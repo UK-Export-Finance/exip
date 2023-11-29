@@ -1,6 +1,5 @@
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
-import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 
@@ -14,17 +13,16 @@ import { Application, RequestBody } from '../../../../../../types';
  */
 const companyDetails = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
+  const dataToSave = getDataToSave(formBody, errorList);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const companyId = application.company?.id;
-  const companyAddressId = application.company?.registeredOfficeAddress?.id;
 
   try {
     // send the form data to the API for database update.
-    const saveResponse = await api.keystone.application.update.company(companyId, companyAddressId, sanitisedData);
+    const saveResponse = await api.keystone.application.update.company(companyId, sanitisedData);
     return saveResponse;
   } catch (err) {
     throw new Error("Updating application's companyDetails");

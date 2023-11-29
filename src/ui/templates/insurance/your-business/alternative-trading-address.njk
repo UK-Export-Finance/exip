@@ -1,0 +1,97 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-xl" data-cy="heading-caption">
+        {{ CONTENT_STRINGS.HEADING_CAPTION }}
+      </span>
+    </div>
+
+    <form method="POST" id="form" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+
+          <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+          {{ govukCharacterCount({
+            name: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID,
+            id: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID,
+            label: {
+              text: FIELDS.ALTERNATIVE_TRADING_ADDRESS.LABEL,
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+              attributes: {
+                'data-cy': FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + '-label',
+                id: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + '-label'
+              }
+            },
+            hint: {
+              html: descriptionHintHtml
+            },
+            attributes: {
+              'data-cy': FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID
+            },
+            maxlength: FIELDS.ALTERNATIVE_TRADING_ADDRESS.MAXIMUM,
+            value: submittedValues[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] or application.exportContract[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID],
+            errorMessage: validationErrors.errorList[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] and {
+              text: validationErrors.errorList[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID].text,
+              attributes: {
+                "data-cy": FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + "-error-message"
+              }
+            }
+          }) }}
+
+        </div>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              formaction : SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+{% endblock %}

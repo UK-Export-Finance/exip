@@ -1,6 +1,7 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -8,6 +9,10 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
+
+const {
+  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER },
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/companies-house-number', () => {
   let req: Request;
@@ -20,7 +25,7 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
+      const expected = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -29,8 +34,8 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
+        FIELD_ID,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -73,27 +78,20 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
     describe('when submitted answer is false', () => {
       beforeEach(() => {
         req.body = {
-          [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: 'false',
+          [FIELD_ID]: 'false',
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, () => {
+      it(`should redirect to ${INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
-      });
-
-      it('should add exitReason to req.flash', () => {
-        post(req, res);
-
-        const expectedReason = PAGES.INSURANCE.APPLY_OFFLINE.REASON.NO_COMPANIES_HOUSE_NUMBER;
-        expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
+        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER);
       });
     });
 
     describe('when there are no validation errors', () => {
       const validBody = {
-        [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: 'true',
+        [FIELD_ID]: 'true',
       };
 
       beforeEach(() => {
@@ -104,7 +102,7 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
         post(req, res);
 
         const expectedPopulatedData = {
-          [PAGE_VARIABLES.FIELD_ID]: validBody[PAGE_VARIABLES.FIELD_ID],
+          [FIELD_ID]: validBody[FIELD_ID],
         };
 
         const expected = {
@@ -115,10 +113,10 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`, () => {
+      it(`should redirect to ${ENTER_COMPANIES_HOUSE_NUMBER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE);
+        expect(res.redirect).toHaveBeenCalledWith(ENTER_COMPANIES_HOUSE_NUMBER);
       });
     });
   });

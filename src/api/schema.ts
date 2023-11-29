@@ -91,28 +91,6 @@ export const lists = {
               },
             };
 
-            // generate and attach a new `company` relationship
-            const { id: companyId } = await context.db.Company.createOne({
-              data: {},
-            });
-
-            modifiedData.company = {
-              connect: {
-                id: companyId,
-              },
-            };
-
-            // generate a new `company address` relationship with the company
-            await context.db.CompanyAddress.createOne({
-              data: {
-                company: {
-                  connect: {
-                    id: companyId,
-                  },
-                },
-              },
-            });
-
             // generate and attach a new 'business' relationship
             const { id: businessId } = await context.db.Business.createOne({
               data: {},
@@ -199,7 +177,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, sectionReviewId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -235,18 +213,6 @@ export const lists = {
                   },
                 },
                 finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN,
-              },
-            });
-
-            // add the application ID to the company entry.
-            await context.db.Company.updateOne({
-              where: { id: companyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
               },
             });
 
@@ -488,9 +454,9 @@ export const lists = {
       }),
       totalYearsExporting: integer(),
       totalEmployeesUK: integer(),
-      totalEmployeesInternational: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+      hasCreditControlProcess: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -548,6 +514,7 @@ export const lists = {
       companyNumber: text(),
       dateOfCreation: timestamp(),
       hasDifferentTradingAddress: nullableCheckbox(),
+      differentTradingName: text(),
       hasDifferentTradingName: nullableCheckbox(),
       companyWebsite: text(),
       phoneNumber: text(),
@@ -612,13 +579,14 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       buyerCountry: relationship({ ref: 'Country' }),
+      coverPeriod: relationship({ ref: 'CoverPeriod' }),
+      hasEndBuyer: checkbox(),
       hasMinimumUkGoodsOrServices: checkbox(),
-      validExporterLocation: checkbox(),
       hasCompaniesHouseNumber: checkbox(),
       otherPartiesInvolved: checkbox(),
       paidByLetterOfCredit: checkbox(),
       totalContractValue: relationship({ ref: 'TotalContractValue' }),
-      coverPeriod: relationship({ ref: 'CoverPeriod' }),
+      validExporterLocation: checkbox(),
     },
     access: allowAll,
   }),

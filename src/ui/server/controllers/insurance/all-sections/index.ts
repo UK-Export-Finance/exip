@@ -30,6 +30,7 @@ export const get = (req: Request, res: Response) => {
     application.referenceNumber,
     application.policy.policyType,
     application.broker.isUsingBroker,
+    application.company.hasDifferentTradingName,
     application.declaration.hasAntiBriberyCodeOfConduct,
   );
 

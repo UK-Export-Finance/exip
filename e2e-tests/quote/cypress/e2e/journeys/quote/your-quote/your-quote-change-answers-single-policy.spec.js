@@ -30,7 +30,7 @@ const {
   },
 } = ROUTES;
 
-context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Export insurance quote', () => {
+context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Credit insurance quote', () => {
   const baseUrl = Cypress.config('baseUrl');
   const url = `${baseUrl}${YOUR_QUOTE}`;
 

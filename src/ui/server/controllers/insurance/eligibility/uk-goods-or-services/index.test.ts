@@ -119,10 +119,10 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.END_BUYER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.INSURED_AMOUNT);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER);
       });
     });
   });

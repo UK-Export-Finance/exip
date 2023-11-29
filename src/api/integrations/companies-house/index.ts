@@ -26,6 +26,13 @@ const companiesHouse = {
         },
       });
 
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true,
+        };
+      }
+
       // if no data in response or status is not 200 then return success as false
       if (!response.data || response.status !== 200) {
         return {

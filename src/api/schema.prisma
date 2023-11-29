@@ -192,16 +192,16 @@ model Authentication {
 }
 
 model Business {
-  id                          String        @id @default(cuid())
-  application                 Application?  @relation("Business_application", fields: [applicationId], references: [id])
-  applicationId               String?       @map("application")
-  goodsOrServicesSupplied     String        @default("") @mysql.VarChar(1000)
-  totalYearsExporting         Int?
-  totalEmployeesUK            Int?
-  totalEmployeesInternational Int?
-  estimatedAnnualTurnover     Int?
-  exportsTurnoverPercentage   Int?
-  from_Application_business   Application[] @relation("Application_business")
+  id                        String        @id @default(cuid())
+  application               Application?  @relation("Business_application", fields: [applicationId], references: [id])
+  applicationId             String?       @map("application")
+  goodsOrServicesSupplied   String        @default("") @mysql.VarChar(1000)
+  totalYearsExporting       Int?
+  totalEmployeesUK          Int?
+  estimatedAnnualTurnover   Int?
+  exportsTurnoverPercentage Int?
+  hasCreditControlProcess   Boolean?
+  from_Application_business Application[] @relation("Application_business")
 
   @@index([applicationId])
 }
@@ -247,6 +247,7 @@ model Company {
   companyNumber              String           @default("")
   dateOfCreation             DateTime?
   hasDifferentTradingAddress Boolean?
+  differentTradingName       String           @default("")
   hasDifferentTradingName    Boolean?
   companyWebsite             String           @default("")
   phoneNumber                String           @default("")
@@ -303,21 +304,22 @@ model Eligibility {
   applicationId                String?             @map("application")
   buyerCountry                 Country?            @relation("Eligibility_buyerCountry", fields: [buyerCountryId], references: [id])
   buyerCountryId               String?             @map("buyerCountry")
+  coverPeriod                  CoverPeriod?        @relation("Eligibility_coverPeriod", fields: [coverPeriodId], references: [id])
+  coverPeriodId                String?             @map("coverPeriod")
+  hasEndBuyer                  Boolean             @default(false)
   hasMinimumUkGoodsOrServices  Boolean             @default(false)
-  validExporterLocation        Boolean             @default(false)
   hasCompaniesHouseNumber      Boolean             @default(false)
   otherPartiesInvolved         Boolean             @default(false)
   paidByLetterOfCredit         Boolean             @default(false)
   totalContractValue           TotalContractValue? @relation("Eligibility_totalContractValue", fields: [totalContractValueId], references: [id])
   totalContractValueId         String?             @map("totalContractValue")
-  coverPeriod                  CoverPeriod?        @relation("Eligibility_coverPeriod", fields: [coverPeriodId], references: [id])
-  coverPeriodId                String?             @map("coverPeriod")
+  validExporterLocation        Boolean             @default(false)
   from_Application_eligibility Application[]       @relation("Application_eligibility")
 
   @@index([applicationId])
   @@index([buyerCountryId])
-  @@index([totalContractValueId])
   @@index([coverPeriodId])
+  @@index([totalContractValueId])
 }
 
 model SectionReview {

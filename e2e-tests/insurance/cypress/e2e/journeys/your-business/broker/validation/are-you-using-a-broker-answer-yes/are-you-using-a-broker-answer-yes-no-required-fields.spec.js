@@ -1,6 +1,5 @@
 import { brokerPage } from '../../../../../../../../pages/your-business';
 import { field as fieldSelector } from '../../../../../../../../pages/shared';
-import partials from '../../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/business';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
@@ -17,18 +16,16 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { BROKER },
+  EXPORTER_BUSINESS: { BROKER_ROOT },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const field = brokerPage[FIELD_ID];
 
-context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
 
   before(() => {
@@ -39,14 +36,14 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitCreditControlForm({});
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
+      const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });

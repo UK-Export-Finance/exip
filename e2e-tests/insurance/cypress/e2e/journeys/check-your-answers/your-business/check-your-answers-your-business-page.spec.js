@@ -24,7 +24,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Your business - I want to confirm my selection for the your business section of my export insurance application', () => {
+context('Insurance - Check your answers - Your business - I want to confirm my selection for the your business section of my credit insurance application', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -36,9 +36,6 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       task.link().click();
-
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
 
       // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();

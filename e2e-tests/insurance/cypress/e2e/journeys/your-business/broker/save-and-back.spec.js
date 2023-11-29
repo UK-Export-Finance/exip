@@ -23,13 +23,15 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    BROKER,
+    BROKER_ROOT,
   },
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.business;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your business - Broker page - Save and back', () => {
   let referenceNumber;
@@ -40,15 +42,15 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitCreditControlForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER}`;
-      allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -94,16 +96,16 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      // submit companies house number form
-      submitButton().click();
       // submit company details form
       submitButton().click();
       // submit nature of business form
       submitButton().click();
       // submit turnover form
       submitButton().click();
+      // submit credit control form
+      cy.completeAndSubmitCreditControlForm({});
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -142,16 +144,16 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        task.link().click();
+        cy.startYourBusinessSection();
 
-        // submit companies house number form
-        submitButton().click();
         // submit company details form
         submitButton().click();
         // submit nature of business form
         submitButton().click();
         // submit turnover form
         submitButton().click();
+        // submit credit control form
+        cy.completeAndSubmitCreditControlForm({});
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -181,16 +183,16 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the relevant fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        task.link().click();
+        cy.startYourBusinessSection();
 
-        // submit companies house number form
-        submitButton().click();
         // submit company details form
         submitButton().click();
         // submit nature of business form
         submitButton().click();
         // submit turnover form
         submitButton().click();
+        // submit credit control form
+        cy.completeAndSubmitCreditControlForm({});
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });

@@ -16,7 +16,7 @@ const {
 } = ROUTES;
 
 const {
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-business/nature-of-your-business-fields', () => {
@@ -41,18 +41,6 @@ describe('server/helpers/summary-lists/your-business/nature-of-your-business-fie
       field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, EMPLOYEES_UK),
       data: mockAnswers,
       href: generateChangeLink(NATURE_OF_BUSINESS_CHANGE, NATURE_OF_BUSINESS_CHECK_AND_CHANGE, `#${EMPLOYEES_UK}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
-    fieldGroupItem({
-      field: getFieldById(FIELDS.NATURE_OF_YOUR_BUSINESS, EMPLOYEES_INTERNATIONAL),
-      data: mockAnswers,
-      href: generateChangeLink(
-        NATURE_OF_BUSINESS_CHANGE,
-        NATURE_OF_BUSINESS_CHECK_AND_CHANGE,
-        `#${EMPLOYEES_INTERNATIONAL}-label`,
-        referenceNumber,
-        checkAndChange,
-      ),
       renderChangeLink: true,
     }),
   ];

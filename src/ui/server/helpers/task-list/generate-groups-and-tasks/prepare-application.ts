@@ -10,7 +10,7 @@ import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 const {
   INSURANCE_ROOT,
   POLICY: { TYPE_OF_POLICY },
-  EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER_ROOT },
+  EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
@@ -29,25 +29,20 @@ const createPrepareApplicationTasks = (
   otherGroups: TaskListData,
   policyType?: string,
   isUsingBroker?: boolean,
+  hasDifferentTradingName?: boolean,
 ): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
   const allInitialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
 
-  const POLICY = {
-    href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
-    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
-    id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-    fields: policyRequiredFields(policyType),
-    dependencies: allInitialChecksFields,
-  };
+  const dependencies = [...allInitialChecksFields];
 
   const EXPORTER_BUSINESS = {
-    href: `${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_ROOT}`,
+    href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
     title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-    fields: businessRequiredFields(isUsingBroker),
-    dependencies: [...POLICY.dependencies],
+    fields: businessRequiredFields(isUsingBroker, hasDifferentTradingName),
+    dependencies,
   };
 
   const YOUR_BUYER = {
@@ -55,10 +50,26 @@ const createPrepareApplicationTasks = (
     title: PREPARE_APPLICATION.TASKS.BUYER,
     id: TASK_IDS.PREPARE_APPLICATION.BUYER,
     fields: yourBuyerRequiredFields(),
-    dependencies: [...POLICY.dependencies],
+    dependencies,
   };
 
-  const tasks = [POLICY, EXPORTER_BUSINESS, YOUR_BUYER] as Array<TaskListDataTask>;
+  const POLICY = {
+    href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
+    id: TASK_IDS.PREPARE_APPLICATION.POLICY,
+    fields: policyRequiredFields(policyType),
+    dependencies,
+  };
+
+  const YOUR_EXPORT_CONTRACT = {
+    href: '#',
+    title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
+    id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
+    fields: [],
+    dependencies,
+  };
+
+  const tasks = [EXPORTER_BUSINESS, YOUR_BUYER, POLICY, YOUR_EXPORT_CONTRACT] as Array<TaskListDataTask>;
 
   return tasks;
 };

@@ -6,7 +6,6 @@ import {
   FIELD_VALUES,
   VALID_PHONE_NUMBERS,
   WEBSITE_EXAMPLES,
-  COMPANY_EXAMPLE,
 } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -17,27 +16,21 @@ const {
     YOUR_BUSINESS,
   },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE,
     COMPANY_DETAILS_CHECK_AND_CHANGE,
+    COMPANY_DETAILS_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  COMPANIES_HOUSE_NUMBER,
-  COMPANY_HOUSE: {
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COMPANY_INCORPORATED,
-    FINANCIAL_YEAR_END_DATE,
-    COMPANY_SIC,
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: {
+      TRADING_ADDRESS,
+      HAS_DIFFERENT_TRADING_NAME,
+      WEBSITE,
+      PHONE_NUMBER,
+    },
   },
-  YOUR_COMPANY: {
-    TRADING_ADDRESS,
-    TRADING_NAME,
-    WEBSITE,
-    PHONE_NUMBER,
-  },
-} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -67,9 +60,6 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 
@@ -89,73 +79,19 @@ context('Insurance - Check your answers - Company details - Your business - Summ
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(COMPANY_NUMBER, () => {
-    const fieldId = COMPANY_NUMBER;
+  describe(HAS_DIFFERENT_TRADING_NAME, () => {
+    const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE);
-
-    describe('when clicking the `change` link', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it(`should redirect to ${COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE}#heading`;
-
-        cy.assertUrl(expectedUrl);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        fieldVariables.newValueInput = '14440211';
-
-        cy.changeAnswerField(fieldVariables, field(COMPANIES_HOUSE_NUMBER).input());
-      });
-
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}#heading`;
-
-        cy.assertUrl(expectedUrl);
-      });
-
-      it('should render the new answer and retain a `completed` status tag', () => {
-        fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
-
-        cy.checkText(summaryList.field(COMPANY_NAME).value(), COMPANY_EXAMPLE.COMPANY_NAME);
-        cy.checkText(summaryList.field(COMPANY_INCORPORATED).value(), COMPANY_EXAMPLE.COMPANY_INCORPORATED);
-
-        cy.checkText(summaryList.field(COMPANY_SIC).value(), `${COMPANY_EXAMPLE.COMPANY_SIC} ${COMPANY_EXAMPLE.COMPANY_SIC_DESCRIPTION}`);
-
-        cy.checkText(summaryList.field(FINANCIAL_YEAR_END_DATE).value(), COMPANY_EXAMPLE.FINANCIAL_YEAR_END_DATE);
-
-        cy.checkTaskStatusCompleted(status());
-      });
-    });
-  });
-
-  describe(TRADING_NAME, () => {
-    const fieldId = TRADING_NAME;
-
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+    let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHANGE);
 
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${COMPANY_DETAILS_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
+
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
         cy.checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);

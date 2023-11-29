@@ -7,7 +7,7 @@ import {
   completeAndSubmitTellUsAboutYourMultiPolicyForm,
 } from './forms';
 
-export default () => {
+const submitAnswersHappyPathMultiplePolicy = () => {
   completeAndSubmitBuyerCountryForm();
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
@@ -15,3 +15,5 @@ export default () => {
   completeAndSubmitPolicyTypeMultiForm();
   completeAndSubmitTellUsAboutYourMultiPolicyForm();
 };
+
+export default submitAnswersHappyPathMultiplePolicy;

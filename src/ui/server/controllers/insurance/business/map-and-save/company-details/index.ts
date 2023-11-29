@@ -1,7 +1,7 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import mapCompanyDetailsSubmittedData from '../../company-details/map-submitted-data';
 import save from '../../save-data/company-details';
+import mapSubmittedData from '../../map-submitted-data/company-details';
 
 /**
  * maps company details request and calls save function
@@ -14,14 +14,14 @@ import save from '../../save-data/company-details';
 const companyDetails = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      // maps through formBody and puts fields in correct format
-      const dataToSave = mapCompanyDetailsSubmittedData(formBody, application);
       let saveResponse;
 
+      const populatedData = mapSubmittedData(formBody);
+
       if (validationErrors) {
-        saveResponse = await save.companyDetails(application, dataToSave, validationErrors.errorList);
+        saveResponse = await save.companyDetails(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.companyDetails(application, dataToSave);
+        saveResponse = await save.companyDetails(application, populatedData);
       }
 
       if (!saveResponse) {

@@ -8,21 +8,23 @@ import {
   BUTTONS,
   PAGES,
 } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
+  ROOT,
   POLICY,
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE_NUMBER,
+    ROOT: EXPORTER_BUSINESS_ROOT,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.prepareApplication.tasks.policy;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Check your answers - As an exporter, I want to check my answers to the type of policy section', () => {
   let referenceNumber;
@@ -36,7 +38,7 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
 
       cy.completePolicySection({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -53,8 +55,8 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${POLICY.NAME_ON_POLICY}`,
+      currentHref: `${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`,
+      backLink: `${ROOT}/${referenceNumber}${POLICY.NAME_ON_POLICY}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });
@@ -73,12 +75,12 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${COMPANIES_HOUSE_NUMBER}`, () => {
+      it(`should redirect to ${EXPORTER_BUSINESS_ROOT}`, () => {
         cy.navigateToUrl(url);
 
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANIES_HOUSE_NUMBER}`;
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`;
         cy.assertUrl(expectedUrl);
       });
     });

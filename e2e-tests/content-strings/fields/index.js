@@ -25,12 +25,13 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: {
-    HINT: 'Cover is based on the country your buyer is located in, not the destination of your goods or services.',
+    HINT: "Credit insurance protects in the event your buyer doesn't pay you. That means that cover is based on the country your buyer is based in, not the destination of the goods or services.",
     SUMMARY: {
       TITLE: 'Buyer is based in',
     },
   },
   [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: {
+    HINT: 'UKEF provides credit insurance for payments from overseas territories.',
     SUMMARY: {
       TITLE: 'Your company',
     },
@@ -155,43 +156,30 @@ export const FIELDS = {
       TITLE: 'Policy length',
     },
   },
-  INSURANCE: {
-    ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
-        HINT: 'This is known as the pre-credit period.',
-      },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-        HINT: 'This is known as the pre-credit period.',
-      },
-    },
+  [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
+    HINT: "If you've applied for credit insurance using this service in the past, you should have an account with us.",
   },
-  [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-    HINT: 'This is known as the pre-credit period.',
-  },
-  [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
-    HINT: "If you've applied online before, you'll already have an account.",
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_NUMBER]: {
     SUMMARY: {
       TITLE: 'Companies House registration number',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_NAME]: {
     SUMMARY: {
       TITLE: 'Company name',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_ADDRESS]: {
     SUMMARY: {
       TITLE: 'Registered office address',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_INCORPORATED]: {
     SUMMARY: {
       TITLE: 'Incorporated on',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
+  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_SIC]: {
     SUMMARY: {
       TITLE: 'Standard industrial classification (SIC) codes and nature of business',
     },

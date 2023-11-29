@@ -1,7 +1,7 @@
 import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
@@ -14,7 +14,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Buyer country page - as an exporter, I want to check if UKEF issue export insurance cover for where my buyer is based', () => {
+context('Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based', () => {
   beforeEach(() => {
     cy.login();
 
@@ -93,7 +93,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
 
     describe('when submitting with a supported country', () => {
       beforeEach(() => {
-        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTED_ONLINE.name);
+        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_QUOTE_SUPPORT.ONLINE.NAME);
 
         const results = countryInput.field(FIELD_ID).results();
         results.first().click();
@@ -110,7 +110,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue expo
       it('should prepopulate the field when going back to the page via back link', () => {
         cy.clickBackLink();
 
-        const expectedValue = COUNTRY_SUPPORTED_ONLINE.name;
+        const expectedValue = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
 
         cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 

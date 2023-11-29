@@ -12,6 +12,7 @@ export const TASK_IDS = {
     POLICY: 'policy',
     EXPORTER_BUSINESS: 'business',
     BUYER: 'buyer',
+    EXPORT_CONTRACT: 'exportContract',
   },
   SUBMIT_APPLICATION: {
     CHECK_ANSWERS: 'checkAnswers',

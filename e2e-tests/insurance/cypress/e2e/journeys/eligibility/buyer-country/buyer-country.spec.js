@@ -1,28 +1,33 @@
-import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { countryInput, submitButton } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
-import { PAGES, LINKS } from '../../../../../../content-strings';
-import { completeStartForm, completeCheckIfEligibleForm } from '../../../../../../commands/insurance/eligibility/forms';
-import { COUNTRY_SUPPORTED_ONLINE } from '../../../../../../fixtures/countries';
+import { PAGES } from '../../../../../../content-strings';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
 const {
   START,
-  ELIGIBILITY: { BUYER_COUNTRY, CHECK_IF_ELIGIBLE, EXPORTER_LOCATION },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANY_DETAILS, TOTAL_VALUE_INSURED },
 } = INSURANCE_ROUTES;
 
 const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
+const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer export insurance policy for where my buyer is based', () => {
+context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based', () => {
   beforeEach(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
 
     const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 
@@ -33,7 +38,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: BUYER_COUNTRY,
-      backLink: CHECK_IF_ELIGIBLE,
+      backLink: COMPANY_DETAILS,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
@@ -81,16 +86,6 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         cy.checkBuyerCountryValidationErrors();
       });
 
-      it('renders a back link with correct url', () => {
-        const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
-
-        cy.checkLink(
-          backLink(),
-          expectedHref,
-          LINKS.BACK,
-        );
-      });
-
       it('should focus on input when clicking summary error message', () => {
         cy.checkBuyerCountryFocusAfterSummaryErrorClick();
       });
@@ -98,7 +93,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     describe('when submitting with a supported country', () => {
       beforeEach(() => {
-        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_SUPPORTED_ONLINE.name);
+        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME);
 
         const results = countryInput.field(FIELD_ID).results();
         results.first().click();
@@ -106,8 +101,8 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         submitButton().click();
       });
 
-      it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
+      it(`should redirect to ${TOTAL_VALUE_INSURED}`, () => {
+        const expectedUrl = `${baseUrl}${TOTAL_VALUE_INSURED}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -115,7 +110,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
       it('should prepopulate the field when going back to the page via back link', () => {
         cy.clickBackLink();
 
-        const expectedValue = COUNTRY_SUPPORTED_ONLINE.name;
+        const expectedValue = COUNTRY_NAME;
 
         cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
 

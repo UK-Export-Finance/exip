@@ -1,6 +1,5 @@
 const EXPORTER_BUSINESS = {
-  COMPANY_HOUSE: {
-    SEARCH: 'companiesHouseSearch',
+  COMPANIES_HOUSE: {
     INPUT: 'companiesHouseNumber',
     COMPANY_NAME: 'companyName',
     COMPANY_ADDRESS: 'registeredOfficeAddress',
@@ -22,15 +21,15 @@ const EXPORTER_BUSINESS = {
   YOUR_COMPANY: {
     YOUR_BUSINESS: 'yourBusiness',
     TRADING_ADDRESS: 'hasDifferentTradingAddress',
-    TRADING_NAME: 'hasDifferentTradingName',
+    HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
   },
+  ALTERNATIVE_TRADING_ADDRESS: 'alternativeTradingAddress',
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
     YEARS_EXPORTING: 'totalYearsExporting',
     EMPLOYEES_UK: 'totalEmployeesUK',
-    EMPLOYEES_INTERNATIONAL: 'totalEmployeesInternational',
   },
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',

@@ -107,6 +107,7 @@ describe('server/helpers/task-list', () => {
         },
         {
           title: taskListDataWithStates[1].title,
+          hint: taskListDataWithStates[1].hint,
           tasks: Object.values(taskListDataWithStates[1].tasks).map((task) => ({
             id: task.id,
             href: task.href,

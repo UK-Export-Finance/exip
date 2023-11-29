@@ -25,6 +25,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
     if (!response.success || !response.data) {
       return {
         success: false,
+        notFound: response.notFound,
       };
     }
 

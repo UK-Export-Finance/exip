@@ -29,18 +29,6 @@ const typeDefs = `
     verificationHash: String
   }
 
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
-  }
-
   type CompaniesHouseResponse {
     companyName: String
     registeredOfficeAddress: CompanyAddress
@@ -51,17 +39,38 @@ const typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
+    postalCode: String
+    country: String
     locality: String
     region: String
     postalCode: String
-    country: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
@@ -79,31 +88,23 @@ const typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
+  input CompanyInput {
     companyName: String
     companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    dateOfCreation: String
     sicCodes: [String]
     industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
     financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
+    registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
+  }
+
+   type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [OrdnanceSurveyAddress]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
   }
 
   type EmailResponse {
@@ -174,14 +175,12 @@ const typeDefs = `
 
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
-    hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
-    totalContractValueId: Int!
     coverPeriodId: Int!
-    validExporterLocation: Boolean!
+    hasCompaniesHouseNumber: Boolean!
+    hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    totalContractValueId: Int!
+    validExporterLocation: Boolean!
   }
 
   type CreateAnApplicationResponse {
@@ -197,11 +196,13 @@ const typeDefs = `
     riskCategory: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
+    canGetAQuoteOffline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    canApplyOnline: Boolean
-    canApplyOffline: Boolean
     cannotApply: Boolean
+    canApplyForInsuranceOnline: Boolean
+    canApplyForInsuranceOffline: Boolean
+    noInsuranceSupport: Boolean
   }
 
   type Mutation {
@@ -218,6 +219,7 @@ const typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """
@@ -284,13 +286,6 @@ const typeDefs = `
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
 
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
-
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
       referenceNumber: Int!
@@ -328,13 +323,19 @@ const typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
+    """ get Ordnance Survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNameOrNumber: String!
+    ): OrdnanceSurveyResponse
   }
 `;
 

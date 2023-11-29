@@ -1,5 +1,6 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
+import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -30,6 +31,7 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION,
+        FIELD: FIELDS[FIELD_ID],
         PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
       };
 
@@ -51,6 +53,42 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
+      });
+    });
+
+    describe('when a there is no submittedData in req.session', () => {
+      it('should add empty submittedData.insuranceEligibility to the session', () => {
+        // @ts-ignore
+        req.session = {};
+
+        get(req, res);
+
+        const expected = {
+          ...req.session,
+          submittedData: {
+            insuranceEligibility: {},
+          },
+        };
+
+        expect(req.session).toEqual(expected);
+      });
+    });
+
+    describe('when a there is no insuranceEligibility in req.session.submittedData', () => {
+      it('should add empty submittedData.insuranceEligibility to the session and retain existing req.session.submittedData', () => {
+        // @ts-ignore
+        req.session.submittedData = {
+          quoteEligibility: {},
+        };
+
+        get(req, res);
+
+        const expected = {
+          ...req.session.submittedData,
+          insuranceEligibility: {},
+        };
+
+        expect(req.session.submittedData).toEqual(expected);
       });
     });
   });
@@ -115,10 +153,10 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES}`, () => {
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
       });
     });
   });

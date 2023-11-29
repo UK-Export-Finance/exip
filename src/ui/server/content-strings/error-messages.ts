@@ -1,11 +1,11 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY } from '../constants';
+import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
 };
 
-const MAX_COVER_AMOUNT = formatCurrency(ELIGIBILITY.MAX_COVER_AMOUNT_IN_GBP, GBP_CURRENCY_CODE, 0);
+const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
 export const ERROR_MESSAGES = {
   THERE_IS_A_PROBLEM: 'There is a problem',
@@ -56,35 +56,33 @@ export const ERROR_MESSAGES = {
   [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: 'Anything else you would like to tell us cannot be more than 1200 characters',
   INSURANCE: {
     ELIGIBILITY: {
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT]: {
-        IS_EMPTY: `Select whether you want to be insured for more than ${MAX_COVER_AMOUNT}`,
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: {
+        IS_EMPTY: `Select if the the total value of your contract exceeds ${THRESHOLD} or not`,
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD]: {
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED]: {
-        IS_EMPTY: 'Select whether there are any other parties involved, apart from you and the buyer',
-      },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT]: {
-        IS_EMPTY: "Select whether you'll be paid by a letter of credit or not",
-      },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD]: {
-        IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER]: {
+        IS_EMPTY: 'Select whether you have a UK Companies House number and whether your company is actively trading',
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER]: {
-        IS_EMPTY: 'Select whether you have a UK Companies House registration number or not',
+        IS_EMPTY: 'Enter your UK Companies House number registration number',
+        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
+        NOT_FOUND: 'Enter a recognised Companies House number',
+        TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
       },
-      [FIELD_IDS.INSURANCE.ELIGIBILITY.ACCOUNT_TO_APPLY_ONLINE]: {
-        IS_EMPTY: 'Select whether you have an account for UKEF export insurance',
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER]: {
+        IS_EMPTY: 'Select if there will be an end buyer for this export contract',
+      },
+      [FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT]: {
+        IS_EMPTY: 'Select if you have a UK Export Finance account',
       },
     },
     EXPORTER_BUSINESS: {
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANIES_HOUSE_NUMBER]: {
-        INCORRECT_FORMAT: 'Enter your Companies House registration number in the correct format - for example, 8989898 or SC907816',
-        NOT_FOUND: 'The number you entered does not match any company in Companies House - try again',
-        TECHNICAL_ISSUES: 'Due to technical issues, you cannot search for your Companies House registration number right now - try again in few minutes',
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {
+        IS_EMPTY: 'Select whether you use a different trading name for this company',
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
         IS_EMPTY: 'Select whether you use a different trading name for this company',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
@@ -94,29 +92,28 @@ export const ERROR_MESSAGES = {
         INCORRECT_FORMAT: 'Enter your company website in a valid format - like www.example.com',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
-        INCORRECT_FORMAT: 'Enter a UK telephone number',
+        INCORRECT_FORMAT: 'Enter a valid UK telephone number',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS]: {
+        IS_EMPTY: 'Enter your alternative trading address',
+        ABOVE_MAXIMUM: 'The alternative address cannot be more than a 1000 characters',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
-        IS_EMPTY: 'Enter the goods or services that your company supplies',
-        ABOVE_MAXIMUM: 'Description of goods and services that your company supplies cannot be more than 1000 characters',
+        IS_EMPTY: 'Enter the information about your business and the products or services you distribute',
+        ABOVE_MAXIMUM: 'The description of your business cannot be more than a 1000 characters',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
-        IS_EMPTY: "Enter how many years you've been exporting for as a whole number - for example, 3 or 7",
-        INCORRECT_FORMAT: "Enter how many years you've been exporting for as a whole number. You cannot enter letters or special characters",
+        IS_EMPTY: 'Enter how many years you have been exporting for as a whole number',
+        INCORRECT_FORMAT: 'Enter how many years you have been exporting for as a whole number - do not enter decimals',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
         IS_EMPTY: 'Enter how many employees you have in the UK as a whole number - for example, 100',
         INCORRECT_FORMAT: 'Enter how many employees you have in the UK as a whole number. You cannot enter letters or special characters',
-      },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
-        IS_EMPTY: 'Enter how many employees you have worldwide, including UK, as a whole number - for example, 100',
-        INCORRECT_FORMAT: 'Enter how many employees you have worldwide, including UK, as a whole number. You cannot enter  letters or special characters',
-        BELOW_UK: 'Number of employees worldwide including UK must be greater or equal to the number of employees in the UK',
-        BELOW_MINIMUM: 'Number of employees worldwide must be more than 0',
+        BELOW_MINIMUM: 'Number of employees in the UK must be more than 0',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated annual turnover for this current financial year',
-        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format, like whole numbers only',
+        INCORRECT_FORMAT: 'Enter your estimated annual turnover for the current financial year in the correct format - for example, whole numbers only',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
         IS_EMPTY: 'Enter your estimated percentage of turnover from exports',
@@ -124,6 +121,9 @@ export const ERROR_MESSAGES = {
           'Enter your estimated percentage of turnover from exports in the correct format, without special characters - for example, a whole number like 50',
         BELOW_MINIMUM: 'Your percentage of turnover from exports must be a number between 0 to 100',
         ABOVE_MAXIMUM: 'Your percentage of turnover from exports must be a number between 0 to 100',
+      },
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.HAS_CREDIT_CONTROL]: {
+        IS_EMPTY: 'Select if you have a process for dealing with late payments',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',

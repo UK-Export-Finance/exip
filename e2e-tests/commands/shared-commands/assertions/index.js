@@ -5,6 +5,15 @@ import {
   checkBuyerCountryFocusAfterSummaryErrorClick,
 } from './check-buyer-country-form';
 import { checkChangeLinkUrl, checkChangeAnswerRendered } from './check-summary-list-field-change';
+import {
+  checkActionReadAboutEligibility,
+  checkActionReadAboutEligibilityLinkRedirect,
+  checkActionContactApprovedBroker,
+  checkActionTalkToYourNearestEFM,
+  checkActionTalkToYourNearestEFMLink,
+  checkActionApplyThroughPDF,
+  checkActionContactUKEFTeam,
+} from './actions';
 
 Cypress.Commands.add('assertUrl', require('./assert-url'));
 
@@ -65,3 +74,11 @@ Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task
 Cypress.Commands.add('checkText', require('./check-text'));
 
 Cypress.Commands.add('checkValue', require('./check-value'));
+
+Cypress.Commands.add('checkActionReadAboutEligibility', checkActionReadAboutEligibility);
+Cypress.Commands.add('checkActionReadAboutEligibilityLinkRedirect', checkActionReadAboutEligibilityLinkRedirect);
+Cypress.Commands.add('checkActionContactApprovedBroker', checkActionContactApprovedBroker);
+Cypress.Commands.add('checkActionTalkToYourNearestEFM', checkActionTalkToYourNearestEFM);
+Cypress.Commands.add('checkActionTalkToYourNearestEFMLink', checkActionTalkToYourNearestEFMLink);
+Cypress.Commands.add('checkActionApplyThroughPDF', checkActionApplyThroughPDF);
+Cypress.Commands.add('checkActionContactUKEFTeam', checkActionContactUKEFTeam);

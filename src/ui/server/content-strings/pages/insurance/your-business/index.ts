@@ -5,6 +5,19 @@ const SHARED = {
 };
 
 const EXPORTER_BUSINESS = {
+  ROOT: {
+    PAGE_TITLE: 'Tell us about your business',
+    INTRO: 'In this section, we want to understand more about your business and the types of products or services you export.',
+    LIST: {
+      INTRO: "We'll ask you to tell us:",
+      ITEMS: [
+        'what your estimated annual turnover is for this year',
+        'if you have any credit management processes',
+        'about any other credit insurance you have in place',
+      ],
+    },
+    OUTRO: 'It should only take a few minutes to complete.',
+  },
   COMPANIES_HOUSE_NUMBER: {
     ...SHARED,
     PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
@@ -25,6 +38,10 @@ const EXPORTER_BUSINESS = {
     CONTINUE_SUFFIX: 'until this problem is resolved',
     INFORMATION: '(You may lose any information you entered on the previous page.)',
   },
+  ALTERNATIVE_TRADING_ADDRESS: {
+    ...SHARED,
+    PAGE_TITLE: 'Alternative trading address',
+  },
   NATURE_OF_YOUR_BUSINESS: {
     ...SHARED,
     PAGE_TITLE: 'Nature of your business',
@@ -32,6 +49,15 @@ const EXPORTER_BUSINESS = {
   TURNOVER: {
     ...SHARED,
     PAGE_TITLE: 'Turnover',
+    PROVIDE_ALTERNATIVE_CURRENCY: 'Provide turnover in an alternative currency',
+  },
+  TURNOVER_CURRENCY: {
+    ...SHARED,
+    PAGE_TITLE: 'What currency is your turnover in?',
+  },
+  CREDIT_CONTROL: {
+    ...SHARED,
+    PAGE_TITLE: 'Do you have a process for dealing with late payments?',
   },
   BROKER: {
     ...SHARED,
@@ -41,7 +67,7 @@ const EXPORTER_BUSINESS = {
     LINE_2: 'You can find your nearest one on',
     LINK_TEXT: "UKEF's list of approved brokers.",
     LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
-    LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
+    LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
   },
   CHECK_YOUR_ANSWERS: {
     ...SHARED,

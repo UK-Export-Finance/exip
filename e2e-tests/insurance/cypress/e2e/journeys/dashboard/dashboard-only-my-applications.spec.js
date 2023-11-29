@@ -12,7 +12,7 @@ const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 
 const accountEmails = [firstAccountEmail, secondAccountEmail];
 
-context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF export insurance application from my dashboard, So that I do not have access to another exporter's application", () => {
+context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF credit insurance application from my dashboard, So that I do not have access to another exporter's application", () => {
   const baseUrl = Cypress.config('baseUrl');
 
   let referenceNumbers;

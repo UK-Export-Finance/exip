@@ -12,26 +12,26 @@ dotenv.config();
 
 export const mockApplicationEligibility = {
   buyerCountry: mockCountries[0],
-  hasMinimumUkGoodsOrServices: true,
-  validExporterLocation: true,
-  hasCompaniesHouseNumber: true,
-  otherPartiesInvolved: false,
-  paidByLetterOfCredit: false,
-  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   coverPeriod: {
     valueId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
   },
-  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  coverPeriodId: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+  hasCompaniesHouseNumber: true,
+  hasEndBuyer: false,
+  hasMinimumUkGoodsOrServices: true,
+  otherPartiesInvolved: false,
+  paidByLetterOfCredit: false,
   totalContractValue: {
     valueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
   },
+  totalContractValueId: TOTAL_CONTRACT_VALUE.LESS_THAN_500K.DB_ID,
+  validExporterLocation: true,
 };
 
 const mockGenericPolicy = {
   requestedStartDate: add(new Date(), { months: 1 }),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
-  needPreCreditPeriodCover: false,
 };
 
 export const mockSinglePolicy = {
@@ -99,10 +99,10 @@ export const mockPolicyContact = {
 export const mockBusiness = {
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: 20,
-  totalEmployeesInternational: 1000,
   totalEmployeesUK: 400,
   estimatedAnnualTurnover: 155220,
   exportsTurnoverPercentage: 20,
+  hasCreditControlProcess: true,
 };
 
 export const mockBroker = {

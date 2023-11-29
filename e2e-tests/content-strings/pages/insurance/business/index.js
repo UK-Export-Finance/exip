@@ -2,6 +2,20 @@ const SHARED = {
   HEADING_CAPTION: 'Your business',
 };
 
+export const ROOT = {
+  PAGE_TITLE: 'Tell us about your business',
+  INTRO: 'In this section, we want to understand more about your business and the types of products or services you export.',
+  LIST: {
+    INTRO: "We'll ask you to tell us:",
+    ITEMS: [
+      'what your estimated annual turnover is for this year',
+      'if you have any credit management processes',
+      'about any other credit insurance you have in place',
+    ],
+  },
+  OUTRO: 'It should only take a few minutes to complete.',
+};
+
 export const COMPANIES_HOUSE_NUMBER = {
   ...SHARED,
   PAGE_TITLE: 'Enter your Companies House registration number (CRN)',
@@ -11,7 +25,7 @@ export const COMPANIES_HOUSE_NUMBER = {
 export const COMPANY_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Your company details',
-  TABLE_NAME: 'Your company',
+  BODY: 'This information comes from Companies House.',
 };
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {
@@ -35,6 +49,11 @@ export const CONTACT = {
   },
 };
 
+export const ALTERNATIVE_TRADING_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: 'Alternative trading address',
+};
+
 export const NATURE_OF_YOUR_BUSINESS = {
   ...SHARED,
   PAGE_TITLE: 'Nature of your business',
@@ -43,6 +62,17 @@ export const NATURE_OF_YOUR_BUSINESS = {
 export const TURNOVER = {
   ...SHARED,
   PAGE_TITLE: 'Turnover',
+  PROVIDE_ALTERNATIVE_CURRENCY: 'Provide turnover in an alternative currency',
+};
+
+export const TURNOVER_CURRENCY = {
+  ...SHARED,
+  PAGE_TITLE: 'What currency is your turnover in?',
+};
+
+export const CREDIT_CONTROL = {
+  ...SHARED,
+  PAGE_TITLE: 'Do you have a process for dealing with late payments?',
 };
 
 export const BROKER = {

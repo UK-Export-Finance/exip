@@ -23,7 +23,6 @@ const {
 } = ROUTES.INSURANCE;
 
 const { taskList } = partials.insurancePartials;
-
 const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {

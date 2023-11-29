@@ -1,4 +1,5 @@
 import completeOtherSectionsPage from '../../../../pages/insurance/complete-other-sections';
+import { intro } from '../../../../pages/shared';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 
@@ -22,7 +23,7 @@ context('Insurance - Complete other sections page', () => {
       referenceNumber = refNumber;
 
       // go to a page with a new application that will trigger a redirect to this page.
-      cy.navigateToUrl(`${insuranceRoute}/${referenceNumber}${CHECK_YOUR_ANSWERS.ELIGIBILITY}`);
+      cy.navigateToUrl(`${insuranceRoute}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`);
 
       completeOtherSectionsUrl = `${insuranceRoute}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`;
 
@@ -53,7 +54,7 @@ context('Insurance - Complete other sections page', () => {
     });
 
     it('renders intro copy', () => {
-      cy.checkText(completeOtherSectionsPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('renders `can access other sections` copy', () => {

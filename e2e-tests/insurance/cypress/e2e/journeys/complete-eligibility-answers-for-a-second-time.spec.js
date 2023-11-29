@@ -1,23 +1,20 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
-import { countryInput } from '../../../../pages/shared';
+import { countryInput, field } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
-import {
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-} from '../../../../commands/insurance/eligibility/forms';
-
-const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY },
+  INSURANCE: {
+    COMPANIES_HOUSE: { COMPANY_NUMBER },
+    ELIGIBILITY: {
+      BUYER_COUNTRY,
+    },
+  },
+} = FIELD_IDS;
+
+const {
+  ELIGIBILITY: { EXPORTER_LOCATION },
 } = ROUTES.INSURANCE;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -25,7 +22,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Eligibility - start and complete for a second time after creating an application', () => {
   let referenceNumber;
 
-  const buyerCountryUrl = `${baseUrl}${BUYER_COUNTRY}`;
+  const exporterLocationUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 
   before(() => {
     cy.deleteAccount();
@@ -37,14 +34,14 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
       dashboardPage.startNewApplicationButton().click();
 
-      cy.assertUrl(buyerCountryUrl);
+      cy.assertUrl(exporterLocationUrl);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(buyerCountryUrl);
+    cy.navigateToUrl(exporterLocationUrl);
   });
 
   after(() => {
@@ -52,40 +49,44 @@ context('Insurance - Eligibility - start and complete for a second time after cr
   });
 
   it('should NOT have prepopulated answers', () => {
-    // buyer country question
-    cy.checkValue(countryInput.field(FIELD_ID), '');
-    completeAndSubmitBuyerCountryForm();
-
     // exporter location question
     cy.assertUncheckedYesNoRadios();
-    completeExporterLocationForm();
-
-    // UK goods and services question
-    cy.assertUncheckedYesNoRadios();
-    completeUkGoodsAndServicesForm();
-
-    // insured amount question
-    cy.assertUncheckedYesNoRadios();
-    completeInsuredAmountForm();
-
-    // insured period question
-    cy.assertUncheckedYesNoRadios();
-    completeInsuredPeriodForm();
-
-    // other parties question
-    cy.assertUncheckedYesNoRadios();
-    completeOtherPartiesForm();
-
-    // letter of credit question
-    cy.assertUncheckedYesNoRadios();
-    completeLetterOfCreditForm();
-
-    // pre-credit period question
-    cy.assertUncheckedYesNoRadios();
-    completePreCreditPeriodForm();
+    cy.completeExporterLocationForm();
 
     // companies house number question
     cy.assertUncheckedYesNoRadios();
-    completeCompaniesHouseNumberForm();
+    cy.completeCompaniesHouseNumberForm();
+
+    // companies house search form
+    cy.checkValue(field(COMPANY_NUMBER), '');
+
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+
+    // company details form
+    cy.completeEligibilityCompanyDetailsForm();
+
+    // buyer country question
+    cy.checkValue(countryInput.field(BUYER_COUNTRY), '');
+    completeAndSubmitBuyerCountryForm();
+
+    /**
+     * total value insured question
+     * check that both 2x radios are NOT checked.
+     */
+    cy.assertTotalValueInsuredRadios({ underThreshold: true, checked: false });
+    cy.assertTotalValueInsuredRadios({ underThreshold: false, checked: false });
+    cy.completeAndSubmitTotalValueInsuredForm({});
+
+    /**
+     * cover period question
+     * check that both 2x radios are NOT checked.
+     */
+    cy.assertCoverPeriodRadios({ underThreshold: true, checked: false });
+    cy.assertCoverPeriodRadios({ underThreshold: false, checked: false });
+    cy.completeCoverPeriodForm({});
+
+    // UK goods and services question
+    cy.assertUncheckedYesNoRadios();
+    cy.completeUkGoodsAndServicesForm();
   });
 });

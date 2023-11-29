@@ -26,9 +26,6 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;

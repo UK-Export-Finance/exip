@@ -1,30 +1,46 @@
 import { generateRequiredData, requiredInsuranceEligibilityDataProvided } from '.';
-import { FIELD_IDS, ROUTES } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { mockReq, mockRes, mockSession } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
-const { APPLY_OFFLINE, SPEAK_TO_UKEF_EFM, ELIGIBILITY, ACCOUNT } = ROUTES.INSURANCE;
+const { APPLY_OFFLINE, ELIGIBILITY, ACCOUNT } = INSURANCE_ROUTES;
 
 const {
+  HAVE_AN_ACCOUNT,
   CANNOT_APPLY,
   CHECK_IF_ELIGIBLE,
   NEED_TO_START_AGAIN,
-  ACCOUNT_TO_APPLY_ONLINE,
   BUYER_COUNTRY,
   EXPORTER_LOCATION,
   UK_GOODS_OR_SERVICES,
-  INSURED_AMOUNT,
-  INSURED_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
+  END_BUYER,
+  CHECK_YOUR_ANSWERS,
+  TOTAL_VALUE_INSURED,
+  COVER_PERIOD,
+  LONG_TERM_COVER,
   COMPANIES_HOUSE_NUMBER,
+  NO_COMPANIES_HOUSE_NUMBER,
+  ENTER_COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_UNAVAILABLE,
+  COMPANY_NOT_ACTIVE,
+  COMPANY_DETAILS,
+  CANNOT_APPLY_MULTIPLE_RISKS,
   ELIGIBLE_TO_APPLY_ONLINE,
 } = ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
-} = FIELD_IDS;
+  ELIGIBILITY: {
+    VALID_EXPORTER_LOCATION,
+    HAS_COMPANIES_HOUSE_NUMBER,
+    BUYER_COUNTRY: BUYER_COUNTRY_FIELD_ID,
+    COVER_PERIOD: COVER_PERIOD_FIELD_ID,
+    TOTAL_CONTRACT_VALUE,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+    HAS_END_BUYER,
+  },
+  COMPANY,
+} = INSURANCE_FIELD_IDS;
 
 describe('middleware/required-data-provided/insurance/eligibility', () => {
   let req: Request;
@@ -36,25 +52,27 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
       const expected = {};
 
-      expected[BUYER_COUNTRY] = [];
+      expected[EXPORTER_LOCATION] = [];
 
-      expected[EXPORTER_LOCATION] = [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
+      expected[COMPANIES_HOUSE_NUMBER] = [VALID_EXPORTER_LOCATION];
 
-      expected[UK_GOODS_OR_SERVICES] = [...expected[EXPORTER_LOCATION], VALID_EXPORTER_LOCATION];
+      expected[ENTER_COMPANIES_HOUSE_NUMBER] = [...expected[COMPANIES_HOUSE_NUMBER], HAS_COMPANIES_HOUSE_NUMBER];
 
-      expected[INSURED_AMOUNT] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
+      expected[COMPANY_DETAILS] = [...expected[ENTER_COMPANIES_HOUSE_NUMBER], COMPANY];
 
-      expected[INSURED_PERIOD] = [...expected[INSURED_AMOUNT], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_AMOUNT];
+      expected[BUYER_COUNTRY] = [...expected[COMPANY_DETAILS]];
 
-      expected[OTHER_PARTIES_INVOLVED] = [...expected[INSURED_PERIOD], FIELD_IDS.INSURANCE.ELIGIBILITY.WANT_COVER_OVER_MAX_PERIOD];
+      expected[TOTAL_VALUE_INSURED] = [...expected[BUYER_COUNTRY], BUYER_COUNTRY_FIELD_ID];
 
-      expected[LETTER_OF_CREDIT] = [...expected[OTHER_PARTIES_INVOLVED], FIELD_IDS.INSURANCE.ELIGIBILITY.OTHER_PARTIES_INVOLVED];
+      expected[COVER_PERIOD] = [...expected[TOTAL_VALUE_INSURED], TOTAL_CONTRACT_VALUE];
 
-      expected[PRE_CREDIT_PERIOD] = [...expected[LETTER_OF_CREDIT], FIELD_IDS.INSURANCE.ELIGIBILITY.LETTER_OF_CREDIT];
+      expected[UK_GOODS_OR_SERVICES] = [...expected[COVER_PERIOD], COVER_PERIOD_FIELD_ID];
 
-      expected[COMPANIES_HOUSE_NUMBER] = [...expected[PRE_CREDIT_PERIOD]];
+      expected[END_BUYER] = [...expected[UK_GOODS_OR_SERVICES], HAS_MINIMUM_UK_GOODS_OR_SERVICES];
 
-      expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[COMPANIES_HOUSE_NUMBER], FIELD_IDS.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER];
+      expected[CHECK_YOUR_ANSWERS] = [...expected[END_BUYER], HAS_END_BUYER];
+
+      expected[ELIGIBLE_TO_APPLY_ONLINE] = [...expected[CHECK_YOUR_ANSWERS]];
 
       expect(result).toEqual(expected);
     });
@@ -80,18 +98,18 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${BUYER_COUNTRY}`, () => {
+    describe(`when req.originalUrl is ${NEED_TO_START_AGAIN}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = BUYER_COUNTRY;
+        req.originalUrl = NEED_TO_START_AGAIN;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${NEED_TO_START_AGAIN}`, () => {
+    describe(`when req.originalUrl is ${LONG_TERM_COVER}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = NEED_TO_START_AGAIN;
+        req.originalUrl = LONG_TERM_COVER;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
@@ -116,18 +134,45 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${SPEAK_TO_UKEF_EFM}`, () => {
+    describe(`when req.originalUrl is ${CHECK_IF_ELIGIBLE}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = SPEAK_TO_UKEF_EFM;
+        req.originalUrl = CHECK_IF_ELIGIBLE;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
       });
     });
 
-    describe(`when req.originalUrl is ${CHECK_IF_ELIGIBLE}`, () => {
+    describe(`when req.originalUrl is ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = CHECK_IF_ELIGIBLE;
+        req.originalUrl = NO_COMPANIES_HOUSE_NUMBER;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${COMPANIES_HOUSE_UNAVAILABLE}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = COMPANIES_HOUSE_UNAVAILABLE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${COMPANY_NOT_ACTIVE}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = COMPANY_NOT_ACTIVE;
+        requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
+
+        expect(nextSpy).toHaveBeenCalled();
+      });
+    });
+
+    describe(`when req.originalUrl is ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {
+      it('should call req.next', () => {
+        req.originalUrl = CANNOT_APPLY_MULTIPLE_RISKS;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
@@ -143,9 +188,9 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    describe(`when req.originalUrl is ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
+    describe(`when req.originalUrl is ${HAVE_AN_ACCOUNT}`, () => {
       it('should call req.next', () => {
-        req.originalUrl = ACCOUNT_TO_APPLY_ONLINE;
+        req.originalUrl = HAVE_AN_ACCOUNT;
         requiredInsuranceEligibilityDataProvided(req, res, nextSpy);
 
         expect(nextSpy).toHaveBeenCalled();
@@ -181,7 +226,7 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
     describe('when there is submittedData in session and the required data for the provided url/route is not in the session', () => {
       it(`should redirect to ${NEED_TO_START_AGAIN}`, () => {
-        req.originalUrl = PRE_CREDIT_PERIOD;
+        req.originalUrl = ELIGIBLE_TO_APPLY_ONLINE;
         req.session = {
           submittedData: {
             insuranceEligibility: {
@@ -200,7 +245,7 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
 
     describe('when there is no submittedData in session', () => {
       it(`should redirect to ${NEED_TO_START_AGAIN}`, () => {
-        req.originalUrl = PRE_CREDIT_PERIOD;
+        req.originalUrl = ELIGIBLE_TO_APPLY_ONLINE;
         req.session = {
           submittedData: {
             insuranceEligibility: {},
@@ -215,8 +260,8 @@ describe('middleware/required-data-provided/insurance/eligibility', () => {
       });
     });
 
-    it('should call req.next', () => {
-      req.originalUrl = PRE_CREDIT_PERIOD;
+    it('should call req.next when all required data is provided', () => {
+      req.originalUrl = ELIGIBLE_TO_APPLY_ONLINE;
       req.session = mockSession;
 
       requiredInsuranceEligibilityDataProvided(req, res, nextSpy);

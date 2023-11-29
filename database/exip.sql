@@ -490,7 +490,7 @@ LOCK TABLES `CoverPeriod` WRITE;
 
 INSERT INTO `CoverPeriod` (`id`, `valueId`, `value`)
 VALUES
-	('cloiparaj000doq73pmr6blua',1,'Less than 2 years'),
+	('cloiparaj000doq73pmr6blua',1,'1 to 24 months'),
 	('cloiparaj000doq73pmr6blub',2,'More than 2 years');
 
 /*!40000 ALTER TABLE `CoverPeriod` ENABLE KEYS */;
@@ -633,13 +633,14 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `buyerCountry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `coverPeriod` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
+  `hasEndBuyer` tinyint(1) NOT NULL DEFAULT '0',
   `hasMinimumUkGoodsOrServices` tinyint(1) NOT NULL DEFAULT '0',
-  `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
   `otherPartiesInvolved` tinyint(1) NOT NULL DEFAULT '0',
   `paidByLetterOfCredit` tinyint(1) NOT NULL DEFAULT '0',
   `totalContractValue` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `coverPeriod` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `hasCompaniesHouseNumber` tinyint(1) NOT NULL DEFAULT '0',
+  `validExporterLocation` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `Eligibility_application_idx` (`application`),
   KEY `Eligibility_buyerCountry_idx` (`buyerCountry`),
@@ -699,14 +700,14 @@ CREATE TABLE `Broker` (
 DROP TABLE IF EXISTS `Business`;
 
 CREATE TABLE `Business` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `goodsOrServicesSupplied` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `goodsOrServicesSupplied` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `totalYearsExporting` int DEFAULT NULL,
   `totalEmployeesUK` int DEFAULT NULL,
-  `totalEmployeesInternational` int DEFAULT NULL,
   `estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
+  `hasCreditControlProcess` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Business_application_idx` (`application`),
   CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -727,6 +728,7 @@ CREATE TABLE IF NOT EXISTS `Company` (
   `dateOfCreation` datetime(3) DEFAULT NULL,
   `hasDifferentTradingAddress` tinyint(1) DEFAULT NULL,
   `hasDifferentTradingName` tinyint(1) DEFAULT NULL,
+  `differentTradingName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

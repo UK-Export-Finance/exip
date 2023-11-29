@@ -28,8 +28,8 @@ const queryStrings = {
     }
   `,
   createAnApplication: () => gql`
-    mutation createAnApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!) {
-      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers) {
+    mutation createAnApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!, $company: CompanyInput!) {
+      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company) {
         referenceNumber
       }
     }
@@ -64,13 +64,6 @@ const queryStrings = {
         verificationHash
         reactivationHash
         passwordResetHash
-      }
-    }
-  `,
-  updateCompanyAndCompanyAddress: () => gql`
-    mutation updateCompanyAndCompanyAddress($companyId: ID!, $companyAddressId: ID!, $data: CompanyAndCompanyAddressInput!) {
-      updateCompanyAndCompanyAddress(companyId: $companyId, companyAddressId: $companyAddressId, data: $data) {
-        id
       }
     }
   `,
@@ -227,14 +220,16 @@ const createBuyer = (countryId) =>
   * Create an application
   * @param {String} Account/application owner ID
   * @param {Object} Eligibility answers
+  * @param {Object} Company object (obtained from eligibility companies house call)
   * @returns {Object} Created application
   */
-const createAnApplication = (accountId, eligibilityAnswers) =>
+const createAnApplication = (accountId, eligibilityAnswers, company) =>
   apollo.query({
     query: queryStrings.createAnApplication(),
     variables: {
       accountId,
       eligibilityAnswers,
+      company,
     },
     context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnApplication);
@@ -298,34 +293,6 @@ const updateAccount = async (id, updateObj) => {
       },
       context: APOLLO_CONTEXT,
     }).then((response) => response.data.updateAccount);
-
-    return responseBody;
-  } catch (err) {
-    console.error(err);
-
-    throw new Error('Updating account', { err });
-  }
-};
-
-/**
- * updateCompanyAndCompanyAddress
- * Update an company and the companies address
- * @param {String} Company ID
- * @param {String} Company address ID
- * @param {String} Company address ID
- * @returns {Object} Updated company and company address
- */
-const updateCompanyAndCompanyAddress = async (companyId, companyAddressId, updateObj) => {
-  try {
-    const responseBody = await apollo.query({
-      query: queryStrings.updateCompanyAndCompanyAddress(),
-      variables: {
-        companyId,
-        companyAddressId,
-        data: updateObj,
-      },
-      context: APOLLO_CONTEXT,
-    }).then((response) => response.data.updateCompanyAndCompanyAddress);
 
     return responseBody;
   } catch (err) {
@@ -593,7 +560,6 @@ const api = {
   createApplications,
   getAccountByEmail,
   updateAccount,
-  updateCompanyAndCompanyAddress,
   deleteAnAccount,
   addAndGetOTP,
   getAccountPasswordResetToken,

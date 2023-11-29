@@ -138,12 +138,6 @@ jobs:
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            # Database
-            az network vnet subnet create \
-            --name snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --address-prefixes ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
-
             # WebApp
             az network vnet subnet create \
             --name snet-webapp-${{ env.PRODUCT }}-${{ vars.VERSION }} \
@@ -211,53 +205,6 @@ jobs:
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --name vnet-peer-apim-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --query peeringState)"
-
-      - name: VNET Peer - UKS 🔀
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            # UKS VNET peering
-
-            # Local VNET peer
-            az network vnet peering create \
-            --name vnet-peer-uks-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --remote-vnet $(az network vnet show --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_UKS }} --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_UKS }} --name ${{ secrets.REMOTE_VNET_NAME_UKS }} --query 'id' -o tsv) \
-            --allow-vnet-access 1
-
-            # Remote VNET peer
-            az network vnet peering create \
-            --name vnet-peer-uks-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --vnet-name  ${{ secrets.REMOTE_VNET_NAME_UKS }} \
-            --remote-vnet $(az network vnet show --name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} --query 'id' -o tsv) \
-            --allow-vnet-access 1 \
-            --subscription ${{ secrets.REMOTE_VNET_SUBSCRIPTION_UKS }} \
-            --resource-group ${{ secrets.REMOTE_VNET_RESOURCE_GROUP_UKS }}
-
-            # Fetch peering state
-            echo "Peering state: $(az network vnet peering show \
-            --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --name vnet-peer-uks-${{ env.TARGET }}-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --query peeringState)"
-
-      - name: Database 💾
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az mysql flexible-server create \
-            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --admin-user ${{ secrets.MYSQL_USER }} \
-            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
-            --database-name ${{ env.PRODUCT }} \
-            --sku-name Standard_B1ms \
-            --tier Burstable \
-            --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
-            --address-prefixes ${{ vars.VNET_ADDRESS_PREFIX }} \
-            --subnet-prefix ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
-            --backup-retention 30 \
-            --yes \
-            --tags ${{ env.TAGS }}
 
       - name: Web app - UI 🌐
         uses: Azure/cli@v1.0.8
@@ -589,7 +536,6 @@ jobs:
       - name: Variables ✨
         run: |
           echo "API_URL=$(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query defaultHostName -o tsv)" >> $GITHUB_ENV
-          echo "MYSQL_URL=$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
         uses: Azure/cli@v1.0.8
@@ -623,7 +569,9 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='mysql://${{ secrets.MYSQL_USER }}:${{ secrets.MYSQL_PASSWORD }}@${{ env.MYSQL_URL }}:${{ vars.DATABASE_PORT }}/${{ env.PRODUCT }}' \
+            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
+            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
+            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
@@ -635,26 +583,6 @@ jobs:
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
-
-      - name: Extension ➕
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-
-      - name: Repository 🗃️
-        uses: actions/checkout@v4
-
-      - name: Database 💾
-        uses: Azure/cli@v1.0.8
-        with:
-          inlineScript: |
-            az webapp connection create mysql-flexible \
-            --source-id $(az webapp show --name app-${{ env.PRODUCT }}-api-${{ env.TARGET }}-${{ vars.VERSION }} --query id -o tsv) \
-            --target-id $(az mysql flexible-server list --query [].id -o tsv)/databases/${{ env.PRODUCT }} \
-            --connection webapp_api_mysqlflexible_${{ env.PRODUCT }}_${{ env.TARGET }}_${{ vars.VERSION }} \
-            --secret name=${{ secrets.MYSQL_USER }} secret=${{ secrets.MYSQL_PASSWORD }} \
-            --client-type nodejs
 
   # 5. Logs and dignostic settings
   log:
@@ -695,18 +623,21 @@ jobs:
             --logs "[{categoryGroup:allLogs,enabled:true}]" \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-      - name: Database 💾
+      - name: WebApp 🌐
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
-            az monitor diagnostic-settings create \
-            --name sqldb-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
-            --resource $(az mysql flexible-server list --query [].id -o tsv) \
-            --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
-            --logs "[{categoryGroup:allLogs,enabled:true}]" \
-            --metrics "[{category:allMetrics,enabled:true}]"
+            # UI
+            az webapp log config \
+            --name app-${{ env.PRODUCT }}-ui-${{ env.TARGET }}-${{ vars.VERSION }} \
+            --detailed-error-messages true \
+            --failed-request-tracing true \
+            --level ${{ vars.WEBAPP_LOG_LEVEL }} \
+            --application-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --docker-container-logging ${{ vars.WEBAPP_LOG_DESTINATION }} \
+            --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
-      - name: WebApp 🌐
+      - name: Log 📄
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
@@ -759,7 +690,7 @@ jobs:
             --workspace $(az monitor log-analytics workspace list --query [].id -o tsv) \
             --metrics "[{category:allMetrics,enabled:true}]"
 
-  # 6. Health check alerts
+  # 5. Health check alerts
   alert:
     name: Alert 📢
     needs: [base, security, webapp]

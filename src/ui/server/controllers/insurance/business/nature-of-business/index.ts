@@ -6,20 +6,20 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save/nature-of-business';
+import mapAndSave from '../map-and-save/business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
+const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
 const { NATURE_OF_YOUR_BUSINESS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { NATURE_OF_YOUR_BUSINESS: NATURE_OF_YOUR_BUSINESS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
 export const TEMPLATE = NATURE_OF_YOUR_BUSINESS_TEMPLATE;
 
-export const FIELD_IDS = [GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL];
+export const FIELD_IDS = [GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK];
 
 const {
   INSURANCE_ROOT,
@@ -48,10 +48,6 @@ const pageVariables = (referenceNumber: number) => ({
     EMPLOYEES_UK: {
       ID: EMPLOYEES_UK,
       ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_UK],
-    },
-    EMPLOYEES_INTERNATIONAL: {
-      ID: EMPLOYEES_INTERNATIONAL,
-      ...NATURE_OF_YOUR_BUSINESS_FIELDS[EMPLOYEES_INTERNATIONAL],
     },
   },
   POST_ROUTES: {
@@ -128,8 +124,11 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call to db
-    const saveResponse = await mapAndSave.natureOfBusiness(payload, application);
+    /**
+     * No validation errors.
+     * call mapAndSave to call the API.
+     */
+    const saveResponse = await mapAndSave.business(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

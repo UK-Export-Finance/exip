@@ -1,26 +1,12 @@
-import requiredFields, { getBrokerTasks } from '.';
+import requiredFields, { getBrokerTasks, getYourCompanyTasks } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 import { mockApplication } from '../../../test-mocks';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE, YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
+  EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
 } = FIELD_IDS;
 
-const {
-  SEARCH,
-  COMPANY_ADDRESS,
-  REGISTED_OFFICE_ADDRESS,
-  COMPANY_SIC,
-  COMPANY_INCORPORATED,
-  FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE_COMPANY_HOUSE,
-  INDUSTRY_SECTOR_NAMES,
-  SIC_CODE,
-  OLD_SIC_CODES,
-  INDUSTRY_SECTOR_NAME,
-  ...COMPANIES_HOUSE_FIELDS
-} = COMPANY_HOUSE;
-
-const { ADDRESS, PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = YOUR_COMPANY;
+const { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
 const { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL } = BROKER;
 
@@ -57,13 +43,48 @@ describe('server/helpers/required-fields/business', () => {
     });
   });
 
+  describe('getYourCompanyTasks', () => {
+    describe('when hasDifferentTradingName is true', () => {
+      it('should return relevant fields in array', () => {
+        const hasDifferentTradingName = true;
+
+        const result = getYourCompanyTasks(hasDifferentTradingName);
+
+        const expected = [HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when hasDifferentTradingName is undefined', () => {
+      it('should return an empty array', () => {
+        const result = getYourCompanyTasks();
+
+        const expected = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when hasDifferentTradingName is false', () => {
+      it('should return an empty array', () => {
+        const hasDifferentTradingName = false;
+
+        const result = getYourCompanyTasks(hasDifferentTradingName);
+
+        const expected = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields(mockApplication.broker.isUsingBroker);
+      const result = requiredFields(mockApplication.broker.isUsingBroker, mockApplication.company.hasDifferentTradingName);
 
       const expected = Object.values({
-        ...YOUR_COMPANY_FIELDS,
-        ...COMPANIES_HOUSE_FIELDS,
+        ...getYourCompanyTasks(mockApplication.company.hasDifferentTradingName),
         ...NATURE_OF_YOUR_BUSINESS,
         ...TURNOVER_FIELDS,
         USING_BROKER,

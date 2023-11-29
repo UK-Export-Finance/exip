@@ -13,6 +13,7 @@ const DEFAULT_RESOLVERS = [
   'updateBroker',
   'updateBusiness',
   'updateBuyer',
+  'updateCompany',
   'updateDeclaration',
   'updatePolicy',
   'updatePolicyContact',
@@ -57,7 +58,6 @@ const CUSTOM_RESOLVERS = [
   'deleteApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
   'submitApplication',
-  'updateCompanyAndCompanyAddress',
 
   // feedback
   'createFeedbackAndSendEmail',

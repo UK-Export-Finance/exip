@@ -1,20 +1,8 @@
-import { submitButton } from '../../../../../../pages/shared';
+import { body, submitButton } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-  completeCompaniesHouseNumberForm,
-} from '../../../../../../commands/insurance/eligibility/forms';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE;
 
@@ -22,10 +10,12 @@ const {
   START,
   ELIGIBILITY: {
     ELIGIBLE_TO_APPLY_ONLINE,
-    COMPANIES_HOUSE_NUMBER,
-    ACCOUNT_TO_APPLY_ONLINE,
+    CHECK_YOUR_ANSWERS,
+    HAVE_AN_ACCOUNT,
   },
 } = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - You are eligible to apply online page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction', () => {
   let url;
@@ -33,19 +23,21 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
   before(() => {
     cy.navigateToUrl(START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-    completeCompaniesHouseNumberForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
 
-    url = `${Cypress.config('baseUrl')}${ELIGIBLE_TO_APPLY_ONLINE}`;
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
+    completeAndSubmitBuyerCountryForm();
+    cy.completeAndSubmitTotalValueInsuredForm({});
+    cy.completeCoverPeriodForm({});
+    cy.completeUkGoodsAndServicesForm();
+    cy.completeEndBuyerForm();
+    cy.submitCheckYourAnswers();
+
+    url = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;
 
     cy.assertUrl(url);
   });
@@ -58,7 +50,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ELIGIBLE_TO_APPLY_ONLINE,
-      backLink: COMPANIES_HOUSE_NUMBER,
+      backLink: CHECK_YOUR_ANSWERS,
       submitButtonCopy: CONTENT_STRINGS.SUBMIT_BUTTON,
       assertAuthenticatedHeader: false,
     });
@@ -76,16 +68,14 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     });
 
     it('renders body text', () => {
-      insurance.eligibility.eligibleToApplyOnlinePage.body().should('exist');
-
-      cy.checkText(insurance.eligibility.eligibleToApplyOnlinePage.body(), CONTENT_STRINGS.BODY);
+      cy.checkText(body(), CONTENT_STRINGS.BODY);
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${ACCOUNT_TO_APPLY_ONLINE}`, () => {
+      it(`should redirect to ${HAVE_AN_ACCOUNT}`, () => {
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${ACCOUNT_TO_APPLY_ONLINE}`;
+        const expectedUrl = `${baseUrl}${HAVE_AN_ACCOUNT}`;
 
         cy.assertUrl(expectedUrl);
       });

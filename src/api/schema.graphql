@@ -968,9 +968,9 @@ type Business {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
-  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  hasCreditControlProcess: Boolean
 }
 
 input BusinessWhereUniqueInput {
@@ -986,7 +986,6 @@ input BusinessWhereInput {
   goodsOrServicesSupplied: StringFilter
   totalYearsExporting: IntNullableFilter
   totalEmployeesUK: IntNullableFilter
-  totalEmployeesInternational: IntNullableFilter
   estimatedAnnualTurnover: IntNullableFilter
   exportsTurnoverPercentage: IntNullableFilter
 }
@@ -996,7 +995,6 @@ input BusinessOrderByInput {
   goodsOrServicesSupplied: OrderDirection
   totalYearsExporting: OrderDirection
   totalEmployeesUK: OrderDirection
-  totalEmployeesInternational: OrderDirection
   estimatedAnnualTurnover: OrderDirection
   exportsTurnoverPercentage: OrderDirection
 }
@@ -1006,9 +1004,9 @@ input BusinessUpdateInput {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
-  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  hasCreditControlProcess: Boolean
 }
 
 input BusinessUpdateArgs {
@@ -1021,9 +1019,9 @@ input BusinessCreateInput {
   goodsOrServicesSupplied: String
   totalYearsExporting: Int
   totalEmployeesUK: Int
-  totalEmployeesInternational: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  hasCreditControlProcess: Boolean
 }
 
 type Broker {
@@ -1182,6 +1180,7 @@ type Company {
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  differentTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1203,6 +1202,7 @@ input CompanyWhereInput {
   companyName: StringFilter
   companyNumber: StringFilter
   dateOfCreation: DateTimeNullableFilter
+  differentTradingName: StringFilter
   companyWebsite: StringFilter
   phoneNumber: StringFilter
   financialYearEndDate: DateTimeNullableFilter
@@ -1219,6 +1219,7 @@ input CompanyOrderByInput {
   companyName: OrderDirection
   companyNumber: OrderDirection
   dateOfCreation: OrderDirection
+  differentTradingName: OrderDirection
   companyWebsite: OrderDirection
   phoneNumber: OrderDirection
   financialYearEndDate: OrderDirection
@@ -1232,6 +1233,7 @@ input CompanyUpdateInput {
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  differentTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1264,6 +1266,7 @@ input CompanyCreateInput {
   companyNumber: String
   dateOfCreation: DateTime
   hasDifferentTradingAddress: Boolean
+  differentTradingName: String
   hasDifferentTradingName: Boolean
   companyWebsite: String
   phoneNumber: String
@@ -1466,13 +1469,14 @@ type Eligibility {
   id: ID!
   application: Application
   buyerCountry: Country
+  coverPeriod: CoverPeriod
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValue
-  coverPeriod: CoverPeriod
+  validExporterLocation: Boolean
 }
 
 input EligibilityWhereUniqueInput {
@@ -1486,45 +1490,48 @@ input EligibilityWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   buyerCountry: CountryWhereInput
+  coverPeriod: CoverPeriodWhereInput
+  hasEndBuyer: BooleanFilter
   hasMinimumUkGoodsOrServices: BooleanFilter
-  validExporterLocation: BooleanFilter
   hasCompaniesHouseNumber: BooleanFilter
   otherPartiesInvolved: BooleanFilter
   paidByLetterOfCredit: BooleanFilter
   totalContractValue: TotalContractValueWhereInput
-  coverPeriod: CoverPeriodWhereInput
+  validExporterLocation: BooleanFilter
 }
 
 input EligibilityOrderByInput {
   id: OrderDirection
+  hasEndBuyer: OrderDirection
   hasMinimumUkGoodsOrServices: OrderDirection
-  validExporterLocation: OrderDirection
   hasCompaniesHouseNumber: OrderDirection
   otherPartiesInvolved: OrderDirection
   paidByLetterOfCredit: OrderDirection
+  validExporterLocation: OrderDirection
 }
 
 input EligibilityUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   buyerCountry: CountryRelateToOneForUpdateInput
+  coverPeriod: CoverPeriodRelateToOneForUpdateInput
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForUpdateInput
-  coverPeriod: CoverPeriodRelateToOneForUpdateInput
-}
-
-input TotalContractValueRelateToOneForUpdateInput {
-  create: TotalContractValueCreateInput
-  connect: TotalContractValueWhereUniqueInput
-  disconnect: Boolean
+  validExporterLocation: Boolean
 }
 
 input CoverPeriodRelateToOneForUpdateInput {
   create: CoverPeriodCreateInput
   connect: CoverPeriodWhereUniqueInput
+  disconnect: Boolean
+}
+
+input TotalContractValueRelateToOneForUpdateInput {
+  create: TotalContractValueCreateInput
+  connect: TotalContractValueWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1536,23 +1543,24 @@ input EligibilityUpdateArgs {
 input EligibilityCreateInput {
   application: ApplicationRelateToOneForCreateInput
   buyerCountry: CountryRelateToOneForCreateInput
+  coverPeriod: CoverPeriodRelateToOneForCreateInput
+  hasEndBuyer: Boolean
   hasMinimumUkGoodsOrServices: Boolean
-  validExporterLocation: Boolean
   hasCompaniesHouseNumber: Boolean
   otherPartiesInvolved: Boolean
   paidByLetterOfCredit: Boolean
   totalContractValue: TotalContractValueRelateToOneForCreateInput
-  coverPeriod: CoverPeriodRelateToOneForCreateInput
-}
-
-input TotalContractValueRelateToOneForCreateInput {
-  create: TotalContractValueCreateInput
-  connect: TotalContractValueWhereUniqueInput
+  validExporterLocation: Boolean
 }
 
 input CoverPeriodRelateToOneForCreateInput {
   create: CoverPeriodCreateInput
   connect: CoverPeriodWhereUniqueInput
+}
+
+input TotalContractValueRelateToOneForCreateInput {
+  create: TotalContractValueCreateInput
+  connect: TotalContractValueWhereUniqueInput
 }
 
 type SectionReview {
@@ -2154,7 +2162,7 @@ type Mutation {
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
   """ create an application """
-  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!): CreateAnApplicationResponse
+  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!): CreateAnApplicationResponse
 
   """ delete an account """
   deleteAnAccount(email: String!): SuccessResponse
@@ -2188,9 +2196,6 @@ type Mutation {
 
   """ reset account password """
   accountPasswordReset(token: String!, password: String!, hasBeenUsedBefore: Boolean): AccountPasswordResetResponse
-
-  """ update company and company address """
-  updateCompanyAndCompanyAddress(companyId: ID!, companyAddressId: ID!, data: CompanyAndCompanyAddressInput!): CompanyAndCompanyAddress
 
   """ delete an application by reference number """
   deleteApplicationByReferenceNumber(referenceNumber: Int!): SuccessResponse
@@ -2310,11 +2315,14 @@ type Query {
   """ verify an account's password reset token """
   verifyAccountPasswordResetToken(token: String!): AccountPasswordResetTokenResponse
 
+  """ get CIS countries from APIM """
+  getApimCisCountries: [MappedCisCountry]
+
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
-  """ get CIS countries from APIM """
-  getApimCisCountries: [MappedCisCountry]
+  """ get Ordnance Survey address """
+  getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
 }
 
 union AuthenticatedItem = User
@@ -2450,17 +2458,6 @@ type CreateAnAccountResponse {
   verificationHash: String
 }
 
-type CompaniesHouseExporterCompanyAddress {
-  addressLine1: String
-  addressLine2: String
-  careOf: String
-  locality: String
-  region: String
-  postalCode: String
-  country: String
-  premises: String
-}
-
 type CompaniesHouseResponse {
   companyName: String
   registeredOfficeAddress: CompanyAddress
@@ -2471,6 +2468,26 @@ type CompaniesHouseResponse {
   financialYearEndDate: DateTime
   success: Boolean
   apiError: Boolean
+  isActive: Boolean
+  notFound: Boolean
+}
+
+type OrdnanceSurveyAddress {
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  country: String
+  county: String
+  town: String
+}
+
+input OrdnanceAddressInput {
+  addressLine1: String
+  addressLine2: String
+  postalCode: String
+  country: String
+  county: String
+  town: String
 }
 
 input OldSicCodes {
@@ -2488,31 +2505,23 @@ input CompanyAddressInput {
   premises: String
 }
 
-type CompanyAndCompanyAddress {
-  id: ID
-  registeredOfficeAddress: CompanyAddress
+input CompanyInput {
   companyName: String
   companyNumber: String
-  dateOfCreation: DateTime
-  hasDifferentTradingAddress: Boolean
-  hasDifferentTradingName: Boolean
-  companyWebsite: String
-  phoneNumber: String
-}
-
-input CompanyAndCompanyAddressInput {
-  address: CompanyAddressInput
+  dateOfCreation: String
   sicCodes: [String]
   industrySectorNames: [String]
-  companyName: String
-  companyNumber: String
-  dateOfCreation: DateTime
-  hasDifferentTradingAddress: Boolean
-  hasDifferentTradingName: Boolean
-  companyWebsite: String
-  phoneNumber: String
   financialYearEndDate: DateTime
-  oldSicCodes: [OldSicCodes]
+  registeredOfficeAddress: CompanyAddressInput
+  isActive: Boolean
+}
+
+type OrdnanceSurveyResponse {
+  success: Boolean
+  addresses: [OrdnanceSurveyAddress]
+  apiError: Boolean
+  noAddressesFound: Boolean
+  invalidPostcode: Boolean
 }
 
 type EmailResponse {
@@ -2583,14 +2592,12 @@ type AccountSendEmailReactivateAccountLinkResponse {
 
 input ApplicationEligibility {
   buyerCountryIsoCode: String!
-  hasCompaniesHouseNumber: Boolean!
-  otherPartiesInvolved: Boolean!
-  paidByLetterOfCredit: Boolean!
-  needPreCreditPeriodCover: Boolean!
-  totalContractValueId: Int!
   coverPeriodId: Int!
-  validExporterLocation: Boolean!
+  hasCompaniesHouseNumber: Boolean!
+  hasEndBuyer: Boolean!
   hasMinimumUkGoodsOrServices: Boolean!
+  totalContractValueId: Int!
+  validExporterLocation: Boolean!
 }
 
 type CreateAnApplicationResponse {
@@ -2606,9 +2613,11 @@ type MappedCisCountry {
   riskCategory: String
   nbiIssueAvailable: Boolean
   canGetAQuoteOnline: Boolean
+  canGetAQuoteOffline: Boolean
   canGetAQuoteByEmail: Boolean
   cannotGetAQuote: Boolean
-  canApplyOnline: Boolean
-  canApplyOffline: Boolean
   cannotApply: Boolean
+  canApplyForInsuranceOnline: Boolean
+  canApplyForInsuranceOffline: Boolean
+  noInsuranceSupport: Boolean
 }

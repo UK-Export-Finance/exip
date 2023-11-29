@@ -5,7 +5,7 @@ import { field, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
 import formatCurrency from '../../../../../../../helpers/format-currency';
-import currencies from '../../../../../../../fixtures/currencies';
+import CURRENCIES from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
 
 const {
@@ -33,6 +33,8 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const NEW_CURRENCY_INPUT = CURRENCIES[3].isoCode;
+
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
@@ -55,9 +57,6 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
       cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
 
       task.link().click();
-
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
@@ -286,7 +285,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          fieldVariables.newValueInput = currencies[3].isoCode;
+          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
@@ -297,7 +296,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = currencies[3].isoCode;
+          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
@@ -306,7 +305,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it('should render the new answer', () => {
-          const { 3: expected } = currencies;
+          const { 3: expected } = CURRENCIES;
           const { name } = expected;
 
           fieldVariables.newValue = name;

@@ -5,7 +5,7 @@ import { field, status, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
 import formatCurrency from '../../../../../../../helpers/format-currency';
-import currencies from '../../../../../../../fixtures/currencies';
+import CURRENCIES from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
 
 const {
@@ -33,6 +33,8 @@ const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const NEW_CURRENCY_INPUT = CURRENCIES[3].isoCode;
+
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
@@ -55,9 +57,6 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       task.link().click();
-
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
@@ -258,7 +257,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
           cy.navigateToUrl(url);
           fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          fieldVariables.newValueInput = currencies[3].isoCode;
+          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
@@ -269,7 +268,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = currencies[3].isoCode;
+          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
         });
 
@@ -278,7 +277,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it('should render the new answer and retain a `completed` status tag', () => {
-          const { 3: expected } = currencies;
+          const { 3: expected } = CURRENCIES;
           const { name } = expected;
 
           fieldVariables.newValue = name;

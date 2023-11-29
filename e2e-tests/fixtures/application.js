@@ -1,14 +1,14 @@
 import {
   FIELD_IDS,
   FIELD_VALUES,
-  COMPANIES_HOUSE_NUMBER,
   COVER_PERIOD as COVER_PERIOD_CONSTANTS,
   TOTAL_CONTRACT_VALUE as TOTAL_CONTRACT_VALUE_CONSTANTS,
   WEBSITE_EXAMPLES,
 } from '../constants';
+import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
 import { GBP_CURRENCY_CODE } from './currencies';
-import mockCountries from './countries';
-import sicCodes from './sic-codes';
+import { COUNTRY_APPLICATION_SUPPORT } from './countries';
+import mockCompanies from './companies';
 
 const {
   INSURANCE: {
@@ -19,12 +19,10 @@ const {
     },
     ELIGIBILITY: {
       COVER_PERIOD_ID,
-      TOTAL_CONTRACT_VALUE_ID,
-      OTHER_PARTIES_INVOLVED,
-      LETTER_OF_CREDIT,
-      PRE_CREDIT_PERIOD,
-      COMPANIES_HOUSE_NUMBER: ELIGIBILITY_COMPANIES_HOUSE_NUMBER,
+      HAS_COMPANIES_HOUSE_NUMBER,
+      HAS_END_BUYER,
       HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+      TOTAL_CONTRACT_VALUE_ID,
       VALID_EXPORTER_LOCATION,
     },
     POLICY: {
@@ -39,28 +37,16 @@ const {
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
     },
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        COMPANY_SIC,
-        INDUSTRY_SECTOR_NAME,
-        INDUSTRY_SECTOR_NAMES,
-        COMPANY_NUMBER,
-        COMPANY_NAME,
-        COMPANY_INCORPORATED,
-      },
-      YOUR_COMPANY: {
-        ADDRESS: YOUR_COMPANY_ADDRESS,
-      },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
         YEARS_EXPORTING,
         EMPLOYEES_UK,
-        EMPLOYEES_INTERNATIONAL,
       },
       TURNOVER: {
-        FINANCIAL_YEAR_END_DATE,
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      CREDIT_CONTROL,
       BROKER: {
         USING_BROKER,
         NAME,
@@ -70,6 +56,9 @@ const {
         COUNTY,
         POSTCODE,
         EMAIL,
+      },
+      YOUR_COMPANY: {
+        DIFFERENT_TRADING_NAME,
       },
     },
     YOUR_BUYER: {
@@ -109,15 +98,17 @@ export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 
 
 const application = {
   ELIGIBILITY: {
-    buyerCountryIsoCode: mockCountries[1].isoCode,
-    [VALID_EXPORTER_LOCATION]: true,
+    buyerCountryIsoCode: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
+    [COVER_PERIOD_ID]: COVER_PERIOD_CONSTANTS.LESS_THAN_2_YEARS.DB_ID,
+    [HAS_COMPANIES_HOUSE_NUMBER]: true,
+    [HAS_END_BUYER]: true,
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: true,
-    [COVER_PERIOD_ID]: TOTAL_CONTRACT_VALUE_CONSTANTS.LESS_THAN_500K.DB_ID,
-    [TOTAL_CONTRACT_VALUE_ID]: COVER_PERIOD_CONSTANTS.LESS_THAN_2_YEARS.DB_ID,
-    [OTHER_PARTIES_INVOLVED]: false,
-    [LETTER_OF_CREDIT]: false,
-    [PRE_CREDIT_PERIOD]: false,
-    [ELIGIBILITY_COMPANIES_HOUSE_NUMBER]: true,
+    [TOTAL_CONTRACT_VALUE_ID]: TOTAL_CONTRACT_VALUE_CONSTANTS.LESS_THAN_250K.DB_ID,
+    [VALID_EXPORTER_LOCATION]: true,
+  },
+  COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
+  YOUR_COMPANY: {
+    [DIFFERENT_TRADING_NAME]: 'test',
   },
   POLICY: {
     [REQUESTED_START_DATE]: {
@@ -139,33 +130,15 @@ const application = {
   },
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
-    [FINAL_DESTINATION]: mockCountries[1].isoCode,
-  },
-  EXPORTER_COMPANY: {
-    [COMPANY_NUMBER]: COMPANIES_HOUSE_NUMBER,
-    [COMPANY_NAME]: 'DHG PROPERTY FINANCE LIMITED',
-    [COMPANY_INCORPORATED]: '2014-04-10T00:00:00.000Z',
-    [YOUR_COMPANY_ADDRESS]: {
-      addressLine1: 'Unit 3 Lewis Court',
-      addressLine2: 'Portmanmoor Road',
-      careOf: '',
-      locality: 'Cardiff',
-      region: 'South Glamorgan',
-      postalCode: 'CF24 5HQ',
-      country: '',
-      premises: '',
-    },
-    [COMPANY_SIC]: [sicCodes[0].code],
-    [INDUSTRY_SECTOR_NAMES]: [sicCodes[0][INDUSTRY_SECTOR_NAME]],
-    [FINANCIAL_YEAR_END_DATE]: '2023-07-31T00:00:00.000Z',
+    [FINAL_DESTINATION]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
   },
   EXPORTER_BUSINESS: {
     [GOODS_OR_SERVICES]: 'abc',
     [YEARS_EXPORTING]: '0',
-    [EMPLOYEES_INTERNATIONAL]: '2005',
     [EMPLOYEES_UK]: '2000',
     [ESTIMATED_ANNUAL_TURNOVER]: '65000',
     [PERCENTAGE_TURNOVER]: '0',
+    [CREDIT_CONTROL]: true,
   },
   EXPORTER_BROKER: {
     [USING_BROKER]: FIELD_VALUES.YES,
@@ -180,7 +153,7 @@ const application = {
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
     [ADDRESS]: 'Test address',
-    [COUNTRY]: mockCountries[1].name,
+    [COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
     [REGISTRATION_NUMBER]: '12345',
     [WEBSITE]: WEBSITE_EXAMPLES.VALID,
     [FIRST_NAME]: 'Bob',
@@ -199,8 +172,6 @@ const application = {
   },
 };
 
-export const country = {
-  ...mockCountries[1],
-};
+export const country = COUNTRY_APPLICATION_SUPPORT.ONLINE;
 
 export default application;

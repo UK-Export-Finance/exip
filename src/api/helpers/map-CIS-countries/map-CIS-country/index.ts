@@ -4,7 +4,8 @@ import mapNbiIssueAvailable from './map-NBI-issue-available';
 import canGetAQuoteOnline from './can-get-a-quote-online';
 import canGetAQuoteByEmail from './can-get-a-quote-by-email';
 import cannotGetAQuote from './cannot-get-a-quote';
-import canApplyOnline from './can-apply-online';
+import applyForInsuranceOnline from './can-apply-for-insurance-online';
+import applyForInsuranceOffline from './can-apply-for-insurance-offline';
 import canApplyOffline from './can-apply-offline';
 import { CisCountry, MappedCisCountry } from '../../../types';
 
@@ -24,14 +25,14 @@ export const mapCisCountry = (country: CisCountry): MappedCisCountry => {
   } as MappedCisCountry;
 
   mapped.canGetAQuoteOnline = canGetAQuoteOnline(mapped);
+  mapped.canGetAQuoteOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = canGetAQuoteByEmail(mapped);
-
   mapped.cannotGetAQuote = cannotGetAQuote(mapped);
 
-  mapped.canApplyOnline = canApplyOnline(country.shortTermCoverAvailabilityDesc);
-  mapped.canApplyOffline = canApplyOffline(country.shortTermCoverAvailabilityDesc);
+  mapped.canApplyForInsuranceOnline = applyForInsuranceOnline(country.shortTermCoverAvailabilityDesc, mapped.riskCategory);
+  mapped.canApplyForInsuranceOffline = applyForInsuranceOffline(country.shortTermCoverAvailabilityDesc);
 
-  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+  mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
 
   return mapped;
 };

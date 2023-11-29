@@ -1,12 +1,9 @@
+import { Address } from '../address';
 import { ConnectObj, SuccessResponse } from '../generic';
 
 export interface CompaniesHouseAccountReferenceDate {
   month: string;
   day: string;
-}
-
-export interface CompaniesHouseAccounts {
-  accounting_reference_date: CompaniesHouseAccountReferenceDate;
 }
 
 export interface CompaniesHouseAPIAddress {
@@ -20,17 +17,24 @@ export interface CompaniesHouseAPIAddress {
   country?: string;
 }
 
+export interface CompaniesHouseAccounts {
+  accounting_reference_date: CompaniesHouseAccountReferenceDate;
+}
+
 export interface CompaniesHouseResponse {
   company_name: string;
-  registered_office_address: CompaniesHouseAPIAddress;
   company_number: string;
+  company_status: string;
+  registered_office_address: CompaniesHouseAPIAddress;
   date_of_creation: string;
   sic_codes: Array<string>;
   accounts: CompaniesHouseAccounts;
+  notFound?: boolean;
 }
 
 export interface CompaniesHouseAPIResponse extends SuccessResponse {
   data?: CompaniesHouseResponse;
+  notFound?: boolean;
 }
 
 export interface GetCompaniesHouseInformationVariables {
@@ -43,15 +47,9 @@ export interface IndustrySector {
   ukefIndustryName: string;
 }
 
-export interface MappedCompaniesHouseAddress {
-  careOf?: string;
-  premises?: string;
-  addressLine1?: string;
-  addressLine2?: string;
+interface MappedCompaniesHouseAddress extends Address {
   locality?: string;
   region?: string;
-  postalCode?: string;
-  country?: string;
 }
 
 export interface MappedCompaniesHouseResponse {

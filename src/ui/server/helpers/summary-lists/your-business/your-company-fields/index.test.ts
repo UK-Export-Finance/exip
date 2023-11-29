@@ -1,30 +1,26 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
-import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
-import mapSicCodes from '../map-sic-codes';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationCompany } from '../../../../../types';
 
-const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
+const {
+  EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: { COMPANIES_HOUSE_NUMBER_CHANGE, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE, COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
+  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE },
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
   },
-} = ROUTES;
-
-const {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, WEBSITE, PHONE_NUMBER },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   TURNOVER: {
@@ -33,57 +29,20 @@ const {
 } = FIELDS;
 
 const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, financialYearEndDateValue: string, checkAndChange = false) => [
-  fieldGroupItem({
-    field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NUMBER),
-    data: mockAnswers,
-    href: generateChangeLink(COMPANIES_HOUSE_NUMBER_CHANGE, COMPANIES_HOUSE_NUMBER_CHECK_AND_CHANGE, '#heading', referenceNumber, checkAndChange),
-    renderChangeLink: true,
-  }),
-  fieldGroupItem({
-    field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_NAME),
-    data: mockAnswers,
-    renderChangeLink: false,
-  }),
   fieldGroupItem(
     {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_ADDRESS),
+      field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
       data: mockAnswers,
-      renderChangeLink: false,
-    },
-    generateMultipleFieldHtml(mockAnswers[COMPANY_ADDRESS]),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_INCORPORATED),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    formatDate(mockAnswers[COMPANY_INCORPORATED]),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, COMPANY_SIC),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    mapSicCodes(mockAnswers[COMPANY_SIC]),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, FINANCIAL_YEAR_END_DATE),
-      data: mockAnswers,
-      renderChangeLink: false,
-    },
-    formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT),
-  ),
-  fieldGroupItem(
-    {
-      field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_NAME),
-      data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_NAME}-label`, referenceNumber, checkAndChange),
+      href: generateChangeLink(
+        COMPANY_DETAILS_CHANGE,
+        COMPANY_DETAILS_CHECK_AND_CHANGE,
+        `#${HAS_DIFFERENT_TRADING_NAME}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
       renderChangeLink: true,
     },
-    mapYesNoField(mockAnswers[TRADING_NAME]),
+    mapYesNoField(mockAnswers[HAS_DIFFERENT_TRADING_NAME]),
   ),
   fieldGroupItem(
     {

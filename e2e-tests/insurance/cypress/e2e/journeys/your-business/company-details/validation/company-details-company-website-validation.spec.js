@@ -2,7 +2,7 @@ import { field, submitButton } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import {
-  ROUTES, FIELD_IDS, COMPANIES_HOUSE_NUMBER, WEBSITE_EXAMPLES,
+  ROUTES, FIELD_IDS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
 
 const {
@@ -14,10 +14,6 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const expectedErrors = 1;
 const errorIndex = 0;
@@ -36,11 +32,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS}`;
-      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });

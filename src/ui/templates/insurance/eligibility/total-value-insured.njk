@@ -1,0 +1,97 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukRadios({
+          idPrefix: FIELD_ID,
+          name: FIELD_ID,
+          fieldset: {
+            legend: {
+             html: "<legend class='govuk-fieldset__legend govuk-fieldset__legend--l'><h1 class='govuk-fieldset__heading' id='heading' data-cy='heading'>" + CONTENT_STRINGS.PAGE_TITLE + "</h1></legend>"
+            }
+          },
+          hint: {
+            text: CONTENT_STRINGS.HINT,
+            attributes: {
+              'data-cy': FIELD_ID + '-hint'
+            }
+          },
+          items: [
+
+            {
+              label: {
+                attributes: {
+                  id: FIELD_ID + '-' + FIELD.OPTIONS.BELOW.ID + '-label',
+                  'data-cy': FIELD_ID + '-' + FIELD.OPTIONS.BELOW.ID + '-label'
+                }
+              },
+              value: FIELD.OPTIONS.BELOW.VALUE ,
+              text: FIELD.OPTIONS.BELOW.TEXT,
+              checked: submittedValues[FIELD_ID] === FIELD.OPTIONS.BELOW.ID,
+              attributes: {
+                "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.BELOW.ID + "-input"
+              }
+            },
+            {
+              label: {
+                attributes: {
+                  id: FIELD.OPTIONS.ABOVE.ID  + '-label',
+                  'data-cy': FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + '-label'
+                }
+              },
+              value: FIELD.OPTIONS.ABOVE.VALUE,
+              text: FIELD.OPTIONS.ABOVE.TEXT,
+              checked: submittedValues[FIELD_ID] === FIELD.OPTIONS.ABOVE.ID,
+              attributes: {
+                "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.ABOVE.ID + "-input"
+              }
+            }
+          ],
+          errorMessage: validationErrors.errorList[FIELD_ID]and {
+            text: validationErrors.errorList[FIELD_ID].text,
+            attributes: {
+              "data-cy": FIELD_ID + '-' + FIELD.OPTIONS.BELOW.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {{ submitButton.render({
+      text: CONTENT_STRINGS.BUTTONS.CONTINUE
+    }) }}
+
+  </form>
+
+{% endblock %}

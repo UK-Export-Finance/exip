@@ -15,7 +15,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    TURNOVER,
+    TURNOVER_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -33,13 +33,12 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -89,7 +88,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
-      task.link().click();
+      cy.startYourBusinessSection();
+
       // submit companies house number form
       submitButton().click();
       // submit company details form
@@ -123,9 +123,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain all the fields on the page', () => {
-      task.link().click();
-      // submit companies house number form
-      submitButton().click();
+      cy.startYourBusinessSection();
+
       // submit company details form
       submitButton().click();
       // submit nature of business form

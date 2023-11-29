@@ -11,24 +11,15 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  COMPANY_HOUSE: {
-    COMPANY_NAME,
-    COMPANY_NUMBER,
-    COMPANY_ADDRESS,
-    COMPANY_INCORPORATED,
-    COMPANY_SIC,
-    FINANCIAL_YEAR_END_DATE,
-  },
   YOUR_COMPANY: {
     TRADING_ADDRESS,
-    TRADING_NAME,
+    HAS_DIFFERENT_TRADING_NAME,
     WEBSITE,
     PHONE_NUMBER,
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
-    EMPLOYEES_INTERNATIONAL,
     EMPLOYEES_UK,
   },
   TURNOVER: {
@@ -59,9 +50,6 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
       task.link().click();
 
-      // To get past "Eligibility" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 
@@ -81,32 +69,8 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render a ${COMPANY_NUMBER} summary list row`, () => {
-    checkSummaryList[COMPANY_NUMBER]();
-  });
-
-  it(`should render a ${COMPANY_NAME} summary list row`, () => {
-    checkSummaryList[COMPANY_NAME]();
-  });
-
-  it(`should render a ${COMPANY_ADDRESS} summary list row`, () => {
-    checkSummaryList[COMPANY_ADDRESS]();
-  });
-
-  it(`should render a ${COMPANY_INCORPORATED} summary list row`, () => {
-    checkSummaryList[COMPANY_INCORPORATED]();
-  });
-
-  it(`should render a ${COMPANY_SIC} summary list row`, () => {
-    checkSummaryList[COMPANY_SIC]();
-  });
-
-  it(`should render a ${FINANCIAL_YEAR_END_DATE} summary list row`, () => {
-    checkSummaryList[FINANCIAL_YEAR_END_DATE]();
-  });
-
-  it(`should render a ${TRADING_NAME} summary list row`, () => {
-    checkSummaryList[TRADING_NAME]();
+  it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
+    checkSummaryList[HAS_DIFFERENT_TRADING_NAME]();
   });
 
   it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
@@ -131,10 +95,6 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
     checkSummaryList[EMPLOYEES_UK]();
-  });
-
-  it(`should render a ${EMPLOYEES_INTERNATIONAL} summary list row`, () => {
-    checkSummaryList[EMPLOYEES_INTERNATIONAL]();
   });
 
   it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {

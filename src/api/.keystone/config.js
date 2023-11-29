@@ -112,6 +112,33 @@ var SHARED_ELIGIBILITY = {
 };
 var shared_eligibility_default = SHARED_ELIGIBILITY;
 
+// constants/field-ids/insurance/shared/index.ts
+var SHARED_FIELD_IDS = {
+  COMPANY: "company",
+  COMPANIES_HOUSE: {
+    COMPANY_NAME: "companyName",
+    COMPANY_ADDRESS: "registeredOfficeAddress",
+    COMPANY_NUMBER: "companyNumber",
+    COMPANY_INCORPORATED: "dateOfCreation",
+    SIC_CODE: "sicCode",
+    COMPANY_SIC: "sicCodes",
+    INDUSTRY_SECTOR_NAME: "industrySectorName",
+    INDUSTRY_SECTOR_NAMES: "industrySectorNames",
+    FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
+    REGISTED_OFFICE_ADDRESS: {
+      ADDRESS_LINE_1: "addressLine1",
+      ADDRESS_LINE_2: "addressLine2",
+      CARE_OF: "careOf",
+      LOCALITY: "locality",
+      REGION: "region",
+      POSTAL_CODE: "postalCode",
+      COUNTRY: "country",
+      PREMISES: "premises"
+    }
+  }
+};
+var shared_default2 = SHARED_FIELD_IDS;
+
 // constants/field-ids/insurance/account/index.ts
 var ACCOUNT = {
   ID: "id",
@@ -166,8 +193,7 @@ var policy_default = POLICY;
 
 // constants/field-ids/insurance/business/index.ts
 var EXPORTER_BUSINESS = {
-  COMPANY_HOUSE: {
-    SEARCH: "companiesHouseSearch",
+  COMPANIES_HOUSE: {
     INPUT: "companiesHouseNumber",
     COMPANY_NAME: "companyName",
     COMPANY_ADDRESS: "registeredOfficeAddress",
@@ -189,15 +215,15 @@ var EXPORTER_BUSINESS = {
   YOUR_COMPANY: {
     YOUR_BUSINESS: "yourBusiness",
     TRADING_ADDRESS: "hasDifferentTradingAddress",
-    TRADING_NAME: "hasDifferentTradingName",
+    HAS_DIFFERENT_TRADING_NAME: "hasDifferentTradingName",
     WEBSITE: "companyWebsite",
     PHONE_NUMBER: "phoneNumber"
   },
+  ALTERNATIVE_TRADING_ADDRESS: "alternativeTradingAddress",
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: "goodsOrServicesSupplied",
     YEARS_EXPORTING: "totalYearsExporting",
-    EMPLOYEES_UK: "totalEmployeesUK",
-    EMPLOYEES_INTERNATIONAL: "totalEmployeesInternational"
+    EMPLOYEES_UK: "totalEmployeesUK"
   },
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
@@ -264,18 +290,18 @@ var check_your_answers_default = CHECK_YOUR_ANSWERS;
 var INSURANCE_FIELD_IDS = {
   ELIGIBILITY: {
     ...shared_eligibility_default,
-    WANT_COVER_OVER_MAX_AMOUNT: "wantCoverOverMaxAmount",
+    ...shared_default2,
+    HAS_COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
+    COMPANIES_HOUSE_NUMBER: "companyNumber",
     TOTAL_CONTRACT_VALUE: "totalContractValue",
     TOTAL_CONTRACT_VALUE_ID: "totalContractValueId",
-    WANT_COVER_OVER_MAX_PERIOD: "wantCoverOverMaxPeriod",
     COVER_PERIOD: "coverPeriod",
     COVER_PERIOD_ID: "coverPeriodId",
-    OTHER_PARTIES_INVOLVED: "otherPartiesInvolved",
-    LETTER_OF_CREDIT: "paidByLetterOfCredit",
-    PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
-    COMPANIES_HOUSE_NUMBER: "hasCompaniesHouseNumber",
-    ACCOUNT_TO_APPLY_ONLINE: "alreadyHaveAnAccount"
+    HAS_END_BUYER: "hasEndBuyer",
+    HAVE_AN_ACCOUNT: "haveAnAccount",
+    HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility"
   },
+  ...shared_default2,
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
   POLICY: policy_default,
@@ -302,6 +328,7 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateCompany",
   "updateDeclaration",
   "updatePolicy",
   "updatePolicyContact",
@@ -338,7 +365,6 @@ var CUSTOM_RESOLVERS = [
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
   "submitApplication",
-  "updateCompanyAndCompanyAddress",
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries"
@@ -418,10 +444,12 @@ var application_default = APPLICATION;
 // constants/cover-period/index.ts
 var COVER_PERIOD = {
   LESS_THAN_2_YEARS: {
-    DB_ID: 1
+    DB_ID: 1,
+    VALUE: "1 to 24 months"
   },
   MORE_THAN_2_YEARS: {
-    DB_ID: 2
+    DB_ID: 2,
+    VALUE: "More than 2 years"
   }
 };
 
@@ -438,13 +466,19 @@ var EXTERNAL_API_DEFINITIONS = {
       NO: "No",
       ILC: "ILC Only",
       CILC: "CILC Only",
-      REFER: "Refer"
+      REFER: "Refer",
+      UNLISTED: "Unlisted"
     },
     NBI_ISSUE_AVAILABLE: {
       YES: "Y",
       NO: "N"
     },
     INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"]
+  },
+  COMPANIES_HOUSE: {
+    COMPANY_STATUS: {
+      ACTIVE: "active"
+    }
   }
 };
 var EXTERNAL_API_MAPPINGS = {
@@ -487,17 +521,22 @@ var FIELD_VALUES = {
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
   LESS_THAN_500K: {
-    DB_ID: 1
+    DB_ID: 1,
+    VALUE: "Less than 500k"
   },
   MORE_THAN_500K: {
-    DB_ID: 2
+    DB_ID: 2,
+    VALUE: "More than 500k"
   },
-  LESS_THAN_250k: {
-    DB_ID: 3
+  LESS_THAN_250K: {
+    DB_ID: 3,
+    VALUE: "Less than 250k"
   },
-  MORE_THAN_250k: {
-    DB_ID: 4
-  }
+  MORE_THAN_250K: {
+    DB_ID: 4,
+    VALUE: "More than 250k"
+  },
+  AMOUNT_250K: 25e4
 };
 
 // helpers/policy-type/index.ts
@@ -702,6 +741,7 @@ var DATE_FORMAT = {
   DEFAULT: "d MMMM yyyy",
   HOURS_AND_MINUTES: "HH:mm"
 };
+var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -877,23 +917,6 @@ var lists = {
                 id: exportContractId
               }
             };
-            const { id: companyId } = await context.db.Company.createOne({
-              data: {}
-            });
-            modifiedData.company = {
-              connect: {
-                id: companyId
-              }
-            };
-            await context.db.CompanyAddress.createOne({
-              data: {
-                company: {
-                  connect: {
-                    id: companyId
-                  }
-                }
-              }
-            });
             const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
@@ -954,7 +977,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, companyId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, sectionReviewId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -984,16 +1007,6 @@ var lists = {
                   }
                 },
                 finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
-              }
-            });
-            await context.db.Company.updateOne({
-              where: { id: companyId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
               }
             });
             await context.db.Business.updateOne({
@@ -1219,9 +1232,9 @@ var lists = {
       }),
       totalYearsExporting: (0, import_fields.integer)(),
       totalEmployeesUK: (0, import_fields.integer)(),
-      totalEmployeesInternational: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
-      exportsTurnoverPercentage: (0, import_fields.integer)()
+      exportsTurnoverPercentage: (0, import_fields.integer)(),
+      hasCreditControlProcess: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1279,6 +1292,7 @@ var lists = {
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
       hasDifferentTradingAddress: nullable_checkbox_default(),
+      differentTradingName: (0, import_fields.text)(),
       hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
@@ -1343,13 +1357,14 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       buyerCountry: (0, import_fields.relationship)({ ref: "Country" }),
+      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" }),
+      hasEndBuyer: (0, import_fields.checkbox)(),
       hasMinimumUkGoodsOrServices: (0, import_fields.checkbox)(),
-      validExporterLocation: (0, import_fields.checkbox)(),
       hasCompaniesHouseNumber: (0, import_fields.checkbox)(),
       otherPartiesInvolved: (0, import_fields.checkbox)(),
       paidByLetterOfCredit: (0, import_fields.checkbox)(),
       totalContractValue: (0, import_fields.relationship)({ ref: "TotalContractValue" }),
-      coverPeriod: (0, import_fields.relationship)({ ref: "CoverPeriod" })
+      validExporterLocation: (0, import_fields.checkbox)()
     },
     access: import_access.allowAll
   }),
@@ -1592,18 +1607,6 @@ var typeDefs = `
     verificationHash: String
   }
 
-  # fields from registered_office_address object
-  type CompaniesHouseExporterCompanyAddress {
-    addressLine1: String
-    addressLine2: String
-    careOf: String
-    locality: String
-    region: String
-    postalCode: String
-    country: String
-    premises: String
-  }
-
   type CompaniesHouseResponse {
     companyName: String
     registeredOfficeAddress: CompanyAddress
@@ -1614,17 +1617,38 @@ var typeDefs = `
     financialYearEndDate: DateTime
     success: Boolean
     apiError: Boolean
+    isActive: Boolean
+    notFound: Boolean
   }
 
   type CompanyAddress {
     addressLine1: String
     addressLine2: String
-    careOf: String
+    postalCode: String
+    country: String
     locality: String
     region: String
     postalCode: String
-    country: String
+    careOf: String
     premises: String
+  }
+
+  type OrdnanceSurveyAddress {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
+  }
+
+  input OrdnanceAddressInput  {
+    addressLine1: String
+    addressLine2: String
+    postalCode: String
+    country: String
+    county: String
+    town: String
   }
 
   input OldSicCodes {
@@ -1642,31 +1666,23 @@ var typeDefs = `
     premises: String
   }
 
-  type CompanyAndCompanyAddress {
-    id: ID
-    registeredOfficeAddress: CompanyAddress
+  input CompanyInput {
     companyName: String
     companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
-  }
-
-  input CompanyAndCompanyAddressInput {
-    address: CompanyAddressInput
+    dateOfCreation: String
     sicCodes: [String]
     industrySectorNames: [String]
-    companyName: String
-    companyNumber: String
-    dateOfCreation: DateTime
-    hasDifferentTradingAddress: Boolean
-    hasDifferentTradingName: Boolean
-    companyWebsite: String
-    phoneNumber: String
     financialYearEndDate: DateTime
-    oldSicCodes: [OldSicCodes]
+    registeredOfficeAddress: CompanyAddressInput
+    isActive: Boolean
+  }
+
+   type OrdnanceSurveyResponse {
+    success: Boolean
+    addresses: [OrdnanceSurveyAddress]
+    apiError: Boolean
+    noAddressesFound: Boolean
+    invalidPostcode: Boolean
   }
 
   type EmailResponse {
@@ -1737,14 +1753,12 @@ var typeDefs = `
 
   input ApplicationEligibility {
     buyerCountryIsoCode: String!
-    hasCompaniesHouseNumber: Boolean!
-    otherPartiesInvolved: Boolean!
-    paidByLetterOfCredit: Boolean!
-    needPreCreditPeriodCover: Boolean!
-    totalContractValueId: Int!
     coverPeriodId: Int!
-    validExporterLocation: Boolean!
+    hasCompaniesHouseNumber: Boolean!
+    hasEndBuyer: Boolean!
     hasMinimumUkGoodsOrServices: Boolean!
+    totalContractValueId: Int!
+    validExporterLocation: Boolean!
   }
 
   type CreateAnApplicationResponse {
@@ -1760,11 +1774,13 @@ var typeDefs = `
     riskCategory: String
     nbiIssueAvailable: Boolean
     canGetAQuoteOnline: Boolean
+    canGetAQuoteOffline: Boolean
     canGetAQuoteByEmail: Boolean
     cannotGetAQuote: Boolean
-    canApplyOnline: Boolean
-    canApplyOffline: Boolean
     cannotApply: Boolean
+    canApplyForInsuranceOnline: Boolean
+    canApplyForInsuranceOffline: Boolean
+    noInsuranceSupport: Boolean
   }
 
   type Mutation {
@@ -1781,6 +1797,7 @@ var typeDefs = `
     createAnApplication(
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """
@@ -1847,13 +1864,6 @@ var typeDefs = `
       hasBeenUsedBefore: Boolean
     ): AccountPasswordResetResponse
 
-    """ update company and company address """
-    updateCompanyAndCompanyAddress(
-      companyId: ID!
-      companyAddressId: ID!
-      data: CompanyAndCompanyAddressInput!
-    ): CompanyAndCompanyAddress
-
     """ delete an application by reference number """
     deleteApplicationByReferenceNumber(
       referenceNumber: Int!
@@ -1891,13 +1901,19 @@ var typeDefs = `
       token: String!
     ): AccountPasswordResetTokenResponse
 
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
     """ get companies house information """
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ get CIS countries from APIM """
-    getApimCisCountries: [MappedCisCountry]
+    """ get Ordnance Survey address """
+    getOrdnanceSurveyAddress(
+      postcode: String!
+      houseNameOrNumber: String!
+    ): OrdnanceSurveyResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -3309,11 +3325,105 @@ var createAPolicy = async (context, applicationId) => {
 };
 var create_a_policy_default = createAPolicy;
 
+// helpers/create-a-company-address/index.ts
+var createACompanyAddress = async (context, addressData, companyId) => {
+  console.info("Creating a company address for ", companyId);
+  try {
+    const companyAddress = await context.db.CompanyAddress.createOne({
+      data: {
+        company: {
+          connect: {
+            id: companyId
+          }
+        },
+        ...addressData
+      }
+    });
+    return companyAddress;
+  } catch (err) {
+    console.error("Error creating a company address %O", err);
+    throw new Error(`Creating a company address ${err}`);
+  }
+};
+var create_a_company_address_default = createACompanyAddress;
+
+// helpers/map-sic-codes/index.ts
+var mapSicCodes = (sicCodes, industrySectorNames2, companyId) => {
+  const mapped = [];
+  if (!sicCodes.length) {
+    return mapped;
+  }
+  sicCodes.forEach((code, index) => {
+    let industrySectorName = "";
+    if (industrySectorNames2 && industrySectorNames2[index]) {
+      industrySectorName = industrySectorNames2[index];
+    }
+    const mappedCode = {
+      sicCode: code,
+      industrySectorName,
+      company: {
+        connect: {
+          id: companyId
+        }
+      }
+    };
+    mapped.push(mappedCode);
+  });
+  return mapped;
+};
+var map_sic_codes_default = mapSicCodes;
+
+// helpers/create-company-sic-codes/index.ts
+var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, companyId) => {
+  console.info("Creating company SIC codes for ", companyId);
+  try {
+    const mappedSicCodes = map_sic_codes_default(sicCodes, industrySectorNames2, companyId);
+    let createdSicCodes = [];
+    if (sicCodes.length) {
+      createdSicCodes = await context.db.CompanySicCode.createMany({
+        data: mappedSicCodes
+      });
+    }
+    return createdSicCodes;
+  } catch (err) {
+    console.error("Error creating company SIC codes %O", err);
+    throw new Error(`Creating company SIC codes ${err}`);
+  }
+};
+var create_company_sic_codes_default = createCompanySicCodes;
+
+// helpers/create-a-company/index.ts
+var createACompany = async (context, applicationId, companyData) => {
+  console.info("Creating a company, address and SIC codes for ", applicationId);
+  try {
+    const { registeredOfficeAddress, sicCodes, industrySectorNames: industrySectorNames2, ...companyFields } = companyData;
+    const company = await context.db.Company.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        ...companyFields
+      }
+    });
+    const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
+    const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    return {
+      ...company,
+      registeredOfficeAddress: companyAddress,
+      sicCodes: createdSicCodes
+    };
+  } catch (err) {
+    console.error("Error creating a company, address and SIC codes %O", err);
+    throw new Error(`Creating a company, address and SIC codes ${err}`);
+  }
+};
+var create_a_company_default = createACompany;
+
 // custom-resolvers/mutations/create-an-application/index.ts
 var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers } = variables;
+    const { accountId, eligibilityAnswers, company: companyData } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       return {
@@ -3335,6 +3445,7 @@ var createAnApplication = async (root, variables, context) => {
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
+    const company = await create_a_company_default(context, applicationId, companyData);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
@@ -3348,6 +3459,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         policy: {
           connect: { id: policy.id }
+        },
+        company: {
+          connect: { id: company.id }
         }
       }
     });
@@ -3394,71 +3508,6 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   }
 };
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
-
-// types/index.ts
-var import_types2 = __toESM(require("@keystone-6/core/types"));
-
-// helpers/map-sic-codes/index.ts
-var mapSicCodes = (company, sicCodes, industrySectorNames2) => {
-  const mapped = [];
-  if (!sicCodes?.length) {
-    return mapped;
-  }
-  sicCodes.forEach((code, index) => {
-    let industrySectorName = "";
-    if (industrySectorNames2 && industrySectorNames2[index]) {
-      industrySectorName = industrySectorNames2[index];
-    }
-    const codeToAdd = {
-      sicCode: code,
-      industrySectorName,
-      company: {
-        connect: {
-          id: company.id
-        }
-      }
-    };
-    mapped.push(codeToAdd);
-  });
-  return mapped;
-};
-
-// custom-resolvers/mutations/update-company-and-company-address/index.ts
-var updateCompanyAndCompanyAddress = async (root, variables, context) => {
-  try {
-    console.info("Updating application company and company address for %s", variables.companyId);
-    const { address, sicCodes, industrySectorNames: industrySectorNames2, oldSicCodes, ...company } = variables.data;
-    if (company?.companyNumber && !company?.financialYearEndDate) {
-      company.financialYearEndDate = null;
-    }
-    const updatedCompany = await context.db.Company.updateOne({
-      where: { id: variables.companyId },
-      data: company
-    });
-    await context.db.CompanyAddress.updateOne({
-      where: { id: variables.companyAddressId },
-      data: address
-    });
-    const mappedSicCodes = mapSicCodes(updatedCompany, sicCodes, industrySectorNames2);
-    if (company && oldSicCodes && oldSicCodes.length) {
-      await context.db.CompanySicCode.deleteMany({
-        where: oldSicCodes
-      });
-    }
-    if (mappedSicCodes?.length) {
-      await context.db.CompanySicCode.createMany({
-        data: mappedSicCodes
-      });
-    }
-    return {
-      id: variables.companyId
-    };
-  } catch (err) {
-    console.error("Error updating application - company and company address %O", err);
-    throw new Error(`Updating application - company and company address ${err}`);
-  }
-};
-var update_company_and_company_address_default = updateCompanyAndCompanyAddress;
 
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns8 = require("date-fns");
@@ -3718,18 +3767,26 @@ var xlsx_row_default = xlsxRow;
 var ROW_SEPERATOR = xlsx_row_default("", "");
 var xlsx_row_seperator_default = ROW_SEPERATOR;
 
+// helpers/format-currency/index.ts
+var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+  style: "currency",
+  currency: currencyCode,
+  minimumFractionDigits: decimalPoints ?? 0,
+  maximumFractionDigits: decimalPoints ?? 0
+});
+var format_currency_default = formatCurrency;
+
 // content-strings/fields/insurance/eligibility/index.ts
 var {
   BUYER_COUNTRY,
   HAS_MINIMUM_UK_GOODS_OR_SERVICES,
   VALID_EXPORTER_LOCATION,
-  WANT_COVER_OVER_MAX_AMOUNT,
-  WANT_COVER_OVER_MAX_PERIOD,
-  OTHER_PARTIES_INVOLVED,
-  LETTER_OF_CREDIT,
-  PRE_CREDIT_PERIOD,
-  COMPANIES_HOUSE_NUMBER
+  COVER_PERIOD: COVER_PERIOD_FIELD_ID,
+  COMPANIES_HOUSE_NUMBER,
+  TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
+  HAS_END_BUYER
 } = insurance_default.ELIGIBILITY;
+var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 var FIELDS_ELIGIBILITY = {
   [BUYER_COUNTRY]: {
     SUMMARY: {
@@ -3747,35 +3804,55 @@ var FIELDS_ELIGIBILITY = {
     },
     ANSWER: "At least 20%"
   },
-  [WANT_COVER_OVER_MAX_AMOUNT]: {
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
     SUMMARY: {
-      TITLE: "Insured for more than \xA3500,000"
+      TITLE: "Mock title"
     }
   },
-  [WANT_COVER_OVER_MAX_PERIOD]: {
+  [COVER_PERIOD_FIELD_ID]: {
+    OPTIONS: {
+      BELOW: {
+        ID: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.LESS_THAN_2_YEARS.VALUE
+      },
+      ABOVE: {
+        ID: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        VALUE: COVER_PERIOD.MORE_THAN_2_YEARS.DB_ID,
+        TEXT: COVER_PERIOD.MORE_THAN_2_YEARS.VALUE
+      }
+    },
     SUMMARY: {
-      TITLE: "Insured for more than 2 years"
-    }
-  },
-  [OTHER_PARTIES_INVOLVED]: {
-    SUMMARY: {
-      TITLE: "Other parties involved"
-    }
-  },
-  [LETTER_OF_CREDIT]: {
-    SUMMARY: {
-      TITLE: "Paid by letter of credit"
-    }
-  },
-  [PRE_CREDIT_PERIOD]: {
-    SUMMARY: {
-      TITLE: "Pre-credit period"
+      TITLE: "Length of policy"
     }
   },
   [COMPANIES_HOUSE_NUMBER]: {
     SUMMARY: {
       TITLE: "UK Companies House registration number and actively trading"
     }
+  },
+  [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+    OPTIONS: {
+      ABOVE: {
+        ID: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.DB_ID,
+        TEXT: `${THRESHOLD} and above`
+      },
+      BELOW: {
+        ID: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+        VALUE: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.DB_ID,
+        TEXT: `Less than ${THRESHOLD}`
+      }
+    },
+    SUMMARY: {
+      TITLE: "Total value to insure",
+      ABOVE: `Above ${THRESHOLD}`,
+      BELOW: `Below ${THRESHOLD}`
+    }
+  },
+  [HAS_END_BUYER]: {
+    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'."
   }
 };
 
@@ -3850,12 +3927,15 @@ var POLICY_FIELDS = {
 };
 
 // content-strings/fields/insurance/your-business/index.ts
-var { EXPORTER_BUSINESS: EXPORTER_BUSINESS2 } = insurance_default;
 var {
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
-  TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  EXPORTER_BUSINESS: EXPORTER_BUSINESS2
+} = insurance_default;
+var {
+  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  ALTERNATIVE_TRADING_ADDRESS,
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 }
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
@@ -3890,7 +3970,7 @@ var FIELDS = {
         TITLE: "Financial year end date"
       }
     },
-    [TRADING_NAME]: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
         TITLE: "Different trading name?"
       }
@@ -3911,6 +3991,9 @@ var FIELDS = {
       }
     }
   },
+  [ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?"
+  },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
       SUMMARY: {
@@ -3925,11 +4008,6 @@ var FIELDS = {
     [EMPLOYEES_UK]: {
       SUMMARY: {
         TITLE: "UK employees"
-      }
-    },
-    [EMPLOYEES_INTERNATIONAL]: {
-      SUMMARY: {
-        TITLE: "Worldwide employees including UK employees"
       }
     }
   },
@@ -4062,9 +4140,9 @@ var {
   }
 } = policy_default;
 var {
-  COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+  COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
   YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL2 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
   BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
 } = business_default;
@@ -4098,7 +4176,6 @@ var XLSX = {
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
     [YEARS_EXPORTING2]: "Exporter years exporting",
     [EMPLOYEES_UK2]: "Exporter UK Employees",
-    [EMPLOYEES_INTERNATIONAL2]: "Exporter worldwide employees including UK employees",
     [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
     [USING_BROKER3]: "Using a broker for this insurance",
     [BROKER_NAME]: "Name of broker or company",
@@ -4159,7 +4236,7 @@ var CONTENT_STRINGS = {
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANY_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
@@ -4182,13 +4259,13 @@ var mapSecondaryKeyInformation = (application2) => {
 var map_secondary_key_information_default = mapSecondaryKeyInformation;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
-var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
+var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
   currency: currencyCode,
   minimumFractionDigits: decimalPoints ?? 0,
   maximumFractionDigits: decimalPoints ?? 0
 });
-var format_currency_default = formatCurrency;
+var format_currency_default2 = formatCurrency2;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
@@ -4226,15 +4303,15 @@ var mapSinglePolicyFields = (application2) => {
   const { policy } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
   const { policy } = application2;
   return [
     xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
 };
 var mapPolicyOutro = (application2) => {
@@ -4297,9 +4374,9 @@ var CONTENT_STRINGS3 = {
   ...FIELDS.BROKER
 };
 var {
-  COMPANY_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
-  YOUR_COMPANY: { TRADING_NAME: TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3, EMPLOYEES_INTERNATIONAL: EMPLOYEES_INTERNATIONAL3 },
+  COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
   BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
 } = business_default;
@@ -4341,7 +4418,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(CONTENT_STRINGS3[TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_NAME2])),
+    xlsx_row_default(CONTENT_STRINGS3[HAS_DIFFERENT_TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME2])),
     xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
     xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
     xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
@@ -4351,8 +4428,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(XLSX.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
     xlsx_row_default(XLSX.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
     xlsx_row_default(XLSX.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_INTERNATIONAL3], business[EMPLOYEES_INTERNATIONAL3]),
-    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     // broker fields
     ...mapBroker(application2)
@@ -4387,42 +4463,57 @@ var mapBuyer = (application2) => {
 };
 var map_buyer_default = mapBuyer;
 
+// generate-xlsx/map-application-to-XLSX/helpers/map-total-contract-field/index.ts
+var FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
+var { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
+var { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
+var mapTotalContractField = (answer) => {
+  if (answer === MORE_THAN_250K.DB_ID) {
+    return ABOVE;
+  }
+  if (answer === LESS_THAN_250K.DB_ID) {
+    return BELOW;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_total_contract_field_default = mapTotalContractField;
+
+// generate-xlsx/map-application-to-XLSX/helpers/map-cover-period-field/index.ts
+var FIELD_ID2 = FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD;
+var { LESS_THAN_2_YEARS, MORE_THAN_2_YEARS } = COVER_PERIOD;
+var { ABOVE: ABOVE2, BELOW: BELOW2 } = FIELDS_ELIGIBILITY[FIELD_ID2].OPTIONS;
+var mapCoverPeriodField = (answer) => {
+  if (answer === MORE_THAN_2_YEARS.DB_ID) {
+    return ABOVE2.TEXT;
+  }
+  if (answer === LESS_THAN_2_YEARS.DB_ID) {
+    return BELOW2.TEXT;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_cover_period_field_default = mapCoverPeriodField;
+
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY2,
     HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
     VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
-    WANT_COVER_OVER_MAX_AMOUNT: WANT_COVER_OVER_MAX_AMOUNT2,
     COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
-    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ELIGIBILITY,
-    WANT_COVER_OVER_MAX_PERIOD: WANT_COVER_OVER_MAX_PERIOD2,
-    OTHER_PARTIES_INVOLVED: OTHER_PARTIES_INVOLVED2,
-    LETTER_OF_CREDIT: LETTER_OF_CREDIT2,
-    PRE_CREDIT_PERIOD: PRE_CREDIT_PERIOD2,
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE3,
+    COVER_PERIOD: COVER_PERIOD2,
     COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
   }
 } = FIELD_IDS.INSURANCE;
-var { MORE_THAN_2_YEARS } = COVER_PERIOD;
-var { MORE_THAN_500K } = TOTAL_CONTRACT_VALUE;
 var mapEligibility = (application2) => {
-  const { eligibility, policy } = application2;
+  const { eligibility } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(
-      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_AMOUNT2].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_ELIGIBILITY].valueId === MORE_THAN_500K.DB_ID)
-    ),
-    xlsx_row_default(
-      FIELDS_ELIGIBILITY[WANT_COVER_OVER_MAX_PERIOD2].SUMMARY?.TITLE,
-      map_yes_no_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId === MORE_THAN_2_YEARS.DB_ID)
-    ),
-    xlsx_row_default(FIELDS_ELIGIBILITY[OTHER_PARTIES_INVOLVED2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[OTHER_PARTIES_INVOLVED2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[LETTER_OF_CREDIT2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[LETTER_OF_CREDIT2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[PRE_CREDIT_PERIOD2].SUMMARY?.TITLE, map_yes_no_field_default(policy[PRE_CREDIT_PERIOD2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE, map_total_contract_field_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)),
+    xlsx_row_default(FIELDS_ELIGIBILITY[COVER_PERIOD2].SUMMARY?.TITLE, map_cover_period_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId)),
     xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
   ];
   return mapped;
@@ -4790,15 +4881,34 @@ var cannotGetAQuote = (country) => {
 };
 var cannot_get_a_quote_default = cannotGetAQuote;
 
-// helpers/map-CIS-countries/map-CIS-country/can-apply-online/index.ts
-var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
-var canApplyOnline = (originalShortTermCover) => {
-  if (originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.YES) {
-    return true;
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
+var {
+  CIS: {
+    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED }
   }
-  return false;
+} = EXTERNAL_API_DEFINITIONS;
+var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
+  switch (originalShortTermCover) {
+    case (riskCategory && YES):
+      return true;
+    case (riskCategory && ILC):
+      return true;
+    case (riskCategory && CILC):
+      return true;
+    case (riskCategory && REFER):
+      return true;
+    case (riskCategory && UNLISTED):
+      return true;
+    default:
+      return false;
+  }
 };
-var can_apply_online_default = canApplyOnline;
+var can_apply_for_insurance_online_default = canApplyForInsuranceOnline;
+
+// helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-offline/index.ts
+var { CIS: CIS3 } = EXTERNAL_API_DEFINITIONS;
+var canApplyForInsuranceOffline = (originalShortTermCover) => originalShortTermCover === CIS3.SHORT_TERM_COVER_AVAILABLE.NO;
+var can_apply_for_insurance_offline_default = canApplyForInsuranceOffline;
 
 // helpers/map-CIS-countries/map-CIS-country/can-apply-offline/index.ts
 var { CIS: CIS4 } = EXTERNAL_API_DEFINITIONS;
@@ -4826,11 +4936,12 @@ var mapCisCountry = (country) => {
     nbiIssueAvailable: map_NBI_issue_available_default(country.NBIIssue)
   };
   mapped.canGetAQuoteOnline = can_get_a_quote_online_default(mapped);
+  mapped.canGetAQuoteOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
   mapped.canGetAQuoteByEmail = can_get_a_quote_by_email_default(mapped);
   mapped.cannotGetAQuote = cannot_get_a_quote_default(mapped);
-  mapped.canApplyOnline = can_apply_online_default(country.shortTermCoverAvailabilityDesc);
-  mapped.canApplyOffline = can_apply_offline_default(country.shortTermCoverAvailabilityDesc);
-  mapped.cannotApply = !mapped.canApplyOnline && !mapped.canApplyOffline;
+  mapped.canApplyForInsuranceOnline = can_apply_for_insurance_online_default(country.shortTermCoverAvailabilityDesc, mapped.riskCategory);
+  mapped.canApplyForInsuranceOffline = can_apply_for_insurance_offline_default(country.shortTermCoverAvailabilityDesc);
+  mapped.noInsuranceSupport = !mapped.canApplyForInsuranceOnline && !mapped.canApplyForInsuranceOffline;
   return mapped;
 };
 var map_CIS_country_default = mapCisCountry;
@@ -4891,30 +5002,35 @@ var mapSicCodeDescriptions = (sicCodes, sectors) => {
 var map_sic_code_descriptions_default = mapSicCodeDescriptions;
 
 // helpers/map-companies-house-fields/index.ts
-var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => {
-  return {
-    companyName: companiesHouseResponse.company_name,
-    registeredOfficeAddress: {
-      careOf: companiesHouseResponse.registered_office_address.care_of,
-      premises: companiesHouseResponse.registered_office_address.premises,
-      addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
-      addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
-      locality: companiesHouseResponse.registered_office_address.locality,
-      region: companiesHouseResponse.registered_office_address.region,
-      postalCode: companiesHouseResponse.registered_office_address.postal_code,
-      country: companiesHouseResponse.registered_office_address.country
-    },
-    companyNumber: companiesHouseResponse.company_number,
-    dateOfCreation: companiesHouseResponse.date_of_creation,
-    sicCodes: companiesHouseResponse.sic_codes,
-    industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
-    // creates timestamp for financialYearEndDate from day and month if exist
-    financialYearEndDate: create_full_timestamp_from_day_month_default(
-      companiesHouseResponse.accounts?.accounting_reference_date?.day,
-      companiesHouseResponse.accounts?.accounting_reference_date?.month
-    )
-  };
-};
+var {
+  COMPANIES_HOUSE: { COMPANY_STATUS }
+} = EXTERNAL_API_DEFINITIONS;
+var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
+  companyName: companiesHouseResponse.company_name,
+  registeredOfficeAddress: {
+    careOf: companiesHouseResponse.registered_office_address.care_of,
+    premises: companiesHouseResponse.registered_office_address.premises,
+    addressLine1: companiesHouseResponse.registered_office_address.address_line_1,
+    addressLine2: companiesHouseResponse.registered_office_address.address_line_2,
+    locality: companiesHouseResponse.registered_office_address.locality,
+    region: companiesHouseResponse.registered_office_address.region,
+    postalCode: companiesHouseResponse.registered_office_address.postal_code,
+    country: companiesHouseResponse.registered_office_address.country
+  },
+  companyNumber: companiesHouseResponse.company_number,
+  dateOfCreation: companiesHouseResponse.date_of_creation,
+  sicCodes: companiesHouseResponse.sic_codes,
+  industrySectorNames: map_sic_code_descriptions_default(companiesHouseResponse.sic_codes, sectors),
+  /**
+   * Create a timestamp for financialYearEndDate
+   * If day and month exist
+   */
+  financialYearEndDate: create_full_timestamp_from_day_month_default(
+    companiesHouseResponse.accounts?.accounting_reference_date?.day,
+    companiesHouseResponse.accounts?.accounting_reference_date?.month
+  ),
+  isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE
+});
 
 // integrations/industry-sector/index.ts
 var import_axios2 = __toESM(require("axios"));
@@ -4977,6 +5093,12 @@ var companiesHouse = {
           return acceptableStatus.includes(status);
         }
       });
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true
+        };
+      }
       if (!response.data || response.status !== 200) {
         return {
           success: false
@@ -5003,7 +5125,8 @@ var getCompaniesHouseInformation = async (root, variables) => {
     const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
       return {
-        success: false
+        success: false,
+        notFound: response.notFound
       };
     }
     const industrySectors = await industry_sector_default.get();
@@ -5027,6 +5150,112 @@ var getCompaniesHouseInformation = async (root, variables) => {
   }
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
+
+// integrations/ordnance-survey/index.ts
+var import_axios4 = __toESM(require("axios"));
+var import_dotenv8 = __toESM(require("dotenv"));
+import_dotenv8.default.config();
+var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
+var ordnanceSurvey = {
+  get: async (postcode) => {
+    try {
+      const response = await (0, import_axios4.default)({
+        method: "get",
+        url: `${ORDNANCE_SURVEY_API_URL}${ORDNANCE_SURVEY_QUERY_URL}${postcode}&key=${ORDNANCE_SURVEY_API_KEY}`,
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response?.data?.results || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data.results
+      };
+    } catch (err) {
+      console.error("Error calling Ordnance Survey API %O", err);
+      throw new Error(`Calling Ordnance Survey API. Unable to search for address ${err}`);
+    }
+  }
+};
+var ordnance_survey_default = ordnanceSurvey;
+
+// helpers/is-valid-postcode/index.ts
+var import_postcode_validator = require("postcode-validator");
+var isValidPostcode = (postcode) => (0, import_postcode_validator.postcodeValidator)(postcode, "GB");
+
+// helpers/map-address/index.ts
+var mapAddress = (address) => ({
+  addressLine1: `${address.DPA.ORGANISATION_NAME ?? ""} ${address.DPA.BUILDING_NAME ?? ""} ${address.DPA.BUILDING_NUMBER ?? ""} ${address.DPA.THOROUGHFARE_NAME ?? ""}`.trim(),
+  addressLine2: address.DPA.DEPENDENT_LOCALITY,
+  town: address.DPA.POST_TOWN,
+  postalCode: address.DPA.POSTCODE
+});
+var map_address_default2 = mapAddress;
+
+// helpers/map-and-filter-address/index.ts
+var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
+  const filtered = ordnanceSurveyResponse.filter(
+    (eachAddress) => eachAddress.DPA.BUILDING_NUMBER === houseNameOrNumber || eachAddress.DPA.BUILDING_NAME === houseNameOrNumber
+  );
+  if (!filtered.length) {
+    return [];
+  }
+  const mappedFilteredAddresses = [];
+  filtered.forEach((address) => {
+    mappedFilteredAddresses.push(map_address_default2(address));
+  });
+  return mappedFilteredAddresses;
+};
+var map_and_filter_address_default = mapAndFilterAddress;
+
+// helpers/remove-white-space/index.ts
+var removeWhiteSpace = (string) => string.replace(" ", "");
+var remove_white_space_default = removeWhiteSpace;
+
+// custom-resolvers/queries/get-ordnance-survey-address/index.ts
+var getOrdnanceSurveyAddress = async (root, variables) => {
+  try {
+    const { postcode, houseNameOrNumber } = variables;
+    console.info("Getting Ordnance Survey address for postcode: %s, houseNameOrNumber: %s", postcode, houseNameOrNumber);
+    const noWhitespacePostcode = remove_white_space_default(postcode);
+    if (!isValidPostcode(noWhitespacePostcode)) {
+      console.error("Invalid postcode: %s", postcode);
+      return {
+        success: false,
+        invalidPostcode: true
+      };
+    }
+    const response = await ordnance_survey_default.get(postcode);
+    if (!response.success || !response.data) {
+      return {
+        success: false
+      };
+    }
+    const mappedAddresses = map_and_filter_address_default(houseNameOrNumber, response.data);
+    if (!mappedAddresses.length) {
+      return {
+        success: false,
+        noAddressesFound: true
+      };
+    }
+    return {
+      addresses: mappedAddresses,
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting Ordnance Survey address results %O", err);
+    return {
+      apiError: true,
+      success: false
+    };
+  }
+};
+var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
 var import_date_fns10 = require("date-fns");
@@ -5080,7 +5309,6 @@ var customResolvers = {
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
     createAnApplication: create_an_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
-    updateCompanyAndCompanyAddress: update_company_and_company_address_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default
@@ -5089,6 +5317,7 @@ var customResolvers = {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
     getApimCisCountries: get_APIM_CIS_countries_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
+    getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
 };

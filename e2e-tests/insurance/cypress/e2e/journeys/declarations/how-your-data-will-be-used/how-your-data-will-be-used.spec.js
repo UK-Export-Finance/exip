@@ -30,7 +30,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my export insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
+context('Insurance - Declarations - How your data will be used page - As an Exporter, I want to have details of how my credit insurance application data will be used, So that I can determine if I am okay with the use of my application in that format', () => {
   let referenceNumber;
   let url;
 

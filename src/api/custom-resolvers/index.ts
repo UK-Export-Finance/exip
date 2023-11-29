@@ -12,12 +12,17 @@ import {
   sendEmailReactivateAccountLink,
   createAnApplication,
   deleteApplicationByReferenceNumber,
-  updateCompanyAndCompanyAddress,
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
 } from './mutations';
-import { getAccountPasswordResetToken, getApimCisCountries, getCompaniesHouseInformation, verifyAccountPasswordResetToken } from './queries';
+import {
+  getAccountPasswordResetToken,
+  getApimCisCountries,
+  getCompaniesHouseInformation,
+  getOrdnanceSurveyAddress,
+  verifyAccountPasswordResetToken,
+} from './queries';
 
 /**
  * customResolvers
@@ -41,7 +46,6 @@ const customResolvers = {
     sendEmailReactivateAccountLink,
     createAnApplication,
     deleteApplicationByReferenceNumber,
-    updateCompanyAndCompanyAddress,
     submitApplication,
     createFeedbackAndSendEmail,
     verifyAccountReactivationToken,
@@ -50,6 +54,7 @@ const customResolvers = {
     getAccountPasswordResetToken,
     getApimCisCountries,
     getCompaniesHouseInformation,
+    getOrdnanceSurveyAddress,
     verifyAccountPasswordResetToken,
   },
 };

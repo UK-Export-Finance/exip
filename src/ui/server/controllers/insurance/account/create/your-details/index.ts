@@ -62,10 +62,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 /**
  * get
- * Render the Do you already have an account page
+ * Render the Do you have an account page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Do you already have an account page
+ * @returns {Express.Response.render} Do you have an account page
  */
 export const get = (req: Request, res: Response) => {
   if (req.session.user?.id) {
@@ -88,7 +88,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Check  Do you already have an account page validation errors and if successful, redirect to the next part of the flow.
+ * Check  Do you have an account page validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page

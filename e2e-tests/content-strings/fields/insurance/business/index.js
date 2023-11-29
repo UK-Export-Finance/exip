@@ -1,59 +1,15 @@
 import { FIELD_IDS } from '../../../../constants';
 
 export const EXPORTER_BUSINESS_FIELDS = {
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.SUMMARY_LIST]: {
-    LABEL: 'Your company',
-    COMPANY_NUMBER: {
-      text: 'Companies House registration number',
-    },
-    COMPANY_NAME: {
-      text: 'Company name',
-    },
-    COMPANY_ADDRESS: {
-      text: 'Registered office address',
-    },
-    COMPANY_INCORPORATED: {
-      text: 'Incorporated on',
-    },
-    COMPANY_SIC: {
-      text: 'Standard industrial classification (SIC) codes and nature of business',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NUMBER]: {
-    SUMMARY: {
-      TITLE: 'Companies House registration number',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_NAME]: {
-    SUMMARY: {
-      TITLE: 'Company name',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_ADDRESS]: {
-    SUMMARY: {
-      TITLE: 'Registered office address',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_INCORPORATED]: {
-    SUMMARY: {
-      TITLE: 'Date incorporated',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.COMPANY_SIC]: {
-    SUMMARY: {
-      TITLE: 'Standard industry classification (SIC) codes and nature of business',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.COMPANY_HOUSE.FINANCIAL_YEAR_END_DATE]: {
-    SUMMARY: {
-      TITLE: 'Financial year end date',
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_NAME]: {
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {
     LABEL: 'Do you use a different trading name for this company?',
     SUMMARY: {
       TITLE: 'Different trading name?',
     },
+  },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
+    LABEL: "What's your organisation's alternative trading name?",
+    HINT: 'Your official trading name will still be on the policy.',
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
     LABEL: 'Do you trade from a different address to your registered office address for this company?',
@@ -74,10 +30,14 @@ export const EXPORTER_BUSINESS_FIELDS = {
       TITLE: 'UK telephone number (optional)',
     },
   },
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?",
+    MAXIMUM: 1000,
+  },
   NATURE_OF_YOUR_BUSINESS: {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
-      LABEL: 'What goods or services does your company supply?',
-      HINT: 'Give a general overview rather than just the exports you want to insure',
+      LABEL: 'Tell us about your business',
+      HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
       MAXIMUM: 1000,
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
@@ -92,16 +52,9 @@ export const EXPORTER_BUSINESS_FIELDS = {
       },
     },
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
-      LEGEND: 'How many employees do you have?',
-      LABEL: 'In the UK',
+      LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
         TITLE: 'UK employees',
-      },
-    },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_INTERNATIONAL]: {
-      LABEL: 'Worldwide including UK',
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
       },
     },
   },
@@ -172,7 +125,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       LINE_2: "You can find your nearest one on UKEF's list of approved brokers.",
       LINK_TEXT: "UKEF's list of approved brokers.",
       LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
-      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF export insurance policy.',
+      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
     },
   },
 };

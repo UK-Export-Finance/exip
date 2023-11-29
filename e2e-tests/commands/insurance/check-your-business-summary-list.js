@@ -2,24 +2,13 @@ import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../content-strings/fields/insurance/business';
-import { formatDate } from '../../helpers/date';
 import application from '../../fixtures/application';
 
 const {
   INSURANCE: {
     EXPORTER_BUSINESS: {
-      COMPANY_HOUSE: {
-        COMPANY_NAME,
-        COMPANY_NUMBER,
-        COMPANY_ADDRESS,
-        COMPANY_INCORPORATED,
-        COMPANY_SIC,
-        INDUSTRY_SECTOR_NAMES,
-        FINANCIAL_YEAR_END_DATE,
-      },
       YOUR_COMPANY: {
-        ADDRESS: YOUR_COMPANY_ADDRESS,
-        TRADING_NAME,
+        HAS_DIFFERENT_TRADING_NAME,
         TRADING_ADDRESS,
         WEBSITE,
         PHONE_NUMBER,
@@ -27,7 +16,6 @@ const {
       NATURE_OF_YOUR_BUSINESS: {
         YEARS_EXPORTING,
         GOODS_OR_SERVICES,
-        EMPLOYEES_INTERNATIONAL,
         EMPLOYEES_UK,
       },
       TURNOVER: {
@@ -48,89 +36,12 @@ const {
   },
 } = FIELD_IDS;
 
-const {
-  TURNOVER: {
-    [FINANCIAL_YEAR_END_DATE]: { DATE_FORMAT },
-  },
-} = FIELDS;
-
 const checkYourBusinessSummaryList = ({
-  [COMPANY_NUMBER]: () => {
-    const fieldId = COMPANY_NUMBER;
+  [HAS_DIFFERENT_TRADING_NAME]: () => {
+    const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [COMPANY_NAME]: () => {
-    const fieldId = COMPANY_NAME;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [COMPANY_ADDRESS]: () => {
-    const fieldId = COMPANY_ADDRESS;
-    const expectedKey = FIELDS[fieldId].SUMMARY.TITLE;
-
-    const row = summaryList.field(fieldId);
-
-    cy.checkText(
-      row.key(),
-      expectedKey,
-    );
-
-    // as html, cannot use checkText so checking contains following fields
-    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].addressLine1);
-    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].addressLine2);
-    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].locality);
-    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].region);
-    row.value().contains(application.EXPORTER_COMPANY[YOUR_COMPANY_ADDRESS].postalCode);
-
-    row.changeLink().should('not.exist');
-  },
-  [COMPANY_INCORPORATED]: () => {
-    const fieldId = COMPANY_INCORPORATED;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-
-    const timestamp = application.EXPORTER_COMPANY[fieldId];
-    const expectedValue = formatDate(timestamp);
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [COMPANY_SIC]: () => {
-    const fieldId = COMPANY_SIC;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-
-    const values = application.EXPORTER_COMPANY;
-
-    const [sicCode] = values[fieldId];
-    const [industrySectorName] = values[INDUSTRY_SECTOR_NAMES];
-
-    const expectedValue = `${sicCode} - ${industrySectorName}`;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [FINANCIAL_YEAR_END_DATE]: () => {
-    const fieldId = FINANCIAL_YEAR_END_DATE;
-
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
-
-    const timestamp = application.EXPORTER_COMPANY[fieldId];
-
-    const expectedValue = formatDate(timestamp, DATE_FORMAT);
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
-  },
-  [TRADING_NAME]: () => {
-    const fieldId = TRADING_NAME;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.YES;
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -139,7 +50,7 @@ const checkYourBusinessSummaryList = ({
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
 
-    const expectedValue = FIELD_VALUES.YES;
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -147,7 +58,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = WEBSITE;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+    const expectedValue = application.COMPANY[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -155,7 +66,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = PHONE_NUMBER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.EXPORTER_COMPANY[fieldId];
+    const expectedValue = application.COMPANY[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -177,14 +88,6 @@ const checkYourBusinessSummaryList = ({
   },
   [EMPLOYEES_UK]: () => {
     const fieldId = EMPLOYEES_UK;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
-    const expectedValue = application.EXPORTER_BUSINESS[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [EMPLOYEES_INTERNATIONAL]: () => {
-    const fieldId = EMPLOYEES_INTERNATIONAL;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NATURE_OF_YOUR_BUSINESS);
     const expectedValue = application.EXPORTER_BUSINESS[fieldId];

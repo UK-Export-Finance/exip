@@ -1,0 +1,60 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+
+      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      <p class="govuk-body" data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+
+      {% if CONTENT_STRINGS.ACTIONS.INTRO %}
+        <p class="govuk-body" data-cy="actions-intro">{{ CONTENT_STRINGS.ACTIONS.INTRO }}</p>
+      {% endif %}
+
+      {% if CONTENT_STRINGS.ACTIONS.ELIGIBILITY or CONTENT_STRINGS.ACTIONS.CONTACT_EFM %}
+        <ul class="govuk-list govuk-list--bullet">
+
+          {% if CONTENT_STRINGS.ACTIONS.UPDATE_COMPANY_DETAILS.TEXT %}
+            <li data-cy="action-update-company-details">{{ CONTENT_STRINGS.ACTIONS.UPDATE_COMPANY_DETAILS.TEXT }} <a class="govuk-link" data-cy="action-update-company-details-link" href="{{ CONTENT_STRINGS.ACTIONS.UPDATE_COMPANY_DETAILS.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.UPDATE_COMPANY_DETAILS.LINK.TEXT }}</a></li>
+          {% endif %}
+
+          <li data-cy="action-eligibility">{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.TEXT }} <a class="govuk-link" data-cy="action-eligibility-link" href="{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.ELIGIBILITY.LINK.TEXT }}</a></li>
+          <li data-cy="action-approved-broker">
+            <a class="govuk-link" data-cy="action-approved-broker-link" href="{{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.LINK.TEXT }}</a> {{ CONTENT_STRINGS.ACTIONS.CONTACT_APPROVED_BROKER.TEXT }}
+          </li>
+
+          <li data-cy="action-contact-efm">
+            <a class="govuk-link" data-cy="action-contact-efm-link" href="{{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.LINK.TEXT }}</a> {{ CONTENT_STRINGS.ACTIONS.CONTACT_EFM.TEXT }}
+          </li>
+        </ul>
+      {% endif %}
+
+      {% if CONTENT_STRINGS.ACTIONS.FIND_EFM %}
+        <p data-cy="action-contact-efm">
+          <a class="govuk-link" data-cy="action-contact-efm-link" href="{{ CONTENT_STRINGS.ACTIONS.FIND_EFM.LINK.HREF }}">{{ CONTENT_STRINGS.ACTIONS.FIND_EFM.LINK.TEXT }}</a> {{ CONTENT_STRINGS.ACTIONS.FIND_EFM.TEXT }}
+        </p>
+      {% endif %}
+
+    </div>
+  </div>
+
+{% endblock %}

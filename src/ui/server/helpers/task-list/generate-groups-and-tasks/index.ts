@@ -19,6 +19,7 @@ const generateGroupsAndTasks = (
   referenceNumber: number,
   policyType?: string,
   isUsingBroker?: boolean,
+  hasDifferentTradingName?: boolean,
   hasAntiBriberyCodeOfConduct?: boolean | null,
 ): TaskListData => {
   let groups = [
@@ -33,8 +34,9 @@ const generateGroupsAndTasks = (
     ...groups,
     {
       title: PREPARE_APPLICATION.HEADING,
+      hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(referenceNumber, groups, policyType, isUsingBroker),
+      tasks: prepareApplicationTasks(referenceNumber, groups, policyType, isUsingBroker, hasDifferentTradingName),
     },
   ] as TaskListData;
 

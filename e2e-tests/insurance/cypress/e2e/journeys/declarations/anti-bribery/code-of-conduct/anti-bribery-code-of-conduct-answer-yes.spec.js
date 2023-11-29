@@ -16,7 +16,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm my company does have code of conduct procedure, So that UKEF can have clarity about how my company operates processing my export insurance application', () => {
+context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an Exporter, I want to confirm my company does have code of conduct procedure, So that UKEF can have clarity about how my company operates processing my credit insurance application', () => {
   let referenceNumber;
   let url;
 

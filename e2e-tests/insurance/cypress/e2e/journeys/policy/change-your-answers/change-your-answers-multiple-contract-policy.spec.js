@@ -7,7 +7,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
 import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
-import currencies from '../../../../../../fixtures/currencies';
+import CURRENCIES from '../../../../../../fixtures/currencies';
 
 const {
   ROOT,
@@ -267,7 +267,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
       });
 
       describe('form submission with a new answer', () => {
-        const newAnswer = currencies[3].isoCode;
+        const newAnswer = CURRENCIES[3].isoCode;
 
         beforeEach(() => {
           cy.navigateToUrl(url);
@@ -284,7 +284,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it('should render the new answer', () => {
-          const { 3: expected } = currencies;
+          const { 3: expected } = CURRENCIES;
           const { name } = expected;
 
           cy.assertSummaryListRowValueNew(summaryList, fieldId, name);

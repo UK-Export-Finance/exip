@@ -74,7 +74,19 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/emp
       mockBody[FIELD_ID] = '-1';
       const response = employeesUK(mockBody, mockErrors);
 
-      const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
+      const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
+      const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe(`when the ${FIELD_ID} input is 0`, () => {
+    it('should return a validation error', () => {
+      mockBody[FIELD_ID] = '0';
+      const response = employeesUK(mockBody, mockErrors);
+
+      const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
       const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
 
       expect(response).toEqual(expected);

@@ -1,5 +1,5 @@
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
-import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { field as fieldSelector, intro } from '../../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.YOUR_DETAILS;
 
 const {
   START,
-  ELIGIBILITY: { ACCOUNT_TO_APPLY_ONLINE },
+  ELIGIBILITY: { HAVE_AN_ACCOUNT },
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL }, SIGN_IN },
 } = ROUTES;
 
@@ -47,7 +47,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: YOUR_DETAILS,
-      backLink: ACCOUNT_TO_APPLY_ONLINE,
+      backLink: HAVE_AN_ACCOUNT,
       assertAuthenticatedHeader: false,
       lightHouseThresholds: {
         performance: 70,
@@ -61,7 +61,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     it('renders intro text', () => {
-      cy.checkText(yourDetailsPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('renders `first name` label and input', () => {

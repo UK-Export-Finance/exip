@@ -9,7 +9,6 @@ const {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
     EMPLOYEES_UK,
-    EMPLOYEES_INTERNATIONAL,
   },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
@@ -17,7 +16,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -35,12 +34,11 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -92,7 +90,8 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
-      task.link().click();
+      cy.startYourBusinessSection();
+
       // submit companies house number form
       submitButton().click();
       // company details submit
@@ -101,7 +100,6 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', '');
       field(EMPLOYEES_UK).input().should('have.value', '');
-      field(EMPLOYEES_INTERNATIONAL).input().should('have.value', '');
     });
   });
 
@@ -112,7 +110,6 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.keyboardInput(field(GOODS_OR_SERVICES).textarea(), application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       cy.keyboardInput(field(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       cy.keyboardInput(field(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      cy.keyboardInput(field(EMPLOYEES_INTERNATIONAL).input(), application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
 
       saveAndBackButton().click();
     });
@@ -127,16 +124,14 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
-      task.link().click();
-      // submit companies house number form
-      submitButton().click();
+      cy.startYourBusinessSection();
+
       // company details submit
       submitButton().click();
 
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
       field(EMPLOYEES_UK).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
-      field(EMPLOYEES_INTERNATIONAL).input().should('have.value', application.EXPORTER_BUSINESS[EMPLOYEES_INTERNATIONAL]);
     });
   });
 });

@@ -1,24 +1,10 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_HOUSE, YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
+  EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, BROKER },
 } = FIELD_IDS;
 
-const {
-  SEARCH,
-  COMPANY_ADDRESS,
-  REGISTED_OFFICE_ADDRESS,
-  COMPANY_SIC,
-  COMPANY_INCORPORATED,
-  FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE_COMPANY_HOUSE,
-  INDUSTRY_SECTOR_NAMES,
-  SIC_CODE,
-  OLD_SIC_CODES,
-  INDUSTRY_SECTOR_NAME,
-  ...COMPANIES_HOUSE_FIELDS
-} = COMPANY_HOUSE;
-
-const { ADDRESS, PHONE_NUMBER, WEBSITE, YOUR_BUSINESS, ...YOUR_COMPANY_FIELDS } = YOUR_COMPANY;
+const { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
 
 const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
 
@@ -39,18 +25,32 @@ export const getBrokerTasks = (isUsingBroker?: boolean): Array<string> => {
 };
 
 /**
+ * getYourCompanyTasks
+ * Get your company tasks depending on the hasDifferentTradingName field
+ * @param {Boolean} hasDifferentTradingName "has different trading name" flag
+ * @returns {Array} Array of tasks
+ */
+export const getYourCompanyTasks = (hasDifferentTradingName?: boolean): Array<string> => {
+  if (hasDifferentTradingName) {
+    return [HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
+  }
+
+  return [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS];
+};
+
+/**
  * Required fields for the insurance - business section
  * @param {Boolean} Is using broker
+ * @param {Boolean} hasDifferentTradingName flag
  * @returns {Array} Required field IDs
  */
-const requiredFields = (isUsingBroker?: boolean): Array<string> => {
+const requiredFields = (isUsingBroker?: boolean, hasDifferentTradingName?: boolean): Array<string> => {
   let fields = {
-    ...YOUR_COMPANY_FIELDS,
-    ...COMPANIES_HOUSE_FIELDS,
+    ...getYourCompanyTasks(hasDifferentTradingName),
     ...NATURE_OF_YOUR_BUSINESS,
     ...TURNOVER_FIELDS,
     USING_BROKER,
-  };
+  } as Array<string>;
 
   if (isUsingBroker) {
     fields = {

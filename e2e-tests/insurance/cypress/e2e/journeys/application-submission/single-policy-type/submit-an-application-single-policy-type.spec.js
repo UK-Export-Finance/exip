@@ -9,7 +9,7 @@ const { DASHBOARD, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - submit an application - Single policy type, no broker - As an Exporter, I want to submit my completed export insurance application, So that UKEF can process and make a decision on my application', () => {
+context('Insurance - submit an application - Single policy type, no broker - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 

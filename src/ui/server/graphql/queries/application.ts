@@ -21,19 +21,22 @@ const applicationQuery = gql`
             isoCode
             name
           }
+          coverPeriod {
+            id
+            value
+            valueId
+          }
           hasMinimumUkGoodsOrServices
-          validExporterLocation
+          hasEndBuyer
           hasCompaniesHouseNumber
           otherPartiesInvolved
           paidByLetterOfCredit
           totalContractValue {
             id
             value
+            valueId
           }
-          coverPeriod {
-            id
-            value
-          }
+          validExporterLocation
         }
         policy {
           id
@@ -73,6 +76,7 @@ const applicationQuery = gql`
           companyNumber
           companyWebsite
           hasDifferentTradingName
+          differentTradingName
           hasDifferentTradingAddress
           dateOfCreation
           phoneNumber
@@ -99,9 +103,9 @@ const applicationQuery = gql`
           goodsOrServicesSupplied
           totalYearsExporting
           totalEmployeesUK
-          totalEmployeesInternational
           estimatedAnnualTurnover
           exportsTurnoverPercentage
+          hasCreditControlProcess
         }
         broker {
           id

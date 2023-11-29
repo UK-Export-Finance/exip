@@ -21,42 +21,38 @@ const {
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    TURNOVER,
-    NATURE_OF_BUSINESS,
-    BROKER,
+    TURNOVER_ROOT,
+    TURNOVER_CURRENCY,
+    NATURE_OF_BUSINESS_ROOT,
+    CREDIT_CONTROL,
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const financialYearEnd = {
   content: FIELDS.TURNOVER[FINANCIAL_YEAR_END_DATE],
-  timestamp: application.EXPORTER_COMPANY[FINANCIAL_YEAR_END_DATE],
+  timestamp: application.COMPANY[FINANCIAL_YEAR_END_DATE],
 };
 
 financialYearEnd.expectedValue = formatDate(financialYearEnd.timestamp, financialYearEnd.content.DATE_FORMAT);
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Turnover page - As an Exporter I want to enter the I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
+context('Insurance - Your business - Turnover page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
-  let brokerUrl;
+  let creditControlUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
+      creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 
       cy.assertUrl(url);
     });
@@ -73,8 +69,8 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${TURNOVER}`,
-      backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`,
+      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+      backLink: `${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
     });
   });
 
@@ -98,14 +94,14 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       field.hint().contains(financialYearEnd.content.HINT);
     });
 
-    it('should display turnover fieldset legend', () => {
+    it('should render turnover fieldset legend', () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = fieldSelector(fieldId);
 
       cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
     });
 
-    it(`should display ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
+    it(`should render ${ESTIMATED_ANNUAL_TURNOVER} section`, () => {
       const fieldId = ESTIMATED_ANNUAL_TURNOVER;
       const field = fieldSelector(fieldId);
 
@@ -116,7 +112,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
     });
 
-    it(`should display ${PERCENTAGE_TURNOVER} section`, () => {
+    it(`should render ${PERCENTAGE_TURNOVER} section`, () => {
       const fieldId = PERCENTAGE_TURNOVER;
       const field = fieldSelector(fieldId);
 
@@ -127,18 +123,26 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
       cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
     });
 
-    it('should display save and go back button', () => {
+    it('should render a `provide alternative currency` link', () => {
+      cy.checkLink(
+        turnoverPage.provideAlternativeCurrencyLink(),
+        `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
+        CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
+      );
+    });
+
+    it('should render save and go back button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER}`, () => {
+    it(`should redirect to ${CREDIT_CONTROL}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitTurnoverForm();
 
-      cy.assertUrl(brokerUrl);
+      cy.assertUrl(creditControlUrl);
     });
   });
 

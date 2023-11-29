@@ -1,55 +1,18 @@
 import { FIELD_IDS } from '../../../../constants';
-import { LINKS } from '../../..';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 
 const {
-  COMPANIES_HOUSE_NUMBER,
-  COMPANY_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS },
-  YOUR_COMPANY: { TRADING_ADDRESS, TRADING_NAME, PHONE_NUMBER, WEBSITE },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK, EMPLOYEES_INTERNATIONAL },
+  YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
+  ALTERNATIVE_TRADING_ADDRESS,
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
 } = EXPORTER_BUSINESS;
 
 export const FIELDS = {
-  COMPANIES_HOUSE_NUMBER: {
-    [COMPANIES_HOUSE_NUMBER]: {
-      HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
-    },
-  },
   COMPANY_DETAILS: {
-    [COMPANY_NUMBER]: {
-      SUMMARY: {
-        TITLE: 'Companies House registration number',
-      },
-    },
-    [COMPANY_NAME]: {
-      SUMMARY: {
-        TITLE: 'Company name',
-      },
-    },
-    [COMPANY_ADDRESS]: {
-      SUMMARY: {
-        TITLE: 'Registered office address',
-      },
-    },
-    [COMPANY_INCORPORATED]: {
-      SUMMARY: {
-        TITLE: 'Date incorporated',
-      },
-    },
-    [COMPANY_SIC]: {
-      SUMMARY: {
-        TITLE: 'Standard industry classification (SIC) codes and nature of business',
-      },
-    },
-    [FINANCIAL_YEAR_END_DATE]: {
-      SUMMARY: {
-        TITLE: 'Financial year end date',
-      },
-    },
-    [TRADING_NAME]: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
         TITLE: 'Different trading name?',
       },
@@ -70,10 +33,13 @@ export const FIELDS = {
       },
     },
   },
+  [ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?",
+  },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
-      LABEL: 'What goods or services does your company supply?',
-      HINT: 'Give a general overview rather than just the exports you want to insure',
+      LABEL: 'Tell us about your business',
+      HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
       },
@@ -87,16 +53,9 @@ export const FIELDS = {
       },
     },
     [EMPLOYEES_UK]: {
-      LEGEND: 'How many employees do you have?',
-      LABEL: 'In the UK',
+      LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
         TITLE: 'UK employees',
-      },
-    },
-    [EMPLOYEES_INTERNATIONAL]: {
-      LABEL: 'Worldwide including UK',
-      SUMMARY: {
-        TITLE: 'Worldwide employees including UK employees',
       },
     },
   },

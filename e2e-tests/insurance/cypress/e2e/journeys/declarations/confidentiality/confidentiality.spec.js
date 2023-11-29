@@ -24,7 +24,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my export insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my export insurance application', () => {
+context('Insurance - Declarations - Confidentiality page - As an Exporter, I want to make confidentiality declaration for my credit insurance application, So that UKEF can be assured of my agreement with regards to confidentiality while processing my credit insurance application', () => {
   let referenceNumber;
   let url;
 

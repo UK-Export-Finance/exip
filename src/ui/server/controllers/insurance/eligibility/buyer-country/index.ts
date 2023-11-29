@@ -26,15 +26,6 @@ const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
 export const get = async (req: Request, res: Response) => {
   try {
-    const { submittedData } = req.session;
-
-    if (!submittedData || !objectHasProperty(submittedData, 'insuranceEligibility')) {
-      req.session.submittedData = {
-        ...req.session.submittedData,
-        insuranceEligibility: {},
-      };
-    }
-
     const countries = await api.keystone.APIM.getCisCountries();
 
     if (!isPopulatedArray(countries)) {
@@ -84,9 +75,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const mappedCountries = mapCountries(countries);
-
     if (validationErrors) {
+      const mappedCountries = mapCountries(countries);
+
       return res.render(TEMPLATE, {
         ...singleInputPageVariables({
           ...PAGE_VARIABLES,
@@ -106,19 +97,19 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
     }
 
-    if (country.canApplyOnline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.canApplyForInsuranceOnline) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
         insuranceEligibility: updateSubmittedData(populatedData, req.session.submittedData.insuranceEligibility),
       };
 
-      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION);
+      return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED);
     }
 
-    if (country.canApplyOffline) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.canApplyForInsuranceOffline) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,
@@ -128,8 +119,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.INSURANCE.APPLY_OFFLINE);
     }
 
-    if (country.cannotApply) {
-      const populatedData = mapSubmittedEligibilityCountry(country, country.canApplyOnline);
+    if (country.noInsuranceSupport) {
+      const populatedData = mapSubmittedEligibilityCountry(country);
 
       req.session.submittedData = {
         ...req.session.submittedData,

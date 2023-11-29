@@ -1,4 +1,5 @@
 import applicationSubmittedPage from '../../../../../pages/insurance/applicationSubmitted';
+import { intro } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -6,7 +7,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.APPLICATION_SUBMITTED;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ELIGIBILITY: { BUYER_COUNTRY },
+  ELIGIBILITY: { EXPORTER_LOCATION },
   DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED },
   APPLICATION_SUBMITTED,
   FEEDBACK,
@@ -68,7 +69,7 @@ context('Insurance - application submitted page', () => {
     });
 
     it('renders intro copy', () => {
-      cy.checkText(applicationSubmittedPage.intro(), CONTENT_STRINGS.INTRO);
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     describe('what happens next', () => {
@@ -117,15 +118,15 @@ context('Insurance - application submitted page', () => {
         it('renders a link', () => {
           cy.checkLink(
             selector(),
-            BUYER_COUNTRY,
+            EXPORTER_LOCATION,
             CONTENT_STRINGS.ACTIONS.START_NEW_APPLICATION.TEXT,
           );
         });
 
-        it(`should redirect to ${BUYER_COUNTRY}`, () => {
+        it(`should redirect to ${EXPORTER_LOCATION}`, () => {
           selector().click();
 
-          const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
+          const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
           cy.assertUrl(expectedUrl);
         });
       });

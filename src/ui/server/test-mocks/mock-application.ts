@@ -6,6 +6,7 @@ import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import mockContact from './mock-contact';
+import companyMock from './mock-company';
 import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
@@ -46,9 +47,7 @@ export const mockOwner = {
 
 export const mockCompany = {
   id: 'clcyyopn40148m8noyar9wxrn',
-  companyName: 'Test Name',
-  companyNumber: '0123456',
-  companyWebsite: '',
+  ...companyMock,
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
   dateOfCreation: '2014-04-10T00:00:00.000Z',
@@ -56,6 +55,7 @@ export const mockCompany = {
     {
       id: 'clcyyxldc0634m8novkr94spo',
       sicCode: '64999',
+      industrySectorName: 'Mock industry',
     },
   ],
   registeredOfficeAddress: {
@@ -71,17 +71,16 @@ export const mockCompany = {
     __typename: 'CompanyAddress',
   },
   financialYearEndDate: new Date(),
-  __typename: 'Company',
 };
 
 export const mockBusiness = {
   id: 'clcyyopna0158m8noaglyy9gg',
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: '20',
-  totalEmployeesInternational: '1000',
   totalEmployeesUK: '400',
   estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '20',
+  hasCreditControlProcess: true,
 };
 
 export const mockBroker = {

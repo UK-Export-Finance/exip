@@ -1,5 +1,5 @@
-import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -23,11 +23,10 @@ const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.buyer;
-
 const baseUrl = Cypress.config('baseUrl');
+
+const { taskList } = partials.insurancePartials;
+const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your Buyer - Company or organisation page - form validation - address', () => {
   let referenceNumber;

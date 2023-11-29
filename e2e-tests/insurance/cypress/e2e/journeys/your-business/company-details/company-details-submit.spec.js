@@ -1,9 +1,8 @@
 import { companyDetails } from '../../../../../../pages/your-business';
 import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import partials from '../../../../../../partials';
 import {
-  INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
+  INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -11,7 +10,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      TRADING_NAME,
+      HAS_DIFFERENT_TRADING_NAME,
       TRADING_ADDRESS,
       WEBSITE,
       PHONE_NUMBER,
@@ -23,15 +22,11 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS,
-    NATURE_OF_BUSINESS,
+    NATURE_OF_BUSINESS_ROOT,
   },
 } = INSURANCE_ROUTES;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const INVALID_PHONE_NUMBER = INVALID_PHONE_NUMBERS.LANDLINE.LONG;
 
@@ -49,11 +44,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
-      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS}`;
+      natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber, companiesHouseNumber: COMPANIES_HOUSE_NUMBER });
+      cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);
     });
@@ -76,14 +71,14 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
   describe('all page errors', () => {
     it('should display the validation error for trading name in radio error summary', () => {
-      const field = companyDetails[TRADING_NAME];
+      const field = companyDetails[HAS_DIFFERENT_TRADING_NAME];
 
       const radioField = {
         ...field,
         input: field.yesRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_NAME].IS_EMPTY);
+      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY);
     });
 
     it('should display the validation error for trading address in radio error summary', () => {

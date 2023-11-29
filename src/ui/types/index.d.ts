@@ -5,7 +5,6 @@ import {
   ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicy,
-  ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
@@ -17,8 +16,8 @@ import {
   ApplicationPolicyContact,
 } from './application';
 import { ApolloResponse } from './apollo';
-import { CompanyDetails, SicCode } from './company-details';
-import { CompanyHouseResponse } from './company-house-response';
+import { Company } from './company';
+import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
 import { Currency } from './currency';
@@ -29,6 +28,7 @@ import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibilit
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
 import { SelectOption } from './select-option';
+import { SicCode } from './sic-code';
 import {
   SubmittedDataQuoteEligibility,
   InsuranceEligibility,
@@ -60,7 +60,6 @@ export {
   ApplicationFlat,
   ApplicationPolicy,
   ApplicationCompany,
-  ApplicationExporterSicCodes,
   ApplicationExporterindustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
@@ -71,8 +70,8 @@ export {
   ApolloResponse,
   ApplicationOwner,
   ApplicationPolicyContact,
-  CompanyDetails,
-  CompanyHouseResponse,
+  Company,
+  CompaniesHouseResponse,
   Connect,
   CorePageVariablesInitialInput,
   CorePageVariablesInput,
@@ -85,6 +84,7 @@ export {
   InsuranceEligibilityCore,
   InsuranceFeedbackVariables,
   Next,
+  Object,
   PageContentStrings,
   PageVariablesContentStrings,
   PricingGrid,

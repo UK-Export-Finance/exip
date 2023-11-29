@@ -3,19 +3,23 @@ import {
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
-import { completeStartForm, completeCheckIfEligibleForm, completeExporterLocationForm } from '../../../../../../commands/insurance/eligibility/forms';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CANNOT_APPLY;
 
-context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF export insurance cover - submit `no - UK goods/services is below the minimum`', () => {
+context('Insurance - UK goods or services page - as an exporter, I want to check if my export value is eligible for UKEF credit insurance cover - submit `no - UK goods/services is below the minimum`', () => {
   beforeEach(() => {
     cy.navigateToUrl(ROUTES.INSURANCE.START);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
+    cy.completeCompaniesHouseNumberForm();
+    cy.completeAndSubmitCompaniesHouseSearchForm({});
+    cy.completeEligibilityCompanyDetailsForm();
     completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
+    cy.completeAndSubmitTotalValueInsuredForm({});
+    cy.completeCoverPeriodForm({});
 
     noRadio().input().click();
     submitButton().click();

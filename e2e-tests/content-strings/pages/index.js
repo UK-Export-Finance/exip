@@ -1,5 +1,6 @@
 import QUOTE_PAGES from './quote';
 import INSURANCE_PAGES from './insurance';
+import { ACTIONS } from '../actions';
 import { LINKS } from '../links';
 import { CONTACT_DETAILS, ROUTES } from '../../constants';
 import { CUSTOMER_SERVICE_CONTACT_DETAILS } from '../contact';
@@ -9,7 +10,7 @@ const BUYER_COUNTRY = {
 };
 
 const EXPORTER_LOCATION = {
-  PAGE_TITLE: 'Are you exporting from a business base inside the UK, Channel Islands or Isle of Man?',
+  PAGE_TITLE: 'Are you exporting from the UK, Channel Islands or Isle of Man?',
 };
 
 const UK_GOODS_OR_SERVICES = {
@@ -17,36 +18,20 @@ const UK_GOODS_OR_SERVICES = {
 };
 
 const CANNOT_APPLY = {
-  PAGE_TITLE: 'You cannot apply for UKEF export insurance',
+  PAGE_TITLE: 'You cannot apply for UKEF credit insurance',
   REASON: {
     INTRO: 'This is because',
-    UNSUPPORTED_COMPANY_COUNTRY: 'your company is not based in the UK, Channel Islands or Isle of Man.',
+    UNSUPPORTED_COMPANY_COUNTRY: "you're not exporting from a business base in the UK, Channel Islands or Isle of Man.We can only provide cover for UK businesses.",
     UNSUPPORTED_BUYER_COUNTRY_1: 'your buyer is based in',
     UNSUPPORTED_BUYER_COUNTRY_2: 'which we cannot provide cover for.',
     NOT_ENOUGH_UK_GOODS_OR_SERVICES: 'your export contract value is not made up from at least 20% UK goods or services.',
   },
-  ACTIONS: {
-    INTRO: 'You can:',
-    ELIGIBILITY: {
-      TEXT: 'read about',
-      LINK: {
-        TEXT: 'eligibility',
-        HREF: LINKS.EXTERNAL.GUIDANCE,
-      },
-    },
-    CONTACT_APPROVED_BROKER: {
-      LINK: {
-        TEXT: 'contact an approved broker',
-        HREF: LINKS.EXTERNAL.APPROVED_BROKER_LIST,
-      },
-      TEXT: 'who may be able to help you get insurance from the private sector, if you`ve not tried already',
-    },
-  },
+  ACTIONS,
 };
 
 const ACCESSIBILITY_STATEMENT_PAGE = {
-  PAGE_TITLE: 'Apply for export insurance - accessibility statement',
-  HEADING: 'Apply for export insurance - accessibility statement',
+  PAGE_TITLE: 'Apply for credit insurance - accessibility statement',
+  HEADING: 'Apply for credit insurance - accessibility statement',
   USING_OUR_SERVICE: {
     HEADING: 'Using our service',
     INTRO: 'This service is run by UK Export Finance. We want as many people as possible to use this service. For example, that means you should be able to:',

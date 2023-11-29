@@ -28,7 +28,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const field = singleInputField(FIELD_ID);
 
-context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my export insurance application", () => {
+context("Insurance - Declarations - Confirmation and acknowledgements page - As an Exporter, I want the system to provide the details of my application's confirmation and acknowledgement, So that, I can readily confirm my credit insurance application", () => {
   let referenceNumber;
   let url;
 

@@ -12,7 +12,7 @@ context("Insurance - Eligibility - You are eligible to apply online page - user 
       // start new application/eligibility flow
       dashboardPage.startNewApplicationButton().click();
 
-      cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
+      cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
     });
   });
 

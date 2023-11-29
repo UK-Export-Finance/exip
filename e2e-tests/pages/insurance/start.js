@@ -1,5 +1,4 @@
 const startPage = {
-  intro: () => cy.get('[data-cy="intro"]'),
   list: {
     intro: () => cy.get('[data-cy="list-intro"]'),
     item1: () => cy.get('[data-cy="list-item-1"]'),

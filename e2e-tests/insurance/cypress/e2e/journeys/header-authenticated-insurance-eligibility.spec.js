@@ -25,6 +25,6 @@ context('Insurance - header - authenticated - complete insurance eligibility', (
   });
 
   it('should render an authenticated header in each insurance eligibility page', () => {
-    cy.submitInsuranceEligibilityAnswersFromBuyerCountryHappyPath();
+    cy.submitInsuranceEligibilityAnswersFromExporterLocationHappyPath();
   });
 });

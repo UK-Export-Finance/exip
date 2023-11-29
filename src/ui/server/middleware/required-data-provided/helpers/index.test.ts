@@ -88,7 +88,7 @@ describe('middleware/required-data-provided/helpers', () => {
           },
         };
 
-        const result = hasRequiredData(INSURANCE.ELIGIBILITY.EXPORTER_LOCATION, mockRequiredDataState, mockSubmittedData);
+        const result = hasRequiredData(INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE, mockRequiredDataState, mockSubmittedData);
 
         expect(result).toEqual(false);
       });

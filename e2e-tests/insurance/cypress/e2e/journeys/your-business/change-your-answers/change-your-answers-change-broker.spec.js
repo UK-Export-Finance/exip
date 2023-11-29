@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { brokerPage } from '../../../../../../pages/your-business';
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -27,10 +26,6 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 context('Insurance - Your business - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let url;
@@ -39,12 +34,12 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompaniesHouseSearchForm({ referenceNumber });
-      cy.completeAndSubmitCompanyDetails();
+      cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
+      cy.completeAndSubmitCreditControlForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

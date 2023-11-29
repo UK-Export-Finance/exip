@@ -2,8 +2,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { DATE_ONE_MINUTE_IN_THE_PAST } from '../../../../../../../constants/dates';
 import { PAGES, BUTTONS } from '../../../../../../../content-strings';
-import { linkExpiredPage } from '../../../../../../../pages/insurance/account/suspended';
-import { submitButton } from '../../../../../../../pages/shared';
+import { body, submitButton } from '../../../../../../../pages/shared';
 import api from '../../../../../../../commands/api';
 
 const {
@@ -78,7 +77,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an expired 
       });
 
       cy.checkText(
-        linkExpiredPage.body(),
+        body(),
         CONTENT_STRINGS.BODY,
       );
 

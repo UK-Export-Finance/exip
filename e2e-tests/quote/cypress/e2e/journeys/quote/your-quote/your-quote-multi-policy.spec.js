@@ -36,7 +36,7 @@ const submissionData = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Get a quote/your quote page (multiple policy) - as an exporter, I want to get an Export insurance quote', () => {
+context('Get a quote/your quote page (multiple policy) - as an exporter, I want to get an Credit insurance quote', () => {
   const url = `${baseUrl}${YOUR_QUOTE}`;
 
   before(() => {

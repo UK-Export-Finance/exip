@@ -1,4 +1,4 @@
-import { SHARED } from '../../shared';
+import SHARED from '../../shared';
 
 export const SHARED_CONTRACT_POLICY = {
   REQUESTED_START_DATE: 'requestedStartDate',

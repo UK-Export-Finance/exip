@@ -4,45 +4,26 @@ import {
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import {
-  completeStartForm,
-  completeCheckIfEligibleForm,
-  completeExporterLocationForm,
-  completeUkGoodsAndServicesForm,
-  completeInsuredAmountForm,
-  completeInsuredPeriodForm,
-  completeOtherPartiesForm,
-  completeLetterOfCreditForm,
-  completePreCreditPeriodForm,
-} from '../../../../../../commands/insurance/eligibility/forms';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
+const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER;
 
 const {
-  ELIGIBILITY: { COMPANIES_HOUSE_NUMBER: FIELD_ID },
+  ELIGIBILITY: { HAS_COMPANIES_HOUSE_NUMBER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
 
-context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I do not have UK Companies House Registration Number', () => {
-  let url;
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Eligibility - Companies house number page - I want to check if I can use online service to apply for UKEF Export Insurance Policy for my export transaction if I have UK Companies House Registration Number', () => {
+  const url = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
 
   before(() => {
     cy.navigateToUrl(insuranceStartRoute);
 
-    completeStartForm();
-    completeCheckIfEligibleForm();
-    completeAndSubmitBuyerCountryForm();
-    completeExporterLocationForm();
-    completeUkGoodsAndServicesForm();
-    completeInsuredAmountForm();
-    completeInsuredPeriodForm();
-    completeOtherPartiesForm();
-    completeLetterOfCreditForm();
-    completePreCreditPeriodForm();
-
-    url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`;
+    cy.completeStartForm();
+    cy.completeCheckIfEligibleForm();
+    cy.completeExporterLocationForm();
 
     cy.assertUrl(url);
   });
@@ -55,7 +36,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER,
-      backLink: ROUTES.INSURANCE.ELIGIBILITY.PRE_CREDIT_PERIOD,
+      backLink: ROUTES.INSURANCE.ELIGIBILITY.EXPORTER_LOCATION,
       assertAuthenticatedHeader: false,
     });
   });
@@ -108,8 +89,8 @@ context('Insurance - Eligibility - Companies house number page - I want to check
         submitButton().click();
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`, () => {
-        const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE}`;
+      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`, () => {
+        const expected = `${baseUrl}${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`;
 
         cy.assertUrl(expected);
       });
