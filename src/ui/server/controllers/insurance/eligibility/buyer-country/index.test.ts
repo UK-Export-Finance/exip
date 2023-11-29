@@ -1,6 +1,7 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -13,7 +14,11 @@ import { updateSubmittedData } from '../../../../helpers/update-submitted-data/i
 import { Country, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockSession, mockCountries } from '../../../../test-mocks';
 
-const { PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
+const {
+  PROBLEM_WITH_SERVICE,
+  APPLY_OFFLINE,
+  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, TOTAL_VALUE_INSURED, BUYER_COUNTRY_CHANGE, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/buyer-country', () => {
   let req: Request;
@@ -164,10 +169,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = 'Country not in the mock response';
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${CANNOT_APPLY_ROUTE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_ROUTE);
       });
     });
 
@@ -203,10 +208,21 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED}`, async () => {
+      it(`should redirect to ${TOTAL_VALUE_INSURED}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.TOTAL_VALUE_INSURED);
+        expect(res.redirect).toHaveBeenCalledWith(TOTAL_VALUE_INSURED);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = BUYER_COUNTRY_CHANGE;
+
+          await post(req, res);
+
+          const expected = CHECK_YOUR_ANSWERS;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
@@ -238,10 +254,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.APPLY_OFFLINE}`, async () => {
+      it(`should redirect to ${APPLY_OFFLINE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.APPLY_OFFLINE);
+        expect(res.redirect).toHaveBeenCalledWith(APPLY_OFFLINE);
       });
     });
 
@@ -284,10 +300,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         expect(req.flash).toHaveBeenCalledWith('exitReason', expectedReason);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${CANNOT_APPLY_ROUTE}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY_ROUTE);
       });
     });
 

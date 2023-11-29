@@ -115,7 +115,9 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
         // check the change link
         summaryList.field(TOTAL_CONTRACT_VALUE).changeLink().click();
-        cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE, TOTAL_CONTRACT_VALUE, 'label');
+        cy.assertChangeAnswersPageUrl({
+          referenceNumber, route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: TOTAL_CONTRACT_VALUE, fragmentSuffix: 'label',
+        });
       });
     });
   });

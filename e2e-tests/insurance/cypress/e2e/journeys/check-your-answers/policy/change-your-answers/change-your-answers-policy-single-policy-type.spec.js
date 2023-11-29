@@ -112,7 +112,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -156,7 +156,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -195,7 +195,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -234,7 +234,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -273,7 +273,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer and retain a `completed` status tag', () => {

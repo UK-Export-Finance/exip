@@ -1,11 +1,17 @@
 import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
+
+const {
+  ELIGIBILITY: { CANNOT_APPLY: CANNOT_APPLY_ROUTE, END_BUYER, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
@@ -51,7 +57,7 @@ export const post = (req: Request, res: Response) => {
 
     req.flash('exitReason', REASON.NOT_ENOUGH_UK_GOODS_OR_SERVICES);
 
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+    return res.redirect(CANNOT_APPLY_ROUTE);
   }
 
   req.session.submittedData = {
@@ -59,5 +65,9 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.END_BUYER);
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(CHECK_YOUR_ANSWERS);
+  }
+
+  return res.redirect(END_BUYER);
 };

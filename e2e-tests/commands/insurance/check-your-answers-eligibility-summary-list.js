@@ -23,50 +23,50 @@ const checkYourAnswersEligibilitySummaryList = ({
   [BUYER_COUNTRY]: () => {
     const fieldId = BUYER_COUNTRY;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = country.NAME;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [VALID_EXPORTER_LOCATION]: () => {
     const fieldId = VALID_EXPORTER_LOCATION;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.YES;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: () => {
     const fieldId = HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELDS[HAS_MINIMUM_UK_GOODS_OR_SERVICES].ANSWER;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [TOTAL_CONTRACT_VALUE]: () => {
     const fieldId = TOTAL_CONTRACT_VALUE;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELDS[fieldId].SUMMARY.BELOW;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [COVER_PERIOD]: () => {
     const fieldId = COVER_PERIOD;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELDS[fieldId].OPTIONS.BELOW.TEXT;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [HAS_COMPANIES_HOUSE_NUMBER]: () => {
     const fieldId = HAS_COMPANIES_HOUSE_NUMBER;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.YES;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [COMPANY_NAME]: () => {
     const fieldId = COMPANY_NAME;
@@ -79,18 +79,18 @@ const checkYourAnswersEligibilitySummaryList = ({
   [COMPANIES_HOUSE_NUMBER]: () => {
     const fieldId = COMPANIES_HOUSE_NUMBER;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = COMPANY[COMPANIES_HOUSE_NUMBER];
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [HAS_END_BUYER]: () => {
     const fieldId = HAS_END_BUYER;
 
-    const { expectedKey } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.NO;
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
 });
 

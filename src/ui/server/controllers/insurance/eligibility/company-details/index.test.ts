@@ -9,7 +9,7 @@ import { Request, Response } from '../../../../../types';
 import { mockCompany, mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, NEED_TO_START_AGAIN, ENTER_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { COMPANY_DETAILS_CHANGE, BUYER_COUNTRY, NEED_TO_START_AGAIN, ENTER_COMPANIES_HOUSE_NUMBER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/company-details', () => {
@@ -72,6 +72,17 @@ describe('controllers/insurance/eligibility/company-details', () => {
       post(req, res);
 
       expect(res.redirect).toHaveBeenCalledWith(BUYER_COUNTRY);
+    });
+  });
+
+  describe("when the url's last substring is `change`", () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      req.originalUrl = COMPANY_DETAILS_CHANGE;
+
+      await post(req, res);
+
+      const expected = CHECK_YOUR_ANSWERS;
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
   });
 });

@@ -107,7 +107,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -145,7 +145,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -184,7 +184,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -223,7 +223,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -262,7 +262,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -301,7 +301,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, TYPE_OF_POLICY, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
         });
 
         it('should render the new answer', () => {

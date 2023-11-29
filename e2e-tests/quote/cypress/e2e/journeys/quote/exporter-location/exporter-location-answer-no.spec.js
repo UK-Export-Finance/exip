@@ -19,7 +19,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
 
     cy.assertUrl(url);

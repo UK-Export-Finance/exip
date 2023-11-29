@@ -20,7 +20,7 @@ context('Policy type page - policy type & length validation - single policy type
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();

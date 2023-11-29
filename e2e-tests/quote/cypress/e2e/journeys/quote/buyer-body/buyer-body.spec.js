@@ -27,7 +27,7 @@ const url = `${baseUrl}${BUYER_BODY}`;
 context('Buyer body page - as an exporter, I want to check if I can get an EXIP online quote for my buyers country', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     cy.assertUrl(url);
   });

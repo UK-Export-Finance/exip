@@ -19,7 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Get a Quote - Need to start again exit page', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
 
     cy.navigateToUrl(TELL_US_ABOUT_YOUR_POLICY);

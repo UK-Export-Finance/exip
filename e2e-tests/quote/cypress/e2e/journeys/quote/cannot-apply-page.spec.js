@@ -17,7 +17,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Cannot apply exit page', () => {
   beforeEach(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 

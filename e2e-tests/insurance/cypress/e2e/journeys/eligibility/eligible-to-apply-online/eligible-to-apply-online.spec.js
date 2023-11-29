@@ -30,7 +30,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeCoverPeriodForm({});
     cy.completeUkGoodsAndServicesForm();

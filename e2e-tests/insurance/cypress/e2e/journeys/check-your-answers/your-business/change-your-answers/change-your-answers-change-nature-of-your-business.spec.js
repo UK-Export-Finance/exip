@@ -97,7 +97,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -136,7 +136,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -175,7 +175,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer', () => {

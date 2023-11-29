@@ -125,7 +125,9 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
         // check the change link
         summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
-        cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, MAXIMUM_BUYER_WILL_OWE, 'label');
+        cy.assertChangeAnswersPageUrl({
+          referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
+        });
       });
     });
   });

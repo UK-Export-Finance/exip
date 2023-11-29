@@ -32,7 +32,7 @@ context('Insurance - Eligibility - Long term cover page - I want to check if I c
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeCoverPeriodForm({ underThreshold: false });
 

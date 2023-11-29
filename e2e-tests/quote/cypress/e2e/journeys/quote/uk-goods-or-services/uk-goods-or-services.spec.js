@@ -32,7 +32,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
 

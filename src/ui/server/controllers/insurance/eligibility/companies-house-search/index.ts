@@ -12,6 +12,7 @@ import companiesHouse from '../../../../helpers/companies-house-search';
 import mapCompaniesHouseData from '../../../../helpers/mappings/map-companies-house-data';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { CompaniesHouseResponse, Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
   ELIGIBILITY: {
@@ -132,6 +133,10 @@ export const post = async (req: Request, res: Response) => {
       ...req.session.submittedData,
       insuranceEligibility: updateSubmittedData(sessionUpdate, req.session.submittedData.insuranceEligibility),
     };
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${COMPANY_DETAILS}/change`);
+    }
 
     return res.redirect(COMPANY_DETAILS);
   } catch (err) {

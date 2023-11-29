@@ -38,7 +38,7 @@ context('Insurance - Cover period page - I want to enter the length of my export
     cy.completeCompaniesHouseNumberForm();
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     cy.completeAndSubmitTotalValueInsuredForm({});
 
     url = `${baseUrl}${COVER_PERIOD_ROUTE}`;

@@ -74,7 +74,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, NAME);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: NAME });
       });
     });
 
@@ -92,7 +92,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -110,7 +110,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, ADDRESS);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: ADDRESS });
       });
     });
 
@@ -128,7 +128,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -156,7 +156,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, REGISTRATION_NUMBER);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: REGISTRATION_NUMBER });
       });
     });
 
@@ -174,7 +174,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -192,7 +192,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, WEBSITE);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: WEBSITE });
       });
     });
 
@@ -210,7 +210,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -228,7 +228,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, FIRST_NAME);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: FIRST_NAME });
       });
     });
 
@@ -250,7 +250,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -281,7 +281,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, COMPANY_OR_ORGANISATION_CHANGE, CAN_CONTACT_BUYER);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_OR_ORGANISATION_CHANGE, fieldId: CAN_CONTACT_BUYER });
       });
     });
 
@@ -297,7 +297,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {

@@ -29,7 +29,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
   before(() => {
     cy.login();
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
     completeAndSubmitBuyerBodyForm();
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
