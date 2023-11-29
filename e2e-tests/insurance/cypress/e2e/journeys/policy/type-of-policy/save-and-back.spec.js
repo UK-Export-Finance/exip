@@ -61,7 +61,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
 
       saveAndBackButton().click();
 
-      task.link().click();
+      cy.startInsurancePolicySection();
 
       multiplePolicyField.input().click();
       saveAndBackButton().click();
@@ -81,7 +81,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
 
     describe('when going back to the page', () => {
       it('should have the originally submitted answer selected', () => {
-        task.link().click();
+        cy.startInsurancePolicySection();
 
         multiplePolicyField.input().should('be.checked');
       });

@@ -100,7 +100,7 @@ context('Insurance - Policy - About goods or services page - Save and go back', 
       saveAndBackButton().click();
 
       // go back to the page via the task list
-      task.link().click();
+      cy.startInsurancePolicySection();
       submitButton().click();
       submitButton().click();
 
@@ -137,7 +137,7 @@ context('Insurance - Policy - About goods or services page - Save and go back', 
 
     it('should have no value in `description` when going back to the page', () => {
       // go back to the page via the task list
-      task.link().click();
+      cy.startInsurancePolicySection();
       submitButton().click();
       submitButton().click();
 

@@ -104,7 +104,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
 
         saveAndBackButton().click();
 
-        taskList.prepareApplication.tasks.policy.link().click();
+        cy.startInsurancePolicySection();
 
         submitButton().click();
       });
@@ -144,7 +144,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
 
         saveAndBackButton().click();
 
-        taskList.prepareApplication.tasks.policy.link().click();
+        cy.startInsurancePolicySection();
         submitButton().click();
       });
 
@@ -195,7 +195,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
         field.input().clear();
         saveAndBackButton().click();
 
-        task.link().click();
+        cy.startInsurancePolicySection();
         submitButton().click();
       });
 

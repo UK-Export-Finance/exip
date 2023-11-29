@@ -101,9 +101,7 @@ context('Insurance - Dashboard - populated application', () => {
       table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy' section via task list
-      const task = taskList.prepareApplication.tasks.policy;
-
-      task.link().click();
+      cy.startInsurancePolicySection();
 
       // complete the first form - single contract policy
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -131,9 +129,7 @@ context('Insurance - Dashboard - populated application', () => {
       table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy' section via task list
-      const task = taskList.prepareApplication.tasks.policy;
-
-      task.link().click();
+      cy.startInsurancePolicySection();
 
       // complete the first form - single contract policy
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);

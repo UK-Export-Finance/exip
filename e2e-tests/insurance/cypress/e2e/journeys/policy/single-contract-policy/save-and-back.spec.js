@@ -108,7 +108,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should not have saved the submitted values  going back to the page', () => {
-      task.link().click();
+      cy.startInsurancePolicySection();
       submitButton().click();
 
       field.dayInput().should('have.value', '');
@@ -141,7 +141,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should have the submitted values when going back to the page', () => {
-      task.link().click();
+      cy.startInsurancePolicySection();
       submitButton().click();
 
       field.dayInput().should('have.value', '1');
@@ -178,7 +178,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should have no value in `buyer credit period` when going back to the page', () => {
-      task.link().click();
+      cy.startInsurancePolicySection();
       submitButton().click();
 
       field.input().should('have.value', '');

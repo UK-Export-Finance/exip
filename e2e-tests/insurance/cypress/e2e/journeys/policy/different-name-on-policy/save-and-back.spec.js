@@ -143,7 +143,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     });
 
     it('should have the originally submitted answers populated when going back to the page through policy and exports flow', () => {
-      task.link().click();
+      cy.startInsurancePolicySection();
 
       submitButton().click();
       submitButton().click();
