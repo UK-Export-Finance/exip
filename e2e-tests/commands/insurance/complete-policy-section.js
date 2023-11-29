@@ -10,6 +10,8 @@ const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
  * @param {Boolean} sameName - if sameName on policy - defaults to true
  */
 const completePolicySection = ({ policyType = SINGLE, sameName = true }) => {
+  cy.startInsurancePolicySection();
+
   cy.completeAndSubmitPolicyTypeForm(policyType);
 
   if (policyType === SINGLE) {

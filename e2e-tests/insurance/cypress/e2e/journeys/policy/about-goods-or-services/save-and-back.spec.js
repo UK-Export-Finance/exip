@@ -37,8 +37,7 @@ context('Insurance - Policy - About goods or services page - Save and go back', 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
       cy.completeAndSubmitSingleContractPolicyForm({});

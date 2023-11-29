@@ -1,6 +1,5 @@
 import { submitButton, summaryList, countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -21,9 +20,6 @@ const {
   },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.policy;
-
 const NEW_COUNTRY_INPUT = COUNTRIES[0].NAME;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -35,8 +31,6 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({});
 

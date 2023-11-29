@@ -10,6 +10,8 @@ const task = taskList.prepareApplication.tasks.policy;
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE;
 const multiplePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].multiple;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy - Type of policy page - Save and go back', () => {
   let referenceNumber;
   let url;
@@ -18,9 +20,9 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsurancePolicySection();
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
       cy.assertUrl(url);
     });
   });
@@ -41,7 +43,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -66,7 +68,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });

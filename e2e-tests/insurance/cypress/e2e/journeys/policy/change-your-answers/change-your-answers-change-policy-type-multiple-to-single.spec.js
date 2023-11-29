@@ -1,6 +1,5 @@
 import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { LINKS } from '../../../../../../content-strings';
@@ -30,9 +29,6 @@ const {
 
 const { CONTRACT_POLICY: { SINGLE: SINGLE_FIELD_STRINGS } } = FIELDS;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.policy;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Change your answers - Policy type - multiple to single', () => {
@@ -44,8 +40,6 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 

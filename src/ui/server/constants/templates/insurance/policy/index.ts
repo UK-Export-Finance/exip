@@ -1,4 +1,5 @@
 export const POLICY_TEMPLATES = {
+  ROOT: 'insurance/policy/index.njk',
   TYPE_OF_POLICY: 'insurance/policy/type-of-policy.njk',
   SINGLE_CONTRACT_POLICY: 'insurance/policy/single-contract-policy.njk',
   MULTIPLE_CONTRACT_POLICY: 'insurance/policy/multiple-contract-policy.njk',

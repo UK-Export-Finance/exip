@@ -5,8 +5,6 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const { taskList } = partials.insurancePartials;
-
 const {
   POLICY: {
     CONTRACT_POLICY: {
@@ -39,9 +37,9 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+
       const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(expectedUrl);

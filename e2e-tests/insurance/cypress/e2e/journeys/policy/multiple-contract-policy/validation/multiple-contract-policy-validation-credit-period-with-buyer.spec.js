@@ -5,8 +5,6 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
-const { taskList } = partials.insurancePartials;
-
 const multiplePolicyFieldId = INSURANCE_FIELD_IDS.POLICY.POLICY_TYPE;
 const multiplePolicyField = typeOfPolicyPage[multiplePolicyFieldId].multiple;
 
@@ -41,7 +39,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
+      cy.startInsurancePolicySection();
 
       multiplePolicyField.input().click();
       submitButton().click();

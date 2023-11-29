@@ -44,7 +44,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsurancePolicySection();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.TYPE_OF_POLICY}`;
 

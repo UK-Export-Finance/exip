@@ -1,12 +1,9 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY;
 
@@ -39,8 +36,7 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();

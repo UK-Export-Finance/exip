@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import requestedCoverStartDate from '../../../../../../../commands/insurance/requested-start-date-field';
@@ -7,8 +6,6 @@ const {
   ROOT,
   POLICY: { SINGLE_CONTRACT_POLICY },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
 
 const { checkValidation } = requestedCoverStartDate;
 
@@ -22,8 +19,7 @@ context('Insurance - Policy - Single contract policy page - form validation - re
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;

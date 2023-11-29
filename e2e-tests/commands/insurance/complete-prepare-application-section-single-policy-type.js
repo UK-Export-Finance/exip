@@ -1,10 +1,5 @@
 import { submitButton, startNowLink } from '../../pages/shared';
-import partials from '../../partials';
 import { FIELD_VALUES } from '../../constants';
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 /**
  * completePrepareYourApplicationSectionSingle
@@ -23,7 +18,7 @@ const completePrepareYourApplicationSectionSingle = ({
   policyMaximumValue = false,
   differentPolicyContact,
 }) => {
-  task.link().click();
+  cy.startInsurancePolicySection();
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
   cy.completeAndSubmitSingleContractPolicyForm({ policyMaximumValue });
