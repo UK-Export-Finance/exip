@@ -15,6 +15,8 @@ const {
 
 const fieldId = HAS_CREDIT_CONTROL;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Change your answers - Credit control - As an exporter, I want to change my answers to the credit control section', () => {
   let referenceNumber;
   let url;
@@ -31,7 +33,7 @@ context('Insurance - Your business - Change your answers - Credit control - As a
       cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -49,7 +51,7 @@ context('Insurance - Your business - Change your answers - Credit control - As a
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl(referenceNumber, CREDIT_CONTROL_CHANGE, HAS_CREDIT_CONTROL);
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CREDIT_CONTROL_CHANGE, fieldId });
     });
   });
 
@@ -63,7 +65,7 @@ context('Insurance - Your business - Change your answers - Credit control - As a
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
     });
 
     it('should render the new answer', () => {
