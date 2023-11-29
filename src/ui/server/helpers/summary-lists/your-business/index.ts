@@ -3,6 +3,7 @@ import generateYourCompanyFields from './your-company-fields';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateTurnoverFields from './turnover-fields';
 import { generateBrokerFields } from './broker-fields';
+import generateCreditControlFields from './credit-control-fields';
 import { ApplicationCompany, ApplicationBusiness, ApplicationBroker, SummaryListItemData } from '../../../../types';
 
 /**
@@ -24,6 +25,7 @@ const generateFields = (
     ...generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
     ...generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
+    ...generateCreditControlFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
   ] as Array<SummaryListItemData>;
 

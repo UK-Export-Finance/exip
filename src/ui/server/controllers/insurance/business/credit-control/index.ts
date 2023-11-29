@@ -1,4 +1,5 @@
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
+import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
@@ -7,11 +8,14 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/business';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { BROKER_ROOT, CREDIT_CONTROL_SAVE_AND_BACK: SAVE_AND_BACK },
+  EXPORTER_BUSINESS: { BROKER_ROOT, CREDIT_CONTROL_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -48,6 +52,7 @@ export const get = (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
       }),
+      FIELD_HINT: FIELDS[FIELD_ID].HINT,
       userName: getUserNameFromSession(req.session.user),
       application: application.business,
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
@@ -85,6 +90,7 @@ export const post = async (req: Request, res: Response) => {
           ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
         }),
+        FIELD_HINT: FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: payload,
@@ -100,6 +106,14 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);

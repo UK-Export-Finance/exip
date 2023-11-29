@@ -36,6 +36,7 @@ const EXPORTER_BUSINESS = {
     ESTIMATED_ANNUAL_TURNOVER: 'estimatedAnnualTurnover',
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
+  HAS_CREDIT_CONTROL: 'hasCreditControlProcess',
   BROKER: {
     HEADING: 'broker',
     USING_BROKER: 'isUsingBroker',

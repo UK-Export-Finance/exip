@@ -2,11 +2,13 @@ import partials from '../../../../../../partials';
 import {
   submitButton,
   saveAndBackButton,
+  yesNoRadioHint,
   yesRadioInput,
   yesRadio,
   noRadio,
 } from '../../../../../../pages/shared';
 import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
@@ -72,10 +74,11 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `yes` radio button', () => {
+    it('renders a `yes` radio button with a hint', () => {
       yesRadio().input().should('exist');
 
       cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+      cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
 
       cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
     });

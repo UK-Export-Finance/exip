@@ -22,6 +22,7 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      HAS_CREDIT_CONTROL,
       BROKER: {
         USING_BROKER,
         NAME,
@@ -107,6 +108,14 @@ const checkYourBusinessSummaryList = ({
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.TURNOVER);
     const expectedValue = `${application.EXPORTER_BUSINESS[fieldId]}%`;
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [HAS_CREDIT_CONTROL]: () => {
+    const fieldId = HAS_CREDIT_CONTROL;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = FIELD_VALUES.YES;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

@@ -5,8 +5,8 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateTurnoverFields from '.';
 import mapPercentage from '../../../map-percentage';
-import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
+import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 

@@ -26,6 +26,7 @@ const {
     ESTIMATED_ANNUAL_TURNOVER,
     PERCENTAGE_TURNOVER,
   },
+  HAS_CREDIT_CONTROL,
   BROKER: {
     USING_BROKER,
     NAME,
@@ -103,6 +104,10 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
     checkSummaryList[PERCENTAGE_TURNOVER]();
+  });
+
+  it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
+    checkSummaryList[HAS_CREDIT_CONTROL]();
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {
