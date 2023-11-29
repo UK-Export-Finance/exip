@@ -6,10 +6,6 @@ Include a summary of the changes and related feature(s) or issue(s).
 
 List all changes made to the codebase.
 
--
-
 ## Miscellaneous :heavy_plus_sign:
 
 List any additional fixes or improvements.
-
--
