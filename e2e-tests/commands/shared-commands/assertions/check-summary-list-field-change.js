@@ -8,7 +8,7 @@ export const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
 
   summaryList.field(fieldId).changeLink().click();
 
-  cy.assertChangeAnswersPageUrl(referenceNumber, route, fieldId);
+  cy.assertChangeAnswersPageUrl({ referenceNumber, route, fieldId });
 };
 
 /**

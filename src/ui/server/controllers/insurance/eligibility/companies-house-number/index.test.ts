@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
 
 const {
-  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { ENTER_COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER, CHECK_YOUR_ANSWERS, COMPANIES_HOUSE_NUMBER_CHANGE },
 } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/companies-house-number', () => {
@@ -82,10 +82,10 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
         };
       });
 
-      it(`should redirect to ${INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER}`, () => {
+      it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.ELIGIBILITY.NO_COMPANIES_HOUSE_NUMBER);
+        expect(res.redirect).toHaveBeenCalledWith(NO_COMPANIES_HOUSE_NUMBER);
       });
     });
 
@@ -117,6 +117,17 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(ENTER_COMPANIES_HOUSE_NUMBER);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = COMPANIES_HOUSE_NUMBER_CHANGE;
+
+          await post(req, res);
+
+          const expected = CHECK_YOUR_ANSWERS;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
   });

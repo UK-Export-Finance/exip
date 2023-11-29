@@ -1,7 +1,8 @@
 import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -9,6 +10,10 @@ import generateValidationErrors from '../../../../shared-validation/yes-no-radio
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes } from '../../../../test-mocks';
+
+const {
+  ELIGIBILITY: { EXPORTER_LOCATION_CHANGE, COMPANIES_HOUSE_NUMBER, CANNOT_APPLY, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/eligibility/exporter-location', () => {
   let req: Request;
@@ -115,10 +120,10 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         };
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY}`, async () => {
+      it(`should redirect to ${CANNOT_APPLY}`, async () => {
         await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.CANNOT_APPLY);
+        expect(res.redirect).toHaveBeenCalledWith(CANNOT_APPLY);
       });
 
       it('should add exitReason to req.flash', async () => {
@@ -153,10 +158,21 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         expect(req.session.submittedData).toEqual(expected);
       });
 
-      it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER}`, () => {
+      it(`should redirect to ${COMPANIES_HOUSE_NUMBER}`, () => {
         post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(ROUTES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
+        expect(res.redirect).toHaveBeenCalledWith(COMPANIES_HOUSE_NUMBER);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = EXPORTER_LOCATION_CHANGE;
+
+          await post(req, res);
+
+          const expected = CHECK_YOUR_ANSWERS;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
   });

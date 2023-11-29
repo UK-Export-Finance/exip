@@ -57,7 +57,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, GOODS_OR_SERVICES);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NATURE_OF_BUSINESS_CHANGE, fieldId: GOODS_OR_SERVICES });
       });
     });
 
@@ -75,7 +75,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -93,7 +93,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NATURE_OF_BUSINESS_CHANGE, fieldId });
       });
     });
 
@@ -111,7 +111,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -129,7 +129,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, NATURE_OF_BUSINESS_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NATURE_OF_BUSINESS_CHANGE, fieldId });
       });
     });
 
@@ -147,7 +147,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {

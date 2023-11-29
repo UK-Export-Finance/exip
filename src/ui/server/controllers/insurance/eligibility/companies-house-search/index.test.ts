@@ -22,7 +22,7 @@ const {
 const {
   PROBLEM_WITH_SERVICE,
   INSURANCE: {
-    ELIGIBILITY: { COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE },
+    ELIGIBILITY: { COMPANIES_HOUSE_NUMBER_CHANGE, COMPANY_DETAILS, COMPANY_NOT_ACTIVE, COMPANIES_HOUSE_UNAVAILABLE, COMPANY_DETAILS_CHANGE },
   },
 } = ROUTES;
 
@@ -163,6 +163,17 @@ describe('controllers/insurance/eligibility/companies-house-search', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(COMPANY_DETAILS);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, async () => {
+          req.originalUrl = COMPANIES_HOUSE_NUMBER_CHANGE;
+
+          await post(req, res);
+
+          const expected = COMPANY_DETAILS_CHANGE;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       describe('when companiesHouse.search returns isActive=false', () => {

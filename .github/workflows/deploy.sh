@@ -24,7 +24,7 @@ if [ -n "$selection" ]; then
     elif [ "$selection" = "1" ]
     then
     read destination
-    branch=main
+    branch=main-application-no-pdf
     ############### ACR PURGE ###############
     elif [ "$selection" = "2" ]
     then

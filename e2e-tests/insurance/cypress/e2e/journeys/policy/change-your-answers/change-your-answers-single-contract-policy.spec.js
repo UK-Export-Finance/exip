@@ -67,7 +67,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -89,7 +89,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         });
 
         it('should redirect to the check answers page', () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -109,7 +109,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -130,7 +130,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -150,7 +150,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -168,7 +168,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -188,7 +188,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -206,7 +206,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -226,7 +226,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, SINGLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -244,7 +244,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {

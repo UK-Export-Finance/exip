@@ -108,7 +108,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -129,7 +129,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHECK_AND_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -155,7 +155,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -209,7 +209,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -230,7 +230,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHECK_AND_CHANGE, USING_BROKER);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -246,7 +246,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUSINESS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
       });
 
       it('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {

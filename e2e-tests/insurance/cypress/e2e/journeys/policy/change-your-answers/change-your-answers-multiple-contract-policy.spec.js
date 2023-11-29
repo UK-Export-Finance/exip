@@ -69,7 +69,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -90,7 +90,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -110,7 +110,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -128,7 +128,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -148,7 +148,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -166,7 +166,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -186,7 +186,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -204,7 +204,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -224,7 +224,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -242,7 +242,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {
@@ -262,7 +262,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl(referenceNumber, MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -280,7 +280,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
         });
 
         it('should render the new answer', () => {

@@ -54,7 +54,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, TURNOVER_CHANGE, ESTIMATED_ANNUAL_TURNOVER);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TURNOVER_CHANGE, fieldId: ESTIMATED_ANNUAL_TURNOVER });
       });
     });
 
@@ -72,7 +72,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -90,7 +90,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, TURNOVER_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TURNOVER_CHANGE, fieldId });
       });
     });
 
@@ -108,7 +108,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {

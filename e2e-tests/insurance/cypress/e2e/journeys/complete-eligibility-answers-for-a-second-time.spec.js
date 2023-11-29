@@ -67,7 +67,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
 
     // buyer country question
     cy.checkValue(countryInput.field(BUYER_COUNTRY), '');
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     /**
      * total value insured question

@@ -99,7 +99,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -140,7 +140,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, YOUR_BUYER, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {

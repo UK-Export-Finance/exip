@@ -71,6 +71,7 @@ const mockCompanies = {
   [COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE]: {
     ...baseCompany,
     companyNumber: COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
+    [COMPANY_NAME]: 'EP CAPITAL PARTNERS LLP NO 16',
   },
 };
 

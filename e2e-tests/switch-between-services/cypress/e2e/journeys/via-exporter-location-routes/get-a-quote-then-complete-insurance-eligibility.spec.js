@@ -34,7 +34,7 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
   it('allows an exporter to get another quote when visiting the buyer country page directly', () => {
     cy.navigateToUrl(BUYER_COUNTRY);
 
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     const expectedUrl = `${baseUrl}${BUYER_BODY}`;
 

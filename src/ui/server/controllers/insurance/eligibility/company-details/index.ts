@@ -5,9 +5,10 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, NEED_TO_START_AGAIN, ENTER_COMPANIES_HOUSE_NUMBER },
+  ELIGIBILITY: { BUYER_COUNTRY, NEED_TO_START_AGAIN, ENTER_COMPANIES_HOUSE_NUMBER, ENTER_COMPANIES_HOUSE_NUMBER_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.COMPANY_DETAILS;
@@ -27,6 +28,11 @@ export const get = (req: Request, res: Response) => {
   }
 
   const { company } = req.session.submittedData.insuranceEligibility;
+  let enterCompaniesHouseNumberRoute = ENTER_COMPANIES_HOUSE_NUMBER;
+
+  if (isChangeRoute(req.originalUrl)) {
+    enterCompaniesHouseNumberRoute = ENTER_COMPANIES_HOUSE_NUMBER_CHANGE;
+  }
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
@@ -35,7 +41,7 @@ export const get = (req: Request, res: Response) => {
     }),
     userName: getUserNameFromSession(req.session.user),
     SUMMARY_LIST: companiesHouseSummaryList(company),
-    DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: ENTER_COMPANIES_HOUSE_NUMBER,
+    DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: enterCompaniesHouseNumberRoute,
   });
 };
 
@@ -46,4 +52,10 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow
  */
-export const post = (req: Request, res: Response) => res.redirect(BUYER_COUNTRY);
+export const post = (req: Request, res: Response) => {
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(CHECK_YOUR_ANSWERS);
+  }
+
+  return res.redirect(BUYER_COUNTRY);
+};

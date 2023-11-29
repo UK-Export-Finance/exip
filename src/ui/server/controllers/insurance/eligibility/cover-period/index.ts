@@ -1,5 +1,6 @@
 import { PAGES, ERROR_MESSAGES } from '../../../../content-strings';
-import { COVER_PERIOD, FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { COVER_PERIOD, FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { FIELDS_ELIGIBILITY as FIELDS } from '../../../../content-strings/fields/insurance/eligibility';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -7,6 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD;
 
@@ -18,6 +20,10 @@ export const PAGE_VARIABLES = {
     ...FIELDS[FIELD_ID],
   },
 };
+
+const {
+  ELIGIBILITY: { LONG_TERM_COVER, UK_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.COVER_PERIOD;
 
@@ -63,7 +69,7 @@ export const post = (req: Request, res: Response) => {
   const answer = Number(req.body[FIELD_ID]);
 
   if (answer !== COVER_PERIOD.LESS_THAN_2_YEARS.DB_ID) {
-    return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.LONG_TERM_COVER);
+    return res.redirect(LONG_TERM_COVER);
   }
 
   req.session.submittedData = {
@@ -71,5 +77,9 @@ export const post = (req: Request, res: Response) => {
     insuranceEligibility: updateSubmittedData({ [FIELD_ID]: answer }, req.session.submittedData.insuranceEligibility),
   };
 
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+  if (isChangeRoute(req.originalUrl)) {
+    return res.redirect(CHECK_YOUR_ANSWERS);
+  }
+
+  return res.redirect(UK_GOODS_OR_SERVICES);
 };

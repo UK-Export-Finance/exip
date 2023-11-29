@@ -17,7 +17,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
   before(() => {
     cy.login();
-    completeAndSubmitBuyerCountryForm();
+    completeAndSubmitBuyerCountryForm({});
 
     cy.assertUrl(url);
   });

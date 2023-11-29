@@ -66,6 +66,9 @@ Cypress.Commands.add('assertSummaryListRow', require('./assert-summary-list-row'
 Cypress.Commands.add('assertSummaryListRowKey', require('./assert-summary-list-row-key'));
 Cypress.Commands.add('assertSummaryListRowChangeText', require('./assert-summary-list-row-change-text'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
+Cypress.Commands.add('submitAndAssertSummaryListRowValue', require('./submit-and-assert-summary-list-row-value'));
+
+Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));
 
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 

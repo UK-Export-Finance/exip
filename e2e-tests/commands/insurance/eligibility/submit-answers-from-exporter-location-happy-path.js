@@ -35,7 +35,7 @@ const submitAnswersFromExporterLocationHappyPath = (assertAuthenticatedHeader = 
 
   checkAuthHeader(assertAuthenticatedHeader);
 
-  completeAndSubmitBuyerCountryForm();
+  completeAndSubmitBuyerCountryForm({});
 
   checkAuthHeader(assertAuthenticatedHeader);
 

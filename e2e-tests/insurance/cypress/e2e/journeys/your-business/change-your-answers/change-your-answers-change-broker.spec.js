@@ -63,7 +63,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: NAME });
       });
     });
 
@@ -81,7 +81,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -99,7 +99,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId });
       });
     });
 
@@ -125,7 +125,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -157,7 +157,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, NAME);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: NAME });
       });
     });
 
@@ -175,7 +175,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -193,7 +193,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, EMAIL);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: EMAIL });
       });
     });
 
@@ -211,7 +211,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -229,7 +229,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl(referenceNumber, BROKER_CHANGE, USING_BROKER);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: USING_BROKER });
       });
     });
 
@@ -245,7 +245,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl(referenceNumber, CHECK_YOUR_ANSWERS, fieldId);
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
       it('should render the new answer and not render the optional broker sections', () => {
