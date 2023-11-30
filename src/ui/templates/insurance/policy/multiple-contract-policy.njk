@@ -47,7 +47,7 @@
         {% set monthId = FIELDS.REQUESTED_START_DATE.ID + '-month' %}
         {% set yearId = FIELDS.REQUESTED_START_DATE.ID + '-year' %}
 
-        {{dateInput.render({
+        {{ dateInput.render({
           fieldId: FIELDS.REQUESTED_START_DATE.ID,
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,

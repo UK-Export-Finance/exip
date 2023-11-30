@@ -49,7 +49,7 @@
         {% set monthId = FIELDS.REQUESTED_START_DATE.ID + '-month' %}
         {% set yearId = FIELDS.REQUESTED_START_DATE.ID + '-year' %}
 
-        {{dateInput.render({
+        {{ dateInput.render({
           fieldId: FIELDS.REQUESTED_START_DATE.ID,
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
@@ -57,7 +57,7 @@
           submittedAnswers: submittedValues or application.policy
         }) }}
 
-        {{dateInput.render({
+        {{ dateInput.render({
           fieldId: FIELDS.CONTRACT_COMPLETION_DATE.ID,
           label: FIELDS.CONTRACT_COMPLETION_DATE.LABEL,
           hint: FIELDS.CONTRACT_COMPLETION_DATE.HINT,
