@@ -2517,7 +2517,7 @@ input CompanyInput {
 }
 
 input SectionReviewInput {
-  eligibility: Boolean
+  eligibility: Boolean!
 }
 
 type OrdnanceSurveyResponse {

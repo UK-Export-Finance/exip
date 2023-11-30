@@ -100,7 +100,7 @@ const typeDefs = `
   }
 
   input SectionReviewInput {
-    eligibility: Boolean
+    eligibility: Boolean!
   }
 
    type OrdnanceSurveyResponse {

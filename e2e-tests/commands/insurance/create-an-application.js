@@ -41,7 +41,15 @@ const createAnApplication = (accountId, companyNumber) => {
         company[FINANCIAL_YEAR_END_DATE] = mockCompany[FINANCIAL_YEAR_END_DATE];
       }
 
-      return api.createAnApplication(accountId, mockEligibilityAnswers, company).then((application) => application);
+      /**
+       * pass sectionReview for eligibility to API
+       * has to be set to true for eligibility
+       */
+      const sectionReview = {
+        eligibility: true,
+      };
+
+      return api.createAnApplication(accountId, mockEligibilityAnswers, company, sectionReview).then((application) => application);
     } catch (err) {
       console.error('Creating an application', err);
 

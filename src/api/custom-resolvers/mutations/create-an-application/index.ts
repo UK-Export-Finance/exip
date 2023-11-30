@@ -90,6 +90,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Buyer
      * 2) Eligibility
      * 3) Policy
+     * 4) sectionReview
      */
     const updatedApplication = await context.db.Application.updateOne({
       where: {

@@ -1663,7 +1663,7 @@ var typeDefs = `
   }
 
   input SectionReviewInput {
-    eligibility: Boolean
+    eligibility: Boolean!
   }
 
    type OrdnanceSurveyResponse {
@@ -3440,7 +3440,6 @@ var createAnApplication = async (root, variables, context) => {
         success: false
       };
     }
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!", sectionReviewData);
     const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     const application2 = await context.db.Application.createOne({
