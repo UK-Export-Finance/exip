@@ -1,10 +1,8 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import application from '../../../../../../../fixtures/application';
-
-const { policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -13,7 +11,6 @@ const {
     POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: {
           CONTRACT_COMPLETION_DATE,
@@ -66,7 +63,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkErrorSummaryListHeading();
 
-    const TOTAL_REQUIRED_FIELDS = 5;
+    const TOTAL_REQUIRED_FIELDS = 4;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
@@ -86,11 +83,6 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkText(
       partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(4),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );
   });
@@ -99,11 +91,13 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
     it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
       cy.navigateToUrl(url);
 
-      const currencyCode = application.POLICY[POLICY_CURRENCY_CODE];
+      const fieldId = POLICY_CURRENCY_CODE;
 
-      policyCurrencyCodeFormField.input().select(currencyCode);
+      const currencyCode = application.POLICY[fieldId];
 
-      policyCurrencyCodeFormField.inputOptionSelected().contains(currencyCode);
+      field(fieldId).input().select(currencyCode);
+
+      field(fieldId).inputOptionSelected().contains(currencyCode);
     });
   });
 });

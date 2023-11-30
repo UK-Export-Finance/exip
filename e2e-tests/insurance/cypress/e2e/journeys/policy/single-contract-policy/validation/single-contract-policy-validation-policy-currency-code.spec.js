@@ -1,9 +1,7 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-
-const { policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -56,12 +54,12 @@ context('Insurance - Policy - Single contract policy page - form validation - po
       submitButton().click();
 
       cy.checkText(
-        partials.errorSummaryListItems().eq(4),
+        partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
       );
 
       cy.checkText(
-        policyCurrencyCodeFormField.errorMessage(),
+        field(POLICY_CURRENCY_CODE).errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
       );
     });

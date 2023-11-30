@@ -11,7 +11,6 @@ const {
     BROKER: { ADDRESS_LINE_1, ADDRESS_LINE_2, POSTCODE, NAME: BROKER_NAME },
   },
   POLICY: {
-    CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER },
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
   YOUR_BUYER: {
@@ -26,7 +25,6 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
     it('should return an explicit array of field IDs that are string fields that could have a pure number value', () => {
       const expected = [
         SECURITY_CODE,
-        CREDIT_PERIOD_WITH_BUYER,
         DESCRIPTION,
         COMPANY_NUMBER,
         COMPANY_SIC,

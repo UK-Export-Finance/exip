@@ -163,7 +163,6 @@ var account_default = ACCOUNT;
 // constants/field-ids/insurance/policy/index.ts
 var SHARED_CONTRACT_POLICY = {
   REQUESTED_START_DATE: "requestedStartDate",
-  CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
   POLICY_CURRENCY_CODE: "policyCurrencyCode"
 };
 var POLICY = {
@@ -3873,11 +3872,6 @@ var POLICY_FIELDS = {
         TITLE: "Policy start date"
       }
     },
-    [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: "Credit period"
-      }
-    },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       SUMMARY: {
         TITLE: "Policy currency"
@@ -4292,7 +4286,6 @@ var {
     REQUESTED_START_DATE,
     SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE
   },
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY }
@@ -4324,7 +4317,6 @@ var mapMultiplePolicyFields = (application2) => {
 var mapPolicyOutro = (application2) => {
   const { exportContract, policy } = application2;
   const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS2[CREDIT_PERIOD_WITH_BUYER].SUMMARY?.TITLE), policy[CREDIT_PERIOD_WITH_BUYER]),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
     xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_COUNTRY].name)

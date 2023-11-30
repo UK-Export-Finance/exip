@@ -1,6 +1,5 @@
 import { FIELD_IDS, APPLICATION } from '../../constants';
 import { singleContractPolicyPage } from '../../pages/insurance/policy';
-import insurancePartials from '../../partials/insurance';
 import { field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
@@ -9,7 +8,6 @@ const {
     POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
       },
@@ -37,8 +35,7 @@ export default ({ policyMaximumValue = false }) => {
     cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }
 
-  cy.keyboardInput(field(CREDIT_PERIOD_WITH_BUYER).input(), application.POLICY[CREDIT_PERIOD_WITH_BUYER]);
-  insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY[POLICY_CURRENCY_CODE]);
+  field(POLICY_CURRENCY_CODE).input().select(application.POLICY[POLICY_CURRENCY_CODE]);
 
   submitButton().click();
 };

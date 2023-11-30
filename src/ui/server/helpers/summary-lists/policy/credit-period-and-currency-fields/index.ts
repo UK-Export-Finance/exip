@@ -8,7 +8,7 @@ import { ApplicationPolicy, Currency, SummaryListItemData } from '../../../../..
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
-  CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE },
+  CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
 } = FIELD_IDS;
 
 /**
@@ -20,11 +20,6 @@ const {
  */
 const generateCreditPeriodAndCurrencyFields = (answers: ApplicationPolicy, referenceNumber: number, currencies: Array<Currency>, checkAndChange: boolean) => {
   const fields = [
-    fieldGroupItem({
-      field: getFieldById(FIELDS.CONTRACT_POLICY, CREDIT_PERIOD_WITH_BUYER),
-      data: answers,
-      ...changeLink(answers[POLICY_TYPE], referenceNumber, CREDIT_PERIOD_WITH_BUYER, checkAndChange),
-    }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE),

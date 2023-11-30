@@ -22,14 +22,13 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
+const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
@@ -205,45 +204,6 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
       });
     });
 
-    describe(CREDIT_PERIOD_WITH_BUYER, () => {
-      const fieldId = CREDIT_PERIOD_WITH_BUYER;
-
-      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
-      describe('when clicking the `change` link', () => {
-        beforeEach(() => {
-          cy.navigateToUrl(url);
-        });
-
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
-          cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
-          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-        });
-      });
-
-      describe('form submission with a new answer', () => {
-        beforeEach(() => {
-          cy.navigateToUrl(url);
-
-          summaryList.field(fieldId).changeLink().click();
-          fieldVariables.newValueInput = `${String(application.POLICY[fieldId])} additional text`;
-
-          cy.changeAnswerField(fieldVariables, field(fieldId).input());
-        });
-
-        it(`should redirect to ${TYPE_OF_POLICY}`, () => {
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
-        });
-
-        it('should render the new answer', () => {
-          fieldVariables.newValue = fieldVariables.newValueInput;
-          cy.checkChangeAnswerRendered(fieldVariables);
-        });
-      });
-    });
-
     describe(POLICY_CURRENCY_CODE, () => {
       const fieldId = POLICY_CURRENCY_CODE;
       let fieldVariables = getFieldVariables(fieldId, referenceNumber);
@@ -269,7 +229,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
-          cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
+          cy.changeAnswerSelectField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

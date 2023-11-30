@@ -14,7 +14,6 @@ const {
       TYPE_OF_POLICY: { POLICY_TYPE },
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
         MULTIPLE: {
@@ -40,15 +39,6 @@ const checkPolicySummaryList = ({
     const { day, month, year } = application.POLICY[fieldId];
     const timestamp = createTimestampFromNumbers(day, month, year);
     const expectedValue = formatDate(timestamp);
-
-    const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [CREDIT_PERIOD_WITH_BUYER]: () => {
-    const fieldId = CREDIT_PERIOD_WITH_BUYER;
-    const expectedKey = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
-    const expectedValue = application.POLICY[fieldId];
 
     const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
 

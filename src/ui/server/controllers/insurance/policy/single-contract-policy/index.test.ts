@@ -31,7 +31,6 @@ const {
     REQUESTED_START_DATE_MONTH,
     REQUESTED_START_DATE_YEAR,
     SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
-    CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE,
   },
 } = POLICY_FIELD_IDS;
@@ -89,10 +88,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
             ID: TOTAL_CONTRACT_VALUE,
             ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
           },
-          CREDIT_PERIOD_WITH_BUYER: {
-            ID: CREDIT_PERIOD_WITH_BUYER,
-            ...FIELDS.CONTRACT_POLICY[CREDIT_PERIOD_WITH_BUYER],
-          },
           POLICY_CURRENCY_CODE: {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
@@ -121,7 +116,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         CONTRACT_COMPLETION_DATE_MONTH,
         CONTRACT_COMPLETION_DATE_YEAR,
         TOTAL_CONTRACT_VALUE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
       ];
 
@@ -248,7 +242,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(initFutureDate),
       [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(initFutureDate) + 2,
       [TOTAL_CONTRACT_VALUE]: '150000',
-      [CREDIT_PERIOD_WITH_BUYER]: 'Mock text',
       [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
     };
 
