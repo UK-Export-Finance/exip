@@ -1,6 +1,5 @@
 import { FIELD_IDS, APPLICATION } from '../../constants';
 import { singleContractPolicyPage } from '../../pages/insurance/policy';
-import insurancePartials from '../../partials/insurance';
 import { field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
@@ -36,7 +35,7 @@ export default ({ policyMaximumValue = false }) => {
     cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }
 
-  insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY[POLICY_CURRENCY_CODE]);
+  field(POLICY_CURRENCY_CODE).input().select(application.POLICY[POLICY_CURRENCY_CODE]);
 
   submitButton().click();
 };

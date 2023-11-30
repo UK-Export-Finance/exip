@@ -20,7 +20,7 @@ import {
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
 
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
+const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY;
 
@@ -198,7 +198,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-        policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
+        fieldSelector(POLICY_CURRENCY_CODE).inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
       });
     });
   });

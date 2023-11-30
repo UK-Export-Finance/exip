@@ -55,7 +55,9 @@
           submittedAnswers: submittedValues or application.policy
         }) }}
 
-        {{ govukInput({
+        {{ govukSelect({
+          id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          name: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
           label: {
             text: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
@@ -70,6 +72,7 @@
               'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-hint'
             }
           },
+          items: monthOptions,
           classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
           attributes: {
             'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-input'

@@ -17,7 +17,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
 
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
+const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY;
 
@@ -185,7 +185,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
         fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
         fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
-        policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
+        fieldSelector(POLICY_CURRENCY_CODE).inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
       });
     });
   });
