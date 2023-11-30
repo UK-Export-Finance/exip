@@ -1,5 +1,4 @@
 import { LINKS } from '../links';
-import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 
 const BUYER_BODY = {
   PAGE_TITLE: 'Is your buyer a government or public sector body?',
@@ -72,7 +71,7 @@ const YOUR_QUOTE = {
       CAN_NOW_SUBMIT: 'You can now submit a',
       FULL_APPLICATION: {
         TEXT: 'full application',
-        HREF: INSURANCE_ROUTES.START,
+        HREF: LINKS.EXTERNAL.FULL_APPLICATION,
       },
       TIMEFRAME: 'It takes about 2 weeks to get a decision from UKEF.',
       CAN_GET_HELP: 'You can get help with the application process from export finance managers or brokers.',
