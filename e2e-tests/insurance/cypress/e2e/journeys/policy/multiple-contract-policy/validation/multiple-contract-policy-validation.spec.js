@@ -13,7 +13,6 @@ const {
     POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
@@ -91,11 +90,6 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
 
     cy.checkText(
       partials.errorSummaryListItems().eq(4),
-      CONTRACT_ERROR_MESSAGES[CREDIT_PERIOD_WITH_BUYER].IS_EMPTY,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(5),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );
   });

@@ -9,7 +9,7 @@ import { mockApplication, mockCurrencies } from '../../../../test-mocks';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
-  CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE },
+  CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/policy/credit-period-and-currency-fields', () => {
@@ -21,11 +21,6 @@ describe('server/helpers/summary-lists/policy/credit-period-and-currency-fields'
     const result = generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange);
 
     const expected = [
-      fieldGroupItem({
-        field: getFieldById(FIELDS.CONTRACT_POLICY, CREDIT_PERIOD_WITH_BUYER),
-        data: mockAnswers,
-        ...changeLink(mockAnswers[POLICY_TYPE], referenceNumber, CREDIT_PERIOD_WITH_BUYER, checkAndChange),
-      }),
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE),

@@ -1,7 +1,6 @@
 import {
   field as fieldSelector,
   headingCaption,
-  submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy';
@@ -18,7 +17,6 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
-import checkCreditPeriodWithBuyerInput from '../../../../../../commands/insurance/check-credit-period-with-buyer-input';
 
 const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
@@ -40,7 +38,6 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
       POLICY_CURRENCY_CODE,
       MULTIPLE: {
         TOTAL_MONTHS_OF_COVER,
@@ -158,10 +155,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       field.input().should('exist');
     });
 
-    it('renders `credit period with buyer` label, hint and input', () => {
-      checkCreditPeriodWithBuyerInput();
-    });
-
     it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
       checkPolicyCurrencyCodeInput();
     });
@@ -202,25 +195,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
         fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
         fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
-        fieldSelector(CREDIT_PERIOD_WITH_BUYER).input().should('have.value', application.POLICY[CREDIT_PERIOD_WITH_BUYER]);
         policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
-      });
-    });
-
-    describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
-      const creditPeriodField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-      const submittedValue = '1234';
-
-      it('should retain the submitted value when going back to the page', () => {
-        cy.navigateToUrl(url);
-
-        cy.keyboardInput(creditPeriodField.input(), submittedValue);
-
-        submitButton().click();
-
-        cy.clickBackLink();
-
-        creditPeriodField.input().should('have.value', submittedValue);
       });
     });
   });

@@ -9,7 +9,6 @@ const {
     POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
@@ -39,7 +38,6 @@ export default ({ policyMaximumValue = false }) => {
   } else {
     cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
   }
-  cy.keyboardInput(field(CREDIT_PERIOD_WITH_BUYER).input(), application.POLICY[CREDIT_PERIOD_WITH_BUYER]);
 
   insurancePartials.policyCurrencyCodeFormField.input().select(application.POLICY[POLICY_CURRENCY_CODE]);
 

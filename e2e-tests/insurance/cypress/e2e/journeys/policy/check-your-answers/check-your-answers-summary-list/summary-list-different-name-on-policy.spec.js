@@ -13,7 +13,6 @@ const {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
@@ -69,10 +68,6 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
 
   it(`should render a ${TOTAL_CONTRACT_VALUE} summary list row`, () => {
     checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
-  });
-
-  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]();
   });
 
   it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {

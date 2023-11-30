@@ -2,12 +2,10 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
 {% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
-{% import '../../components/credit-period-with-buyer-hint.njk' as creditPeriodWithBuyerHint %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -111,39 +109,6 @@
             text: validationErrors.errorList[FIELDS.TOTAL_CONTRACT_VALUE.ID].text,
             attributes: {
               "data-cy": FIELDS.TOTAL_CONTRACT_VALUE.ID + "-error-message"
-            }
-          }
-        }) }}
-        
-        {% set creditPeriodWithBuyerHintHtml %}
-          {{ creditPeriodWithBuyerHint.render({
-            id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-            hint: FIELDS.CREDIT_PERIOD_WITH_BUYER.HINT
-          }) }}
-        {% endset %}
-
-        {{ govukCharacterCount({
-          name: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-          id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-          label: {
-            text: FIELDS.CREDIT_PERIOD_WITH_BUYER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-label'
-            }
-          },
-          hint: {
-            html: creditPeriodWithBuyerHintHtml
-          },
-          attributes: {
-            'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
-          },
-          maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
-          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policy[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
-            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + "-error-message"
             }
           }
         }) }}

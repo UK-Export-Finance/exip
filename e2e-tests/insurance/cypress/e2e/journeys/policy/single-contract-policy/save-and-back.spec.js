@@ -26,7 +26,6 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -148,41 +147,6 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       field.dayInput().should('have.value', '1');
       field.monthInput().should('have.value', getMonth(futureDate));
       field.yearInput().should('have.value', getYear(futureDate));
-    });
-  });
-
-  describe('when removing a previously submitted `buyer credit period` value', () => {
-    const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      // submit a value
-      cy.keyboardInput(field.input(), 'Test');
-      saveAndBackButton().click();
-
-      // go back to the page
-      cy.clickBackLink();
-
-      field.input().clear();
-      saveAndBackButton().click();
-    });
-
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
-    });
-
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-    });
-
-    it('should have no value in `buyer credit period` when going back to the page', () => {
-      task.link().click();
-      submitButton().click();
-
-      field.input().should('have.value', '');
     });
   });
 });

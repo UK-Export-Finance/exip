@@ -19,7 +19,6 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
@@ -173,44 +172,6 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
         it('should render the new answer', () => {
           const expected = formatCurrency(newAnswer);
-
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
-        });
-      });
-    });
-
-    describe(CREDIT_PERIOD_WITH_BUYER, () => {
-      const fieldId = CREDIT_PERIOD_WITH_BUYER;
-
-      describe('when clicking the `change` link', () => {
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
-          cy.navigateToUrl(url);
-
-          summaryList.field(fieldId).changeLink().click();
-
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
-        });
-      });
-
-      describe('form submission with a new answer', () => {
-        const newAnswer = `${application.POLICY[fieldId]} additional text`;
-
-        beforeEach(() => {
-          cy.navigateToUrl(url);
-
-          summaryList.field(fieldId).changeLink().click();
-
-          cy.keyboardInput(field(fieldId).input(), newAnswer);
-
-          submitButton().click();
-        });
-
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-        });
-
-        it('should render the new answer', () => {
-          const expected = newAnswer;
 
           cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
         });

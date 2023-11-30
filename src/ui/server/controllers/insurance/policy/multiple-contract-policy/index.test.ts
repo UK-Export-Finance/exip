@@ -33,7 +33,6 @@ const {
     REQUESTED_START_DATE_MONTH,
     REQUESTED_START_DATE_YEAR,
     MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE,
   },
 } = POLICY_FIELD_IDS;
@@ -96,10 +95,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
             ID: MAXIMUM_BUYER_WILL_OWE,
             ...FIELDS.CONTRACT_POLICY.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
           },
-          CREDIT_PERIOD_WITH_BUYER: {
-            ID: CREDIT_PERIOD_WITH_BUYER,
-            ...FIELDS.CONTRACT_POLICY[CREDIT_PERIOD_WITH_BUYER],
-          },
           POLICY_CURRENCY_CODE: {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
@@ -135,7 +130,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         TOTAL_MONTHS_OF_COVER,
         TOTAL_SALES_TO_BUYER,
         MAXIMUM_BUYER_WILL_OWE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
       ];
 
@@ -294,7 +288,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
       [TOTAL_MONTHS_OF_COVER]: '1',
       [TOTAL_SALES_TO_BUYER]: '1000',
       [MAXIMUM_BUYER_WILL_OWE]: '500',
-      [CREDIT_PERIOD_WITH_BUYER]: 'Mock',
       [POLICY_CURRENCY_CODE]: GBP_CURRENCY_CODE,
     };
 
