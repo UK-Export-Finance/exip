@@ -34,9 +34,18 @@ const nullableCheckboxConfig = (defaultValue?: boolean) =>
     input: {
       create: {
         arg: graphql.arg({ type: graphql.Boolean }),
-        resolve() {
+        resolve(value) {
           if (defaultValue || defaultValue === false) {
             return defaultValue;
+          }
+
+          /**
+           * need this because defaultValue will not work when this is called directly with the context API
+           * needed for when creating an application which requires some nullableCheckboxes to be created
+           * for eg. sectionReview
+           */
+          if (value || value === false) {
+            return value;
           }
 
           return null;

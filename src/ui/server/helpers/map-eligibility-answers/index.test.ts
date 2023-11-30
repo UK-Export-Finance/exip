@@ -22,6 +22,9 @@ describe('server/helpers/map-eligibility-answers', () => {
         [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
         [COVER_PERIOD_ID]: coverPeriod,
         [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
+        sectionReview: {
+          eligibility: hasReviewedEligibility,
+        },
       };
 
       expect(result).toEqual(expected);

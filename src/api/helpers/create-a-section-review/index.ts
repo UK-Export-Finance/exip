@@ -10,10 +10,10 @@ import { Context, SectionReview } from '../../types';
  */
 const createASectionReview = async (context: Context, applicationId: string, sectionReviewData: SectionReview) => {
   console.info('Creating a section review for ', applicationId);
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', sectionReviewData);
+
   try {
     /**
-     * Create a company with provided data and application relationship
+     * Create a sectionReview with provided data and application relationship
      */
     const sectionReview = await context.db.SectionReview.createOne({
       data: {
@@ -23,7 +23,7 @@ const createASectionReview = async (context: Context, applicationId: string, sec
         ...sectionReviewData,
       },
     });
-    console.log('assdfsdfsdfdsf', sectionReview)
+
     return sectionReview;
   } catch (err) {
     console.error('Error creating a section review %O', err);

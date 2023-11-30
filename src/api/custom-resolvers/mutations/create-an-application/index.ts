@@ -40,7 +40,6 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       };
     }
 
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!', sectionReviewData)
     /**
      * Get a country's ID from the provided ISO code.
      * This is required to be used in:
@@ -70,6 +69,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
      * 3) Create a new eligibility with country and application relationship.
      * 4) Create a new policy with application relationship.
+     * 5) Create a new sectionReview with application relationship
      */
     const buyer = await createABuyer(context, country.id, applicationId);
 

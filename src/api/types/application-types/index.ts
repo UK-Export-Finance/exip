@@ -158,9 +158,9 @@ export interface ApplicationVersion {
 
 export interface SectionReview {
   eligibility: boolean;
-  business: boolean;
-  policy: boolean;
-  buyer: boolean;
+  business?: boolean;
+  policy?: boolean;
+  buyer?: boolean;
 }
 
 export interface CreateAnApplicationVariables {

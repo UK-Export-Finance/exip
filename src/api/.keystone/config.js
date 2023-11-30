@@ -810,9 +810,12 @@ var nullableCheckboxConfig = (defaultValue) => (
     input: {
       create: {
         arg: import_core.graphql.arg({ type: import_core.graphql.Boolean }),
-        resolve() {
+        resolve(value) {
           if (defaultValue || defaultValue === false) {
             return defaultValue;
+          }
+          if (value || value === false) {
+            return value;
           }
           return null;
         }
@@ -3409,7 +3412,6 @@ var create_a_company_default = createACompany;
 // helpers/create-a-section-review/index.ts
 var createASectionReview = async (context, applicationId, sectionReviewData) => {
   console.info("Creating a section review for ", applicationId);
-  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", sectionReviewData);
   try {
     const sectionReview = await context.db.SectionReview.createOne({
       data: {
@@ -3419,7 +3421,6 @@ var createASectionReview = async (context, applicationId, sectionReviewData) => 
         ...sectionReviewData
       }
     });
-    console.log("assdfsdfsdfdsf", sectionReview);
     return sectionReview;
   } catch (err) {
     console.error("Error creating a section review %O", err);
