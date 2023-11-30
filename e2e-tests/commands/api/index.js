@@ -221,6 +221,7 @@ const createBuyer = (countryId) =>
   * @param {String} Account/application owner ID
   * @param {Object} Eligibility answers
   * @param {Object} Company object (obtained from eligibility companies house call)
+  * @param {Object} sectionReview object (with eligibility set to true)
   * @returns {Object} Created application
   */
 const createAnApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
