@@ -7,7 +7,6 @@ import { multipleContractPolicyPage } from '../../../../../../pages/insurance/po
 import partials from '../../../../../../partials';
 import {
   BUTTONS,
-  LINKS,
   PAGES,
   TASKS,
 } from '../../../../../../content-strings';
@@ -140,15 +139,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
 
       cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
-
-      const expected = `${HINT.NEED_MORE_COVER} ${HINT.FILL_IN_FORM.TEXT}`;
-      cy.checkText(field.hint.needMoreCover(), expected);
-
-      cy.checkLink(
-        field.hint.fillInFormLink(),
-        LINKS.EXTERNAL.PROPOSAL_FORM,
-        HINT.FILL_IN_FORM.TEXT,
-      );
 
       cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 
