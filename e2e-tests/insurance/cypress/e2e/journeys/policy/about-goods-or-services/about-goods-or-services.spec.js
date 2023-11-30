@@ -51,8 +51,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
+      cy.startInsurancePolicySection();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 

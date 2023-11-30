@@ -2,7 +2,6 @@ import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insuranc
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../../../constants/field-values';
 import { field, backLink } from '../../../../../pages/shared';
-import partials from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
 
@@ -14,12 +13,6 @@ const {
   ROOT: INSURANCE_ROOT,
   POLICY: { DIFFERENT_NAME_ON_POLICY },
 } = INSURANCE_ROUTES;
-
-const {
-  taskList: {
-    prepareApplication: { tasks },
-  },
-} = partials.insurancePartials;
 
 const mockAccountSpecialCharacters = {
   ...mockAccount,
@@ -38,7 +31,7 @@ context('Insurance - Name fields - `Policy contact` name fields should render sp
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      tasks.policy.link().click();
+      cy.startInsurancePolicySection();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});

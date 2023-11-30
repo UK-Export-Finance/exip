@@ -3,7 +3,6 @@ import {
   saveAndBackButton,
   field,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
@@ -14,8 +13,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import account from '../../../../../../fixtures/account';
 import application from '../../../../../../fixtures/application';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.NAME_ON_POLICY;
 
@@ -53,8 +50,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();

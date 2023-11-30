@@ -3,7 +3,6 @@ import {
   submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
@@ -20,10 +19,6 @@ const {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Check your answers - As an exporter, I want to check my answers to the type of policy section', () => {
@@ -33,8 +28,6 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({});
 
