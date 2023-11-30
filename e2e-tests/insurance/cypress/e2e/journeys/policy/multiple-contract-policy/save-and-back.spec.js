@@ -20,7 +20,6 @@ const {
   INSURANCE: {
     POLICY: {
       CONTRACT_POLICY: {
-        CREDIT_PERIOD_WITH_BUYER,
         MULTIPLE: { TOTAL_SALES_TO_BUYER },
       },
     },
@@ -28,6 +27,8 @@ const {
 } = FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policy;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - Save and go back', () => {
   let referenceNumber;
@@ -37,11 +38,10 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -63,7 +63,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -86,7 +86,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -103,7 +103,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
 
         saveAndBackButton().click();
 
-        taskList.prepareApplication.tasks.policy.link().click();
+        cy.startInsurancePolicySection();
 
         submitButton().click();
       });
@@ -126,7 +126,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -143,63 +143,12 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
 
         saveAndBackButton().click();
 
-        taskList.prepareApplication.tasks.policy.link().click();
+        cy.startInsurancePolicySection();
         submitButton().click();
       });
 
       it('should have the submitted value', () => {
         fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-      });
-    });
-  });
-
-  describe('when removing a previously submitted `buyer credit period` value', () => {
-    const field = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      // submit a value
-      cy.keyboardInput(field.input(), 'Test');
-      saveAndBackButton().click();
-
-      // go back to the page
-      cy.clickBackLink();
-
-      field.input().clear();
-      saveAndBackButton().click();
-    });
-
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
-    });
-
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-    });
-
-    describe('when going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        // submit a value
-        cy.keyboardInput(field.input(), 'Test');
-        saveAndBackButton().click();
-
-        // go back to the page
-        cy.clickBackLink();
-
-        field.input().clear();
-        saveAndBackButton().click();
-
-        task.link().click();
-        submitButton().click();
-      });
-
-      it('should have no value in `buyer credit period`', () => {
-        field.input().should('have.value', '');
       });
     });
   });

@@ -7,7 +7,7 @@ import { mockApplication } from '../../../../../test-mocks';
 
 const {
   POLICY: {
-    CONTRACT_POLICY: { CREDIT_PERIOD_WITH_BUYER },
+    CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -16,7 +16,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
 
   let mockFormBody = {
     _csrf: '1234',
-    [CREDIT_PERIOD_WITH_BUYER]: 'Example',
+    [POLICY_CURRENCY_CODE]: 'Example',
   };
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);

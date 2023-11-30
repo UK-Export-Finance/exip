@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
@@ -13,7 +12,6 @@ const {
       TYPE_OF_POLICY: { POLICY_TYPE },
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
@@ -26,9 +24,7 @@ const {
   },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Check your answers - Summary list - multiple contract policy', () => {
   let referenceNumber;
@@ -38,11 +34,9 @@ context('Insurance - Policy - Check your answers - Summary list - multiple contr
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
-
       cy.completePolicySection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -74,10 +68,6 @@ context('Insurance - Policy - Check your answers - Summary list - multiple contr
 
   it(`should render a ${MAXIMUM_BUYER_WILL_OWE} summary list row`, () => {
     checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
-  });
-
-  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]();
   });
 
   it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {

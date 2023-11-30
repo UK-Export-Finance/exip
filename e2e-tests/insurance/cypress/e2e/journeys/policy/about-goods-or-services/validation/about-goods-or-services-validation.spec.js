@@ -1,10 +1,7 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/policy';
-import partials from '../../../../../../../partials';
 import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-
-const { taskList } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -33,10 +30,8 @@ context('Insurance - Policy - About goods or services page - form validation', (
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
       cy.completeAndSubmitSingleContractPolicyForm({});
 
       const expectedUrl = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES}`;

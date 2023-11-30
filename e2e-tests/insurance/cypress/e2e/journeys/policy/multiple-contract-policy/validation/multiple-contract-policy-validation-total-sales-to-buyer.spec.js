@@ -3,8 +3,6 @@ import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 
-const { taskList } = partials.insurancePartials;
-
 const {
   INSURANCE: {
     ROOT: INSURANCE_ROOT,
@@ -35,6 +33,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy - Multiple contract policy page - form validation - total sales to buyer', () => {
   let referenceNumber;
   let url;
@@ -43,11 +43,10 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -149,7 +148,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
       cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234');
       submitButton().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.assertUrl(expectedUrl);
     });
   });

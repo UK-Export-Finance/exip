@@ -9,7 +9,7 @@ import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { TYPE_OF_POLICY },
+  POLICY: { ROOT: POLICY_ROOT },
   EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
@@ -54,7 +54,7 @@ const createPrepareApplicationTasks = (
   };
 
   const POLICY = {
-    href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+    href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY,
     fields: policyRequiredFields(policyType),

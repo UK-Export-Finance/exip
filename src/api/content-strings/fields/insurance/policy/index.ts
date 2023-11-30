@@ -16,11 +16,6 @@ export const POLICY_FIELDS = {
         TITLE: 'Policy start date',
       },
     },
-    [CONTRACT_POLICY.CREDIT_PERIOD_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: 'Credit period',
-      },
-    },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       SUMMARY: {
         TITLE: 'Policy currency',

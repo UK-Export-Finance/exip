@@ -15,7 +15,6 @@ const {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
       POLICY_CURRENCY_CODE,
       MULTIPLE: {
         TOTAL_MONTHS_OF_COVER,
@@ -80,10 +79,6 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Di
 
   it(`should render a ${MAXIMUM_BUYER_WILL_OWE} summary list row`, () => {
     checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
-  });
-
-  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]();
   });
 
   it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {

@@ -1,9 +1,7 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -25,6 +23,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy - Multiple contract policy page - form validation - policy currency code', () => {
   let referenceNumber;
 
@@ -32,11 +32,10 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY}`;
+      const expectedUrl = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(expectedUrl);
     });
@@ -55,12 +54,12 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
       submitButton().click();
 
       cy.checkText(
-        partials.errorSummaryListItems().eq(5),
+        partials.errorSummaryListItems().eq(4),
         CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
       );
 
       cy.checkText(
-        policyCurrencyCodeFormField.errorMessage(),
+        field(POLICY_CURRENCY_CODE).errorMessage(),
         `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
       );
     });

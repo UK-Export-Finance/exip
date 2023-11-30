@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -13,7 +12,6 @@ const {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      CREDIT_PERIOD_WITH_BUYER,
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
@@ -21,10 +19,6 @@ const {
     NAME_ON_POLICY: { NAME, POSITION },
   },
 } = INSURANCE_FIELD_IDS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -35,8 +29,6 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({});
 
@@ -68,10 +60,6 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
 
   it(`should render a ${TOTAL_CONTRACT_VALUE} summary list row`, () => {
     checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
-  });
-
-  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]();
   });
 
   it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {

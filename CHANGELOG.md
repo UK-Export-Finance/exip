@@ -1,5 +1,19 @@
 # Changelog
 
+## [2.2.5](https://github.com/UK-Export-Finance/exip/compare/v2.2.4...v2.2.5) (2023-11-30)
+
+
+### Bug Fixes
+
+* **EMS-2341:** quote page - update application link ([#1429](https://github.com/UK-Export-Finance/exip/issues/1429)) ([7d3e648](https://github.com/UK-Export-Finance/exip/commit/7d3e648896896028d6a4b758b2fbe7e74981b6d5))
+
+## [2.2.4](https://github.com/UK-Export-Finance/exip/compare/v2.2.3...v2.2.4) (2023-11-29)
+
+
+### Miscellaneous
+
+* **prTemplate:** simplify pull request template ([#1426](https://github.com/UK-Export-Finance/exip/issues/1426)) ([5887ab9](https://github.com/UK-Export-Finance/exip/commit/5887ab9766a1fc251702c56a1b6984c66d43e339))
+
 ## [2.2.3](https://github.com/UK-Export-Finance/exip/compare/v2.2.2...v2.2.3) (2023-11-28)
 
 

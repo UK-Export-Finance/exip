@@ -2,6 +2,21 @@ const SHARED = {
   HEADING_CAPTION: 'Type of policy and exports',
 };
 
+const ROOT = {
+  ...SHARED,
+  PAGE_TITLE: 'What type of cover do you need?',
+  LIST: {
+    INTRO: 'This section will cover',
+    ITEMS: [
+      'what type of policy you need(single or multiple)',
+      'whose name should be on the policy',
+      'whether you need cover during the pre - credit period',
+      'any other companies that may need to be covered in your policy',
+    ],
+  },
+  OUTRO: "We'll also ask you tell us if you have a broker or a nominated loss payee.",
+};
+
 const TYPE_OF_POLICY = {
   ...SHARED,
   PAGE_TITLE: 'What type of policy do you need?',
@@ -41,6 +56,7 @@ const CHECK_YOUR_ANSWERS = {
 };
 
 export default {
+  ROOT,
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
   MULTIPLE_CONTRACT_POLICY,

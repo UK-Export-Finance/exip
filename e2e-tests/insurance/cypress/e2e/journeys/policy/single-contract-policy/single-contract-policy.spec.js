@@ -1,7 +1,6 @@
 import {
   field as fieldSelector,
   headingCaption,
-  submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import { singleContractPolicyPage } from '../../../../../../pages/insurance/policy';
@@ -20,9 +19,8 @@ import {
 } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
-import checkCreditPeriodWithBuyerInput from '../../../../../../commands/insurance/check-credit-period-with-buyer-input';
 
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
+const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY;
 
@@ -43,7 +41,6 @@ const {
     POLICY: {
       CONTRACT_POLICY: {
         REQUESTED_START_DATE,
-        CREDIT_PERIOD_WITH_BUYER,
         POLICY_CURRENCY_CODE,
         SINGLE: {
           CONTRACT_COMPLETION_DATE,
@@ -56,6 +53,8 @@ const {
 
 const task = taskList.prepareApplication.tasks.policy;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy - Single contract policy page - As an exporter, I want to enter the type of policy I need for my export contract', () => {
   let referenceNumber;
   let url;
@@ -64,11 +63,10 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -154,10 +152,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.input().should('exist');
     });
 
-    it('renders `credit period with buyer` label, hint and input', () => {
-      checkCreditPeriodWithBuyerInput();
-    });
-
     describe('currency', () => {
       it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
         checkPolicyCurrencyCodeInput();
@@ -177,7 +171,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     });
 
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -205,26 +199,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-        fieldSelector(CREDIT_PERIOD_WITH_BUYER).input().should('have.value', application.POLICY[CREDIT_PERIOD_WITH_BUYER]);
-        policyCurrencyCodeFormField.inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
-      });
-    });
-
-    describe('when the credit period with buyer field is a pure number and there are no other validation errors', () => {
-      const creditPeriodField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-      const submittedValue = '1234';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        cy.keyboardInput(creditPeriodField.input(), submittedValue);
-        submitButton().click();
-      });
-
-      it('should retain the submitted value when going back to the page', () => {
-        cy.clickBackLink();
-
-        creditPeriodField.input().should('have.value', submittedValue);
+        fieldSelector(POLICY_CURRENCY_CODE).inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
       });
     });
   });

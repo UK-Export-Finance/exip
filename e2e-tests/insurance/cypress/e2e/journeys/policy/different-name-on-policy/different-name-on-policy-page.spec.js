@@ -3,7 +3,6 @@ import {
   saveAndBackButton,
   field as fieldSelector,
 } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
@@ -16,8 +15,6 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import mockApplication from '../../../../../../fixtures/application';
 
 const { POLICY_CONTACT } = mockApplication;
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY;
 
@@ -52,8 +49,7 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();

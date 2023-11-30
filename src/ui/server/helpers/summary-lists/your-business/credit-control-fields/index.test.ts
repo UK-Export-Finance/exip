@@ -1,0 +1,41 @@
+import { FIELDS } from '../../../../content-strings/fields/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import fieldGroupItem from '../../generate-field-group-item';
+import getFieldById from '../../../get-field-by-id';
+import generateTurnoverFields from '.';
+import mapYesNoField from '../../../mappings/map-yes-no-field';
+import generateChangeLink from '../../../generate-change-link';
+import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+
+const {
+  EXPORTER_BUSINESS: { CREDIT_CONTROL_CHANGE, CREDIT_CONTROL_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
+
+const {
+  EXPORTER_BUSINESS: { HAS_CREDIT_CONTROL },
+} = INSURANCE_FIELD_IDS;
+
+describe('server/helpers/summary-lists/your-business/credit-control-fields', () => {
+  const mockAnswers = mockBusiness;
+  const { referenceNumber } = mockApplication;
+  const checkAndChange = false;
+
+  const expectedBase = [
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS, HAS_CREDIT_CONTROL),
+        data: mockAnswers,
+        href: generateChangeLink(CREDIT_CONTROL_CHANGE, CREDIT_CONTROL_CHECK_AND_CHANGE, `#${HAS_CREDIT_CONTROL}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(mockAnswers[HAS_CREDIT_CONTROL]),
+    ),
+  ];
+
+  it('should return fields and values from the submitted data/answers', () => {
+    const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
+
+    expect(result).toEqual(expectedBase);
+  });
+});

@@ -22,7 +22,7 @@ const {
 /**
  * generateTurnover
  * Create all your turnover fields and values for the Insurance - Turnover govukSummaryList
- * @param {ApplicationBusiness} answers exporter turnover
+ * @param {ApplicationBusiness} answers: turnover answers
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All turnover fields and values in an object structure for GOVUK summary list structure
  */

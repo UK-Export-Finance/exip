@@ -7,8 +7,6 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import account from '../../../../../../../fixtures/account';
 
-const { taskList } = partials.insurancePartials;
-
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
@@ -44,8 +42,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      taskList.prepareApplication.tasks.policy.link().click();
-
+      cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();

@@ -14,6 +14,8 @@ const {
 
 const task = taskList.prepareApplication.tasks.policy;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Policy - Complete the entire section as a single contract policy', () => {
   let referenceNumber;
 
@@ -21,7 +23,7 @@ context('Insurance - Policy - Complete the entire section as a single contract p
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.policy.link().click();
+      cy.startInsurancePolicySection();
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
@@ -42,7 +44,7 @@ context('Insurance - Policy - Complete the entire section as a single contract p
   });
 
   it(`should change the 'type of policy' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
     cy.assertUrl(expectedUrl);
 

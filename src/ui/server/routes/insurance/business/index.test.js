@@ -37,8 +37,8 @@ describe('routes/insurance/your-business', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(22);
-    expect(post).toHaveBeenCalledTimes(26);
+    expect(get).toHaveBeenCalledTimes(24);
+    expect(post).toHaveBeenCalledTimes(28);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK, postCompanyDetailsSaveAndBack);
@@ -72,6 +72,10 @@ describe('routes/insurance/your-business', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL, getCreditControl);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL, postCreditControl);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_SAVE_AND_BACK, postCreditControlSaveAndBack);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHANGE, getCreditControl);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHANGE, postCreditControl);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHECK_AND_CHANGE, getCreditControl);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHECK_AND_CHANGE, postCreditControl);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT, getBroker);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT, postBroker);

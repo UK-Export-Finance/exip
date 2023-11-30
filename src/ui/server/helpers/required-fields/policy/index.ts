@@ -2,7 +2,7 @@ import POLICY_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/fie
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 
-const { REQUESTED_START_DATE, CREDIT_PERIOD_WITH_BUYER, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
+const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const { CONTRACT_POLICY, TYPE_OF_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY } = POLICY_FIELD_IDS;
 
@@ -45,7 +45,6 @@ const requiredFields = (policyType?: string) =>
   Object.values({
     ...TYPE_OF_POLICY,
     REQUESTED_START_DATE,
-    CREDIT_PERIOD_WITH_BUYER,
     POLICY_CURRENCY_CODE,
     ...getContractPolicyTasks(policyType),
     ...ABOUT_GOODS_OR_SERVICES,

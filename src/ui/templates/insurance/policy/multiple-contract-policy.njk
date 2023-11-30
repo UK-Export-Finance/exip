@@ -1,14 +1,11 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
 {% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
-{% import '../../components/credit-period-with-buyer-hint.njk' as creditPeriodWithBuyerHint %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -50,7 +47,7 @@
         {% set monthId = FIELDS.REQUESTED_START_DATE.ID + '-month' %}
         {% set yearId = FIELDS.REQUESTED_START_DATE.ID + '-year' %}
 
-        {{dateInput.render({
+        {{ dateInput.render({
           fieldId: FIELDS.REQUESTED_START_DATE.ID,
           label: FIELDS.REQUESTED_START_DATE.LABEL,
           hint: FIELDS.REQUESTED_START_DATE.HINT,
@@ -65,14 +62,9 @@
             text: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
             attributes: {
-              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label',
-              id: FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label'
+              id: FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label',
+              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label'
             }
-          },
-          items: monthOptions,
-          classes: "govuk-grid-column-one-quarter-from-desktop",
-          attributes: {
-            "data-cy": FIELDS.TOTAL_MONTHS_OF_COVER.ID + "-input"
           },
           hint: {
             text: FIELDS.TOTAL_MONTHS_OF_COVER.HINT,
@@ -80,6 +72,17 @@
               'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-hint'
             }
           },
+          items: monthOptions,
+          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+          attributes: {
+            'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-input'
+          },
+          id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          name: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          spellcheck: false,
+          value: submittedValues[FIELDS.TOTAL_MONTHS_OF_COVER.ID] or application.policy[FIELDS.TOTAL_MONTHS_OF_COVER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID] and {
             text: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID].text,
             attributes: {
@@ -127,14 +130,11 @@
           }
         }) }}
 
-
         {% set maximumBuyerWillOweId = FIELDS.MAXIMUM_BUYER_WILL_OWE.ID %}
         {% set MAXIMUM_HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
 
         {% set maximumBuyerWillOweHintHtml %}
           <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ MAXIMUM_HINT.FOR_EXAMPLE }}</p>
-          <p data-cy="{{ maximumBuyerWillOweId }}-hint-need-more-cover">{{ MAXIMUM_HINT.NEED_MORE_COVER }} <a class="govuk-link" href="{{ MAXIMUM_HINT.FILL_IN_FORM.HREF }}" data-cy="{{ maximumBuyerWillOweId }}-hint-fill-in-form-link">{{ MAXIMUM_HINT.FILL_IN_FORM.TEXT }}</a></p>
-
           <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
         {% endset %}
 
@@ -170,40 +170,6 @@
             text: validationErrors.errorList[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID].text,
             attributes: {
               "data-cy": FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + "-error-message"
-            }
-          }
-        }) }}
-
-        {% set creditPeriodWithBuyerHintHtml %}
-          {{ creditPeriodWithBuyerHint.render({
-            id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-            hint: FIELDS.CREDIT_PERIOD_WITH_BUYER.HINT
-          }) }}
-        {% endset %}
-
-        {{ govukCharacterCount({
-          name: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-          id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-          label: {
-            text: FIELDS.CREDIT_PERIOD_WITH_BUYER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-label',
-              id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-label'
-            }
-          },
-          hint: {
-            html: creditPeriodWithBuyerHintHtml
-          },
-          attributes: {
-            'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-input'
-          },
-          maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
-          value: submittedValues[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] or application.policy[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
-            text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + "-error-message"
             }
           }
         }) }}
