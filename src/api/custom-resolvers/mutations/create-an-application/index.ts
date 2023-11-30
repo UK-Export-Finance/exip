@@ -6,6 +6,7 @@ import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
 import createAPolicy from '../../../helpers/create-a-policy';
 import createACompany from '../../../helpers/create-a-company';
+import createASectionReview from '../../../helpers/create-a-section-review';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
 /**
@@ -25,7 +26,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   console.info('Creating application for ', variables.accountId);
 
   try {
-    const { accountId, eligibilityAnswers, company: companyData } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData } = variables;
 
     /**
      * Check the account exists.
@@ -39,6 +40,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       };
     }
 
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!', sectionReviewData)
     /**
      * Get a country's ID from the provided ISO code.
      * This is required to be used in:
@@ -81,6 +83,8 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const company = await createACompany(context, applicationId, companyData);
 
+    const sectionReview = await createASectionReview(context, applicationId, sectionReviewData);
+
     /**
      * Update the application with relationships for:
      * 1) Buyer
@@ -103,6 +107,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         company: {
           connect: { id: company.id },
+        },
+        sectionReview: {
+          connect: { id: sectionReview.id },
         },
       },
     });

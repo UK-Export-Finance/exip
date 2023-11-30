@@ -19,6 +19,10 @@ interface SubmittedDataQuoteEligibility extends SharedEligibility {
   policyLength?: number;
 }
 
+interface SectionReview {
+  eligibility?: boolean;
+}
+
 interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
   companyNumber?: string;
@@ -27,6 +31,7 @@ interface InsuranceEligibilityCore extends SharedEligibility {
   coverPeriod?: number;
   hasEndBuyer?: boolean;
   hasReviewedEligibility?: boolean;
+  sectionReview?: SectionReview;
 }
 
 interface InsuranceEligibility extends InsuranceEligibilityCore {

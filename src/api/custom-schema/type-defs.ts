@@ -99,6 +99,10 @@ const typeDefs = `
     isActive: Boolean
   }
 
+  input SectionReviewInput {
+    eligibility: Boolean
+  }
+
    type OrdnanceSurveyResponse {
     success: Boolean
     addresses: [OrdnanceSurveyAddress]
@@ -220,6 +224,7 @@ const typeDefs = `
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
       company: CompanyInput!
+      sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """

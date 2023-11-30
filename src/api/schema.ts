@@ -124,17 +124,6 @@ export const lists = {
               },
             };
 
-            // generate and attach a new 'sectionReview' relationship
-            const { id: sectionReviewId } = await context.db.SectionReview.createOne({
-              data: {},
-            });
-
-            modifiedData.sectionReview = {
-              connect: {
-                id: sectionReviewId,
-              },
-            };
-
             // generate and attach a new 'declaration' relationship
             const { id: declarationId } = await context.db.Declaration.createOne({
               data: {},
@@ -177,7 +166,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyContactId, exportContractId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -231,18 +220,6 @@ export const lists = {
             // add the application ID to the broker entry.
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-              },
-            });
-
-            // add the application ID to the section review entry.
-            await context.db.SectionReview.updateOne({
-              where: { id: sectionReviewId },
               data: {
                 application: {
                   connect: {

@@ -2162,7 +2162,7 @@ type Mutation {
   createAnAccount(urlOrigin: String!, firstName: String!, lastName: String!, email: String!, password: String!): CreateAnAccountResponse
 
   """ create an application """
-  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!): CreateAnApplicationResponse
+  createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnApplicationResponse
 
   """ delete an account """
   deleteAnAccount(email: String!): SuccessResponse
@@ -2514,6 +2514,10 @@ input CompanyInput {
   financialYearEndDate: DateTime
   registeredOfficeAddress: CompanyAddressInput
   isActive: Boolean
+}
+
+input SectionReviewInput {
+  eligibility: Boolean
 }
 
 type OrdnanceSurveyResponse {

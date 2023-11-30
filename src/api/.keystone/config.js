@@ -941,14 +941,6 @@ var lists = {
                 id: brokerId
               }
             };
-            const { id: sectionReviewId } = await context.db.SectionReview.createOne({
-              data: {}
-            });
-            modifiedData.sectionReview = {
-              connect: {
-                id: sectionReviewId
-              }
-            };
             const { id: declarationId } = await context.db.Declaration.createOne({
               data: {}
             });
@@ -977,7 +969,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, businessId, brokerId, sectionReviewId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1021,16 +1013,6 @@ var lists = {
             });
             await context.db.Broker.updateOne({
               where: { id: brokerId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.SectionReview.updateOne({
-              where: { id: sectionReviewId },
               data: {
                 application: {
                   connect: {
@@ -1677,6 +1659,10 @@ var typeDefs = `
     isActive: Boolean
   }
 
+  input SectionReviewInput {
+    eligibility: Boolean
+  }
+
    type OrdnanceSurveyResponse {
     success: Boolean
     addresses: [OrdnanceSurveyAddress]
@@ -1798,6 +1784,7 @@ var typeDefs = `
       accountId: String!
       eligibilityAnswers: ApplicationEligibility!
       company: CompanyInput!
+      sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
 
     """ delete an account """
@@ -3419,17 +3406,40 @@ var createACompany = async (context, applicationId, companyData) => {
 };
 var create_a_company_default = createACompany;
 
+// helpers/create-a-section-review/index.ts
+var createASectionReview = async (context, applicationId, sectionReviewData) => {
+  console.info("Creating a section review for ", applicationId);
+  console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!", sectionReviewData);
+  try {
+    const sectionReview = await context.db.SectionReview.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        ...sectionReviewData
+      }
+    });
+    console.log("assdfsdfsdfdsf", sectionReview);
+    return sectionReview;
+  } catch (err) {
+    console.error("Error creating a section review %O", err);
+    throw new Error(`Creating a section review ${err}`);
+  }
+};
+var create_a_section_review_default = createASectionReview;
+
 // custom-resolvers/mutations/create-an-application/index.ts
 var createAnApplication = async (root, variables, context) => {
   console.info("Creating application for ", variables.accountId);
   try {
-    const { accountId, eligibilityAnswers, company: companyData } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
       return {
         success: false
       };
     }
+    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!", sectionReviewData);
     const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
     const application2 = await context.db.Application.createOne({
@@ -3446,6 +3456,7 @@ var createAnApplication = async (root, variables, context) => {
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
     const policy = await create_a_policy_default(context, applicationId);
     const company = await create_a_company_default(context, applicationId, companyData);
+    const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
     const updatedApplication = await context.db.Application.updateOne({
       where: {
         id: applicationId
@@ -3462,6 +3473,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         company: {
           connect: { id: company.id }
+        },
+        sectionReview: {
+          connect: { id: sectionReview.id }
         }
       }
     });

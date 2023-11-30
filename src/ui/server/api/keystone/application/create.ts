@@ -16,12 +16,13 @@ const createApplication = async (eligibilityAnswers: SubmittedDataInsuranceEligi
   try {
     console.info('Creating application');
 
-    const { company, ...otherAnswers } = eligibilityAnswers;
+    const { company, sectionReview, ...otherAnswers } = eligibilityAnswers;
 
     const variables = {
       accountId,
       eligibilityAnswers: otherAnswers,
       company,
+      sectionReview,
     };
 
     const response = (await apollo('POST', createAnApplicationMutation, variables)) as ApolloResponse;

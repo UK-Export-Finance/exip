@@ -16,6 +16,9 @@ const mapEligibilityAnswers = (answers: SubmittedDataInsuranceEligibility) => {
       [BUYER_COUNTRY_ISO_CODE]: buyerCountry?.isoCode,
       [COVER_PERIOD_ID]: coverPeriod,
       [TOTAL_CONTRACT_VALUE_ID]: totalContractValue,
+      sectionReview: {
+        eligibility: hasReviewedEligibility,
+      },
     };
 
     return mapped;
