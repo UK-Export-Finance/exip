@@ -63,7 +63,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkErrorSummaryListHeading();
 
-    const TOTAL_REQUIRED_FIELDS = 5;
+    const TOTAL_REQUIRED_FIELDS = 4;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(

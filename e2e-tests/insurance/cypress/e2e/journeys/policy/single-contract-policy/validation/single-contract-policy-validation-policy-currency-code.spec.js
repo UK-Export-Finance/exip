@@ -54,7 +54,7 @@ context('Insurance - Policy - Single contract policy page - form validation - po
       submitButton().click();
 
       cy.checkText(
-        partials.errorSummaryListItems().eq(4),
+        partials.errorSummaryListItems().eq(3),
         CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
       );
 
