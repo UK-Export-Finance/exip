@@ -1,5 +1,6 @@
 import express from 'express';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import { get as policyRootGet } from '../../../controllers/insurance/policy';
 import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../../controllers/insurance/policy/type-of-policy';
 import { post as typeOfPolicySaveAndBackPost } from '../../../controllers/insurance/policy/type-of-policy/save-and-back';
 import { get as singleContractPolicyGet, post as singleContractPolicyPost } from '../../../controllers/insurance/policy/single-contract-policy';
@@ -17,6 +18,8 @@ import { post as checkYourAnswersSaveAndBackPost } from '../../../controllers/in
 
 // @ts-ignore
 const insurancePolicyRouter = express.Router();
+
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.TYPE_OF_POLICY}`, typeOfPolicyGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.TYPE_OF_POLICY}`, typeOfPolicyPost);

@@ -12,7 +12,7 @@ import { mockApplication } from '../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { TYPE_OF_POLICY },
+  POLICY: { ROOT: POLICY_ROOT },
   EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
@@ -58,7 +58,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const POLICY = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY}`,
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
         id: TASK_IDS.PREPARE_APPLICATION.POLICY,
         fields: policyRequiredFields(policyType),

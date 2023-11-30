@@ -27,9 +27,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
+const { policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -40,8 +38,6 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 

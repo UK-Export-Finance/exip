@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -21,10 +20,6 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Check your answers - Summary list - single contract policy', () => {
@@ -34,8 +29,6 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      task.link().click();
 
       cy.completePolicySection({});
 
