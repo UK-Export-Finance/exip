@@ -1,7 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% from "govuk/components/select/macro.njk" import govukSelect %}
@@ -58,21 +57,14 @@
           submittedAnswers: submittedValues or application.policy
         }) }}
 
-        {{ govukSelect({
-          id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
-          name: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+        {{ govukInput({
           label: {
             text: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
             attributes: {
-              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label',
-              id: FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label'
+              id: FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label',
+              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label'
             }
-          },
-          items: monthOptions,
-          classes: "govuk-grid-column-one-quarter-from-desktop",
-          attributes: {
-            "data-cy": FIELDS.TOTAL_MONTHS_OF_COVER.ID + "-input"
           },
           hint: {
             text: FIELDS.TOTAL_MONTHS_OF_COVER.HINT,
@@ -80,6 +72,16 @@
               'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-hint'
             }
           },
+          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
+          attributes: {
+            'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-input'
+          },
+          id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          name: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          inputmode: "numeric",
+          pattern: "[0-9]*",
+          spellcheck: false,
+          value: submittedValues[FIELDS.TOTAL_MONTHS_OF_COVER.ID] or application.policy[FIELDS.TOTAL_MONTHS_OF_COVER.ID],
           errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID] and {
             text: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID].text,
             attributes: {
@@ -127,14 +129,11 @@
           }
         }) }}
 
-
         {% set maximumBuyerWillOweId = FIELDS.MAXIMUM_BUYER_WILL_OWE.ID %}
         {% set MAXIMUM_HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
 
         {% set maximumBuyerWillOweHintHtml %}
           <p data-cy="{{ maximumBuyerWillOweId }}-hint-for-example">{{ MAXIMUM_HINT.FOR_EXAMPLE }}</p>
-          <p data-cy="{{ maximumBuyerWillOweId }}-hint-need-more-cover">{{ MAXIMUM_HINT.NEED_MORE_COVER }} <a class="govuk-link" href="{{ MAXIMUM_HINT.FILL_IN_FORM.HREF }}" data-cy="{{ maximumBuyerWillOweId }}-hint-fill-in-form-link">{{ MAXIMUM_HINT.FILL_IN_FORM.TEXT }}</a></p>
-
           <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
         {% endset %}
 

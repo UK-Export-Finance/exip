@@ -13,7 +13,7 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { APPLICATION, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -111,23 +111,13 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       field.yearInput().should('exist');
     });
 
-    describe('total months of cover', () => {
+    it('renders `total months of cover` label, hint and input', () => {
       const fieldId = TOTAL_MONTHS_OF_COVER;
       const field = fieldSelector(fieldId);
 
-      it('renders `total months of insurance` label, hint and input', () => {
-        cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-
-        cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
-
-        field.input().should('exist');
-      });
-
-      it('renders correct amount of month options', () => {
-        // Note: additional option is the default/empty option.
-        const expected = APPLICATION.POLICY.TOTAL_MONTHS_OF_COVER + 1;
-        field.inputOption().should('have.length', expected);
-      });
+      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
+      field.input().should('exist');
     });
 
     it('renders `total sales to buyer` label, hint, prefix and input', () => {
