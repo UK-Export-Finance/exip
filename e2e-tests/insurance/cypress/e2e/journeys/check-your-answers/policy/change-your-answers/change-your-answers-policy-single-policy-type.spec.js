@@ -28,7 +28,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { taskList, policyCurrencyCodeFormField } = partials.insurancePartials;
+const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
@@ -229,7 +229,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
-          cy.changeAnswerSelectField(fieldVariables, policyCurrencyCodeFormField.input());
+          cy.changeAnswerSelectField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

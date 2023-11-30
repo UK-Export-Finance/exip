@@ -1,6 +1,5 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
 import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -26,8 +25,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const { policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -231,7 +228,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          policyCurrencyCodeFormField.input().select(newAnswer);
+          field(fieldId).input().select(newAnswer);
 
           submitButton().click();
         });

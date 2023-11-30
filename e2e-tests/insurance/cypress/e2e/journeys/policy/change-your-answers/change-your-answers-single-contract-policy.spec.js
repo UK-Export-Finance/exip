@@ -1,5 +1,4 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
@@ -24,8 +23,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const { policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -195,7 +192,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           summaryList.field(fieldId).changeLink().click();
 
-          policyCurrencyCodeFormField.input().select(newAnswer);
+          field(fieldId).input().select(newAnswer);
 
           submitButton().click();
         });

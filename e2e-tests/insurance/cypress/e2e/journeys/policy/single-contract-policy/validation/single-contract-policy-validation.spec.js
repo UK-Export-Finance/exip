@@ -1,10 +1,8 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import { field, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import application from '../../../../../../../fixtures/application';
-
-const { policyCurrencyCodeFormField } = partials.insurancePartials;
 
 const { INSURANCE } = ROUTES;
 
@@ -93,11 +91,13 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
     it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
       cy.navigateToUrl(url);
 
-      const currencyCode = application.POLICY[POLICY_CURRENCY_CODE];
+      const fieldId = POLICY_CURRENCY_CODE;
 
-      policyCurrencyCodeFormField.input().select(currencyCode);
+      const currencyCode = application.POLICY[fieldId];
 
-      policyCurrencyCodeFormField.inputOptionSelected().contains(currencyCode);
+      field(fieldId).input().select(currencyCode);
+
+      field(fieldId).inputOptionSelected().contains(currencyCode);
     });
   });
 });
