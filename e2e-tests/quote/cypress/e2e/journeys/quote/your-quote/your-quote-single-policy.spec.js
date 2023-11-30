@@ -32,7 +32,6 @@ const {
     BUYER_COUNTRY_CHANGE,
     YOUR_QUOTE,
   },
-  INSURANCE: { START },
 } = ROUTES;
 
 const {
@@ -233,7 +232,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
         cy.checkLink(
           yourQuotePage.whatHappensNext.intro.fullApplicationLink(),
-          START,
+          LINKS.EXTERNAL.FULL_APPLICATION,
           CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.FULL_APPLICATION.TEXT,
         );
       });
