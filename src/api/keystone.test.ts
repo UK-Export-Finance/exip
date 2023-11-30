@@ -159,11 +159,6 @@ describe('Create an Application', () => {
     expect(typeof application.broker.id).toEqual('string');
   });
 
-  test('it should have a sectionReview id', () => {
-    expect(application.sectionReview).toBeDefined();
-    expect(typeof application.sectionReview.id).toEqual('string');
-  });
-
   test('it should have a declaration id', () => {
     expect(application.declaration).toBeDefined();
     expect(typeof application.declaration.id).toEqual('string');
@@ -212,17 +207,6 @@ describe('Create an Application', () => {
     });
 
     expect(broker.application.id).toEqual(application.id);
-  });
-
-  test('it should add the application ID to the sectionReview entry', async () => {
-    const sectionReview = await context.query.SectionReview.findOne({
-      where: {
-        id: application.sectionReview.id,
-      },
-      query: 'id application { id }',
-    });
-
-    expect(sectionReview.application.id).toEqual(application.id);
   });
 
   test('it should add the application ID to the declaration entry', async () => {
@@ -406,18 +390,6 @@ describe('Application timestamp updates', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Buyer.updateOne({
         where: { id: application.buyer.id },
-        data: {},
-        query: 'id',
-      });
-
-      assertSpyWasCalled();
-    });
-  });
-
-  describe('SectionReview', () => {
-    test('it should call updateApplication.timestamp', async () => {
-      await context.query.SectionReview.updateOne({
-        where: { id: application.sectionReview.id },
         data: {},
         query: 'id',
       });
