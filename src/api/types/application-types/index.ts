@@ -156,10 +156,18 @@ export interface ApplicationVersion {
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
 }
 
+export interface SectionReview {
+  eligibility: boolean;
+  business?: boolean;
+  policy?: boolean;
+  buyer?: boolean;
+}
+
 export interface CreateAnApplicationVariables {
   accountId: string;
   eligibilityAnswers: ApplicationEligibility;
   company: ApplicationCompanyCore;
+  sectionReview: SectionReview;
 }
 
 export interface DeleteApplicationByReferenceNumberVariables {

@@ -5,7 +5,7 @@ import { ApolloResponse, SubmittedDataInsuranceEligibility } from '../../../../t
 /**
  * createApplication
  * 1) Extract company object from eligibility answers
- * 2) Construct variables object with separate eligibilityAnswers and company object.
+ * 2) Construct variables object with separate eligibilityAnswers, company object and sectionReview object.
  * 3) Call the GraphQL API with constructed variables.
  * 4) Return the created application or error.
  * @param {Object} eligibilityAnswers: Answers submitted from the eligibility forms.
@@ -16,12 +16,13 @@ const createApplication = async (eligibilityAnswers: SubmittedDataInsuranceEligi
   try {
     console.info('Creating application');
 
-    const { company, ...otherAnswers } = eligibilityAnswers;
+    const { company, sectionReview, ...otherAnswers } = eligibilityAnswers;
 
     const variables = {
       accountId,
       eligibilityAnswers: otherAnswers,
       company,
+      sectionReview,
     };
 
     const response = (await apollo('POST', createAnApplicationMutation, variables)) as ApolloResponse;

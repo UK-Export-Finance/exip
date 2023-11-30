@@ -18,6 +18,9 @@ describe('custom-resolvers/create-an-application', () => {
       hasCompaniesHouseNumber: true,
     },
     company: mockCompany,
+    sectionReview: {
+      eligibility: true,
+    },
   };
 
   beforeAll(async () => {
@@ -52,7 +55,7 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.referenceNumber).toEqual(expected);
   });
 
-  test('it should create buyer, eligibility, policy and company relationships', async () => {
+  test('it should create buyer, eligibility, policy, company and sectionReview relationships', async () => {
     result = await createAnApplication({}, variables, context);
 
     const application = await applications.get({ context, applicationId: result.id });
@@ -62,13 +65,14 @@ describe('custom-resolvers/create-an-application', () => {
       eligibilityId: application.eligibility.id,
       policyId: application.policy.id,
       companyId: application.company.id,
+      sectionReviewId: application.sectionReview.id,
     };
 
     expect(result.buyerId).toEqual(expected.buyerId);
     expect(result.eligibilityId).toEqual(expected.eligibilityId);
     expect(result.policyId).toEqual(expected.policyId);
-
     expect(result.companyId).toEqual(expected.companyId);
+    expect(result.sectionReviewId).toEqual(expected.sectionReviewId);
   });
 
   describe('when there is no account for the provided accountId', () => {

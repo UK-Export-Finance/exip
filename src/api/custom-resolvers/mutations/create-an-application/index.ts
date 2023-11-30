@@ -6,6 +6,7 @@ import createAnEligibility from '../../../helpers/create-an-eligibility';
 import createABuyer from '../../../helpers/create-a-buyer';
 import createAPolicy from '../../../helpers/create-a-policy';
 import createACompany from '../../../helpers/create-a-company';
+import createASectionReview from '../../../helpers/create-a-section-review';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
 /**
@@ -25,7 +26,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   console.info('Creating application for ', variables.accountId);
 
   try {
-    const { accountId, eligibilityAnswers, company: companyData } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData } = variables;
 
     /**
      * Check the account exists.
@@ -68,6 +69,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
      * 3) Create a new eligibility with country and application relationship.
      * 4) Create a new policy with application relationship.
+     * 5) Create a new sectionReview with application relationship
      */
     const buyer = await createABuyer(context, country.id, applicationId);
 
@@ -81,11 +83,14 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const company = await createACompany(context, applicationId, companyData);
 
+    const sectionReview = await createASectionReview(context, applicationId, sectionReviewData);
+
     /**
      * Update the application with relationships for:
      * 1) Buyer
      * 2) Eligibility
      * 3) Policy
+     * 4) sectionReview
      */
     const updatedApplication = await context.db.Application.updateOne({
       where: {
@@ -103,6 +108,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         company: {
           connect: { id: company.id },
+        },
+        sectionReview: {
+          connect: { id: sectionReview.id },
         },
       },
     });

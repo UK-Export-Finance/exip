@@ -28,8 +28,8 @@ const queryStrings = {
     }
   `,
   createAnApplication: () => gql`
-    mutation createAnApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!, $company: CompanyInput!) {
-      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company) {
+    mutation createAnApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!, $company: CompanyInput!, $sectionReview: SectionReviewInput!) {
+      createAnApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company, sectionReview: $sectionReview) {
         referenceNumber
       }
     }
@@ -221,15 +221,17 @@ const createBuyer = (countryId) =>
   * @param {String} Account/application owner ID
   * @param {Object} Eligibility answers
   * @param {Object} Company object (obtained from eligibility companies house call)
+  * @param {Object} sectionReview object (with eligibility set to true)
   * @returns {Object} Created application
   */
-const createAnApplication = (accountId, eligibilityAnswers, company) =>
+const createAnApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
   apollo.query({
     query: queryStrings.createAnApplication(),
     variables: {
       accountId,
       eligibilityAnswers,
       company,
+      sectionReview,
     },
     context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnApplication);
