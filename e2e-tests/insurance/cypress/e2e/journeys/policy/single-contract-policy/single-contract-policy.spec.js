@@ -1,4 +1,5 @@
 import {
+  currencyRadios,
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
@@ -152,10 +153,8 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.input().should('exist');
     });
 
-    describe('currency', () => {
-      it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
-        checkPolicyCurrencyCodeInput();
-      });
+    it('renders `currency` label and radio inputs', () => {
+      checkPolicyCurrencyCodeInput();
     });
 
     it('renders a `save and back` button', () => {
@@ -199,7 +198,9 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-        fieldSelector(POLICY_CURRENCY_CODE).inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
+
+        const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
+        currencyRadios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
       });
     });
   });

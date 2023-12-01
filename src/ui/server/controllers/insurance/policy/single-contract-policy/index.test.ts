@@ -8,7 +8,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
-import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
+import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -52,8 +52,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       [POLICY_CURRENCY_CODE]: null,
     },
   };
-
-  const currencyCode = mockCurrencies[0].isoCode;
 
   beforeEach(() => {
     req = mockReq();
@@ -133,7 +131,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies);
+      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -165,7 +163,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       it('should render template with currencies mapped to submitted currency', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, mockApplicationWithCurrencyCode.policy[POLICY_CURRENCY_CODE]);
+        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -305,7 +303,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies);
+        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -321,39 +319,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-
-      describe('when a policy currency code is submitted', () => {
-        const mockFormBody = {
-          [POLICY_CURRENCY_CODE]: currencyCode,
-        };
-
-        beforeEach(() => {
-          req.body = mockFormBody;
-        });
-
-        it('should render template with currencies mapped to submitted currency', async () => {
-          await post(req, res);
-
-          const payload = constructPayload(req.body, FIELD_IDS);
-
-          const expectedCurrencies = mapCurrenciesAsSelectOptions(mockCurrencies, currencyCode);
-
-          const expectedVariables = {
-            ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
-              BACK_LINK: req.headers.referer,
-            }),
-            ...pageVariables(refNumber),
-            userName: getUserNameFromSession(req.session.user),
-            application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
-            submittedValues: payload,
-            currencies: expectedCurrencies,
-            validationErrors: generateValidationErrors(payload),
-          };
-
-          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-        });
       });
     });
 

@@ -8,7 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import { objectHasProperty } from '../../../../helpers/object';
-import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
+import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -107,14 +107,6 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let mappedCurrencies;
-
-    if (objectHasProperty(application.policy, POLICY_CURRENCY_CODE)) {
-      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, application.policy[POLICY_CURRENCY_CODE]);
-    } else {
-      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
-    }
-
     let mappedTotalMonthsOfCover;
 
     if (objectHasProperty(application.policy, TOTAL_MONTHS_OF_COVER)) {
@@ -122,6 +114,9 @@ export const get = async (req: Request, res: Response) => {
     } else {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
     }
+
+    // const bla = mapCurrenciesAsRadioOptions(currencies);
+    // console.log('---------- controller - currencies ', currencies);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -131,7 +126,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mappedCurrencies,
+      currencies: mapCurrenciesAsRadioOptions(currencies),
       monthOptions: mappedTotalMonthsOfCover,
     });
   } catch (err) {
@@ -170,14 +165,6 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      let mappedCurrencies;
-
-      if (objectHasProperty(payload, POLICY_CURRENCY_CODE)) {
-        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, payload[POLICY_CURRENCY_CODE]);
-      } else {
-        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
-      }
-
       let mappedTotalMonthsOfCover;
 
       if (objectHasProperty(payload, TOTAL_MONTHS_OF_COVER)) {
@@ -195,7 +182,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mappedCurrencies,
+        currencies: mapCurrenciesAsRadioOptions(currencies),
         monthOptions: mappedTotalMonthsOfCover,
         validationErrors,
       });
