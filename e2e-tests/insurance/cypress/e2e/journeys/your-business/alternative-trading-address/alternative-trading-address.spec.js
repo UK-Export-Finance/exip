@@ -35,8 +35,9 @@ const field = fieldSelector(fieldId);
 const textareaField = { ...field, input: field.textarea };
 const expectedErrorsCount = 1;
 
-const fields = FIELDS.ALTERNATIVE_TRADING_ADDRESS;
-const { MAXIMUM } = FIELDS.ALTERNATIVE_TRADING_ADDRESS[ALTERNATIVE_TRADING_ADDRESS];
+const {
+  MAXIMUM, LABEL, REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
+} = FIELDS[ALTERNATIVE_TRADING_ADDRESS];
 
 const address = application.COMPANY[COMPANY_ADDRESS];
 
@@ -89,17 +90,21 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
 
     it('renders a registered office address heading', () => {
-      cy.checkText(fieldSelector(COMPANY_ADDRESS).label(), fields[COMPANY_ADDRESS].LABEL);
+      cy.checkText(fieldSelector(COMPANY_ADDRESS).heading(), REGISTERED_OFFICE_ADDRESS_HEADING);
+    });
+
+    it('renders a registered office address heading', () => {
+      cy.checkText(fieldSelector(COMPANY_ADDRESS).hint(), REGISTERED_OFFICE_ADDRESS_HINT);
     });
 
     it('renders a registered office address', () => {
       const addressText = `${address.addressLine1}${address.addressLine2}${address.locality}${address.region}${address.postalCode}`;
-      cy.checkText(fieldSelector(COMPANY_ADDRESS).id(), addressText);
+      cy.checkText(partials.html(COMPANY_ADDRESS), addressText);
     });
 
     it(`should display ${ALTERNATIVE_TRADING_ADDRESS} label and input`, () => {
       field.textarea().should('exist');
-      cy.checkText(field.label(), fields[fieldId].LABEL);
+      cy.checkText(field.label(), LABEL);
     });
 
     it('should display save and go back button', () => {

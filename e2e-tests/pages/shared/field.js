@@ -1,5 +1,4 @@
 const field = (id) => ({
-  id: () => cy.get(`[data-cy="${id}"`),
   label: () => cy.get(`[data-cy="${id}-label"]`),
   legend: () => cy.get(`[data-cy="${id}-legend`),
   heading: () => cy.get(`[data-cy="${id}-heading"]`),

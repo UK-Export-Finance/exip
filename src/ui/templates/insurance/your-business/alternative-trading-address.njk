@@ -47,7 +47,7 @@
         </div>
 
         <div class="govuk-grid-column-three-quarters-from-desktop">
-            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}-label">{{ FIELDS.REGISTERED_OFFICE_ADDRESS.LABEL }}</h2>
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}-heading">{{ FIELDS.REGISTERED_OFFICE_ADDRESS.HEADING }}</h2>
 
             {{ govukHint({
               text: FIELDS.REGISTERED_OFFICE_ADDRESS.HINT,
@@ -56,7 +56,7 @@
               }
             }) }}
 
-            <p class="govuk-body" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}">{{ addressHtml | safe }}</p>
+            <p class="govuk-body" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}-html">{{ addressHtml | safe }}</p>
         </div>
 
         <div class="govuk-grid-column-three-quarters-from-desktop">

@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../../constants';
 
-const { EXPORTER_BUSINESS, COMPANIES_HOUSE } = FIELD_IDS.INSURANCE;
+const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 
 const {
   YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE },
@@ -10,8 +10,6 @@ const {
   BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
   HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
-
-const { COMPANY_ADDRESS } = COMPANIES_HOUSE;
 
 export const FIELDS = {
   COMPANY_DETAILS: {
@@ -36,14 +34,10 @@ export const FIELDS = {
       },
     },
   },
-  ALTERNATIVE_TRADING_ADDRESS: {
-    [ALTERNATIVE_TRADING_ADDRESS]: {
-      LABEL: "What's your alternative trading address?",
-    },
-    [COMPANY_ADDRESS]: {
-      LABEL: 'Your registered office address',
-      HINT: 'This information comes from Companies House.',
-    },
+  [ALTERNATIVE_TRADING_ADDRESS]: {
+    LABEL: "What's your alternative trading address?",
+    REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
+    REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {
