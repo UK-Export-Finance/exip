@@ -3,6 +3,7 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -43,13 +44,28 @@
         <div class="govuk-grid-column-three-quarters-from-desktop">
 
           <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+        </div>
 
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+            <h2 class="govuk-heading-m govuk-!-margin-bottom-2" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}-label">{{ FIELDS.REGISTERED_OFFICE_ADDRESS.LABEL }}</h2>
+
+            {{ govukHint({
+              text: FIELDS.REGISTERED_OFFICE_ADDRESS.HINT,
+              attributes: {
+              "data-cy": FIELDS.REGISTERED_OFFICE_ADDRESS.ID + "-hint"
+              }
+            }) }}
+
+            <p class="govuk-body" data-cy="{{FIELDS.REGISTERED_OFFICE_ADDRESS.ID}}">{{ addressHtml | safe }}</p>
+        </div>
+
+        <div class="govuk-grid-column-three-quarters-from-desktop">
           {{ govukCharacterCount({
             name: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID,
             id: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID,
             label: {
               text: FIELDS.ALTERNATIVE_TRADING_ADDRESS.LABEL,
-              classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+              classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-5",
               attributes: {
                 'data-cy': FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + '-label',
                 id: FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID + '-label'
@@ -70,6 +86,7 @@
               }
             }
           }) }}
+        <div>
 
         </div>
       </div>

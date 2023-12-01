@@ -3,6 +3,7 @@ import { pageVariables, get, TEMPLATE, post, FIELD_IDS, MAXIMUM } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -11,6 +12,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import generateMultipleFieldHtml from '../../../../helpers/generate-multiple-field-html';
 
 const {
   INSURANCE_ROOT,
@@ -19,6 +21,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const { ALTERNATIVE_TRADING_ADDRESS } = BUSINESS_FIELD_IDS;
+
+const {
+  COMPANIES_HOUSE: { COMPANY_ADDRESS },
+} = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/business/alternative-trading-address', () => {
   let req: Request;
@@ -41,8 +47,12 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
         FIELDS: {
           ALTERNATIVE_TRADING_ADDRESS: {
             ID: ALTERNATIVE_TRADING_ADDRESS,
-            ...FIELDS[ALTERNATIVE_TRADING_ADDRESS],
+            ...FIELDS.ALTERNATIVE_TRADING_ADDRESS[ALTERNATIVE_TRADING_ADDRESS],
             MAXIMUM,
+          },
+          REGISTERED_OFFICE_ADDRESS: {
+            ID: COMPANY_ADDRESS,
+            ...FIELDS.ALTERNATIVE_TRADING_ADDRESS[COMPANY_ADDRESS],
           },
         },
         SAVE_AND_BACK_URL: '',
@@ -56,12 +66,17 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     it('should render template', () => {
       get(req, res);
 
+      const { company } = mockApplication;
+
+      const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
+
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
+        addressHtml,
         ...pageVariables,
       });
     });
@@ -86,6 +101,10 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
 
         await post(req, res);
 
+        const { company } = mockApplication;
+
+        const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
+
         const payload = constructPayload(req.body, FIELD_IDS);
 
         const validationErrors = generateValidationErrors(payload);
@@ -96,6 +115,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
+          addressHtml,
           ...pageVariables,
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
