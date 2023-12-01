@@ -1,4 +1,4 @@
-import getSupportedCurrencies from '../';
+import getSupportedCurrencies from '..';
 import mapSelectOption from '../../map-select-option';
 import sortArrayAlphabetically from '../../../sort-array-alphabetically';
 import { Currency } from '../../../../../types';

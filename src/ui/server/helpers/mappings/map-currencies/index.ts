@@ -1,7 +1,6 @@
 import { SUPPORTED_CURRENCIES } from '../../../constants';
 import { Currency } from '../../../../types';
 
-
 /**
  * getSupportedCurrencies
  * Get all supported currencies
@@ -13,6 +12,5 @@ const getSupportedCurrencies = (currencies: Array<Currency>) => {
 
   return supported;
 };
-
 
 export default getSupportedCurrencies;
