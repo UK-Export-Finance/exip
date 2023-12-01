@@ -3,7 +3,7 @@ import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } f
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
-import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsSelectOptions from '../../../helpers/mappings/map-currencies/as-select-options';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import corePageVariables from '../../../helpers/page-variables/core';
 import constructPayload from '../../../helpers/construct-payload';
@@ -114,9 +114,9 @@ const get = async (req: Request, res: Response) => {
     let mappedCurrencies;
 
     if (objectHasProperty(submittedData.quoteEligibility, CURRENCY)) {
-      mappedCurrencies = mapCurrencies(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
+      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
-      mappedCurrencies = mapCurrencies(currencies);
+      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
     }
 
     let mappedPercentageOfCover;
@@ -189,9 +189,9 @@ const post = async (req: Request, res: Response) => {
       let mappedCurrencies = [];
 
       if (submittedCurrencyCode) {
-        mappedCurrencies = mapCurrencies(currencies, submittedCurrencyCode);
+        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, submittedCurrencyCode);
       } else {
-        mappedCurrencies = mapCurrencies(currencies);
+        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
       }
 
       // map percentage of cover drop down options

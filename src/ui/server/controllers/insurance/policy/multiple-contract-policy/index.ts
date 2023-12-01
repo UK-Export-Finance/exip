@@ -8,7 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import { objectHasProperty } from '../../../../helpers/object';
-import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -110,9 +110,9 @@ export const get = async (req: Request, res: Response) => {
     let mappedCurrencies;
 
     if (objectHasProperty(application.policy, POLICY_CURRENCY_CODE)) {
-      mappedCurrencies = mapCurrencies(currencies, application.policy[POLICY_CURRENCY_CODE]);
+      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, application.policy[POLICY_CURRENCY_CODE]);
     } else {
-      mappedCurrencies = mapCurrencies(currencies);
+      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
     }
 
     let mappedTotalMonthsOfCover;
@@ -173,9 +173,9 @@ export const post = async (req: Request, res: Response) => {
       let mappedCurrencies;
 
       if (objectHasProperty(payload, POLICY_CURRENCY_CODE)) {
-        mappedCurrencies = mapCurrencies(currencies, payload[POLICY_CURRENCY_CODE]);
+        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, payload[POLICY_CURRENCY_CODE]);
       } else {
-        mappedCurrencies = mapCurrencies(currencies);
+        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
       }
 
       let mappedTotalMonthsOfCover;

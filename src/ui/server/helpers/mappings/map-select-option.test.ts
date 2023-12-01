@@ -21,7 +21,7 @@ describe('server/helpers/mappings/map-select-option', () => {
       const result = mapSelectOption(mockOption.name, mockOption.isoCode, true);
 
       const expected = {
-        text: `${mockOption.isoCode} - ${mockOption.name}`,
+        text: `${mockOption.name} (${mockOption.isoCode})`,
         value: mockOption.isoCode,
         selected: false,
       };

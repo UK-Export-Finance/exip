@@ -15,7 +15,7 @@ const mapSelectOption = (name: string, value: string, renderValueInText: boolean
   let text = name;
 
   if (renderValueInText) {
-    text = `${value} - ${name}`;
+    text = `${name} (${value})`;
   }
 
   const mapped = {
