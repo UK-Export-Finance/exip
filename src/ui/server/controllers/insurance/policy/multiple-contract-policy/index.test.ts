@@ -1,4 +1,3 @@
-import { add, getMonth, getYear } from 'date-fns';
 import { pageVariables, TEMPLATE, FIELD_IDS, totalMonthsOfCoverOptions, get, post } from '.';
 import { GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
@@ -282,9 +281,9 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     const date = new Date();
 
     const validBody = {
-      [`${REQUESTED_START_DATE}-day`]: '1',
-      [`${REQUESTED_START_DATE}-month`]: getMonth(add(date, { months: 1 })),
-      [`${REQUESTED_START_DATE}-year`]: getYear(add(date, { years: 1 })),
+      [`${REQUESTED_START_DATE}-day`]: new Date(date).getDate(),
+      [`${REQUESTED_START_DATE}-month`]: new Date(date).getMonth() + 1,
+      [`${REQUESTED_START_DATE}-year`]: new Date(date).getFullYear(),
       [TOTAL_MONTHS_OF_COVER]: '1',
       [TOTAL_SALES_TO_BUYER]: '1000',
       [MAXIMUM_BUYER_WILL_OWE]: '500',
