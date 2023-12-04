@@ -1,5 +1,5 @@
 import mapCurrenciesAsSelectOptions from '.';
-import getSupportedCurrencies from '..';
+import getSupportedCurrencies from '../map-supported-currencies';
 import sortArrayAlphabetically from '../../../sort-array-alphabetically';
 import mapSelectOption from '../../map-select-option';
 import { mockCurrencies } from '../../../../test-mocks';

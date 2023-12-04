@@ -1,7 +1,7 @@
 import getSupportedCurrencies from '.';
-import { mockCurrencies } from '../../../test-mocks';
+import { mockCurrencies } from '../../../../test-mocks';
 
-describe('server/helpers/mappings/map-currencies/index', () => {
+describe('server/helpers/mappings/map-currencies/map-supported-currencies', () => {
   it('should only return supported currencies (GBP, EUR, JPY, USD)', () => {
     const result = getSupportedCurrencies(mockCurrencies);
 

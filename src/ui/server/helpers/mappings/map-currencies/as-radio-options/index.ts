@@ -1,4 +1,4 @@
-import getSupportedCurrencies from '..';
+import getSupportedCurrencies from '../map-supported-currencies';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import nameAndIsoCodeText from '../../../name-and-iso-code-text';

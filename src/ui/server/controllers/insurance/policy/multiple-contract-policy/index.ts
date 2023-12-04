@@ -115,9 +115,6 @@ export const get = async (req: Request, res: Response) => {
       mappedTotalMonthsOfCover = mapTotalMonthsOfCover(totalMonthsOfCoverOptions);
     }
 
-    // const bla = mapCurrenciesAsRadioOptions(currencies);
-    // console.log('---------- controller - currencies ', currencies);
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
