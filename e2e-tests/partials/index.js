@@ -23,6 +23,7 @@ const partials = {
   phaseBanner,
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   ukGoodsOrServicesDescription,
+  html: (id) => cy.get(`[data-cy="${id}-html"]`),
 };
 
 export default partials;
