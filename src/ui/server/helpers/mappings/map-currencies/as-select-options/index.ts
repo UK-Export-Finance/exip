@@ -13,7 +13,9 @@ import { Currency } from '../../../../../types';
 const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue?: string) => {
   const supportedCurrencies = getSupportedCurrencies(currencies);
 
-  const mapped = supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, true, selectedValue));
+  const renderValueInText = true;
+
+  const mapped = supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, renderValueInText, selectedValue));
 
   const sorted = sortArrayAlphabetically(mapped, 'text');
 

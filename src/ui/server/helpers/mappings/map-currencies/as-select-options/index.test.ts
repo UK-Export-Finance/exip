@@ -7,11 +7,13 @@ import { mockCurrencies } from '../../../../test-mocks';
 describe('server/helpers/mappings/map-currencies/as-select-options', () => {
   const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
 
+  const renderValueInText = true;
+
   it('should return an array of mapped objects from mapSelectOption and with a default option', () => {
     const result = mapCurrenciesAsSelectOptions(supportedCurrencies);
 
     const expectedSorted = sortArrayAlphabetically(
-      supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, true)),
+      supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, renderValueInText)),
       'text',
     );
 
@@ -34,7 +36,7 @@ describe('server/helpers/mappings/map-currencies/as-select-options', () => {
       const result = mapCurrenciesAsSelectOptions(mockCurrencies, mockSelectedValue);
 
       const expected = sortArrayAlphabetically(
-        supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, true, mockSelectedValue)),
+        supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, renderValueInText, mockSelectedValue)),
         'text',
       );
 
