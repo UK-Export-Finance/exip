@@ -36,10 +36,6 @@ export const EXPORTER_BUSINESS_FIELDS = {
     REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
     REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
   },
-  [FIELD_IDS.INSURANCE.COMPANIES_HOUSE.COMPANY_ADDRESS]: {
-    LABEL: 'Your registered office address',
-    HINT: 'This information comes from Companies House.',
-  },
   NATURE_OF_YOUR_BUSINESS: {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
       LABEL: 'Tell us about your business',
