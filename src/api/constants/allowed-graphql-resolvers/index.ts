@@ -20,6 +20,7 @@ const DEFAULT_RESOLVERS = [
   'updateExportContract',
   'updateSectionReview',
   'updateEligibility',
+  'updateDifferentTradingAddress',
   'referenceNumber',
   'applications',
 

@@ -154,6 +154,11 @@ interface ApplicationPolicyContact {
   isSameAsOwner?: boolean;
 }
 
+interface ApplicationDifferentTradingAddress {
+  id: string;
+  fullAddress?: string;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
@@ -166,6 +171,7 @@ interface Application extends ApplicationCore {
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   policyContact: ApplicationPolicyContact;
+  differentTradingAddress: ApplicationDifferentTradingAddress;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {

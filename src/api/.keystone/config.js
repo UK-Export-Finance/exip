@@ -335,6 +335,7 @@ var DEFAULT_RESOLVERS = [
   "updateExportContract",
   "updateSectionReview",
   "updateEligibility",
+  "updateDifferentTradingAddress",
   "referenceNumber",
   "applications",
   // account
@@ -1282,6 +1283,22 @@ var lists = {
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
       financialYearEndDate: (0, import_fields.timestamp)()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
+  DifferentTradingAddress: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      fullAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

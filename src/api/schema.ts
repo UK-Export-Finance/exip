@@ -506,6 +506,22 @@ export const lists = {
     },
     access: allowAll,
   }),
+  DifferentTradingAddress: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
   CompanySicCode: list({
     fields: {
       company: relationship({ ref: 'Company.sicCodes' }),

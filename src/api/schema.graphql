@@ -1283,6 +1283,45 @@ input CompanySicCodeRelateToManyForCreateInput {
   connect: [CompanySicCodeWhereUniqueInput!]
 }
 
+type DifferentTradingAddress {
+  id: ID!
+  application: Application
+  fullAddress: String
+}
+
+input DifferentTradingAddressWhereUniqueInput {
+  id: ID
+}
+
+input DifferentTradingAddressWhereInput {
+  AND: [DifferentTradingAddressWhereInput!]
+  OR: [DifferentTradingAddressWhereInput!]
+  NOT: [DifferentTradingAddressWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  fullAddress: StringFilter
+}
+
+input DifferentTradingAddressOrderByInput {
+  id: OrderDirection
+  fullAddress: OrderDirection
+}
+
+input DifferentTradingAddressUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  fullAddress: String
+}
+
+input DifferentTradingAddressUpdateArgs {
+  where: DifferentTradingAddressWhereUniqueInput!
+  data: DifferentTradingAddressUpdateInput!
+}
+
+input DifferentTradingAddressCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  fullAddress: String
+}
+
 type CompanySicCode {
   id: ID!
   company: Company
@@ -2082,6 +2121,12 @@ type Mutation {
   updateCompanies(data: [CompanyUpdateArgs!]!): [Company]
   deleteCompany(where: CompanyWhereUniqueInput!): Company
   deleteCompanies(where: [CompanyWhereUniqueInput!]!): [Company]
+  createDifferentTradingAddress(data: DifferentTradingAddressCreateInput!): DifferentTradingAddress
+  createDifferentTradingAddresses(data: [DifferentTradingAddressCreateInput!]!): [DifferentTradingAddress]
+  updateDifferentTradingAddress(where: DifferentTradingAddressWhereUniqueInput!, data: DifferentTradingAddressUpdateInput!): DifferentTradingAddress
+  updateDifferentTradingAddresses(data: [DifferentTradingAddressUpdateArgs!]!): [DifferentTradingAddress]
+  deleteDifferentTradingAddress(where: DifferentTradingAddressWhereUniqueInput!): DifferentTradingAddress
+  deleteDifferentTradingAddresses(where: [DifferentTradingAddressWhereUniqueInput!]!): [DifferentTradingAddress]
   createCompanySicCode(data: CompanySicCodeCreateInput!): CompanySicCode
   createCompanySicCodes(data: [CompanySicCodeCreateInput!]!): [CompanySicCode]
   updateCompanySicCode(where: CompanySicCodeWhereUniqueInput!, data: CompanySicCodeUpdateInput!): CompanySicCode
@@ -2267,6 +2312,9 @@ type Query {
   companies(where: CompanyWhereInput! = {}, orderBy: [CompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyWhereUniqueInput): [Company!]
   company(where: CompanyWhereUniqueInput!): Company
   companiesCount(where: CompanyWhereInput! = {}): Int
+  differentTradingAddresses(where: DifferentTradingAddressWhereInput! = {}, orderBy: [DifferentTradingAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DifferentTradingAddressWhereUniqueInput): [DifferentTradingAddress!]
+  differentTradingAddress(where: DifferentTradingAddressWhereUniqueInput!): DifferentTradingAddress
+  differentTradingAddressesCount(where: DifferentTradingAddressWhereInput! = {}): Int
   companySicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   companySicCode(where: CompanySicCodeWhereUniqueInput!): CompanySicCode
   companySicCodesCount(where: CompanySicCodeWhereInput! = {}): Int

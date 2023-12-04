@@ -11,6 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateMultipleFieldHtml from '../../../../helpers/generate-multiple-field-html';
+import mapAndSave from '../map-and-save/different-trading-address';
 
 const {
   INSURANCE_ROOT,
@@ -93,7 +94,7 @@ const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-const post = (req: Request, res: Response) => {
+const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
 
@@ -128,6 +129,16 @@ const post = (req: Request, res: Response) => {
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
       });
+    }
+
+    /**
+     * No validation errors.
+     * call mapAndSave to call the API.
+     */
+    const saveResponse = await mapAndSave.differentTradingAddress(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
