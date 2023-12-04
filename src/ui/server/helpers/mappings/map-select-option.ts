@@ -1,3 +1,4 @@
+import nameAndIsoCodeText from '../name-and-iso-code-text';
 import { SelectOption } from '../../../types';
 
 /**
@@ -15,7 +16,8 @@ const mapSelectOption = (name: string, value: string, renderValueInText: boolean
   let text = name;
 
   if (renderValueInText) {
-    text = `${name} (${value})`;
+    // text = `${name} (${value})`;
+    text = nameAndIsoCodeText(name, value);
   }
 
   const mapped = {
