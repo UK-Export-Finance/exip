@@ -18,7 +18,7 @@ describe('server/helpers/mappings/map-currencies/as-radio-options', () => {
   it('should return an object of supported countries options and an ALTERNATIVE option', () => {
     const result = mapCurrenciesAsRadioOptions(supportedCurrencies);
 
-    const [country0, country1, country2] = supportedCurrencies;
+    const [country0, country1, country2, country3] = supportedCurrencies;
 
     const expected = {
       [country0.isoCode]: {
@@ -32,6 +32,10 @@ describe('server/helpers/mappings/map-currencies/as-radio-options', () => {
       [country2.isoCode]: {
         text: `${country2.name} (${country2.isoCode})`,
         value: country2.isoCode,
+      },
+      [country3.isoCode]: {
+        text: `${country3.name} (${country3.isoCode})`,
+        value: country3.isoCode,
       },
       ALTERNATIVE: {
         text: CONTRACT_POLICY[POLICY_CURRENCY_CODE][ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
