@@ -16,7 +16,6 @@ const mapSelectOption = (name: string, value: string, renderValueInText: boolean
   let text = name;
 
   if (renderValueInText) {
-    // text = `${name} (${value})`;
     text = nameAndIsoCodeText(name, value);
   }
 
