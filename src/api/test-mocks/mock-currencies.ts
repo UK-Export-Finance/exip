@@ -6,8 +6,8 @@ const mockCurrencies = [
     isoCode: 'EUR',
   },
   {
-    name: 'Hong Kong Dollars',
-    isoCode: 'HKD',
+    name: 'Japanese Yen',
+    isoCode: 'JPY',
   },
   {
     name: 'UK Sterling',

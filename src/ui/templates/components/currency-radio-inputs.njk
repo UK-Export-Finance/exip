@@ -60,6 +60,20 @@
         }
       },
       {
+        label: {
+          attributes: {
+            id: id + '-' + supportedCurrencies.JPY.value + '-label',
+            'data-cy': id + '-' + supportedCurrencies.JPY.value + '-label'
+          }
+        },
+        value: supportedCurrencies.JPY.value,
+        text: supportedCurrencies.JPY.text,
+        checked: submittedValue === supportedCurrencies.JPY.value,
+        attributes: {
+          "data-cy": id + '-' + supportedCurrencies.JPY.value + '-input'
+        }
+      },
+      {
         divider: 'or'
       },
       {
