@@ -13,6 +13,8 @@ import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
+const { EUR, GBP, USD } = SUPPORTED_CURRENCIES;
+
 const {
   ELIGIBILITY: {
     CURRENCY,
@@ -103,9 +105,9 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       const field = fieldSelector(fieldId);
 
-      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
-      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
-      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+      field.input().select(1).should('have.value', EUR.isoCode);
+      field.input().select(2).should('have.value', GBP.isoCode);
+      field.input().select(3).should('have.value', USD.isoCode);
     });
 
     it('should render `contract value` label and input', () => {

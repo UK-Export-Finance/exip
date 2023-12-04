@@ -5,7 +5,7 @@ import { field, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
 import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
 import formatCurrency from '../../../../../../../helpers/format-currency';
-import CURRENCIES from '../../../../../../../fixtures/currencies';
+import { USD } from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
 
 const {
@@ -31,8 +31,6 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
-
-const NEW_CURRENCY_INPUT = CURRENCIES[3].isoCode;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
@@ -234,7 +232,12 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
 
     describe(POLICY_CURRENCY_CODE, () => {
       const fieldId = POLICY_CURRENCY_CODE;
-      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+
+      const fieldVariables = {
+        ...getFieldVariables(fieldId, referenceNumber),
+        newValueInput: USD.isoCode,
+        newValue: USD.name,
+      };
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
@@ -243,9 +246,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
 
         it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
           cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
         });
       });
@@ -256,8 +257,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = NEW_CURRENCY_INPUT;
-          cy.changeAnswerSelectField(fieldVariables, field(fieldId).input());
+          cy.changeAnswerRadioField(fieldVariables);
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -265,10 +265,6 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
         });
 
         it('should render the new answer', () => {
-          const { 3: expected } = CURRENCIES;
-          const { name } = expected;
-
-          fieldVariables.newValue = name;
           cy.checkChangeAnswerRendered(fieldVariables);
         });
       });

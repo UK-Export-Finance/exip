@@ -1,5 +1,5 @@
 import {
-  currencyRadios,
+  radios,
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
@@ -188,7 +188,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
         fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
-        currencyRadios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
+        radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
       });
     });
   });

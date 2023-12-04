@@ -1,4 +1,4 @@
-import { currencyRadios, field as fieldSelector } from '../../pages/shared';
+import { radios, field as fieldSelector } from '../../pages/shared';
 import { POLICY_FIELDS } from '../../content-strings/fields/insurance/policy';
 import { SUPPORTED_CURRENCIES } from '../../constants';
 import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy';
@@ -25,22 +25,22 @@ const checkPolicyCurrencyCodeInput = () => {
   );
 
   // EUR
-  const option1 = currencyRadios(fieldId, EUR.isoCode).option;
+  const option1 = radios(fieldId, EUR.isoCode).option;
   cy.checkText(option1.label(), `${EUR.name} (${EUR.isoCode})`);
   option1.input().should('have.value', EUR.isoCode);
 
   // GBP
-  const option2 = currencyRadios(fieldId, GBP.isoCode).option;
+  const option2 = radios(fieldId, GBP.isoCode).option;
   cy.checkText(option2.label(), `${GBP.name} (${GBP.isoCode})`);
   option2.input().should('have.value', GBP.isoCode);
 
   // USD
-  const option3 = currencyRadios(fieldId, USD.isoCode).option;
+  const option3 = radios(fieldId, USD.isoCode).option;
   cy.checkText(option3.label(), `${USD.name} (${USD.isoCode})`);
   option3.input().should('have.value', USD.isoCode);
 
   // Alternative currency
-  const option4 = currencyRadios(fieldId, ALTERNATIVE_POLICY_CURRENCY_CODE).option;
+  const option4 = radios(fieldId, ALTERNATIVE_POLICY_CURRENCY_CODE).option;
   cy.checkText(option4.label(), CONTRACT_POLICY[fieldId][ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT);
   option4.input().should('have.value', ALTERNATIVE_POLICY_CURRENCY_CODE);
 };

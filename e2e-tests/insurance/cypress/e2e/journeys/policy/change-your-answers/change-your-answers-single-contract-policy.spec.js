@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
 import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
-import CURRENCIES from '../../../../../../fixtures/currencies';
+import { USD } from '../../../../../../fixtures/currencies';
 
 const {
   ROOT,
@@ -174,6 +174,12 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
     describe(POLICY_CURRENCY_CODE, () => {
       const fieldId = POLICY_CURRENCY_CODE;
 
+      const fieldVariables = {
+        fieldId,
+        newValueInput: USD.isoCode,
+        newValue: USD.name,
+      };
+
       describe('when clicking the `change` link', () => {
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
@@ -185,16 +191,12 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
       });
 
       describe('form submission with a new answer', () => {
-        const newAnswer = CURRENCIES[3].isoCode;
-
         beforeEach(() => {
           cy.navigateToUrl(url);
 
           summaryList.field(fieldId).changeLink().click();
 
-          field(fieldId).input().select(newAnswer);
-
-          submitButton().click();
+          cy.changeAnswerRadioField(fieldVariables);
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -202,9 +204,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         });
 
         it('should render the new answer', () => {
-          const { 3: expected } = CURRENCIES;
-          const { name } = expected;
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, name);
+          cy.assertSummaryListRowValueNew(summaryList, fieldId, fieldVariables.newValue);
         });
       });
     });

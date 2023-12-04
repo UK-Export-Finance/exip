@@ -1,6 +1,6 @@
 import { FIELD_IDS, APPLICATION } from '../../constants';
 import { singleContractPolicyPage } from '../../pages/insurance/policy';
-import { currencyRadios, field, submitButton } from '../../pages/shared';
+import { radios, field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -36,7 +36,7 @@ export default ({ policyMaximumValue = false }) => {
   }
 
   const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
-  currencyRadios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
+  radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
 
   submitButton().click();
 };

@@ -4,7 +4,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
-{% import '../../components/currency-radio-inputs.njk' as currencyRadiosInputs %}
+{% import '../../components/currency-radio-inputs.njk' as radiosInputs %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -112,7 +112,7 @@
           }
         }) }}
 
-        {{ currencyRadiosInputs.render({
+        {{ radiosInputs.render({
           id: FIELDS.POLICY_CURRENCY_CODE.ID,
           legend: FIELDS.POLICY_CURRENCY_CODE.LEGEND,
           supportedCurrencies: currencies,

@@ -1,5 +1,5 @@
 import {
-  currencyRadios,
+  radios,
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
@@ -200,7 +200,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
-        currencyRadios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
+        radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
       });
     });
   });
