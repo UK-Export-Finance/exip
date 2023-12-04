@@ -27,30 +27,31 @@ const checkPolicyCurrencyCodeInput = () => {
     CONTENT_STRINGS.LEGEND,
   );
 
+  const { option: option1 } = radios(fieldId, EUR.isoCode);
+  const { option: option2 } = radios(fieldId, GBP.isoCode);
+  const { option: option3 } = radios(fieldId, USD.isoCode);
+  const { option: option4 } = radios(fieldId, JPY.isoCode);
+  const { option: option5 } = radios(fieldId, ALTERNATIVE_POLICY_CURRENCY_CODE);
+
   // EUR
-  const option1 = radios(fieldId, EUR.isoCode).option;
   cy.checkText(option1.label(), `${EUR.name} (${EUR.isoCode})`);
-  option1.input().should('have.value', EUR.isoCode);
+  cy.checkValue(option1, EUR.isoCode);
 
   // GBP
-  const option2 = radios(fieldId, GBP.isoCode).option;
   cy.checkText(option2.label(), `${GBP.name} (${GBP.isoCode})`);
-  option2.input().should('have.value', GBP.isoCode);
+  cy.checkValue(option2, GBP.isoCode);
 
   // USD
-  const option3 = radios(fieldId, USD.isoCode).option;
   cy.checkText(option3.label(), `${USD.name} (${USD.isoCode})`);
-  option3.input().should('have.value', USD.isoCode);
+  cy.checkValue(option3, USD.isoCode);
 
   // JPY
-  const option4 = radios(fieldId, JPY.isoCode).option;
   cy.checkText(option4.label(), `${JPY.name} (${JPY.isoCode})`);
-  option4.input().should('have.value', JPY.isoCode);
+  cy.checkValue(option4, JPY.isoCode);
 
   // Alternative currency
-  const option5 = radios(fieldId, ALTERNATIVE_POLICY_CURRENCY_CODE).option;
   cy.checkText(option5.label(), CONTRACT_POLICY[fieldId][ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT);
-  option5.input().should('have.value', ALTERNATIVE_POLICY_CURRENCY_CODE);
+  cy.checkValue(option5, ALTERNATIVE_POLICY_CURRENCY_CODE);
 };
 
 export default checkPolicyCurrencyCodeInput;
