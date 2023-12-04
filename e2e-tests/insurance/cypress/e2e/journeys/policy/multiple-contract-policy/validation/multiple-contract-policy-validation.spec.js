@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../../../../../pages/shared';
+import { radios, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -98,12 +98,12 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
       cy.navigateToUrl(url);
 
       const fieldId = POLICY_CURRENCY_CODE;
+      const isoCode = application.POLICY[fieldId];
 
-      const currencyCode = application.POLICY[fieldId];
+      radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
+      submitButton().click();
 
-      field(fieldId).input().select(currencyCode);
-
-      field(fieldId).inputOptionSelected().contains(currencyCode);
+      radios(fieldId, isoCode).option.input().should('be.checked');
     });
   });
 });
