@@ -6,11 +6,11 @@ interface Currency {
 }
 
 interface CurrencyRadios {
-  EUR: RadioOption,
-  GBP: RadioOption,
-  JPY: RadioOption,
-  USD: RadioOption,
-  ALTERNATIVE: RadioOption,
+  EUR: RadioOption;
+  GBP: RadioOption;
+  JPY: RadioOption;
+  USD: RadioOption;
+  ALTERNATIVE: RadioOption;
 }
 
 export { Currency, CurrencyRadios };
