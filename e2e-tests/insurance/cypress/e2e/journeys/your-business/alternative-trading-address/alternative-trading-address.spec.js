@@ -4,6 +4,7 @@ import { PAGES, BUTTONS, ERROR_MESSAGES } from '../../../../../../content-string
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
@@ -12,6 +13,9 @@ const ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const {
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS,
+  },
+  COMPANIES_HOUSE: {
+    COMPANY_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -31,7 +35,11 @@ const field = fieldSelector(fieldId);
 const textareaField = { ...field, input: field.textarea };
 const expectedErrorsCount = 1;
 
-const { MAXIMUM } = FIELDS[fieldId];
+const {
+  MAXIMUM, LABEL, REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
+} = FIELDS[ALTERNATIVE_TRADING_ADDRESS];
+
+const address = application.COMPANY[COMPANY_ADDRESS];
 
 context('Insurance - Your business - Alternative trading address page - I want to input information on an alternative business trading address So that I can provide necessary business information to support my application for Export Insurance', () => {
   let referenceNumber;
@@ -81,9 +89,22 @@ context('Insurance - Your business - Alternative trading address page - I want t
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
+    it('renders a registered office address heading', () => {
+      cy.checkText(fieldSelector(COMPANY_ADDRESS).heading(), REGISTERED_OFFICE_ADDRESS_HEADING);
+    });
+
+    it('renders a registered office address heading', () => {
+      cy.checkText(fieldSelector(COMPANY_ADDRESS).hint(), REGISTERED_OFFICE_ADDRESS_HINT);
+    });
+
+    it('renders a registered office address', () => {
+      const addressText = `${address.addressLine1}${address.addressLine2}${address.locality}${address.region}${address.postalCode}`;
+      cy.checkText(partials.html(COMPANY_ADDRESS), addressText);
+    });
+
     it(`should display ${ALTERNATIVE_TRADING_ADDRESS} label and input`, () => {
       field.textarea().should('exist');
-      cy.checkText(field.label(), FIELDS[fieldId].LABEL);
+      cy.checkText(field.label(), LABEL);
     });
 
     it('should display save and go back button', () => {
