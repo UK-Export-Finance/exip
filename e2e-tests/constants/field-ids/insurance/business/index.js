@@ -20,16 +20,4 @@ export const EXPORTER_BUSINESS = {
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
   },
   HAS_CREDIT_CONTROL: 'hasCreditControlProcess',
-  BROKER: {
-    LEGEND: 'broker',
-    USING_BROKER: 'isUsingBroker',
-    NAME: 'name',
-    ADDRESS_LINE_1: 'addressLine1',
-    ADDRESS_LINE_2: 'addressLine2',
-    TOWN: 'town',
-    COUNTY: 'county',
-    POSTCODE: 'postcode',
-    EMAIL: 'email',
-    DETAILS: 'whyAppointBroker',
-  },
 };

@@ -1,17 +1,18 @@
 import partials from '../../../../../../../../partials';
-import { ROUTES } from '../../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_ROOT,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
+context('Insurance - Policy - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -22,12 +23,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      // go to the page we want to test.
+      cy.startInsurancePolicySection();
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

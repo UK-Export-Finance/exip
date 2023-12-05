@@ -1,32 +1,34 @@
-import { brokerPage } from '../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../pages/insurance/policy';
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  BROKER: {
-    USING_BROKER,
-    NAME,
-    ADDRESS_LINE_1,
-    ADDRESS_LINE_2,
-    TOWN,
-    COUNTY,
-    POSTCODE,
-    EMAIL,
+  POLICY: {
+    BROKER: {
+      USING_BROKER,
+      NAME,
+      ADDRESS_LINE_1,
+      ADDRESS_LINE_2,
+      TOWN,
+      COUNTY,
+      POSTCODE,
+      EMAIL,
+    },
   },
-} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
-context('Insurance - Your business - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
+context('Insurance - Policy - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let url;
 
@@ -34,13 +36,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
-
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
-      cy.completeAndSubmitBrokerForm({ usingBroker: true });
+      cy.completePolicySection({ usingBroker: true });
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

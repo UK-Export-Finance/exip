@@ -1,8 +1,9 @@
-import { brokerPage } from '../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
 import { field, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import application from '../../../../../../fixtures/application';
 
@@ -25,7 +26,7 @@ const {
   EXPORTER_BUSINESS: {
     BROKER_ROOT,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 
@@ -33,7 +34,7 @@ const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Broker page - Save and back', () => {
+context('Insurance - Policy - Broker page - Save and back', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -42,12 +43,13 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      // go to the page we want to test.
+      cy.startInsurancePolicySection();
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -65,7 +67,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
   });
 
   describe('when no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
+    it(`should redirect to ${ALL_SECTIONS} retain the "insurance policy" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
       saveAndBackButton().click();
@@ -78,7 +80,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
   });
 
   describe('save and back on a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
+    it(`should redirect to ${ALL_SECTIONS} retain the "insurance policy" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
       brokerPage[USING_BROKER].yesRadioInput().click();
@@ -96,16 +98,16 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.startYourBusinessSection();
+      cy.startInsurancePolicySection();
 
-      // submit company details form
+      // submit policy type form
       submitButton().click();
-      // submit nature of business form
+      // submit single contract policy form
       submitButton().click();
-      // submit turnover form
+      // submit about goods or services form
       submitButton().click();
-      // submit credit control form
-      cy.completeAndSubmitCreditControlForm({});
+      // submit name on policy form
+      submitButton().click();
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -120,7 +122,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
 
   describe('when all fields are provided', () => {
     describe(`when selecting yes for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
+      it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "completed"`, () => {
         cy.navigateToUrl(url);
 
         brokerPage[USING_BROKER].yesRadioInput().click();
@@ -144,16 +146,16 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.startYourBusinessSection();
+        cy.startInsurancePolicySection();
 
-        // submit company details form
+        // submit policy type form
         submitButton().click();
-        // submit nature of business form
+        // submit single contract policy form
         submitButton().click();
-        // submit turnover form
+        // submit about goods or services form
         submitButton().click();
-        // submit credit control form
-        cy.completeAndSubmitCreditControlForm({});
+        // submit name on policy form
+        submitButton().click();
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -167,7 +169,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     });
 
     describe(`when selecting no for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "Completed"`, () => {
+      it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "Completed"`, () => {
         cy.navigateToUrl(url);
 
         brokerPage[USING_BROKER].noRadioInput().click();
@@ -183,16 +185,16 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it('should retain all the relevant fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.startYourBusinessSection();
+        cy.startInsurancePolicySection();
 
-        // submit company details form
+        // submit policy type form
         submitButton().click();
-        // submit nature of business form
+        // submit single contract policy form
         submitButton().click();
-        // submit turnover form
+        // submit about goods or services form
         submitButton().click();
-        // submit credit control form
-        cy.completeAndSubmitCreditControlForm({});
+        // submit name on policy form
+        submitButton().click();
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });

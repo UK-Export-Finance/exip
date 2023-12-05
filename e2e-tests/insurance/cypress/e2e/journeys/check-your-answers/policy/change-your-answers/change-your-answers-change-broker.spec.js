@@ -5,8 +5,8 @@ import {
   summaryList,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import { brokerPage } from '../../../../../../../pages/your-business';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
+import { brokerPage } from '../../../../../../../pages/insurance/policy';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -14,9 +14,9 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: {
-    YOUR_BUSINESS,
+    TYPE_OF_POLICY,
   },
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
@@ -32,7 +32,7 @@ const {
     POSTCODE,
     EMAIL,
   },
-} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS.POLICY;
 
 const { taskList } = partials.insurancePartials;
 
@@ -40,7 +40,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: BROKER_CHECK_AND_CHANGE,
-  checkYourAnswersRoute: YOUR_BUSINESS,
+  checkYourAnswersRoute: TYPE_OF_POLICY,
   newValueInput: '',
   fieldId,
   referenceNumber,
@@ -48,7 +48,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context('Insurance - Check your answers - Broker - Your business - Summary list', () => {
+context('Insurance - Check your answers - Broker - Policy - Summary list', () => {
   let referenceNumber;
   let url;
 
@@ -60,10 +60,10 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
       task.link().click();
 
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
+      // // To get past "Policy" check your answers page
+      // cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -107,8 +107,8 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -154,8 +154,8 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         submitButton().click();
       });
 
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -208,8 +208,8 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         cy.changeAnswerField(fieldVariables, field(fieldId).input());
       });
 
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
@@ -245,8 +245,8 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
         submitButton().click();
       });
 
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {

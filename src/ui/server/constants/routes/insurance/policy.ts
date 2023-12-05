@@ -1,5 +1,5 @@
 const ROOT = '/policy';
-const BROKER_ROOT = '/broker';
+const BROKER_ROOT = `${ROOT}/broker`;
 
 export const POLICY = {
   ROOT,
@@ -28,9 +28,9 @@ export const POLICY = {
   DIFFERENT_NAME_ON_POLICY_CHANGE: `${ROOT}/different-name-on-policy/change`,
   DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/different-name-on-policy/check-and-change`,
   BROKER_ROOT,
-  BROKER_SAVE_AND_BACK: `${ROOT}${BROKER_ROOT}/save-and-back`,
-  BROKER_CHANGE: `${ROOT}${BROKER_ROOT}/change`,
-  BROKER_CHECK_AND_CHANGE: `${ROOT}${BROKER_ROOT}/check-and-change`,
+  BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
+  BROKER_CHANGE: `${BROKER_ROOT}/change`,
+  BROKER_CHECK_AND_CHANGE: `${BROKER_ROOT}/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
   CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${ROOT}/check-your-answers/save-and-go-back`,
 };

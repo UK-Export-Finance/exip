@@ -9,7 +9,6 @@ const {
   ALTERNATIVE_TRADING_ADDRESS,
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL },
   HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
 
@@ -101,28 +100,6 @@ export const FIELDS = {
   [HAS_CREDIT_CONTROL]: {
     SUMMARY: {
       TITLE: 'Process for managing late payments',
-    },
-  },
-  BROKER: {
-    [USING_BROKER]: {
-      SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
-      },
-    },
-    [NAME]: {
-      SUMMARY: {
-        TITLE: "Broker's name or company",
-      },
-    },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address",
-      },
-    },
-    [EMAIL]: {
-      SUMMARY: {
-        TITLE: "Broker's email",
-      },
     },
   },
 };

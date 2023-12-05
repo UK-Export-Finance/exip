@@ -44,7 +44,6 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitCreditControlForm({});
-  // cy.completeAndSubmitBrokerForm({ usingBroker });
 
   submitButton().click();
 

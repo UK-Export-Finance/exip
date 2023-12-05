@@ -186,6 +186,18 @@ var POLICY = {
     DESCRIPTION: "goodsOrServicesDescription",
     FINAL_DESTINATION: "finalDestinationCountryCode",
     FINAL_DESTINATION_COUNTRY: "finalDestinationCountry"
+  },
+  BROKER: {
+    HEADING: "broker",
+    USING_BROKER: "isUsingBroker",
+    NAME: "name",
+    ADDRESS_LINE_1: "addressLine1",
+    ADDRESS_LINE_2: "addressLine2",
+    TOWN: "town",
+    COUNTY: "county",
+    POSTCODE: "postcode",
+    EMAIL: "email",
+    DETAILS: "whyAppointBroker"
   }
 };
 var policy_default = POLICY;
@@ -229,19 +241,7 @@ var EXPORTER_BUSINESS = {
     ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
     PERCENTAGE_TURNOVER: "exportsTurnoverPercentage"
   },
-  HAS_CREDIT_CONTROL: "hasCreditControlProcess",
-  BROKER: {
-    HEADING: "broker",
-    USING_BROKER: "isUsingBroker",
-    NAME: "name",
-    ADDRESS_LINE_1: "addressLine1",
-    ADDRESS_LINE_2: "addressLine2",
-    TOWN: "town",
-    COUNTY: "county",
-    POSTCODE: "postcode",
-    EMAIL: "email",
-    DETAILS: "whyAppointBroker"
-  }
+  HAS_CREDIT_CONTROL: "hasCreditControlProcess"
 };
 var business_default = EXPORTER_BUSINESS;
 
@@ -548,7 +548,7 @@ var {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
   },
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER: { USING_BROKER }
   }
 } = insurance_default;
@@ -3871,11 +3871,17 @@ var FIELDS_ELIGIBILITY = {
 };
 
 // content-strings/fields/insurance/policy/index.ts
-var { POLICY: POLICY3 } = FIELD_IDS.INSURANCE;
-var { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY3;
+var {
+  POLICY: {
+    CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
+    BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 },
+    POLICY_TYPE: POLICY_TYPE3
+  }
+} = insurance_default;
 var POLICY_FIELDS = {
-  [POLICY3.POLICY_TYPE]: {
-    ID: FIELD_IDS.POLICY_TYPE,
+  [POLICY_TYPE3]: {
+    ID: POLICY_TYPE3,
     SUMMARY: {
       TITLE: "Policy type"
     }
@@ -3932,6 +3938,28 @@ var POLICY_FIELDS = {
         TITLE: "Final destination of export"
       }
     }
+  },
+  BROKER: {
+    [USING_BROKER2]: {
+      SUMMARY: {
+        TITLE: "Using a broker for this insurance?"
+      }
+    },
+    [NAME]: {
+      SUMMARY: {
+        TITLE: "Broker's name or company"
+      }
+    },
+    [ADDRESS_LINE_1]: {
+      SUMMARY: {
+        TITLE: "Broker's address"
+      }
+    },
+    [EMAIL4]: {
+      SUMMARY: {
+        TITLE: "Broker's email"
+      }
+    }
   }
 };
 
@@ -3945,7 +3973,6 @@ var {
   ALTERNATIVE_TRADING_ADDRESS,
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 },
   HAS_CREDIT_CONTROL
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
@@ -4036,28 +4063,6 @@ var FIELDS = {
   [HAS_CREDIT_CONTROL]: {
     SUMMARY: {
       TITLE: "Process for managing late payments"
-    }
-  },
-  BROKER: {
-    [USING_BROKER2]: {
-      SUMMARY: {
-        TITLE: "Using a broker for this insurance?"
-      }
-    },
-    [NAME]: {
-      SUMMARY: {
-        TITLE: "Broker's name or company"
-      }
-    },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address"
-      }
-    },
-    [EMAIL4]: {
-      SUMMARY: {
-        TITLE: "Broker's email"
-      }
     }
   }
 };
@@ -4152,14 +4157,14 @@ var { FIRST_NAME, LAST_NAME } = account_default;
 var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE }
-  }
+  },
+  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
 } = policy_default;
 var {
   COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
   YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 }
 } = business_default;
 var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
@@ -4257,7 +4262,7 @@ var {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
   },
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE3 }
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 }
   }
 } = insurance_default;
 var mapSecondaryKeyInformation = (application2) => {
@@ -4267,7 +4272,7 @@ var mapSecondaryKeyInformation = (application2) => {
     xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE3].SUMMARY?.TITLE), policy[POLICY_TYPE3])
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4])
   ];
   return mapped;
 };
@@ -4295,7 +4300,7 @@ var CONTENT_STRINGS2 = {
   MULTIPLE: POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE
 };
 var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 },
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
     SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
@@ -4308,7 +4313,7 @@ var mapPolicyIntro = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4]),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5]),
     xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
   ];
   return mapped;
@@ -4339,7 +4344,7 @@ var mapPolicyOutro = (application2) => {
 };
 var mapPolicy = (application2) => {
   let mapped = mapPolicyIntro(application2);
-  const policyType = application2.policy[POLICY_TYPE4];
+  const policyType = application2.policy[POLICY_TYPE5];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
@@ -4387,12 +4392,16 @@ var CONTENT_STRINGS3 = {
   ...FIELDS.BROKER
 };
 var {
-  COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
-  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-  BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
-} = business_default;
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
+  },
+  POLICY: {
+    BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
+  }
+} = insurance_default;
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
   sicCodes.forEach((sicCodeObj) => {

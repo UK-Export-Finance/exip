@@ -15,13 +15,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY: {
-      NAME_ON_POLICY_SAVE_AND_BACK,
-      CHECK_YOUR_ANSWERS,
-      DIFFERENT_NAME_ON_POLICY,
-      NAME_ON_POLICY_CHECK_AND_CHANGE,
-      DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
-    },
+    POLICY: { BROKER_ROOT, NAME_ON_POLICY_SAVE_AND_BACK, DIFFERENT_NAME_ON_POLICY, NAME_ON_POLICY_CHECK_AND_CHANGE, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
@@ -135,10 +129,10 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           req.body = validBody;
         });
 
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${BROKER_ROOT}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

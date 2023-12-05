@@ -8,7 +8,7 @@ import { LINKS } from '../../../links';
 
 const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
 const {
-  CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
+  ABOUT_GOODS_OR_SERVICES, BROKER, CONTRACT_POLICY, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
 } = POLICY;
 const { EMAIL } = ACCOUNT;
 
@@ -167,6 +167,54 @@ export const POLICY_FIELDS = {
       SUMMARY: {
         TITLE: 'Contact email',
       },
+    },
+  },
+  BROKER: {
+    [BROKER.LEGEND]: {
+      LEGEND: 'Enter contact details for your broker',
+    },
+    [BROKER.USING_BROKER]: {
+      SUMMARY: {
+        TITLE: 'Using a broker for this insurance?',
+      },
+    },
+    [BROKER.NAME]: {
+      LABEL: 'Name of broker or company',
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+      },
+    },
+    [BROKER.ADDRESS_LINE_1]: {
+      LABEL: 'Address line 1',
+      SUMMARY: {
+        TITLE: "Broker's address",
+      },
+    },
+    [BROKER.ADDRESS_LINE_2]: {
+      LABEL: 'Address line 2 (optional)',
+    },
+    [BROKER.TOWN]: {
+      LABEL: 'Town or city',
+    },
+    [BROKER.COUNTY]: {
+      LABEL: 'County (optional)',
+    },
+    [BROKER.POSTCODE]: {
+      LABEL: 'Postcode',
+    },
+    [BROKER.EMAIL]: {
+      LABEL: 'Email address',
+      SUMMARY: {
+        TITLE: "Broker's email",
+      },
+    },
+    [BROKER.DETAILS]: {
+      SUMMARY: 'Why appoint a broker?',
+      LINE_1: 'A broker can advise you during the application process and lifetime of any UKEF insurance policy.',
+      LINE_2: "You can find your nearest one on UKEF's list of approved brokers.",
+      LINK_TEXT: "UKEF's list of approved brokers.",
+      LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
+      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
     },
   },
 };

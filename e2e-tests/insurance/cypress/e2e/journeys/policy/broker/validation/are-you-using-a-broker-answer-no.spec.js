@@ -1,8 +1,9 @@
-import { brokerPage } from '../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../partials';
 import { submitButton } from '../../../../../../../pages/shared';
-import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 
 const {
   BROKER: {
@@ -12,15 +13,15 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_ROOT,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am not using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
+context('Insurance - Policy - Broker Page - As an Exporter I want to confirm that I am not using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
 
   let checkYourAnswersUrl;
@@ -29,12 +30,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      // go to the page we want to test.
+      cy.startInsurancePolicySection();
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

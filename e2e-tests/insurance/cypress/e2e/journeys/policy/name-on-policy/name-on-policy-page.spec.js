@@ -20,7 +20,7 @@ const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
     ABOUT_GOODS_OR_SERVICES,
-    CHECK_YOUR_ANSWERS,
+    BROKER_ROOT,
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
   },
@@ -121,12 +121,12 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
 
   describe('form submission', () => {
     describe(SAME_NAME, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${SAME_NAME} is selected`, () => {
+      it(`should redirect to ${BROKER_ROOT} when ${SAME_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitNameOnPolicyForm({});
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
         cy.assertUrl(expectedUrl);
       });
 

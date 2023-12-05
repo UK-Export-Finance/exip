@@ -27,6 +27,18 @@ const POLICY = {
     FINAL_DESTINATION: 'finalDestinationCountryCode',
     FINAL_DESTINATION_COUNTRY: 'finalDestinationCountry',
   },
+  BROKER: {
+    HEADING: 'broker',
+    USING_BROKER: 'isUsingBroker',
+    NAME: 'name',
+    ADDRESS_LINE_1: 'addressLine1',
+    ADDRESS_LINE_2: 'addressLine2',
+    TOWN: 'town',
+    COUNTY: 'county',
+    POSTCODE: 'postcode',
+    EMAIL: 'email',
+    DETAILS: 'whyAppointBroker',
+  },
 };
 
 export default POLICY;

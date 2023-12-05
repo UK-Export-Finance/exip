@@ -14,7 +14,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY: { NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY },
+    POLICY: { BROKER_ROOT, DIFFERENT_NAME_ON_POLICY, NAME_ON_POLICY_SAVE_AND_BACK },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
@@ -128,12 +128,14 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
+
     const differentNameOnPolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
     if (payload[NAME] === OTHER_NAME) {
       redirectRoute = differentNameOnPolicyRoute;
     }
+
     // // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application);
 

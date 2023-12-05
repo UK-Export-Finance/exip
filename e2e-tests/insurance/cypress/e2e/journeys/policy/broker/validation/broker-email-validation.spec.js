@@ -1,7 +1,8 @@
-import { brokerPage } from '../../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../../pages/insurance/policy';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 
 const {
@@ -13,12 +14,12 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_ROOT,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
-const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
+const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
 const field = brokerPage[FIELD_ID];
 
@@ -29,7 +30,7 @@ const ERROR_ASSERTIONS = {
   errorMessage: BROKER_ERRORS[EMAIL].INCORRECT_FORMAT,
 };
 
-context('Insurance - Your business - Broker Page - Validation - Email', () => {
+context('Insurance - Policy - Broker Page - Validation - Email', () => {
   let referenceNumber;
   let url;
 
@@ -40,12 +41,13 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      // go to the page we want to test.
+      cy.startInsurancePolicySection();
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
     });

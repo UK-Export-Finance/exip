@@ -2,7 +2,7 @@ import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { yesRadioInput, noRadioInput } from '../../shared';
 
 const {
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER: { USING_BROKER, DETAILS },
   },
 } = INSURANCE_FIELD_IDS;

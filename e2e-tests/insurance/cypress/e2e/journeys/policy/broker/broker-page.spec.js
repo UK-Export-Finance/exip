@@ -1,15 +1,16 @@
-import { brokerPage } from '../../../../../../pages/your-business';
+import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
 import { field as fieldSelector, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
 import {
   PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
+import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import application from '../../../../../../fixtures/application';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.BROKER;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER;
 
 const {
   BROKER: {
@@ -28,14 +29,14 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_ROOT,
     CHECK_YOUR_ANSWERS,
-    CREDIT_CONTROL,
+    NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
-const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
+const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
 
 const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
@@ -48,7 +49,7 @@ const ERROR_ASSERTIONS = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
+context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
@@ -57,12 +58,13 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      // go to the page we want to test.
+      cy.startInsurancePolicySection();
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -83,7 +85,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
+      backLink: `${ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
       assertSubmitButton: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
