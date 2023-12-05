@@ -37,7 +37,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 
     const application = (await context.query.Application.findOne({
       where: { id: applicationId },
-      query: 'id eligibility { id } buyer { id } policy { id } company { id } sectionReview { id } referenceNumber',
+      query: 'id eligibility { id } buyer { id } policy { id } company { id } sectionReview { id } differentTradingAddress { id } referenceNumber',
     })) as Application;
 
     return application;

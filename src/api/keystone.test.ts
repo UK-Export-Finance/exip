@@ -164,6 +164,11 @@ describe('Create an Application', () => {
     expect(typeof application.declaration.id).toEqual('string');
   });
 
+  test('it should have a differentTradingAddress id', () => {
+    expect(application.differentTradingAddress).toBeDefined();
+    expect(typeof application.differentTradingAddress.id).toEqual('string');
+  });
+
   test('it should add the application ID to the reference number entry', async () => {
     const referenceNumber = await context.query.ReferenceNumber.findOne({
       where: {
@@ -218,6 +223,17 @@ describe('Create an Application', () => {
     });
 
     expect(declaration.application.id).toEqual(application.id);
+  });
+
+  test('it should add the application ID to the differentTradingAddress entry', async () => {
+    const differentTradingAddress = await context.query.DifferentTradingAddress.findOne({
+      where: {
+        id: application.differentTradingAddress.id,
+      },
+      query: 'id application { id }',
+    });
+
+    expect(differentTradingAddress.application.id).toEqual(application.id);
   });
 });
 
@@ -402,6 +418,18 @@ describe('Application timestamp updates', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Declaration.updateOne({
         where: { id: application.declaration.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('DifferentTradingAddress', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.DifferentTradingAddress.updateOne({
+        where: { id: application.differentTradingAddress.id },
         data: {},
         query: 'id',
       });
