@@ -45,7 +45,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
-        fields: businessRequiredFields(isUsingBroker, hasDifferentTradingName),
+        fields: businessRequiredFields(hasDifferentTradingName),
         dependencies: expectedDependencies,
       };
 
@@ -61,7 +61,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
         id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-        fields: policyRequiredFields(policyType),
+        fields: policyRequiredFields({ policyType, isUsingBroker }),
         dependencies: expectedDependencies,
       };
 

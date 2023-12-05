@@ -9,6 +9,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { policySummaryList } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
+import { mockBroker } from '../../../../test-mocks/mock-application';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const {
@@ -86,7 +87,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryList(answers, mockContact, referenceNumber, mockCountries, mockCurrencies);
+      const summaryList = policySummaryList(answers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

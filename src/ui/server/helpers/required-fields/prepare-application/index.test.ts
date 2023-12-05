@@ -1,5 +1,5 @@
 import requiredFields from '.';
-import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import requiredEligibilityFields from '../eligibility';
 import requiredPolicyFields from '../policy';
 import requiredBusinessFields from '../business';
@@ -8,8 +8,14 @@ import flattenApplicationData from '../../flatten-application-data';
 import { mockApplication } from '../../../test-mocks';
 
 const {
-  TYPE_OF_POLICY: { POLICY_TYPE },
-} = POLICY_FIELD_IDS;
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    BROKER: { USING_BROKER },
+  },
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
+  },
+} = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/required-fields/section-review', () => {
   it('should return array of required fields', () => {
@@ -19,8 +25,11 @@ describe('server/helpers/required-fields/section-review', () => {
 
     const expected = [
       ...requiredEligibilityFields(),
-      ...requiredPolicyFields(flatApplicationData[POLICY_TYPE]),
-      ...requiredBusinessFields(),
+      ...requiredPolicyFields({
+        policyType: flatApplicationData[POLICY_TYPE],
+        isUsingBroker: flatApplicationData[USING_BROKER],
+      }),
+      ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
       ...requiredYourBuyerFields(),
     ];
 

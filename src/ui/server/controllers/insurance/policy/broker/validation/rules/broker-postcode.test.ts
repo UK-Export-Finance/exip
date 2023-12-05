@@ -1,6 +1,6 @@
 import brokerPostcode from './broker-postcode';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import { RequestBody } from '../../../../../../../types';
 import postCodeValidation from '../../../../../../shared-validation/postcode';
 
@@ -8,10 +8,10 @@ const {
   BROKER: { POSTCODE, USING_BROKER },
 } = FIELD_IDS;
 
-const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
-const ERROR_MESSAGE = EXPORTER_BUSINESS[POSTCODE];
+const { POLICY } = ERROR_MESSAGES.INSURANCE;
+const ERROR_MESSAGE = POLICY[POSTCODE];
 
-describe('controllers/insurance/business/broker/validation/rules/broker-postcode', () => {
+describe('controllers/insurance/policy/broker/validation/rules/broker-postcode', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

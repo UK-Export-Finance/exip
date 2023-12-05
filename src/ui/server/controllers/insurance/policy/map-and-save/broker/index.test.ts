@@ -5,12 +5,12 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 
 const {
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER: { NAME },
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/map-and-save/broker', () => {
+describe('controllers/insurance/policy/map-and-save/broker', () => {
   jest.mock('../../save-data/broker');
 
   const mockFormBody = {

@@ -2,7 +2,7 @@ import mapAndSave from '.';
 import save from '../../save-data/broker';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 
-describe('controllers/insurance/business/map-and-save/broker - API error', () => {
+describe('controllers/insurance/policy/map-and-save/broker - API error', () => {
   jest.mock('../../save-data/broker');
 
   const mockFormBody = {

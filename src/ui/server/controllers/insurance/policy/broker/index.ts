@@ -1,7 +1,8 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES, ROUTES } from '../../../../constants';
-import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
@@ -12,10 +13,10 @@ import mapAndSave from '../map-and-save/broker';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = BUSINESS_FIELD_IDS.BROKER;
+const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
 
-const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { BROKER } = PAGES.INSURANCE.POLICY;
+const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.POLICY;
 
 export const TEMPLATE = BROKER_TEMPLATE;
 
@@ -23,14 +24,12 @@ export const FIELD_IDS = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TO
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
-  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  POLICY: { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
-const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = EXPORTER_BUSINESS_ROUTES;
-
-const { BROKER: BROKER_FIELDS } = FIELDS;
+const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
 
 const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
@@ -106,7 +105,7 @@ const get = (req: Request, res: Response) => {
 };
 
 /**
- * posts turnover page
+ * posts broker page
  * runs validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response

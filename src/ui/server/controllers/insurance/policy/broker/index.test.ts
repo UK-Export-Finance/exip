@@ -1,35 +1,34 @@
 import { PAGES } from '../../../../content-strings';
 import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
-import { TEMPLATES, ROUTES } from '../../../../constants';
-import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
-import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 
-const { BROKER: BROKER_FIELDS } = FIELDS;
+const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
 
-const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE, EMAIL, DETAILS } = BUSINESS_FIELD_IDS.BROKER;
+const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
 
-const { BROKER } = PAGES.INSURANCE.EXPORTER_BUSINESS;
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
+const { BROKER } = PAGES.INSURANCE.POLICY;
+const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.POLICY;
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES,
-  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
+  POLICY: { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
-const { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BROKER_CHECK_AND_CHANGE } = EXPORTER_BUSINESS_ROUTES;
-
-describe('controllers/insurance/business/broker', () => {
+describe('controllers/insurance/policy/broker', () => {
   let req: Request;
   let res: Response;
 
@@ -197,7 +196,7 @@ describe('controllers/insurance/business/broker', () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.body = mockBroker;
 
-          req.originalUrl = BROKER_CHECK_AND_CHANGE;
+          req.originalUrl = INSURANCE_ROUTES.POLICY.BROKER_CHECK_AND_CHANGE;
 
           await post(req, res);
 

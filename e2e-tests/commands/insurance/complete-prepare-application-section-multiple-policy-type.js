@@ -27,6 +27,8 @@ const completePrepareApplicationMultiplePolicyType = ({
     cy.completeAndSubmitDifferentNameOnPolicyForm({});
   }
 
+  cy.completeAndSubmitBrokerForm({ usingBroker });
+
   // submit "policy and exports - check your answers" form
   submitButton().click();
 
@@ -42,7 +44,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitCreditControlForm({});
-  cy.completeAndSubmitBrokerForm({ usingBroker });
+  // cy.completeAndSubmitBrokerForm({ usingBroker });
 
   submitButton().click();
 

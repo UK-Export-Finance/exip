@@ -7,7 +7,8 @@ import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generatePolicyContactFields from './policy-contact-fields';
-import { ApplicationPolicy, ApplicationPolicyContact, Country, Currency } from '../../../../types';
+import { generateBrokerFields } from './broker-fields';
+import { ApplicationPolicy, ApplicationPolicyContact, ApplicationBroker, Country, Currency } from '../../../../types';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
@@ -23,6 +24,7 @@ const {
 const generateFields = (
   answers: ApplicationPolicy,
   answersPolicyContact: ApplicationPolicyContact,
+  answersBroker: ApplicationBroker,
   referenceNumber: number,
   countries: Array<Country>,
   currencies: Array<Currency>,
@@ -43,6 +45,7 @@ const generateFields = (
     ...generateCreditPeriodAndCurrencyFields(answers, referenceNumber, currencies, checkAndChange),
     ...generateAboutGoodsOrServicesFields(answers, referenceNumber, countries, checkAndChange),
     ...generatePolicyContactFields(answersPolicyContact, referenceNumber, checkAndChange),
+    ...generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
   ];
 
   return fields;
@@ -59,12 +62,13 @@ const generateFields = (
 const policySummaryList = (
   answers: ApplicationPolicy,
   answersPolicyContact: ApplicationPolicyContact,
+  answersBroker: ApplicationBroker,
   referenceNumber: number,
   countries: Array<Country>,
   currencies: Array<Currency>,
   checkAndChange = false,
 ) => {
-  const fields = generateFields(answers, answersPolicyContact, referenceNumber, countries, currencies, checkAndChange);
+  const fields = generateFields(answers, answersPolicyContact, answersBroker, referenceNumber, countries, currencies, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

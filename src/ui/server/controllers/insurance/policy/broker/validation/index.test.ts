@@ -5,9 +5,9 @@ import combineValidationRules from '../../../../../helpers/combine-validation-ru
 
 const {
   BROKER: { USING_BROKER },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS.INSURANCE.POLICY;
 
-describe('controllers/insurance/business/broker/validation', () => {
+describe('controllers/insurance/policy/broker/validation', () => {
   it('should return an array of results from rule functions', () => {
     const mockFormBody = {
       [USING_BROKER]: '',

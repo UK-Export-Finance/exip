@@ -7,7 +7,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-import { mockCompany, mockBusiness, mockBroker } from '../../../../test-mocks/mock-application';
+import { mockCompany, mockBusiness } from '../../../../test-mocks/mock-application';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/check-your-answers', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
-      const summaryList = yourBusinessSummaryList(mockCompany, mockBusiness, mockBroker, mockApplication.referenceNumber);
+      const summaryList = yourBusinessSummaryList(mockCompany, mockBusiness, mockApplication.referenceNumber);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

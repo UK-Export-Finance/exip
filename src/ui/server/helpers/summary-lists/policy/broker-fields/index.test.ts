@@ -1,5 +1,5 @@
 import { generateBrokerFields, optionalBrokerFields } from '.';
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -9,48 +9,46 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
 
-const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
+const {
+  POLICY: {
+    BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    EXPORTER_BUSINESS: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
+    POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
-const {
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
-} = FIELD_IDS;
-
-describe('server/helpers/summary-lists/your-business/broker-fields', () => {
+describe('server/helpers/summary-lists/policy/broker-fields', () => {
   describe('generateBrokerFields', () => {
-    const mockAnswers = mockBroker;
     const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
     const expectedBase = [
       fieldGroupItem(
         {
-          field: getFieldById(FIELDS.BROKER, USING_BROKER),
-          data: mockAnswers,
+          field: getFieldById(POLICY_FIELDS.BROKER, USING_BROKER),
+          data: mockBroker,
           href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
-        mapYesNoField(mockAnswers[USING_BROKER]),
+        mapYesNoField(mockBroker[USING_BROKER]),
       ),
-      ...optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange),
+      ...optionalBrokerFields(mockBroker, referenceNumber, checkAndChange),
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      mockAnswers[USING_BROKER] = true;
+      mockBroker[USING_BROKER] = true;
 
-      const result = generateBrokerFields(mockAnswers, referenceNumber, checkAndChange);
+      const result = generateBrokerFields(mockBroker, referenceNumber, checkAndChange);
 
       expect(result).toEqual(expectedBase);
     });
   });
 
   describe('optionalBrokerFields', () => {
-    const mockAnswers = mockBroker;
     const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
@@ -65,32 +63,32 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
     describe(`${USING_BROKER} is Yes`, () => {
       const expectedBase = [
         fieldGroupItem({
-          field: getFieldById(FIELDS.BROKER, NAME),
-          data: mockAnswers,
+          field: getFieldById(POLICY_FIELDS.BROKER, NAME),
+          data: mockBroker,
           href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         }),
         fieldGroupItem(
           {
-            field: getFieldById(FIELDS.BROKER, ADDRESS_LINE_1),
-            data: mockAnswers,
+            field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
+            data: mockBroker,
             href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
           generateMultipleFieldHtml(mockAddress),
         ),
         fieldGroupItem({
-          field: getFieldById(FIELDS.BROKER, EMAIL),
-          data: mockAnswers,
+          field: getFieldById(POLICY_FIELDS.BROKER, EMAIL),
+          data: mockBroker,
           href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         }),
       ];
 
       it('should return array with optional fields', () => {
-        mockAnswers[USING_BROKER] = true;
+        mockBroker[USING_BROKER] = true;
 
-        const result = optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange);
+        const result = optionalBrokerFields(mockBroker, referenceNumber, checkAndChange);
 
         expect(result).toEqual(expectedBase);
       });
@@ -98,9 +96,9 @@ describe('server/helpers/summary-lists/your-business/broker-fields', () => {
 
     describe(`${USING_BROKER} is false`, () => {
       it('should return array with optional fields', () => {
-        mockAnswers[USING_BROKER] = false;
+        mockBroker[USING_BROKER] = false;
 
-        const result = optionalBrokerFields(mockAnswers, referenceNumber, checkAndChange);
+        const result = optionalBrokerFields(mockBroker, referenceNumber, checkAndChange);
 
         expect(result).toEqual([]);
       });

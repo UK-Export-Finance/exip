@@ -5,9 +5,7 @@ import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_IDS } from '..';
 
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
-
-export const TEMPLATE = BROKER_TEMPLATE;
+export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

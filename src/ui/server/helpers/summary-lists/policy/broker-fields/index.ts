@@ -1,4 +1,4 @@
-import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -8,17 +8,17 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
 
-const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
+const {
+  POLICY: {
+    BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    EXPORTER_BUSINESS: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
+    POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
-
-const {
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
-} = FIELD_IDS;
 
 /**
  * optionalBrokerFields
@@ -44,14 +44,14 @@ const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
 
     fields = [
       fieldGroupItem({
-        field: getFieldById(FIELDS.BROKER, NAME),
+        field: getFieldById(POLICY_FIELDS.BROKER, NAME),
         data: answers,
         href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       }),
       fieldGroupItem(
         {
-          field: getFieldById(FIELDS.BROKER, ADDRESS_LINE_1),
+          field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
           data: answers,
           href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
@@ -59,7 +59,7 @@ const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
         generateMultipleFieldHtml(address),
       ),
       fieldGroupItem({
-        field: getFieldById(FIELDS.BROKER, EMAIL),
+        field: getFieldById(POLICY_FIELDS.BROKER, EMAIL),
         data: answers,
         href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
@@ -80,7 +80,7 @@ const generateBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.BROKER, USING_BROKER),
+        field: getFieldById(POLICY_FIELDS.BROKER, USING_BROKER),
         data: answers,
         href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${USING_BROKER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,

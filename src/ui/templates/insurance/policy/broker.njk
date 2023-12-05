@@ -16,10 +16,10 @@
 
 {% set brokerHTML %}
   {% call govukFieldset({
-      legend: {
-        html: fieldsetLegend.render({ id: FIELDS.LEGEND.ID, legendText: FIELDS.LEGEND.LEGEND }),
-        isPageHeading: false
-      }
+    legend: {
+      html: fieldsetLegend.render({ id: FIELDS.LEGEND.ID, legendText: FIELDS.LEGEND.LEGEND }),
+      isPageHeading: false
+    }
   }) %}
 
     {{ govukInput({

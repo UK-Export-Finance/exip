@@ -8,12 +8,12 @@ import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER: { ADDRESS_LINE_1 },
   },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/save-data/broker', () => {
+describe('controllers/insurance/policy/save-data/broker', () => {
   const mockUpdateApplicationResponse = mockApplication;
   const updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
   const mockFormBody = mockBroker;

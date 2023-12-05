@@ -2,9 +2,8 @@ import generateSummaryListRows from '../generate-summary-list-rows';
 import generateYourCompanyFields from './your-company-fields';
 import generateNatureOfYourBusinessFields from './nature-of-your-business-fields';
 import generateTurnoverFields from './turnover-fields';
-import { generateBrokerFields } from './broker-fields';
 import generateCreditControlFields from './credit-control-fields';
-import { ApplicationCompany, ApplicationBusiness, ApplicationBroker, SummaryListItemData } from '../../../../types';
+import { ApplicationCompany, ApplicationBusiness, SummaryListItemData } from '../../../../types';
 
 /**
  * generateFields
@@ -14,19 +13,12 @@ import { ApplicationCompany, ApplicationBusiness, ApplicationBroker, SummaryList
  * @param {Number} referenceNumber
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
-const generateFields = (
-  answersCompany: ApplicationCompany,
-  answersBusiness: ApplicationBusiness,
-  answersBroker: ApplicationBroker,
-  referenceNumber: number,
-  checkAndChange: boolean,
-) => {
+const generateFields = (answersCompany: ApplicationCompany, answersBusiness: ApplicationBusiness, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
     ...generateYourCompanyFields(answersCompany, referenceNumber, checkAndChange),
     ...generateNatureOfYourBusinessFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateTurnoverFields(answersBusiness, referenceNumber, checkAndChange),
     ...generateCreditControlFields(answersBusiness, referenceNumber, checkAndChange),
-    ...generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
   ] as Array<SummaryListItemData>;
 
   return fields;
@@ -41,14 +33,8 @@ const generateFields = (
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const yourBusinessSummaryList = (
-  answersCompany: ApplicationCompany,
-  answersBusiness: ApplicationBusiness,
-  answersBroker: ApplicationBroker,
-  referenceNumber: number,
-  checkAndChange = false,
-) => {
-  const fields = generateFields(answersCompany, answersBusiness, answersBroker, referenceNumber, checkAndChange);
+const yourBusinessSummaryList = (answersCompany: ApplicationCompany, answersBusiness: ApplicationBusiness, referenceNumber: number, checkAndChange = false) => {
+  const fields = generateFields(answersCompany, answersBusiness, referenceNumber, checkAndChange);
 
   const summaryList = generateSummaryListRows(fields);
 

@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
@@ -8,7 +8,7 @@ const {
 } = FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+  POLICY: { [FIELD_ID]: ERROR_MESSAGE },
 } = ERROR_MESSAGES.INSURANCE;
 
 /**

@@ -2,7 +2,7 @@ import save from '.';
 import api from '../../../../../api';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 
-describe('controllers/insurance/business/save-data/broker - API error', () => {
+describe('controllers/insurance/policy/save-data/broker - API error', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
   const mockFormBody = mockBroker;

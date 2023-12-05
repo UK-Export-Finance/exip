@@ -13,6 +13,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
+import { mockBroker } from '../../../../test-mocks/mock-application';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -88,9 +89,15 @@ describe('controllers/insurance/check-your-answers/policy', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryList(answers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+      const summaryList = policySummaryList(answers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
-      const fields = requiredFields(policy.policyType);
+      const { policyType } = policy;
+      const { isUsingBroker } = mockBroker;
+
+      const fields = requiredFields({
+        policyType,
+        isUsingBroker,
+      });
 
       const status = sectionStatus(fields, mockApplication);
 

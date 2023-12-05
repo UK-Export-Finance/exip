@@ -7,7 +7,6 @@ const {
   ALTERNATIVE_TRADING_ADDRESS,
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
   TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-  BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN, EMAIL },
   HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
 
@@ -88,46 +87,6 @@ export const FIELDS = {
     HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',
     SUMMARY: {
       TITLE: 'Process for managing late payments',
-    },
-  },
-  BROKER: {
-    [LEGEND]: {
-      LEGEND: 'Enter contact details for your broker',
-    },
-    [USING_BROKER]: {
-      SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
-      },
-    },
-    [NAME]: {
-      LABEL: 'Name of broker or company',
-      SUMMARY: {
-        TITLE: "Broker's name or company",
-      },
-    },
-    [ADDRESS_LINE_1]: {
-      LABEL: 'Address line 1',
-      SUMMARY: {
-        TITLE: "Broker's address",
-      },
-    },
-    [ADDRESS_LINE_2]: {
-      LABEL: 'Address line 2 (optional)',
-    },
-    [TOWN]: {
-      LABEL: 'Town or city',
-    },
-    [COUNTY]: {
-      LABEL: 'County (optional)',
-    },
-    [POSTCODE]: {
-      LABEL: 'Postcode',
-    },
-    [EMAIL]: {
-      LABEL: 'Email address',
-      SUMMARY: {
-        TITLE: "Broker's email",
-      },
     },
   },
 };

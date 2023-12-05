@@ -1,14 +1,10 @@
 import { Request, Response } from '../../../../../../types';
-import { TEMPLATES, ROUTES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../../map-and-save/business';
 import { FIELD_ID } from '..';
-
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
-
-export const TEMPLATE = BROKER_TEMPLATE;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

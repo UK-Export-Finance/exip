@@ -1,7 +1,7 @@
 import { post } from '.';
 import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
-import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/broker';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../../test-mocks';
@@ -9,11 +9,11 @@ import { Request, Response } from '../../../../../../types';
 
 const {
   BROKER: { NAME, POSTCODE },
-} = BUSINESS_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/business/broker/save-and-back', () => {
+describe('controllers/insurance/policy/broker/save-and-back', () => {
   let req: Request;
   let res: Response;
 
