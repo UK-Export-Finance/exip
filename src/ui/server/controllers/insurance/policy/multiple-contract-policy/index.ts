@@ -8,7 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import { objectHasProperty } from '../../../../helpers/object';
-import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -107,14 +107,6 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let mappedCurrencies;
-
-    if (objectHasProperty(application.policy, POLICY_CURRENCY_CODE)) {
-      mappedCurrencies = mapCurrencies(currencies, application.policy[POLICY_CURRENCY_CODE]);
-    } else {
-      mappedCurrencies = mapCurrencies(currencies);
-    }
-
     let mappedTotalMonthsOfCover;
 
     if (objectHasProperty(application.policy, TOTAL_MONTHS_OF_COVER)) {
@@ -131,7 +123,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mappedCurrencies,
+      currencies: mapCurrenciesAsRadioOptions(currencies),
       monthOptions: mappedTotalMonthsOfCover,
     });
   } catch (err) {
@@ -170,14 +162,6 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      let mappedCurrencies;
-
-      if (objectHasProperty(payload, POLICY_CURRENCY_CODE)) {
-        mappedCurrencies = mapCurrencies(currencies, payload[POLICY_CURRENCY_CODE]);
-      } else {
-        mappedCurrencies = mapCurrencies(currencies);
-      }
-
       let mappedTotalMonthsOfCover;
 
       if (objectHasProperty(payload, TOTAL_MONTHS_OF_COVER)) {
@@ -195,7 +179,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mappedCurrencies,
+        currencies: mapCurrenciesAsRadioOptions(currencies),
         monthOptions: mappedTotalMonthsOfCover,
         validationErrors,
       });

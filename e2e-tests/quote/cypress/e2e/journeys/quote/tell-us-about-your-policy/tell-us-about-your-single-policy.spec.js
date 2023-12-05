@@ -8,8 +8,13 @@ import {
 import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../../constants';
-import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import {
+  EUR,
+  GBP,
+  JPY,
+  USD,
+} from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -103,9 +108,10 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       const field = fieldSelector(fieldId);
 
-      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
-      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
-      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+      field.input().select(1).should('have.value', EUR.isoCode);
+      field.input().select(2).should('have.value', JPY.isoCode);
+      field.input().select(3).should('have.value', GBP.isoCode);
+      field.input().select(4).should('have.value', USD.isoCode);
     });
 
     it('should render `contract value` label and input', () => {
@@ -156,7 +162,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
 
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 1);
       cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), 100);
-      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      fieldSelector(CURRENCY).input().select(GBP.isoCode);
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
 
       submitButton().click();

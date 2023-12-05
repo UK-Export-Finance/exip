@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
-import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
 import mapTotalMonthsOfCover from '../../../../helpers/mappings/map-total-months-of-insurance';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
@@ -146,8 +146,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedCurrencies = mapCurrencies(mockCurrencies);
-
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
@@ -156,7 +154,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
-        currencies: expectedCurrencies,
+        currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
         monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
       };
 
@@ -179,8 +177,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
       it('should render template with currencies mapped to submitted currency', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
-
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
@@ -189,7 +185,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithCurrency),
-          currencies: expectedCurrencies,
+          currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
           monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
         };
 
@@ -223,7 +219,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithMonths),
-          currencies: mapCurrencies(mockCurrencies),
+          currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
           monthOptions: expectedMonthOptions,
         };
 
@@ -350,8 +346,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedCurrencies = mapCurrencies(mockCurrencies, payload[POLICY_CURRENCY_CODE]);
-
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
@@ -361,46 +355,12 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
           submittedValues: payload,
-          currencies: expectedCurrencies,
+          currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
           monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
           validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-
-      describe('when a policy currency code is submitted', () => {
-        const mockFormBody = {
-          [POLICY_CURRENCY_CODE]: currencyCode,
-        };
-
-        beforeEach(() => {
-          req.body = mockFormBody;
-        });
-
-        it('should render template with currencies mapped to submitted currency', async () => {
-          await post(req, res);
-
-          const payload = constructPayload(req.body, FIELD_IDS);
-
-          const expectedCurrencies = mapCurrencies(mockCurrencies, currencyCode);
-
-          const expectedVariables = {
-            ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
-              BACK_LINK: req.headers.referer,
-            }),
-            ...pageVariables(refNumber),
-            userName: getUserNameFromSession(req.session.user),
-            application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
-            submittedValues: payload,
-            currencies: expectedCurrencies,
-            monthOptions: mapTotalMonthsOfCover(totalMonthsOfCoverOptions),
-            validationErrors: generateValidationErrors(payload),
-          };
-
-          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-        });
       });
 
       describe('when total months of cover is submitted', () => {
@@ -428,7 +388,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
             submittedValues: payload,
-            currencies: mapCurrencies(mockCurrencies),
+            currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
             monthOptions: expectedMonthOptions,
             validationErrors: generateValidationErrors(payload),
           };

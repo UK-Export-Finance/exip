@@ -13,6 +13,5 @@ export * from './pagination';
 export * from './percentages-of-cover';
 export * from './eligibility';
 export * from './routes';
-export * from './supported-currencies';
 export * from './total-contract-value';
 export * from './ukef-contact-details';

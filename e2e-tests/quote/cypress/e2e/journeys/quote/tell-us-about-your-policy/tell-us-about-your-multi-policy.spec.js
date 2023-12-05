@@ -12,8 +12,13 @@ import {
   FIELDS,
   PAGES,
 } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../../../../../constants';
-import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
+import { ROUTES, FIELD_IDS } from '../../../../../../constants';
+import {
+  EUR,
+  GBP,
+  JPY,
+  USD,
+} from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 
@@ -101,9 +106,10 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
 
       const field = fieldSelector(fieldId);
 
-      field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
-      field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
-      field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+      field.input().select(1).should('have.value', EUR.isoCode);
+      field.input().select(2).should('have.value', JPY.isoCode);
+      field.input().select(3).should('have.value', GBP.isoCode);
+      field.input().select(4).should('have.value', USD.isoCode);
     });
 
     it('renders `max amount owed` label and input', () => {
@@ -184,7 +190,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '100');
-      fieldSelector(CURRENCY).input().select(GBP_CURRENCY_CODE);
+      fieldSelector(CURRENCY).input().select(GBP.isoCode);
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 

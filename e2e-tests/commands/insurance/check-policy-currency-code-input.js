@@ -1,13 +1,20 @@
-import { field as fieldSelector } from '../../pages/shared';
+import { radios, field as fieldSelector } from '../../pages/shared';
 import { POLICY_FIELDS } from '../../content-strings/fields/insurance/policy';
-import { SUPPORTED_CURRENCIES } from '../../constants';
+import {
+  EUR,
+  GBP,
+  JPY,
+  USD,
+} from '../../fixtures/currencies';
 import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy';
 
-const { POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
+const { POLICY_CURRENCY_CODE, ALTERNATIVE_POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
+
+const { CONTRACT_POLICY } = POLICY_FIELDS;
 
 /**
  * checkPolicyCurrencyCodeInput
- * Check "policy currency code" label, hint and input.
+ * Check "policy currency code" legend and radio options
  */
 const checkPolicyCurrencyCodeInput = () => {
   const fieldId = POLICY_CURRENCY_CODE;
@@ -16,18 +23,35 @@ const checkPolicyCurrencyCodeInput = () => {
   const CONTENT_STRINGS = POLICY_FIELDS.CONTRACT_POLICY[fieldId];
 
   cy.checkText(
-    field.label(),
-    CONTENT_STRINGS.LABEL,
+    field.legend(),
+    CONTENT_STRINGS.LEGEND,
   );
 
-  field.input().should('exist');
+  const { option: option1 } = radios(fieldId, EUR.isoCode);
+  const { option: option2 } = radios(fieldId, GBP.isoCode);
+  const { option: option3 } = radios(fieldId, USD.isoCode);
+  const { option: option4 } = radios(fieldId, JPY.isoCode);
+  const { option: option5 } = radios(fieldId, ALTERNATIVE_POLICY_CURRENCY_CODE);
 
-  field.inputOption().should('have.length', SUPPORTED_CURRENCIES.length + 1);
+  // EUR
+  cy.checkText(option1.label(), `${EUR.name} (${EUR.isoCode})`);
+  cy.checkValue(option1, EUR.isoCode);
 
-  field.inputFirstOption().should('be.disabled');
-  field.input().select(1).should('have.value', SUPPORTED_CURRENCIES[0]);
-  field.input().select(2).should('have.value', SUPPORTED_CURRENCIES[1]);
-  field.input().select(3).should('have.value', SUPPORTED_CURRENCIES[2]);
+  // GBP
+  cy.checkText(option2.label(), `${GBP.name} (${GBP.isoCode})`);
+  cy.checkValue(option2, GBP.isoCode);
+
+  // USD
+  cy.checkText(option3.label(), `${USD.name} (${USD.isoCode})`);
+  cy.checkValue(option3, USD.isoCode);
+
+  // JPY
+  cy.checkText(option4.label(), `${JPY.name} (${JPY.isoCode})`);
+  cy.checkValue(option4, JPY.isoCode);
+
+  // Alternative currency
+  cy.checkText(option5.label(), CONTRACT_POLICY[fieldId][ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT);
+  cy.checkValue(option5, ALTERNATIVE_POLICY_CURRENCY_CODE);
 };
 
 export default checkPolicyCurrencyCodeInput;

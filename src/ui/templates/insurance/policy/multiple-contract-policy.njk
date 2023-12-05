@@ -5,7 +5,7 @@
 {% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/date-input.njk' as dateInput %}
-{% import '../../components/policy-currency-code-hint.njk' as policyCurrencyCodeHint %}
+{% import '../../components/currency-radio-inputs.njk' as radiosInputs %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -174,40 +174,13 @@
           }
         }) }}
 
-        {% set currencyCodeHintHtml %}
-          {{ policyCurrencyCodeHint.render({
-            id: FIELDS.POLICY_CURRENCY_CODE.ID,
-            hint: FIELDS.POLICY_CURRENCY_CODE.HINT
-          }) }}
-        {% endset %}
-
-        {{ govukSelect({
+        {{ radiosInputs.render({
           id: FIELDS.POLICY_CURRENCY_CODE.ID,
-          name: FIELDS.POLICY_CURRENCY_CODE.ID,
-          label: {
-            text: FIELDS.POLICY_CURRENCY_CODE.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              'data-cy': FIELDS.POLICY_CURRENCY_CODE.ID + '-label',
-              id: FIELDS.POLICY_CURRENCY_CODE.ID + '-label'
-            }
-          },
-          hint: {
-            html: currencyCodeHintHtml
-          },
-          items: currencies,
-          classes: "govuk-grid-column-one-quarter-from-desktop",
-          attributes: {
-            "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-input"
-          },
-          errorMessage: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID] and {
-            text: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID].text,
-            attributes: {
-              "data-cy": FIELDS.POLICY_CURRENCY_CODE.ID + "-error-message"
-            }
-          }
+          legend: FIELDS.POLICY_CURRENCY_CODE.LEGEND,
+          supportedCurrencies: currencies,
+          error: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID],
+          submittedValue: submittedValues[FIELDS.POLICY_CURRENCY_CODE.ID] or application.policy[FIELDS.POLICY_CURRENCY_CODE.ID]
         }) }}
-
       </div>
     </div>
 
