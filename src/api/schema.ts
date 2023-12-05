@@ -55,6 +55,7 @@ export const lists = {
       sectionReview: relationship({ ref: 'SectionReview' }),
       declaration: relationship({ ref: 'Declaration' }),
       policyContact: relationship({ ref: 'PolicyContact' }),
+      differentTradingAddress: relationship({ ref: 'DifferentTradingAddress' }),
       version: text({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true },
@@ -135,6 +136,17 @@ export const lists = {
               },
             };
 
+            // generate and attach a new 'declaration' relationship
+            const { id: differentTradingAddressId } = await context.db.DifferentTradingAddress.createOne({
+              data: {},
+            });
+
+            modifiedData.differentTradingAddress = {
+              connect: {
+                id: differentTradingAddressId,
+              },
+            };
+
             // add dates
             const now = new Date();
             modifiedData.createdAt = now;
@@ -166,7 +178,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, declarationId, differentTradingAddressId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -232,6 +244,18 @@ export const lists = {
             // add the application ID to the declaration entry.
             await context.db.Declaration.updateOne({
               where: { id: declarationId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId,
+                  },
+                },
+              },
+            });
+
+            // add the application ID to the declaration entry.
+            await context.db.DifferentTradingAddress.updateOne({
+              where: { id: differentTradingAddressId },
               data: {
                 application: {
                   connect: {

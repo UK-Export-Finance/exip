@@ -110,6 +110,11 @@ export const mockApplicationDeclaration = {
   agreeHowDataWillBeUsed: true,
 };
 
+export const mockDifferentTradingAddress = {
+  id: 'clf3te7vx1432cfoqp9rboe55',
+  fullAddress: 'test',
+};
+
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
   version: APPLICATION.LATEST_VERSION.LATEST_VERSION_NUMBER,
@@ -136,6 +141,7 @@ const mockApplication = {
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
   policyContact: mockContact,
+  differentTradingAddress: mockDifferentTradingAddress,
 };
 
 export const mockApplicationMultiplePolicy = {

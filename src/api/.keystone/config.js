@@ -893,6 +893,7 @@ var lists = {
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
       policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
+      differentTradingAddress: (0, import_fields.relationship)({ ref: "DifferentTradingAddress" }),
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
@@ -953,6 +954,14 @@ var lists = {
                 id: declarationId
               }
             };
+            const { id: differentTradingAddressId } = await context.db.DifferentTradingAddress.createOne({
+              data: {}
+            });
+            modifiedData.differentTradingAddress = {
+              connect: {
+                id: differentTradingAddressId
+              }
+            };
             const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -973,7 +982,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, declarationId, differentTradingAddressId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1027,6 +1036,16 @@ var lists = {
             });
             await context.db.Declaration.updateOne({
               where: { id: declarationId },
+              data: {
+                application: {
+                  connect: {
+                    id: applicationId
+                  }
+                }
+              }
+            });
+            await context.db.DifferentTradingAddress.updateOne({
+              where: { id: differentTradingAddressId },
               data: {
                 application: {
                   connect: {

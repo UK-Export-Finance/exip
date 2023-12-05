@@ -84,6 +84,7 @@ type Application {
   sectionReview: SectionReview
   declaration: Declaration
   policyContact: PolicyContact
+  differentTradingAddress: DifferentTradingAddress
   version: String
   dealType: String
 }
@@ -119,6 +120,7 @@ input ApplicationWhereInput {
   sectionReview: SectionReviewWhereInput
   declaration: DeclarationWhereInput
   policyContact: PolicyContactWhereInput
+  differentTradingAddress: DifferentTradingAddressWhereInput
   version: StringFilter
   dealType: StringFilter
 }
@@ -234,6 +236,7 @@ input ApplicationUpdateInput {
   sectionReview: SectionReviewRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
   policyContact: PolicyContactRelateToOneForUpdateInput
+  differentTradingAddress: DifferentTradingAddressRelateToOneForUpdateInput
   version: String
   dealType: String
 }
@@ -304,6 +307,12 @@ input PolicyContactRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input DifferentTradingAddressRelateToOneForUpdateInput {
+  create: DifferentTradingAddressCreateInput
+  connect: DifferentTradingAddressWhereUniqueInput
+  disconnect: Boolean
+}
+
 input ApplicationUpdateArgs {
   where: ApplicationWhereUniqueInput!
   data: ApplicationUpdateInput!
@@ -330,6 +339,7 @@ input ApplicationCreateInput {
   sectionReview: SectionReviewRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
   policyContact: PolicyContactRelateToOneForCreateInput
+  differentTradingAddress: DifferentTradingAddressRelateToOneForCreateInput
   version: String
   dealType: String
 }
@@ -387,6 +397,11 @@ input DeclarationRelateToOneForCreateInput {
 input PolicyContactRelateToOneForCreateInput {
   create: PolicyContactCreateInput
   connect: PolicyContactWhereUniqueInput
+}
+
+input DifferentTradingAddressRelateToOneForCreateInput {
+  create: DifferentTradingAddressCreateInput
+  connect: DifferentTradingAddressWhereUniqueInput
 }
 
 type TotalContractValue {

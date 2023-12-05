@@ -5,8 +5,8 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 
 /**
- * gets fields to add to the database and sanitises them
- * saves to business tables in database via api call
+ * gets fields to sent to API and sanitises them
+ * saves to differentTradingAddress tables in database via api call
  * @param {Application} application
  * @param {RequestBody} formBody
  * @param {Object} errorList

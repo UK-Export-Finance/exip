@@ -80,6 +80,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       addressHtml,
       ...pageVariables,
+      application: mapApplicationToFormFields(application),
     });
   } catch (err) {
     console.error('Error getting alternative trading address %O', err);

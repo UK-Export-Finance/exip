@@ -4,7 +4,7 @@ import save from '../../save-data/different-trading-address';
 import mapSubmittedData from '../../map-submitted-data/different-trading-address';
 
 /**
- * maps business data and calls save function
+ * maps differentTradingAddress data and calls save function
  * returns true or false based on response from save function
  * @param {RequestBody} formBody
  * @param {Object} application

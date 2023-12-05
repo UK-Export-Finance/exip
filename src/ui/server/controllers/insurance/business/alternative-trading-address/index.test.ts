@@ -13,6 +13,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateMultipleFieldHtml from '../../../../helpers/generate-multiple-field-html';
+import mapAndSave from '../map-and-save/different-trading-address';
 
 const {
   INSURANCE_ROOT,
@@ -79,6 +80,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
         userName: getUserNameFromSession(req.session.user),
         addressHtml,
         ...pageVariables,
+        application: mapApplicationToFormFields(mockApplication),
       });
     });
 
@@ -96,6 +98,8 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
   });
 
   describe('post', () => {
+    mapAndSave.differentTradingAddress = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
@@ -126,12 +130,24 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should redirect to next page', () => {
+      beforeEach(() => {
         req.body = {
           [ALTERNATIVE_TRADING_ADDRESS]: 'test',
         };
+      });
 
-        post(req, res);
+      it('should call mapAndSave.business once with the data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [ALTERNATIVE_TRADING_ADDRESS]);
+
+        expect(mapAndSave.differentTradingAddress).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.differentTradingAddress).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      it('should redirect to next page', async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);

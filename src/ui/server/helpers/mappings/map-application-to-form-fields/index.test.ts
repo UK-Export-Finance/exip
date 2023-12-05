@@ -18,6 +18,8 @@ const {
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
+    FULL_ADDRESS,
+    ALTERNATIVE_TRADING_ADDRESS,
   },
 } = FIELD_IDS.INSURANCE;
 
@@ -105,6 +107,22 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         company: {
           ...mockApplication.company,
           [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(mockApplication.company[FINANCIAL_YEAR_END_DATE]),
+        },
+      });
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when an application has company.${FINANCIAL_YEAR_END_DATE} field`, () => {
+    it('should return mapped date field', () => {
+      const result = mapApplicationToFormFields(mockApplication);
+
+      const expected = mapNameFields({
+        ...mockApplication,
+        differentTradingAddress: {
+          ...mockApplication.differentTradingAddress,
+          [ALTERNATIVE_TRADING_ADDRESS]: mockApplication.differentTradingAddress[FULL_ADDRESS],
         },
       });
 

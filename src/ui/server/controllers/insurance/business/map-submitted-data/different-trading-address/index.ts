@@ -7,8 +7,9 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 /**
- * maps business formBody and returns fields in correct format
- * removes commas from numbers entered as commas are valid input
+ * maps differentTradingAddress formBody and returns fields in correct format
+ * changes ALTERNATIVE_TRADING_ADDRESS to FULL_ADDRESS so can be handled by API
+ * removes ALTERNATIVE_TRADING_ADDRESS value
  * @param {RequestBody} formBody
  * @returns {Object} populatedData
  */

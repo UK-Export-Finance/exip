@@ -152,6 +152,10 @@ const applicationQuery = gql`
           agreeToConfirmationAndAcknowledgements
           agreeHowDataWillBeUsed
         }
+        differentTradingAddress {
+          id
+          fullAddress
+        }
       }
     }
   }

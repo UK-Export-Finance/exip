@@ -52,6 +52,8 @@ model Application {
   declarationId                            String?                   @map("declaration")
   policyContact                            PolicyContact?            @relation("Application_policyContact", fields: [policyContactId], references: [id])
   policyContactId                          String?                   @map("policyContact")
+  differentTradingAddress                  DifferentTradingAddress?  @relation("Application_differentTradingAddress", fields: [differentTradingAddressId], references: [id])
+  differentTradingAddressId                String?                   @map("differentTradingAddress")
   version                                  String                    @default("1")
   dealType                                 String                    @default("EXIP") @mysql.VarChar(4)
   from_ReferenceNumber_application         ReferenceNumber[]         @relation("ReferenceNumber_application")
@@ -80,6 +82,7 @@ model Application {
   @@index([sectionReviewId])
   @@index([declarationId])
   @@index([policyContactId])
+  @@index([differentTradingAddressId])
 }
 
 model TotalContractValue {
@@ -259,10 +262,11 @@ model Company {
 }
 
 model DifferentTradingAddress {
-  id            String       @id @default(cuid())
-  application   Application? @relation("DifferentTradingAddress_application", fields: [applicationId], references: [id])
-  applicationId String?      @map("application")
-  fullAddress   String       @default("") @mysql.VarChar(1000)
+  id                                       String        @id @default(cuid())
+  application                              Application?  @relation("DifferentTradingAddress_application", fields: [applicationId], references: [id])
+  applicationId                            String?       @map("application")
+  fullAddress                              String        @default("") @mysql.VarChar(1000)
+  from_Application_differentTradingAddress Application[] @relation("Application_differentTradingAddress")
 
   @@index([applicationId])
 }
