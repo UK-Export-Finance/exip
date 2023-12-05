@@ -1,6 +1,7 @@
 import actions from './actions';
 import countryInput from './countryInput';
 import cannotApplyPage from './cannotApply';
+import radios from './radios';
 import exporterLocationPage from './exporterLocation';
 import needToStartAgainPage from './needToStartAgain';
 import summaryList from './summaryList';
@@ -47,6 +48,7 @@ export {
   allSectionsLink,
   backLink,
   body,
+  radios,
   heading,
   headingCaption,
   intro,

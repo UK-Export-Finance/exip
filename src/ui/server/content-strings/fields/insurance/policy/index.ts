@@ -49,9 +49,14 @@ export const POLICY_FIELDS = {
       },
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-      LABEL: 'Select currency you want your policy to be issued in',
+      LEGEND: "Select currency you'd like your policy to be issued in",
       SUMMARY: {
         TITLE: 'Policy currency',
+      },
+      [CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE]: {
+        TEXT: 'Another currency',
+        ID: CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE,
+        VALUE: CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE,
       },
     },
     SINGLE: {

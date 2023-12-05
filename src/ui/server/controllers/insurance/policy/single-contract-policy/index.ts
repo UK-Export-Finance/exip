@@ -7,8 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
-import { objectHasProperty } from '../../../../helpers/object';
-import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -101,14 +100,6 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let mappedCurrencies;
-
-    if (objectHasProperty(application.policy, POLICY_CURRENCY_CODE)) {
-      mappedCurrencies = mapCurrencies(currencies, application.policy[POLICY_CURRENCY_CODE]);
-    } else {
-      mappedCurrencies = mapCurrencies(currencies);
-    }
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
@@ -117,7 +108,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mappedCurrencies,
+      currencies: mapCurrenciesAsRadioOptions(currencies),
     });
   } catch (err) {
     console.error('Error getting currencies %O', err);
@@ -155,14 +146,6 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      let mappedCurrencies;
-
-      if (objectHasProperty(payload, POLICY_CURRENCY_CODE)) {
-        mappedCurrencies = mapCurrencies(currencies, payload[POLICY_CURRENCY_CODE]);
-      } else {
-        mappedCurrencies = mapCurrencies(currencies);
-      }
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
@@ -172,7 +155,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mappedCurrencies,
+        currencies: mapCurrenciesAsRadioOptions(currencies),
         validationErrors,
       });
     } catch (err) {

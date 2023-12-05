@@ -1,4 +1,5 @@
 import {
+  radios,
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
@@ -145,7 +146,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       field.input().should('exist');
     });
 
-    it('renders `currency` label, hint and input with supported currencies ordered alphabetically', () => {
+    it('renders `currency` label and radio inputs', () => {
       checkPolicyCurrencyCodeInput();
     });
 
@@ -185,7 +186,9 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
         fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
         fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
-        fieldSelector(POLICY_CURRENCY_CODE).inputOptionSelected().contains(application.POLICY[POLICY_CURRENCY_CODE]);
+
+        const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
+        radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
       });
     });
   });

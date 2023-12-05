@@ -1,6 +1,6 @@
 import { FIELD_IDS, APPLICATION } from '../../constants';
 import { singleContractPolicyPage } from '../../pages/insurance/policy';
-import { field, submitButton } from '../../pages/shared';
+import { radios, field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -35,7 +35,8 @@ export default ({ policyMaximumValue = false }) => {
     cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }
 
-  field(POLICY_CURRENCY_CODE).input().select(application.POLICY[POLICY_CURRENCY_CODE]);
+  const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
+  radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
 
   submitButton().click();
 };

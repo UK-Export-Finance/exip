@@ -20,13 +20,14 @@ import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
-import { Currency } from './currency';
+import { Currency, CurrencyRadios } from './currency';
 import { NumberErrorMessage } from './errors';
 import { Business } from './business';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
 import { PricingGrid, PricingGridMonth, PricingGridRate } from './pricing-grid';
 import { Quote, QuoteContent } from './quote';
+import { RadioOption } from './radio-option';
 import { SelectOption } from './select-option';
 import { SicCode } from './sic-code';
 import {
@@ -78,6 +79,7 @@ export {
   CorePageVariables,
   Country,
   Currency,
+  CurrencyRadios,
   NumberErrorMessage,
   Business,
   InsuranceEligibility,
@@ -99,6 +101,7 @@ export {
   RequiredDataStateInsuranceEligibility,
   RequiredDataStateQuoteEligibility,
   Response,
+  RadioOption,
   SelectOption,
   SicCode,
   SingleInputPageVariablesInitialInput,
