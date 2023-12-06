@@ -9,6 +9,7 @@ export const EXPORTER_BUSINESS = {
     DIFFERENT_TRADING_NAME: 'differentTradingName',
   },
   ALTERNATIVE_TRADING_ADDRESS: 'alternativeTradingAddress',
+  FULL_ADDRESS: 'fullAddress',
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
     YEARS_EXPORTING: 'totalYearsExporting',

@@ -97,6 +97,10 @@ const applicationQuery = gql`
             country
             premises
           }
+          differentTradingAddress {
+            id
+            fullAddress
+          }
         }
         business {
           id

@@ -237,24 +237,32 @@ model CompanyAddress {
 }
 
 model Company {
-  id                         String           @id @default(cuid())
-  application                Application?     @relation("Company_application", fields: [applicationId], references: [id])
-  applicationId              String?          @map("application")
-  registeredOfficeAddress    CompanyAddress?  @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
-  registeredOfficeAddressId  String?          @unique @map("registeredOfficeAddress")
-  sicCodes                   CompanySicCode[] @relation("CompanySicCode_company")
-  companyName                String           @default("")
-  companyNumber              String           @default("")
+  id                         String                          @id @default(cuid())
+  application                Application?                    @relation("Company_application", fields: [applicationId], references: [id])
+  applicationId              String?                         @map("application")
+  registeredOfficeAddress    CompanyAddress?                 @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
+  registeredOfficeAddressId  String?                         @unique @map("registeredOfficeAddress")
+  differentTradingAddress    CompanyDifferentTradingAddress? @relation("Company_differentTradingAddress", fields: [differentTradingAddressId], references: [id])
+  differentTradingAddressId  String?                         @unique @map("differentTradingAddress")
+  sicCodes                   CompanySicCode[]                @relation("CompanySicCode_company")
+  companyName                String                          @default("")
+  companyNumber              String                          @default("")
   dateOfCreation             DateTime?
   hasDifferentTradingAddress Boolean?
-  differentTradingName       String           @default("")
+  differentTradingName       String                          @default("")
   hasDifferentTradingName    Boolean?
-  companyWebsite             String           @default("")
-  phoneNumber                String           @default("")
+  companyWebsite             String                          @default("")
+  phoneNumber                String                          @default("")
   financialYearEndDate       DateTime?
-  from_Application_company   Application[]    @relation("Application_company")
+  from_Application_company   Application[]                   @relation("Application_company")
 
   @@index([applicationId])
+}
+
+model CompanyDifferentTradingAddress {
+  id          String   @id @default(cuid())
+  company     Company? @relation("Company_differentTradingAddress")
+  fullAddress String   @default("") @mysql.VarChar(1000)
 }
 
 model CompanySicCode {

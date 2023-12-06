@@ -3,6 +3,7 @@ import business from './business';
 import buyer from './buyer';
 import company from './company';
 import declarations from '../declarations';
+import companyDifferentTradingAddress from './companyDifferentTradingAddress';
 import exportContract from './exportContract';
 import policy from './policy';
 import policyContact from './policyContact';
@@ -19,6 +20,7 @@ const update = {
   buyer,
   company,
   declarations: declarations.update,
+  companyDifferentTradingAddress,
   exportContract,
   policy,
   policyContact,

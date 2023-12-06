@@ -48,6 +48,11 @@ interface ApplicationExportContract {
   finalDestinationCountryCode?: string;
 }
 
+interface ApplicationDifferentTradingAddress {
+  id: string;
+  fullAddress?: string;
+}
+
 interface ApplicationCompanyAddress {
   id: string;
   addressLine1?: string;
@@ -74,6 +79,7 @@ interface ApplicationCompany {
   hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddress;
   sicCodes: Array<SicCode>;
+  differentTradingAddress: ApplicationDifferentTradingAddress;
 }
 
 interface ApplicationBusiness {

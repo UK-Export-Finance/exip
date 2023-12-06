@@ -483,6 +483,7 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       registeredOfficeAddress: relationship({ ref: 'CompanyAddress.company' }),
+      differentTradingAddress: relationship({ ref: 'CompanyDifferentTradingAddress.company' }),
       sicCodes: relationship({
         ref: 'CompanySicCode.company',
         many: true,
@@ -503,6 +504,15 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
+    },
+    access: allowAll,
+  }),
+  CompanyDifferentTradingAddress: list({
+    fields: {
+      company: relationship({ ref: 'Company.differentTradingAddress' }),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     access: allowAll,
   }),
