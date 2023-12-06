@@ -74,7 +74,6 @@ context('Insurance - Change your answers - Policy - Change from same name to dif
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
-        // cy.wait(6000);
       });
 
       it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {

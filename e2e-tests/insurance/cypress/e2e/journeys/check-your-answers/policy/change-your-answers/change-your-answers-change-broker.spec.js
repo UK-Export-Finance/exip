@@ -60,9 +60,6 @@ context('Insurance - Check your answers - Broker - Policy - Summary list', () =>
 
       task.link().click();
 
-      // // To get past "Policy" check your answers page
-      // cy.submitCheckYourAnswersForm();
-
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
