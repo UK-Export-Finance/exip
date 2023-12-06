@@ -74,7 +74,7 @@ export const NO_COMPANIES_HOUSE_NUMBER = {
 
 export const COMPANIES_HOUSE_UNAVAILABLE = {
   PAGE_TITLE: 'You cannot search for your Companies House registration number right now',
-  ERROR_REASON: 'This is due to technical issues with the Companies House search',
+  ERROR_REASON: 'This is due to technical issues with the Companies House search.',
   TRY_AGAIN_PREFIX: 'You can',
   TRY_AGAIN: 'try again in a few minutes.',
   CONTINUE_PREFIX: 'Or you can continue filling in',
