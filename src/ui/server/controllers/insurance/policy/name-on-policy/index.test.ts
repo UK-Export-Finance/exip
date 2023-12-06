@@ -15,7 +15,16 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY: { BROKER_ROOT, NAME_ON_POLICY_SAVE_AND_BACK, DIFFERENT_NAME_ON_POLICY, NAME_ON_POLICY_CHECK_AND_CHANGE, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE },
+    POLICY: {
+      BROKER_ROOT,
+      CHECK_YOUR_ANSWERS,
+      NAME_ON_POLICY_SAVE_AND_BACK,
+      DIFFERENT_NAME_ON_POLICY,
+      DIFFERENT_NAME_ON_POLICY_CHANGE,
+      DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
+      NAME_ON_POLICY_CHANGE,
+      NAME_ON_POLICY_CHECK_AND_CHANGE,
+    },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
@@ -150,7 +159,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         });
       });
 
-      describe(`when ${OTHER_NAME} is selected`, () => {
+      describe(`when ${OTHER_NAME} is submitted`, () => {
         const validBody = {
           [NAME]: OTHER_NAME,
         };
@@ -180,6 +189,41 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         });
       });
 
+      describe("when the url's last substring is `change`", () => {
+        const validBody = {
+          [NAME]: SAME_NAME,
+          [POSITION]: 'Text',
+        };
+
+        describe(`when ${SAME_NAME} is selected`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            req.originalUrl = NAME_ON_POLICY_CHANGE;
+            req.body = validBody;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when ${OTHER_NAME} is submitted`, () => {
+          it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHANGE}`, async () => {
+            req.originalUrl = NAME_ON_POLICY_CHANGE;
+            validBody[NAME] = OTHER_NAME;
+
+            req.body = validBody;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${DIFFERENT_NAME_ON_POLICY_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+      });
+
       describe("when the url's last substring is `check-and-change`", () => {
         const validBody = {
           [NAME]: SAME_NAME,
@@ -199,7 +243,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           });
         });
 
-        describe(`when ${OTHER_NAME} is selected`, () => {
+        describe(`when ${OTHER_NAME} is submitted`, () => {
           it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`, async () => {
             req.originalUrl = NAME_ON_POLICY_CHECK_AND_CHANGE;
             validBody[NAME] = OTHER_NAME;

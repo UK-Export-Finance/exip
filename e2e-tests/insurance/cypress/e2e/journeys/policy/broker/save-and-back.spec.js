@@ -4,7 +4,7 @@ import { field, saveAndBackButton, submitButton } from '../../../../../../pages/
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
+import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../fixtures/application';
 
 const {
@@ -23,14 +23,16 @@ const {
 const {
   ROOT,
   ALL_SECTIONS,
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER_ROOT,
   },
 } = INSURANCE_ROUTES;
 
+const { IN_PROGRESS, COMPLETED } = TASKS.STATUS;
+
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.business;
+const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -74,8 +76,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkText(task.status(), IN_PROGRESS);
     });
   });
 
@@ -91,8 +92,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkText(task.status(), IN_PROGRESS);
     });
 
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
@@ -139,8 +139,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.assertUrl(allSectionsUrl);
 
-        const expected = TASKS.STATUS.COMPLETED;
-        cy.checkTaskStatus(task, expected);
+        cy.checkTaskStatus(task, COMPLETED);
       });
 
       it('should retain all the fields on the page', () => {
@@ -178,8 +177,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.assertUrl(allSectionsUrl);
 
-        const expected = TASKS.STATUS.COMPLETED;
-        cy.checkTaskStatus(task, expected);
+        cy.checkTaskStatus(task, COMPLETED);
       });
 
       it('should retain all the relevant fields on the page', () => {

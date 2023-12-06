@@ -49,7 +49,7 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`,
-      backLink: `${ROOT}/${referenceNumber}${POLICY.NAME_ON_POLICY}`,
+      backLink: `${ROOT}/${referenceNumber}${POLICY.BROKER_ROOT}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });

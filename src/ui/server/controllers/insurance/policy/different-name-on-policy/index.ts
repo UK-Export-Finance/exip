@@ -9,13 +9,14 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapNameFields from '../../../../helpers/mappings/map-name-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
 import mapAndSave from '../map-and-save/policy-contact';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK },
+  POLICY: { BROKER_ROOT, DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -132,6 +133,10 @@ export const post = async (req: Request, res: Response) => {
     const saveResponse = await mapAndSave.policyContact(payload, application);
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {

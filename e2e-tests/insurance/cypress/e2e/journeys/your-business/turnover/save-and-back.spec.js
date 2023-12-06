@@ -25,7 +25,7 @@ const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { IN_PROGRESS, COMPLETED } = TASKS.STATUS;
+const { IN_PROGRESS } = TASKS.STATUS;
 
 context('Insurance - Your business - Turnover page - Save and back', () => {
   let referenceNumber;
@@ -116,8 +116,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should change the status of task `your business` to `completed`', () => {
-      cy.checkTaskStatus(task, COMPLETED);
+    it('should retain the `your business` task status as `in progress`', () => {
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should retain all the fields on the page', () => {
