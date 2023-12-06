@@ -483,7 +483,7 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       registeredOfficeAddress: relationship({ ref: 'CompanyAddress.company' }),
-      differentTradingAddress: relationship({ ref: 'DifferentTradingAddress.company' }),
+      differentTradingAddress: relationship({ ref: 'CompanyDifferentTradingAddress.company' }),
       sicCodes: relationship({
         ref: 'CompanySicCode.company',
         many: true,
@@ -507,7 +507,7 @@ export const lists = {
     },
     access: allowAll,
   }),
-  DifferentTradingAddress: list({
+  CompanyDifferentTradingAddress: list({
     fields: {
       company: relationship({ ref: 'Company.differentTradingAddress' }),
       fullAddress: text({

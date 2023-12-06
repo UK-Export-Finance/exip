@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const updateDifferentTradingAddressMutation = gql`
-  mutation updateDifferentTradingAddress($where: DifferentTradingAddressWhereUniqueInput!, $data: DifferentTradingAddressUpdateInput!) {
-    updateDifferentTradingAddress(where: $where, data: $data) {
+  mutation updateCompanyDifferentTradingAddress($where: CompanyDifferentTradingAddressWhereUniqueInput!, $data: CompanyDifferentTradingAddressUpdateInput!) {
+    updateCompanyDifferentTradingAddress(where: $where, data: $data) {
       id
     }
   }

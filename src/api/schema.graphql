@@ -1174,7 +1174,7 @@ type Company {
   id: ID!
   application: Application
   registeredOfficeAddress: CompanyAddress
-  differentTradingAddress: DifferentTradingAddress
+  differentTradingAddress: CompanyDifferentTradingAddress
   sicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   sicCodesCount(where: CompanySicCodeWhereInput! = {}): Int
   companyName: String
@@ -1199,7 +1199,7 @@ input CompanyWhereInput {
   id: IDFilter
   application: ApplicationWhereInput
   registeredOfficeAddress: CompanyAddressWhereInput
-  differentTradingAddress: DifferentTradingAddressWhereInput
+  differentTradingAddress: CompanyDifferentTradingAddressWhereInput
   sicCodes: CompanySicCodeManyRelationFilter
   companyName: StringFilter
   companyNumber: StringFilter
@@ -1230,7 +1230,7 @@ input CompanyOrderByInput {
 input CompanyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   registeredOfficeAddress: CompanyAddressRelateToOneForUpdateInput
-  differentTradingAddress: DifferentTradingAddressRelateToOneForUpdateInput
+  differentTradingAddress: CompanyDifferentTradingAddressRelateToOneForUpdateInput
   sicCodes: CompanySicCodeRelateToManyForUpdateInput
   companyName: String
   companyNumber: String
@@ -1249,9 +1249,9 @@ input CompanyAddressRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input DifferentTradingAddressRelateToOneForUpdateInput {
-  create: DifferentTradingAddressCreateInput
-  connect: DifferentTradingAddressWhereUniqueInput
+input CompanyDifferentTradingAddressRelateToOneForUpdateInput {
+  create: CompanyDifferentTradingAddressCreateInput
+  connect: CompanyDifferentTradingAddressWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1270,7 +1270,7 @@ input CompanyUpdateArgs {
 input CompanyCreateInput {
   application: ApplicationRelateToOneForCreateInput
   registeredOfficeAddress: CompanyAddressRelateToOneForCreateInput
-  differentTradingAddress: DifferentTradingAddressRelateToOneForCreateInput
+  differentTradingAddress: CompanyDifferentTradingAddressRelateToOneForCreateInput
   sicCodes: CompanySicCodeRelateToManyForCreateInput
   companyName: String
   companyNumber: String
@@ -1288,9 +1288,9 @@ input CompanyAddressRelateToOneForCreateInput {
   connect: CompanyAddressWhereUniqueInput
 }
 
-input DifferentTradingAddressRelateToOneForCreateInput {
-  create: DifferentTradingAddressCreateInput
-  connect: DifferentTradingAddressWhereUniqueInput
+input CompanyDifferentTradingAddressRelateToOneForCreateInput {
+  create: CompanyDifferentTradingAddressCreateInput
+  connect: CompanyDifferentTradingAddressWhereUniqueInput
 }
 
 input CompanySicCodeRelateToManyForCreateInput {
@@ -1298,41 +1298,41 @@ input CompanySicCodeRelateToManyForCreateInput {
   connect: [CompanySicCodeWhereUniqueInput!]
 }
 
-type DifferentTradingAddress {
+type CompanyDifferentTradingAddress {
   id: ID!
   company: Company
   fullAddress: String
 }
 
-input DifferentTradingAddressWhereUniqueInput {
+input CompanyDifferentTradingAddressWhereUniqueInput {
   id: ID
 }
 
-input DifferentTradingAddressWhereInput {
-  AND: [DifferentTradingAddressWhereInput!]
-  OR: [DifferentTradingAddressWhereInput!]
-  NOT: [DifferentTradingAddressWhereInput!]
+input CompanyDifferentTradingAddressWhereInput {
+  AND: [CompanyDifferentTradingAddressWhereInput!]
+  OR: [CompanyDifferentTradingAddressWhereInput!]
+  NOT: [CompanyDifferentTradingAddressWhereInput!]
   id: IDFilter
   company: CompanyWhereInput
   fullAddress: StringFilter
 }
 
-input DifferentTradingAddressOrderByInput {
+input CompanyDifferentTradingAddressOrderByInput {
   id: OrderDirection
   fullAddress: OrderDirection
 }
 
-input DifferentTradingAddressUpdateInput {
+input CompanyDifferentTradingAddressUpdateInput {
   company: CompanyRelateToOneForUpdateInput
   fullAddress: String
 }
 
-input DifferentTradingAddressUpdateArgs {
-  where: DifferentTradingAddressWhereUniqueInput!
-  data: DifferentTradingAddressUpdateInput!
+input CompanyDifferentTradingAddressUpdateArgs {
+  where: CompanyDifferentTradingAddressWhereUniqueInput!
+  data: CompanyDifferentTradingAddressUpdateInput!
 }
 
-input DifferentTradingAddressCreateInput {
+input CompanyDifferentTradingAddressCreateInput {
   company: CompanyRelateToOneForCreateInput
   fullAddress: String
 }
@@ -2136,12 +2136,12 @@ type Mutation {
   updateCompanies(data: [CompanyUpdateArgs!]!): [Company]
   deleteCompany(where: CompanyWhereUniqueInput!): Company
   deleteCompanies(where: [CompanyWhereUniqueInput!]!): [Company]
-  createDifferentTradingAddress(data: DifferentTradingAddressCreateInput!): DifferentTradingAddress
-  createDifferentTradingAddresses(data: [DifferentTradingAddressCreateInput!]!): [DifferentTradingAddress]
-  updateDifferentTradingAddress(where: DifferentTradingAddressWhereUniqueInput!, data: DifferentTradingAddressUpdateInput!): DifferentTradingAddress
-  updateDifferentTradingAddresses(data: [DifferentTradingAddressUpdateArgs!]!): [DifferentTradingAddress]
-  deleteDifferentTradingAddress(where: DifferentTradingAddressWhereUniqueInput!): DifferentTradingAddress
-  deleteDifferentTradingAddresses(where: [DifferentTradingAddressWhereUniqueInput!]!): [DifferentTradingAddress]
+  createCompanyDifferentTradingAddress(data: CompanyDifferentTradingAddressCreateInput!): CompanyDifferentTradingAddress
+  createCompanyDifferentTradingAddresses(data: [CompanyDifferentTradingAddressCreateInput!]!): [CompanyDifferentTradingAddress]
+  updateCompanyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!, data: CompanyDifferentTradingAddressUpdateInput!): CompanyDifferentTradingAddress
+  updateCompanyDifferentTradingAddresses(data: [CompanyDifferentTradingAddressUpdateArgs!]!): [CompanyDifferentTradingAddress]
+  deleteCompanyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!): CompanyDifferentTradingAddress
+  deleteCompanyDifferentTradingAddresses(where: [CompanyDifferentTradingAddressWhereUniqueInput!]!): [CompanyDifferentTradingAddress]
   createCompanySicCode(data: CompanySicCodeCreateInput!): CompanySicCode
   createCompanySicCodes(data: [CompanySicCodeCreateInput!]!): [CompanySicCode]
   updateCompanySicCode(where: CompanySicCodeWhereUniqueInput!, data: CompanySicCodeUpdateInput!): CompanySicCode
@@ -2327,9 +2327,9 @@ type Query {
   companies(where: CompanyWhereInput! = {}, orderBy: [CompanyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyWhereUniqueInput): [Company!]
   company(where: CompanyWhereUniqueInput!): Company
   companiesCount(where: CompanyWhereInput! = {}): Int
-  differentTradingAddresses(where: DifferentTradingAddressWhereInput! = {}, orderBy: [DifferentTradingAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: DifferentTradingAddressWhereUniqueInput): [DifferentTradingAddress!]
-  differentTradingAddress(where: DifferentTradingAddressWhereUniqueInput!): DifferentTradingAddress
-  differentTradingAddressesCount(where: DifferentTradingAddressWhereInput! = {}): Int
+  companyDifferentTradingAddresses(where: CompanyDifferentTradingAddressWhereInput! = {}, orderBy: [CompanyDifferentTradingAddressOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanyDifferentTradingAddressWhereUniqueInput): [CompanyDifferentTradingAddress!]
+  companyDifferentTradingAddress(where: CompanyDifferentTradingAddressWhereUniqueInput!): CompanyDifferentTradingAddress
+  companyDifferentTradingAddressesCount(where: CompanyDifferentTradingAddressWhereInput! = {}): Int
   companySicCodes(where: CompanySicCodeWhereInput! = {}, orderBy: [CompanySicCodeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CompanySicCodeWhereUniqueInput): [CompanySicCode!]
   companySicCode(where: CompanySicCodeWhereUniqueInput!): CompanySicCode
   companySicCodesCount(where: CompanySicCodeWhereInput! = {}): Int

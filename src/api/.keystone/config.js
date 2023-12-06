@@ -335,7 +335,7 @@ var DEFAULT_RESOLVERS = [
   "updateExportContract",
   "updateSectionReview",
   "updateEligibility",
-  "updateDifferentTradingAddress",
+  "updateCompanyDifferentTradingAddress",
   "referenceNumber",
   "applications",
   // account
@@ -1270,7 +1270,7 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       registeredOfficeAddress: (0, import_fields.relationship)({ ref: "CompanyAddress.company" }),
-      differentTradingAddress: (0, import_fields.relationship)({ ref: "DifferentTradingAddress.company" }),
+      differentTradingAddress: (0, import_fields.relationship)({ ref: "CompanyDifferentTradingAddress.company" }),
       sicCodes: (0, import_fields.relationship)({
         ref: "CompanySicCode.company",
         many: true
@@ -1294,7 +1294,7 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  DifferentTradingAddress: (0, import_core2.list)({
+  CompanyDifferentTradingAddress: (0, import_core2.list)({
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.differentTradingAddress" }),
       fullAddress: (0, import_fields.text)({
@@ -3397,7 +3397,7 @@ var create_company_sic_codes_default = createCompanySicCodes;
 var createADifferentTradingAddress = async (context, companyId) => {
   console.info("Creating a different trading address for ", companyId);
   try {
-    const differentTradingAddress = await context.db.DifferentTradingAddress.createOne({
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
       data: {
         company: {
           connect: {

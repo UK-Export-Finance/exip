@@ -28,8 +28,8 @@ const updateDifferentTradingAddress = async (id: string, update: object) => {
       console.error('GraphQL network error updating application differentTradingAddress %O', response.networkError.result.errors);
     }
 
-    if (response?.data?.updateDifferentTradingAddress) {
-      return response.data.updateDifferentTradingAddress;
+    if (response?.data?.updateCompanyDifferentTradingAddress) {
+      return response.data.updateCompanyDifferentTradingAddress;
     }
 
     console.error('Error with GraphQL updateDifferentTradingAddressMutation %O', response);

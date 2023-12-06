@@ -624,18 +624,18 @@ VALUES
 /*!40000 ALTER TABLE `DeclarationHowDataWillBeUsed` ENABLE KEYS */;
 UNLOCK TABLES;
 
-# Dump of table DifferentTradingAddress
+# Dump of table CompanyDifferentTradingAddress
 # ------------------------------------------------------------
 
-DROP TABLE IF EXISTS `DifferentTradingAddress`;
+DROP TABLE IF EXISTS `CompanyDifferentTradingAddress`;
 
-CREATE TABLE `DifferentTradingAddress` (
+CREATE TABLE `CompanyDifferentTradingAddress` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `company` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `fullAddress` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
-  KEY `DifferentTradingAddress_company_idx` (`company`),
-  CONSTRAINT `DifferentTradingAddress_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  KEY `CompanyDifferentTradingAddress_company_idx` (`company`),
+  CONSTRAINT `CompanyDifferentTradingAddress_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -752,7 +752,7 @@ CREATE TABLE IF NOT EXISTS `Company` (
   KEY `Company_application_idx` (`application`),
   KEY `Company_business_idx` (`business`),
   CONSTRAINT `Company_address_fkey` FOREIGN KEY (`registeredOfficeAddress`) REFERENCES `CompanyAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Different_trading_address_fkey` FOREIGN KEY (`differentTradingAddress`) REFERENCES `DifferentTradingAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Different_trading_address_fkey` FOREIGN KEY (`differentTradingAddress`) REFERENCES `CompanyDifferentTradingAddress` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Company_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Company_business_fkey` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

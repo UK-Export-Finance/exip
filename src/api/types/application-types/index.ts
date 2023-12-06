@@ -141,7 +141,6 @@ export interface Application {
   buyer: ApplicationBuyer;
   sectionReview: Relationship;
   declaration: ApplicationDeclaration;
-  differentTradingAddress: ApplicationDifferentTradingAddress;
 }
 
 export interface ApplicationSubmissionEmailVariables {

@@ -12,7 +12,7 @@ const createADifferentTradingAddress = async (context: Context, companyId: strin
   console.info('Creating a different trading address for ', companyId);
 
   try {
-    const differentTradingAddress = await context.db.DifferentTradingAddress.createOne({
+    const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
       data: {
         company: {
           connect: {

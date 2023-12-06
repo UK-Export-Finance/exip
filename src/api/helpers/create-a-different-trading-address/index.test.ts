@@ -26,7 +26,6 @@ describe('helpers/create-a-company', () => {
 
     expect(typeof result.id).toEqual('string');
     expect(result.id.length).toBeGreaterThan(0);
-
   });
 
   describe('when an invalid company ID is passed', () => {
