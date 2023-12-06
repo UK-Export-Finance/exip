@@ -1,5 +1,4 @@
 import dotenv from 'dotenv';
-import { add, addMonths } from 'date-fns';
 import { APPLICATION, COVER_PERIOD, TOTAL_CONTRACT_VALUE } from '../constants';
 import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
@@ -9,6 +8,9 @@ import buyer from './mock-buyer';
 import mockCompanySicCode from './mock-company-sic-code';
 
 dotenv.config();
+
+const date = new Date();
+const month = date.getMonth();
 
 export const mockApplicationEligibility = {
   buyerCountry: mockCountries[0],
@@ -28,7 +30,7 @@ export const mockApplicationEligibility = {
 };
 
 const mockGenericPolicy = {
-  requestedStartDate: add(new Date(), { months: 1 }),
+  requestedStartDate: new Date(date.setMonth(month + 1)),
   creditPeriodWithBuyer: ' Mock free text',
   policyCurrencyCode: mockCurrencies[0].isoCode,
   needPreCreditPeriodCover: false,
@@ -37,7 +39,7 @@ const mockGenericPolicy = {
 export const mockSinglePolicy = {
   ...mockGenericPolicy,
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
-  contractCompletionDate: add(new Date(), { months: 3 }),
+  contractCompletionDate: new Date(date.setMonth(month + 3)),
   totalValueOfContract: 1500,
 };
 
@@ -142,7 +144,7 @@ const mockApplication = {
   dealType: APPLICATION.DEAL_TYPE,
   submissionCount: 1,
   submissionDate: new Date(),
-  submissionDeadline: addMonths(new Date(), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS).toISOString(),
+  submissionDeadline: new Date(date.setMonth(month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS)).toISOString(),
   submissionType: 'Manual Inclusion Application',
   eligibility: {
     id: 'clav8by1g0000kgoq5a2afr1z',

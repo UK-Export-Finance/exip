@@ -1,10 +1,3 @@
-import {
-  add,
-  getDate,
-  getMonth,
-  getYear,
-  sub,
-} from 'date-fns';
 import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -168,11 +161,13 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
   it('should render a validation error when the date is not in the future', () => {
     const date = new Date();
-    const yesterday = sub(date, { days: 1 });
+    const day = date.getDate();
 
-    cy.keyboardInput(field.dayInput(), getDate(yesterday));
-    cy.keyboardInput(field.monthInput(), getMonth(add(yesterday, { months: 1 })));
-    cy.keyboardInput(field.yearInput(), getYear(yesterday));
+    const yesterday = new Date(date.setDate(day - 1));
+
+    cy.keyboardInput(field.dayInput(), yesterday.getDate());
+    cy.keyboardInput(field.monthInput(), yesterday.getMonth());
+    cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
     submitButton().click();
 
     cy.checkText(
@@ -188,11 +183,10 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
   it('should render a validation error when the date has an invalid format', () => {
     const date = new Date();
-    const futureDate = add(date, { days: 1 });
 
-    cy.keyboardInput(field.dayInput(), getDate(futureDate));
+    cy.keyboardInput(field.dayInput(), new Date(date).getDate());
     cy.keyboardInput(field.monthInput(), '24');
-    cy.keyboardInput(field.yearInput(), getYear(futureDate));
+    cy.keyboardInput(field.yearInput(), new Date(date).getFullYear());
     submitButton().click();
 
     cy.checkText(
@@ -208,20 +202,23 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     const date = new Date();
-    const startDate = add(date, { years: 1 });
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    const startDate = new Date(date.setFullYear(year + 1));
 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).dayInput(), '2');
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).monthInput(), getMonth(startDate));
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).yearInput(), getYear(startDate));
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).dayInput(), day);
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).monthInput(), startDate.getMonth());
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).yearInput(), startDate.getFullYear());
     });
 
     it(`should render a validation error when the date is the same as ${REQUESTED_START_DATE}`, () => {
-      cy.keyboardInput(field.dayInput(), '2');
-      cy.keyboardInput(field.monthInput(), getMonth(startDate));
-      cy.keyboardInput(field.yearInput(), getYear(startDate));
+      cy.keyboardInput(field.dayInput(), day);
+      cy.keyboardInput(field.monthInput(), startDate.getMonth());
+      cy.keyboardInput(field.yearInput(), startDate.getFullYear());
       submitButton().click();
 
       cy.checkText(
@@ -236,9 +233,9 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     });
 
     it(`should render a validation error when the date is before the ${REQUESTED_START_DATE}`, () => {
-      cy.keyboardInput(field.dayInput(), '1');
-      cy.keyboardInput(field.monthInput(), getMonth(startDate));
-      cy.keyboardInput(field.yearInput(), getYear(startDate));
+      cy.keyboardInput(field.dayInput(), day);
+      cy.keyboardInput(field.monthInput(), startDate.getMonth());
+      cy.keyboardInput(field.yearInput(), startDate.getFullYear());
       submitButton().click();
 
       cy.checkText(
@@ -253,11 +250,11 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     });
 
     it(`should render a validation error when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const endDate = add(new Date(startDate), { years: ELIGIBILITY.MAX_COVER_PERIOD_YEARS });
+      const endDate = new Date(date.setFullYear(year + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
 
       cy.keyboardInput(field.dayInput(), '3');
-      cy.keyboardInput(field.monthInput(), getMonth(endDate));
-      cy.keyboardInput(field.yearInput(), getYear(endDate));
+      cy.keyboardInput(field.monthInput(), endDate.getMonth());
+      cy.keyboardInput(field.yearInput(), endDate.getFullYear());
       submitButton().click();
 
       cy.checkText(

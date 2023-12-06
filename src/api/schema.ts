@@ -2,7 +2,6 @@ import { list } from '@keystone-6/core';
 import { allowAll } from '@keystone-6/core/access';
 import { checkbox, integer, relationship, select, text, timestamp, password } from '@keystone-6/core/fields';
 import { document } from '@keystone-6/fields-document';
-import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION, FEEDBACK } from './constants';
 import ACCOUNT_FIELD_IDS from './constants/field-ids/insurance/account';
@@ -172,7 +171,11 @@ export const lists = {
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+
+            const date = new Date();
+            const month = date.getMonth();
+
+            modifiedData.submissionDeadline = new Date(date.setMonth(month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS));
 
             // add default submission type
             modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;

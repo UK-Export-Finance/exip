@@ -1,9 +1,3 @@
-import {
-  add,
-  getDate,
-  getMonth,
-  getYear,
-} from 'date-fns';
 import partials from '../../partials';
 import { field as fieldSelector, submitButton } from '../../pages/shared';
 import { ERROR_MESSAGES } from '../../content-strings';
@@ -129,12 +123,14 @@ const checkValidation = {
     },
   },
   notInTheFuture: () => {
-    const today = new Date();
-    const yesterday = today.setDate(today.getDate() - 1);
+    const now = new Date();
+    const day = now.getDate();
 
-    cy.keyboardInput(field.dayInput(), getDate(yesterday));
-    cy.keyboardInput(field.monthInput(), getMonth(yesterday));
-    cy.keyboardInput(field.yearInput(), getYear(yesterday));
+    const yesterday = new Date(now.setDate(day - 1));
+
+    cy.keyboardInput(field.dayInput(), yesterday.getDate());
+    cy.keyboardInput(field.monthInput(), yesterday.getMonth());
+    cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
     submitButton().click();
 
     cy.checkText(
@@ -148,12 +144,14 @@ const checkValidation = {
     );
   },
   invalidFormat: () => {
-    const date = new Date();
-    const futureDate = add(date, { days: 1 });
+    const now = new Date();
+    const day = now.getDate();
 
-    cy.keyboardInput(field.dayInput(), getDate(futureDate));
+    const futureDate = new Date(now.setDate(day + 1));
+
+    cy.keyboardInput(field.dayInput(), futureDate.getDate());
     cy.keyboardInput(field.monthInput(), '24');
-    cy.keyboardInput(field.yearInput(), getYear(futureDate));
+    cy.keyboardInput(field.yearInput(), futureDate.getFullYear());
     submitButton().click();
 
     cy.checkText(
@@ -167,11 +165,11 @@ const checkValidation = {
     );
   },
   isToday: () => {
-    const date = new Date();
+    const now = new Date();
 
-    cy.keyboardInput(field.dayInput(), getDate(date));
-    cy.keyboardInput(field.monthInput(), getMonth(date) + 1);
-    cy.keyboardInput(field.yearInput(), getYear(date));
+    cy.keyboardInput(field.dayInput(), now.getDate());
+    cy.keyboardInput(field.monthInput(), now.getMonth());
+    cy.keyboardInput(field.yearInput(), now.getFullYear());
 
     submitButton().click();
 
