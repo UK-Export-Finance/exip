@@ -11,7 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateMultipleFieldHtml from '../../../../helpers/generate-multiple-field-html';
-import mapAndSave from '../map-and-save/different-trading-address';
+import mapAndSave from '../map-and-save/company-different-trading-address';
 
 const {
   INSURANCE_ROOT,
@@ -136,7 +136,7 @@ const post = async (req: Request, res: Response) => {
      * No validation errors.
      * call mapAndSave to call the API.
      */
-    const saveResponse = await mapAndSave.differentTradingAddress(payload, application);
+    const saveResponse = await mapAndSave.companyDifferentTradingAddress(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -4,7 +4,7 @@ import mapSubmittedData from '.';
 
 const { ALTERNATIVE_TRADING_ADDRESS, FULL_ADDRESS } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
-describe('controllers/insurance/business/map-submitted-data/different-trading-address', () => {
+describe('controllers/insurance/business/map-submitted-data/company-different-trading-address', () => {
   describe('when all fields are provided', () => {
     it(`should return the formBody without _csrf and replace ${ALTERNATIVE_TRADING_ADDRESS} with ${FULL_ADDRESS}`, () => {
       const mockBody = {

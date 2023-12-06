@@ -13,7 +13,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateMultipleFieldHtml from '../../../../helpers/generate-multiple-field-html';
-import mapAndSave from '../map-and-save/different-trading-address';
+import mapAndSave from '../map-and-save/company-different-trading-address';
 
 const {
   INSURANCE_ROOT,
@@ -98,7 +98,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
   });
 
   describe('post', () => {
-    mapAndSave.differentTradingAddress = jest.fn(() => Promise.resolve(true));
+    mapAndSave.companyDifferentTradingAddress = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
@@ -141,9 +141,9 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
 
         const payload = constructPayload(req.body, [ALTERNATIVE_TRADING_ADDRESS]);
 
-        expect(mapAndSave.differentTradingAddress).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.differentTradingAddress).toHaveBeenCalledWith(payload, mockApplication);
+        expect(mapAndSave.companyDifferentTradingAddress).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       it('should redirect to next page', async () => {

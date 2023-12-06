@@ -1,6 +1,6 @@
 import createACompanyAddress from '../create-a-company-address';
 import createCompanySicCodes from '../create-company-sic-codes';
-import createADifferentTradingAddress from '../create-a-different-trading-address';
+import createACompanyDifferentTradingAddress from '../create-a-company-different-trading-address';
 import { Context, ApplicationCompanyCore } from '../../types';
 
 /**
@@ -42,7 +42,7 @@ const createACompany = async (context: Context, applicationId: string, companyDa
     /**
      * Create different trading address with company relationship.
      */
-    const createdDifferentTradingAddress = await createADifferentTradingAddress(context, company.id);
+    const createdDifferentTradingAddress = await createACompanyDifferentTradingAddress(context, company.id);
 
     return {
       ...company,
@@ -51,9 +51,9 @@ const createACompany = async (context: Context, applicationId: string, companyDa
       differentTradingAddress: createdDifferentTradingAddress,
     };
   } catch (err) {
-    console.error('Error creating a company, address, SIC codes and different trading address %O', err);
+    console.error('Error creating a company, address, SIC codes and company different trading address %O', err);
 
-    throw new Error(`Creating a company, address, SIC codes and different trading address ${err}`);
+    throw new Error(`Creating a company, address, SIC codes and company different trading address ${err}`);
   }
 };
 

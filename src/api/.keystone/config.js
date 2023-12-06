@@ -3393,8 +3393,8 @@ var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, comp
 };
 var create_company_sic_codes_default = createCompanySicCodes;
 
-// helpers/create-a-different-trading-address/index.ts
-var createADifferentTradingAddress = async (context, companyId) => {
+// helpers/create-a-company-different-trading-address/index.ts
+var createACompanyDifferentTradingAddress = async (context, companyId) => {
   console.info("Creating a different trading address for ", companyId);
   try {
     const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.createOne({
@@ -3408,11 +3408,11 @@ var createADifferentTradingAddress = async (context, companyId) => {
     });
     return differentTradingAddress;
   } catch (err) {
-    console.error("Error creating a different trading address %O", err);
-    throw new Error(`Creating a different trading address ${err}`);
+    console.error("Error creating a company different trading address %O", err);
+    throw new Error(`Creating a company different trading address ${err}`);
   }
 };
-var create_a_different_trading_address_default = createADifferentTradingAddress;
+var create_a_company_different_trading_address_default = createACompanyDifferentTradingAddress;
 
 // helpers/create-a-company/index.ts
 var createACompany = async (context, applicationId, companyData) => {
@@ -3429,7 +3429,7 @@ var createACompany = async (context, applicationId, companyData) => {
     });
     const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
     const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
-    const createdDifferentTradingAddress = await create_a_different_trading_address_default(context, company.id);
+    const createdDifferentTradingAddress = await create_a_company_different_trading_address_default(context, company.id);
     return {
       ...company,
       registeredOfficeAddress: companyAddress,
@@ -3437,8 +3437,8 @@ var createACompany = async (context, applicationId, companyData) => {
       differentTradingAddress: createdDifferentTradingAddress
     };
   } catch (err) {
-    console.error("Error creating a company, address, SIC codes and different trading address %O", err);
-    throw new Error(`Creating a company, address, SIC codes and different trading address ${err}`);
+    console.error("Error creating a company, address, SIC codes and company different trading address %O", err);
+    throw new Error(`Creating a company, address, SIC codes and company different trading address ${err}`);
   }
 };
 var create_a_company_default = createACompany;

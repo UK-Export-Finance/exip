@@ -1,6 +1,6 @@
 import mapAndSave from '.';
-import save from '../../save-data/different-trading-address';
-import mapSubmittedData from '../../map-submitted-data/different-trading-address';
+import save from '../../save-data/company-different-trading-address';
+import mapSubmittedData from '../../map-submitted-data/company-different-trading-address';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
@@ -9,8 +9,8 @@ const {
   EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/map-and-save/different-trading-address', () => {
-  jest.mock('../../save-data/different-trading-address');
+describe('controllers/insurance/business/map-and-save/company-different-trading-address', () => {
+  jest.mock('../../save-data/company-different-trading-address');
 
   let mockFormBody = {
     _csrf: '1234',
@@ -18,21 +18,21 @@ describe('controllers/insurance/business/map-and-save/different-trading-address'
   };
 
   const mockSaveDifferentTradingAddress = jest.fn(() => Promise.resolve({}));
-  save.differentTradingAddress = mockSaveDifferentTradingAddress;
+  save.companyDifferentTradingAddress = mockSaveDifferentTradingAddress;
 
   const mockValidationErrors = generateValidationErrors(ALTERNATIVE_TRADING_ADDRESS, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
       it('should call save.differentTradingAddress with application, populated submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.differentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
+        await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
 
-        expect(save.differentTradingAddress).toHaveBeenCalledTimes(1);
-        expect(save.differentTradingAddress).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
+        expect(save.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.differentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -45,14 +45,14 @@ describe('controllers/insurance/business/map-and-save/different-trading-address'
       };
 
       it('should call save.differentTradingAddress with application and populated submitted data', async () => {
-        await mapAndSave.differentTradingAddress(mockFormBody, mockApplication);
+        await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication);
 
-        expect(save.differentTradingAddress).toHaveBeenCalledTimes(1);
-        expect(save.differentTradingAddress).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+        expect(save.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
+        expect(save.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.differentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -63,7 +63,7 @@ describe('controllers/insurance/business/map-and-save/different-trading-address'
     it('should return true', async () => {
       mockFormBody = { _csrf: '1234' };
 
-      const result = await mapAndSave.differentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

@@ -7,7 +7,7 @@ const {
 } = FIELD_IDS.INSURANCE;
 
 /**
- * maps differentTradingAddress formBody and returns fields in correct format
+ * maps companyDifferentTradingAddress formBody and returns fields in correct format
  * changes ALTERNATIVE_TRADING_ADDRESS to FULL_ADDRESS so can be handled by API
  * removes ALTERNATIVE_TRADING_ADDRESS value
  * @param {RequestBody} formBody
