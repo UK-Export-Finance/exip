@@ -190,7 +190,7 @@ const checkPolicySummaryList = ({
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [USING_BROKER]: () => {
-    const fieldId = USING_BROKER;
+    const fieldId = BROKER.USING_BROKER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
     const expectedValue = application.EXPORTER_BROKER[fieldId];

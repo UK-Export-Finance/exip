@@ -19,7 +19,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Policy contact- As an exporter, I want to change my answers to the same name on policy as policy owner', () => {
+context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers to the same name on policy as policy owner', () => {
   let referenceNumber;
   let url;
 

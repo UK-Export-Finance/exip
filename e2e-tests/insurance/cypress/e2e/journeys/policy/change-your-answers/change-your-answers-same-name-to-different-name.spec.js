@@ -7,7 +7,7 @@ const {
   POLICY: {
     CHECK_YOUR_ANSWERS,
     NAME_ON_POLICY_CHANGE,
-    DIFFERENT_NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -22,7 +22,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { POLICY_CONTACT } = application;
 
-context('Insurance - Policy - Change your answers - Policy contact- As an exporter, I want to change my answers to a different name on policy', () => {
+context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers to a different name on policy', () => {
   let referenceNumber;
   let url;
   let differentNameUrl;
@@ -34,7 +34,7 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
       cy.completePolicySection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      differentNameUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+      differentNameUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY_CHANGE}`;
       cy.assertUrl(url);
     });
   });
@@ -69,7 +69,7 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
         cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
       });
 
-      it(`should redirect to ${DIFFERENT_NAME_ON_POLICY}`, () => {
+      it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHANGE}`, () => {
         cy.assertUrl(`${differentNameUrl}#${fieldId}-label`);
       });
 
