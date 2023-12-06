@@ -21,9 +21,6 @@ import { get as getTurnoverCurrency } from '../../../controllers/insurance/busin
 import { get as getCreditControl, post as postCreditControl } from '../../../controllers/insurance/business/credit-control';
 import { post as postCreditControlSaveAndBack } from '../../../controllers/insurance/business/credit-control/save-and-back';
 
-import { get as getBroker, post as postBroker } from '../../../controllers/insurance/business/broker';
-import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/business/broker/save-and-back';
-
 import { get as getCheckYourAnswers, post as postCheckYourAnswers } from '../../../controllers/insurance/business/check-your-answers';
 import { post as postCheckYourAnswersSaveAndBack } from '../../../controllers/insurance/business/check-your-answers/save-and-back';
 
@@ -37,8 +34,8 @@ describe('routes/insurance/your-business', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(24);
-    expect(post).toHaveBeenCalledTimes(28);
+    expect(get).toHaveBeenCalledTimes(21);
+    expect(post).toHaveBeenCalledTimes(24);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK, postCompanyDetailsSaveAndBack);
@@ -76,14 +73,6 @@ describe('routes/insurance/your-business', () => {
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHANGE, postCreditControl);
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHECK_AND_CHANGE, getCreditControl);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL_CHECK_AND_CHANGE, postCreditControl);
-
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT, getBroker);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_ROOT, postBroker);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_SAVE_AND_BACK, postBrokerSaveAndBack);
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_CHANGE, getBroker);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_CHANGE, postBroker);
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_CHECK_AND_CHANGE, getBroker);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.BROKER_CHECK_AND_CHANGE, postBroker);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS, getCheckYourAnswers);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS, postCheckYourAnswers);

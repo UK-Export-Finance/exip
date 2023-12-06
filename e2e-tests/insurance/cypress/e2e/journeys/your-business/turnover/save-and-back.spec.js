@@ -25,6 +25,8 @@ const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
+const { IN_PROGRESS } = TASKS.STATUS;
+
 context('Insurance - Your business - Turnover page - Save and back', () => {
   let referenceNumber;
   let url;
@@ -64,8 +66,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkText(task.status(), IN_PROGRESS);
     });
   });
 
@@ -83,8 +84,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
@@ -117,9 +117,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkTaskStatus(task, expected);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
     it('should retain all the fields on the page', () => {

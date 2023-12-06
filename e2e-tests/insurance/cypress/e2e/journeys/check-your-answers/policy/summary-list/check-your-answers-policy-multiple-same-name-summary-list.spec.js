@@ -24,6 +24,8 @@ const {
     },
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     NAME_ON_POLICY: { NAME, POSITION },
+    USING_BROKER,
+    BROKER,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -38,7 +40,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
+      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, usingBroker: true });
 
       task.link().click();
 
@@ -96,5 +98,23 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
 
   it(`should render a ${POSITION} summary list row`, () => {
     checkSummaryList[POSITION]();
+  });
+
+  describe('`broker`', () => {
+    it(`should render a ${USING_BROKER} summary list row`, () => {
+      checkSummaryList[USING_BROKER]();
+    });
+
+    it(`should render a ${BROKER.NAME} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER.NAME]({});
+    });
+
+    it(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER.ADDRESS_LINE_1]();
+    });
+
+    it(`should render a ${BROKER.EMAIL} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER.EMAIL]();
+    });
   });
 });

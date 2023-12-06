@@ -6,7 +6,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
   },
-  EXPORTER_BUSINESS: {
+  POLICY: {
     BROKER: { USING_BROKER },
   },
 } = FIELD_IDS;

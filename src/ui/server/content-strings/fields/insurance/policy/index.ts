@@ -1,9 +1,19 @@
 import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
 import { LINKS } from '../../../links';
 
-const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
-const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY } = POLICY;
-const { EMAIL } = ACCOUNT;
+const {
+  ACCOUNT: { EMAIL },
+  POLICY: {
+    POLICY_TYPE,
+    SINGLE_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE,
+    CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
+    NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
+    BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
+  },
+} = FIELD_IDS.INSURANCE;
 
 const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
 const {
@@ -11,11 +21,11 @@ const {
 } = APPLICATION;
 
 export const POLICY_FIELDS = {
-  [POLICY.POLICY_TYPE]: {
+  [POLICY_TYPE]: {
     ID: FIELD_IDS.POLICY_TYPE,
     OPTIONS: {
       SINGLE: {
-        ID: POLICY.SINGLE_POLICY_TYPE,
+        ID: SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
         TEXT: 'Single contract policy',
         HINT_LIST: [
@@ -26,7 +36,7 @@ export const POLICY_FIELDS = {
         ],
       },
       MULTIPLE: {
-        ID: POLICY.MULTIPLE_POLICY_TYPE,
+        ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [
@@ -164,6 +174,46 @@ export const POLICY_FIELDS = {
     [EMAIL]: {
       SUMMARY: {
         TITLE: 'Contact email',
+      },
+    },
+  },
+  BROKER: {
+    [LEGEND]: {
+      LEGEND: 'Enter contact details for your broker',
+    },
+    [USING_BROKER]: {
+      SUMMARY: {
+        TITLE: 'Using a broker for this insurance?',
+      },
+    },
+    [NAME]: {
+      LABEL: 'Name of broker or company',
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+      },
+    },
+    [ADDRESS_LINE_1]: {
+      LABEL: 'Address line 1',
+      SUMMARY: {
+        TITLE: "Broker's address",
+      },
+    },
+    [ADDRESS_LINE_2]: {
+      LABEL: 'Address line 2 (optional)',
+    },
+    [TOWN]: {
+      LABEL: 'Town or city',
+    },
+    [COUNTY]: {
+      LABEL: 'County (optional)',
+    },
+    [POSTCODE]: {
+      LABEL: 'Postcode',
+    },
+    [EMAIL]: {
+      LABEL: 'Email address',
+      SUMMARY: {
+        TITLE: "Broker's email",
       },
     },
   },

@@ -23,16 +23,6 @@ const {
         PERCENTAGE_TURNOVER,
       },
       HAS_CREDIT_CONTROL,
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        TOWN,
-        COUNTY,
-        POSTCODE,
-        EMAIL,
-      },
     },
   },
 } = FIELD_IDS;
@@ -116,49 +106,6 @@ const checkYourBusinessSummaryList = ({
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
     const expectedValue = FIELD_VALUES.YES;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [USING_BROKER]: () => {
-    const fieldId = USING_BROKER;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
-    const expectedValue = application.EXPORTER_BROKER[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [NAME]: () => {
-    const fieldId = NAME;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
-    const expectedValue = application.EXPORTER_BROKER[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [ADDRESS_LINE_1]: () => {
-    const fieldId = ADDRESS_LINE_1;
-
-    const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
-
-    const row = summaryList.field(fieldId);
-
-    cy.checkText(
-      row.key(),
-      expectedKey,
-    );
-
-    // as html, cannot use checkText so checking contains following fields
-    row.value().contains(application.EXPORTER_BROKER[fieldId]);
-    row.value().contains(application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-    row.value().contains(application.EXPORTER_BROKER[TOWN]);
-    row.value().contains(application.EXPORTER_BROKER[COUNTY]);
-    row.value().contains(application.EXPORTER_BROKER[POSTCODE]);
-  },
-  [EMAIL]: () => {
-    const fieldId = NAME;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
-    const expectedValue = application.EXPORTER_BROKER[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

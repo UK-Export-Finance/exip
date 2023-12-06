@@ -31,7 +31,6 @@ context('Insurance - Your business - Change your answers - Credit control - As a
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
-      cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

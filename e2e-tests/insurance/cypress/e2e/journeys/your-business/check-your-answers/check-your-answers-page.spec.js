@@ -14,7 +14,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORTER_BUSINESS: {
-    BROKER_ROOT,
+    CREDIT_CONTROL,
     CHECK_YOUR_ANSWERS,
   },
   YOUR_BUYER: {
@@ -38,7 +38,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm({});
-      cy.completeAndSubmitBrokerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -58,7 +57,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });

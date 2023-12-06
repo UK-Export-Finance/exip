@@ -14,6 +14,7 @@ const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
     DIFFERENT_NAME_ON_POLICY,
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -60,11 +61,13 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when entering contact details of application owner on "different name on policy" page', () => {
+  describe(`when entering contact details of application owner on "different name on policy" page and proceeding to ${CHECK_YOUR_ANSWERS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitDifferentNameOnPolicyForm({ firstName: account[FIRST_NAME], lastName: account[LAST_NAME], email: account[EMAIL] });
+
+      cy.completeAndSubmitBrokerForm({});
 
       summaryList.field(NAME).changeLink().click();
     });

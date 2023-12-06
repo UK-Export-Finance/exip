@@ -5,9 +5,10 @@ import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generatePolicyContactFields from './policy-contact-fields';
+import { generateBrokerFields } from './broker-fields';
 import generateSummaryListRows from '../generate-summary-list-rows';
 import { mockCountries, mockCurrencies, mockContact } from '../../../test-mocks';
-import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
+import mockApplication, { mockBroker, mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/policy', () => {
   const { referenceNumber } = mockApplication;
@@ -18,7 +19,7 @@ describe('server/helpers/summary-lists/policy', () => {
       const mockAnswers = mockSinglePolicy;
 
       it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+        const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
         const expected = [
           ...generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange),
@@ -26,6 +27,7 @@ describe('server/helpers/summary-lists/policy', () => {
           ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
           ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           ...generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
+          ...generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
         ];
 
         expect(result).toEqual(expected);
@@ -36,7 +38,7 @@ describe('server/helpers/summary-lists/policy', () => {
       const mockAnswers = mockMultiplePolicy;
 
       it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+        const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
         const expected = [
           ...generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange),
@@ -44,6 +46,7 @@ describe('server/helpers/summary-lists/policy', () => {
           ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
           ...generateAboutGoodsOrServicesFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           ...generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
+          ...generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
         ];
 
         expect(result).toEqual(expected);
@@ -55,9 +58,9 @@ describe('server/helpers/summary-lists/policy', () => {
     const mockAnswers = mockSinglePolicy;
 
     it('should return an array of summary list rows', () => {
-      const result = policySummaryList(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies);
+      const result = policySummaryList(mockAnswers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies);
 
-      const fields = generateFields(mockAnswers, mockContact, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
+      const fields = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies, checkAndChange);
 
       const expected = generateSummaryListRows(fields);
 

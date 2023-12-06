@@ -1,11 +1,17 @@
-import { FIELD_IDS } from '../../../../constants/field-ids';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 
-const { POLICY } = FIELD_IDS.INSURANCE;
-const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES } = POLICY;
+const {
+  POLICY: {
+    CONTRACT_POLICY,
+    ABOUT_GOODS_OR_SERVICES,
+    BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL },
+    POLICY_TYPE,
+  },
+} = INSURANCE_FIELD_IDS;
 
 export const POLICY_FIELDS = {
-  [POLICY.POLICY_TYPE]: {
-    ID: FIELD_IDS.POLICY_TYPE,
+  [POLICY_TYPE]: {
+    ID: POLICY_TYPE,
     SUMMARY: {
       TITLE: 'Policy type',
     },
@@ -60,6 +66,28 @@ export const POLICY_FIELDS = {
     [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
       SUMMARY: {
         TITLE: 'Final destination of export',
+      },
+    },
+  },
+  BROKER: {
+    [USING_BROKER]: {
+      SUMMARY: {
+        TITLE: 'Using a broker for this insurance?',
+      },
+    },
+    [NAME]: {
+      SUMMARY: {
+        TITLE: "Broker's name or company",
+      },
+    },
+    [ADDRESS_LINE_1]: {
+      SUMMARY: {
+        TITLE: "Broker's address",
+      },
+    },
+    [EMAIL]: {
+      SUMMARY: {
+        TITLE: "Broker's email",
       },
     },
   },

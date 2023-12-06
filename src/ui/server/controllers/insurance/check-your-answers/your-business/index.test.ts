@@ -13,6 +13,8 @@ import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
+const { company, business, referenceNumber } = mockApplication;
+
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
 const {
@@ -74,15 +76,9 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBusinessSummaryList(
-        mockApplication.company,
-        mockApplication.business,
-        mockApplication.broker,
-        mockApplication.referenceNumber,
-        checkAndChange,
-      );
+      const summaryList = yourBusinessSummaryList(company, business, referenceNumber, checkAndChange);
 
-      const exporterFields = requiredFields(mockApplication.broker.isUsingBroker);
+      const exporterFields = requiredFields(company.hasDifferentTradingName);
 
       const status = sectionStatus(exporterFields, mockApplication);
 

@@ -1,4 +1,5 @@
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -16,13 +17,11 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { Request, Response } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },

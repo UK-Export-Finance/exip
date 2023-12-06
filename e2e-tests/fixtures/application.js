@@ -34,6 +34,16 @@ const {
       },
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
+      BROKER: {
+        USING_BROKER,
+        NAME,
+        ADDRESS_LINE_1,
+        ADDRESS_LINE_2,
+        TOWN,
+        COUNTY,
+        POSTCODE,
+        EMAIL,
+      },
     },
     EXPORTER_BUSINESS: {
       FULL_ADDRESS,
@@ -47,16 +57,6 @@ const {
         PERCENTAGE_TURNOVER,
       },
       HAS_CREDIT_CONTROL,
-      BROKER: {
-        USING_BROKER,
-        NAME,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        TOWN,
-        COUNTY,
-        POSTCODE,
-        EMAIL,
-      },
       YOUR_COMPANY: {
         DIFFERENT_TRADING_NAME,
       },

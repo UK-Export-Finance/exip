@@ -1,4 +1,4 @@
-import requiredFields, { getContractPolicyTasks } from '.';
+import requiredFields, { getContractPolicyTasks, getBrokerTasks } from '.';
 import { FIELD_VALUES } from '../../../constants';
 import POLICY_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
@@ -8,7 +8,13 @@ const { POLICY_TYPE } = FIELD_VALUES;
 
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
-const { CONTRACT_POLICY, TYPE_OF_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY } = POLICY_FIELD_IDS;
+const {
+  CONTRACT_POLICY,
+  TYPE_OF_POLICY,
+  ABOUT_GOODS_OR_SERVICES,
+  NAME_ON_POLICY,
+  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL },
+} = POLICY_FIELD_IDS;
 
 const {
   SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
@@ -20,8 +26,10 @@ const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
 const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
 
 describe('server/helpers/required-fields/policy', () => {
-  const { policy } = mockApplication;
-  const { policyType } = policy;
+  const {
+    policy: { policyType },
+    broker: { isUsingBroker },
+  } = mockApplication;
 
   describe('getContractPolicyTasks', () => {
     describe(`when the policy type is ${POLICY_TYPE.SINGLE}`, () => {
@@ -58,22 +66,56 @@ describe('server/helpers/required-fields/policy', () => {
     });
   });
 
+  describe('getBrokerTasks', () => {
+    describe('when isUsingBroker is true', () => {
+      it('should return multiple field ids in an array', () => {
+        const isUsingBrokerFlag = true;
+
+        const result = getBrokerTasks(isUsingBrokerFlag);
+
+        const expected = [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isUsingBroker is undefined', () => {
+      it('should return an empty array', () => {
+        const result = getBrokerTasks();
+
+        expect(result).toEqual([]);
+      });
+    });
+
+    describe('when isUsingBroker is false', () => {
+      it('should return an empty array', () => {
+        const isUsingBrokerFlag = false;
+
+        const result = getBrokerTasks(isUsingBrokerFlag);
+
+        expect(result).toEqual([]);
+      });
+    });
+  });
+
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields(policyType);
+      const result = requiredFields({ policyType, isUsingBroker });
 
-      const expected = Object.values({
-        ...TYPE_OF_POLICY,
+      const expected = [
+        ...Object.values(TYPE_OF_POLICY),
         REQUESTED_START_DATE,
         POLICY_CURRENCY_CODE,
-        ...getContractPolicyTasks(policyType),
-        ...ABOUT_GOODS_OR_SERVICES,
+        ...Object.values(getContractPolicyTasks(policyType)),
+        ...Object.values(ABOUT_GOODS_OR_SERVICES),
         IS_SAME_AS_OWNER,
         FIRST_NAME,
         LAST_NAME,
         POLICY_CONTACT_EMAIL,
         POSITION,
-      });
+        USING_BROKER,
+        ...getBrokerTasks(isUsingBroker),
+      ];
 
       expect(result).toEqual(expected);
     });

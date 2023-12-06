@@ -4,7 +4,13 @@ import { isSinglePolicyType, isMultiplePolicyType } from '../../policy-type';
 
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
-const { CONTRACT_POLICY, TYPE_OF_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY } = POLICY_FIELD_IDS;
+const {
+  CONTRACT_POLICY,
+  TYPE_OF_POLICY,
+  ABOUT_GOODS_OR_SERVICES,
+  NAME_ON_POLICY,
+  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL },
+} = POLICY_FIELD_IDS;
 
 const {
   SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
@@ -37,22 +43,42 @@ export const getContractPolicyTasks = (policyType?: string): object => {
 };
 
 /**
+ * getBrokerTasks
+ * Get broker section tasks depending on the isUsingBroker field
+ * @param {Boolean} Application "Is using broker" flag
+ * @returns {Array} Array of tasks
+ */
+export const getBrokerTasks = (isUsingBroker?: boolean) => {
+  if (isUsingBroker) {
+    return [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
+  }
+
+  return [];
+};
+
+interface RequiredFields {
+  policyType?: string;
+  isUsingBroker?: boolean;
+}
+
+/**
  * Required fields for the insurance - policy section
  * @param {String} Application "Policy type"
  * @returns {Array} Required field IDs
  */
-const requiredFields = (policyType?: string) =>
-  Object.values({
-    ...TYPE_OF_POLICY,
-    REQUESTED_START_DATE,
-    POLICY_CURRENCY_CODE,
-    ...getContractPolicyTasks(policyType),
-    ...ABOUT_GOODS_OR_SERVICES,
-    IS_SAME_AS_OWNER,
-    FIRST_NAME,
-    LAST_NAME,
-    POLICY_CONTACT_EMAIL,
-    POSITION,
-  });
+const requiredFields = ({ policyType, isUsingBroker }: RequiredFields): Array<string> => [
+  ...Object.values(TYPE_OF_POLICY),
+  REQUESTED_START_DATE,
+  POLICY_CURRENCY_CODE,
+  ...Object.values(getContractPolicyTasks(policyType)),
+  ...Object.values(ABOUT_GOODS_OR_SERVICES),
+  IS_SAME_AS_OWNER,
+  FIRST_NAME,
+  LAST_NAME,
+  POLICY_CONTACT_EMAIL,
+  POSITION,
+  USING_BROKER,
+  ...getBrokerTasks(isUsingBroker),
+];
 
 export default requiredFields;

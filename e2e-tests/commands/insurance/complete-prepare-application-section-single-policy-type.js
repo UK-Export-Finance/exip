@@ -29,6 +29,8 @@ const completePrepareYourApplicationSectionSingle = ({
     cy.completeAndSubmitDifferentNameOnPolicyForm({});
   }
 
+  cy.completeAndSubmitBrokerForm({ usingBroker });
+
   // submit "policy and exports - check your answers" form
   submitButton().click();
 
@@ -44,7 +46,6 @@ const completePrepareYourApplicationSectionSingle = ({
   cy.completeAndSubmitNatureOfYourBusiness();
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitCreditControlForm({});
-  cy.completeAndSubmitBrokerForm({ usingBroker });
 
   submitButton().click();
 

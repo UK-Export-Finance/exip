@@ -30,7 +30,7 @@ const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { IN_PROGRESS, COMPLETED } = TASKS.STATUS;
+const { IN_PROGRESS } = TASKS.STATUS;
 
 context('Insurance - Policy - Name on policy - Save and go back', () => {
   let referenceNumber;
@@ -136,8 +136,8 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it('should change the status of task `type of policy and exports` to `completed`', () => {
-      cy.checkText(task.status(), COMPLETED);
+    it('should retain the status of task `type of policy and exports` as `in progress`', () => {
+      cy.checkText(task.status(), IN_PROGRESS);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

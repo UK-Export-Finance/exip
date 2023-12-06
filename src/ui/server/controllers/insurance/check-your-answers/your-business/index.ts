@@ -52,13 +52,13 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, broker, company, business } = application;
+    const { referenceNumber, company, business } = application;
 
     const checkAndChange = true;
 
-    const summaryList = yourBusinessSummaryList(company, business, broker, referenceNumber, checkAndChange);
+    const summaryList = yourBusinessSummaryList(company, business, referenceNumber, checkAndChange);
 
-    const exporterFields = requiredFields(broker.isUsingBroker);
+    const exporterFields = requiredFields(company.hasDifferentTradingName);
 
     const status = sectionStatus(exporterFields, application);
 

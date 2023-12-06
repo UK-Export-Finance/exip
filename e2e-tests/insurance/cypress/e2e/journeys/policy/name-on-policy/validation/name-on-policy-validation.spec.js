@@ -10,7 +10,7 @@ import account from '../../../../../../../fixtures/account';
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    CHECK_YOUR_ANSWERS,
+    BROKER_ROOT,
     DIFFERENT_NAME_ON_POLICY,
     NAME_ON_POLICY,
   },
@@ -120,7 +120,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
 
       partials.errorSummaryListItems().should('not.exist');
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
       cy.assertUrl(expectedUrl);
     });
   });

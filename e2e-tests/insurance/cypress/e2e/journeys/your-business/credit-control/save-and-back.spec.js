@@ -9,7 +9,7 @@ const {
   EXPORTER_BUSINESS: { CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
-const { STATUS: { IN_PROGRESS } } = TASKS;
+const { STATUS: { IN_PROGRESS, COMPLETED } } = TASKS;
 
 const task = partials.taskList.prepareApplication.tasks.business;
 
@@ -58,7 +58,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskStatus(task, IN_PROGRESS);
     });
   });
 
@@ -72,10 +72,10 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
+    it(`should change the status of task 'your business' as '${COMPLETED}'`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskStatus(task, COMPLETED);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -95,10 +95,10 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
+    it(`should change the status of task 'your business' as '${COMPLETED}'`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskStatus(task, COMPLETED);
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

@@ -1,20 +1,22 @@
-import { brokerPage } from '../../pages/your-business';
+import { brokerPage } from '../../pages/insurance/policy';
 import { field, submitButton } from '../../pages/shared';
-import { FIELD_IDS } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import application from '../../fixtures/application';
 
 const {
-  BROKER: {
-    USING_BROKER,
-    NAME,
-    ADDRESS_LINE_1,
-    ADDRESS_LINE_2,
-    TOWN,
-    COUNTY,
-    EMAIL,
-    POSTCODE,
+  POLICY: {
+    BROKER: {
+      USING_BROKER,
+      NAME,
+      ADDRESS_LINE_1,
+      ADDRESS_LINE_2,
+      TOWN,
+      COUNTY,
+      EMAIL,
+      POSTCODE,
+    },
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeAndSubmitBrokerForm

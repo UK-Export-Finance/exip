@@ -63,11 +63,6 @@ export const CREDIT_CONTROL = {
   PAGE_TITLE: 'Do you have a process for dealing with late payments?',
 };
 
-export const BROKER = {
-  ...SHARED,
-  PAGE_TITLE: 'Are you using a broker to get this insurance?',
-};
-
 export const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',

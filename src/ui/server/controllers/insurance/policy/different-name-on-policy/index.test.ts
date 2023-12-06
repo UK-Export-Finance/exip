@@ -16,7 +16,13 @@ import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test
 
 const {
   INSURANCE_ROOT,
-  POLICY: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE },
+  POLICY: {
+    BROKER_ROOT,
+    CHECK_YOUR_ANSWERS,
+    DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
+    DIFFERENT_NAME_ON_POLICY_CHANGE,
+    DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -138,10 +144,10 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -156,6 +162,18 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
         expect(mapAndSave.policyContact).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.policyContact).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = DIFFERENT_NAME_ON_POLICY_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {

@@ -29,6 +29,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
       cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
       cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitBrokerForm({});
 
       // go back to the all sections page
       saveAndBackButton().click();

@@ -4,7 +4,6 @@ const ALTERNATIVE_TRADING_ADDRESS_ROOT = `${ROOT}/alternative-trading-address`;
 const NATURE_OF_BUSINESS_ROOT = `${ROOT}/nature-of-business`;
 const TURNOVER_ROOT = `${ROOT}/turnover`;
 const CREDIT_CONTROL_ROOT = `${ROOT}/credit-control`;
-const BROKER_ROOT = `${ROOT}/broker`;
 const CHECK_YOUR_ANSWERS = `${ROOT}/check-your-answers`;
 
 export const EXPORTER_BUSINESS = {
@@ -28,10 +27,6 @@ export const EXPORTER_BUSINESS = {
   CREDIT_CONTROL_SAVE_AND_BACK: `${CREDIT_CONTROL_ROOT}/save-and-back`,
   CREDIT_CONTROL_CHANGE: `${CREDIT_CONTROL_ROOT}/change`,
   CREDIT_CONTROL_CHECK_AND_CHANGE: `${CREDIT_CONTROL_ROOT}/check-and-change`,
-  BROKER_ROOT,
-  BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
-  BROKER_CHANGE: `${BROKER_ROOT}/change`,
-  BROKER_CHECK_AND_CHANGE: `${BROKER_ROOT}/check-and-change`,
   CHECK_YOUR_ANSWERS,
   CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${CHECK_YOUR_ANSWERS}/save-and-back`,
 };
