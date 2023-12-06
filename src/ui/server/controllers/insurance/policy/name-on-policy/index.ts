@@ -137,7 +137,7 @@ export const post = async (req: Request, res: Response) => {
       redirectRoute = differentNameOnPolicyRoute;
     }
 
-    // // save the application
+    // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application);
 
     if (!saveResponse) {

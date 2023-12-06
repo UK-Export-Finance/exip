@@ -1,11 +1,25 @@
-import { FIELD_VALUES } from '../../../../../../constants';
-import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
+import {
+  VALID_PHONE_NUMBERS,
+  WEBSITE_EXAMPLES,
+  FIELD_VALUES,
+} from '../../../../../../constants';
+import {
+  field,
+  submitButton,
+  summaryList,
+  noRadioInput,
+} from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
+    YOUR_COMPANY: {
+      TRADING_ADDRESS,
+      HAS_DIFFERENT_TRADING_NAME,
+      WEBSITE,
+      PHONE_NUMBER,
+    },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -84,111 +98,111 @@ context('Insurance - Your business - Change your answers - Company details - As 
     });
   });
 
-  // describe(TRADING_ADDRESS, () => {
-  //   const fieldId = TRADING_ADDRESS;
+  describe(TRADING_ADDRESS, () => {
+    const fieldId = TRADING_ADDRESS;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+    describe('form submission with a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       noRadioInput().eq(1).click();
+        noRadioInput().eq(1).click();
 
-  //       submitButton().click();
-  //     });
+        submitButton().click();
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it('should render the new answer', () => {
-  //       const expected = FIELD_VALUES.NO;
+      it('should render the new answer', () => {
+        const expected = FIELD_VALUES.NO;
 
-  //       cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-  //     });
-  //   });
-  // });
+        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+      });
+    });
+  });
 
-  // describe(PHONE_NUMBER, () => {
-  //   const fieldId = PHONE_NUMBER;
+  describe(PHONE_NUMBER, () => {
+    const fieldId = PHONE_NUMBER;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     const newAnswer = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
+    describe('form submission with a new answer', () => {
+      const newAnswer = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
 
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.keyboardInput(field(PHONE_NUMBER).input(), newAnswer);
+        cy.keyboardInput(field(PHONE_NUMBER).input(), newAnswer);
 
-  //       submitButton().click();
-  //     });
+        submitButton().click();
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it('should render the new answer', () => {
-  //       cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-  //     });
-  //   });
-  // });
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+      });
+    });
+  });
 
-  // describe(WEBSITE, () => {
-  //   const fieldId = WEBSITE;
+  describe(WEBSITE, () => {
+    const fieldId = WEBSITE;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     const newAnswer = WEBSITE_EXAMPLES.VALID;
+    describe('form submission with a new answer', () => {
+      const newAnswer = WEBSITE_EXAMPLES.VALID;
 
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.keyboardInput(field(WEBSITE).input(), newAnswer);
+        cy.keyboardInput(field(WEBSITE).input(), newAnswer);
 
-  //       submitButton().click();
-  //     });
+        submitButton().click();
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it('should render the new answer', () => {
-  //       cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-  //     });
-  //   });
-  // });
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+      });
+    });
+  });
 });
