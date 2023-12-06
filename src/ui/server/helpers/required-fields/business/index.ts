@@ -1,7 +1,7 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 
 const {
-  EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER },
+  EXPORTER_BUSINESS: { YOUR_COMPANY, NATURE_OF_YOUR_BUSINESS, TURNOVER, HAS_CREDIT_CONTROL },
 } = FIELD_IDS;
 
 const { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
@@ -33,6 +33,7 @@ const requiredFields = (hasDifferentTradingName?: boolean): Array<string> =>
     ...getYourCompanyTasks(hasDifferentTradingName),
     ...NATURE_OF_YOUR_BUSINESS,
     ...TURNOVER_FIELDS,
+    HAS_CREDIT_CONTROL,
   }) as Array<string>;
 
 export default requiredFields;
