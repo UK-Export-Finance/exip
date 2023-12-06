@@ -36,6 +36,7 @@ const {
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
     },
     EXPORTER_BUSINESS: {
+      FULL_ADDRESS,
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
         YEARS_EXPORTING,
@@ -167,6 +168,9 @@ const application = {
     [ACCOUNT_LAST_NAME]: 'Smith',
     [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
     [CONTACT_POSITION]: 'CEO',
+  },
+  DIFFERENT_TRADING_ADDRESS: {
+    [FULL_ADDRESS]: 'Mock full address',
   },
 };
 

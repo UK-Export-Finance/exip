@@ -13,6 +13,7 @@ const ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const {
   EXPORTER_BUSINESS: {
     ALTERNATIVE_TRADING_ADDRESS,
+    FULL_ADDRESS,
   },
   COMPANIES_HOUSE: {
     COMPANY_ADDRESS,
@@ -40,6 +41,7 @@ const {
 } = FIELDS[ALTERNATIVE_TRADING_ADDRESS];
 
 const address = application.COMPANY[COMPANY_ADDRESS];
+const { DIFFERENT_TRADING_ADDRESS } = application;
 
 context('Insurance - Your business - Alternative trading address page - I want to input information on an alternative business trading address So that I can provide necessary business information to support my application for Export Insurance', () => {
   let referenceNumber;
@@ -156,8 +158,11 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
   });
 
-  // describe('when going back to the page', () => {
-  //   it('should have the submitted values', () => {
-  //   });
-  // });
+  describe('when going back to the page', () => {
+    it('should have the submitted value', () => {
+      cy.navigateToUrl(alternativeAddressUrl);
+
+      cy.checkText(fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+    });
+  });
 });

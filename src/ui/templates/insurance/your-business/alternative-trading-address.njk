@@ -78,7 +78,7 @@
               'data-cy': FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID
             },
             maxlength: FIELDS.ALTERNATIVE_TRADING_ADDRESS.MAXIMUM,
-            value: submittedValues[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] or application.exportContract[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID],
+            value: submittedValues[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] or application.company.differentTradingAddress[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID],
             errorMessage: validationErrors.errorList[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID] and {
               text: validationErrors.errorList[FIELDS.ALTERNATIVE_TRADING_ADDRESS.ID].text,
               attributes: {

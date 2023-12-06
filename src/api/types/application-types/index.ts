@@ -112,6 +112,10 @@ export interface ApplicationPolicyContact extends Relationship {
   isSameAsOwner: boolean;
 }
 
+export interface ApplicationDifferentTradingAddress extends Relationship {
+  fullAddress: string;
+}
+
 export interface Application {
   id: string;
   referenceNumber: number;
