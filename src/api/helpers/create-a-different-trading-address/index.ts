@@ -21,7 +21,7 @@ const createADifferentTradingAddress = async (context: Context, companyId: strin
         },
       },
     });
-    console.log('!!!!!!!!!!!!!!!!!!!!', differentTradingAddress);
+
     return differentTradingAddress;
   } catch (err) {
     console.error('Error creating a different trading address %O', err);

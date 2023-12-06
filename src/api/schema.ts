@@ -240,7 +240,6 @@ export const lists = {
                 },
               },
             });
-
           } catch (err) {
             console.error('Error adding an application ID to relationships %O', err);
 

@@ -21,7 +21,7 @@ describe('controllers/insurance/business/save-data/different-trading-address', (
 
       const dataToSave = getDataToSave(mockFormBody);
       const expectedSanitisedData = sanitiseData(dataToSave);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.differentTradingAddress.id, expectedSanitisedData);
+      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.company.differentTradingAddress.id, expectedSanitisedData);
     });
 
     it('should return the API response', async () => {

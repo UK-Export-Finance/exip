@@ -120,9 +120,12 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
 
       const expected = mapNameFields({
         ...mockApplication,
-        differentTradingAddress: {
-          ...mockApplication.differentTradingAddress,
-          [ALTERNATIVE_TRADING_ADDRESS]: mockApplication.differentTradingAddress[FULL_ADDRESS],
+        company: {
+          ...mockApplication.company,
+          differentTradingAddress: {
+            ...mockApplication.company.differentTradingAddress,
+            [ALTERNATIVE_TRADING_ADDRESS]: mockApplication.company.differentTradingAddress[FULL_ADDRESS],
+          },
         },
       });
 

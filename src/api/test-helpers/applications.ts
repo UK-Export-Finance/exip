@@ -1,7 +1,7 @@
 import { Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate } from '../types';
 
 const applicationQuery =
-  'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } exportContract { id } owner { id } company { id } business { id } broker { id } buyer { id } sectionReview { id } declaration { id } policyContact { id } differentTradingAddress { id }';
+  'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } exportContract { id } owner { id } company { id } business { id } broker { id } buyer { id } sectionReview { id } declaration { id } policyContact { id }';
 
 /**
  * create application test helper
@@ -37,7 +37,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 
     const application = (await context.query.Application.findOne({
       where: { id: applicationId },
-      query: 'id eligibility { id } buyer { id } policy { id } company { id } sectionReview { id } differentTradingAddress { id } referenceNumber',
+      query: 'id eligibility { id } buyer { id } policy { id } company { id } sectionReview { id } referenceNumber',
     })) as Application;
 
     return application;

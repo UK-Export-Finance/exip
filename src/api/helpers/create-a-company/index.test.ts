@@ -9,7 +9,7 @@ const invalidId = 'invalid-id';
 const assertError = (err) => {
   const errorString = String(err);
 
-  expect(errorString.includes('Creating a company, address and SIC codes')).toEqual(true);
+  expect(errorString.includes('Creating a company, address, SIC codes and different trading address')).toEqual(true);
 };
 
 describe('helpers/create-a-company', () => {
