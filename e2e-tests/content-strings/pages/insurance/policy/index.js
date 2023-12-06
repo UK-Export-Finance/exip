@@ -8,9 +8,9 @@ const ROOT = {
   LIST: {
     INTRO: 'This section will cover',
     ITEMS: [
-      'what type of policy you need(single or multiple)',
+      'what type of policy you need (single or multiple)',
       'whose name should be on the policy',
-      'whether you need cover during the pre - credit period',
+      'whether you need cover during the pre-credit period',
       'any other companies that may need to be covered in your policy',
     ],
   },
