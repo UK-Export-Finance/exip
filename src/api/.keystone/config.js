@@ -893,7 +893,6 @@ var lists = {
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
       policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
-      differentTradingAddress: (0, import_fields.relationship)({ ref: "DifferentTradingAddress" }),
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
@@ -954,14 +953,6 @@ var lists = {
                 id: declarationId
               }
             };
-            const { id: differentTradingAddressId } = await context.db.DifferentTradingAddress.createOne({
-              data: {}
-            });
-            modifiedData.differentTradingAddress = {
-              connect: {
-                id: differentTradingAddressId
-              }
-            };
             const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
@@ -982,7 +973,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, businessId, brokerId, declarationId, differentTradingAddressId } = item;
+            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1036,16 +1027,6 @@ var lists = {
             });
             await context.db.Declaration.updateOne({
               where: { id: declarationId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                }
-              }
-            });
-            await context.db.DifferentTradingAddress.updateOne({
-              where: { id: differentTradingAddressId },
               data: {
                 application: {
                   connect: {
@@ -1289,6 +1270,7 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       registeredOfficeAddress: (0, import_fields.relationship)({ ref: "CompanyAddress.company" }),
+      differentTradingAddress: (0, import_fields.relationship)({ ref: "DifferentTradingAddress.company" }),
       sicCodes: (0, import_fields.relationship)({
         ref: "CompanySicCode.company",
         many: true
@@ -1314,17 +1296,10 @@ var lists = {
   }),
   DifferentTradingAddress: (0, import_core2.list)({
     fields: {
-      application: (0, import_fields.relationship)({ ref: "Application" }),
+      company: (0, import_fields.relationship)({ ref: "Company.differentTradingAddress" }),
       fullAddress: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       })
-    },
-    hooks: {
-      afterOperation: async ({ item, context }) => {
-        if (item?.applicationId) {
-          await update_application_default.timestamp(context, item.applicationId);
-        }
-      }
     },
     access: import_access.allowAll
   }),
@@ -3418,6 +3393,28 @@ var createCompanySicCodes = async (context, sicCodes, industrySectorNames2, comp
 };
 var create_company_sic_codes_default = createCompanySicCodes;
 
+// helpers/create-a-different-trading-address/index.ts
+var createADifferentTradingAddress = async (context, companyId) => {
+  console.info("Creating a different trading address for ", companyId);
+  try {
+    const differentTradingAddress = await context.db.DifferentTradingAddress.createOne({
+      data: {
+        company: {
+          connect: {
+            id: companyId
+          }
+        }
+      }
+    });
+    console.log("!!!!!!!!!!!!!!!!!!!!", differentTradingAddress);
+    return differentTradingAddress;
+  } catch (err) {
+    console.error("Error creating a different trading address %O", err);
+    throw new Error(`Creating a different trading address ${err}`);
+  }
+};
+var create_a_different_trading_address_default = createADifferentTradingAddress;
+
 // helpers/create-a-company/index.ts
 var createACompany = async (context, applicationId, companyData) => {
   console.info("Creating a company, address and SIC codes for ", applicationId);
@@ -3433,14 +3430,16 @@ var createACompany = async (context, applicationId, companyData) => {
     });
     const companyAddress = await create_a_company_address_default(context, registeredOfficeAddress, company.id);
     const createdSicCodes = await create_company_sic_codes_default(context, sicCodes, industrySectorNames2, company.id);
+    const createdDifferentTradingAddress = await create_a_different_trading_address_default(context, company.id);
     return {
       ...company,
       registeredOfficeAddress: companyAddress,
-      sicCodes: createdSicCodes
+      sicCodes: createdSicCodes,
+      differentTradingAddress: createdDifferentTradingAddress
     };
   } catch (err) {
-    console.error("Error creating a company, address and SIC codes %O", err);
-    throw new Error(`Creating a company, address and SIC codes ${err}`);
+    console.error("Error creating a company, address, SIC codes and different trading address %O", err);
+    throw new Error(`Creating a company, address, SIC codes and different trading address ${err}`);
   }
 };
 var create_a_company_default = createACompany;

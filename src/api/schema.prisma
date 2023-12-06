@@ -20,55 +20,52 @@ model ReferenceNumber {
 }
 
 model Application {
-  id                                       String                    @id @default(cuid())
-  createdAt                                DateTime?
-  updatedAt                                DateTime?
-  eligibility                              Eligibility?              @relation("Application_eligibility", fields: [eligibilityId], references: [id])
-  eligibilityId                            String?                   @map("eligibility")
-  referenceNumber                          Int?
-  submissionCount                          Int                       @default(0)
-  submissionDate                           DateTime?
-  submissionDeadline                       DateTime?
-  submissionType                           String?                   @default("Manual Inclusion Application")
-  status                                   String                    @default("")
-  previousStatus                           String                    @default("")
-  policy                                   Policy?                   @relation("Application_policy", fields: [policyId], references: [id])
-  policyId                                 String?                   @map("policy")
-  exportContract                           ExportContract?           @relation("Application_exportContract", fields: [exportContractId], references: [id])
-  exportContractId                         String?                   @map("exportContract")
-  owner                                    Account?                  @relation("Application_owner", fields: [ownerId], references: [id])
-  ownerId                                  String?                   @map("owner")
-  business                                 Business?                 @relation("Application_business", fields: [businessId], references: [id])
-  businessId                               String?                   @map("business")
-  company                                  Company?                  @relation("Application_company", fields: [companyId], references: [id])
-  companyId                                String?                   @map("company")
-  broker                                   Broker?                   @relation("Application_broker", fields: [brokerId], references: [id])
-  brokerId                                 String?                   @map("broker")
-  buyer                                    Buyer?                    @relation("Application_buyer", fields: [buyerId], references: [id])
-  buyerId                                  String?                   @map("buyer")
-  sectionReview                            SectionReview?            @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
-  sectionReviewId                          String?                   @map("sectionReview")
-  declaration                              Declaration?              @relation("Application_declaration", fields: [declarationId], references: [id])
-  declarationId                            String?                   @map("declaration")
-  policyContact                            PolicyContact?            @relation("Application_policyContact", fields: [policyContactId], references: [id])
-  policyContactId                          String?                   @map("policyContact")
-  differentTradingAddress                  DifferentTradingAddress?  @relation("Application_differentTradingAddress", fields: [differentTradingAddressId], references: [id])
-  differentTradingAddressId                String?                   @map("differentTradingAddress")
-  version                                  String                    @default("1")
-  dealType                                 String                    @default("EXIP") @mysql.VarChar(4)
-  from_ReferenceNumber_application         ReferenceNumber[]         @relation("ReferenceNumber_application")
-  from_Policy_application                  Policy[]                  @relation("Policy_application")
-  from_PolicyContact_application           PolicyContact[]           @relation("PolicyContact_application")
-  from_ExportContract_application          ExportContract[]          @relation("ExportContract_application")
-  from_Account_applications                Account[]                 @relation("Account_applications")
-  from_Business_application                Business[]                @relation("Business_application")
-  from_Broker_application                  Broker[]                  @relation("Broker_application")
-  from_Company_application                 Company[]                 @relation("Company_application")
-  from_DifferentTradingAddress_application DifferentTradingAddress[] @relation("DifferentTradingAddress_application")
-  from_Buyer_application                   Buyer[]                   @relation("Buyer_application")
-  from_Eligibility_application             Eligibility[]             @relation("Eligibility_application")
-  from_SectionReview_application           SectionReview[]           @relation("SectionReview_application")
-  from_Declaration_application             Declaration[]             @relation("Declaration_application")
+  id                               String            @id @default(cuid())
+  createdAt                        DateTime?
+  updatedAt                        DateTime?
+  eligibility                      Eligibility?      @relation("Application_eligibility", fields: [eligibilityId], references: [id])
+  eligibilityId                    String?           @map("eligibility")
+  referenceNumber                  Int?
+  submissionCount                  Int               @default(0)
+  submissionDate                   DateTime?
+  submissionDeadline               DateTime?
+  submissionType                   String?           @default("Manual Inclusion Application")
+  status                           String            @default("")
+  previousStatus                   String            @default("")
+  policy                           Policy?           @relation("Application_policy", fields: [policyId], references: [id])
+  policyId                         String?           @map("policy")
+  exportContract                   ExportContract?   @relation("Application_exportContract", fields: [exportContractId], references: [id])
+  exportContractId                 String?           @map("exportContract")
+  owner                            Account?          @relation("Application_owner", fields: [ownerId], references: [id])
+  ownerId                          String?           @map("owner")
+  business                         Business?         @relation("Application_business", fields: [businessId], references: [id])
+  businessId                       String?           @map("business")
+  company                          Company?          @relation("Application_company", fields: [companyId], references: [id])
+  companyId                        String?           @map("company")
+  broker                           Broker?           @relation("Application_broker", fields: [brokerId], references: [id])
+  brokerId                         String?           @map("broker")
+  buyer                            Buyer?            @relation("Application_buyer", fields: [buyerId], references: [id])
+  buyerId                          String?           @map("buyer")
+  sectionReview                    SectionReview?    @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
+  sectionReviewId                  String?           @map("sectionReview")
+  declaration                      Declaration?      @relation("Application_declaration", fields: [declarationId], references: [id])
+  declarationId                    String?           @map("declaration")
+  policyContact                    PolicyContact?    @relation("Application_policyContact", fields: [policyContactId], references: [id])
+  policyContactId                  String?           @map("policyContact")
+  version                          String            @default("1")
+  dealType                         String            @default("EXIP") @mysql.VarChar(4)
+  from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
+  from_Policy_application          Policy[]          @relation("Policy_application")
+  from_PolicyContact_application   PolicyContact[]   @relation("PolicyContact_application")
+  from_ExportContract_application  ExportContract[]  @relation("ExportContract_application")
+  from_Account_applications        Account[]         @relation("Account_applications")
+  from_Business_application        Business[]        @relation("Business_application")
+  from_Broker_application          Broker[]          @relation("Broker_application")
+  from_Company_application         Company[]         @relation("Company_application")
+  from_Buyer_application           Buyer[]           @relation("Buyer_application")
+  from_Eligibility_application     Eligibility[]     @relation("Eligibility_application")
+  from_SectionReview_application   SectionReview[]   @relation("SectionReview_application")
+  from_Declaration_application     Declaration[]     @relation("Declaration_application")
 
   @@index([eligibilityId])
   @@index([referenceNumber])
@@ -82,7 +79,6 @@ model Application {
   @@index([sectionReviewId])
   @@index([declarationId])
   @@index([policyContactId])
-  @@index([differentTradingAddressId])
 }
 
 model TotalContractValue {
@@ -241,34 +237,32 @@ model CompanyAddress {
 }
 
 model Company {
-  id                         String           @id @default(cuid())
-  application                Application?     @relation("Company_application", fields: [applicationId], references: [id])
-  applicationId              String?          @map("application")
-  registeredOfficeAddress    CompanyAddress?  @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
-  registeredOfficeAddressId  String?          @unique @map("registeredOfficeAddress")
-  sicCodes                   CompanySicCode[] @relation("CompanySicCode_company")
-  companyName                String           @default("")
-  companyNumber              String           @default("")
+  id                         String                   @id @default(cuid())
+  application                Application?             @relation("Company_application", fields: [applicationId], references: [id])
+  applicationId              String?                  @map("application")
+  registeredOfficeAddress    CompanyAddress?          @relation("Company_registeredOfficeAddress", fields: [registeredOfficeAddressId], references: [id])
+  registeredOfficeAddressId  String?                  @unique @map("registeredOfficeAddress")
+  differentTradingAddress    DifferentTradingAddress? @relation("Company_differentTradingAddress", fields: [differentTradingAddressId], references: [id])
+  differentTradingAddressId  String?                  @unique @map("differentTradingAddress")
+  sicCodes                   CompanySicCode[]         @relation("CompanySicCode_company")
+  companyName                String                   @default("")
+  companyNumber              String                   @default("")
   dateOfCreation             DateTime?
   hasDifferentTradingAddress Boolean?
-  differentTradingName       String           @default("")
+  differentTradingName       String                   @default("")
   hasDifferentTradingName    Boolean?
-  companyWebsite             String           @default("")
-  phoneNumber                String           @default("")
+  companyWebsite             String                   @default("")
+  phoneNumber                String                   @default("")
   financialYearEndDate       DateTime?
-  from_Application_company   Application[]    @relation("Application_company")
+  from_Application_company   Application[]            @relation("Application_company")
 
   @@index([applicationId])
 }
 
 model DifferentTradingAddress {
-  id                                       String        @id @default(cuid())
-  application                              Application?  @relation("DifferentTradingAddress_application", fields: [applicationId], references: [id])
-  applicationId                            String?       @map("application")
-  fullAddress                              String        @default("") @mysql.VarChar(1000)
-  from_Application_differentTradingAddress Application[] @relation("Application_differentTradingAddress")
-
-  @@index([applicationId])
+  id          String   @id @default(cuid())
+  company     Company? @relation("Company_differentTradingAddress")
+  fullAddress String   @default("") @mysql.VarChar(1000)
 }
 
 model CompanySicCode {

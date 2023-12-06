@@ -19,7 +19,7 @@ const differentTradingAddress = async (application: Application, formBody: Reque
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
-  const differentTradingAddressId = application.differentTradingAddress?.id;
+  const differentTradingAddressId = application.company.differentTradingAddress?.id;
 
   try {
     // send the form data to the API for database update.

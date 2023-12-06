@@ -114,8 +114,8 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     });
   });
 
-  describe(`when an application has company.${FINANCIAL_YEAR_END_DATE} field`, () => {
-    it('should return mapped date field', () => {
+  describe(`when an application has differentTradingAddress.${FULL_ADDRESS} field`, () => {
+    it('should return mapped differentTradingAddress field', () => {
       const result = mapApplicationToFormFields(mockApplication);
 
       const expected = mapNameFields({

@@ -48,6 +48,11 @@ interface ApplicationExportContract {
   finalDestinationCountryCode?: string;
 }
 
+interface ApplicationDifferentTradingAddress {
+  id: string;
+  fullAddress?: string;
+}
+
 interface ApplicationCompanyAddress {
   id: string;
   addressLine1?: string;
@@ -74,6 +79,7 @@ interface ApplicationCompany {
   hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddress;
   sicCodes: Array<SicCode>;
+  differentTradingAddress: ApplicationDifferentTradingAddress;
 }
 
 interface ApplicationBusiness {
@@ -154,11 +160,6 @@ interface ApplicationPolicyContact {
   isSameAsOwner?: boolean;
 }
 
-interface ApplicationDifferentTradingAddress {
-  id: string;
-  fullAddress?: string;
-}
-
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
@@ -171,7 +172,6 @@ interface Application extends ApplicationCore {
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   policyContact: ApplicationPolicyContact;
-  differentTradingAddress: ApplicationDifferentTradingAddress;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {

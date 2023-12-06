@@ -3,11 +3,11 @@ import updateDifferentTradingAddressMutation from '../../../../graphql/mutations
 import { ApolloResponse } from '../../../../../types';
 
 /**
- * updateBroker
+ * updateDifferentTradingAddress
  * Update an application's "differentTradingAddress"
  * @param {String} Broker ID
  * @param {Object} Broker update
- * @returns {Object} Updated broker
+ * @returns {Object} Updated differentTradingAddress
  */
 const updateDifferentTradingAddress = async (id: string, update: object) => {
   try {

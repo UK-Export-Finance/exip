@@ -22,7 +22,7 @@ describe('helpers/create-a-company', () => {
     application = (await applications.create({ context, data: {} })) as Application;
   });
 
-  test('it should return a company with address and SIC code relationships', async () => {
+  test('it should return a company with address, SIC code and different trading address relationships', async () => {
     const result = await createACompany(context, application.id, mockCompany);
 
     expect(typeof result.id).toEqual('string');
@@ -39,6 +39,7 @@ describe('helpers/create-a-company', () => {
 
     expect(result.registeredOfficeAddress.id.length).toBeGreaterThan(0);
     expect(result.sicCodes.length).toBeGreaterThan(0);
+    expect(result.differentTradingAddress.id.length).toBeGreaterThan(0);
   });
 
   describe('when an invalid application ID is passed', () => {

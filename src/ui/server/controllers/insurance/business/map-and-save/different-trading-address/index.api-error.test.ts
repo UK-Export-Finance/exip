@@ -7,8 +7,8 @@ const {
   EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS },
 } = FIELD_IDS.INSURANCE;
 
-describe('controllers/insurance/business/map-and-save/turnover - API error', () => {
-  jest.mock('../../save-data/business');
+describe('controllers/insurance/business/map-and-save/different-trading-address - API error', () => {
+  jest.mock('../../save-data/different-trading-address');
 
   const mockFormBody = {
     _csrf: '1234',

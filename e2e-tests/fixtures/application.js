@@ -170,7 +170,7 @@ const application = {
     [CONTACT_POSITION]: 'CEO',
   },
   DIFFERENT_TRADING_ADDRESS: {
-    [FULL_ADDRESS]: 'test',
+    [FULL_ADDRESS]: 'Mock full address',
   },
 };
 

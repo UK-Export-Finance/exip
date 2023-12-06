@@ -14,15 +14,13 @@ const {
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
-  const { _csrf, ...populatedData } = formBody;
-
-  if (objectHasProperty(populatedData, ALTERNATIVE_TRADING_ADDRESS)) {
-    populatedData[FULL_ADDRESS] = populatedData[ALTERNATIVE_TRADING_ADDRESS];
+  if (objectHasProperty(formBody, ALTERNATIVE_TRADING_ADDRESS)) {
+    return {
+      [FULL_ADDRESS]: formBody[ALTERNATIVE_TRADING_ADDRESS],
+    };
   }
 
-  delete populatedData[ALTERNATIVE_TRADING_ADDRESS];
-
-  return populatedData;
+  return {};
 };
 
 export default mapSubmittedData;

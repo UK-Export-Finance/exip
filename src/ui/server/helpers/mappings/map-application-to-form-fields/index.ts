@@ -72,8 +72,8 @@ const mapApplicationToFormFields = (application?: Application): object => {
       };
     }
 
-    if (application.differentTradingAddress?.[FULL_ADDRESS]) {
-      mapped.differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS] = application.differentTradingAddress[FULL_ADDRESS];
+    if (application.company.differentTradingAddress?.[FULL_ADDRESS]) {
+      mapped.company.differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS] = application.company.differentTradingAddress[FULL_ADDRESS];
     }
 
     return mapped;

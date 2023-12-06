@@ -97,6 +97,10 @@ const applicationQuery = gql`
             country
             premises
           }
+          differentTradingAddress {
+            id
+            fullAddress
+          }
         }
         business {
           id
@@ -151,10 +155,6 @@ const applicationQuery = gql`
           willExportWithAntiBriberyCodeOfConduct
           agreeToConfirmationAndAcknowledgements
           agreeHowDataWillBeUsed
-        }
-        differentTradingAddress {
-          id
-          fullAddress
         }
       }
     }
