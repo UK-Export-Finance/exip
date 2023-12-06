@@ -17,8 +17,13 @@ const {
 /**
  * generateFields
  * Create all fields for the insurance - Type of policy govukSummaryList
- * @param {Object} All submitted policy data
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Object} answers: Submitted "policy" data
+ * @param {Object} answersPolicyContact: Submitted "policy contact" data
+ * @param {Object} answersBroker: Submitted "broker" data
+ * @param {Integer} referenceNumber: Application reference number
+ * @param {Array} countries: Countries
+ * @param {Array} currencies: Currencies
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Object} All policy values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
