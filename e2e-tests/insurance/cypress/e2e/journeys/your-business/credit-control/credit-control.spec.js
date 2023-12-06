@@ -20,7 +20,7 @@ const { HAS_CREDIT_CONTROL: FIELD_ID } = FIELD_IDS;
 const {
   ROOT,
   EXPORTER_BUSINESS: {
-    BROKER_ROOT,
+    CHECK_YOUR_ANSWERS,
     CREDIT_CONTROL,
     TURNOVER_ROOT,
   },
@@ -31,7 +31,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your business - Credit control page - answer `yes` - As an Exporter, I want to provide our late payment process  So that UKEF can have clarity on our credit control', () => {
   let referenceNumber;
   let url;
-  let brokerUrl;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -43,7 +43,7 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
       cy.completeAndSubmitTurnoverForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -115,12 +115,12 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
     });
 
     describe('when submitting the answer as `yes`', () => {
-      it(`should redirect to ${BROKER_ROOT}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitCreditControlForm({});
 
-        cy.assertUrl(brokerUrl);
+        cy.assertUrl(checkYourAnswersUrl);
       });
     });
   });

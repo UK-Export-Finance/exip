@@ -41,6 +41,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitAboutGoodsOrServicesForm();
       cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitBrokerForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -65,7 +66,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
     });
 
-    it('should not have fields populated on different name on policy age', () => {
+    it('should not have fields populated on different name on policy page', () => {
       cy.checkValue(fieldSelector(FIRST_NAME), '');
       cy.checkValue(fieldSelector(LAST_NAME), '');
       cy.checkValue(fieldSelector(EMAIL), '');

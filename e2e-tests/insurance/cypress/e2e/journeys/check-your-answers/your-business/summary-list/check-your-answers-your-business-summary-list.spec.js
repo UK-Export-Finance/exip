@@ -27,12 +27,6 @@ const {
     PERCENTAGE_TURNOVER,
   },
   HAS_CREDIT_CONTROL,
-  BROKER: {
-    USING_BROKER,
-    NAME,
-    ADDRESS_LINE_1,
-    EMAIL,
-  },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const { taskList } = partials.insurancePartials;
@@ -108,21 +102,5 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
     checkSummaryList[HAS_CREDIT_CONTROL]();
-  });
-
-  it(`should render a ${USING_BROKER} summary list row`, () => {
-    checkSummaryList[USING_BROKER]();
-  });
-
-  it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]({});
-  });
-
-  it(`should render a ${ADDRESS_LINE_1} summary list row`, () => {
-    checkSummaryList[ADDRESS_LINE_1]();
-  });
-
-  it(`should render a ${EMAIL} summary list row`, () => {
-    checkSummaryList[EMAIL]();
   });
 });

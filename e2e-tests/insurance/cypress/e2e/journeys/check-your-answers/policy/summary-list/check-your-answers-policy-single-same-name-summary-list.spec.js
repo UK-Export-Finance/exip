@@ -20,6 +20,7 @@ const {
     },
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     NAME_ON_POLICY: { NAME, POSITION },
+    BROKER,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -90,5 +91,23 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
 
   it(`should render a ${POSITION} summary list row`, () => {
     checkSummaryList[POSITION]();
+  });
+
+  describe('`broker`', () => {
+    it(`should render a ${BROKER.USING_BROKER} summary list row`, () => {
+      checkSummaryList[BROKER.USING_BROKER]();
+    });
+
+    it(`should render a ${BROKER.NAME} summary list row`, () => {
+      checkSummaryList[BROKER.NAME]({});
+    });
+
+    it(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
+      checkSummaryList[BROKER.ADDRESS_LINE_1]();
+    });
+
+    it(`should render a ${BROKER.EMAIL} summary list row`, () => {
+      checkSummaryList[BROKER.EMAIL]();
+    });
   });
 });

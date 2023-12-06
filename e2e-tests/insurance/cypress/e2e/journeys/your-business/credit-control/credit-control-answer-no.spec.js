@@ -3,10 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    BROKER_ROOT,
-    CREDIT_CONTROL,
-  },
+  EXPORTER_BUSINESS: { CREDIT_CONTROL, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -26,7 +23,7 @@ context('Insurance - Your business - Credit control page - answer `no` - As an E
       cy.completeAndSubmitTurnoverForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -41,7 +38,7 @@ context('Insurance - Your business - Credit control page - answer `no` - As an E
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER_ROOT}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: false });

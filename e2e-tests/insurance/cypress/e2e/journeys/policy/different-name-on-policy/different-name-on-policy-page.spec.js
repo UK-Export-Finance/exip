@@ -21,7 +21,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    BROKER,
+    BROKER_ROOT,
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
   },
@@ -132,12 +132,12 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER}`, () => {
+    it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitDifferentNameOnPolicyForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BROKER}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
       cy.assertUrl(expectedUrl);
     });
 
