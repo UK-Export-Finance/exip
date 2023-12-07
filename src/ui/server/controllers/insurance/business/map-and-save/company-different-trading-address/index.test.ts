@@ -1,12 +1,11 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-different-trading-address';
-import { mapSubmittedData } from '../../map-submitted-data/company-different-trading-address';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 
 const {
-  EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS },
+  EXPORTER_BUSINESS: { FULL_ADDRESS },
 } = FIELD_IDS.INSURANCE;
 
 describe('controllers/insurance/business/map-and-save/company-different-trading-address', () => {
@@ -14,21 +13,23 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
 
   let mockFormBody = {
     _csrf: '1234',
-    [ALTERNATIVE_TRADING_ADDRESS]: 'test',
+    [FULL_ADDRESS]: 'test',
   };
 
   const mockSaveDifferentTradingAddress = jest.fn(() => Promise.resolve({}));
   save.companyDifferentTradingAddress = mockSaveDifferentTradingAddress;
 
-  const mockValidationErrors = generateValidationErrors(ALTERNATIVE_TRADING_ADDRESS, 'error', {});
+  const mockValidationErrors = generateValidationErrors(FULL_ADDRESS, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
       it('should call save.differentTradingAddress with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication, mockValidationErrors);
 
+        const { _csrf, ...dataToSave } = mockFormBody;
+
         expect(save.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
-        expect(save.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, dataToSave, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -41,14 +42,16 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
     describe('when the form does NOT have validation errors ', () => {
       mockFormBody = {
         _csrf: '1234',
-        [ALTERNATIVE_TRADING_ADDRESS]: 'test',
+        [FULL_ADDRESS]: 'test',
       };
 
       it('should call save.differentTradingAddress with application and populated submitted data', async () => {
         await mapAndSave.companyDifferentTradingAddress(mockFormBody, mockApplication);
 
+        const { _csrf, ...dataToSave } = mockFormBody;
+
         expect(save.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
-        expect(save.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+        expect(save.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, dataToSave);
       });
 
       it('should return true', async () => {

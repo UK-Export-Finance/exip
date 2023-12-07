@@ -21,7 +21,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { ALTERNATIVE_TRADING_ADDRESS } = BUSINESS_FIELD_IDS;
+const { ALTERNATIVE_TRADING_ADDRESS, FULL_ADDRESS } = BUSINESS_FIELD_IDS;
 
 const {
   COMPANIES_HOUSE: { COMPANY_ADDRESS },
@@ -47,7 +47,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
       const expected = {
         FIELDS: {
           ALTERNATIVE_TRADING_ADDRESS: {
-            ID: ALTERNATIVE_TRADING_ADDRESS,
+            ID: FULL_ADDRESS,
             ...FIELDS[ALTERNATIVE_TRADING_ADDRESS],
             MAXIMUM,
           },
@@ -133,14 +133,14 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
-          [ALTERNATIVE_TRADING_ADDRESS]: 'test',
+          [FULL_ADDRESS]: 'test',
         };
       });
 
       it('should call mapAndSave.business once with the data from constructPayload function and application', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, [ALTERNATIVE_TRADING_ADDRESS]);
+        const payload = constructPayload(req.body, [FULL_ADDRESS]);
 
         expect(mapAndSave.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
 

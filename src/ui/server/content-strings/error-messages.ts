@@ -94,7 +94,7 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
         INCORRECT_FORMAT: 'Enter a valid UK telephone number',
       },
-      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS]: {
+      [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.FULL_ADDRESS]: {
         IS_EMPTY: 'Enter your alternative trading address',
         ABOVE_MAXIMUM: 'The alternative address cannot be more than a 1000 characters',
       },

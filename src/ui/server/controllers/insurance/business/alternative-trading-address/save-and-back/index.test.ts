@@ -7,7 +7,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-different-trading-address';
 import { Request, Response } from '../../../../../../types';
 
-const { ALTERNATIVE_TRADING_ADDRESS } = BUSINESS_FIELD_IDS;
+const { FULL_ADDRESS } = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -29,7 +29,7 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
   });
 
   const validBody = {
-    [ALTERNATIVE_TRADING_ADDRESS]: 'Mock address',
+    [FULL_ADDRESS]: 'Mock address',
   };
 
   describe('when there are no validation errors', () => {
@@ -56,7 +56,7 @@ describe('controllers/insurance/business/alternative-trading-address/save-and-ba
 
   describe('when there are validation errors', () => {
     const invalidBody = {
-      [ALTERNATIVE_TRADING_ADDRESS]: '',
+      [FULL_ADDRESS]: '',
     };
 
     it('should redirect to all sections page', async () => {

@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials/insurance';
-import { saveAndBackButton, field as fieldSelector } from '../../../../../../pages/shared';
+import { saveAndBackButton, field } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -80,7 +80,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea().type('a'.repeat(MAXIMUM + 1));
+      field(FULL_ADDRESS).textarea().type('a'.repeat(MAXIMUM + 1));
 
       saveAndBackButton().click();
 
@@ -96,7 +96,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it('should not have the originally submitted answer', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea(), '');
+      cy.checkText(field(FULL_ADDRESS).textarea(), '');
     });
   });
 
@@ -104,7 +104,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+      field(FULL_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
 
       saveAndBackButton().click();
 
@@ -120,7 +120,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it('should have the originally submitted answer', () => {
       cy.navigateToUrl(url);
 
-      cy.checkText(fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+      cy.checkText(field(FULL_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
     });
   });
 });

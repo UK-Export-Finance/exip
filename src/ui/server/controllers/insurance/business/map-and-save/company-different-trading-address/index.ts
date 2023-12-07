@@ -1,7 +1,6 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 import save from '../../save-data/company-different-trading-address';
-import { mapSubmittedData, mapErrors } from '../../map-submitted-data/company-different-trading-address';
 
 /**
  * maps differentTradingAddress data and calls save function
@@ -14,18 +13,12 @@ import { mapSubmittedData, mapErrors } from '../../map-submitted-data/company-di
 const companyDifferentTradingAddress = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      const dataToSave = mapSubmittedData(formBody);
-      /**
-       * maps errors for companyDifferentAddress
-       * Adds errors for fullAddress to validationErrors object
-       * As field is fullAddress in database
-       */
-      const errors = mapErrors(validationErrors) as ValidationErrors;
+      const { _csrf, ...dataToSave } = formBody;
 
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.companyDifferentTradingAddress(application, dataToSave, errors.errorList);
+        saveResponse = await save.companyDifferentTradingAddress(application, dataToSave, validationErrors.errorList);
       } else {
         saveResponse = await save.companyDifferentTradingAddress(application, dataToSave);
       }

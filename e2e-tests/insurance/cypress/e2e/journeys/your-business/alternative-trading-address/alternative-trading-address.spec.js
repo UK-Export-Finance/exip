@@ -31,7 +31,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const fieldId = ALTERNATIVE_TRADING_ADDRESS;
+const fieldId = FULL_ADDRESS;
 const field = fieldSelector(fieldId);
 const textareaField = { ...field, input: field.textarea };
 const expectedErrorsCount = 1;
@@ -70,9 +70,9 @@ context('Insurance - Your business - Alternative trading address page - I want t
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+  // after(() => {
+  //   cy.deleteApplication(referenceNumber);
+  // });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
@@ -162,7 +162,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
     it('should have the submitted value', () => {
       cy.navigateToUrl(alternativeAddressUrl);
 
-      cy.checkText(fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+      cy.checkText(fieldSelector(FULL_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
     });
   });
 });

@@ -4,7 +4,6 @@ import application from '../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS,
     FULL_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS;
@@ -16,7 +15,7 @@ const { DIFFERENT_TRADING_ADDRESS } = application;
  * Complet and submit the "alternative trading address" form in the "your business" section.
  */
 const completeAndSubmitAlternativeTradingAddressForm = () => {
-  fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+  fieldSelector(FULL_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
   submitButton().click();
 };
 

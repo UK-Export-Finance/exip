@@ -4,7 +4,7 @@ import { mockApplication } from '../../../../../test-mocks';
 import { FIELD_IDS } from '../../../../../constants';
 
 const {
-  EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS },
+  EXPORTER_BUSINESS: { FULL_ADDRESS },
 } = FIELD_IDS.INSURANCE;
 
 describe('controllers/insurance/business/map-and-save/company-different-trading-address - API error', () => {
@@ -12,7 +12,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
 
   const mockFormBody = {
     _csrf: '1234',
-    [ALTERNATIVE_TRADING_ADDRESS]: 'test',
+    [FULL_ADDRESS]: 'test',
   };
 
   const mockSaveDifferentTradingAddress = jest.fn(() => Promise.resolve({}));
