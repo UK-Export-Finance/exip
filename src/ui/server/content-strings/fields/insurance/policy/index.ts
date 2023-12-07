@@ -1,5 +1,4 @@
 import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
-import { LINKS } from '../../../links';
 
 const {
   ACCOUNT: { EMAIL },
@@ -79,14 +78,7 @@ export const POLICY_FIELDS = {
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
         LABEL: "What's the total value of the contract you want to insure?",
-        HINT: {
-          NEED_MORE_COVER: 'If you need cover for more than £500,000,',
-          FILL_IN_FORM: {
-            TEXT: 'fill in this form instead',
-            HREF: LINKS.EXTERNAL.PROPOSAL_FORM,
-          },
-          NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
-        },
+        HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
         },

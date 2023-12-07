@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { field, status, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
-import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
 import formatCurrency from '../../../../../../../helpers/format-currency';
 import { USD } from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
@@ -188,7 +187,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = application.POLICY[fieldId] - 500;
-          cy.changeAnswerField(fieldVariables, singleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

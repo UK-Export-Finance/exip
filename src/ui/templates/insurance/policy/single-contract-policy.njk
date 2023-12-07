@@ -64,18 +64,6 @@
           submittedAnswers: submittedValues or application.policy
         }) }}
 
-        {% set totalContractValueHintHtml %}
-          <p class="govuk-!-margin-bottom-0">
-            <span data-cy="{{ FIELDS.TOTAL_CONTRACT_VALUE.ID }}-hint-need-more-cover">{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.NEED_MORE_COVER }}</span>
-            <a
-              class="govuk-link"
-              href="{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.FILL_IN_FORM.HREF }}"
-              data-cy="{{ FIELDS.TOTAL_CONTRACT_VALUE.ID }}-hint-link"
-            >{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.FILL_IN_FORM.TEXT }}</a>
-          </p>
-          <p class="govuk-!-margin-top-0" data-cy="{{ FIELDS.TOTAL_CONTRACT_VALUE.ID }}-hint-no-decimals">{{ FIELDS.TOTAL_CONTRACT_VALUE.HINT.NO_DECIMALS }}</p>
-        {% endset %}
-
         {{ govukInput({
           label: {
             text: FIELDS.TOTAL_CONTRACT_VALUE.LABEL,
@@ -86,7 +74,10 @@
             }
           },
           hint: {
-            html: totalContractValueHintHtml
+            text: FIELDS.TOTAL_CONTRACT_VALUE.HINT,
+            attributes: {
+              'data-cy': FIELDS.TOTAL_CONTRACT_VALUE.ID + '-hint'
+            }
           },
           classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
           attributes: {

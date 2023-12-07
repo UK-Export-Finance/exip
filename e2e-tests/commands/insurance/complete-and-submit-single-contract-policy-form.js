@@ -1,5 +1,4 @@
 import { FIELD_IDS, APPLICATION } from '../../constants';
-import { singleContractPolicyPage } from '../../pages/insurance/policy';
 import { radios, field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
@@ -30,9 +29,9 @@ export default ({ policyMaximumValue = false }) => {
   cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
   if (policyMaximumValue) {
-    cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM);
+    cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM);
   } else {
-    cy.keyboardInput(singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
+    cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }
 
   const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
