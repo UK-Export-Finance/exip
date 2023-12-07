@@ -4,11 +4,9 @@ import {
   headingCaption,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
 import {
   BUTTONS,
-  LINKS,
   PAGES,
   TASKS,
 } from '../../../../../../content-strings';
@@ -126,26 +124,13 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
 
     it('renders `total contract value` label, hint, prefix and input', () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
-      const field = singleContractPolicyPage[fieldId];
+      const field = fieldSelector(fieldId);
 
       cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
-      const hintContent = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT;
-
       cy.checkText(
-        field.hint.needMoreCover(),
-        hintContent.NEED_MORE_COVER,
-      );
-
-      cy.checkLink(
-        field.hint.link(),
-        LINKS.EXTERNAL.PROPOSAL_FORM,
-        hintContent.FILL_IN_FORM.TEXT,
-      );
-
-      cy.checkText(
-        field.hint.noDecimals(),
-        hintContent.NO_DECIMALS,
+        field.hint(),
+        FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT,
       );
 
       cy.checkText(field.prefix(), '£');
@@ -197,7 +182,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].month);
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
-        singleContractPolicyPage[TOTAL_CONTRACT_VALUE].input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
+        fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
         radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');

@@ -1,5 +1,4 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { singleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
+import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -63,7 +62,7 @@ context('Insurance - Policy - Single contract policy page - form validation - to
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = singleContractPolicyPage[TOTAL_CONTRACT_VALUE];
+  const field = fieldSelector(TOTAL_CONTRACT_VALUE);
 
   it('should render a validation error when total contract value is not provided', () => {
     submitButton().click();
