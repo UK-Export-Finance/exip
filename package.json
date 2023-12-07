@@ -45,13 +45,13 @@
     "dotenv": "^16.3.1",
     "graphql-tag": "^2.12.6",
     "node-notifier": "^10.0.1",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
     "@commitlint/config-conventional": "^18.4.3",
     "@types/jest": "^29.5.11",
-    "@types/node": "^20.10.3",
+    "@types/node": "^20.10.4",
     "@typescript-eslint/eslint-plugin": "^6.13.2",
     "@typescript-eslint/parser": "^6.13.2",
     "commitlint": "^18.4.3",
@@ -73,7 +73,7 @@
     "prettier": "^3.1.0",
     "sort-package-json": "^2.6.0",
     "ts-jest": "^29.1.1",
-    "typescript": "^5.3.2"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=21",
