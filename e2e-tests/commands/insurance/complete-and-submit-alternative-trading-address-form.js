@@ -3,10 +3,8 @@ import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import application from '../../fixtures/application';
 
 const {
-  EXPORTER_BUSINESS: {
-    FULL_ADDRESS,
-  },
-} = INSURANCE_FIELD_IDS;
+  FULL_ADDRESS,
+} = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
 const { DIFFERENT_TRADING_ADDRESS } = application;
 

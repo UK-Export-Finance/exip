@@ -7,7 +7,9 @@ import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import mapAndSave from '../../map-and-save/company-different-trading-address';
 import { Request, Response } from '../../../../../../types';
 
-const { FULL_ADDRESS } = BUSINESS_FIELD_IDS;
+const {
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+} = BUSINESS_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

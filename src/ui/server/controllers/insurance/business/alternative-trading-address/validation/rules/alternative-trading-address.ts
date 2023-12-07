@@ -5,7 +5,7 @@ import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import inputValidation from '../../../../../../shared-validation/max-length';
 
-const { FULL_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { FULL_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
 const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },

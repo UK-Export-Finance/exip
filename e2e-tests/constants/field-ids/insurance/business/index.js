@@ -8,8 +8,9 @@ export const EXPORTER_BUSINESS = {
     PHONE_NUMBER: 'phoneNumber',
     DIFFERENT_TRADING_NAME: 'differentTradingName',
   },
-  ALTERNATIVE_TRADING_ADDRESS: 'alternativeTradingAddress',
-  FULL_ADDRESS: 'fullAddress',
+  ALTERNATIVE_TRADING_ADDRESS: {
+    FULL_ADDRESS: 'fullAddress',
+  },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
     YEARS_EXPORTING: 'totalYearsExporting',

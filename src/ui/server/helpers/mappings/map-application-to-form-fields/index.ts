@@ -16,8 +16,6 @@ const {
     },
   },
   EXPORTER_BUSINESS: {
-    FULL_ADDRESS,
-    ALTERNATIVE_TRADING_ADDRESS,
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
@@ -70,10 +68,6 @@ const mapApplicationToFormFields = (application?: Application): object => {
         [PERCENTAGE_TURNOVER]: transformNumberToString(application.business[PERCENTAGE_TURNOVER]),
         [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.business[ESTIMATED_ANNUAL_TURNOVER]),
       };
-    }
-
-    if (application.company.differentTradingAddress?.[FULL_ADDRESS]) {
-      mapped.company.differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS] = application.company.differentTradingAddress[FULL_ADDRESS];
     }
 
     return mapped;
