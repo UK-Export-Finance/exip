@@ -12,7 +12,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
 
   const mockFormBody = {
     _csrf: '1234',
-    [FULL_ADDRESS]: 'test',
+    [FULL_ADDRESS]: 'mock address',
   };
 
   const mockSaveDifferentTradingAddress = jest.fn(() => Promise.resolve({}));

@@ -13,7 +13,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
 
   let mockFormBody = {
     _csrf: '1234',
-    [FULL_ADDRESS]: 'test',
+    [FULL_ADDRESS]: 'mock address',
   };
 
   const mockSaveDifferentTradingAddress = jest.fn(() => Promise.resolve({}));
@@ -42,7 +42,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
     describe('when the form does NOT have validation errors ', () => {
       mockFormBody = {
         _csrf: '1234',
-        [FULL_ADDRESS]: 'test',
+        [FULL_ADDRESS]: 'mock address',
       };
 
       it('should call save.differentTradingAddress with application and populated submitted data', async () => {

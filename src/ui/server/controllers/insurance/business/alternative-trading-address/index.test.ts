@@ -133,7 +133,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
-          [FULL_ADDRESS]: 'test',
+          [FULL_ADDRESS]: 'mock address',
         };
       });
 
