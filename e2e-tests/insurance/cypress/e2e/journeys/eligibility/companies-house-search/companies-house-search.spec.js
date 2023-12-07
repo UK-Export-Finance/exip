@@ -6,7 +6,7 @@ import {
   COMPANIES_HOUSE_NUMBER_EMPTY,
   COMPANIES_HOUSE_NUMBER_TOO_SHORT,
   COMPANIES_HOUSE_NUMBER_WITH_SPECIAL_CHARACTERS,
-  COMPANIES_HOUSE_NUMBER_WITH_SPACE,
+  COMPANIES_HOUSE_NUMBER_WITH_SPACES,
   COMPANIES_HOUSE_NUMBER_NOT_FOUND,
 } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -115,18 +115,6 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
     });
 
-    describe('when the companies house number has a space', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        companyNumber = COMPANIES_HOUSE_NUMBER_WITH_SPACE;
-      });
-
-      it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
-      });
-    });
-
     describe('when the companies house number is not found', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
@@ -169,6 +157,37 @@ context('Insurance - Eligibility - Companies house search page - I want to check
             field(FIELD_ID),
             VALID_COMPANIES_HOUSE_NUMBER,
           );
+        });
+      });
+    });
+
+    describe('when submitting the answer a valid companies house number, with white spaces', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.interceptCompaniesHousePost({ companyNumber: COMPANIES_HOUSE_NUMBER_WITH_SPACES });
+
+        cy.keyboardInput(
+          field(FIELD_ID).input(),
+          COMPANIES_HOUSE_NUMBER_WITH_SPACES,
+        );
+
+        submitButton().click();
+      });
+
+      it(`should redirect to ${COMPANY_DETAILS}`, () => {
+        const expected = `${baseUrl}${COMPANY_DETAILS}`;
+
+        cy.assertUrl(expected);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected, without white spaces', () => {
+          cy.clickBackLink();
+
+          const expected = `${COMPANIES_HOUSE_NUMBER_WITH_SPACES}`.replaceAll(' ', '');
+
+          cy.checkValue(field(FIELD_ID), expected);
         });
       });
     });

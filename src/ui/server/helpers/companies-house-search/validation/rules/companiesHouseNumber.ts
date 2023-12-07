@@ -16,7 +16,9 @@ const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
  * - only contains letters and/or numbers
  * - has a length greater than 6
  */
-const schema = Joi.string().alphanum().min(6).required();
+const joiFunc = Joi.string();
+
+const schema = () => joiFunc.alphanum().trim().min(6).required();
 
 /**
  * validates companies house input
@@ -35,7 +37,7 @@ const companiesHouseNumber = (formBody: RequestBody, errors: ValidationErrors) =
     return updatedErrors;
   }
 
-  const validation = schema.validate(formBody[FIELD_ID]);
+  const validation = schema().validate(formBody[FIELD_ID]);
 
   // if error, then has failed schema check
   if (validation.error) {

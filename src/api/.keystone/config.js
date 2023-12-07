@@ -5034,6 +5034,94 @@ var getApimCisCountries = async () => {
 };
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
+// helpers/remove-white-space/index.ts
+var removeWhiteSpace = (string) => string.replace(" ", "");
+var remove_white_space_default = removeWhiteSpace;
+
+// integrations/companies-house/index.ts
+var import_axios2 = __toESM(require("axios"));
+var import_dotenv6 = __toESM(require("dotenv"));
+import_dotenv6.default.config();
+var username = String(process.env.COMPANIES_HOUSE_API_KEY);
+var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
+var companiesHouse = {
+  get: async (companyNumber) => {
+    try {
+      const response = await (0, import_axios2.default)({
+        method: "get",
+        url: `${companiesHouseURL}/company/${companyNumber}`,
+        auth: { username, password: "" },
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (response.status === 404) {
+        return {
+          success: false,
+          notFound: true
+        };
+      }
+      if (!response.data || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data
+      };
+    } catch (err) {
+      console.error("Error calling Companies House API %O", err);
+      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
+    }
+  }
+};
+var companies_house_default = companiesHouse;
+
+// integrations/industry-sector/index.ts
+var import_axios3 = __toESM(require("axios"));
+var import_dotenv7 = __toESM(require("dotenv"));
+import_dotenv7.default.config();
+var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
+var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
+var headers = {
+  "Content-Type": "application/json",
+  [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
+};
+var industrySectorNames = {
+  get: async () => {
+    try {
+      console.info("Calling industry sector API");
+      const response = await (0, import_axios3.default)({
+        method: "get",
+        url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
+        headers,
+        validateStatus(status) {
+          const acceptableStatus = [200, 404];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (!response.data || response.status !== 200) {
+        return {
+          success: false
+        };
+      }
+      return {
+        success: true,
+        data: response.data
+      };
+    } catch (err) {
+      console.error("Error calling industry sector API %O", err);
+      return {
+        success: false,
+        apiError: true
+      };
+    }
+  }
+};
+var industry_sector_default = industrySectorNames;
+
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
   if (day && month) {
@@ -5088,96 +5176,12 @@ var mapCompaniesHouseFields = (companiesHouseResponse, sectors) => ({
   isActive: companiesHouseResponse.company_status === COMPANY_STATUS.ACTIVE
 });
 
-// integrations/industry-sector/index.ts
-var import_axios2 = __toESM(require("axios"));
-var import_dotenv6 = __toESM(require("dotenv"));
-import_dotenv6.default.config();
-var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
-var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
-var headers = {
-  "Content-Type": "application/json",
-  [String(APIM_MDM_KEY2)]: APIM_MDM_VALUE2
-};
-var industrySectorNames = {
-  get: async () => {
-    try {
-      console.info("Calling industry sector API");
-      const response = await (0, import_axios2.default)({
-        method: "get",
-        url: `${APIM_MDM_URL2}${APIM_MDM2.INDUSTRY_SECTORS}`,
-        headers,
-        validateStatus(status) {
-          const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
-        }
-      });
-      if (!response.data || response.status !== 200) {
-        return {
-          success: false
-        };
-      }
-      return {
-        success: true,
-        data: response.data
-      };
-    } catch (err) {
-      console.error("Error calling industry sector API %O", err);
-      return {
-        success: false,
-        apiError: true
-      };
-    }
-  }
-};
-var industry_sector_default = industrySectorNames;
-
-// integrations/companies-house/index.ts
-var import_axios3 = __toESM(require("axios"));
-var import_dotenv7 = __toESM(require("dotenv"));
-import_dotenv7.default.config();
-var username = String(process.env.COMPANIES_HOUSE_API_KEY);
-var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
-var companiesHouse = {
-  get: async (companyNumber) => {
-    try {
-      const response = await (0, import_axios3.default)({
-        method: "get",
-        url: `${companiesHouseURL}/company/${companyNumber}`,
-        auth: { username, password: "" },
-        validateStatus(status) {
-          const acceptableStatus = [200, 404];
-          return acceptableStatus.includes(status);
-        }
-      });
-      if (response.status === 404) {
-        return {
-          success: false,
-          notFound: true
-        };
-      }
-      if (!response.data || response.status !== 200) {
-        return {
-          success: false
-        };
-      }
-      return {
-        success: true,
-        data: response.data
-      };
-    } catch (err) {
-      console.error("Error calling Companies House API %O", err);
-      throw new Error(`Calling Companies House API. Unable to search for company ${err}`);
-    }
-  }
-};
-var companies_house_default = companiesHouse;
-
 // custom-resolvers/queries/get-companies-house-information/index.ts
 var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
     console.info("Getting Companies House information for %s", companiesHouseNumber);
-    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, "0");
+    const sanitisedRegNo = remove_white_space_default(companiesHouseNumber.toString());
     const response = await companies_house_default.get(sanitisedRegNo);
     if (!response.success || !response.data) {
       return {
@@ -5268,10 +5272,6 @@ var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
   return mappedFilteredAddresses;
 };
 var map_and_filter_address_default = mapAndFilterAddress;
-
-// helpers/remove-white-space/index.ts
-var removeWhiteSpace = (string) => string.replace(" ", "");
-var remove_white_space_default = removeWhiteSpace;
 
 // custom-resolvers/queries/get-ordnance-survey-address/index.ts
 var getOrdnanceSurveyAddress = async (root, variables) => {

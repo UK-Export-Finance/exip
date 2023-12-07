@@ -1,7 +1,8 @@
+import removeWhiteSpace from '../../../helpers/remove-white-space';
+import companiesHouse from '../../../integrations/companies-house';
+import industrySectorNames from '../../../integrations/industry-sector';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import { GetCompaniesHouseInformationVariables } from '../../../types';
-import industrySectorNames from '../../../integrations/industry-sector';
-import companiesHouse from '../../../integrations/companies-house';
 
 /**
  * getCompaniesHouseInformation
@@ -17,9 +18,9 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
 
     console.info('Getting Companies House information for %s', companiesHouseNumber);
 
-    const sanitisedRegNo = companiesHouseNumber.toString().padStart(8, '0');
+    const sanitisedNumber = removeWhiteSpace(companiesHouseNumber.toString());
 
-    const response = await companiesHouse.get(sanitisedRegNo);
+    const response = await companiesHouse.get(sanitisedNumber);
 
     // if no data in response or status is not 200 then return blank object
     if (!response.success || !response.data) {
