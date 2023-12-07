@@ -15,7 +15,7 @@ import mapAndSave from '../map-and-save/company-different-trading-address';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT, ALTERNATIVE_TRADING_ADDRESS_ROOT_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -49,7 +49,6 @@ const pageVariables = {
       HINT: FIELDS[ALTERNATIVE_TRADING_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
     },
   },
-  SAVE_AND_BACK_URL: '',
 };
 
 /**
@@ -67,7 +66,7 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { company } = application;
+    const { company, referenceNumber } = application;
 
     // generates address as HTML with line breaks
     const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
@@ -81,6 +80,7 @@ const get = (req: Request, res: Response) => {
       addressHtml,
       ...pageVariables,
       application: mapApplicationToFormFields(application),
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
   } catch (err) {
     console.error('Error getting alternative trading address %O', err);
@@ -129,6 +129,7 @@ const post = async (req: Request, res: Response) => {
         validationErrors,
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });
     }
 

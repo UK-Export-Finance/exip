@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-different-trading-address';
-import mapSubmittedData from '../../map-submitted-data/company-different-trading-address';
+import { mapSubmittedData } from '../../map-submitted-data/company-different-trading-address';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';

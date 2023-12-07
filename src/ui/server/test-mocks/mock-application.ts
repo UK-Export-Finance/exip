@@ -44,7 +44,7 @@ export const mockOwner = {
   id: mockAccount.id,
 };
 
-export const mockDifferentTradingAddress = {
+export const mockCompanyDifferentTradingAddress = {
   id: 'clf3te7vx1432cfoqp9rboe55',
   fullAddress: 'test',
 };
@@ -62,7 +62,7 @@ export const mockCompany = {
       industrySectorName: 'Mock industry',
     },
   ],
-  differentTradingAddress: mockDifferentTradingAddress,
+  differentTradingAddress: mockCompanyDifferentTradingAddress,
   registeredOfficeAddress: {
     id: 'clcyyopna0158m8noaglyy94t',
     addressLine1: 'Line 1',

@@ -7,7 +7,7 @@ import mockCountries from './mock-countries';
 import mockCurrencies from './mock-currencies';
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
-import mockApplication, { mockBusiness, mockDifferentTradingAddress } from './mock-application';
+import mockApplication, { mockBusiness, mockCompanyDifferentTradingAddress } from './mock-application';
 import mockApplications from './mock-applications';
 import mockEligibility from './mock-eligibility';
 import mockUrlOrigin from './mock-url-origin';
@@ -105,7 +105,7 @@ export {
   mockCompany,
   mockCurrencies,
   mockDeclarations,
-  mockDifferentTradingAddress,
+  mockCompanyDifferentTradingAddress,
   mockEligibility,
   mockInsuranceFeedback,
   mockNext,
