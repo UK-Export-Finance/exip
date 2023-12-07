@@ -16,6 +16,7 @@ const {
   EXPORTER_BUSINESS,
   YOUR_BUYER,
   POLICY,
+  EXPORT_CONTRACT,
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -148,7 +149,7 @@ context('Insurance - All sections - new application', () => {
         it('should render an `export contract` task with link and `not started` status', () => {
           const task = taskList.prepareApplication.tasks.exportContract;
 
-          const expectedHref = '#';
+          const expectedHref = `${ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT;
 
           cy.checkLink(
