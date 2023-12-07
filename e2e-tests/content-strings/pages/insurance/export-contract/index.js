@@ -10,8 +10,8 @@ const ROOT = {
     ITEMS: [
       'what goods and services you want to export',
       "how you'll get paid",
-      'your commissioning agent(if you have one)',
-      'your end buyer(if you have one)',
+      'your commissioning agent (if you have one)',
+      'your end buyer (if you have one)',
     ],
   },
   OUTRO:

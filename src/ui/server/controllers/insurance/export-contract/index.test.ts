@@ -26,6 +26,7 @@ describe('controllers/insurance/export-contract/index', () => {
     it('should have correct properties', () => {
       const expected = {
         ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
+        START_NOW_URL: '#',
       };
 
       expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);

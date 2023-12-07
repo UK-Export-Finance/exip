@@ -17,6 +17,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.ROOT;
  */
 export const pageVariables = (referenceNumber: number) => ({
   ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+  START_NOW_URL: '#',
 });
 
 /**
