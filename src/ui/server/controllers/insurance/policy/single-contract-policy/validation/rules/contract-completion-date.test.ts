@@ -131,8 +131,8 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
   });
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
-    const date = new Date();
-    const year = date.getFullYear();
+    let date = new Date();
+    let year = date.getFullYear();
 
     // Add 1 day
     const initFutureDate = new Date(date.setDate(date.getDate() + 1));
@@ -141,13 +141,17 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
     const futureDateYear = initFutureDate.getFullYear();
     const futureDate = new Date(initFutureDate.setFullYear(futureDateYear + 1));
 
-    const requestedStartDateFields = {
-      [`${REQUESTED_START_DATE}-day`]: futureDate.getDate(),
-      [`${REQUESTED_START_DATE}-month`]: futureDate.getMonth(),
-      [`${REQUESTED_START_DATE}-year`]: futureDate.getFullYear(),
-    };
+    let requestedStartDateFields = {};
 
-    describe(`when the date is the same as ${REQUESTED_START_DATE}`, () => {
+    beforeEach(() => {
+      requestedStartDateFields = {
+        [`${REQUESTED_START_DATE}-day`]: futureDate.getDate(),
+        [`${REQUESTED_START_DATE}-month`]: futureDate.getMonth(),
+        [`${REQUESTED_START_DATE}-year`]: futureDate.getFullYear(),
+      };
+    });
+
+    describe(`when ${CONTRACT_COMPLETION_DATE} is the same as ${REQUESTED_START_DATE}`, () => {
       it('should return validation error', () => {
         const mockSubmittedData = {
           ...requestedStartDateFields,
@@ -190,16 +194,22 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       });
     });
 
-    describe(`when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const day = date.getDate();
+    describe(`when ${CONTRACT_COMPLETION_DATE} is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
+      date = new Date();
 
-      const nextYear = new Date(date.setFullYear(year + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
-      const completionDate = new Date(nextYear.setDate(day + 1));
+      const day = date.getDate();
+      const month = date.getMonth();
+      year = date.getFullYear();
+
+      const futureYear = new Date(futureDate.setFullYear(futureDateYear + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
+      const completionDate = new Date(futureYear.setDate(day + 1));
 
       it('should return validation error', () => {
         const mockSubmittedData = {
-          ...requestedStartDateFields,
-          [`${CONTRACT_COMPLETION_DATE}-day`]: completionDate.getDate() + 1,
+          [`${REQUESTED_START_DATE}-day`]: day,
+          [`${REQUESTED_START_DATE}-month`]: month,
+          [`${REQUESTED_START_DATE}-year`]: year,
+          [`${CONTRACT_COMPLETION_DATE}-day`]: completionDate.getDate(),
           [`${CONTRACT_COMPLETION_DATE}-month`]: completionDate.getMonth(),
           [`${CONTRACT_COMPLETION_DATE}-year`]: completionDate.getFullYear(),
         };
