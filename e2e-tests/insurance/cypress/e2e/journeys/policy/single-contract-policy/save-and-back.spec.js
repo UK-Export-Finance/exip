@@ -83,9 +83,10 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.navigateToUrl(url);
 
       // enter an invalid date
-      const day = new Date(date).getDate();
+      const now = new Date();
+      const day = new Date(now).getDate();
 
-      const yesterday = new Date(date.setDate(day - 1));
+      const yesterday = new Date(now.setDate(day - 1));
 
       cy.keyboardInput(field.dayInput(), yesterday.getDate());
       cy.keyboardInput(field.monthInput(), yesterday.getMonth());

@@ -168,7 +168,7 @@ const checkValidation = {
     const now = new Date();
 
     cy.keyboardInput(field.dayInput(), now.getDate());
-    cy.keyboardInput(field.monthInput(), now.getMonth());
+    cy.keyboardInput(field.monthInput(), now.getMonth() + 1);
     cy.keyboardInput(field.yearInput(), now.getFullYear());
 
     submitButton().click();
