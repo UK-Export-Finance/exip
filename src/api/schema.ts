@@ -172,7 +172,6 @@ export const lists = {
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-
             modifiedData.submissionDeadline = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
             // add default submission type
