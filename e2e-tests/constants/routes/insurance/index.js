@@ -2,6 +2,7 @@ import { ACCOUNT } from './account';
 import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';
 import { YOUR_BUYER } from './your-buyer';
+import { EXPORT_CONTRACT } from './export-contract';
 import { DECLARATIONS } from './declarations';
 import { CHECK_YOUR_ANSWERS } from './check-your-answers';
 
@@ -53,6 +54,7 @@ export const INSURANCE_ROUTES = {
   POLICY,
   EXPORTER_BUSINESS,
   YOUR_BUYER,
+  EXPORT_CONTRACT,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   APPLICATION_SUBMITTED: '/application-submitted',

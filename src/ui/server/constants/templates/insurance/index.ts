@@ -3,6 +3,7 @@ import { ACCOUNT_TEMPLATES } from './account';
 import { POLICY_TEMPLATES } from './policy';
 import { BUSINESS_TEMPLATES } from './business';
 import { YOUR_BUYER_TEMPLATES } from './your-buyer';
+import { EXPORT_CONTRACT_TEMPLATES } from './export-contract';
 import { DECLARATIONS_TEMPLATES } from './declarations';
 
 export const INSURANCE_TEMPLATES = {
@@ -15,6 +16,7 @@ export const INSURANCE_TEMPLATES = {
   POLICY: POLICY_TEMPLATES,
   EXPORTER_BUSINESS: BUSINESS_TEMPLATES,
   YOUR_BUYER: YOUR_BUYER_TEMPLATES,
+  EXPORT_CONTRACT: EXPORT_CONTRACT_TEMPLATES,
   DECLARATIONS: DECLARATIONS_TEMPLATES,
   CHECK_YOUR_ANSWERS: 'insurance/check-your-answers/check-your-answers.njk',
   PAGE_NOT_FOUND: 'insurance/page-not-found.njk',

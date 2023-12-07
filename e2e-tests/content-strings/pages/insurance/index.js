@@ -6,6 +6,7 @@ import * as ELIGIBILITY_PAGES from './eligibility';
 import * as ACCOUNT_PAGES from './account';
 import * as EXPORTER_BUSINESS from './business';
 import * as YOUR_BUYER from './your-buyer';
+import * as EXPORT_CONTRACT from './export-contract';
 import * as DECLARATIONS from './declarations';
 import * as CHECK_YOUR_ANSWERS from './check-your-answers';
 import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
@@ -133,6 +134,7 @@ const INSURANCE = {
   NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY,
   YOUR_BUYER,
+  EXPORT_CONTRACT,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   COMPLETE_OTHER_SECTIONS,

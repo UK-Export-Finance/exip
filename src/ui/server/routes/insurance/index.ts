@@ -17,6 +17,7 @@ import insuranceEligibilityRoutes from './eligibility';
 import insurancePolicyRouter from './policy';
 import insuranceBusinessRouter from './business';
 import insuranceYourBuyerRouter from './your-buyer';
+import insuranceExportContractrRouter from './export-contract';
 import insuranceDeclarationsRouter from './declarations';
 import insuranceAccountRouter from './account';
 import insuranceCheckYourAnswersRouter from './check-your-answers';
@@ -49,6 +50,7 @@ insuranceRouter.use('/', insuranceAccountRouter);
 insuranceRouter.use(INSURANCE_ROOT, insurancePolicyRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceBusinessRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceYourBuyerRouter);
+insuranceRouter.use(INSURANCE_ROOT, insuranceExportContractrRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceDeclarationsRouter);
 insuranceRouter.use(INSURANCE_ROOT, insuranceCheckYourAnswersRouter);
 

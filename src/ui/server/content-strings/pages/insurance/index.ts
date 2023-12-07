@@ -6,6 +6,7 @@ import ACCOUNT from './account';
 import POLICY from './policy';
 import EXPORTER_BUSINESS from './your-business';
 import YOUR_BUYER from './your-buyer';
+import EXPORT_CONTRACT from './export-contract';
 import DECLARATIONS from './declarations';
 import CHECK_YOUR_ANSWERS from './check-your-answers';
 import COMPLETE_OTHER_SECTIONS from './complete-other-sections';
@@ -131,6 +132,7 @@ export default {
   NO_ACCESS_TO_APPLICATION_PAGE,
   POLICY,
   YOUR_BUYER,
+  EXPORT_CONTRACT,
   DECLARATIONS,
   CHECK_YOUR_ANSWERS,
   COMPLETE_OTHER_SECTIONS,
