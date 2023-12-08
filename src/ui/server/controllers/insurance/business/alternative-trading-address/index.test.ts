@@ -17,11 +17,13 @@ import mapAndSave from '../map-and-save/company-different-trading-address';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT, ALTERNATIVE_TRADING_ADDRESS_ROOT_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { ALTERNATIVE_TRADING_ADDRESS } = BUSINESS_FIELD_IDS;
+const {
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+} = BUSINESS_FIELD_IDS;
 
 const {
   COMPANIES_HOUSE: { COMPANY_ADDRESS },
@@ -47,17 +49,16 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
       const expected = {
         FIELDS: {
           ALTERNATIVE_TRADING_ADDRESS: {
-            ID: ALTERNATIVE_TRADING_ADDRESS,
-            ...FIELDS[ALTERNATIVE_TRADING_ADDRESS],
+            ID: FULL_ADDRESS,
+            ...FIELDS[FULL_ADDRESS],
             MAXIMUM,
           },
           REGISTERED_OFFICE_ADDRESS: {
             ID: COMPANY_ADDRESS,
-            HEADING: FIELDS[ALTERNATIVE_TRADING_ADDRESS].REGISTERED_OFFICE_ADDRESS_HEADING,
-            HINT: FIELDS[ALTERNATIVE_TRADING_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
+            HEADING: FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HEADING,
+            HINT: FIELDS[FULL_ADDRESS].REGISTERED_OFFICE_ADDRESS_HINT,
           },
         },
-        SAVE_AND_BACK_URL: '',
       };
 
       expect(pageVariables).toEqual(expected);
@@ -68,7 +69,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { company } = mockApplication;
+      const { company, referenceNumber } = mockApplication;
 
       const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
 
@@ -81,6 +82,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
         addressHtml,
         ...pageVariables,
         application: mapApplicationToFormFields(mockApplication),
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });
     });
 
@@ -106,7 +108,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
 
         await post(req, res);
 
-        const { company } = mockApplication;
+        const { company, referenceNumber } = mockApplication;
 
         const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
 
@@ -125,6 +127,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
         });
       });
     });
@@ -132,14 +135,14 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = {
-          [ALTERNATIVE_TRADING_ADDRESS]: 'test',
+          [FULL_ADDRESS]: 'mock address',
         };
       });
 
       it('should call mapAndSave.business once with the data from constructPayload function and application', async () => {
         await post(req, res);
 
-        const payload = constructPayload(req.body, [ALTERNATIVE_TRADING_ADDRESS]);
+        const payload = constructPayload(req.body, [FULL_ADDRESS]);
 
         expect(mapAndSave.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
 

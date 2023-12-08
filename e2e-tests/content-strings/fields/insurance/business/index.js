@@ -30,7 +30,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       TITLE: 'UK telephone number (optional)',
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS]: {
+  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]: {
     LABEL: "What's your alternative trading address?",
     MAXIMUM: 1000,
     REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',

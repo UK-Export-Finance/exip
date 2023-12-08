@@ -1,7 +1,6 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 import save from '../../save-data/company-different-trading-address';
-import mapSubmittedData from '../../map-submitted-data/company-different-trading-address';
 
 /**
  * maps differentTradingAddress data and calls save function
@@ -14,7 +13,7 @@ import mapSubmittedData from '../../map-submitted-data/company-different-trading
 const companyDifferentTradingAddress = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      const dataToSave = mapSubmittedData(formBody);
+      const { _csrf, ...dataToSave } = formBody;
 
       let saveResponse;
 

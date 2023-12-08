@@ -5,7 +5,7 @@ import generateValidationErrors from '../../../../../../helpers/validation';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import inputValidation from '../../../../../../shared-validation/max-length';
 
-const { ALTERNATIVE_TRADING_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+const { FULL_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
 const {
   EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
