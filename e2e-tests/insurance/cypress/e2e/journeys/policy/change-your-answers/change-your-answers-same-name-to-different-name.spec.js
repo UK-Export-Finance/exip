@@ -87,9 +87,9 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
         const newEmail = POLICY_CONTACT[EMAIL];
         const newPosition = POLICY_CONTACT[POSITION];
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, newName);
-        cy.assertSummaryListRowValueNew(summaryList, EMAIL, newEmail);
-        cy.assertSummaryListRowValueNew(summaryList, POSITION, newPosition);
+        cy.assertSummaryListRowValue(summaryList, fieldId, newName);
+        cy.assertSummaryListRowValue(summaryList, EMAIL, newEmail);
+        cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
       });
     });
   });

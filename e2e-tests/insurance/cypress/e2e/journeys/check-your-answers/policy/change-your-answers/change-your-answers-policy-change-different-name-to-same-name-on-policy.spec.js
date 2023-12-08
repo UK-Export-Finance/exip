@@ -100,8 +100,8 @@ context('Insurance - Change your answers - Policy - Change from different name t
         const newName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
         const newPosition = POLICY_CONTACT[POSITION];
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, newName);
-        cy.assertSummaryListRowValueNew(summaryList, POSITION, newPosition);
+        cy.assertSummaryListRowValue(summaryList, fieldId, newName);
+        cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
       });
     });
   });
