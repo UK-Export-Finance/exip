@@ -7,7 +7,7 @@ describe('sanitiseCompaniesHouseNumber', () => {
 
   describe('when a company number does not have white spaces, lowercase characters or a leading zero', () => {
     it('should return the company number as is, but with a leading zero', () => {
-      const numb = 'A123456'
+      const numb = 'A123456';
 
       const response = sanitiseCompaniesHouseNumber(numb);
 
