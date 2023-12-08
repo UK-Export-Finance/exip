@@ -15,6 +15,7 @@ const {
   POLICY: { ROOT: POLICY_ROOT },
   EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+  EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT },
 } = INSURANCE_ROUTES;
 
 const { PREPARE_APPLICATION } = TASKS.LIST;
@@ -66,7 +67,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const YOUR_EXPORT_CONTRACT = {
-        href: '#',
+        href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
         fields: [],

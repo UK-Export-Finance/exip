@@ -7,14 +7,9 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
 
-const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
-  POLICY: { TYPE_OF_POLICY },
-  PROBLEM_WITH_SERVICE,
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/policy/index', () => {
+describe('controllers/insurance/export-contract/index', () => {
   let req: Request;
   let res: Response;
 
@@ -30,8 +25,8 @@ describe('controllers/insurance/policy/index', () => {
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const expected = {
-        START_NOW_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY}`,
         ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
+        START_NOW_URL: '#',
       };
 
       expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
@@ -50,7 +45,7 @@ describe('controllers/insurance/policy/index', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ROOT,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(mockApplication.referenceNumber),

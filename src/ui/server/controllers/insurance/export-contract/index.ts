@@ -5,12 +5,7 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
-const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
-  POLICY: { TYPE_OF_POLICY },
-  PROBLEM_WITH_SERVICE,
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
 
@@ -21,16 +16,16 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  START_NOW_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
   ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+  START_NOW_URL: '#',
 });
 
 /**
  * get
- * Render the "Insurance policy - start" page
+ * Render the "Insurance export contract - start" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Insurance policy - start page
+ * @returns {Express.Response.render} Export contract - start page
  */
 export const get = (req: Request, res: Response) => {
   try {
@@ -42,7 +37,7 @@ export const get = (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ROOT,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(application.referenceNumber),
