@@ -7,7 +7,7 @@ import { Request, Response } from '../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.ROOT;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
 
 /**
  * pageVariables

@@ -40,7 +40,7 @@ describe('controllers/insurance/policy/index', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.ROOT);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SECTION_START);
     });
   });
 

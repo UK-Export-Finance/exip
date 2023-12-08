@@ -22,7 +22,9 @@
 
       <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
 
-      <p class="govuk-body" data-cy="list-intro">{{ CONTENT_STRINGS.LIST.INTRO }}</p>
+      {% if CONTENT_STRINGS.LIST.INTRO %}
+        <p class="govuk-body" data-cy="list-intro">{{ CONTENT_STRINGS.LIST.INTRO }}</p>
+      {% endif %}
 
       <ul class="govuk-list govuk-list--bullet">
         {% for item in CONTENT_STRINGS.LIST.ITEMS %}

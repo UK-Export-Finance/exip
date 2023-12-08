@@ -35,7 +35,7 @@ describe('controllers/insurance/export-contract/index', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.EXPORT_CONTRACT.ROOT);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SECTION_START);
     });
   });
 
