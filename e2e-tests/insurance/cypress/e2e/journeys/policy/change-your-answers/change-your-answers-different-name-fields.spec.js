@@ -79,7 +79,7 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
       });
 
       it('should render the new answers when completing the different name on policy form', () => {
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, newPosition);
+        cy.assertSummaryListRowValue(summaryList, fieldId, newPosition);
       });
     });
   });
@@ -109,7 +109,7 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
       });
 
       it('should render the new answers when completing the different name on policy form', () => {
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, newEmail);
+        cy.assertSummaryListRowValue(summaryList, fieldId, newEmail);
       });
     });
   });
@@ -145,7 +145,7 @@ context('Insurance - Policy - Change your answers - Policy contact- As an export
       it('should render the new answers when completing the different name on policy form', () => {
         const newName = `${newFirstName} ${newLastName}`;
 
-        cy.assertSummaryListRowValueNew(summaryList, NAME, newName);
+        cy.assertSummaryListRowValue(summaryList, NAME, newName);
       });
     });
   });

@@ -84,7 +84,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
       it('should render the new answer', () => {
         const expected = newAnswer;
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });
     });
   });
@@ -122,7 +122,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
       it('should render the new answer', () => {
         const expected = countries[0].name;
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
       });
     });
   });
