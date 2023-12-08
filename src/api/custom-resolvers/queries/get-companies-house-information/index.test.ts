@@ -1,5 +1,5 @@
 import getCompaniesHouseInformation from '.';
-import removeWhiteSpace from '../../../helpers/remove-white-space';
+import sanitiseCompaniesHouseNumber from '../../../helpers/sanitise-companies-house-number';
 import companiesHouse from '../../../integrations/companies-house';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import industrySectorNames from '../../../integrations/industry-sector';
@@ -23,7 +23,7 @@ describe('custom-resolvers/get-companies-house-information', () => {
 
     expect(companiesHouse.get).toHaveBeenCalledTimes(1);
 
-    const expected = removeWhiteSpace(mockNumber.toString());
+    const expected = sanitiseCompaniesHouseNumber(mockNumber);
 
     expect(companiesHouse.get).toHaveBeenCalledWith(expected);
   });

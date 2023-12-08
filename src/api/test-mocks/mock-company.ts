@@ -2,7 +2,7 @@ import { ApplicationCompanyCore } from '../types';
 
 const mockCompany = {
   companyName: 'Mock company',
-  companyNumber: '0a123456',
+  companyNumber: '0A123456',
   registeredOfficeAddress: {
     careOf: '',
     premises: '',

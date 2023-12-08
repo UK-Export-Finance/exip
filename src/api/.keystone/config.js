@@ -5038,6 +5038,10 @@ var get_APIM_CIS_countries_default = getApimCisCountries;
 var removeWhiteSpace = (string) => string.replace(" ", "");
 var remove_white_space_default = removeWhiteSpace;
 
+// helpers/sanitise-companies-house-number/index.ts
+var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase();
+var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
+
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
 var import_dotenv6 = __toESM(require("dotenv"));
@@ -5181,8 +5185,8 @@ var getCompaniesHouseInformation = async (root, variables) => {
   try {
     const { companiesHouseNumber } = variables;
     console.info("Getting Companies House information for %s", companiesHouseNumber);
-    const sanitisedRegNo = remove_white_space_default(companiesHouseNumber.toString());
-    const response = await companies_house_default.get(sanitisedRegNo);
+    const sanitisedNumber = sanitise_companies_house_number_default(companiesHouseNumber);
+    const response = await companies_house_default.get(sanitisedNumber);
     if (!response.success || !response.data) {
       return {
         success: false,

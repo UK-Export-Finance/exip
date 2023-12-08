@@ -1,4 +1,4 @@
-import removeWhiteSpace from '../../../helpers/remove-white-space';
+import sanitiseCompaniesHouseNumber from '../../../helpers/sanitise-companies-house-number';
 import companiesHouse from '../../../integrations/companies-house';
 import industrySectorNames from '../../../integrations/industry-sector';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
@@ -18,7 +18,7 @@ const getCompaniesHouseInformation = async (root: any, variables: GetCompaniesHo
 
     console.info('Getting Companies House information for %s', companiesHouseNumber);
 
-    const sanitisedNumber = removeWhiteSpace(companiesHouseNumber.toString());
+    const sanitisedNumber = sanitiseCompaniesHouseNumber(companiesHouseNumber);
 
     const response = await companiesHouse.get(sanitisedNumber);
 

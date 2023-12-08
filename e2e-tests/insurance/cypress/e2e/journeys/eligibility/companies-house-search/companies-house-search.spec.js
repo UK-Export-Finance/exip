@@ -7,6 +7,7 @@ import {
   COMPANIES_HOUSE_NUMBER_TOO_SHORT,
   COMPANIES_HOUSE_NUMBER_WITH_SPECIAL_CHARACTERS,
   COMPANIES_HOUSE_NUMBER_WITH_SPACES,
+  COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
   COMPANIES_HOUSE_NUMBER_NOT_FOUND,
 } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -129,7 +130,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
     });
 
-    describe('when submitting the answer a valid companies house number', () => {
+    describe('when submitting the answer as a valid companies house number', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -161,7 +162,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
     });
 
-    describe('when submitting the answer a valid companies house number, with white spaces', () => {
+    describe('when submitting the answer as a valid companies house number, with white spaces', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -186,6 +187,39 @@ context('Insurance - Eligibility - Companies house search page - I want to check
           cy.clickBackLink();
 
           const expected = `${COMPANIES_HOUSE_NUMBER_WITH_SPACES}`.replaceAll(' ', '');
+
+          cy.checkValue(field(FIELD_ID), expected);
+        });
+      });
+    });
+
+    describe('when submitting the answer as a valid companies house number, in lowercase', () => {
+      const lowerCaseCompaniesHouseNumber = COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE.toLowerCase();
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.interceptCompaniesHousePost({ companyNumber: lowerCaseCompaniesHouseNumber });
+
+        cy.keyboardInput(
+          field(FIELD_ID).input(),
+          lowerCaseCompaniesHouseNumber,
+        );
+
+        submitButton().click();
+      });
+
+      it(`should redirect to ${COMPANY_DETAILS}`, () => {
+        const expected = `${baseUrl}${COMPANY_DETAILS}`;
+
+        cy.assertUrl(expected);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected, in uppercase', () => {
+          cy.clickBackLink();
+
+          const expected = lowerCaseCompaniesHouseNumber.toUpperCase();
 
           cy.checkValue(field(FIELD_ID), expected);
         });
