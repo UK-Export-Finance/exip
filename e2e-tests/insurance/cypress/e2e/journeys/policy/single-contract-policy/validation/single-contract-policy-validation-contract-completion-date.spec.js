@@ -158,7 +158,6 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
   it('should render a validation error when the date is not in the future', () => {
     const date = new Date();
-    // sets date to 1 day in the past using native js
     const yesterday = new Date(date.setDate(date.getDate() - 1));
 
     cy.keyboardInput(field.dayInput(), yesterday.getDate());

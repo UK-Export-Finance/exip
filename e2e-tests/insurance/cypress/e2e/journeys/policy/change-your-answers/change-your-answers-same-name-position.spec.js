@@ -71,8 +71,8 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
       it('should render the new answers when completing the same name on policy form', () => {
         const oldName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
 
-        cy.assertSummaryListRowValueNew(summaryList, NAME, oldName);
-        cy.assertSummaryListRowValueNew(summaryList, POSITION, newAnswer);
+        cy.assertSummaryListRowValue(summaryList, NAME, oldName);
+        cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
       });
     });
   });

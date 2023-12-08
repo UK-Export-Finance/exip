@@ -12,47 +12,50 @@ const {
 } = CONTRACT_POLICY;
 
 describe('controllers/insurance/policy/map-submitted-data/policy', () => {
-  const date = new Date();
+  let date = new Date();
+  let day: number;
+  let month: number;
+  let year: number;
 
-  const day = new Date(date).getDate();
-  const month = new Date(date).getMonth();
-  const year = new Date(date).getFullYear();
+  beforeEach(() => {
+    date = new Date();
+
+    day = date.getDate();
+    month = date.getMonth();
+    year = date.getFullYear();
+  });
 
   describe(`when ${REQUESTED_START_DATE} day, month and year fields are provided`, () => {
-    const mockBody = {
-      [`${REQUESTED_START_DATE}-day`]: day,
-      [`${REQUESTED_START_DATE}-month`]: month,
-      [`${REQUESTED_START_DATE}-year`]: year,
-    };
-
     it(`should return an object with ${REQUESTED_START_DATE} as a timestamp`, () => {
+      const mockBody = {
+        [`${REQUESTED_START_DATE}-day`]: '1',
+        [`${REQUESTED_START_DATE}-month`]: month,
+        [`${REQUESTED_START_DATE}-year`]: year,
+      };
+
       const result = mapSubmittedData(mockBody);
 
-      const dayNumber = Number(mockBody[`${REQUESTED_START_DATE}-day`]);
-      const monthNumber = Number(mockBody[`${REQUESTED_START_DATE}-month`]);
-      const yearNumber = Number(mockBody[`${REQUESTED_START_DATE}-year`]);
+      day = Number(mockBody[`${REQUESTED_START_DATE}-day`]);
+      month = Number(mockBody[`${REQUESTED_START_DATE}-month`]);
+      year = Number(mockBody[`${REQUESTED_START_DATE}-year`]);
 
-      const expected = createTimestampFromNumbers(dayNumber, monthNumber, yearNumber);
+      const expected = createTimestampFromNumbers(day, month, year);
 
       expect(result[REQUESTED_START_DATE]).toEqual(expected);
     });
   });
 
   describe(`when ${CONTRACT_COMPLETION_DATE} day, month and year fields are provided`, () => {
-    const mockBody = {
-      [`${CONTRACT_COMPLETION_DATE}-day`]: day,
-      [`${CONTRACT_COMPLETION_DATE}-month`]: month,
-      [`${CONTRACT_COMPLETION_DATE}-year`]: year,
-    };
-
     it(`should return an object with ${CONTRACT_COMPLETION_DATE} as a timestamp`, () => {
+      const mockBody = {
+        [`${CONTRACT_COMPLETION_DATE}-day`]: day,
+        [`${CONTRACT_COMPLETION_DATE}-month`]: month,
+        [`${CONTRACT_COMPLETION_DATE}-year`]: year,
+      };
+
       const result = mapSubmittedData(mockBody);
 
-      const dayNumber = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-day`]);
-      const monthNumber = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-month`]);
-      const yearNumber = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-year`]);
-
-      const expected = createTimestampFromNumbers(dayNumber, monthNumber, yearNumber);
+      const expected = createTimestampFromNumbers(day, month, year);
 
       expect(result[CONTRACT_COMPLETION_DATE]).toEqual(expected);
     });
