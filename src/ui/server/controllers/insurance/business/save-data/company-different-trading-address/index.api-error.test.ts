@@ -1,11 +1,11 @@
 import save from '.';
 import api from '../../../../../api';
-import { mockApplication, mockDifferentTradingAddress } from '../../../../../test-mocks';
+import { mockApplication, mockCompanyDifferentTradingAddress } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/save-data/company-different-trading-address - API error', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
-  const mockFormBody = mockDifferentTradingAddress;
+  const mockFormBody = mockCompanyDifferentTradingAddress;
 
   beforeEach(() => {
     api.keystone.application.update.companyDifferentTradingAddress = updateApplicationSpy;

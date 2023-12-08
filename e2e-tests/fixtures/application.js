@@ -46,7 +46,9 @@ const {
       },
     },
     EXPORTER_BUSINESS: {
-      FULL_ADDRESS,
+      ALTERNATIVE_TRADING_ADDRESS: {
+        FULL_ADDRESS,
+      },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
         YEARS_EXPORTING,

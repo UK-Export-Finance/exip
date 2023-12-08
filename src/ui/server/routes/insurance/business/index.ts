@@ -11,6 +11,7 @@ import {
   get as getAlternativeTradingAddress,
   post as postAlternativeTradingAddress,
 } from '../../../controllers/insurance/business/alternative-trading-address';
+import { post as postAlternativeTradingAddressSaveAndBack } from '../../../controllers/insurance/business/alternative-trading-address/save-and-back';
 
 import { get as getNatureOfBusiness, post as postNatureOfBusiness } from '../../../controllers/insurance/business/nature-of-business';
 import { post as postNatureOfBusinessSaveAndBack } from '../../../controllers/insurance/business/nature-of-business/save-and-back';
@@ -41,6 +42,10 @@ insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSIN
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_ROOT}`, getAlternativeTradingAddress);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_ROOT}`, postAlternativeTradingAddress);
+insuranceBusinessRouter.post(
+  `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_ROOT_SAVE_AND_BACK}`,
+  postAlternativeTradingAddressSaveAndBack,
+);
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`, getNatureOfBusiness);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_SAVE_AND_BACK}`, postNatureOfBusinessSaveAndBack);

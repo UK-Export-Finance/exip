@@ -2,12 +2,12 @@ import save from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
-import { mockApplication, mockDifferentTradingAddress } from '../../../../../test-mocks';
+import { mockApplication, mockCompanyDifferentTradingAddress } from '../../../../../test-mocks';
 
 describe('controllers/insurance/business/save-data/company-different-trading-address', () => {
   const mockUpdateApplicationResponse = mockApplication;
   const updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
-  const mockFormBody = mockDifferentTradingAddress;
+  const mockFormBody = mockCompanyDifferentTradingAddress;
 
   beforeEach(() => {
     api.keystone.application.update.companyDifferentTradingAddress = updateApplicationSpy;
