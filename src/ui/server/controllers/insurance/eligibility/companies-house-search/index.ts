@@ -90,9 +90,9 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * 1) Call companies house API (via our own API)
-     * 4) If notFound is returned, render the page with validation errors.
-     * 2) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
-     * 3) If the company is not active, redirect to COMPANY_NOT_ACTIVE.
+     * 2) If notFound is returned, render the page with validation errors.
+     * 3) If apiError is returned, redirect to COMPANIES_HOUSE_UNAVAILABLE.
+     * 4) If the company is not active, redirect to COMPANY_NOT_ACTIVE.
      */
     const response = await companiesHouse.search(payload[FIELD_ID]);
 

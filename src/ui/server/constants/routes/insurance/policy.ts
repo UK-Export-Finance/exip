@@ -1,4 +1,4 @@
-const ROOT = '/policy';
+const ROOT = '/insurance-policy';
 const BROKER_ROOT = `${ROOT}/broker`;
 
 export const POLICY = {

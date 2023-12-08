@@ -1,4 +1,5 @@
 import getCompaniesHouseInformation from '.';
+import sanitiseCompaniesHouseNumber from '../../../helpers/sanitise-companies-house-number';
 import companiesHouse from '../../../integrations/companies-house';
 import { mapCompaniesHouseFields } from '../../../helpers/map-companies-house-fields';
 import industrySectorNames from '../../../integrations/industry-sector';
@@ -11,6 +12,20 @@ describe('custom-resolvers/get-companies-house-information', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  it('should call companiesHouse.get with a sanitised companies house number', async () => {
+    companiesHouse.get = jest.fn();
+
+    const mockNumber = ' 12345 ';
+
+    await getCompaniesHouseInformation({}, { companiesHouseNumber: mockNumber });
+
+    expect(companiesHouse.get).toHaveBeenCalledTimes(1);
+
+    const expected = sanitiseCompaniesHouseNumber(mockNumber);
+
+    expect(companiesHouse.get).toHaveBeenCalledWith(expected);
   });
 
   describe('when companies house API returns success as false', () => {

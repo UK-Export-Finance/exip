@@ -21,7 +21,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
   } as RequestBody;
 
   describe('when the companies house number input is incorrectly formatted', () => {
-    it('should return validation error when number is an empty string', () => {
+    it('should return a validation error when number is an empty string', () => {
       const result = companiesHouseNumber(mockBody, mockErrors);
 
       const errorMessage = ELIGIBILITY[FIELD_ID].IS_EMPTY;
@@ -30,7 +30,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       expect(result).toEqual(expected);
     });
 
-    it('should return validation error when number is less than 6 digits long', () => {
+    it('should return a validation error when number is less than 6 digits long', () => {
       mockBody[FIELD_ID] = '123';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
@@ -40,7 +40,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       expect(result).toEqual(expected);
     });
 
-    it('should return validation error when number has special characters', () => {
+    it('should return a validation error when number has special characters', () => {
       mockBody[FIELD_ID] = '1235!?';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
@@ -50,7 +50,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       expect(result).toEqual(expected);
     });
 
-    it('should return validation error when number is a space', () => {
+    it('should return a validation error when number is a space', () => {
       mockBody[FIELD_ID] = ' ';
       const result = companiesHouseNumber(mockBody, mockErrors);
 
@@ -60,17 +60,7 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
       expect(result).toEqual(expected);
     });
 
-    it('should return validation error when number has a space', () => {
-      mockBody[FIELD_ID] = '123456 ';
-      const result = companiesHouseNumber(mockBody, mockErrors);
-
-      const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
-      const expected = generateValidationErrors(FIELD_ID, errorMessage, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-
-    it('should return validation error when number is null', () => {
+    it('should return a validation error when number is null', () => {
       mockBody[FIELD_ID] = null;
       const result = companiesHouseNumber(mockBody, mockErrors);
 
@@ -82,18 +72,33 @@ describe('helpers/companies-house-search/validation/rules/companiesHouseNumber',
   });
 
   describe('when the companies house number input is correctly formatted', () => {
-    it('should not return validation error when number is more than 6 numbers long', () => {
-      mockBody[FIELD_ID] = '8989898';
-      const result = companiesHouseNumber(mockBody, mockErrors);
+    describe('when the number is more than 6 numbers long', () => {
+      describe('with pure numbers', () => {
+        it('should not return a validation error', () => {
+          mockBody[FIELD_ID] = '8989898';
+          const result = companiesHouseNumber(mockBody, mockErrors);
 
-      expect(result).toEqual(mockErrors);
-    });
+          expect(result).toEqual(mockErrors);
+        });
+      });
 
-    it('should not return validation error when number is more than 6 numbers long and has letters and numbers', () => {
-      mockBody[FIELD_ID] = 'SC907816';
-      const result = companiesHouseNumber(mockBody, mockErrors);
+      describe('with letters and numbers', () => {
+        it('should not return a validation error', () => {
+          mockBody[FIELD_ID] = 'SC907816';
+          const result = companiesHouseNumber(mockBody, mockErrors);
 
-      expect(result).toEqual(mockErrors);
+          expect(result).toEqual(mockErrors);
+        });
+      });
+
+      describe('with letters, numbers and white spaces', () => {
+        it('should not return a validation error', () => {
+          mockBody[FIELD_ID] = ' SC907816 ';
+          const result = companiesHouseNumber(mockBody, mockErrors);
+
+          expect(result).toEqual(mockErrors);
+        });
+      });
     });
   });
 });
