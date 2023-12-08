@@ -5,17 +5,19 @@ import mockCompany from '../../test-mocks/mock-company';
 describe('sanitiseCompaniesHouseNumber', () => {
   const { companyNumber } = mockCompany;
 
-  describe('when a company number does not have white spaces or lowercase characters', () => {
-    it('should return the company number as is', () => {
-      const numb = companyNumber.toUpperCase();
+  describe('when a company number does not have white spaces, lowercase characters or a leading zero', () => {
+    it('should return the company number as is, but with a leading zero', () => {
+      const numb = 'A123456'
 
       const response = sanitiseCompaniesHouseNumber(numb);
 
-      expect(response).toEqual(companyNumber);
+      const expected = `0${numb}`;
+
+      expect(response).toEqual(expected);
     });
   });
 
-  describe('when a company number has white spaces, lowercase characters', () => {
+  describe('when a company number has white spaces, lowercase characters and a leading zero', () => {
     it('should return the company number without white spaces', () => {
       const numb = ` ${companyNumber} `;
 
@@ -27,7 +29,7 @@ describe('sanitiseCompaniesHouseNumber', () => {
     });
   });
 
-  describe('when a company number has white spaces and lowercase characters', () => {
+  describe('when a company number has white spaces, lowercase characters and a leading zero', () => {
     it('should return the company number without white spaces', () => {
       const numb = ` ${companyNumber.toLowerCase()} `;
 
