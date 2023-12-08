@@ -12,7 +12,7 @@ const {
 } = CONTRACT_POLICY;
 
 describe('controllers/insurance/policy/map-submitted-data/policy', () => {
-  let date;
+  let date = new Date();
   let day: number;
   let month: number;
   let year: number;
@@ -54,10 +54,6 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
       };
 
       const result = mapSubmittedData(mockBody);
-
-      day = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-day`]);
-      month = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-month`]);
-      year = Number(mockBody[`${CONTRACT_COMPLETION_DATE}-year`]);
 
       const expected = createTimestampFromNumbers(day, month, year);
 

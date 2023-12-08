@@ -250,7 +250,8 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     });
 
     it(`should render a validation error when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const endDate = new Date(date.setFullYear(year + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
+      const endDateUnformatted = date.setFullYear(startDate.getFullYear() + ELIGIBILITY.MAX_COVER_PERIOD_YEARS);
+      const endDate = new Date(endDateUnformatted);
 
       cy.keyboardInput(field.dayInput(), '3');
       cy.keyboardInput(field.monthInput(), endDate.getMonth());

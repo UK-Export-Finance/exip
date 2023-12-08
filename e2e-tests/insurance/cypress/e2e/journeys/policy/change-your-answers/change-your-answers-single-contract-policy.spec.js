@@ -95,7 +95,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -136,7 +136,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         it('should render the new answer', () => {
           const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -174,7 +174,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         it('should render the new answer', () => {
           const expected = formatCurrency(newAnswer);
 
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -212,7 +212,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         it('should render the new answer', () => {
           const expected = newAnswer;
 
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, expected);
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
         });
       });
     });
@@ -250,7 +250,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         it('should render the new answer', () => {
           const { 3: expected } = currencies;
           const { name } = expected;
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, name);
+          cy.assertSummaryListRowValue(summaryList, fieldId, name);
         });
       });
     });

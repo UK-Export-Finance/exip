@@ -110,19 +110,19 @@ context('Insurance - Change your answers - Policy - Change from same name to dif
         it(NAME, () => {
           const newName = `${POLICY_CONTACT[FIRST_NAME]} ${POLICY_CONTACT[LAST_NAME]}`;
 
-          cy.assertSummaryListRowValueNew(summaryList, fieldId, newName);
+          cy.assertSummaryListRowValue(summaryList, fieldId, newName);
         });
 
         it(EMAIL, () => {
           const newEmail = POLICY_CONTACT[EMAIL];
 
-          cy.assertSummaryListRowValueNew(summaryList, EMAIL, newEmail);
+          cy.assertSummaryListRowValue(summaryList, EMAIL, newEmail);
         });
 
         it(POSITION, () => {
           const newPosition = POLICY_CONTACT[POSITION];
 
-          cy.assertSummaryListRowValueNew(summaryList, POSITION, newPosition);
+          cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
         });
       });
     });

@@ -97,7 +97,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
       });
 
       it(POLICY_TYPE, () => {
-        cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.SINGLE);
+        cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.SINGLE);
       });
 
       it(CONTRACT_COMPLETION_DATE, () => {
@@ -106,7 +106,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
         const expectedDate = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedDate);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedDate);
       });
 
       it(`${TOTAL_CONTRACT_VALUE} with different change link`, () => {
@@ -114,7 +114,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
         const expectedTotalContractValue = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedTotalContractValue);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedTotalContractValue);
 
         // check the change link
         summaryList.field(TOTAL_CONTRACT_VALUE).changeLink().click();
