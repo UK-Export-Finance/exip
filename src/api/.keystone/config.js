@@ -5039,7 +5039,7 @@ var removeWhiteSpace = (string) => string.replace(" ", "");
 var remove_white_space_default = removeWhiteSpace;
 
 // helpers/sanitise-companies-house-number/index.ts
-var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase();
+var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase().padStart(8, "0");
 var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts

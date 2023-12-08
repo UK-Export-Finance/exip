@@ -3,6 +3,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import {
   ROUTES,
   COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER,
+  COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO,
   COMPANIES_HOUSE_NUMBER_EMPTY,
   COMPANIES_HOUSE_NUMBER_TOO_SHORT,
   COMPANIES_HOUSE_NUMBER_WITH_SPECIAL_CHARACTERS,
@@ -158,6 +159,37 @@ context('Insurance - Eligibility - Companies house search page - I want to check
             field(FIELD_ID),
             VALID_COMPANIES_HOUSE_NUMBER,
           );
+        });
+      });
+    });
+
+    describe('when submitting the answer as a valid companies house number, with no leading zero', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.interceptCompaniesHousePost({ companyNumber: COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO });
+
+        cy.keyboardInput(
+          field(FIELD_ID).input(),
+          COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO,
+        );
+
+        submitButton().click();
+      });
+
+      it(`should redirect to ${COMPANY_DETAILS}`, () => {
+        const expected = `${baseUrl}${COMPANY_DETAILS}`;
+
+        cy.assertUrl(expected);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the originally submitted answer selected, with a leading zero', () => {
+          cy.clickBackLink();
+
+          const expected = `0${COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO}`;
+
+          cy.checkValue(field(FIELD_ID), expected);
         });
       });
     });
