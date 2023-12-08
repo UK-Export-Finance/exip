@@ -12,8 +12,9 @@ const ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const {
   EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS,
-    FULL_ADDRESS,
+    ALTERNATIVE_TRADING_ADDRESS: {
+      FULL_ADDRESS,
+    },
   },
   COMPANIES_HOUSE: {
     COMPANY_ADDRESS,
@@ -31,14 +32,14 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const fieldId = ALTERNATIVE_TRADING_ADDRESS;
+const fieldId = FULL_ADDRESS;
 const field = fieldSelector(fieldId);
 const textareaField = { ...field, input: field.textarea };
 const expectedErrorsCount = 1;
 
 const {
   MAXIMUM, LABEL, REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
-} = FIELDS[ALTERNATIVE_TRADING_ADDRESS];
+} = FIELDS[FULL_ADDRESS];
 
 const address = application.COMPANY[COMPANY_ADDRESS];
 const { DIFFERENT_TRADING_ADDRESS } = application;
@@ -104,7 +105,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
       cy.checkText(partials.html(COMPANY_ADDRESS), addressText);
     });
 
-    it(`should display ${ALTERNATIVE_TRADING_ADDRESS} label and input`, () => {
+    it(`should display ${FULL_ADDRESS} label and input`, () => {
       field.textarea().should('exist');
       cy.checkText(field.label(), LABEL);
     });
@@ -119,8 +120,8 @@ context('Insurance - Your business - Alternative trading address page - I want t
       cy.navigateToUrl(alternativeAddressUrl);
     });
 
-    it(`should display validation errors if ${ALTERNATIVE_TRADING_ADDRESS} is left empty`, () => {
-      const errorMessage = ERRORS[ALTERNATIVE_TRADING_ADDRESS].IS_EMPTY;
+    it(`should display validation errors if ${FULL_ADDRESS} is left empty`, () => {
+      const errorMessage = ERRORS[FULL_ADDRESS].IS_EMPTY;
 
       cy.submitAndAssertFieldErrors(
         textareaField,
@@ -132,8 +133,8 @@ context('Insurance - Your business - Alternative trading address page - I want t
       );
     });
 
-    it(`should display validation errors if ${ALTERNATIVE_TRADING_ADDRESS} is over ${MAXIMUM} characters`, () => {
-      const errorMessage = ERRORS[ALTERNATIVE_TRADING_ADDRESS].ABOVE_MAXIMUM;
+    it(`should display validation errors if ${FULL_ADDRESS} is over ${MAXIMUM} characters`, () => {
+      const errorMessage = ERRORS[FULL_ADDRESS].ABOVE_MAXIMUM;
 
       const submittedValue = 'a'.repeat(MAXIMUM + 1);
 
@@ -162,7 +163,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
     it('should have the submitted value', () => {
       cy.navigateToUrl(alternativeAddressUrl);
 
-      cy.checkText(fieldSelector(ALTERNATIVE_TRADING_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+      cy.checkText(fieldSelector(FULL_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
     });
   });
 });
