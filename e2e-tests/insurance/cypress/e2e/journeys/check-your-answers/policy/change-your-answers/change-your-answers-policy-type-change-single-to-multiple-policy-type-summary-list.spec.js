@@ -97,7 +97,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       });
 
       it(POLICY_TYPE, () => {
-        cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+        cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       });
 
       it(TOTAL_MONTHS_OF_COVER, () => {
@@ -105,7 +105,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
         const expectedValue = `${application.POLICY[fieldId]} months`;
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedValue);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
       });
 
       it(TOTAL_SALES_TO_BUYER, () => {
@@ -113,7 +113,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
         const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedValue);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
       });
 
       it(`${MAXIMUM_BUYER_WILL_OWE} with different change link`, () => {
@@ -121,7 +121,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
         const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedMaximumBuyerWillOwe);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedMaximumBuyerWillOwe);
 
         // check the change link
         summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();

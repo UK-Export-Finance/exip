@@ -99,7 +99,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
       });
 
       it(POLICY_TYPE, () => {
-        cy.assertSummaryListRowValueNew(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.SINGLE);
+        cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.SINGLE);
       });
 
       it(CONTRACT_COMPLETION_DATE, () => {
@@ -108,7 +108,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
 
         const expectedDate = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedDate);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedDate);
 
         cy.checkLink(
           summaryList.field(fieldId).changeLink(),
@@ -122,7 +122,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
 
         const expectedTotalContractValue = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValueNew(summaryList, fieldId, expectedTotalContractValue);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedTotalContractValue);
 
         cy.checkLink(
           summaryList.field(fieldId).changeLink(),

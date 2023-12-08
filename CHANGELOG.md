@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.2.6](https://github.com/UK-Export-Finance/exip/compare/v2.2.5...v2.2.6) (2023-12-08)
+
+
+### Miscellaneous
+
+* **EMS-2409:** Rename/align assertSummaryListRowValue cypress commands ([#1481](https://github.com/UK-Export-Finance/exip/issues/1481)) ([f0fbc97](https://github.com/UK-Export-Finance/exip/commit/f0fbc97f4bfa56cdd875ff05aa66efed9459c962))
+
 ## [2.2.5](https://github.com/UK-Export-Finance/exip/compare/v2.2.4...v2.2.5) (2023-11-30)
 
 
