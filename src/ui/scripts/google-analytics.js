@@ -1,4 +1,5 @@
-const id = document.querySelector('script[data-campaign]').getAttribute('data-campaign');
+const id = document.querySelector('script[data-campaign-ga]').getAttribute('data-campaign-ga');
+
 console.info('Intialising Google Analytics with ID:', id);
 
 window.dataLayer = window.dataLayer || [];

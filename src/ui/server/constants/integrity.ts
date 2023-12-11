@@ -6,4 +6,5 @@ export const INTEGRITY = {
   FORM: 'sha512-uyTmQxJNGlnB71lDj1CCOUhKJLch3djXW1Av0BOT4g7K7riFXsDbyUmhNkhUrtpbdFICkh3lFxmviTlOKNTh7w==',
   COOKIES: 'sha512-mdioDv38Cx1nkVD8oPXoJxvie9wf/339EE8g8+jlsVaDrJeJiwUkYBwweF3fqQMZfZzO8ivTXAEyithgBzeEpw==',
   GA: 'sha512-EiZ7aXrH6dgeg6B1KIkNnkTdg/12270bhonXlSgS8gItLqhW/OIAmAkgPbPSDc4moyO0Eioo78TI5m5cgG69AQ==',
+  GA_TAG_MANAGER: 'TODO',
 };

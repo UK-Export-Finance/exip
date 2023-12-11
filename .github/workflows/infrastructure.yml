@@ -607,6 +607,7 @@ jobs:
             TLS_KEY='${{ secrets.TLS_KEY }}' \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
+            GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
             API_URL='https://${{ env.API_URL }}/api/graphql' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \

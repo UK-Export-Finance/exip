@@ -53,8 +53,13 @@
     <script src="/assets/js/cookies.js" type="text/javascript" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
 
     {% if cookieConsent %}
-      <script async src="https://www.googletagmanager.com/gtag/js?id={{ googleAnalyticsId }}"></script>
-      <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign-ga="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
+
+      <script src="/assets/js/googleTagManager.js" type="text/javascript" data-campaign-gtm="{{ googleTagManagerId }}" integrity="{{ SRI.GA_TAG_MANAGER }}" crossorigin="anonymous"></script>
+
+      <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id={{ googleTagManagerId }}" height="0" width="0" class="ukef-hide-iframe"></iframe>
+      </noscript>
     {% endif %}
 
   </body>

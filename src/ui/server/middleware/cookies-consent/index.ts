@@ -13,6 +13,7 @@ export const cookiesConsent = (req: Request, res: Response, next: () => void) =>
     if (req.cookies.optionalCookies === 'true' || req.cookies[COOKIE.NAME.OPTION] === 'true') {
       res.locals.cookieConsent = true;
       res.locals.googleAnalyticsId = process.env.GOOGLE_ANALYTICS_ID;
+      res.locals.googleTagManagerId = process.env.GOOGLE_TAG_MANAGER_ID;
     } else {
       res.locals.cookieConsent = false;
     }

@@ -31,6 +31,7 @@ interface SRI {
   COOKIES: string;
   ACCESSIBILITY: string;
   GA: string;
+  GA_TAG_MANAGER: string;
 }
 
 interface MetaData {
@@ -46,6 +47,7 @@ interface ResponseLocals {
   cookieConsentDecision?: boolean;
   cookieConsentNewDecision?: boolean;
   googleAnalyticsId?: string;
+  googleTagManagerId?: string;
   meta: MetaData;
   SRI: SRI;
 }
