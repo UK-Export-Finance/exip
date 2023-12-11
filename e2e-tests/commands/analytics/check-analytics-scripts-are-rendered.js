@@ -1,14 +1,33 @@
+/**
+ * getDomScriptSrc
+ * Get a particular script's SRC attribute from the DOM.
+ * @param {Array}: Script SRCs
+ * @param {String}: SRC name
+ * @returns {String} Script SRC
+ */
 const getDomScriptSrc = (srcs, name) => {
   const scriptSrc = srcs.filter((src) => src.includes(name));
 
   return scriptSrc;
 };
 
-const getDomScriptAttribute = (domElements, value) =>
+/**
+ * getDomScriptAttribute
+ * Get a particular script attribute from the DOM.
+ * @param {Array}: domElements
+ * @param {String}: attribute
+ * @returns {Array} DOM elemnets that have the provided attribute.
+ */
+const getDomScriptAttribute = (domElements, attribute) =>
   Array.from(domElements)
-    .map((script) => script.getAttribute(value))
+    .map((script) => script.getAttribute(attribute))
     .filter((s) => s);
 
+
+/**
+ * checkAnalyticsScriptsAreRendered
+ * Check that GA and GTM scripts are rendered
+ */
 const checkAnalyticsScriptsAreRendered = () => {
   cy.document().then((document) => {
     const domElements = document.querySelectorAll('script');
