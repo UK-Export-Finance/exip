@@ -56,7 +56,7 @@ context('Cookies consent - accept', () => {
       cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });
 
-    it('should render a google tag manager script and data layer script', () => {
+    it('should render a google analytics and google tag manager scripts', () => {
       cy.checkAnalyticsScriptsAreRendered();
     });
 
@@ -113,7 +113,7 @@ context('Cookies consent - accept', () => {
       partials.cookieBanner.accepted.copy().should('not.exist');
     });
 
-    it('should render a google tag manager script and data layer script', () => {
+    it('should render a google analytics and google tag manager scripts', () => {
       cy.checkAnalyticsScriptsAreRendered();
     });
 
