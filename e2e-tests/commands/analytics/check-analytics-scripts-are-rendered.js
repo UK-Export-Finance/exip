@@ -23,7 +23,6 @@ const getDomScriptAttribute = (domElements, attribute) =>
     .map((script) => script.getAttribute(attribute))
     .filter((s) => s);
 
-
 /**
  * checkAnalyticsScriptsAreRendered
  * Check that GA and GTM scripts are rendered
