@@ -24,7 +24,7 @@
   "dependencies": {
     "@babel/core": "^7.23.3",
     "@babel/plugin-transform-runtime": "^7.23.4",
-    "@babel/preset-env": "^7.23.3",
+    "@babel/preset-env": "^7.23.6",
     "@babel/preset-typescript": "^7.23.3",
     "@graphql-tools/schema": "^10.0.2",
     "@keystone-6/auth": "^7.0.2",
