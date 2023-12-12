@@ -233,7 +233,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     });
 
     it(`should render a validation error when the date is before the ${REQUESTED_START_DATE}`, () => {
-      cy.keyboardInput(field.dayInput(), day);
+      cy.keyboardInput(field.dayInput(), day - 1);
       cy.keyboardInput(field.monthInput(), startDate.getMonth());
       cy.keyboardInput(field.yearInput(), startDate.getFullYear());
       submitButton().click();
@@ -253,7 +253,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
       const endDateUnformatted = date.setFullYear(startDate.getFullYear() + ELIGIBILITY.MAX_COVER_PERIOD_YEARS);
       const endDate = new Date(endDateUnformatted);
 
-      cy.keyboardInput(field.dayInput(), '3');
+      cy.keyboardInput(field.dayInput(), endDate.getDate() + 1);
       cy.keyboardInput(field.monthInput(), endDate.getMonth());
       cy.keyboardInput(field.yearInput(), endDate.getFullYear());
       submitButton().click();
