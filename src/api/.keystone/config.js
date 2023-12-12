@@ -184,6 +184,7 @@ var POLICY = {
   },
   ABOUT_GOODS_OR_SERVICES: {
     DESCRIPTION: "goodsOrServicesDescription",
+    FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
     FINAL_DESTINATION: "finalDestinationCountryCode",
     FINAL_DESTINATION_COUNTRY: "finalDestinationCountry"
   },

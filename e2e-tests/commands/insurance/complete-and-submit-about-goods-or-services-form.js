@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../constants';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/policy';
-import { submitButton, countryInput } from '../../pages/shared';
+import { countryInput, submitButton, yesRadio } from '../../pages/shared';
 import application from '../../fixtures/application';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../fixtures/countries';
 
@@ -17,6 +17,8 @@ const {
 
 export default () => {
   cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
+
+  yesRadio().input().click();
 
   cy.keyboardInput(countryInput.field(FINAL_DESTINATION).input(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
 

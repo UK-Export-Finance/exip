@@ -29,6 +29,7 @@ const createPrepareApplicationTasks = (
   referenceNumber: number,
   otherGroups: TaskListData,
   policyType?: string,
+  finalDestinationKnown?: boolean,
   isUsingBroker?: boolean,
   hasDifferentTradingName?: boolean,
 ): Array<TaskListDataTask> => {
@@ -58,7 +59,7 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-    fields: policyRequiredFields({ policyType, isUsingBroker }),
+    fields: policyRequiredFields({ policyType, finalDestinationKnown, isUsingBroker }),
     dependencies,
   };
 

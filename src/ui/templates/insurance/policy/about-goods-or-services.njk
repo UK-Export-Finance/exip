@@ -2,7 +2,9 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-{% from "govuk/components/select/macro.njk" import govukSelect %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
@@ -81,28 +83,63 @@
           }
         }) }}
 
-        {{ govukSelect({
-          id: FIELDS.FINAL_DESTINATION.ID,
-          name: FIELDS.FINAL_DESTINATION.ID,
-          label: {
-            text: FIELDS.FINAL_DESTINATION.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              'data-cy': FIELDS.FINAL_DESTINATION.ID + '-label',
-              id: FIELDS.FINAL_DESTINATION.ID + '-label'
-            }
-          },
-          items: countries,
-          classes: "govuk-grid-column-one-quarter-from-desktop",
-          attributes: {
-            "data-cy": FIELDS.FINAL_DESTINATION.ID + "-input"
-          },
-          errorMessage: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID] and {
-            text: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID].text,
-            attributes: {
-              "data-cy": FIELDS.FINAL_DESTINATION.ID + "-error-message"
-            }
-          }
+        {% set conditionalYesHtml %}
+          <div class="govuk-grid-row">
+            {% set class = "govuk-form-group" %}
+
+            {% if validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID] %}
+              {% set class = "govuk-form-group govuk-form-group--error-message" %}
+            {% endif %}
+
+            <div class="{{ class }}">
+              {{ govukLabel({
+                for: FIELDS.FINAL_DESTINATION.ID,
+                classes: "govuk-!-font-weight-bold",
+                text: FIELDS.FINAL_DESTINATION.LABEL,
+                attributes: {
+                  id: FIELDS.FINAL_DESTINATION.ID + "-label",
+                  "data-cy": FIELDS.FINAL_DESTINATION.ID + "-label"
+                }
+              }) }}
+
+              {{ govukErrorMessage({
+                text: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID].text,
+                attributes: {
+                  "data-cy": FIELDS.FINAL_DESTINATION.ID + "-error-message"
+                }
+              }) }}
+
+              <div class="govuk-grid-row">
+                <div class="govuk-grid-column-one-half-from-desktop">
+
+                  <select class="govuk-select" id="{{ FIELDS.FINAL_DESTINATION.ID }}" name="{{ FIELDS.FINAL_DESTINATION.ID }}">
+                    <option value="" disabled selected></option>
+
+                    {% for country in countries %}
+                      {% if country.selected %}
+                        <option value="{{ country.text }}" selected>{{ country.text }}</option>
+                      {% else %}
+                        <option value="{{ country.text }}">{{ country.text }}</option>
+                      {% endif %}
+                    {% endfor %}
+                  </select>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        {% endset %}
+
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.FINAL_DESTINATION_KNOWN.ID,
+          legendText: FIELDS.FINAL_DESTINATION_KNOWN.LABEL,
+          legendClass: 'govuk-fieldset__legend--m',
+          legendSpan: true,
+          dataCyLegend: FIELDS.FINAL_DESTINATION_KNOWN.ID + '-legend',
+          submittedAnswer: application.exportContract[FIELDS.FINAL_DESTINATION_KNOWN.ID],
+          errorMessage: validationErrors.errorList[FIELDS.FINAL_DESTINATION_KNOWN.ID],
+          conditionalYesHtml: conditionalYesHtml,
+          horizontalRadios: true
         }) }}
 
       </div>

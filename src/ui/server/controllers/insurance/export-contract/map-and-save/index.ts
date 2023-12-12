@@ -1,6 +1,7 @@
 import hasFormData from '../../../../helpers/has-form-data';
+import mapSubmittedData from '../map-submitted-data/about-goods-or-services';
 import save from '../save-data';
-import { Application, RequestBody, ValidationErrors } from '../../../../../types';
+import { Application, Country, RequestBody, ValidationErrors } from '../../../../../types';
 
 /**
  * mapAndSave
@@ -8,17 +9,20 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../types
  * @param {Express.Request.body} Express request body
  * @param {Application}
  * @param {Object} Validation errors
+ * @param {Array} Countries
  * @returns {Boolean}
  */
-const exportContract = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const exportContract = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors, countries?: Array<Country>) => {
   try {
     if (hasFormData(formBody)) {
+      const populatedData = mapSubmittedData(formBody, countries);
+
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exportContract(application, formBody, validationErrors.errorList);
+        saveResponse = await save.exportContract(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.exportContract(application, formBody);
+        saveResponse = await save.exportContract(application, populatedData);
       }
 
       if (!saveResponse) {
