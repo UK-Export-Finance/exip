@@ -369,3 +369,14 @@ This approach simplifies the handling of different versions of the application a
 These are the key aspects of the UK Export Finance EXIP service codebase and development process. If you have specific questions or need more details about any particular aspect, feel free to ask!
 
 ---
+
+## Sub-resource integrity [(SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
+JavaScript files are protected by SRI security feature which allows the browser to verify the authenticity of the JavaScript files in use.
+We use `SHA512` hashing algrothim for all our JavaScript files.
+
+To calculate file hash use the following Bash command with reference to the file in question (Webpack compiled JS file).
+
+```bash
+cat FILENAME.js | openssl dgst -sha512 -binary | openssl base64 -A
+```
+
