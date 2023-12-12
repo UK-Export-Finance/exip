@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.2](https://github.com/UK-Export-Finance/exip/compare/v2.3.1...v2.3.2) (2023-12-12)
+
+
+### Miscellaneous
+
+* **deps:** dependencies updates ([#1503](https://github.com/UK-Export-Finance/exip/issues/1503)) ([578361d](https://github.com/UK-Export-Finance/exip/commit/578361d6e46faf4f8b34ab157ca89e71694f0d7d))
+
 ## [2.3.1](https://github.com/UK-Export-Finance/exip/compare/v2.3.0...v2.3.1) (2023-12-12)
 
 
