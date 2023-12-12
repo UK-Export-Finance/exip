@@ -12,6 +12,7 @@ module.exports = {
     cookies: './scripts/cookies.js',
     formSubmission: './scripts/form-submission.js',
     googleAnalytics: './scripts/google-analytics.js',
+    googleTagManager: './scripts/google-tag-manager.js',
   },
   output: {
     path: path.join(__dirname, 'public/js'),

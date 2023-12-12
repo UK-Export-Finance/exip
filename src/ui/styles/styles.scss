@@ -47,3 +47,8 @@ $govuk-new-link-styles: true;
 .ukef-application-submitted {
   max-width: 360px;
 }
+
+.ukef-hide-iframe {
+  display: none;
+  visibility: hidden;
+}
