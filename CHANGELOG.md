@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.1](https://github.com/UK-Export-Finance/exip/compare/v2.3.0...v2.3.1) (2023-12-12)
+
+
+### Miscellaneous
+
+* **EMS-2394:** Replace mock date constructions to use native JS instead of date-fns ([#1463](https://github.com/UK-Export-Finance/exip/issues/1463)) ([00b6732](https://github.com/UK-Export-Finance/exip/commit/00b673267db92bcb51313ca4caf03260a2cb46bd))
+
 ## [2.3.0](https://github.com/UK-Export-Finance/exip/compare/v2.2.6...v2.3.0) (2023-12-12)
 
 
