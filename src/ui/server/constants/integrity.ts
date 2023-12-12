@@ -5,5 +5,6 @@ export const INTEGRITY = {
   GOVUK: 'sha512-EdyNYxz0W40gqYt1R48s+ye7mW0p7SwUTnkyUcMJ0eGRsucWodRmVpC5+QAtUBZSYeOMeWumRLnqJZ2zzkDRqg==',
   FORM: 'sha512-uyTmQxJNGlnB71lDj1CCOUhKJLch3djXW1Av0BOT4g7K7riFXsDbyUmhNkhUrtpbdFICkh3lFxmviTlOKNTh7w==',
   COOKIES: 'sha512-mdioDv38Cx1nkVD8oPXoJxvie9wf/339EE8g8+jlsVaDrJeJiwUkYBwweF3fqQMZfZzO8ivTXAEyithgBzeEpw==',
-  GA: 'sha512-EiZ7aXrH6dgeg6B1KIkNnkTdg/12270bhonXlSgS8gItLqhW/OIAmAkgPbPSDc4moyO0Eioo78TI5m5cgG69AQ==',
+  GA: 'sha512-GYc1xJpYfgNCIBH1NDfs7GhzBdepN1aPqueETCi5ZFIaompI6v++beAnZgbxpSyKr2GqO/oUpm86HZyoe3tD1Q==',
+  GA_TAG_MANAGER: 'sha512-dAe3s9iSAGIFpxcjHcJRUNomEj+fQnwCG3Yd3xj1uPhFZakBF1tZzeO3ktWRhSkCoMD6rbORULsnbOPr4Vaekg==',
 };
