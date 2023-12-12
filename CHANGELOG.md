@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.0](https://github.com/UK-Export-Finance/exip/compare/v2.2.6...v2.3.0) (2023-12-12)
+
+
+### Features
+
+* **EMS-2386:** Add Google tag manager script ([#1486](https://github.com/UK-Export-Finance/exip/issues/1486)) ([370adb5](https://github.com/UK-Export-Finance/exip/commit/370adb50f1d95ecf63308b96036bbd10b1522350))
+
 ## [2.2.6](https://github.com/UK-Export-Finance/exip/compare/v2.2.5...v2.2.6) (2023-12-08)
 
 
