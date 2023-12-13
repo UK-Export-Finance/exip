@@ -10,6 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../../export-contract/map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
@@ -278,7 +279,7 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplicationWithoutCountryCode,
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
           countries: mapCountries(mockCountries),
           validationErrors: generateValidationErrors(payload),
         };

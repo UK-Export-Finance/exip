@@ -48,7 +48,7 @@ const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
+context('Insurance - Policy - About goods or services page - final destination not known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
 
@@ -187,7 +187,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
     it(`should redirect to ${NAME_ON_POLICY}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
@@ -197,7 +197,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm();
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
@@ -210,9 +210,8 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm();
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-        // cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
         cy.navigateToUrl(url);
 
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
@@ -223,7 +222,6 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
         cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.NAME);
       });
 
-      // TODO - tests for answering "no"
       it(`should have a visible ${FINAL_DESTINATION}`, () => {
         cy.navigateToUrl(url);
 
@@ -238,7 +236,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm();
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
         cy.clickBackLink();
 

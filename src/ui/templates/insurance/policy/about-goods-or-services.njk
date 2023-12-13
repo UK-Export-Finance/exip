@@ -136,7 +136,7 @@
           legendClass: 'govuk-fieldset__legend--m',
           legendSpan: true,
           dataCyLegend: FIELDS.FINAL_DESTINATION_KNOWN.ID + '-legend',
-          submittedAnswer: application.exportContract[FIELDS.FINAL_DESTINATION_KNOWN.ID],
+          submittedAnswer: submittedValues[FIELDS.FINAL_DESTINATION_KNOWN.ID] or application.exportContract[FIELDS.FINAL_DESTINATION_KNOWN.ID],
           errorMessage: validationErrors.errorList[FIELDS.FINAL_DESTINATION_KNOWN.ID],
           conditionalYesHtml: conditionalYesHtml,
           horizontalRadios: true

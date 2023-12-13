@@ -20,7 +20,7 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
   cy.completeAndSubmitMultipleContractPolicyForm({ policyMaximumValue });
-  cy.completeAndSubmitAboutGoodsOrServicesForm();
+  cy.completeAndSubmitAboutGoodsOrServicesForm({});
   cy.completeAndSubmitNameOnPolicyForm({ sameName: !differentPolicyContact });
 
   if (differentPolicyContact) {

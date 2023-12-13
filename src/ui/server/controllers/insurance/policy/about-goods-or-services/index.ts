@@ -11,6 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../../export-contract/map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
@@ -150,7 +151,7 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application,
-        submittedValues: payload,
+        submittedValues: sanitiseData(payload),
         countries: mappedCountries,
         validationErrors,
       });
