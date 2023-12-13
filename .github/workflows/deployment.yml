@@ -72,7 +72,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: Azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -109,7 +109,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Environment 🧱
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -137,7 +137,7 @@ jobs:
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Create new temporary slot
@@ -159,7 +159,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp restart \
@@ -183,7 +183,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: Azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -218,7 +218,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Environment 🧱
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -239,7 +239,7 @@ jobs:
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Create new temporary slot
@@ -261,7 +261,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp restart \
