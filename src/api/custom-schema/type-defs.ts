@@ -204,6 +204,11 @@ const typeDefs = `
     cannotApply: Boolean
   }
 
+  type MappedCurrency {
+    isoCode: String!
+    name: String!
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -335,6 +340,9 @@ const typeDefs = `
 
     """ get CIS countries from APIM """
     getApimCisCountries: [MappedCisCountry]
+
+    """ get currencies from APIM """
+    getApimCurrencies: [MappedCurrency]
   }
 `;
 

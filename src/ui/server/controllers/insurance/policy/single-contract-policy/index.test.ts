@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
-import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapCurrencies from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -63,7 +63,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
-    api.external.getCurrencies = getCurrenciesSpy;
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -129,7 +129,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
   });
 
   describe('get', () => {
-    it('should call api.external.getCurrencies', async () => {
+    it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
       expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -203,7 +203,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -216,7 +216,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -231,7 +231,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
   describe('post', () => {
     beforeEach(() => {
       getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
-      api.external.getCurrencies = getCurrenciesSpy;
+      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
     });
 
     const date = new Date();
@@ -305,7 +305,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should call api.external.getCurrencies', async () => {
+      it('should call api.keystone.APIM.getCurrencies', async () => {
         await get(req, res);
 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -385,7 +385,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         describe('when the get currencies API call fails', () => {
           beforeEach(() => {
             getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-            api.external.getCurrencies = getCurrenciesSpy;
+            api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -398,7 +398,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
             getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-            api.external.getCurrencies = getCurrenciesSpy;
+            api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

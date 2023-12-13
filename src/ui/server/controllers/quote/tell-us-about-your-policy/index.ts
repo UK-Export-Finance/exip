@@ -3,7 +3,7 @@ import { FIELD_IDS as ALL_FIELD_IDS, PERCENTAGES_OF_COVER, ROUTES, TEMPLATES } f
 import api from '../../../api';
 import { objectHasProperty } from '../../../helpers/object';
 import { isPopulatedArray } from '../../../helpers/array';
-import { mapCurrencies } from '../../../helpers/mappings/map-currencies';
+import mapCurrencies from '../../../helpers/mappings/map-currencies';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import corePageVariables from '../../../helpers/page-variables/core';
 import constructPayload from '../../../helpers/construct-payload';
@@ -105,7 +105,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 const get = async (req: Request, res: Response) => {
   try {
     const { submittedData } = req.session;
-    const currencies = await api.external.getCurrencies();
+    const currencies = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(currencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -176,7 +176,7 @@ const post = async (req: Request, res: Response) => {
       ...payload,
     });
 
-    const currencies = await api.external.getCurrencies();
+    const currencies = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(currencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);

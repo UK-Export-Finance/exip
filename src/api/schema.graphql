@@ -2315,6 +2315,9 @@ type Query {
 
   """ get CIS countries from APIM """
   getApimCisCountries: [MappedCisCountry]
+
+  """ get currencies from APIM """
+  getApimCurrencies: [MappedCurrency]
 }
 
 union AuthenticatedItem = User
@@ -2611,4 +2614,9 @@ type MappedCisCountry {
   canApplyOnline: Boolean
   canApplyOffline: Boolean
   cannotApply: Boolean
+}
+
+type MappedCurrency {
+  isoCode: String!
+  name: String!
 }
