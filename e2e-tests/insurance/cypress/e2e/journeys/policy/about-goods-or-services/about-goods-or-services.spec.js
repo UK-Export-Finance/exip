@@ -48,7 +48,7 @@ const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - final destination not known - As an exporter, I want to enter the details of the export contract', () => {
+context('Insurance - Policy - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
 

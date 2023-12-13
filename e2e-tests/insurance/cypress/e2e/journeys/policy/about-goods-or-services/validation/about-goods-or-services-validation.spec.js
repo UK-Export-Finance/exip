@@ -1,8 +1,7 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/policy';
-import { countryInput, yesRadio, submitButton } from '../../../../../../../pages/shared';
+import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-import application from '../../../../../../../fixtures/application';
 
 const { INSURANCE } = ROUTES;
 
@@ -82,10 +81,9 @@ context('Insurance - Policy - About goods or services page - form validation', (
     it(`should render a ${FINAL_DESTINATION} validation error`, () => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
-      yesRadio().input().click();
-
-      submitButton().click();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({
+        includeFinalDestination: false,
+      });
 
       const expectedErrorsCount = 1;
 
