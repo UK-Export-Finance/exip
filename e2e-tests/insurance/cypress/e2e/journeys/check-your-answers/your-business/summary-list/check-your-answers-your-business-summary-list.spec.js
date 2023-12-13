@@ -17,6 +17,9 @@ const {
     WEBSITE,
     PHONE_NUMBER,
   },
+  ALTERNATIVE_TRADING_ADDRESS: {
+    FULL_ADDRESS,
+  },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
     YEARS_EXPORTING,
@@ -70,6 +73,10 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
 
   it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
     checkSummaryList[TRADING_ADDRESS]();
+  });
+
+  it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
+    checkSummaryList[FULL_ADDRESS](false);
   });
 
   it(`should render a ${WEBSITE} summary list row`, () => {

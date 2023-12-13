@@ -46,6 +46,16 @@ insuranceBusinessRouter.post(
   `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_ROOT_SAVE_AND_BACK}`,
   postAlternativeTradingAddressSaveAndBack,
 );
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, getAlternativeTradingAddress);
+insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, postAlternativeTradingAddress);
+insuranceBusinessRouter.get(
+  `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`,
+  getAlternativeTradingAddress,
+);
+insuranceBusinessRouter.post(
+  `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`,
+  postAlternativeTradingAddress,
+);
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`, getNatureOfBusiness);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_SAVE_AND_BACK}`, postNatureOfBusinessSaveAndBack);

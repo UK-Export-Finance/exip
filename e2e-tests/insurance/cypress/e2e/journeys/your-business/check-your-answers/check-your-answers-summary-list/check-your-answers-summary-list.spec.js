@@ -26,6 +26,9 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
+      ALTERNATIVE_TRADING_ADDRESS: {
+        FULL_ADDRESS,
+      },
       HAS_CREDIT_CONTROL,
     },
   },
@@ -37,68 +40,106 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
   let referenceNumber;
   let url;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+  describe(`${TRADING_ADDRESS} as no`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+        cy.startYourBusinessSection();
 
-      cy.completeAndSubmitCompanyDetails({});
-      cy.completeAndSubmitNatureOfYourBusiness();
-      cy.completeAndSubmitTurnoverForm();
-      cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitCompanyDetails({});
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitCreditControlForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
+      checkSummaryList[HAS_DIFFERENT_TRADING_NAME]();
+    });
+
+    it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
+      checkSummaryList[TRADING_ADDRESS]();
+    });
+
+    it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
+      checkSummaryList[FULL_ADDRESS](false);
+    });
+
+    it(`should render a ${WEBSITE} summary list row`, () => {
+      checkSummaryList[WEBSITE]();
+    });
+
+    it(`should render a ${PHONE_NUMBER} summary list row`, () => {
+      checkSummaryList[PHONE_NUMBER]();
+    });
+
+    it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {
+      checkSummaryList[GOODS_OR_SERVICES]();
+    });
+
+    it(`should render a ${YEARS_EXPORTING} summary list row`, () => {
+      checkSummaryList[YEARS_EXPORTING]();
+    });
+
+    it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
+      checkSummaryList[EMPLOYEES_UK]();
+    });
+
+    it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
+      checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
+    });
+
+    it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
+      checkSummaryList[PERCENTAGE_TURNOVER]();
+    });
+
+    it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
+      checkSummaryList[HAS_CREDIT_CONTROL]();
     });
   });
 
-  beforeEach(() => {
-    cy.saveSession();
+  describe(`${TRADING_ADDRESS} as yes`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-    cy.navigateToUrl(url);
-  });
+        cy.startYourBusinessSection();
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
+        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitCreditControlForm({});
 
-  it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
-    checkSummaryList[HAS_DIFFERENT_TRADING_NAME]();
-  });
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
 
-  it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-    checkSummaryList[TRADING_ADDRESS]();
-  });
+    beforeEach(() => {
+      cy.saveSession();
 
-  it(`should render a ${WEBSITE} summary list row`, () => {
-    checkSummaryList[WEBSITE]();
-  });
+      cy.navigateToUrl(url);
+    });
 
-  it(`should render a ${PHONE_NUMBER} summary list row`, () => {
-    checkSummaryList[PHONE_NUMBER]();
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  it(`should render a ${GOODS_OR_SERVICES} summary list row`, () => {
-    checkSummaryList[GOODS_OR_SERVICES]();
-  });
-
-  it(`should render a ${YEARS_EXPORTING} summary list row`, () => {
-    checkSummaryList[YEARS_EXPORTING]();
-  });
-
-  it(`should render a ${EMPLOYEES_UK} summary list row`, () => {
-    checkSummaryList[EMPLOYEES_UK]();
-  });
-
-  it(`should render a ${ESTIMATED_ANNUAL_TURNOVER} summary list row`, () => {
-    checkSummaryList[ESTIMATED_ANNUAL_TURNOVER]();
-  });
-
-  it(`should render a ${PERCENTAGE_TURNOVER} summary list row`, () => {
-    checkSummaryList[PERCENTAGE_TURNOVER]();
-  });
-
-  it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
-    checkSummaryList[HAS_CREDIT_CONTROL]();
+    it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
+      checkSummaryList[FULL_ADDRESS](true);
+    });
   });
 });

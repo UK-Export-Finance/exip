@@ -1,4 +1,5 @@
-import generateCompanyOrOrganisationFields, { generateAddressObject, generateContactDetailsObject } from '.';
+import generateCompanyOrOrganisationFields, { generateContactDetailsObject } from '.';
+import generateAddressObject from '../../generate-address-object';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
@@ -7,7 +8,6 @@ import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
 import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -25,22 +25,6 @@ const {
 const checkAndChange = false;
 
 describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields', () => {
-  describe('generateAddressObject', () => {
-    describe(`when ${ADDRESS} is provided`, () => {
-      it('should return a fully populated object', () => {
-        const response = generateAddressObject(mockApplicationBuyer);
-
-        const address = replaceNewLineWithLineBreak(mockApplicationBuyer[ADDRESS]);
-
-        const expected = {
-          address,
-        };
-
-        expect(response).toEqual(expected);
-      });
-    });
-  });
-
   describe('generateContactDetailsObject', () => {
     describe(`when ${FIRST_NAME} and ${LAST_NAME} are provided`, () => {
       it('should return a fully populated object', () => {
@@ -60,10 +44,11 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
 
   describe('generateCompanyOrOrganisationFields', () => {
     const mockAnswers = mockApplicationBuyer;
+    const mockAddress = mockAnswers[ADDRESS];
 
     const { referenceNumber } = mockApplication;
 
-    const addressObject = generateAddressObject(mockAnswers);
+    const addressObject = generateAddressObject(mockAddress);
     const contactDetailsObject = generateContactDetailsObject(mockAnswers);
 
     const expectedBase = [

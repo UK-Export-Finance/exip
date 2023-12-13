@@ -37,6 +37,9 @@ export const FIELDS = {
     LABEL: "What's your alternative trading address?",
     REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
     REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
+    SUMMARY: {
+      TITLE: 'Different trading address',
+    },
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {

@@ -23,7 +23,15 @@ const { COMPANY_DETAILS: COMPANY_DETAILS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORT
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { COMPANY_DETAILS_SAVE_AND_BACK, ALTERNATIVE_TRADING_ADDRESS_ROOT, NATURE_OF_BUSINESS_ROOT, CHECK_YOUR_ANSWERS, COMPANY_DETAILS_ROOT },
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS_SAVE_AND_BACK,
+    ALTERNATIVE_TRADING_ADDRESS_ROOT,
+    NATURE_OF_BUSINESS_ROOT,
+    CHECK_YOUR_ANSWERS,
+    COMPANY_DETAILS_ROOT,
+    ALTERNATIVE_TRADING_ADDRESS_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -139,18 +147,32 @@ const post = async (req: Request, res: Response) => {
 
     /**
      * If "different trading address" has been submitted as "yes"/true,
-     * Redirect to the "alternative trading address" route.
+     * Redirect to the "alternative trading address" route if not a check/check or change route.
      */
-    if (submittedValues[TRADING_ADDRESS]) {
+    if (submittedValues[TRADING_ADDRESS] && !(isChangeRoute(req.originalUrl) || isCheckAndChangeRoute(req.originalUrl))) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`);
     }
 
+    // check and check-and-change routes
+    let changeRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+    let checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+    // if is a change route and TRADING_ADDRESS is true, then redirect ALTERNATIVE_TRADING_ADDRESS_CHANGE
+    if (submittedValues[TRADING_ADDRESS] && isChangeRoute(req.originalUrl)) {
+      changeRoute = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
+    }
+
+    // if is a check-and-change route and TRADING_ADDRESS is true, then redirect ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE
+    if (submittedValues[TRADING_ADDRESS] && isCheckAndChangeRoute(req.originalUrl)) {
+      checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
+    }
+
     if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+      return res.redirect(changeRoute);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      return res.redirect(checkAndChangeRoute);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`);
