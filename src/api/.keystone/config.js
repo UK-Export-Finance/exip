@@ -393,6 +393,12 @@ var VERSIONS = [
     TOTAL_VALUE_OF_CONTRACT: 5e5,
     DEFAULT_FINAL_DESTINATION_KNOWN: true,
     DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false
+  },
+  {
+    VERSION_NUMBER: "2",
+    OVER_500K_SUPPORT: true,
+    DEFAULT_FINAL_DESTINATION_KNOWN: null,
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null
   }
 ];
 var versions_default = VERSIONS;
@@ -409,7 +415,7 @@ var getApplicationDefinition = (versionNumber) => {
 var get_application_definition_default = getApplicationDefinition;
 
 // constants/application/versions/latest.ts
-var LATEST_VERSION_NUMBER = "1";
+var LATEST_VERSION_NUMBER = "2";
 var latest_default = LATEST_VERSION_NUMBER;
 
 // constants/application/index.ts
@@ -1066,13 +1072,6 @@ var lists = {
   Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      /**
-       * NOTE:
-       * - For MVP, needPreCreditPeriodCover is part of the eligibility UI flow.
-       * - Post MVP/next phase needPreCreditPeriodCover is part of the application flow.
-       * - To avoid data migration, we save the eligibility answer as part of the "policy", instead of eligibility.
-       * - In the next phase, the defaultValue can be removed, to default null.
-       */
       needPreCreditPeriodCover: nullable_checkbox_default(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: (0, import_fields.select)({
         options: [

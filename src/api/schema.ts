@@ -271,13 +271,6 @@ export const lists = {
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
-      /**
-       * NOTE:
-       * - For MVP, needPreCreditPeriodCover is part of the eligibility UI flow.
-       * - Post MVP/next phase needPreCreditPeriodCover is part of the application flow.
-       * - To avoid data migration, we save the eligibility answer as part of the "policy", instead of eligibility.
-       * - In the next phase, the defaultValue can be removed, to default null.
-       */
       needPreCreditPeriodCover: nullableCheckbox(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: select({
         options: [
