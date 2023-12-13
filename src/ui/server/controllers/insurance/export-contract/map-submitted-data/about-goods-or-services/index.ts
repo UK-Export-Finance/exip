@@ -11,6 +11,7 @@ const {
  * mapSubmittedData
  * Map About goods or services fields
  * if FINAL_DESTINATION is provided, map as the country ISO code.
+ * if FINAL_DESTINATION_KNOWN is false, delete FINAL_DESTINATIN
  * @param {Express.Request.body} formBody
  * @param {Array} countries
  * @returns {Object} populatedData
@@ -33,8 +34,8 @@ const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): ob
     delete populatedData[FINAL_DESTINATION];
   }
 
-  if (!hasFinalDestination) {
-    delete populatedData[FINAL_DESTINATION];
+  if (formBody[FINAL_DESTINATION_KNOWN] === 'false') {
+    populatedData[FINAL_DESTINATION] = '';
   }
 
   return populatedData;

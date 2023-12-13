@@ -8,6 +8,8 @@ const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
 } = POLICY_FIELD_IDS;
 
+const mockCountryName = mockCountries[0].name;
+
 describe('controllers/insurance/export-contract/map-submitted-data/about-goods-or-services', () => {
   let mockFormBody: RequestBody;
 
@@ -20,8 +22,6 @@ describe('controllers/insurance/export-contract/map-submitted-data/about-goods-o
 
   describe(`when ${FINAL_DESTINATION} field is provided`, () => {
     it(`should return the form body with ${FINAL_DESTINATION} as a country ISO code`, () => {
-      const mockCountryName = mockCountries[0].name;
-
       const mockBodyWithCountry = {
         ...mockFormBody,
         [FINAL_DESTINATION]: mockCountryName,
@@ -38,17 +38,20 @@ describe('controllers/insurance/export-contract/map-submitted-data/about-goods-o
     });
   });
 
-  describe(`when ${FINAL_DESTINATION} field is NOT provided`, () => {
-    it(`should return the form body without ${FINAL_DESTINATION}`, () => {
+  describe(`when ${FINAL_DESTINATION_KNOWN} field is a false string`, () => {
+    it(`should return the form body with an empty ${FINAL_DESTINATION}`, () => {
       const mockBodyWithoutCountry = {
         ...mockFormBody,
-        [FINAL_DESTINATION]: '',
+        [FINAL_DESTINATION]: mockCountryName,
+        [FINAL_DESTINATION_KNOWN]: 'false',
       };
 
       const result = mapSubmittedData(mockBodyWithoutCountry, mockCountries);
 
       const expected = {
         ...mockFormBody,
+        [FINAL_DESTINATION]: '',
+        [FINAL_DESTINATION_KNOWN]: 'false',
       };
 
       expect(result).toEqual(expected);
