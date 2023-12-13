@@ -12,6 +12,7 @@ const {
   QUOTE: { BUYER_COUNTRY, BUYER_BODY },
 } = ROUTES;
 
+const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
 const baseUrl = Cypress.config('baseUrl');
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based', () => {
@@ -92,10 +93,12 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     });
 
     describe('when submitting with a supported country', () => {
-      beforeEach(() => {
-        cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_QUOTE_SUPPORT.ONLINE.NAME);
+      const field = countryInput.field(FIELD_ID);
 
-        const results = countryInput.field(FIELD_ID).results();
+      beforeEach(() => {
+        cy.keyboardInput(field.input(), supportedCountryName);
+
+        const results = field.results();
         results.first().click();
 
         submitButton().click();
@@ -110,11 +113,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       it('should prepopulate the field when going back to the page via back link', () => {
         cy.clickBackLink();
 
-        const expectedValue = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
+        cy.checkValue(field, supportedCountryName);
 
-        cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
-
-        cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
+        cy.checkText(field.results(), supportedCountryName);
       });
     });
   });
