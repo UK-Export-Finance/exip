@@ -1,10 +1,3 @@
-import {
-  add,
-  getDate,
-  getMonth,
-  getYear,
-  sub,
-} from 'date-fns';
 import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
@@ -39,7 +32,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
   let url;
 
   const date = new Date();
-  const futureDate = add(date, { years: 1 });
+  const year = date.getFullYear();
+  const futureDate = new Date(date.setFullYear(year + 1));
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -87,11 +81,14 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.navigateToUrl(url);
 
       // enter an invalid date
-      const yesterday = sub(date, { days: 1 });
+      const now = new Date();
+      const day = new Date(now).getDate();
 
-      cy.keyboardInput(field.dayInput(), getDate(yesterday));
-      cy.keyboardInput(field.monthInput(), getMonth(yesterday));
-      cy.keyboardInput(field.yearInput(), getYear(yesterday));
+      const yesterday = new Date(now.setDate(day - 1));
+
+      cy.keyboardInput(field.dayInput(), yesterday.getDate());
+      cy.keyboardInput(field.monthInput(), yesterday.getMonth());
+      cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
 
       saveAndBackButton().click();
     });
@@ -123,8 +120,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.dayInput(), '1');
-      cy.keyboardInput(field.monthInput(), getMonth(futureDate));
-      cy.keyboardInput(field.yearInput(), getYear(futureDate));
+      cy.keyboardInput(field.monthInput(), new Date(futureDate).getMonth());
+      cy.keyboardInput(field.yearInput(), new Date(futureDate).getFullYear());
 
       saveAndBackButton().click();
     });
@@ -144,8 +141,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       submitButton().click();
 
       field.dayInput().should('have.value', '1');
-      field.monthInput().should('have.value', getMonth(futureDate));
-      field.yearInput().should('have.value', getYear(futureDate));
+      field.monthInput().should('have.value', new Date(futureDate).getMonth());
+      field.yearInput().should('have.value', new Date(futureDate).getFullYear());
     });
   });
 });

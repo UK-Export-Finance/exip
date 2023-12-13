@@ -1,4 +1,3 @@
-import { getDate, getMonth, getYear } from 'date-fns';
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
@@ -228,17 +227,22 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     });
 
     const date = new Date();
+    const futureDate = new Date(date.setDate(date.getDate() + 1));
 
-    // Add 1 day
-    const initFutureDate = new Date(date.setDate(date.getDate() + 1));
+    const day = futureDate.getDate();
+    const month = futureDate.getMonth();
+    const year = futureDate.getFullYear();
+
+    const oneYearFromNow = new Date(futureDate.setFullYear(year + 1)).getFullYear();
+    const twoYearsFromNow = new Date(futureDate.setFullYear(year + 2)).getFullYear();
 
     const validBody = {
-      [`${REQUESTED_START_DATE}-day`]: getDate(initFutureDate),
-      [`${REQUESTED_START_DATE}-month`]: getMonth(initFutureDate),
-      [`${REQUESTED_START_DATE}-year`]: getYear(initFutureDate) + 1,
-      [`${CONTRACT_COMPLETION_DATE}-day`]: getDate(initFutureDate),
-      [`${CONTRACT_COMPLETION_DATE}-month`]: getMonth(initFutureDate),
-      [`${CONTRACT_COMPLETION_DATE}-year`]: getYear(initFutureDate) + 2,
+      [`${REQUESTED_START_DATE}-day`]: day,
+      [`${REQUESTED_START_DATE}-month`]: month,
+      [`${REQUESTED_START_DATE}-year`]: oneYearFromNow,
+      [`${CONTRACT_COMPLETION_DATE}-day`]: day,
+      [`${CONTRACT_COMPLETION_DATE}-month`]: month,
+      [`${CONTRACT_COMPLETION_DATE}-year`]: twoYearsFromNow,
       [TOTAL_CONTRACT_VALUE]: '150000',
       [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
     };
