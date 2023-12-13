@@ -227,7 +227,6 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
         expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
 
         const expectedValidationErrors = false;
-        // const expectedCountries = mapCountries(mockCountries, payload[FINAL_DESTINATION]);
 
         expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, expectedValidationErrors, mockCountries);
       });
