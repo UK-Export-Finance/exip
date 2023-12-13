@@ -1,6 +1,6 @@
-import { RequestBody } from '../../../../../../types';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { objectHasProperty } from '../../../../../helpers/object';
+import { RequestBody } from '../../../../../../types';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS },

@@ -39,7 +39,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/about-goods-o
   });
 
   describe(`when ${FINAL_DESTINATION} field is NOT provided`, () => {
-    it('should return the form body as is', () => {
+    it(`should return the form body without ${FINAL_DESTINATION}`, () => {
       const mockBodyWithoutCountry = {
         ...mockFormBody,
         [FINAL_DESTINATION]: '',
@@ -49,7 +49,6 @@ describe('controllers/insurance/export-contract/map-submitted-data/about-goods-o
 
       const expected = {
         ...mockFormBody,
-        [FINAL_DESTINATION]: '',
       };
 
       expect(result).toEqual(expected);
