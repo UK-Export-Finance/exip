@@ -138,8 +138,8 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.deleteApplication(referenceNumber);
     });
 
-    it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
-      checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
+    it(`should render a ${FULL_ADDRESS} summary list row`, () => {
+      checkSummaryList[FULL_ADDRESS]({});
     });
   });
 });
