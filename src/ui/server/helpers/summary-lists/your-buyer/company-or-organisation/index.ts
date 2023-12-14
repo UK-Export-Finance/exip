@@ -6,7 +6,7 @@ import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import generateAddressObject from '../../generate-address-object';
 import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
@@ -20,21 +20,6 @@ const {
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
 } = FIELD_IDS;
-
-/**
- * generateAddressObject
- * generates object with address and country to generate html string for address section
- * @param {ApplicationBuyer} answers
- * @returns {Object}
- */
-export const generateAddressObject = (answers: ApplicationBuyer) => {
-  // replace new lines with line breaks to display in summary list
-  const address = replaceNewLineWithLineBreak(answers[ADDRESS]);
-
-  return {
-    address,
-  };
-};
 
 /**
  * generateContactDetailsObject
@@ -60,7 +45,7 @@ export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
  * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
  */
 const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
-  const addressObject = generateAddressObject(answers);
+  const addressObject = generateAddressObject(answers[ADDRESS]);
   const contactDetailsObject = generateContactDetailsObject(answers);
 
   const fields = [

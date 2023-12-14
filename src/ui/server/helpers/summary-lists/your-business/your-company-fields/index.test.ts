@@ -4,21 +4,29 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
-import generateYourCompanyFields from '.';
+import generateYourCompanyFields, { optionalFields } from '.';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationCompany } from '../../../../../types';
+import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
+import generateAddressObject from '../../generate-address-object';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS_CHANGE,
+    COMPANY_DETAILS_CHECK_AND_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 const {
   COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE },
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_ADDRESS },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -53,6 +61,7 @@ const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, f
     },
     mapYesNoField(mockAnswers[TRADING_ADDRESS]),
   ),
+  ...optionalFields(mockAnswers, referenceNumber, checkAndChange),
   fieldGroupItem({
     field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
     data: mockAnswers,
@@ -68,33 +77,83 @@ const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, f
 ];
 
 describe('server/helpers/summary-lists/your-business/your-company-fields', () => {
-  describe('when a company has a financial year end date', () => {
-    const mockAnswers = mockCompany;
+  describe('optionalFields', () => {
     const { referenceNumber } = mockApplication;
-    const checkAndChange = false;
-    const financialYearEndDateValue = formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT);
 
-    const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+    it(`should return an empty array when ${TRADING_ADDRESS} is false`, () => {
+      const mockAnswers = {
+        ...mockCompany,
+        [TRADING_ADDRESS]: false,
+      };
+      const checkAndChange = false;
 
-    it('should return fields and values from the submitted data/answers', () => {
-      const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
+      const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
 
-      expect(result).toEqual(expectedBase);
+      expect(result).toEqual([]);
+    });
+
+    it(`should return optional field when ${TRADING_ADDRESS} is true`, () => {
+      const mockAnswers = {
+        ...mockCompany,
+        [TRADING_ADDRESS]: true,
+      };
+      const checkAndChange = false;
+
+      const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
+
+      const address = generateAddressObject(mockAnswers[DIFFERENT_TRADING_ADDRESS][FULL_ADDRESS]);
+
+      const expected = [
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS, FULL_ADDRESS),
+            data: mockAnswers,
+            href: generateChangeLink(
+              ALTERNATIVE_TRADING_ADDRESS_CHANGE,
+              ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
+              `#${FULL_ADDRESS}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          generateMultipleFieldHtml(address),
+        ),
+      ];
+
+      expect(result).toEqual(expected);
     });
   });
 
-  describe('when a company does not have a financial year end date', () => {
-    const mockAnswers = mockCompany;
-    const { referenceNumber } = mockApplication;
-    const checkAndChange = false;
-    const financialYearEndDateValue = DEFAULT.EMPTY;
+  describe('generateYourCompanyFields', () => {
+    describe('when a company has a financial year end date', () => {
+      const mockAnswers = mockCompany;
+      const { referenceNumber } = mockApplication;
+      const checkAndChange = false;
+      const financialYearEndDateValue = formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT);
 
-    const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+      const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
 
-    it('should return fields and values from the submitted data/answers with dash for financial year end date', () => {
-      const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
+      it('should return fields and values from the submitted data/answers', () => {
+        const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
 
-      expect(result).toEqual(expectedBase);
+        expect(result).toEqual(expectedBase);
+      });
+    });
+
+    describe('when a company does not have a financial year end date', () => {
+      const mockAnswers = mockCompany;
+      const { referenceNumber } = mockApplication;
+      const checkAndChange = false;
+      const financialYearEndDateValue = DEFAULT.EMPTY;
+
+      const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+
+      it('should return fields and values from the submitted data/answers with dash for financial year end date', () => {
+        const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
+
+        expect(result).toEqual(expectedBase);
+      });
     });
   });
 });

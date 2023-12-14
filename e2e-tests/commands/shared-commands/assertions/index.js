@@ -63,6 +63,7 @@ Cypress.Commands.add('checkRadioInputYesAriaLabel', require('./check-radio-input
 Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-no-aria-label'));
 
 Cypress.Commands.add('assertSummaryListRow', require('./assert-summary-list-row'));
+Cypress.Commands.add('assertSummaryListRowDoesNotExist', require('./assert-summary-list-row-does-not-exist'));
 Cypress.Commands.add('assertSummaryListRowKey', require('./assert-summary-list-row-key'));
 Cypress.Commands.add('assertSummaryListRowChangeText', require('./assert-summary-list-row-change-text'));
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));

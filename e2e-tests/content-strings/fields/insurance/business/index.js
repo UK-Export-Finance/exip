@@ -35,6 +35,9 @@ export const EXPORTER_BUSINESS_FIELDS = {
     MAXIMUM: 1000,
     REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
     REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
+    SUMMARY: {
+      TITLE: 'Different trading address',
+    },
   },
   NATURE_OF_YOUR_BUSINESS: {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {

@@ -1,5 +1,5 @@
 import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
-import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -31,6 +31,8 @@ const {
     COMPANY_DETAILS_CHANGE,
     COMPANY_DETAILS_ROOT,
     COMPANY_DETAILS_CHECK_AND_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
@@ -187,11 +189,11 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe(`when req.body has ${TRADING_ADDRESS} with a value of '${FIELD_VALUES.YES}'`, () => {
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' but is not a check or check-and-change route`, () => {
         it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}`, async () => {
           req.body = {
             ...validBody,
-            [TRADING_ADDRESS]: FIELD_VALUES.YES,
+            [TRADING_ADDRESS]: 'true',
           };
 
           await post(req, res);
@@ -201,9 +203,44 @@ describe('controllers/insurance/business/companies-details', () => {
         });
       });
 
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' and is a check route`, () => {
+        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, async () => {
+          req.body = {
+            ...validBody,
+            [TRADING_ADDRESS]: 'true',
+          };
+
+          req.originalUrl = COMPANY_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' and is a check-and-change route`, () => {
+        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, async () => {
+          req.body = {
+            ...validBody,
+            [TRADING_ADDRESS]: 'true',
+          };
+
+          req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = validBody;
+          req.body = {
+            ...validBody,
+            [TRADING_ADDRESS]: 'false',
+          };
 
           req.originalUrl = COMPANY_DETAILS_CHANGE;
 
@@ -216,7 +253,11 @@ describe('controllers/insurance/business/companies-details', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = validBody;
+          req.body = {
+            ...validBody,
+            [TRADING_ADDRESS]: 'false',
+          };
+
           req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
 
           await post(req, res);
