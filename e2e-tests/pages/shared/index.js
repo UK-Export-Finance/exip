@@ -16,6 +16,7 @@ const headingCaption = () => cy.get('[data-cy="heading-caption"]');
 const intro = () => cy.get('[data-cy="intro"]');
 const listIntro = () => cy.get('[data-cy="list-intro"]');
 const listItem = (index) => cy.get(`[data-cy="list-item-${index}"]`);
+const listOutro = () => cy.get('[data-cy="list-outro"]');
 const yesNoRadioHint = () => cy.get('[data-cy="yes-no-input-hint"]');
 const yesRadio = (fieldId) => ({
   label: () => cy.get('[data-cy="yes"]'),
@@ -54,6 +55,7 @@ export {
   intro,
   listIntro,
   listItem,
+  listOutro,
   yesNoRadioHint,
   yesRadio,
   yesRadioInput,

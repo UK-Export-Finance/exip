@@ -2,9 +2,8 @@ import { saveAndBackButton, submitButton } from '../../../../../../pages/shared'
 import partials from '../../../../../../partials';
 import { workingWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 
 const {
   WORKING_WITH_BUYER: {
@@ -19,7 +18,7 @@ const {
   YOUR_BUYER: {
     WORKING_WITH_BUYER,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
@@ -32,11 +31,11 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
+      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
       cy.assertUrl(url);
     });

@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import { workingWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -20,9 +19,6 @@ const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
 } = ROUTES.INSURANCE;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
-
 context('Insurance - Your Buyer - Working with buyer page - As an exporter, I want to confirm my buyer details', () => {
   let referenceNumber;
   let url;
@@ -32,7 +28,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 

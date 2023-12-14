@@ -14,7 +14,7 @@ const {
   INSURANCE_ROOT,
   POLICY: { ROOT: POLICY_ROOT },
   EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION },
+  YOUR_BUYER: { ROOT: YOUR_BUYER_ROOT },
   EXPORT_CONTRACT: { ROOT: EXPORT_CONTRACT_ROOT },
 } = INSURANCE_ROUTES;
 
@@ -51,7 +51,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const YOUR_BUYER = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_OR_ORGANISATION}`,
+        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
         fields: yourBuyerRequiredFields(),
