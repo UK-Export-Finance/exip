@@ -1,13 +1,12 @@
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import sectionStartPageVariables from '../../../helpers/section-start-page-variables';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
 const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: { COMPANY_DETAILS_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -18,11 +17,11 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
  * pageVariables
  * Page URLs
  * @param {Number} Application reference number
- * @returns {Object} Page variables
+ * @returns {Object} sectionStartPageVariables
  */
-export const pageVariables = (referenceNumber: number) => ({
-  START_NOW_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
-  ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+export const pageVariables = (referenceNumber: number) => sectionStartPageVariables({
+  referenceNumber,
+  startNowRoute: COMPANY_DETAILS_ROOT,
 });
 
 /**

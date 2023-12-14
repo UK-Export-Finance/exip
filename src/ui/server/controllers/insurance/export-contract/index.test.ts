@@ -2,12 +2,15 @@ import { TEMPLATE, pageVariables, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import sectionStartPageVariables from '../../../helpers/section-start-page-variables';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
+const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/export-contract/index', () => {
   let req: Request;
@@ -23,13 +26,13 @@ describe('controllers/insurance/export-contract/index', () => {
   });
 
   describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
-        START_NOW_URL: '#',
-      };
+    it('should return sectionStartPageVariables', () => {
+      const expected = sectionStartPageVariables({
+        referenceNumber,
+        startNowRoute: '#',
+      });
 
-      expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
+      expect(pageVariables(referenceNumber)).toEqual(expected);
     });
   });
 
@@ -48,7 +51,7 @@ describe('controllers/insurance/export-contract/index', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
       });
     });
