@@ -75,7 +75,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
 
     it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
-      checkSummaryList[FULL_ADDRESS](false);
+      checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
     });
 
     it(`should render a ${WEBSITE} summary list row`, () => {
@@ -139,7 +139,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
 
     it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
-      checkSummaryList[FULL_ADDRESS](true);
+      checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
     });
   });
 });

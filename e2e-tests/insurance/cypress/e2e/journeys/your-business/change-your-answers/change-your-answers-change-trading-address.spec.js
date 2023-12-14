@@ -172,7 +172,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
         const expected = FIELD_VALUES.NO;
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
 
-        checkSummaryList[FULL_ADDRESS](false);
+        checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
       });
     });
   });

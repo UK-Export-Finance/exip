@@ -48,7 +48,7 @@ const checkYourBusinessSummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [FULL_ADDRESS]: (shouldRender) => {
+  [FULL_ADDRESS]: ({ shouldRender = true }) => {
     const fieldId = FULL_ADDRESS;
 
     if (shouldRender) {

@@ -76,7 +76,7 @@ context('Insurance - Check your answers - Your business - Summary list', () => {
   });
 
   it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
-    checkSummaryList[FULL_ADDRESS](false);
+    checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
   });
 
   it(`should render a ${WEBSITE} summary list row`, () => {
