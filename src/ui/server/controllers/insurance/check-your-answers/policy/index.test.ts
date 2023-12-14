@@ -46,7 +46,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
 
     req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
-    api.external.getCurrencies = getCurrenciesSpy;
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   describe('FIELD_ID', () => {
@@ -157,7 +157,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -170,7 +170,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

@@ -172,10 +172,10 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
         insuranceEligibility: {},
       };
 
-      api.external.getCurrencies = getCurrenciesSpy;
+      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
     });
 
-    it('should call api.external.getCurrencies', async () => {
+    it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
       expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -332,7 +332,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -344,7 +344,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -359,7 +359,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
     beforeEach(() => {
-      api.external.getCurrencies = getCurrenciesSpy;
+      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       req.body = mockAnswers;
       req.session.submittedData = {
         quoteEligibility: previousFlowSubmittedData,
@@ -368,7 +368,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
     });
 
     describe('when a currency code has been submitted', () => {
-      it('should call api.external.getCurrencies', async () => {
+      it('should call api.keystone.APIM.getCurrencies', async () => {
         await post(req, res);
 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -588,7 +588,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
@@ -600,7 +600,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${ROUTES.PROBLEM_WITH_SERVICE}`, async () => {
