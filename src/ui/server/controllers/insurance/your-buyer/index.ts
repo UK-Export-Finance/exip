@@ -14,9 +14,6 @@ const {
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
 
-// TODO shared helper for this "start page variables".
-// The only difference between each page is the start now URL.
-
 /**
  * pageVariables
  * Page URLs
