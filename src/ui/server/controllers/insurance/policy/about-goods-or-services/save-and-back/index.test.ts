@@ -1,15 +1,19 @@
 import { post } from '.';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../../export-contract/map-and-save';
 import generateValidationErrors from '../validation';
+import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockApplication, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
+
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
-} = ROUTES;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+} = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/about-goods-or-services/save-and-back', () => {
   let req: Request;
@@ -17,14 +21,14 @@ describe('controllers/insurance/policy/about-goods-or-services/save-and-back', (
 
   jest.mock('../../map-and-save/policy');
 
-  let mockMapAndSave = jest.fn(() => Promise.resolve(true));
-  mapAndSave.exportContract = mockMapAndSave;
+  let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
+  const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
   const refNumber = Number(mockApplication.referenceNumber);
 
   const mockFormBody = {
     _csrf: '1234',
-    mock: true,
+    [DESCRIPTION]: 'Mock description',
   };
 
   beforeEach(() => {
@@ -34,26 +38,92 @@ describe('controllers/insurance/policy/about-goods-or-services/save-and-back', (
     req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;
+
+    api.keystone.countries.getAll = getCountriesSpy;
+    mapAndSave.exportContract = mapAndSaveSpy;
   });
 
   describe('when the form has data', () => {
-    it('should call mapAndSave.exportContract with data from constructPayload function, application and validationErrors', async () => {
-      await post(req, res);
+    // jest.resetAllMocks();
 
-      const payload = constructPayload(req.body, FIELD_IDS);
-
-      const validationErrors = generateValidationErrors(payload);
-
-      expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
-      expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+    beforeEach(() => {
+      api.keystone.countries.getAll = getCountriesSpy;
+      mapAndSave.exportContract = mapAndSaveSpy;
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, async () => {
-      await post(req, res);
+    describe(`when the form has ${FINAL_DESTINATION}`, () => {
+      beforeEach(() => {
+        req.body[FINAL_DESTINATION] = mockCountries[0].isoCode;
+      });
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+      it('should call api.keystone.countries.getAll', async () => {
+        await post(req, res);
 
-      expect(res.redirect).toHaveBeenCalledWith(expected);
+        expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should call mapAndSave.exportContract with data from constructPayload function, application, validationErrors and countries', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, validationErrors, mockCountries);
+      });
+
+      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe(`when the form does NOT have ${FINAL_DESTINATION}`, () => {
+      beforeEach(() => {
+        jest.resetAllMocks();
+
+        api.keystone.countries.getAll = getCountriesSpy;
+
+        mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
+        mapAndSave.exportContract = mapAndSaveSpy;
+
+        req.body = {
+          _csrf: '1234',
+          [DESCRIPTION]: 'Mock description',
+        };
+      });
+
+      it('should NOT call api.keystone.countries.getAll', async () => {
+        await post(req, res);
+
+        expect(getCountriesSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it('should call mapAndSave.exportContract with data from constructPayload function, application, validationErrors and empty countries', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, validationErrors, []);
+      });
+
+      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+        // mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
+        mapAndSave.exportContract = mapAndSaveSpy;
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
     });
   });
 
@@ -84,8 +154,8 @@ describe('controllers/insurance/policy/about-goods-or-services/save-and-back', (
   describe('api error handling', () => {
     describe('when the mapAndSave call does not return anything', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.exportContract = mockMapAndSave;
+        mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+        mapAndSave.exportContract = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -97,9 +167,9 @@ describe('controllers/insurance/policy/about-goods-or-services/save-and-back', (
 
     describe('when the mapAndSave call fails', () => {
       beforeEach(() => {
-        mockMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
+        mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-        mapAndSave.exportContract = mockMapAndSave;
+        mapAndSave.exportContract = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

@@ -1,0 +1,2 @@
+var EXIP;!function(){const t=document.querySelector("script[data-campaign-gtm]").getAttribute("data-campaign-gtm");console.info("Intialising Google Tag Manager with ID:",t),function(t,e,a,n,g){t[n]=t[n]||[],t[n].push({"gtm.start":(new Date).getTime(),event:"gtm.js"});var o=e.getElementsByTagName(a)[0],i=e.createElement(a);i.async=!0,i.src="https://www.googletagmanager.com/gtm.js?id="+g,o.parentNode.insertBefore(i,o)}(window,document,"script","dataLayer",t),(EXIP=void 0===EXIP?{}:EXIP).googleTagManager={}}();
+//# sourceMappingURL=googleTagManager.js.map

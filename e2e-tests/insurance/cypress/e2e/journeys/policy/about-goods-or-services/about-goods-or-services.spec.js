@@ -2,6 +2,9 @@ import {
   headingCaption,
   submitButton,
   saveAndBackButton,
+  yesRadio,
+  yesRadioInput,
+  noRadio,
   countryInput,
 } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
@@ -35,15 +38,17 @@ const {
 
 const {
   POLICY: {
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policy;
 
+const finalDestinationField = countryInput.field(FINAL_DESTINATION);
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - As an exporter, I want to enter the details of the export contract', () => {
+context('Insurance - Policy - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
 
@@ -88,7 +93,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders `description` label, hint, prefix and input', () => {
+    it(`renders ${DESCRIPTION} label, hint, prefix and input`, () => {
       const fieldId = DESCRIPTION;
       const field = aboutGoodsOrServicesPage[fieldId];
 
@@ -105,41 +110,71 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       field.textarea().should('exist');
     });
 
-    it('renders `final destination` label and input with disabled first input', () => {
+    describe(`${FINAL_DESTINATION_KNOWN} label and input`, () => {
+      const fieldId = FINAL_DESTINATION_KNOWN;
+
+      it('renders `yes` radio button', () => {
+        yesRadio().input().should('exist');
+
+        cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+        cy.checkRadioInputYesAriaLabel(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+      });
+
+      it('renders `no` radio button', () => {
+        cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+        cy.checkRadioInputNoAriaLabel(FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+      });
+    });
+
+    it(`renders ${FINAL_DESTINATION} label and input`, () => {
       const fieldId = FINAL_DESTINATION;
-      const field = countryInput.field(fieldId);
+      const field = finalDestinationField;
 
       cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
 
       field.input().should('exist');
     });
 
-    describe('searchable autocomplete input', () => {
+    describe(`searchable autocomplete input (${FINAL_DESTINATION})`, () => {
       const fieldId = FINAL_DESTINATION;
       const field = countryInput.field(fieldId);
 
-      it('has working client side JS', () => {
-        checkAutocompleteInput.hasWorkingClientSideJS(field);
+      it('should NOT be visible by default', () => {
+        checkAutocompleteInput.isNotVisible(field);
       });
 
-      it('renders an input', () => {
-        checkAutocompleteInput.rendersInput(field);
-      });
+      describe(`when clicking the 'yes' ${FINAL_DESTINATION_KNOWN} radio`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
 
-      it('renders `no results` message when no results are found', () => {
-        checkAutocompleteInput.rendersNoResultsMessage(field, 'test');
-      });
+          yesRadio().input().click();
+        });
 
-      it('renders a single country result after searching', () => {
-        checkAutocompleteInput.rendersSingleResult(field, 'Alg');
-      });
+        it('has working client side JS', () => {
+          checkAutocompleteInput.hasWorkingClientSideJS(field);
+        });
 
-      it('renders multiple country results after searching', () => {
-        checkAutocompleteInput.rendersMultipleResults(field);
-      });
+        it('renders an input', () => {
+          checkAutocompleteInput.rendersInput(field);
+        });
 
-      it('allows user to remove a selected country and search again', () => {
-        checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, COUNTRIES[0].NAME, COUNTRIES[1].NAME);
+        it('renders `no results` message when no results are found', () => {
+          checkAutocompleteInput.rendersNoResultsMessage(field, 'test');
+        });
+
+        it('renders a single country result after searching', () => {
+          checkAutocompleteInput.rendersSingleResult(field, 'Alg');
+        });
+
+        it('renders multiple country results after searching', () => {
+          checkAutocompleteInput.rendersMultipleResults(field);
+        });
+
+        it('allows user to remove a selected country and search again', () => {
+          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, COUNTRIES[0].NAME, COUNTRIES[1].NAME);
+        });
       });
     });
 
@@ -152,7 +187,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
     it(`should redirect to ${NAME_ON_POLICY}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
@@ -162,7 +197,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       it('should retain the `type of policy and exports` task status as `in progress`', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm();
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
@@ -175,14 +210,22 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm();
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
+        cy.navigateToUrl(url);
 
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
+        yesRadioInput().should('be.checked');
+
         const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
         cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.NAME);
+      });
+
+      it(`should have a visible ${FINAL_DESTINATION}`, () => {
+        cy.navigateToUrl(url);
+
+        checkAutocompleteInput.isVisible(finalDestinationField);
       });
     });
 
@@ -193,7 +236,7 @@ context('Insurance - Policy - About goods or services page - As an exporter, I w
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm();
+        cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
         cy.clickBackLink();
 

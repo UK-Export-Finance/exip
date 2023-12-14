@@ -1,14 +1,19 @@
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import hasFormData from '../../../../../helpers/has-form-data';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import callMapAndSave from '../../../export-contract/call-map-and-save';
+import { objectHasProperty } from '../../../../../helpers/object';
+import api from '../../../../../api';
+import mapAndSave from '../../../export-contract/map-and-save';
 import { Request, Response } from '../../../../../../types';
 
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
 const {
-  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
-} = ROUTES;
+  ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION },
+} = POLICY_FIELD_IDS;
 
 /**
  * post
@@ -27,10 +32,26 @@ export const post = async (req: Request, res: Response) => {
 
     const { referenceNumber } = req.params;
 
+    /**
+     * If form data is populated:
+     * 1) generate a payload.
+     * 2) generate validation errors.
+     * 3) if FINAL_DESTINATION is provided, fetch countries.
+     * 4) call mapAndSave and redirect
+     * Otherwise, redirect to ALL_SECTIONS
+     */
     if (hasFormData(req.body)) {
       const payload = constructPayload(req.body, FIELD_IDS);
 
-      const saveResponse = await callMapAndSave(payload, application, generateValidationErrors(payload));
+      const validationErrors = generateValidationErrors(payload);
+
+      let countries = [];
+
+      if (objectHasProperty(req.body, FINAL_DESTINATION)) {
+        countries = await api.keystone.countries.getAll();
+      }
+
+      const saveResponse = await mapAndSave.exportContract(payload, application, validationErrors, countries);
 
       if (!saveResponse) {
         return res.redirect(PROBLEM_WITH_SERVICE);

@@ -1,4 +1,3 @@
-import { add, getDate, getMonth, getYear } from 'date-fns';
 import requestedStartDateRules from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
@@ -19,6 +18,12 @@ const {
 } = ERROR_MESSAGES;
 
 describe('shared-validation/requested-start-date', () => {
+  const date = new Date();
+
+  const day = date.getDate();
+  const month = date.getMonth();
+  const year = date.getFullYear();
+
   const mockErrors = {
     summary: [],
     errorList: {},
@@ -27,8 +32,8 @@ describe('shared-validation/requested-start-date', () => {
   describe('when day field is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-month`]: '1',
-        [`${FIELD_ID}-year`]: '2022',
+        [`${FIELD_ID}-month`]: month,
+        [`${FIELD_ID}-year`]: year,
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -42,8 +47,8 @@ describe('shared-validation/requested-start-date', () => {
   describe('when month field is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: '10',
-        [`${FIELD_ID}-year`]: '2022',
+        [`${FIELD_ID}-day`]: day,
+        [`${FIELD_ID}-year`]: year,
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -57,8 +62,8 @@ describe('shared-validation/requested-start-date', () => {
   describe('when year field is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: '10',
-        [`${FIELD_ID}-month`]: '1',
+        [`${FIELD_ID}-day`]: day,
+        [`${FIELD_ID}-month`]: month,
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -87,13 +92,10 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when the date is invalid', () => {
     it('should return validation error', () => {
-      const date = new Date();
-      const futureDate = add(date, { days: 1, months: 1 });
-
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: getDate(futureDate),
+        [`${FIELD_ID}-day`]: day,
         [`${FIELD_ID}-month`]: '24',
-        [`${FIELD_ID}-year`]: getYear(futureDate),
+        [`${FIELD_ID}-year`]: year,
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -106,13 +108,12 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when the date is in the past', () => {
     it('should return validation error', () => {
-      const today = new Date();
-      const yesterday = today.setDate(today.getDate() - 1);
+      const yesterday = new Date(date.setDate(day - 1));
 
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: getDate(yesterday),
-        [`${FIELD_ID}-month`]: getMonth(yesterday),
-        [`${FIELD_ID}-year`]: getYear(yesterday),
+        [`${FIELD_ID}-day`]: yesterday.getDate(),
+        [`${FIELD_ID}-month`]: month,
+        [`${FIELD_ID}-year`]: year,
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -125,12 +126,12 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when the date is today', () => {
     it('should NOT return a validation error', () => {
-      const now = new Date();
+      const today = new Date();
 
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: getDate(now),
-        [`${FIELD_ID}-month`]: getMonth(now) + 1,
-        [`${FIELD_ID}-year`]: getYear(now),
+        [`${FIELD_ID}-day`]: today.getDate(),
+        [`${FIELD_ID}-month`]: today.getMonth() + 1,
+        [`${FIELD_ID}-year`]: today.getFullYear(),
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -141,13 +142,12 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
-      const date = new Date();
-      const futureDate = add(date, { months: 6 });
+      const futureDate = new Date(date.setMonth(month + 6));
 
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: getDate(futureDate),
-        [`${FIELD_ID}-month`]: getMonth(futureDate) + 1,
-        [`${FIELD_ID}-year`]: getYear(futureDate),
+        [`${FIELD_ID}-day`]: futureDate.getDate(),
+        [`${FIELD_ID}-month`]: futureDate.getMonth(),
+        [`${FIELD_ID}-year`]: futureDate.getFullYear(),
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);

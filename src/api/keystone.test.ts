@@ -1,4 +1,3 @@
-import { addMonths } from 'date-fns';
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
@@ -113,9 +112,10 @@ describe('Create an Application', () => {
     const submissionDeadlineMonth = new Date(application.submissionDeadline).getMonth();
     const submissionDeadlineYear = new Date(application.submissionDeadline).getFullYear();
 
-    const now = new Date();
+    const date = new Date();
+    const month = date.getMonth();
 
-    const expectedDate = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+    const expectedDate = new Date(date.setMonth(month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS));
 
     const expectedDay = new Date(expectedDate).getDate();
     const expectedMonth = new Date(expectedDate).getMonth();
@@ -195,7 +195,7 @@ describe('Create an Application', () => {
     });
 
     expect(exportContract.application.id).toEqual(application.id);
-    expect(exportContract.finalDestinationKnown).toEqual(true);
+    expect(exportContract.finalDestinationKnown).toEqual(null);
   });
 
   test('it should add the application ID to the broker entry', async () => {

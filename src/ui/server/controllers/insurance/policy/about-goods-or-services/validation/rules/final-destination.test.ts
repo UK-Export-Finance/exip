@@ -1,39 +1,51 @@
 import finalDestinationRules from './final-destination';
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FIELD_ID },
-    },
+  POLICY: {
+    ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { [FIELD_ID]: ERROR_MESSAGE },
-    },
+    POLICY: { ABOUT_GOODS_OR_SERVICES: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/policy/about-goods-or-services/validation/rules/final-destination', () => {
-  const mockBody = {
-    [FIELD_ID]: '',
-  };
-
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  it('should return the result of emptyFieldValidation', () => {
-    const result = finalDestinationRules(mockBody, mockErrors);
+  describe(`when ${FINAL_DESTINATION_KNOWN} is 'true'`, () => {
+    it('should return the result of emptyFieldValidation with FINAL_DESTINATION field ID/error mesage', () => {
+      const mockBody = {
+        [FINAL_DESTINATION_KNOWN]: 'true',
+      };
 
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const result = finalDestinationRules(mockBody, mockErrors);
 
-    expect(result).toEqual(expected);
+      const expected = emptyFieldValidation(mockBody, FINAL_DESTINATION, ERROR_MESSAGE[FINAL_DESTINATION].IS_EMPTY, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${FINAL_DESTINATION_KNOWN} is NOT 'true'`, () => {
+    it('should return the result of emptyFieldValidation with FINAL_DESTINATION_KNOWN field ID/error mesage', () => {
+      const mockBody = {
+        [FINAL_DESTINATION_KNOWN]: '',
+      };
+
+      const result = finalDestinationRules(mockBody, mockErrors);
+
+      const expected = emptyFieldValidation(mockBody, FINAL_DESTINATION_KNOWN, ERROR_MESSAGE[FINAL_DESTINATION_KNOWN].IS_EMPTY, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
   });
 });

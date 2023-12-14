@@ -125,6 +125,9 @@ export const POLICY_FIELDS = {
         TITLE: "Goods or services you're exporting",
       },
     },
+    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN]: {
+      LABEL: 'Do you know the final destination of the goods or services?',
+    },
     [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
       SUMMARY: {

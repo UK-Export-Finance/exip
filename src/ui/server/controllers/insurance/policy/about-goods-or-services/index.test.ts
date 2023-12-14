@@ -10,6 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../../export-contract/map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
@@ -22,7 +23,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/about-goods-or-services', () => {
@@ -69,6 +70,10 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
             ID: DESCRIPTION,
             ...FIELDS.ABOUT_GOODS_OR_SERVICES[DESCRIPTION],
           },
+          FINAL_DESTINATION_KNOWN: {
+            ID: FINAL_DESTINATION_KNOWN,
+            ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION_KNOWN],
+          },
           FINAL_DESTINATION: {
             ID: FINAL_DESTINATION,
             ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION],
@@ -89,7 +94,7 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [DESCRIPTION, FINAL_DESTINATION];
+      const expected = [DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -199,8 +204,15 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
 
     const validBody = {
       [DESCRIPTION]: 'Mock description',
+      [FINAL_DESTINATION_KNOWN]: 'true',
       [FINAL_DESTINATION]: countryIsoCode,
     };
+
+    it('should call api.keystone.countries.getAll', async () => {
+      await post(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
@@ -214,7 +226,9 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
 
         expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application);
+        const expectedValidationErrors = false;
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, expectedValidationErrors, mockCountries);
       });
 
       it(`should redirect to ${NAME_ON_POLICY}`, async () => {
@@ -251,12 +265,6 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should call api.keystone.countries.getAll', async () => {
-        await post(req, res);
-
-        expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-      });
-
       it('should render template with validation errors', async () => {
         await post(req, res);
 
@@ -270,7 +278,7 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplicationWithoutCountryCode,
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
           countries: mapCountries(mockCountries),
           validationErrors: generateValidationErrors(payload),
         };

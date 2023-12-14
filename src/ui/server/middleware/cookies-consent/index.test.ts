@@ -53,6 +53,12 @@ describe('middleware/cookies-consent', () => {
 
       expect(res.locals.googleAnalyticsId).toEqual(process.env.GOOGLE_ANALYTICS_ID);
     });
+
+    it('should add process.env.GOOGLE_TAG_MANAGER_ID to res.locals.googleTagManagerId', () => {
+      cookiesConsent(req, res, next);
+
+      expect(res.locals.googleTagManagerId).toEqual(process.env.GOOGLE_TAG_MANAGER_ID);
+    });
   });
 
   describe("when req.cookies['__Secure-optionalCookies'] is `true`", () => {

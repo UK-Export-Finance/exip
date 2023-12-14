@@ -219,7 +219,7 @@ context('Cookies page - Insurance', () => {
           cy.checkCookiesConsentBannerDoesNotExist();
         });
 
-        it('should render a google tag manager script and data layer script', () => {
+        it('should render a google analytics and google tag manager scripts', () => {
           cy.checkAnalyticsScriptsAreRendered();
         });
 

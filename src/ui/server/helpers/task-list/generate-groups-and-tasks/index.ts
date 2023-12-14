@@ -11,13 +11,16 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * generateGroupsAndTasks
  * @param {Number} Application reference number
  * @param {String} Application "Policy type"
+ * @param {Boolean} Application "Final destination known" flag
  * @param {Boolean} Application "Is using broker" flag
+ * @param {Boolean} Application "Has different trading name" flag
  * @param {String} Application "Has anti-bribery code of conduct" flag
  * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (
   referenceNumber: number,
   policyType?: string,
+  finalDestinationKnown?: boolean,
   isUsingBroker?: boolean,
   hasDifferentTradingName?: boolean,
   hasAntiBriberyCodeOfConduct?: boolean | null,
@@ -36,7 +39,7 @@ const generateGroupsAndTasks = (
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(referenceNumber, groups, policyType, isUsingBroker, hasDifferentTradingName),
+      tasks: prepareApplicationTasks(referenceNumber, groups, policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName),
     },
   ] as TaskListData;
 

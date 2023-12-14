@@ -1,4 +1,10 @@
 const checkAutocompleteInput = {
+  isVisible: (field) => {
+    field.input().should('be.visible');
+  },
+  isNotVisible: (field) => {
+    field.input().should('not.be.visible');
+  },
   hasWorkingClientSideJS: (field) => {
     field.input().should('have.class', 'autocomplete__input');
   },

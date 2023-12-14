@@ -52,7 +52,7 @@ model Application {
   declarationId                    String?           @map("declaration")
   policyContact                    PolicyContact?    @relation("Application_policyContact", fields: [policyContactId], references: [id])
   policyContactId                  String?           @map("policyContact")
-  version                          String            @default("1")
+  version                          String            @default("2")
   dealType                         String            @default("EXIP") @mysql.VarChar(4)
   from_ReferenceNumber_application ReferenceNumber[] @relation("ReferenceNumber_application")
   from_Policy_application          Policy[]          @relation("Policy_application")

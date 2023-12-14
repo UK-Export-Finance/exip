@@ -1,5 +1,26 @@
 # Changelog
 
+## [2.3.2](https://github.com/UK-Export-Finance/exip/compare/v2.3.1...v2.3.2) (2023-12-12)
+
+
+### Miscellaneous
+
+* **deps:** dependencies updates ([#1503](https://github.com/UK-Export-Finance/exip/issues/1503)) ([578361d](https://github.com/UK-Export-Finance/exip/commit/578361d6e46faf4f8b34ab157ca89e71694f0d7d))
+
+## [2.3.1](https://github.com/UK-Export-Finance/exip/compare/v2.3.0...v2.3.1) (2023-12-12)
+
+
+### Miscellaneous
+
+* **EMS-2394:** Replace mock date constructions to use native JS instead of date-fns ([#1463](https://github.com/UK-Export-Finance/exip/issues/1463)) ([00b6732](https://github.com/UK-Export-Finance/exip/commit/00b673267db92bcb51313ca4caf03260a2cb46bd))
+
+## [2.3.0](https://github.com/UK-Export-Finance/exip/compare/v2.2.6...v2.3.0) (2023-12-12)
+
+
+### Features
+
+* **EMS-2386:** Add Google tag manager script ([#1486](https://github.com/UK-Export-Finance/exip/issues/1486)) ([370adb5](https://github.com/UK-Export-Finance/exip/commit/370adb50f1d95ecf63308b96036bbd10b1522350))
+
 ## [2.2.6](https://github.com/UK-Export-Finance/exip/compare/v2.2.5...v2.2.6) (2023-12-08)
 
 

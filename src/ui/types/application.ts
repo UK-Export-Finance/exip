@@ -45,6 +45,7 @@ interface ApplicationPolicy {
 interface ApplicationExportContract {
   id: string;
   goodsOrServicesDescription?: string;
+  finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
 }
 
