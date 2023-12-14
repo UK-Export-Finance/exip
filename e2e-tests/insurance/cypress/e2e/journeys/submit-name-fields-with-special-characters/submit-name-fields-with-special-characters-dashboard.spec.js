@@ -12,8 +12,6 @@ const {
   },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-
 const nameWithSpecialCharacters = mockNameWithSpecialCharacters(mockApplication.BUYER[BUYER_NAME]);
 
 context('Insurance - Name fields - Dashboard fields should render special characters without character codes after submission', () => {
@@ -23,7 +21,7 @@ context('Insurance - Name fields - Dashboard fields should render special charac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      taskList.prepareApplication.tasks.buyer.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({
         buyerName: nameWithSpecialCharacters,

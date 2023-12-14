@@ -26,7 +26,7 @@ const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Insurance policy - start page - As an Exporter, I want to provide the details of the export transaction that I need a cover for, So that UKEF can issue a credit insurance cover that meet my export transaction need', () => {
+context('Insurance - Insurance policy - Start page - As an Exporter, I want to provide the details of the export transaction that I need a cover for, So that UKEF can issue a credit insurance cover that meet my export transaction need', () => {
   let referenceNumber;
   let insurancePolicyRootUrl;
   let typeOfPolicyUrl;

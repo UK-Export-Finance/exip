@@ -18,12 +18,6 @@ const {
   ROOT, DASHBOARD, ALL_SECTIONS,
 } = INSURANCE_ROUTES;
 
-const {
-  taskList: {
-    prepareApplication: { tasks },
-  },
-} = partials.insurancePartials;
-
 const mockAccountSpecialCharacters = {
   ...mockAccount,
   [FIRST_NAME]: mockNameWithSpecialCharacters(mockAccount[FIRST_NAME]),
@@ -98,7 +92,7 @@ context('Insurance - Name fields - Header and page fields should render special 
       beforeEach(() => {
         cy.navigateToUrl(allSectionsUrl);
 
-        tasks.buyer.link().click();
+        cy.startInsuranceYourBuyerSection();
 
         cy.completeAndSubmitCompanyOrOrganisationForm({
           buyerName: nameWithSpecialCharacters,

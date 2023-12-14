@@ -120,7 +120,7 @@ context('Insurance - All sections - new application', () => {
           const task = taskList.prepareApplication.tasks.buyer;
 
           const expectedText = TASKS.LIST.PREPARE_APPLICATION.TASKS.BUYER;
-          const expectedHref = `${ROOT}/${referenceNumber}${YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+          const expectedHref = `${ROOT}/${referenceNumber}${YOUR_BUYER.ROOT}`;
 
           cy.checkLink(
             task.link(),

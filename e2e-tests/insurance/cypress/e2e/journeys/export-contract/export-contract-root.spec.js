@@ -25,7 +25,7 @@ const task = taskList.prepareApplication.tasks.exportContract;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - start page - As an Exporter, I want to provide details on my export contract, So that UKEF can have clarity on the export contract', () => {
+context('Insurance - Export contract - Start page - As an Exporter, I want to provide details on my export contract, So that UKEF can have clarity on the export contract', () => {
   let referenceNumber;
   let exportContractRootUrl;
   let allSectionsUrl;

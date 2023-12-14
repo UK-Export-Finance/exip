@@ -1,5 +1,6 @@
 import { YOUR_BUYER } from '../../../constants/routes/insurance/your-buyer';
 import { get, post } from '../../../test-mocks/mock-router';
+import { get as buyerRootGet } from '../../../controllers/insurance/your-buyer';
 import { get as getCompanyOrOrganisation, post as postCompanyOrOrganisation } from '../../../controllers/insurance/your-buyer/company-or-organisation';
 import { post as postCompanyOrOrganisationSaveAndBack } from '../../../controllers/insurance/your-buyer/company-or-organisation/save-and-back';
 
@@ -18,8 +19,10 @@ describe('routes/insurance/your-buyer', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(7);
+    expect(get).toHaveBeenCalledTimes(8);
     expect(post).toHaveBeenCalledTimes(9);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION}`, getCompanyOrOrganisation);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION}`, postCompanyOrOrganisation);

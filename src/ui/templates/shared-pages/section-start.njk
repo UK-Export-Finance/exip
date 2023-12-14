@@ -32,7 +32,11 @@
         {% endfor %}
       </ul>
 
-      <p class="govuk-body govuk-!-margin-bottom-9"  data-cy="outro">{{ CONTENT_STRINGS.OUTRO }}</p>
+      {% if CONTENT_STRINGS.LIST.OUTRO %}
+        <p class="govuk-body" data-cy="list-outro">{{ CONTENT_STRINGS.LIST.OUTRO }}</p>
+      {% endif %}
+
+      <p class="govuk-body govuk-!-margin-bottom-9" data-cy="outro">{{ CONTENT_STRINGS.OUTRO }}</p>
 
       <div class="govuk-button-group">
         <a class="govuk-button" data-cy="start-now-link" href="{{ START_NOW_URL }}">

@@ -47,9 +47,14 @@ const completePrepareYourApplicationSectionSingle = ({
   cy.completeAndSubmitTurnoverForm();
   cy.completeAndSubmitCreditControlForm({});
 
+  // submit "your business - check your answers" form
   submitButton().click();
 
+  // start "your buyer" section
+  startNowLink().click();
+
   cy.completeAndSubmitCompanyOrOrganisationForm({});
+
   cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
 
   submitButton().click();
