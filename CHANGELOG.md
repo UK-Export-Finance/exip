@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.3](https://github.com/UK-Export-Finance/exip/compare/v2.3.2...v2.3.3) (2023-12-14)
+
+
+### Miscellaneous
+
+* **EMS-1964:** Move external UI currency API calls into the EXIP API  ([#1511](https://github.com/UK-Export-Finance/exip/issues/1511)) ([616ce85](https://github.com/UK-Export-Finance/exip/commit/616ce85b7d0af6dd98b24d5e1d1bafb0a3cba66b))
+
 ## [2.3.2](https://github.com/UK-Export-Finance/exip/compare/v2.3.1...v2.3.2) (2023-12-12)
 
 
