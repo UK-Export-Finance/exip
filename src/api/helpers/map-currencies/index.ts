@@ -1,4 +1,4 @@
-import { SUPPORTED_CURRENCIES } from '../../constants';
+import { FIELD_IDS, SUPPORTED_CURRENCIES } from '../../constants';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { Currency } from '../../types';
 
@@ -25,7 +25,7 @@ export const getSupportedCurrencies = (currencies: Array<Currency>) => {
 const mapCurrencies = (currencies: Array<Currency>) => {
   const supportedCurrencies = getSupportedCurrencies(currencies);
 
-  const sorted = sortArrayAlphabetically(supportedCurrencies, 'name');
+  const sorted = sortArrayAlphabetically(supportedCurrencies, FIELD_IDS.NAME);
 
   return sorted;
 };
