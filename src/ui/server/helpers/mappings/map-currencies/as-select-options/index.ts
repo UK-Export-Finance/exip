@@ -1,6 +1,4 @@
-import getSupportedCurrencies from '../map-supported-currencies';
 import mapSelectOption from '../../map-select-option';
-import sortArrayAlphabetically from '../../../sort-array-alphabetically';
 import { Currency } from '../../../../../types';
 
 /**
@@ -11,13 +9,9 @@ import { Currency } from '../../../../../types';
  * @returns {Array} Array of mapped currencies
  */
 const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue?: string) => {
-  const supportedCurrencies = getSupportedCurrencies(currencies);
-
   const renderValueInText = true;
 
-  const mapped = supportedCurrencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, renderValueInText, selectedValue));
-
-  const sorted = sortArrayAlphabetically(mapped, 'text');
+  const mappedCurrencies = currencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, renderValueInText, selectedValue));
 
   if (!selectedValue) {
     const defaultOption = {
@@ -26,14 +20,12 @@ const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue
       value: '',
     };
 
-    const result = [defaultOption, ...sorted];
+    const result = [defaultOption, ...mappedCurrencies];
 
     return result;
   }
 
-  const result = sorted;
-
-  return result;
+  return mappedCurrencies;
 };
 
 export default mapCurrenciesAsSelectOptions;

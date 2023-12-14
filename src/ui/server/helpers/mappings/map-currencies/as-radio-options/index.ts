@@ -1,4 +1,3 @@
-import getSupportedCurrencies from '../map-supported-currencies';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import nameAndIsoCodeText from '../../../name-and-iso-code-text';
@@ -19,11 +18,9 @@ const { CONTRACT_POLICY } = POLICY_FIELDS;
  * @returns {Object} Mapped currencies with an "alternative" option.
  */
 const mapCurrenciesAsRadioOptions = (currencies: Array<Currency>) => {
-  const supportedCurrencies = getSupportedCurrencies(currencies);
-
   const mappedObj = {} as CurrencyRadios;
 
-  supportedCurrencies.forEach((country) => {
+  currencies.forEach((country) => {
     const { isoCode, name } = country;
 
     mappedObj[isoCode] = {
