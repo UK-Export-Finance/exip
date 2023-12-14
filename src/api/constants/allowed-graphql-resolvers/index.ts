@@ -64,6 +64,7 @@ const CUSTOM_RESOLVERS = [
   'createFeedbackAndSendEmail',
 
   'getApimCisCountries',
+  'getApimCurrencies',
 ];
 
 /**

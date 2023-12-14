@@ -1,5 +1,4 @@
 import mapCurrenciesAsRadioOptions from '.';
-import getSupportedCurrencies from '../map-supported-currencies';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import nameAndIsoCodeText from '../../../name-and-iso-code-text';
@@ -14,29 +13,31 @@ const {
 const { CONTRACT_POLICY } = POLICY_FIELDS;
 
 describe('server/helpers/mappings/map-currencies/as-radio-options', () => {
-  const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
-
   it('should return an object of supported countries options and an ALTERNATIVE option', () => {
-    const result = mapCurrenciesAsRadioOptions(supportedCurrencies);
+    const result = mapCurrenciesAsRadioOptions(mockCurrencies);
 
-    const [country0, country1, country2, country3] = supportedCurrencies;
+    const [currency0, currency1, currency2, currency3, currency4] = mockCurrencies;
 
     const expected = {
-      [country0.isoCode]: {
-        text: nameAndIsoCodeText(country0.name, country0.isoCode),
-        value: country0.isoCode,
+      [currency0.isoCode]: {
+        text: nameAndIsoCodeText(currency0.name, currency0.isoCode),
+        value: currency0.isoCode,
       },
-      [country1.isoCode]: {
-        text: nameAndIsoCodeText(country1.name, country1.isoCode),
-        value: country1.isoCode,
+      [currency1.isoCode]: {
+        text: nameAndIsoCodeText(currency1.name, currency1.isoCode),
+        value: currency1.isoCode,
       },
-      [country2.isoCode]: {
-        text: nameAndIsoCodeText(country2.name, country2.isoCode),
-        value: country2.isoCode,
+      [currency2.isoCode]: {
+        text: nameAndIsoCodeText(currency2.name, currency2.isoCode),
+        value: currency2.isoCode,
       },
-      [country3.isoCode]: {
-        text: nameAndIsoCodeText(country3.name, country3.isoCode),
-        value: country3.isoCode,
+      [currency3.isoCode]: {
+        text: nameAndIsoCodeText(currency3.name, currency3.isoCode),
+        value: currency3.isoCode,
+      },
+      [currency4.isoCode]: {
+        text: nameAndIsoCodeText(currency4.name, currency4.isoCode),
+        value: currency4.isoCode,
       },
       ALTERNATIVE: {
         text: CONTRACT_POLICY[POLICY_CURRENCY_CODE][ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
