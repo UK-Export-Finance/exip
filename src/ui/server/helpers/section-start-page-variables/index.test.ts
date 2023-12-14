@@ -12,7 +12,7 @@ describe('server/helpers/section-start-page-variables', () => {
 
     const result = sectionStartPageVariables({
       referenceNumber,
-      startNowRoute: mockStartNowRoute
+      startNowRoute: mockStartNowRoute,
     });
 
     const expected = {

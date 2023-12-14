@@ -19,10 +19,11 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
  * @param {Number} Application reference number
  * @returns {Object} sectionStartPageVariables
  */
-export const pageVariables = (referenceNumber: number) => sectionStartPageVariables({
-  referenceNumber,
-  startNowRoute: COMPANY_DETAILS_ROOT,
-});
+export const pageVariables = (referenceNumber: number) =>
+  sectionStartPageVariables({
+    referenceNumber,
+    startNowRoute: COMPANY_DETAILS_ROOT,
+  });
 
 /**
  * get
