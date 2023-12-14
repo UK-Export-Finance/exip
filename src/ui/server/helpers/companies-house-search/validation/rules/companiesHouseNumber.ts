@@ -16,9 +16,9 @@ const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
  * - only contains letters and/or numbers
  * - has a length greater than 6
  */
-const joiFunc = Joi.string();
+const joiString = Joi.string();
 
-const schema = () => joiFunc.alphanum().trim().min(6).required();
+const schema = () => joiString.alphanum().trim().min(6).required();
 
 /**
  * validates companies house input
