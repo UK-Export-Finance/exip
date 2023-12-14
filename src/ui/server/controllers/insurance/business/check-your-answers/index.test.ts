@@ -16,7 +16,7 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER:
 
 const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK: CHECK_YOUR_ANSWERS_ROUTE } = EXPORTER_BUSINESS_ROUTES;
 
-const { COMPANY_OR_ORGANISATION } = YOUR_BUYER_ROUTES;
+const { ROOT: YOUR_BUYER_ROOT } = YOUR_BUYER_ROUTES;
 
 describe('controllers/insurance/business/check-your-answers', () => {
   let req: Request;
@@ -70,10 +70,10 @@ describe('controllers/insurance/business/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${COMPANY_OR_ORGANISATION}`, () => {
+    it(`should redirect to ${YOUR_BUYER_ROOT}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${COMPANY_OR_ORGANISATION}`;
+      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${YOUR_BUYER_ROOT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

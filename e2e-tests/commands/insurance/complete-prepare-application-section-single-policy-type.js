@@ -51,9 +51,10 @@ const completePrepareYourApplicationSectionSingle = ({
   submitButton().click();
 
   // start "your buyer" section
-  cy.startInsuranceYourBuyerSection();
+  startNowLink().click();
 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
+
   cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
 
   submitButton().click();
