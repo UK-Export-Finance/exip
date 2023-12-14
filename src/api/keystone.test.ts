@@ -195,7 +195,7 @@ describe('Create an Application', () => {
     });
 
     expect(exportContract.application.id).toEqual(application.id);
-    expect(exportContract.finalDestinationKnown).toEqual(true);
+    expect(exportContract.finalDestinationKnown).toEqual(null);
   });
 
   test('it should add the application ID to the broker entry', async () => {

@@ -27,7 +27,7 @@ context('Insurance - Policy - Complete the entire section as a single contract p
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
       cy.completeAndSubmitBrokerForm({});
 

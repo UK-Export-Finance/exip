@@ -27,7 +27,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       cy.completeAndSubmitMultipleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
       cy.completeAndSubmitBrokerForm({});
 

@@ -9,15 +9,23 @@ import { mockApplication } from '../../../test-mocks';
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
-  const { referenceNumber, policy, broker, declaration, company } = mockApplication;
+  const { referenceNumber, policy, exportContract, broker, declaration, company } = mockApplication;
 
   const { policyType } = policy;
+  const { finalDestinationKnown } = exportContract;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
   const { hasAntiBriberyCodeOfConduct } = declaration;
 
   it('should return EXIP groups and tasks', () => {
-    const result = generateGroupsAndTasks(referenceNumber, policyType, isUsingBroker, hasDifferentTradingName, hasAntiBriberyCodeOfConduct);
+    const result = generateGroupsAndTasks(
+      referenceNumber,
+      policyType,
+      finalDestinationKnown,
+      isUsingBroker,
+      hasDifferentTradingName,
+      hasAntiBriberyCodeOfConduct,
+    );
 
     const initialChecks = {
       title: INITIAL_CHECKS.HEADING,
@@ -29,7 +37,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(referenceNumber, [initialChecks], policyType, isUsingBroker, hasDifferentTradingName),
+      tasks: prepareApplicationTasks(referenceNumber, [initialChecks], policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName),
     };
 
     const submitApplication = {

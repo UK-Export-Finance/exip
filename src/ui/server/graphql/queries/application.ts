@@ -62,6 +62,7 @@ const applicationQuery = gql`
         exportContract {
           id
           goodsOrServicesDescription
+          finalDestinationKnown
           finalDestinationCountryCode
         }
         owner {
