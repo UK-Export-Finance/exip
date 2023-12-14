@@ -209,6 +209,11 @@ const typeDefs = `
     noInsuranceSupport: Boolean
   }
 
+  type MappedCurrency {
+    isoCode: String!
+    name: String!
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -341,6 +346,12 @@ const typeDefs = `
       postcode: String!
       houseNameOrNumber: String!
     ): OrdnanceSurveyResponse
+
+    """ get CIS countries from APIM """
+    getApimCisCountries: [MappedCisCountry]
+
+    """ get currencies from APIM """
+    getApimCurrencies: [MappedCurrency]
   }
 `;
 

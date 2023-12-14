@@ -19,6 +19,7 @@ import {
 import {
   getAccountPasswordResetToken,
   getApimCisCountries,
+  getApimCurrencies,
   getCompaniesHouseInformation,
   getOrdnanceSurveyAddress,
   verifyAccountPasswordResetToken,
@@ -53,6 +54,7 @@ const customResolvers = {
   Query: {
     getAccountPasswordResetToken,
     getApimCisCountries,
+    getApimCurrencies,
     getCompaniesHouseInformation,
     getOrdnanceSurveyAddress,
     verifyAccountPasswordResetToken,

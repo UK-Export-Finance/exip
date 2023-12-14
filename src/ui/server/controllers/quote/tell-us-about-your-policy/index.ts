@@ -105,7 +105,7 @@ export const TEMPLATE = TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 const get = async (req: Request, res: Response) => {
   try {
     const { submittedData } = req.session;
-    const currencies = await api.external.getCurrencies();
+    const currencies = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(currencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
@@ -176,7 +176,7 @@ const post = async (req: Request, res: Response) => {
       ...payload,
     });
 
-    const currencies = await api.external.getCurrencies();
+    const currencies = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(currencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
