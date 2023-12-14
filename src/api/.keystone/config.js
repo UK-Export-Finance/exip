@@ -99,7 +99,8 @@ var import_dotenv = __toESM(require("dotenv"));
 
 // constants/field-ids/shared/index.ts
 var SHARED = {
-  POLICY_TYPE: "policyType"
+  POLICY_TYPE: "policyType",
+  NAME: "name"
 };
 var shared_default = SHARED;
 
@@ -528,7 +529,7 @@ var FIELD_VALUES = {
 };
 
 // constants/supported-currencies/index.ts
-var SUPPORTED_CURRENCIES = ["EUR", "GBP", "USD"];
+var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
@@ -1919,19 +1920,17 @@ var typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-<<<<<<< HEAD
     """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(
       postcode: String!
       houseNameOrNumber: String!
     ): OrdnanceSurveyResponse
-=======
+
     """ get CIS countries from APIM """
     getApimCisCountries: [MappedCisCountry]
 
     """ get currencies from APIM """
     getApimCurrencies: [MappedCurrency]
->>>>>>> main
   }
 `;
 var type_defs_default = typeDefs;
@@ -5079,11 +5078,6 @@ var getApimCisCountries = async () => {
 };
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
-<<<<<<< HEAD
-// helpers/remove-white-space/index.ts
-var removeWhiteSpace = (string) => string.replace(" ", "");
-var remove_white_space_default = removeWhiteSpace;
-=======
 // helpers/map-currencies/index.ts
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
@@ -5091,7 +5085,7 @@ var getSupportedCurrencies = (currencies) => {
 };
 var mapCurrencies = (currencies) => {
   const supportedCurrencies = getSupportedCurrencies(currencies);
-  const sorted = sort_array_alphabetically_default(supportedCurrencies, "name");
+  const sorted = sort_array_alphabetically_default(supportedCurrencies, FIELD_IDS.NAME);
   return sorted;
 };
 var map_currencies_default = mapCurrencies;
@@ -5113,15 +5107,9 @@ var getApimCurrencies = async () => {
 };
 var get_APIM_currencies_default = getApimCurrencies;
 
-// helpers/create-full-timestamp-from-day-month/index.ts
-var createFullTimestampFromDayAndMonth = (day, month) => {
-  if (day && month) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
-  }
-  return null;
-};
-var create_full_timestamp_from_day_month_default = createFullTimestampFromDayAndMonth;
->>>>>>> main
+// helpers/remove-white-space/index.ts
+var removeWhiteSpace = (string) => string.replace(" ", "");
+var remove_white_space_default = removeWhiteSpace;
 
 // helpers/sanitise-companies-house-number/index.ts
 var sanitiseCompaniesHouseNumber = (companyNumber) => remove_white_space_default(companyNumber).toUpperCase().padStart(8, "0");

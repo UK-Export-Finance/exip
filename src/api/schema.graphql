@@ -2384,16 +2384,11 @@ type Query {
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
-<<<<<<< HEAD
   """ get Ordnance Survey address """
   getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
-=======
-  """ get CIS countries from APIM """
-  getApimCisCountries: [MappedCisCountry]
 
   """ get currencies from APIM """
   getApimCurrencies: [MappedCurrency]
->>>>>>> main
 }
 
 union AuthenticatedItem = User
