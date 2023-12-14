@@ -34,6 +34,8 @@ const task = taskList.prepareApplication.tasks.buyer;
 
 const { BUYER } = application;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your buyer - Company or organisation - Save and back', () => {
   let referenceNumber;
   let url;
@@ -44,7 +46,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
 
       cy.startInsuranceYourBuyerSection();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
       cy.assertUrl(url);
     });
@@ -66,7 +68,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
@@ -87,7 +89,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -96,7 +98,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it(`should retain the ${NAME} and ${CAN_CONTACT_BUYER} input on the page and the other fields should be empty`, () => {
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), BUYER[NAME]);
@@ -128,7 +130,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -137,7 +139,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it('should retain all inputs on the page', () => {
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
       cy.checkValue(field(ADDRESS), BUYER[ADDRESS]);

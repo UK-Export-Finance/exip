@@ -23,6 +23,8 @@ const {
 const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.buyer;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your buyer - Working with buyer - Save and back', () => {
   let referenceNumber;
   let url;
@@ -35,7 +37,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
       cy.assertUrl(url);
     });
@@ -57,7 +59,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -76,7 +78,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -85,7 +87,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should retain the ${CONNECTED_WITH_BUYER} radio button selection and the other fields should be empty`, () => {
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
+
       // submit button to get to working with buyer page
       submitButton().click();
 
@@ -106,7 +109,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
     it('should retain the `your buyer` task status as `completed`', () => {
@@ -115,7 +118,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it('should retain all inputs on the page', () => {
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
+
       // submit button to get to working with buyer page
       submitButton().click();
 
