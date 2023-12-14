@@ -13,6 +13,9 @@ const {
         WEBSITE,
         PHONE_NUMBER,
       },
+      ALTERNATIVE_TRADING_ADDRESS: {
+        FULL_ADDRESS,
+      },
       NATURE_OF_YOUR_BUSINESS: {
         YEARS_EXPORTING,
         GOODS_OR_SERVICES,
@@ -44,6 +47,19 @@ const checkYourBusinessSummaryList = ({
     const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [FULL_ADDRESS]: ({ shouldRender = true }) => {
+    const fieldId = FULL_ADDRESS;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+
+      const expectedValue = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
   },
   [WEBSITE]: () => {
     const fieldId = WEBSITE;

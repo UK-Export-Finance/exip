@@ -6,16 +6,60 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import { ApplicationCompany, SummaryListItemData } from '../../../../../types';
+import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
+import generateAddressObject from '../../generate-address-object';
 
 const {
-  EXPORTER_BUSINESS: { COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE },
+  EXPORTER_BUSINESS: {
+    COMPANY_DETAILS_CHANGE,
+    COMPANY_DETAILS_CHECK_AND_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 const {
   EXPORTER_BUSINESS: {
-    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+    YOUR_COMPANY: { TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
+
+/**
+ * optionalFields
+ * optionalFields for your company summary list
+ * if TRADING_ADDRESS is true, then renders extra row in summary list
+ * @param {ApplicationCompany} answers
+ * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange
+ * @returns {Object} Empty array or FULL_ADDRESS field and value in an object structure for GOVUK summary list structure
+ */
+export const optionalFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange: boolean) => {
+  let fields = [] as Array<SummaryListItemData>;
+
+  if (answers[TRADING_ADDRESS]) {
+    const address = generateAddressObject(answers[DIFFERENT_TRADING_ADDRESS]?.[FULL_ADDRESS]);
+
+    fields = [
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS, FULL_ADDRESS),
+          data: answers,
+          href: generateChangeLink(
+            ALTERNATIVE_TRADING_ADDRESS_CHANGE,
+            ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
+            `#${FULL_ADDRESS}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        },
+        generateMultipleFieldHtml(address),
+      ),
+    ];
+  }
+  return fields;
+};
 
 /**
  * generateYourCompanyFields
@@ -51,6 +95,7 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
       },
       mapYesNoField(answers[TRADING_ADDRESS]),
     ),
+    ...optionalFields(answers, referenceNumber, checkAndChange),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
       data: answers,
