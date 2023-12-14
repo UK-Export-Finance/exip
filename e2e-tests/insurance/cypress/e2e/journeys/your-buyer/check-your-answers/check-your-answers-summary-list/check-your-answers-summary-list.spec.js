@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
@@ -28,9 +27,6 @@ const {
   },
 } = FIELD_IDS;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your buyer - Check your answers - Summary list - your buyer', () => {
@@ -43,7 +39,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});

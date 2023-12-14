@@ -15,7 +15,7 @@ const { INSURANCE_ROOT, EXPORTER_BUSINESS: EXPORTER_BUSINESS_ROUTES, YOUR_BUYER:
 
 const { CHECK_YOUR_ANSWERS_SAVE_AND_BACK } = EXPORTER_BUSINESS_ROUTES;
 
-const { COMPANY_OR_ORGANISATION } = YOUR_BUYER_ROUTES;
+const { ROOT: YOUR_BUYER_ROOT } = YOUR_BUYER_ROUTES;
 
 /**
  * gets the template for check your answers page
@@ -61,7 +61,7 @@ const get = (req: Request, res: Response) => {
 const post = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`);
 };
 
 export { get, post };

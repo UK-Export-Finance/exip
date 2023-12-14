@@ -25,9 +25,6 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
-
 context('Insurance - Your Buyer - Company or organisation page - form validation', () => {
   let referenceNumber;
 
@@ -35,7 +32,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 

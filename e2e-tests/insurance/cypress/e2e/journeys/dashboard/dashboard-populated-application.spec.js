@@ -8,8 +8,6 @@ import formatCurrency from '../../../../../helpers/format-currency';
 
 const { table } = dashboardPage;
 
-const { taskList } = partials.insurancePartials;
-
 const { DASHBOARD } = ROUTES.INSURANCE;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
@@ -64,9 +62,7 @@ context('Insurance - Dashboard - populated application', () => {
       table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'your buyer' section via task list
-      const task = taskList.prepareApplication.tasks.buyer;
-
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
       // complete and submit the form
       cy.completeAndSubmitCompanyOrOrganisationForm({});

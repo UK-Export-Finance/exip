@@ -1,4 +1,3 @@
-import partials from '../../../../../../partials';
 import {
   countryInput,
   field as fieldSelector,
@@ -7,9 +6,8 @@ import {
 } from '../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application, { country } from '../../../../../../fixtures/application';
 
@@ -31,11 +29,11 @@ const {
 } = YOUR_BUYER_FIELD_IDS;
 
 const {
+  ROOT,
   YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
@@ -46,11 +44,11 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      task.link().click();
+      cy.startInsuranceYourBuyerSection();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
-      workingWithBuyerUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
+      workingWithBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
       cy.assertUrl(url);
     });
@@ -67,8 +65,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
+      currentHref: `${ROOT}/${referenceNumber}${INSURANCE_ROUTES.YOUR_BUYER.COMPANY_OR_ORGANISATION}`,
+      backLink: `${ROOT}/${referenceNumber}${INSURANCE_ROUTES.YOUR_BUYER.ROOT}`,
     });
   });
 

@@ -18,7 +18,7 @@ const {
     CHECK_YOUR_ANSWERS,
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION,
+    ROOT: YOUR_BUYER_ROOT,
   },
 } = ROUTES.INSURANCE;
 
@@ -78,12 +78,12 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
   describe('form submission', () => {
     describe('continue', () => {
-      it(`should redirect to ${COMPANY_OR_ORGANISATION}`, () => {
+      it(`should redirect to ${YOUR_BUYER_ROOT}`, () => {
         cy.navigateToUrl(url);
 
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
+        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`;
         cy.assertUrl(expectedUrl);
       });
     });
