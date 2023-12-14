@@ -39,7 +39,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     refNumber = Number(mockApplication.referenceNumber);
 
     api.keystone.countries.getAll = getCountriesSpy;
-    api.external.getCurrencies = getCurrenciesSpy;
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -72,7 +72,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       expect(getCountriesSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should call api.external.getCurrencies', async () => {
+    it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
       expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
@@ -144,7 +144,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -157,7 +157,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
-          api.external.getCurrencies = getCurrenciesSpy;
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

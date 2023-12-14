@@ -1,3 +1,4 @@
+import { Currency } from '../currency';
 import { Relationship } from '../relationship';
 
 export interface CisCountry {
@@ -26,6 +27,11 @@ export interface Country extends Relationship {
 export interface GetApimCisCountriesResponse {
   success: boolean;
   data?: [CisCountry];
+}
+
+export interface GetApimCurrenciesResponse {
+  success: boolean;
+  data?: [Currency];
 }
 
 export interface MappedCisCountry {

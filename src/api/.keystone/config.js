@@ -341,7 +341,8 @@ var CUSTOM_RESOLVERS = [
   "updateCompanyAndCompanyAddress",
   // feedback
   "createFeedbackAndSendEmail",
-  "getApimCisCountries"
+  "getApimCisCountries",
+  "getApimCurrencies"
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
@@ -483,6 +484,9 @@ var FIELD_VALUES = {
   YES: "Yes",
   NO: "No"
 };
+
+// constants/supported-currencies/index.ts
+var SUPPORTED_CURRENCIES = ["EUR", "GBP", "USD"];
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
@@ -1767,6 +1771,11 @@ var typeDefs = `
     cannotApply: Boolean
   }
 
+  type MappedCurrency {
+    isoCode: String!
+    name: String!
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -1898,6 +1907,9 @@ var typeDefs = `
 
     """ get CIS countries from APIM """
     getApimCisCountries: [MappedCisCountry]
+
+    """ get currencies from APIM """
+    getApimCurrencies: [MappedCurrency]
   }
 `;
 var type_defs_default = typeDefs;
@@ -4683,14 +4695,13 @@ var import_dotenv5 = __toESM(require("dotenv"));
 import_dotenv5.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
-var url = `${APIM_MDM_URL}${APIM_MDM.MARKETS}`;
 var APIM = {
   getCisCountries: async () => {
     try {
       console.info("Calling APIM - CIS countries");
       const response = await (0, import_axios.default)({
         method: "get",
-        url,
+        url: `${APIM_MDM_URL}${APIM_MDM.MARKETS}`,
         headers: {
           "Content-Type": "application/json",
           [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
@@ -4712,6 +4723,35 @@ var APIM = {
     } catch (err) {
       console.error("Error calling APIM - CIS countries %O", err);
       throw new Error(`Calling APIM - CIS countries ${err}`);
+    }
+  },
+  getCurrencies: async () => {
+    try {
+      console.info("Calling APIM - currencies");
+      const response = await (0, import_axios.default)({
+        method: "get",
+        url: `${APIM_MDM_URL}${APIM_MDM.CURRENCY}`,
+        headers: {
+          "Content-Type": "application/json",
+          [String(APIM_MDM_KEY)]: APIM_MDM_VALUE
+        },
+        validateStatus(status) {
+          const acceptableStatus = [200];
+          return acceptableStatus.includes(status);
+        }
+      });
+      if (response.data && response.status === 200) {
+        return {
+          success: true,
+          data: response.data
+        };
+      }
+      return {
+        success: false
+      };
+    } catch (err) {
+      console.error("Error calling APIM - currencies %O", err);
+      throw new Error(`Calling APIM - currencies ${err}`);
     }
   }
 };
@@ -4866,6 +4906,35 @@ var getApimCisCountries = async () => {
   }
 };
 var get_APIM_CIS_countries_default = getApimCisCountries;
+
+// helpers/map-currencies/index.ts
+var getSupportedCurrencies = (currencies) => {
+  const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
+  return supported;
+};
+var mapCurrencies = (currencies) => {
+  const supportedCurrencies = getSupportedCurrencies(currencies);
+  const sorted = sort_array_alphabetically_default(supportedCurrencies, "name");
+  return sorted;
+};
+var map_currencies_default = mapCurrencies;
+
+// custom-resolvers/queries/get-APIM-currencies/index.ts
+var getApimCurrencies = async () => {
+  try {
+    console.info("Getting and mapping currencies from APIM");
+    const response = await APIM_default.getCurrencies();
+    if (response.data) {
+      const mapped = map_currencies_default(response.data);
+      return mapped;
+    }
+    return { success: false };
+  } catch (err) {
+    console.error("Error Getting and mapping currencies from APIM %O", err);
+    throw new Error(`Getting and mapping currencies from APIM ${err}`);
+  }
+};
+var get_APIM_currencies_default = getApimCurrencies;
 
 // helpers/create-full-timestamp-from-day-month/index.ts
 var createFullTimestampFromDayAndMonth = (day, month) => {
@@ -5088,6 +5157,7 @@ var customResolvers = {
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
     getApimCisCountries: get_APIM_CIS_countries_default,
+    getApimCurrencies: get_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }

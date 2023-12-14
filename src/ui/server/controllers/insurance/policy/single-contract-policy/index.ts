@@ -8,7 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import { objectHasProperty } from '../../../../helpers/object';
-import { mapCurrencies } from '../../../../helpers/mappings/map-currencies';
+import mapCurrencies from '../../../../helpers/mappings/map-currencies';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -101,7 +101,7 @@ export const get = async (req: Request, res: Response) => {
   const refNumber = Number(referenceNumber);
 
   try {
-    const currencies = await api.external.getCurrencies();
+    const currencies = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(currencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -155,7 +155,7 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     try {
-      const currencies = await api.external.getCurrencies();
+      const currencies = await api.keystone.APIM.getCurrencies();
 
       if (!isPopulatedArray(currencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
