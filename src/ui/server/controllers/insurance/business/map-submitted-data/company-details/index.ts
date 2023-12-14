@@ -1,6 +1,6 @@
-import { RequestBody } from '../../../../../../types';
 import BUSINESS_FIELD_IDS from '../../../../../constants/field-ids/insurance/business';
 import { objectHasProperty } from '../../../../../helpers/object';
+import { RequestBody } from '../../../../../../types';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS },
@@ -12,7 +12,7 @@ const {
  * if HAS_DIFFERENT_TRADING_NAME is false, then set DIFFERENT_TRADING_NAME to be an empty string
  * If HAS_DIFFERENT_TRADING_NAME or TRADING_ADDRESS are empty, then delete from populatedData
  * @param {Express.Request.body} formBody
- * @returns {Object} Page variables
+ * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;

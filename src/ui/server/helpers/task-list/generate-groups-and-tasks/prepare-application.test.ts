@@ -21,13 +21,14 @@ const {
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/prepare-application', () => {
-  const { referenceNumber, policy } = mockApplication;
+  const { referenceNumber, broker, company, policy, exportContract } = mockApplication;
+  const { isUsingBroker } = broker;
+  const { hasDifferentTradingName } = company;
   const { policyType } = policy;
+  const { finalDestinationKnown } = exportContract;
 
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
-    const isUsingBroker = true;
-    const hasDifferentTradingName = false;
 
     const previousGroups = [
       {
@@ -38,7 +39,7 @@ describe('server/helpers/task-list/prepare-application', () => {
     ] as TaskListData;
 
     it('should return EXIP `prepare application` tasks', () => {
-      const result = createPrepareApplicationTasks(referenceNumber, previousGroups, policyType, isUsingBroker);
+      const result = createPrepareApplicationTasks(referenceNumber, previousGroups, policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName);
 
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
@@ -62,7 +63,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
         id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-        fields: policyRequiredFields({ policyType, isUsingBroker }),
+        fields: policyRequiredFields({ policyType, finalDestinationKnown, isUsingBroker }),
         dependencies: expectedDependencies,
       };
 

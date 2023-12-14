@@ -8,7 +8,7 @@ const { INSURANCE } = ROUTES;
 const {
   INSURANCE: {
     POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
     },
   },
 } = FIELD_IDS;
@@ -25,6 +25,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - About goods or services page - form validation', () => {
   let referenceNumber;
+  let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,9 +35,9 @@ context('Insurance - Policy - About goods or services page - form validation', (
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES}`;
 
-      cy.assertUrl(expectedUrl);
+      cy.assertUrl(url);
     });
   });
 
@@ -65,14 +66,35 @@ context('Insurance - Policy - About goods or services page - form validation', (
       false,
     );
 
-    // final destination
+    // final destination known
     cy.submitAndAssertFieldErrors(
-      countryInput.field(FINAL_DESTINATION),
+      countryInput.field(FINAL_DESTINATION_KNOWN),
       null,
       1,
       expectedErrorsCount,
-      ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
+      ABOUT_ERROR_MESSAGES[FINAL_DESTINATION_KNOWN].IS_EMPTY,
       false,
     );
+  });
+
+  describe(`when ${FINAL_DESTINATION_KNOWN} is 'yes', but ${FINAL_DESTINATION} is not provided`, () => {
+    it(`should render a ${FINAL_DESTINATION} validation error`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitAboutGoodsOrServicesForm({
+        includeFinalDestination: false,
+      });
+
+      const expectedErrorsCount = 1;
+
+      cy.submitAndAssertFieldErrors(
+        countryInput.field(FINAL_DESTINATION),
+        null,
+        0,
+        expectedErrorsCount,
+        ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
+        false,
+      );
+    });
   });
 });

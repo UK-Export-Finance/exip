@@ -1,31 +1,34 @@
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../types';
 
 const {
   POLICY: {
-    ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION: FIELD_ID },
+    ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { [FIELD_ID]: ERROR_MESSAGE },
-    },
+    POLICY: { ABOUT_GOODS_OR_SERVICES: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES;
 
-export const MAXIMUM = 1000;
-
 /**
  * finalDestinationRules
- * Returns the result of emptyFieldValidation
+ * If FINAL_DESTINATION_KNOWN is true, return emptyFieldValidation for the FINAL_DESTINATION field.
+ * Otherwise, return FINAL_DESTINATION for the FINAL_DESTINATION_KNOWN field.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const finalDestinationRules = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const finalDestinationRules = (formBody: RequestBody, errors: object) => {
+  if (formBody[FINAL_DESTINATION_KNOWN] === 'true') {
+    return emptyFieldValidation(formBody, FINAL_DESTINATION, ERROR_MESSAGE[FINAL_DESTINATION].IS_EMPTY, errors);
+  }
+
+  return emptyFieldValidation(formBody, FINAL_DESTINATION_KNOWN, ERROR_MESSAGE[FINAL_DESTINATION_KNOWN].IS_EMPTY, errors);
+};
 
 export default finalDestinationRules;

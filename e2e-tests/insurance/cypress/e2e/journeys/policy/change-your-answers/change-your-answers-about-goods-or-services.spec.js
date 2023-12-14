@@ -24,7 +24,7 @@ const NEW_COUNTRY_INPUT = COUNTRIES[0].NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - About goods or services- As an exporter, I want to change my answers to the type of policy section', () => {
+context('Insurance - Policy - Change your answers - About goods or services - As an exporter, I want to change my answers to the type of policy section', () => {
   let referenceNumber;
   let url;
 
@@ -98,7 +98,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
       });
     });
 
-    describe('form submission with a new answer', () => {
+    describe('form submission with a new destination/country answer', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
@@ -113,7 +113,7 @@ context('Insurance - Policy - Change your answers - About goods or services- As 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
-      it('should render the new answer', () => {
+      it('should render the new destination/country', () => {
         const expected = NEW_COUNTRY_INPUT;
 
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);

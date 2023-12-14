@@ -50,7 +50,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;

@@ -39,7 +39,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm();
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
       cy.completeAndSubmitBrokerForm({});
 

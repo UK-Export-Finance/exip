@@ -11,6 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../../export-contract/map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
@@ -24,7 +25,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
 } = POLICY_FIELD_IDS;
 
 /**
@@ -39,6 +40,10 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: DESCRIPTION,
       ...FIELDS.ABOUT_GOODS_OR_SERVICES[DESCRIPTION],
     },
+    FINAL_DESTINATION_KNOWN: {
+      ID: FINAL_DESTINATION_KNOWN,
+      ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION_KNOWN],
+    },
     FINAL_DESTINATION: {
       ID: FINAL_DESTINATION,
       ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION],
@@ -49,7 +54,7 @@ export const pageVariables = (referenceNumber: number) => ({
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES;
 
-export const FIELD_IDS = [DESCRIPTION, FINAL_DESTINATION];
+export const FIELD_IDS = [DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN];
 
 /**
  * get
@@ -121,10 +126,11 @@ export const post = async (req: Request, res: Response) => {
 
   const validationErrors = generateValidationErrors(payload);
 
-  if (validationErrors) {
-    try {
-      const countries = await api.keystone.countries.getAll();
+  let countries;
+  try {
+    countries = await api.keystone.countries.getAll();
 
+    if (validationErrors) {
       if (!isPopulatedArray(countries)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
@@ -145,20 +151,21 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application,
-        submittedValues: payload,
+        submittedValues: sanitiseData(payload),
         countries: mappedCountries,
         validationErrors,
       });
-    } catch (err) {
-      console.error('Error getting countries %O', err);
-
-      return res.redirect(PROBLEM_WITH_SERVICE);
     }
+  } catch (err) {
+    console.error('Error getting countries %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.exportContract(req.body, application);
+
+    const saveResponse = await mapAndSave.exportContract(payload, application, validationErrors, countries);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

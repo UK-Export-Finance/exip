@@ -1,7 +1,8 @@
 import mapAndSave from '.';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import mapSubmittedData from '../map-submitted-data/about-goods-or-services';
 import save from '../save-data';
-import { mockApplication } from '../../../../test-mocks';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { mockApplication, mockCountries } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
 
 const {
@@ -31,7 +32,7 @@ describe('controllers/insurance/export-contract/map-and-save', () => {
           await mapAndSave.exportContract(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(save.exportContract).toHaveBeenCalledTimes(1);
-          expect(save.exportContract).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+          expect(save.exportContract).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockCountries), mockValidationErrors?.errorList);
         });
 
         it('should return true', async () => {
@@ -46,7 +47,7 @@ describe('controllers/insurance/export-contract/map-and-save', () => {
           await mapAndSave.exportContract(mockFormBody, mockApplication);
 
           expect(save.exportContract).toHaveBeenCalledTimes(1);
-          expect(save.exportContract).toHaveBeenCalledWith(mockApplication, mockFormBody);
+          expect(save.exportContract).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockCountries));
         });
 
         it('should return true', async () => {

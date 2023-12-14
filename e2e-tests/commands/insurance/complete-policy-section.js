@@ -21,7 +21,7 @@ const completePolicySection = ({ policyType = SINGLE, sameName = true, usingBrok
     cy.completeAndSubmitMultipleContractPolicyForm({});
   }
 
-  cy.completeAndSubmitAboutGoodsOrServicesForm();
+  cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
   cy.completeAndSubmitNameOnPolicyForm({ sameName });
 

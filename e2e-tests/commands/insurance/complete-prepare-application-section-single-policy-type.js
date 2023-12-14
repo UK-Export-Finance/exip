@@ -22,7 +22,7 @@ const completePrepareYourApplicationSectionSingle = ({
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
   cy.completeAndSubmitSingleContractPolicyForm({ policyMaximumValue });
-  cy.completeAndSubmitAboutGoodsOrServicesForm();
+  cy.completeAndSubmitAboutGoodsOrServicesForm({});
   cy.completeAndSubmitNameOnPolicyForm({ sameName: !differentPolicyContact });
 
   if (differentPolicyContact) {

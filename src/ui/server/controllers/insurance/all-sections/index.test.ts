@@ -31,15 +31,25 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policy, broker, declaration, company } = mockApplication;
+      const { referenceNumber, policy, exportContract, broker, declaration, company } = mockApplication;
 
       const { policyType } = policy;
+      const { finalDestinationKnown } = exportContract;
       const { isUsingBroker } = broker;
       const { hasDifferentTradingName } = company;
       const { hasAntiBriberyCodeOfConduct } = declaration;
 
       const flatApplicationData = flattenApplicationData(mockApplication);
-      const taskListStructure = generateGroupsAndTasks(referenceNumber, policyType, isUsingBroker, hasDifferentTradingName, hasAntiBriberyCodeOfConduct);
+
+      const taskListStructure = generateGroupsAndTasks(
+        referenceNumber,
+        policyType,
+        finalDestinationKnown,
+        isUsingBroker,
+        hasDifferentTradingName,
+        hasAntiBriberyCodeOfConduct,
+      );
+
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
 
       const expectedVariables = {
