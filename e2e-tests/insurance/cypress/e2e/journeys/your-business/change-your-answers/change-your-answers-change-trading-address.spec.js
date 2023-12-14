@@ -36,7 +36,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS} - As an exporter, I want to change my answers to the trading address/ alternative trading address sections`, () => {
+context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS} - As an exporter, I want to change my answers to the trading address / alternative trading address sections`, () => {
   let referenceNumber;
   let url;
 

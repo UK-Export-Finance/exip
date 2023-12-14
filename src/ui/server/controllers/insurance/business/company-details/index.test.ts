@@ -189,8 +189,8 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true'`, () => {
-        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT} but is not a check or check-and-change route`, async () => {
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' but is not a check or check-and-change route`, () => {
+        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}`, async () => {
           req.body = {
             ...validBody,
             [TRADING_ADDRESS]: 'true',
@@ -201,8 +201,10 @@ describe('controllers/insurance/business/companies-details', () => {
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
+      });
 
-        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE} but is check route`, async () => {
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' and is a check route`, () => {
+        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, async () => {
           req.body = {
             ...validBody,
             [TRADING_ADDRESS]: 'true',
@@ -215,8 +217,10 @@ describe('controllers/insurance/business/companies-details', () => {
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
+      });
 
-        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE} but is check-and-change route`, async () => {
+      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' and is a check-and-change route`, () => {
+        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, async () => {
           req.body = {
             ...validBody,
             [TRADING_ADDRESS]: 'true',

@@ -157,12 +157,18 @@ const post = async (req: Request, res: Response) => {
     let changeRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     let checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
-    // if is a change route and TRADING_ADDRESS is true, then redirect ALTERNATIVE_TRADING_ADDRESS_CHANGE
+    /**
+     * If is a change route and TRADING_ADDRESS is true,
+     * redirect to ALTERNATIVE_TRADING_ADDRESS_CHANGE
+     */
     if (submittedValues[TRADING_ADDRESS] && isChangeRoute(req.originalUrl)) {
       changeRoute = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
     }
 
-    // if is a check-and-change route and TRADING_ADDRESS is true, then redirect ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE
+    /**
+     * If is a check-and-change route and TRADING_ADDRESS is true,
+     * redirect to ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE
+     */
     if (submittedValues[TRADING_ADDRESS] && isCheckAndChangeRoute(req.originalUrl)) {
       checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
     }

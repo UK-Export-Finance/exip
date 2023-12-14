@@ -7,17 +7,5 @@ import { DEFAULT } from '../../../content-strings';
  * @param {String} rawAddress
  * @returns {Object}
  */
-const generateAddressObject = (rawAddress?: string) => {
-  let address = DEFAULT.EMPTY;
-
-  if (rawAddress) {
-    // replace new lines with line breaks to display in summary list
-    address = replaceNewLineWithLineBreak(rawAddress);
-  }
-
-  return {
-    address,
-  };
-};
-
+const generateAddressObject = (rawAddress?: string) => (rawAddress ? { address: replaceNewLineWithLineBreak(rawAddress) } : { address: DEFAULT.EMPTY });
 export default generateAddressObject;
