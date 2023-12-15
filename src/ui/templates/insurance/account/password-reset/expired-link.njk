@@ -16,7 +16,7 @@
 
       <p class="govuk-body" data-cy="if-you-would-like">{{ CONTENT_STRINGS.IF_YOU_WOULD_LIKE }}</p>
 
-      <form method="POST" id="form" novalidate>
+      <form method="POST" id="form" enctype="application/x-www-form-urlencoded" novalidate>
 
         <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 

@@ -11,7 +11,7 @@
 
   <p class="govuk-body" data-cy="reason">{{ CONTENT_STRINGS.REASON }}</p>
 
-  <form method="POST" id="form" novalidate>
+  <form method="POST" id="form" enctype="application/x-www-form-urlencoded" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
