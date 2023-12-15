@@ -2,17 +2,18 @@ import { TEMPLATE, pageVariables, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
+import sectionStartPageVariables from '../../../helpers/section-start-page-variables';
 import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
 
 const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
+
+const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/your-buyer/index', () => {
   let req: Request;
@@ -28,13 +29,13 @@ describe('controllers/insurance/your-buyer/index', () => {
   });
 
   describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        START_NOW_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_OR_ORGANISATION}`,
-        ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
-      };
+    it('should return sectionStartPageVariables', () => {
+      const expected = sectionStartPageVariables({
+        referenceNumber,
+        startNowRoute: COMPANY_OR_ORGANISATION,
+      });
 
-      expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
+      expect(pageVariables(referenceNumber)).toEqual(expected);
     });
   });
 
@@ -53,7 +54,7 @@ describe('controllers/insurance/your-buyer/index', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.ROOT,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
       });
     });
