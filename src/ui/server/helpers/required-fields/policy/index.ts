@@ -7,7 +7,6 @@ const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 const {
   CONTRACT_POLICY,
   TYPE_OF_POLICY,
-  ABOUT_GOODS_OR_SERVICES,
   NAME_ON_POLICY,
   BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL },
 } = POLICY_FIELD_IDS;
@@ -43,19 +42,6 @@ export const getContractPolicyTasks = (policyType?: string): object => {
 };
 
 /**
- * getAboutGoodsOrServicesTasks
- * @param {Boolean} finalDestinationKnown: Application "Final destination known"
- * @returns {Array} Array of tasks
- */
-export const getAboutGoodsOrServicesTasks = (finalDestinationKnown?: boolean) => {
-  if (finalDestinationKnown) {
-    return Object.values(ABOUT_GOODS_OR_SERVICES);
-  }
-
-  return [ABOUT_GOODS_OR_SERVICES.DESCRIPTION, ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN];
-};
-
-/**
  * getBrokerTasks
  * Get broker section tasks depending on the isUsingBroker field
  * @param {Boolean} isUsingBroker: Application "Is using broker" flag
@@ -71,7 +57,6 @@ export const getBrokerTasks = (isUsingBroker?: boolean) => {
 
 interface RequiredFields {
   policyType?: string;
-  finalDestinationKnown?: boolean;
   isUsingBroker?: boolean;
 }
 
@@ -82,12 +67,11 @@ interface RequiredFields {
  * @param {Boolean} isUsingBroker: Application "Is using broker"
  * @returns {Array} Required field IDs
  */
-const requiredFields = ({ policyType, finalDestinationKnown, isUsingBroker }: RequiredFields): Array<string> => [
+const requiredFields = ({ policyType, isUsingBroker }: RequiredFields): Array<string> => [
   ...Object.values(TYPE_OF_POLICY),
   REQUESTED_START_DATE,
   POLICY_CURRENCY_CODE,
   ...Object.values(getContractPolicyTasks(policyType)),
-  ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
   IS_SAME_AS_OWNER,
   FIRST_NAME,
   LAST_NAME,

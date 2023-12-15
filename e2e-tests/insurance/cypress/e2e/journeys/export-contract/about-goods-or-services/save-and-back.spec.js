@@ -29,7 +29,7 @@ const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - Save and go back', () => {
+context('Insurance - Export contract - About goods or services page - Save and go back', () => {
   let referenceNumber;
   let url;
 

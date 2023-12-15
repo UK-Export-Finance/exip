@@ -1,5 +1,6 @@
-import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import { FIELD_IDS, ROUTES } from '../../../../constants';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
@@ -7,18 +8,14 @@ import { ApplicationPolicy, Country, SummaryListItemData } from '../../../../../
 import generateChangeLink from '../../../generate-change-link';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-    },
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    POLICY: { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 /**
  * generateAboutGoodsOrServicesFields

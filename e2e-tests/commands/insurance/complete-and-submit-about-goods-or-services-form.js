@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/policy';
 import {
   countryInput,
@@ -10,15 +10,13 @@ import application from '../../fixtures/application';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../fixtures/countries';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: {
-        DESCRIPTION,
-        FINAL_DESTINATION,
-      },
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: {
+      DESCRIPTION,
+      FINAL_DESTINATION,
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeAndSubmitAboutGoodsOrServicesForm

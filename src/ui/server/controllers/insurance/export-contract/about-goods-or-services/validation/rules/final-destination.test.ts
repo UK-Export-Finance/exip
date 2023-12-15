@@ -4,18 +4,18 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: { ABOUT_GOODS_OR_SERVICES: ERROR_MESSAGE },
+    EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy/about-goods-or-services/validation/rules/final-destination', () => {
+describe('controllers/insurance/export-contract/about-goods-or-services/validation/rules/final-destination', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

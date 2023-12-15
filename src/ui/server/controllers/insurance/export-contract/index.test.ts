@@ -7,7 +7,12 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/export-contract/index', () => {
   let req: Request;
@@ -26,7 +31,7 @@ describe('controllers/insurance/export-contract/index', () => {
     it('should have correct properties', () => {
       const expected = {
         ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
-        START_NOW_URL: '#',
+        START_NOW_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
       };
 
       expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);

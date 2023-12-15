@@ -1,25 +1,23 @@
 import goodsOrServicesDescriptionRules, { MAXIMUM } from './description';
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: FIELD_ID },
-    },
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: FIELD_ID },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
+    EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy/about-goods-or-services/validation/rules/goods-or-services-description', () => {
+describe('controllers/insurance/export-contract/about-goods-or-services/validation/rules/goods-or-services-description', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

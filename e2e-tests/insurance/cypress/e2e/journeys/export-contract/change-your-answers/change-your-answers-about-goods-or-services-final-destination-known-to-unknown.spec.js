@@ -11,7 +11,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
 } = INSURANCE_FIELD_IDS;
@@ -23,7 +23,7 @@ const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - About goods or services - Change Final destination known from `yes` to `no`', () => {
+context('Insurance - Export contract - Change your answers - About goods or services - Change Final destination known from `yes` to `no`', () => {
   let referenceNumber;
   let url;
 

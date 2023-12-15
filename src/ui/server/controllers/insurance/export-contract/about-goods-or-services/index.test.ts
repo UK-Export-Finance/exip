@@ -1,9 +1,9 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
-import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -11,27 +11,28 @@ import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../../export-contract/map-and-save';
+import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
+  ALL_SECTIONS,
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
-} = POLICY_FIELD_IDS;
+} = EXPORT_CONTRACT_FIELD_IDS;
 
-describe('controllers/insurance/policy/about-goods-or-services', () => {
+describe('controllers/insurance/export-contract/about-goods-or-services', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../map-and-save/policy');
+  jest.mock('../map-and-save');
 
   mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
@@ -231,21 +232,21 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
         expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, expectedValidationErrors, mockCountries);
       });
 
-      it(`should redirect to ${NAME_ON_POLICY}`, async () => {
+      it(`should redirect to ${ALL_SECTIONS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${NAME_ON_POLICY}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = INSURANCE_ROUTES.POLICY.ABOUT_GOODS_OR_SERVICES_CHANGE;
+          req.originalUrl = INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -253,7 +254,7 @@ describe('controllers/insurance/policy/about-goods-or-services', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = INSURANCE_ROUTES.POLICY.ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE;
+          req.originalUrl = INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE;
 
           await post(req, res);
 

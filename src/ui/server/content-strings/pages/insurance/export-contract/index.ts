@@ -18,6 +18,12 @@ const ROOT = {
     "We may also ask you about your approach to the private insurance market. This is because we provide credit insurance for exporters who haven't been able to get a policy through the private market.",
 };
 
+const ABOUT_GOODS_OR_SERVICES = {
+  ...SHARED,
+  PAGE_TITLE: 'About the goods or services',
+};
+
 export default {
   ROOT,
+  ABOUT_GOODS_OR_SERVICES,
 };

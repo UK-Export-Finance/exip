@@ -1,8 +1,8 @@
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
-import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -12,21 +12,22 @@ import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../../export-contract/map-and-save';
+import mapAndSave from '../map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  ALL_SECTIONS,
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK },
+  // CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
-} = POLICY_FIELD_IDS;
+} = EXPORT_CONTRACT_FIELD_IDS;
 
 /**
  * pageVariables
@@ -52,7 +53,7 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES;
+export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 export const FIELD_IDS = [DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN];
 
@@ -90,7 +91,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES,
+        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
@@ -145,7 +146,7 @@ export const post = async (req: Request, res: Response) => {
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
@@ -172,14 +173,16 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+      // return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      // return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error updating application - policy - about goods or services %O', err);
 

@@ -1,17 +1,19 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/policy';
 import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
-
-const { INSURANCE } = ROUTES;
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
-    },
+  ROOT: INSURANCE_ROOT,
+  POLICY: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
+
+const {
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+} = INSURANCE_ROUTES;
 
 const {
   INSURANCE: {
@@ -23,7 +25,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - form validation', () => {
+context('Insurance - Export contract - About goods or services page - form validation', () => {
   let referenceNumber;
   let url;
 
@@ -31,11 +33,9 @@ context('Insurance - Policy - About goods or services page - form validation', (
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.startInsuranceExportContractSection();
 
-      url = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
       cy.assertUrl(url);
     });

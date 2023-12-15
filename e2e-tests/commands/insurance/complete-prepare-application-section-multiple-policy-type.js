@@ -20,7 +20,6 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
   cy.completeAndSubmitMultipleContractPolicyForm({ policyMaximumValue });
-  cy.completeAndSubmitAboutGoodsOrServicesForm({});
   cy.completeAndSubmitNameOnPolicyForm({ sameName: !differentPolicyContact });
 
   if (differentPolicyContact) {
@@ -31,6 +30,11 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   // submit "policy and exports - check your answers" form
   submitButton().click();
+
+  // start "export contract" section
+  startNowLink().click();
+
+  cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
   // start "your business" section
   startNowLink().click();
@@ -54,6 +58,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   cy.completeAndSubmitCompanyOrOrganisationForm({});
   cy.completeAndSubmitWorkingWithBuyerForm({});
 
+  // submit "your buyer - check your answers" forM
   submitButton().click();
 };
 

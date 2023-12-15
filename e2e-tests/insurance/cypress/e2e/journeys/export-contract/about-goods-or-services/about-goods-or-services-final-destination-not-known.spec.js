@@ -2,7 +2,6 @@ import { noRadioInput, countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -13,14 +12,14 @@ const { taskList } = partials.insurancePartials;
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES,
     NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;
@@ -31,7 +30,7 @@ const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - Final destination not known - As an exporter, I want to enter the details of the export contract', () => {
+context('Insurance - Export contract - About goods or services page - Final destination not known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
 
@@ -39,11 +38,7 @@ context('Insurance - Policy - About goods or services page - Final destination n
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.startInsuranceExportContractSection();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
     });

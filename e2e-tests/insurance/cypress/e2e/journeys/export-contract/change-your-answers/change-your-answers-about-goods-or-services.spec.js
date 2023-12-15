@@ -24,7 +24,7 @@ const NEW_COUNTRY_INPUT = COUNTRIES[0].NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - About goods or services - As an exporter, I want to change my answers to the type of policy section', () => {
+context('Insurance - Export contract - Change your answers - About goods or services - As an exporter, I want to change my answers to the type of policy section', () => {
   let referenceNumber;
   let url;
 

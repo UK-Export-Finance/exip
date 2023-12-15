@@ -4,14 +4,14 @@ import emptyFieldValidation from '../../../../../../shared-validation/empty-fiel
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: { ABOUT_GOODS_OR_SERVICES: ERROR_MESSAGE },
+    EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES;
 

@@ -1,19 +1,19 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import hasFormData from '../../../../../helpers/has-form-data';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import { objectHasProperty } from '../../../../../helpers/object';
 import api from '../../../../../api';
-import mapAndSave from '../../../export-contract/map-and-save';
+import mapAndSave from '../../map-and-save';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION },
-} = POLICY_FIELD_IDS;
+} = EXPORT_CONTRACT_FIELD_IDS;
 
 /**
  * post

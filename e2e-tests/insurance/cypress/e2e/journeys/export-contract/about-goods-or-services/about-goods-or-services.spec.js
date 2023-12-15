@@ -14,7 +14,7 @@ import {
   PAGES,
   TASKS,
 } from '../../../../../../content-strings';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -24,20 +24,19 @@ import checkAutocompleteInput from '../../../../../../commands/shared-commands/a
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: {
-    SINGLE_CONTRACT_POLICY,
+  EXPORT_CONTRACT: {
+    ROOT: EXPORT_CONTRACT_ROOT,
     ABOUT_GOODS_OR_SERVICES,
-    NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;
@@ -48,7 +47,7 @@ const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
+context('Insurance - Export contract - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
 
@@ -56,11 +55,7 @@ context('Insurance - Policy - About goods or services page - Final destination k
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
-
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.startInsuranceExportContractSection();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
@@ -80,7 +75,7 @@ context('Insurance - Policy - About goods or services page - Final destination k
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
     });
   });
 
@@ -184,12 +179,12 @@ context('Insurance - Policy - About goods or services page - Final destination k
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${NAME_ON_POLICY}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
       cy.assertUrl(expectedUrl);
     });
 

@@ -19,7 +19,7 @@ import { mockApplicationMultiplePolicy as mockApplication } from '../../../../te
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
+    POLICY: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
@@ -301,10 +301,10 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, async () => {
+      it(`should redirect to ${NAME_ON_POLICY}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${NAME_ON_POLICY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

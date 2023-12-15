@@ -14,3 +14,4 @@ Cypress.Commands.add('startYourBusinessSection', require('../../../../commands/i
 Cypress.Commands.add('startInsuranceYourBuyerSection', require('../../../../commands/insurance/start-your-buyer-section'));
 
 Cypress.Commands.add('startInsurancePolicySection', require('../../../../commands/insurance/start-insurance-policy-section'));
+Cypress.Commands.add('startInsuranceExportContractSection', require('../../../../commands/insurance/start-insurance-export-contract-section'));

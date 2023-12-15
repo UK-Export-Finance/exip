@@ -5,7 +5,12 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
 
@@ -17,7 +22,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
  */
 export const pageVariables = (referenceNumber: number) => ({
   ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-  START_NOW_URL: '#',
+  START_NOW_URL: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
 });
 
 /**

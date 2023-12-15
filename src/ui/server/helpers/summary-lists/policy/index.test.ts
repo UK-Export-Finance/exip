@@ -1,7 +1,7 @@
 import { generateFields, policySummaryList } from '.';
 import generatePolicyAndDateFields from './policy-and-date-fields';
 import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-fields';
-import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
+import generateAboutGoodsOrServicesFields from '../export-contract/about-goods-or-services-fields';
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generatePolicyContactFields from './policy-contact-fields';

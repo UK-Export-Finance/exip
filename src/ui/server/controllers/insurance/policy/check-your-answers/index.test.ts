@@ -15,7 +15,7 @@ const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const {
   INSURANCE: {
     POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
+    EXPORT_CONTRACT,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -171,10 +171,10 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${EXPORTER_BUSINESS_ROOT}`, () => {
+    it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORTER_BUSINESS_ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORT_CONTRACT.ROOT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

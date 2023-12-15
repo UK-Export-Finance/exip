@@ -1,18 +1,18 @@
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: FIELD_ID },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    POLICY: {
+    EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { [FIELD_ID]: ERROR_MESSAGE },
     },
   },

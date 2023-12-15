@@ -3,6 +3,7 @@ import SHARED_FIELD_IDS from './shared';
 import { ACCOUNT } from './account';
 import { POLICY } from './policy';
 import { EXPORTER_BUSINESS } from './business';
+import { EXPORT_CONTRACT } from './export-contract';
 import { YOUR_BUYER } from './your-buyer';
 import { DECLARATIONS } from './declarations';
 
@@ -25,6 +26,7 @@ export const INSURANCE_FIELD_IDS = {
   ACCOUNT,
   POLICY,
   EXPORTER_BUSINESS,
+  EXPORT_CONTRACT,
   YOUR_BUYER,
   DECLARATIONS,
 };

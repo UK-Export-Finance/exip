@@ -2,7 +2,7 @@ import { field } from '../../shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
 } = INSURANCE_FIELD_IDS;

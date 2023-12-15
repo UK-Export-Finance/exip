@@ -1,9 +1,9 @@
 import { post } from '.';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../../export-contract/map-and-save';
+import mapAndSave from '../../map-and-save';
 import generateValidationErrors from '../validation';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
@@ -13,13 +13,13 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-} = POLICY_FIELD_IDS;
+} = EXPORT_CONTRACT_FIELD_IDS;
 
-describe('controllers/insurance/policy/about-goods-or-services/save-and-back', () => {
+describe('controllers/insurance/export-contract/about-goods-or-services/save-and-back', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save/policy');
+  jest.mock('../../map-and-save');
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
   const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
