@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.4](https://github.com/UK-Export-Finance/exip/compare/v2.3.3...v2.3.4) (2023-12-15)
+
+
+### Miscellaneous
+
+* **EMS-2414:** Add enctype to all forms ([#1517](https://github.com/UK-Export-Finance/exip/issues/1517)) ([0e4af91](https://github.com/UK-Export-Finance/exip/commit/0e4af9135e35852ba860bc892b8d4a501104b7ac))
+
 ## [2.3.3](https://github.com/UK-Export-Finance/exip/compare/v2.3.2...v2.3.3) (2023-12-14)
 
 
