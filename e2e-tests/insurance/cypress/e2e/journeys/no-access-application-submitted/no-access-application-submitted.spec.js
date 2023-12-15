@@ -51,7 +51,7 @@ context('Insurance - no access to application when application is submitted', ()
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: NO_ACCESS_APPLICATION_SUBMITTED,
-        assertSubmitButton: false,
+        hasAForm: false,
         backLink: expectedUrl,
       });
     });

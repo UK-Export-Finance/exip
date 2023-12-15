@@ -56,7 +56,7 @@ context('Insurance - Account - Suspended - Email sent page - As an Exporter, I w
           currentHref: EMAIL_SENT,
           backLink: `${SUSPENDED_ROOT}?id=${account.id}`,
           assertAuthenticatedHeader: false,
-          assertSubmitButton: false,
+          hasAForm: false,
         });
       });
     });

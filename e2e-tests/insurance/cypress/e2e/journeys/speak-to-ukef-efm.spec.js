@@ -49,7 +49,7 @@ context('Insurance - speak to UKEF EFM exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SPEAK_TO_UKEF_EFM,
       backLink: INSURED_PERIOD,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
     });
   });

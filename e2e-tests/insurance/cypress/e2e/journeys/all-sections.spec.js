@@ -37,7 +37,7 @@ context('Insurance - All sections - new application', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`,
       backLink: ROUTES.INSURANCE.ELIGIBILITY.ELIGIBLE_TO_APPLY_ONLINE,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertBackLink: false,
     });
   });

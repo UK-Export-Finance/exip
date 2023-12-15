@@ -99,7 +99,8 @@ var import_dotenv = __toESM(require("dotenv"));
 
 // constants/field-ids/shared/index.ts
 var SHARED = {
-  POLICY_TYPE: "policyType"
+  POLICY_TYPE: "policyType",
+  NAME: "name"
 };
 var shared_default = SHARED;
 
@@ -4914,7 +4915,7 @@ var getSupportedCurrencies = (currencies) => {
 };
 var mapCurrencies = (currencies) => {
   const supportedCurrencies = getSupportedCurrencies(currencies);
-  const sorted = sort_array_alphabetically_default(supportedCurrencies, "name");
+  const sorted = sort_array_alphabetically_default(supportedCurrencies, FIELD_IDS.NAME);
   return sorted;
 };
 var map_currencies_default = mapCurrencies;

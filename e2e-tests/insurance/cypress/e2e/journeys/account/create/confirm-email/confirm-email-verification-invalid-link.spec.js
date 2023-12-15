@@ -42,7 +42,7 @@ context('Insurance - Account - Create - Confirm email page - invalid link - As a
         currentHref: verifyEmailUrl,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+        hasAForm: false,
       });
 
       cy.checkText(

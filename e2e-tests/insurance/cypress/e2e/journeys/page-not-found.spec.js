@@ -19,7 +19,7 @@ context('Insurance - page not found', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: invalidUrl,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertBackLink: false,
       assertAuthenticatedHeader: true,
     });

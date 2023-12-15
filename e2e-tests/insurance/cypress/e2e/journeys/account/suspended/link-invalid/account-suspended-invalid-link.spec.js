@@ -39,7 +39,7 @@ context('Insurance - Account - Suspended - Verify email - Visit with an invalid 
         currentHref: verifyEmailUrl,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+        hasAForm: false,
       });
     });
   });
