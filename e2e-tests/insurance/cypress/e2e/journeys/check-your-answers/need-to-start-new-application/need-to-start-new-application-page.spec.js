@@ -62,7 +62,7 @@ context('Insurance - Check your answers - Need to start new application page', (
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: url,
       backLink: eligibilityUrl,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 

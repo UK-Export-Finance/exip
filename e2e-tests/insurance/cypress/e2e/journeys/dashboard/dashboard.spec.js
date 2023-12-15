@@ -57,7 +57,7 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: DASHBOARD,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertBackLink: false,
     });
   });

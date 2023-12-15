@@ -7,6 +7,7 @@ import ukGoodsOrServicesPage from './ukGoodsOrServices';
 import field from './field';
 
 const backLink = () => cy.get('[data-cy="back-link"]');
+const form = () => cy.get('[data-cy="form"]');
 const heading = () => cy.get('[data-cy="heading"]');
 const headingCaption = () => cy.get('[data-cy="heading-caption"]');
 const yesNoRadioHint = () => cy.get('[data-cy="yes-no-input-hint"]');
@@ -35,6 +36,7 @@ const singleInputField = (fieldId) => ({
 
 export {
   backLink,
+  form,
   heading,
   headingCaption,
   yesNoRadioHint,

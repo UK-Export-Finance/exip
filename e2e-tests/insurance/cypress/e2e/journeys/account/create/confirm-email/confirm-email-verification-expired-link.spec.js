@@ -77,7 +77,7 @@ context('Insurance - Account - Create - Confirm email page - expired token - As 
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: verificationUrl,
         backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
-        assertSubmitButton: false,
+        hasAForm: false,
         assertAuthenticatedHeader: false,
       });
 

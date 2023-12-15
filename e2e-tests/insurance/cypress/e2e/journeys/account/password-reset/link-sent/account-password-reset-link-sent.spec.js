@@ -60,7 +60,7 @@ context('Insurance - Account - Password reset - link sent page - As an Exporter,
         currentHref: LINK_SENT,
         backLink: PASSWORD_RESET_ROOT,
         assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+        hasAForm: false,
       });
     });
   });

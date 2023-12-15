@@ -42,7 +42,7 @@ context("Insurance - Your business - Companies house unavailable page - I want t
       currentHref: `${ROOT}/${referenceNumber}${COMPANIES_HOUSE_UNAVAILABLE}`,
       backLink: null,
       assertBackLink: false,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 

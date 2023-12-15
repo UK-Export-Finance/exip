@@ -20,7 +20,7 @@ context('Problem with service page - Insurance', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: url,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       assertBackLink: false,
       isInsurancePage: true,

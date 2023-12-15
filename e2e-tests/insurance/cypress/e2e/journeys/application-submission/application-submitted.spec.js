@@ -42,7 +42,7 @@ context('Insurance - application submitted page', () => {
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`,
       assertBackLink: false,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 
