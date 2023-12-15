@@ -1,9 +1,8 @@
-import { TEMPLATE, pageVariables, get } from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import sectionStartPageVariables from '../../../helpers/section-start-page-variables';
-import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import sectionStartPageVariables from '../../../helpers/page-variables/core/insurance/section-start';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
@@ -28,17 +27,6 @@ describe('controllers/insurance/business/index', () => {
     jest.resetAllMocks();
   });
 
-  describe('pageVariables', () => {
-    it('should return sectionStartPageVariables', () => {
-      const expected = sectionStartPageVariables({
-        referenceNumber,
-        startNowRoute: COMPANY_DETAILS_ROOT,
-      });
-
-      expect(pageVariables(referenceNumber)).toEqual(expected);
-    });
-  });
-
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SECTION_START);
@@ -50,11 +38,12 @@ describe('controllers/insurance/business/index', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...insuranceCorePageVariables({
+        ...sectionStartPageVariables({
+          REFERENCE_NUMBER: referenceNumber,
+          START_NOW_ROUTE: COMPANY_DETAILS_ROOT,
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.ROOT,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
       });
     });

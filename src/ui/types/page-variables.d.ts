@@ -40,6 +40,16 @@ interface CorePageVariables {
   DATA_CY: PageVariablesDataCy;
 }
 
+interface SectionStartPageVariables extends CorePageVariables {
+  ALL_SECTIONS_URL: string;
+  START_NOW_URL: string;
+}
+
+interface SectionStartPageVariablesInput extends CorePageVariablesInitialInput {
+  REFERENCE_NUMBER: number;
+  START_NOW_ROUTE: string;
+}
+
 interface SingleInputPageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
@@ -64,6 +74,8 @@ export {
   CorePageVariables,
   PageContentStrings,
   PageVariablesContentStrings,
+  SectionStartPageVariables,
+  SectionStartPageVariablesInput,
   SingleInputPageVariablesInitialInput,
   SingleInputPageVariablesInput,
   SingleInputPageVariables,
