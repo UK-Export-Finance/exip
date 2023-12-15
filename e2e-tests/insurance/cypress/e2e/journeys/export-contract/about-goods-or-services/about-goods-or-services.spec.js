@@ -32,6 +32,7 @@ const {
   EXPORT_CONTRACT: {
     ROOT: EXPORT_CONTRACT_ROOT,
     ABOUT_GOODS_OR_SERVICES,
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -179,12 +180,12 @@ context('Insurance - Export contract - About goods or services page - Final dest
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
     });
 

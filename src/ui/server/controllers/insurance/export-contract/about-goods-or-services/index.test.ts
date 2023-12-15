@@ -17,9 +17,7 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  ALL_SECTIONS,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE: CHECK_AND_CHANGE_ROUTE, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -89,7 +87,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES);
     });
   });
 
@@ -113,7 +111,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES,
+          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
@@ -143,7 +141,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES,
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
@@ -232,10 +230,10 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, expectedValidationErrors, mockCountries);
       });
 
-      it(`should redirect to ${ALL_SECTIONS}`, async () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -246,7 +244,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -273,7 +271,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES,
+            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
@@ -303,7 +301,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
           const expectedVariables = {
             ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.ABOUT_GOODS_OR_SERVICES,
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),

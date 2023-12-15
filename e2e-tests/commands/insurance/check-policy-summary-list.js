@@ -1,36 +1,33 @@
 import { summaryList } from '../../pages/shared';
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_VALUES } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy';
 import account from '../../fixtures/account';
 import application from '../../fixtures/application';
-import COUNTRIES from '../../fixtures/countries';
 import CURRENCIES from '../../fixtures/currencies';
 import formatCurrency from '../../helpers/format-currency';
 import { createTimestampFromNumbers, formatDate } from '../../helpers/date';
 import getSummaryListField from './get-summary-list-field';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
-      NAME_ON_POLICY: { NAME, POSITION },
-      USING_BROKER,
-      BROKER,
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
-    ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
+    NAME_ON_POLICY: { NAME, POSITION },
+    USING_BROKER,
+    BROKER,
   },
-} = FIELD_IDS;
+  ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
+} = INSURANCE_FIELD_IDS;
 
 const { POLICY_CONTACT } = application;
 
@@ -56,28 +53,6 @@ const checkPolicySummaryList = ({
     const expectedValue = currency.name;
 
     const expectedChangeLinkText = FIELDS.CONTRACT_POLICY[fieldId].SUMMARY.TITLE;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [DESCRIPTION]: () => {
-    const fieldId = DESCRIPTION;
-    const expectedKey = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
-
-    const expectedValue = application.EXPORT_CONTRACT[fieldId];
-
-    const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [FINAL_DESTINATION]: () => {
-    const fieldId = FINAL_DESTINATION;
-    const expectedKey = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
-
-    const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[fieldId]);
-
-    const expectedValue = country.NAME;
-
-    const expectedChangeLinkText = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].SUMMARY.TITLE;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

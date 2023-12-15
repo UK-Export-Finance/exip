@@ -63,7 +63,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
         id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-        fields: policyRequiredFields({ policyType, finalDestinationKnown, isUsingBroker }),
+        fields: policyRequiredFields({ policyType, isUsingBroker }),
         dependencies: expectedDependencies,
       };
 

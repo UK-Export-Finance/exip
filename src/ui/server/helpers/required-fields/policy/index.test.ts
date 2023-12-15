@@ -28,7 +28,6 @@ describe('server/helpers/required-fields/policy', () => {
   const {
     policy: { policyType },
     broker: { isUsingBroker },
-    exportContract: { finalDestinationKnown },
   } = mockApplication;
 
   describe('getContractPolicyTasks', () => {
@@ -100,7 +99,7 @@ describe('server/helpers/required-fields/policy', () => {
 
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ policyType, finalDestinationKnown, isUsingBroker });
+      const result = requiredFields({ policyType, isUsingBroker });
 
       const expected = [
         ...Object.values(TYPE_OF_POLICY),

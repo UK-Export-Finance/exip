@@ -23,7 +23,13 @@ const ABOUT_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'About the goods or services',
 };
 
+const CHECK_YOUR_ANSWERS = {
+  ...SHARED,
+  PAGE_TITLE: 'Check your answers for this section',
+};
+
 module.exports = {
   ROOT,
   ABOUT_GOODS_OR_SERVICES,
+  CHECK_YOUR_ANSWERS,
 };

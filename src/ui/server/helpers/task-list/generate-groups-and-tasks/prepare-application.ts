@@ -59,7 +59,7 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-    fields: policyRequiredFields({ policyType, finalDestinationKnown, isUsingBroker }),
+    fields: policyRequiredFields({ policyType, isUsingBroker }),
     dependencies,
   };
 
