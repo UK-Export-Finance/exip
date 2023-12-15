@@ -16,14 +16,7 @@ import {
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
 } from './mutations';
-import {
-  getAccountPasswordResetToken,
-  getApimCisCountries,
-  getApimCurrencies,
-  getCompaniesHouseInformation,
-  getOrdnanceSurveyAddress,
-  verifyAccountPasswordResetToken,
-} from './queries';
+import { getAccountPasswordResetToken, getApimCisCountries, getApimCurrencies, getCompaniesHouseInformation, getOrdnanceSurveyAddress, verifyAccountPasswordResetToken } from './queries';
 
 /**
  * customResolvers

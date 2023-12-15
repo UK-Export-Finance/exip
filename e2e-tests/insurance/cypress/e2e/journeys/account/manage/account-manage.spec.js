@@ -85,7 +85,7 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
           currentHref: MANAGE,
           backLink: DASHBOARD,
           assertBackLink: true,
-          assertSubmitButton: false,
+          hasAForm: false,
           assertAuthenticatedHeader: true,
         });
       });

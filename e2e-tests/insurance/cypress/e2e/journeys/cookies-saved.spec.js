@@ -38,7 +38,7 @@ context('Cookies saved page - Insurance', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: COOKIES_SAVED,
       backLink: COOKIES,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
       assertCookies: false,

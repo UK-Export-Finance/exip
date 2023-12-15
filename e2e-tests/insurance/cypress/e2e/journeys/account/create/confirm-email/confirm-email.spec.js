@@ -52,7 +52,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: `${CONFIRM_EMAIL}?id=${account.id}`,
         backLink: YOUR_DETAILS,
-        assertSubmitButton: false,
+        hasAForm: false,
         assertAuthenticatedHeader: false,
         lightHouseThresholds: {
           performance: 69,

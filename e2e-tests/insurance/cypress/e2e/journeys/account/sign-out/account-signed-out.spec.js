@@ -30,7 +30,7 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: SIGNED_OUT,
       assertBackLink: false,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
     });
   });

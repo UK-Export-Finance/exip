@@ -38,7 +38,7 @@ context('Cannot apply exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: CANNOT_APPLY,
       backLink: UK_GOODS_OR_SERVICES,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       lightHouseThresholds: {

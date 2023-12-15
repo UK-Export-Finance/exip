@@ -25,11 +25,17 @@ context('Insurance - Feedback confirmation page - Signed in', () => {
 
   it('renders core page elements', () => {
     cy.corePageChecks({
+      hasAForm: false,
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: url,
-      submitButtonCopy: BUTTONS.BACK_TO_SERVICE,
       assertAuthenticatedHeader: true,
       assertBackLink: false,
     });
+  });
+
+  it('renders a "submit button"/link', () => {
+    cy.navigateToUrl(url);
+
+    cy.checkText(submitButton(), BUTTONS.BACK_TO_SERVICE);
   });
 });

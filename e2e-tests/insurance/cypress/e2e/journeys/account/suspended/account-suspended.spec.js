@@ -48,7 +48,7 @@ context('Insurance - Account - Suspended page - As an Exporter, I want to reacti
         currentHref: accountSuspendedUrl,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+        hasAForm: false,
       });
 
       cy.checkText(body(), CONTENT_STRINGS.BODY);

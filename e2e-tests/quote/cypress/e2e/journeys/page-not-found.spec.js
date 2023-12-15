@@ -16,7 +16,7 @@ context('404 Page not found', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: '/test',
-      assertSubmitButton: false,
+      hasAForm: false,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,

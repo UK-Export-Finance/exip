@@ -44,7 +44,7 @@ context('Accessibility statement page - Quote', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.ACCESSIBILITY_STATEMENT,
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });
