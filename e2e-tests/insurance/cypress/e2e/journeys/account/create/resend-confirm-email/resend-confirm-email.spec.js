@@ -51,7 +51,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: url,
         backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
-        assertSubmitButton: false,
+        hasAForm: false,
         assertAuthenticatedHeader: false,
       });
     });

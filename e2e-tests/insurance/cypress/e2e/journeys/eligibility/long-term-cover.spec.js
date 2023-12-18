@@ -50,7 +50,7 @@ context('Insurance - Eligibility - Long term cover page - I want to check if I c
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: LONG_TERM_COVER,
       backLink: COVER_PERIOD,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
     });
   });

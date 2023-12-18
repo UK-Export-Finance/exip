@@ -11,6 +11,7 @@ import field from './field';
 const allSectionsLink = () => cy.get('[data-cy="all-sections-link"]');
 const backLink = () => cy.get('[data-cy="back-link"]');
 const body = () => cy.get('[data-cy="body"]');
+const form = () => cy.get('[data-cy="form"]');
 const heading = () => cy.get('[data-cy="heading"]');
 const headingCaption = () => cy.get('[data-cy="heading-caption"]');
 const intro = () => cy.get('[data-cy="intro"]');
@@ -50,6 +51,7 @@ export {
   backLink,
   body,
   radios,
+  form,
   heading,
   headingCaption,
   intro,

@@ -28,7 +28,7 @@ context('Contact us page - Insurance', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.CONTACT_US,
       backLink: ROUTES.INSURANCE.START,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
     });

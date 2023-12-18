@@ -49,7 +49,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: CANNOT_APPLY,
       backLink: BUYER_COUNTRY,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
     });
   });

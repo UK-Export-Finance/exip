@@ -43,7 +43,7 @@ context('Insurance - Complete other sections page', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${COMPLETE_OTHER_SECTIONS}`,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertBackLink: false,
     });
   });

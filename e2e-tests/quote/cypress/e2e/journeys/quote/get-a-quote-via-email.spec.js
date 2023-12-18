@@ -30,7 +30,7 @@ context('Get a quote via email exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL,
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
       lightHouseThresholds: {

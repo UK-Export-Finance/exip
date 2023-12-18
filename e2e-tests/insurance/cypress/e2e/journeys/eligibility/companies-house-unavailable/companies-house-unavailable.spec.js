@@ -29,7 +29,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       currentHref: url,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 

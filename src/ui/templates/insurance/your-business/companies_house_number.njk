@@ -30,7 +30,7 @@
   {% endif %}
 
   <div class="govuk-grid-row">
-    <form method="POST" id="form" novalidate>
+    <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">

@@ -17,7 +17,7 @@
       "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
-  <form method="POST" id="form" novalidate>
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     <div class="govuk-grid-row">
