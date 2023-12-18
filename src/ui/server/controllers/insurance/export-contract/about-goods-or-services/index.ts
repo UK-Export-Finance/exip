@@ -51,6 +51,8 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK}`,
 });
 
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
+
 export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 export const FIELD_IDS = [DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN];
@@ -89,7 +91,7 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
+        PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
       ...pageVariables(refNumber),
@@ -144,7 +146,7 @@ export const post = async (req: Request, res: Response) => {
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),

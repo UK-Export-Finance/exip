@@ -1,4 +1,4 @@
-import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
+import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -59,6 +59,12 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
     jest.resetAllMocks();
   });
 
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES);
+    });
+  });
+
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const result = pageVariables(refNumber);
@@ -111,7 +117,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
         ...pageVariables(refNumber),
@@ -141,7 +147,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
+            PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
@@ -271,7 +277,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
+            PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
           ...pageVariables(refNumber),
@@ -301,7 +307,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
           const expectedVariables = {
             ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES,
+              PAGE_CONTENT_STRINGS,
               BACK_LINK: req.headers.referer,
             }),
             ...pageVariables(refNumber),
