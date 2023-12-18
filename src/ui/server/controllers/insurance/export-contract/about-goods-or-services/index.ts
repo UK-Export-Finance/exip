@@ -180,7 +180,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - policy - about goods or services %O', err);
+    console.error('Error updating application - export contract - about goods or services %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
