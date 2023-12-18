@@ -1,14 +1,7 @@
 import partials from '../../../../../../partials';
-import {
-  intro,
-  listIntro,
-  listItem,
-  outro,
-  startNowLink,
-  allSectionsLink,
-} from '../../../../../../pages/shared';
-import { PAGES, BUTTONS } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import assertSectionStartContent from '../../../../../../commands/shared-commands/assertions/assert-section-start-content';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.ROOT;
 
@@ -70,57 +63,49 @@ context('Insurance - Your business - Start page - As an Exporter, I want to prov
     });
 
     it('renders an intro', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      assertSectionStartContent.intro(CONTENT_STRINGS.INTRO);
     });
 
     it('renders a list intro', () => {
-      cy.checkText(listIntro(), CONTENT_STRINGS.LIST.INTRO);
+      assertSectionStartContent.list.intro(CONTENT_STRINGS.LIST.INTRO);
     });
 
     it('renders list items', () => {
-      cy.checkText(listItem(1), CONTENT_STRINGS.LIST.ITEMS[0]);
-      cy.checkText(listItem(2), CONTENT_STRINGS.LIST.ITEMS[1]);
-      cy.checkText(listItem(3), CONTENT_STRINGS.LIST.ITEMS[2]);
+      assertSectionStartContent.list.items(CONTENT_STRINGS.LIST.ITEMS);
     });
 
     it('renders an outro', () => {
-      cy.checkText(outro(), CONTENT_STRINGS.OUTRO);
+      assertSectionStartContent.outro(CONTENT_STRINGS.OUTRO);
     });
 
     it('renders a `start now` link', () => {
-      cy.checkLink(
-        startNowLink(),
-        companyDetailsUrl,
-        BUTTONS.START_NOW,
-      );
+      assertSectionStartContent.startNow.link({
+        expectedUrl: companyDetailsUrl,
+      });
     });
 
     it('renders an `all sections` link', () => {
-      cy.checkLink(
-        allSectionsLink(),
-        allSectionsUrl,
-        BUTTONS.START_DIFFERENT_SECTION,
-      );
+      assertSectionStartContent.allSections.link({
+        expectedUrl: allSectionsUrl,
+      });
     });
   });
 
   describe('when clicking the `start now` link', () => {
     it(`should redirect to ${COMPANY_DETAILS}`, () => {
-      cy.navigateToUrl(yourBusinessRootUrl);
-
-      startNowLink().click();
-
-      cy.assertUrl(`${baseUrl}${companyDetailsUrl}`);
+      assertSectionStartContent.startNow.linkRedirection({
+        currentUrl: yourBusinessRootUrl,
+        expectedUrl: `${baseUrl}${companyDetailsUrl}`,
+      });
     });
   });
 
   describe('when clicking the `all sections` link', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.navigateToUrl(yourBusinessRootUrl);
-
-      allSectionsLink().click();
-
-      cy.assertUrl(`${baseUrl}${allSectionsUrl}`);
+      assertSectionStartContent.allSections.linkRedirection({
+        currentUrl: yourBusinessRootUrl,
+        expectedUrl: `${baseUrl}${allSectionsUrl}`,
+      });
     });
   });
 });

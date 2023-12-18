@@ -1,15 +1,15 @@
-import { TEMPLATE, pageVariables, get } from '.';
+import { TEMPLATE, get } from '.';
 import { PAGES } from '../../../content-strings';
 import { TEMPLATES } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
-import insuranceCorePageVariables from '../../../helpers/page-variables/core/insurance';
+import sectionStartPageVariables from '../../../helpers/page-variables/core/insurance/section-start';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
 
+const { referenceNumber } = mockApplication;
+
 const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -27,17 +27,6 @@ describe('controllers/insurance/export-contract/index', () => {
     jest.resetAllMocks();
   });
 
-  describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const expected = {
-        ALL_SECTIONS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
-        START_NOW_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
-      };
-
-      expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
-    });
-  });
-
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SECTION_START);
@@ -49,11 +38,12 @@ describe('controllers/insurance/export-contract/index', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...insuranceCorePageVariables({
+        ...sectionStartPageVariables({
+          REFERENCE_NUMBER: referenceNumber,
+          START_NOW_ROUTE: ABOUT_GOODS_OR_SERVICES,
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
       });
     });
