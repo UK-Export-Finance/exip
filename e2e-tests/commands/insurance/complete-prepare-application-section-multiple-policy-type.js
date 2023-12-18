@@ -36,8 +36,10 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-  // start "your business" section
-  startNowLink().click();
+  // submit "export contract - check your answers" form
+  submitButton().click();
+
+  cy.startYourBusinessSection();
 
   cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
 
