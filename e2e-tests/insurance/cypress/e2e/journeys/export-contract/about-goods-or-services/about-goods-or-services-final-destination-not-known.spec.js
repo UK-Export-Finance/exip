@@ -1,7 +1,6 @@
 import { noRadioInput, countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -14,7 +13,7 @@ const {
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES,
-    NAME_ON_POLICY,
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -24,7 +23,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const task = taskList.prepareApplication.tasks.policy;
+const task = taskList.prepareApplication.tasks.exportContract;
 
 const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
@@ -57,19 +56,18 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${NAME_ON_POLICY}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown: false });
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
     });
 
     describe('after submitting the form', () => {
-      it('should retain the `type of policy and exports` task status as `in progress`', () => {
+      it('should update the `export contract` task status to `completed`', () => {
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        const expected = TASKS.STATUS.IN_PROGRESS;
-        cy.checkText(task.status(), expected);
+        cy.checkTaskStatusCompleted(task.status());
       });
     });
 

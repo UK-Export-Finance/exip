@@ -6,7 +6,7 @@ import application from '../../../../../../fixtures/application';
 import COUNTRIES from '../../../../../../fixtures/countries';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     CHECK_YOUR_ANSWERS,
     ABOUT_GOODS_OR_SERVICES_CHANGE,
   },
@@ -14,7 +14,7 @@ const {
 
 const {
   INSURANCE: {
-    POLICY: {
+    EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },

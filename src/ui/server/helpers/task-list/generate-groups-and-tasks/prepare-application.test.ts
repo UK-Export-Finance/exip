@@ -5,9 +5,10 @@ import { GROUP_IDS, TASK_IDS } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { TASKS } from '../../../content-strings';
 import { getAllTasksFieldsInAGroup } from '../task-helpers';
-import policyRequiredFields from '../../required-fields/policy';
 import businessRequiredFields from '../../required-fields/business';
 import yourBuyerRequiredFields from '../../required-fields/your-buyer';
+import policyRequiredFields from '../../required-fields/policy';
+import exportContractRequiredFields from '../../required-fields/export-contract';
 import { mockApplication } from '../../../test-mocks';
 
 const {
@@ -71,7 +72,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
-        fields: [],
+        fields: exportContractRequiredFields({ finalDestinationKnown }),
         dependencies: expectedDependencies,
       };
 

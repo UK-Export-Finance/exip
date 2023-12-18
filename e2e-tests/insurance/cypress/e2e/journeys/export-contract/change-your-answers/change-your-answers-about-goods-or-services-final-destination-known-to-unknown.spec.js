@@ -7,7 +7,7 @@ import { DEFAULT } from '../../../../../../content-strings';
 const {
   ROOT,
   ALL_SECTIONS,
-  POLICY: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -19,7 +19,7 @@ const {
 const fieldId = FINAL_DESTINATION;
 
 const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.policy;
+const task = taskList.prepareApplication.tasks.exportContract;
 
 const baseUrl = Cypress.config('baseUrl');
 

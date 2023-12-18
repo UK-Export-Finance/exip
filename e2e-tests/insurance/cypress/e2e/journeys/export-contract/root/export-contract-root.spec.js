@@ -10,6 +10,7 @@ const {
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ROOT: EXPORT_CONTRACT_ROOT,
+    ABOUT_GOODS_OR_SERVICES,
   },
 } = INSURANCE_ROUTES;
 
@@ -73,7 +74,7 @@ context('Insurance - Export contract - Start page - As an Exporter, I want to pr
 
     it('renders a `start now` link', () => {
       assertSectionStartContent.startNow.link({
-        expectedUrl: `${ROOT}/${referenceNumber}#`,
+        expectedUrl: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
       });
     });
 
@@ -88,7 +89,7 @@ context('Insurance - Export contract - Start page - As an Exporter, I want to pr
     it(`should redirect to ${EXPORT_CONTRACT_ROOT}`, () => {
       assertSectionStartContent.startNow.linkRedirection({
         currentUrl: exportContractRootUrl,
-        expectedUrl: `${baseUrl}${ROOT}/${referenceNumber}#`,
+        expectedUrl: `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
       });
     });
   });
