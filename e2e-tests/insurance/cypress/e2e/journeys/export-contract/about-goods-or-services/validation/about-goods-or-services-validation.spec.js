@@ -5,13 +5,13 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  ROOT: INSURANCE_ROOT,
   POLICY: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
+  ROOT: INSURANCE_ROOT,
   EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
 } = INSURANCE_ROUTES;
 
