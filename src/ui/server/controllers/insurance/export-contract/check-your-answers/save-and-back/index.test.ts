@@ -3,10 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 
-const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/export-contract/check-your-answers/save-and-back', () => {
   let req: Request;
