@@ -4,9 +4,10 @@ import { get as exportContractRootGet } from '../../../controllers/insurance/exp
 import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../../controllers/insurance/export-contract/about-goods-or-services';
 import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controllers/insurance/export-contract/about-goods-or-services/save-and-back';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
+import { post as checkYourAnswersSaveAndBackPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const { ROOT, ABOUT_GOODS_OR_SERVICES, ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK } = EXPORT_CONTRACT;
-const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS } = EXPORT_CONTRACT;
+const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS, CHECK_YOUR_ANSWERS_SAVE_AND_BACK } = EXPORT_CONTRACT;
 
 describe('routes/insurance/export-contract', () => {
   beforeEach(() => {
@@ -19,7 +20,7 @@ describe('routes/insurance/export-contract', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(5);
-    expect(post).toHaveBeenCalledTimes(5);
+    expect(post).toHaveBeenCalledTimes(6);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -33,5 +34,6 @@ describe('routes/insurance/export-contract', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`, checkYourAnswersSaveAndBackPost);
   });
 });
