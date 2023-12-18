@@ -1,4 +1,4 @@
-import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/policy';
+import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/export-contract';
 import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';

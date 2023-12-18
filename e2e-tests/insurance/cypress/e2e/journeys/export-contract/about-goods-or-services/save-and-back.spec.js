@@ -1,31 +1,30 @@
-import { submitButton, saveAndBackButton } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
+import { saveAndBackButton } from '../../../../../../pages/shared';
+import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_IDS } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY: { ABOUT_GOODS_OR_SERVICES },
-  },
-} = ROUTES;
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+} = INSURANCE_ROUTES;
 
 const {
   INSURANCE: {
-    POLICY: {
+    EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
     },
   },
 } = FIELD_IDS;
 
-const { STATUS: { IN_PROGRESS } } = TASKS;
+const { STATUS: { NOT_STARTED_YET, IN_PROGRESS } } = TASKS;
 
 const { taskList } = partials.insurancePartials;
 
-const task = taskList.prepareApplication.tasks.policy;
+const task = taskList.prepareApplication.tasks.exportContract;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -37,10 +36,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.startInsuranceExportContractSection();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.assertUrl(url);
@@ -68,8 +64,8 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertUrl(expected);
     });
 
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+    it('should retain the `export contract` task status as `not started`', () => {
+      cy.checkTaskStatus(task, NOT_STARTED_YET);
     });
   });
 
@@ -88,7 +84,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertUrl(expected);
     });
 
-    it('should update the status of task `type of policy`to `in progress`', () => {
+    it('should update the `export contract` task status to `in progress`', () => {
       cy.checkTaskStatus(task, IN_PROGRESS);
     });
 
@@ -100,9 +96,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       saveAndBackButton().click();
 
       // go back to the page via the task list
-      cy.startInsurancePolicySection();
-      submitButton().click();
-      submitButton().click();
+      cy.startInsuranceExportContractSection();
 
       aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
     });
@@ -131,15 +125,12 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertUrl(expected);
     });
 
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+    it('should update the `export contract` task status to `not started`', () => {
+      cy.checkTaskStatus(task, NOT_STARTED_YET);
     });
 
     it('should have no value in `description` when going back to the page', () => {
-      // go back to the page via the task list
-      cy.startInsurancePolicySection();
-      submitButton().click();
-      submitButton().click();
+      cy.startInsuranceExportContractSection();
 
       field.textarea().should('have.value', '');
     });

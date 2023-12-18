@@ -7,7 +7,7 @@ import {
   noRadio,
   countryInput,
 } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
+import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';

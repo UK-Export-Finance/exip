@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { aboutGoodsOrServicesPage } from '../../pages/insurance/policy';
+import { aboutGoodsOrServicesPage } from '../../pages/insurance/export-contract';
 import {
   countryInput,
   submitButton,

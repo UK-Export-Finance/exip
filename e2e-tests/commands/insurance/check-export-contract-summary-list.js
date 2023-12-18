@@ -10,6 +10,10 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+/**
+ * checkExportContractSummaryList
+ * "export contract" summary list assertions.
+ */
 const checkExportContractSummaryList = ({
   [DESCRIPTION]: () => {
     const fieldId = DESCRIPTION;

@@ -1,5 +1,5 @@
 import { noRadioInput, countryInput } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/policy';
+import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import partials from '../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
