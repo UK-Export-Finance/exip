@@ -28,7 +28,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY,
     MULTIPLE_CONTRACT_POLICY,
-    ABOUT_GOODS_OR_SERVICES,
+    NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
@@ -160,10 +160,10 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
+    it(`should redirect to ${NAME_ON_POLICY}`, () => {
       cy.completeAndSubmitMultipleContractPolicyForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
 

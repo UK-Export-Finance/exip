@@ -1,4 +1,4 @@
-import requiredFields, { getContractPolicyTasks, getAboutGoodsOrServicesTasks, getBrokerTasks } from '.';
+import requiredFields, { getContractPolicyTasks, getBrokerTasks } from '.';
 import { FIELD_VALUES } from '../../../constants';
 import POLICY_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
@@ -11,7 +11,6 @@ const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 const {
   CONTRACT_POLICY,
   TYPE_OF_POLICY,
-  ABOUT_GOODS_OR_SERVICES,
   NAME_ON_POLICY,
   BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL },
 } = POLICY_FIELD_IDS;
@@ -29,7 +28,6 @@ describe('server/helpers/required-fields/policy', () => {
   const {
     policy: { policyType },
     broker: { isUsingBroker },
-    exportContract: { finalDestinationKnown },
   } = mockApplication;
 
   describe('getContractPolicyTasks', () => {
@@ -61,30 +59,6 @@ describe('server/helpers/required-fields/policy', () => {
         const result = getContractPolicyTasks();
 
         const expected = TYPE_OF_POLICY;
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
-  describe('getAboutGoodsOrServicesTasks', () => {
-    describe('when finalDestinationKnown is true', () => {
-      it('should return multiple field ids in an array', () => {
-        const finalDestinationKnownFlag = true;
-
-        const result = getAboutGoodsOrServicesTasks(finalDestinationKnownFlag);
-
-        const expected = Object.values(ABOUT_GOODS_OR_SERVICES);
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when finalDestinationKnown is undefined', () => {
-      it('should return 2 field ids in an array', () => {
-        const result = getAboutGoodsOrServicesTasks();
-
-        const expected = [ABOUT_GOODS_OR_SERVICES.DESCRIPTION, ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN];
 
         expect(result).toEqual(expected);
       });
@@ -125,14 +99,13 @@ describe('server/helpers/required-fields/policy', () => {
 
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ policyType, finalDestinationKnown, isUsingBroker });
+      const result = requiredFields({ policyType, isUsingBroker });
 
       const expected = [
         ...Object.values(TYPE_OF_POLICY),
         REQUESTED_START_DATE,
         POLICY_CURRENCY_CODE,
         ...Object.values(getContractPolicyTasks(policyType)),
-        ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
         IS_SAME_AS_OWNER,
         FIRST_NAME,
         LAST_NAME,

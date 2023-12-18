@@ -6,7 +6,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { mockApplication } from '../../../../test-mocks';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;

@@ -32,11 +32,6 @@ const MULTIPLE_CONTRACT_POLICY = {
   PAGE_TITLE: 'Tell us about the multiple contract policy you need',
 };
 
-const ABOUT_GOODS_OR_SERVICES = {
-  ...SHARED,
-  PAGE_TITLE: 'About the goods or services',
-};
-
 const NAME_ON_POLICY = {
   ...SHARED,
   PAGE_TITLE: 'Whose name should be on the policy?',
@@ -70,7 +65,6 @@ module.exports = {
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
   MULTIPLE_CONTRACT_POLICY,
-  ABOUT_GOODS_OR_SERVICES,
   NAME_ON_POLICY,
   DIFFERENT_NAME_ON_POLICY,
   BROKER,

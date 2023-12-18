@@ -44,7 +44,6 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.startInsurancePolicySection();
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
-      cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;

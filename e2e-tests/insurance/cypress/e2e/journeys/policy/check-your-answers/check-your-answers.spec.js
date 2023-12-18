@@ -12,9 +12,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   ROOT,
   POLICY,
-  EXPORTER_BUSINESS: {
-    ROOT: EXPORTER_BUSINESS_ROOT,
-  },
+  EXPORT_CONTRACT,
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;
@@ -68,12 +66,12 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${EXPORTER_BUSINESS_ROOT}`, () => {
+      it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
         cy.navigateToUrl(url);
 
         submitButton().click();
 
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`;
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
         cy.assertUrl(expectedUrl);
       });
     });

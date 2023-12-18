@@ -10,6 +10,7 @@ Cypress.Commands.add('completeAndSubmitDifferentNameOnPolicyForm', require('../.
 Cypress.Commands.add('completeDifferentNameOnPolicyForm', require('../../../../../commands/insurance/complete-different-name-on-policy-form'));
 
 Cypress.Commands.add('completePolicySection', require('../../../../../commands/insurance/complete-policy-section'));
+Cypress.Commands.add('completeExportContractSection', require('../../../../../commands/insurance/complete-export-contract-section'));
 
 Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('../../../../../commands/insurance/complete-prepare-application-section-single-policy-type'));
 Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('../../../../../commands/insurance/complete-prepare-application-section-multiple-policy-type'));

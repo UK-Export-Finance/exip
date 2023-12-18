@@ -6,7 +6,7 @@ import { mockApplication, mockCountries } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
 
 const {
-  POLICY: {
+  EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;

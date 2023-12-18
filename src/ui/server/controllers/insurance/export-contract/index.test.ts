@@ -7,9 +7,12 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import { Request, Response } from '../../../../types';
 import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
-
 const { referenceNumber } = mockApplication;
+
+const {
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/export-contract/index', () => {
   let req: Request;
@@ -37,7 +40,7 @@ describe('controllers/insurance/export-contract/index', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...sectionStartPageVariables({
           REFERENCE_NUMBER: referenceNumber,
-          START_NOW_ROUTE: '#',
+          START_NOW_ROUTE: ABOUT_GOODS_OR_SERVICES,
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
           BACK_LINK: req.headers.referer,
         }),

@@ -15,7 +15,6 @@ const {
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     NAME_ON_POLICY: { NAME, POSITION },
   },
   ACCOUNT: { EMAIL },
@@ -65,14 +64,6 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
 
   it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {
     checkSummaryList[POLICY_CURRENCY_CODE]();
-  });
-
-  it(`should render a ${DESCRIPTION} summary list row`, () => {
-    checkSummaryList[DESCRIPTION]();
-  });
-
-  it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]();
   });
 
   it(`should render a ${NAME} summary list row`, () => {

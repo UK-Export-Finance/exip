@@ -5,7 +5,10 @@ import sectionStartPageVariables from '../../../helpers/page-variables/core/insu
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SECTION_START;
 
@@ -24,10 +27,12 @@ export const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const { referenceNumber } = application;
+
     return res.render(TEMPLATE, {
       ...sectionStartPageVariables({
-        REFERENCE_NUMBER: application.referenceNumber,
-        START_NOW_ROUTE: '#',
+        REFERENCE_NUMBER: referenceNumber,
+        START_NOW_ROUTE: ABOUT_GOODS_OR_SERVICES,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.ROOT,
         BACK_LINK: req.headers.referer,
       }),

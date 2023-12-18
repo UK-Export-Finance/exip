@@ -1,11 +1,15 @@
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import requiredEligibilityFields from '../eligibility';
 import requiredPolicyFields from '../policy';
+import requiredExportContractFields from '../export-contract';
 import requiredBusinessFields from '../business';
 import requiredYourBuyerFields from '../your-buyer';
 import { ApplicationFlat } from '../../../../types';
 
 const {
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION_KNOWN },
+  },
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     BROKER: { USING_BROKER },
@@ -24,6 +28,9 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredPolicyFields({
     policyType: application[POLICY_TYPE],
     isUsingBroker: application[USING_BROKER],
+  }),
+  ...requiredExportContractFields({
+    finalDestinationKnown: application[FINAL_DESTINATION_KNOWN],
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
   ...requiredYourBuyerFields(),

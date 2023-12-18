@@ -7,7 +7,7 @@ import {
 
 const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
 const {
-  ABOUT_GOODS_OR_SERVICES, BROKER, CONTRACT_POLICY, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
+  BROKER, CONTRACT_POLICY, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
 } = POLICY;
 const { EMAIL } = ACCOUNT;
 
@@ -106,32 +106,6 @@ export const POLICY_FIELDS = {
         SUMMARY: {
           TITLE: 'Maximum owed at any single point during policy',
         },
-      },
-    },
-  },
-  ABOUT_GOODS_OR_SERVICES: {
-    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
-      LABEL: "Describe the goods or services you want to insure and explain how they'll be used by the buyer",
-      HINT: {
-        INTRO: 'For example:',
-        LIST: [
-          'fast moving consumer goods, like vegan protein bars',
-          'construction materials to build commercial property',
-          'educational services such as teacher training',
-        ],
-      },
-      MAXIMUM: 1000,
-      SUMMARY: {
-        TITLE: "Goods or services you're exporting",
-      },
-    },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN]: {
-      LABEL: 'Do you know the final destination of the goods or services?',
-    },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
-      LABEL: "What's the final destination of the goods or services?",
-      SUMMARY: {
-        TITLE: 'Final destination of export',
       },
     },
   },
