@@ -28,9 +28,9 @@ context('Insurance - Feedback Confirmation page', () => {
 
   it('renders core page elements', () => {
     cy.corePageChecks({
+      hasAForm: false,
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: url,
-      submitButtonCopy: BUTTONS.BACK_TO_SERVICE,
       assertAuthenticatedHeader: false,
       assertBackLink: false,
     });
@@ -43,6 +43,12 @@ context('Insurance - Feedback Confirmation page', () => {
 
     it('should render text confirming feedback', () => {
       cy.checkText(feedbackConfirmation.feedbackConfirmation(), CONTENT_STRINGS.FEEDBACK_TEXT);
+    });
+
+    it('renders a "submit button"/link', () => {
+      cy.navigateToUrl(url);
+
+      cy.checkText(submitButton(), BUTTONS.BACK_TO_SERVICE);
     });
   });
 });

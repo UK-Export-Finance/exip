@@ -73,7 +73,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: url,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertBackLink: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,

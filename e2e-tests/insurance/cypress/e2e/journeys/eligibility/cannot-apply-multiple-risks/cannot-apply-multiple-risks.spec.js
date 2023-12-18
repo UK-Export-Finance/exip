@@ -54,7 +54,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
       currentHref: CANNOT_APPLY_MULTIPLE_RISKS,
       backLink: END_BUYER,
       assertAuthenticatedHeader: false,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 

@@ -54,7 +54,7 @@ context('Insurance - Account - Reactivated page', () => {
         currentHref: REACTIVATED_ROOT,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+        hasAForm: false,
       });
 
       cy.checkText(

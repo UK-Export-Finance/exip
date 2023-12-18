@@ -28,7 +28,7 @@ context('Contact us page - Quote', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.CONTACT_US,
       backLink: ROUTES.QUOTE.BUYER_COUNTRY,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: false,
     });

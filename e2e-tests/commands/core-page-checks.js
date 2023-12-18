@@ -1,5 +1,10 @@
 import { BUTTONS, LINKS, ORGANISATION } from '../content-strings';
-import { backLink as backLinkSelector, heading, submitButton } from '../pages/shared';
+import {
+  backLink as backLinkSelector,
+  form,
+  heading,
+  submitButton,
+} from '../pages/shared';
 
 // const lighthouseAudit = (lightHouseThresholds = {}) => {
 //   cy.lighthouse({
@@ -58,9 +63,9 @@ const checkPageTitleAndHeading = (pageTitle) => {
  * @param {String} pageTitle - Expected page title
  * @param {String} currentHref - Expected page HREF
  * @param {String} backLink - Expected "back" HREF
- * @param {Boolean} assertSubmitButton - Should check submit button (some pages don't have a submit button)
+ * @param {Boolean} hasAForm - Flag for if a page has a form, to check check form attributes and submit button (some paged do not have a form)
  * @param {String} submitButtonCopy - Expected submit button copy
- * @param {Boolean} assertBackLink - Should check "back" link (some pages don't have a back link)
+ * @param {Boolean} assertBackLink - Should check "back" link (some pages do not have a back link)
  * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
  * @param {Boolean} assertServiceHeading - Should check service heading is for insurance or quote
  * @param {Object} lightHouseThresholds - Custom expected lighthouse thresholds
@@ -69,7 +74,7 @@ const corePageChecks = ({
   pageTitle,
   currentHref,
   backLink,
-  assertSubmitButton = true,
+  hasAForm = true,
   submitButtonCopy = BUTTONS.CONTINUE,
   assertBackLink = true,
   assertAuthenticatedHeader = true,
@@ -109,9 +114,15 @@ const corePageChecks = ({
   // check page title and heading
   checkPageTitleAndHeading(pageTitle);
 
-  if (assertSubmitButton) {
-    // check submit button
-    submitButton().should('exist');
+  /**
+   * If the page has a form,
+   * 1) Assert form attributes
+   * 2) Assert submit button.
+   */
+  if (hasAForm) {
+    form().should('have.attr', 'method', 'POST');
+    form().should('have.attr', 'enctype', 'application/x-www-form-urlencoded');
+    form().should('have.attr', 'novalidate');
 
     cy.checkText(submitButton(), submitButtonCopy);
   }

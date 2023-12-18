@@ -50,7 +50,7 @@ context('Insurance - no access to application page - signed out', () => {
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currentHref: NO_ACCESS_TO_APPLICATION,
-        assertSubmitButton: false,
+        hasAForm: false,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
       });

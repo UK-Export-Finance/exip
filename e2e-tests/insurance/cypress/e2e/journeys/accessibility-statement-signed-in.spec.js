@@ -28,7 +28,7 @@ context('Accessibility statement page - Insurance - Signed in', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT,
       backLink: dashboardUrl,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: true,
       isInsurancePage: true,
     });

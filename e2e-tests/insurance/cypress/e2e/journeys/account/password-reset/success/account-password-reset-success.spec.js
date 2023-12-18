@@ -62,7 +62,7 @@ context('Insurance - Account - Password reset - success page - I want to reset m
           currentHref: successUrl,
           assertBackLink: false,
           assertAuthenticatedHeader: false,
-          assertSubmitButton: false,
+          hasAForm: false,
         });
 
         cy.checkLink(

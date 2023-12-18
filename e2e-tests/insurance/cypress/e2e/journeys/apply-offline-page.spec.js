@@ -46,7 +46,7 @@ context('Insurance - apply offline exit page', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: APPLY_OFFLINE,
       backLink: BUYER_COUNTRY,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
     });
   });
