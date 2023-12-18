@@ -1,8 +1,7 @@
-import { FIELD_ID, pageVariables, get, post, TEMPLATE } from '.';
+import { FIELD_ID, get, post, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
@@ -14,8 +13,6 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { company, business, referenceNumber } = mockApplication;
-
-const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
 const {
   INSURANCE: {
@@ -39,7 +36,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
   });
 
   describe('FIELD_ID', () => {
@@ -50,25 +47,9 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     });
   });
 
-  describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
-
-      const expected = {
-        FIELD: {
-          ID: FIELD_ID,
-          ...FIELDS[FIELD_ID],
-        },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(CHECK_YOUR_ANSWERS_TEMPLATE);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS);
     });
   });
 
@@ -90,7 +71,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
         userName: getUserNameFromSession(req.session.user),
         status,
         SUMMARY_LIST: summaryList,
-        ...pageVariables(mockApplication.referenceNumber),
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

@@ -1,8 +1,8 @@
-import { FIELD_ID, pageVariables, get, post, TEMPLATE } from '.';
+import { FIELD_ID, get, post, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
@@ -13,16 +13,14 @@ import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
+const { referenceNumber } = mockApplication;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/check-your-answers/your-buyer', () => {
   jest.mock('../save-data');
@@ -38,7 +36,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
   });
 
   describe('FIELD_ID', () => {
@@ -49,25 +47,9 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     });
   });
 
-  describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
-
-      const expected = {
-        FIELD: {
-          ID: FIELD_ID,
-          ...FIELDS[FIELD_ID],
-        },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(CHECK_YOUR_ANSWERS_TEMPLATE);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS);
     });
   });
 
@@ -75,7 +57,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBuyerSummaryList(mockApplication.buyer, mockApplication.referenceNumber, checkAndChange);
+      const summaryList = yourBuyerSummaryList(mockApplication.buyer, referenceNumber, checkAndChange);
 
       const fields = requiredFields();
 
@@ -89,7 +71,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
         userName: getUserNameFromSession(req.session.user),
         status,
         SUMMARY_LIST: summaryList,
-        ...pageVariables(mockApplication.referenceNumber),
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

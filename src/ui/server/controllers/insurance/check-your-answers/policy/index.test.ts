@@ -1,8 +1,8 @@
-import { FIELD_ID, pageVariables, get, post, TEMPLATE } from '.';
+import { FIELD_ID, get, post, TEMPLATE } from '.';
 import { PAGES } from '../../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insurance/check-your-answers';
-import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { policySummaryList } from '../../../../helpers/summary-lists/policy';
@@ -18,12 +18,10 @@ import { mockBroker } from '../../../../test-mocks/mock-application';
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const { policy, exportContract, referenceNumber } = mockApplication;
 
@@ -54,22 +52,6 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       const expected = CHECK_YOUR_ANSWERS_FIELD_IDS.POLICY;
 
       expect(FIELD_ID).toEqual(expected);
-    });
-  });
-
-  describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber);
-
-      const expected = {
-        FIELD: {
-          ID: FIELD_ID,
-          ...FIELDS[FIELD_ID],
-        },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
-      };
-
-      expect(result).toEqual(expected);
     });
   });
 
@@ -108,7 +90,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         SUMMARY_LIST: summaryList,
-        ...pageVariables(referenceNumber),
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
         status,
       };
 

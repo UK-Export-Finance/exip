@@ -1,7 +1,7 @@
 import { PAGES } from '../../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
@@ -16,27 +16,11 @@ export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 export const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.BUYER;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
-
-/**
- * pageVariables
- * Page fields and "save and go back" URL
- * @param {Number} Application reference number
- * @returns {Object} Page variables
- */
-export const pageVariables = (referenceNumber: number) => ({
-  FIELD: {
-    ID: FIELD_ID,
-    ...FIELDS[FIELD_ID],
-  },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
-});
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 /**
  * get
@@ -71,7 +55,7 @@ export const get = async (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       status,
       SUMMARY_LIST: summaryList,
-      ...pageVariables(referenceNumber),
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_SAVE_AND_BACK}`,
     });
   } catch (err) {
     console.error('Error getting check your answers - policy %O', err);
