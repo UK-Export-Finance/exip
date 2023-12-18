@@ -56,7 +56,7 @@ context('Insurance - Export contract - Start page - As an Exporter, I want to pr
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 

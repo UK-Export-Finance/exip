@@ -60,7 +60,7 @@ context('Insurance - Your business - Start page - As an Exporter, I want to prov
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 
