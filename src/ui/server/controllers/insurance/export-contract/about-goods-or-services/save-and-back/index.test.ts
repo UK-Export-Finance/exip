@@ -44,8 +44,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
   });
 
   describe('when the form has data', () => {
-    // jest.resetAllMocks();
-
     beforeEach(() => {
       api.keystone.countries.getAll = getCountriesSpy;
       mapAndSave.exportContract = mapAndSaveSpy;
@@ -115,7 +113,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
       });
 
       it(`should redirect to ${ALL_SECTIONS}`, async () => {
-        // mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
         mapAndSave.exportContract = mapAndSaveSpy;
 
         await post(req, res);

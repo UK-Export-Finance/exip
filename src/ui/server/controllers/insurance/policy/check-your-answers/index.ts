@@ -43,11 +43,9 @@ export const get = async (req: Request, res: Response) => {
   const { referenceNumber, policy, exportContract, policyContact, broker } = application;
 
   try {
-    // TODO - can remove countries now
-    const countries = await api.keystone.countries.getAll();
     const currencies = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(countries) || !isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(currencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -56,7 +54,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryList = policySummaryList(answers, policyContact, broker, referenceNumber, countries, currencies);
+    const summaryList = policySummaryList(answers, policyContact, broker, referenceNumber, currencies);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -69,7 +67,7 @@ export const get = async (req: Request, res: Response) => {
       SUMMARY_LIST: summaryList,
     });
   } catch (err) {
-    console.error('Error getting countries or currencies %O', err);
+    console.error('Error getting currencies %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
