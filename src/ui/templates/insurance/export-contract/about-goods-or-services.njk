@@ -6,6 +6,7 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -89,7 +90,7 @@
             {% set class = "govuk-form-group" %}
 
             {% if validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID] %}
-              {% set class = "govuk-form-group govuk-form-group--error-message" %}
+              {% set class = "govuk-form-group govuk-form-group--error" %}
             {% endif %}
 
             <div class="{{ class }}">
@@ -112,19 +113,11 @@
 
               <div class="govuk-grid-row">
                 <div class="govuk-grid-column-one-half-from-desktop">
-
-                  <select class="govuk-select" id="{{ FIELDS.FINAL_DESTINATION.ID }}" name="{{ FIELDS.FINAL_DESTINATION.ID }}">
-                    <option value="" disabled selected></option>
-
-                    {% for country in countries %}
-                      {% if country.selected %}
-                        <option value="{{ country.text }}" selected>{{ country.text }}</option>
-                      {% else %}
-                        <option value="{{ country.text }}">{{ country.text }}</option>
-                      {% endif %}
-                    {% endfor %}
-                  </select>
-
+                  {{ accessibleAutoCompleteSelect.render({
+                    fieldId: FIELDS.FINAL_DESTINATION.ID,
+                    countries: countries,
+                    integrity: SRI.ACCESSIBILITY
+                  }) }}
                 </div>
               </div>
             </div>
@@ -162,7 +155,5 @@
     </div>
 
   </form>
-
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
 
 {% endblock %}
