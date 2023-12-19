@@ -85,7 +85,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`renders ${DESCRIPTION} label, hint, prefix and input`, () => {
+    it(`renders ${DESCRIPTION} label, hint and input`, () => {
       const fieldId = DESCRIPTION;
       const field = aboutGoodsOrServicesPage[fieldId];
 
@@ -98,6 +98,8 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
 
       cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
+
+      cy.checkText(field.hint.outro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.OUTRO);
 
       field.textarea().should('exist');
     });

@@ -46,14 +46,15 @@
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
         {% set descriptionHintHtml %}
+          <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
 
-        <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-intro">{{ FIELDS.DESCRIPTION.HINT.INTRO }}</p>
+          <ul class="govuk-list govuk-list--bullet">
+            {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
+              <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
+            {% endfor %}
+          </ul>
 
-        <ul class="govuk-list govuk-list--bullet">
-          {% for item in FIELDS.DESCRIPTION.HINT.LIST %}
-            <li class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-list-item-{{ loop.index }}">{{ item }}</li>
-          {% endfor %}
-        </ul>
+          <p class="govuk-hint" data-cy="{{ FIELDS.DESCRIPTION.ID }}-hint-outro">{{ FIELDS.DESCRIPTION.HINT.OUTRO }}</p>
         {% endset %}
 
         {{ govukCharacterCount({
