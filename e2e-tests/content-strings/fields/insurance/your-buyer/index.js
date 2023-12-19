@@ -67,6 +67,10 @@ export const YOUR_BUYER_FIELDS = {
         TITLE: 'Connected with the buyer in any way?',
       },
     },
+    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
+      LABEL: 'Describe the connection with the buyer',
+      MAXIMUM: 1000,
+    },
     [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
       LABEL: 'Have you traded with this buyer before?',
       HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',

@@ -54,7 +54,7 @@ const completePrepareYourApplicationSectionSingle = ({
   startNowLink().click();
 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
-
+  cy.completeAndSubmitConnectionToTheBuyerForm({});
   cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
 
   submitButton().click();

@@ -119,6 +119,7 @@ interface ApplicationBuyerCore {
   canContactBuyer?: boolean;
   exporterIsConnectedWithBuyer?: boolean;
   exporterHasTradedWithBuyer?: boolean;
+  connectionWithBuyerDescription?: string;
 }
 
 interface ApplicationBuyer extends ApplicationBuyerCore {

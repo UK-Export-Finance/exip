@@ -1,0 +1,98 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+  <form method="POST" id="form" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    {% set conditionalYesHtml %}
+      {{ govukCharacterCount({
+        name: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID,
+        id: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID,
+        label: {
+          text: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.LABEL,
+          classes: "govuk-label--m",
+          attributes: {
+            'data-cy': FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID + '-label',
+            id: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID + '-label'
+          }
+        },
+        attributes: {
+          'data-cy': FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID
+        },
+        maxlength: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.MAXIMUM,
+        value: submittedValues[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] or application.company.differentTradingAddress[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID],
+        errorMessage: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] and {
+          text: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID].text,
+          attributes: {
+            "data-cy": FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID + "-error-message"
+          }
+        }
+      }) }}
+    {% endset %}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELD_ID,
+          legendText: CONTENT_STRINGS.PAGE_TITLE,
+          hintText: FIELD_HINT,
+          submittedAnswer: submittedValues[FIELD_ID] or application[FIELD_ID],
+          errorMessage: validationErrors.errorList[FIELD_ID],
+          conditionalYesHtml: conditionalYesHtml,
+          horizontalRadios: true
+        }) }}
+      </div>
+    </div>
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </div>
+
+  </form>
+
+{% endblock %}

@@ -77,7 +77,7 @@
           "data-cy": "yes-input",
           'aria-label': legendText + ' Yes'
         },
-        checked: submittedAnswer === true
+        checked: submittedAnswer === true or submittedAnswer === 'true'
       },
       {
         value: false,
@@ -94,7 +94,7 @@
           "data-cy": "no-input",
           'aria-label': legendText + ' No'
         },
-        checked: submittedAnswer === false
+        checked: submittedAnswer === false  or submittedAnswer === 'false'
       }
     ],
     errorMessage: errorMessage and {

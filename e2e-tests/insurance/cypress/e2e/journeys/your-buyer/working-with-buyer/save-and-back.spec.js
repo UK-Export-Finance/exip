@@ -36,6 +36,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 

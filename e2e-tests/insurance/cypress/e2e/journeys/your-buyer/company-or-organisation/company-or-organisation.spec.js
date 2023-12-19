@@ -30,7 +30,7 @@ const {
 
 const {
   ROOT,
-  YOUR_BUYER: { WORKING_WITH_BUYER, COMPANY_OR_ORGANISATION },
+  YOUR_BUYER: { CONNECTION_TO_THE_BUYER, COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -38,7 +38,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
   let url;
-  let workingWithBuyerUrl;
+  let connectionToTheBuyerUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -48,7 +48,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
-      workingWithBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
+      connectionToTheBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`;
 
       cy.assertUrl(url);
     });
@@ -188,12 +188,12 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     const { BUYER } = application;
 
     describe('when submitting a fully filled form', () => {
-      it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+      it(`should redirect to ${CONNECTION_TO_THE_BUYER} page`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-        cy.assertUrl(workingWithBuyerUrl);
+        cy.assertUrl(connectionToTheBuyerUrl);
       });
     });
 
