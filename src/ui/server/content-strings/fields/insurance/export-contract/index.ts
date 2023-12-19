@@ -7,7 +7,7 @@ const {
 export const EXPORT_CONTRACT_FIELDS = {
   ABOUT_GOODS_OR_SERVICES: {
     [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
-      LABEL: "Describe the goods or services you want to insure and explain how they'll be used by the buyer",
+      LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",
       HINT: {
         INTRO: 'For example:',
         LIST: [
@@ -15,6 +15,7 @@ export const EXPORT_CONTRACT_FIELDS = {
           'construction materials to build commercial property',
           'educational services such as teacher training',
         ],
+        OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment.",
       },
       MAXIMUM: 1000,
       SUMMARY: {

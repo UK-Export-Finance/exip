@@ -17,6 +17,7 @@ const aboutGoodsOrServices = {
         item2: () => cy.get(`[data-cy="${DESCRIPTION}-hint-list-item-2"]`),
         item3: () => cy.get(`[data-cy="${DESCRIPTION}-hint-list-item-3"]`),
       },
+      outro: () => cy.get(`[data-cy="${DESCRIPTION}-hint-outro"]`),
     },
   },
 };
