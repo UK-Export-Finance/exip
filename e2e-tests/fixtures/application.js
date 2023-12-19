@@ -78,6 +78,7 @@ const {
       },
       WORKING_WITH_BUYER: {
         CONNECTED_WITH_BUYER,
+        CONNECTION_WITH_BUYER_DESCRIPTION,
         TRADED_WITH_BUYER,
       },
     },
@@ -164,6 +165,7 @@ const application = {
     [CAN_CONTACT_BUYER]: FIELD_VALUES.YES,
     [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
     [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
+    [CONNECTION_WITH_BUYER_DESCRIPTION]: 'test description',
   },
   POLICY_CONTACT: {
     [ACCOUNT_FIRST_NAME]: 'Bob',

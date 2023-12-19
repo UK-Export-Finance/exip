@@ -18,6 +18,7 @@ const mockBuyer = {
   canContactBuyer: true,
   exporterIsConnectedWithBuyer: true,
   exporterHasTradedWithBuyer: true,
+  connectionWithBuyerDescription: 'test description',
 };
 
 export default mockBuyer;

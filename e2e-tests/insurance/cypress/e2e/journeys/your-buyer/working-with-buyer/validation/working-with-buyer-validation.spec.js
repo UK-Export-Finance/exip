@@ -37,6 +37,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
       cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 

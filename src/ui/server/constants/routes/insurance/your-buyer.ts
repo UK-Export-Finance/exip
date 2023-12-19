@@ -1,6 +1,7 @@
 const ROOT = '/your-buyer';
 const COMPANY_OR_ORGANISATION_ROOT = `${ROOT}/buyer-company-organisation`;
 const WORKING_WITH_BUYER_ROOT = `${ROOT}/working-with-buyer`;
+const CONNECTION_TO_THE_BUYER_ROOT = `${ROOT}/connection-to-the-buyer`;
 const CHECK_YOUR_ANSWERS = `${ROOT}/check-your-answers`;
 
 export const YOUR_BUYER = {
@@ -13,6 +14,8 @@ export const YOUR_BUYER = {
   WORKING_WITH_BUYER_CHANGE: `${WORKING_WITH_BUYER_ROOT}/change`,
   WORKING_WITH_BUYER_CHECK_AND_CHANGE: `${WORKING_WITH_BUYER_ROOT}/check-and-change`,
   WORKING_WITH_BUYER_SAVE_AND_BACK: `${WORKING_WITH_BUYER_ROOT}/save-and-back`,
+  CONNECTION_TO_THE_BUYER: CONNECTION_TO_THE_BUYER_ROOT,
+  CONNECTION_TO_THE_BUYER_SAVE_AND_BACK: `${CONNECTION_TO_THE_BUYER_ROOT}/save-and-back`,
   CHECK_YOUR_ANSWERS,
   CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${CHECK_YOUR_ANSWERS}/save-and-back`,
 };

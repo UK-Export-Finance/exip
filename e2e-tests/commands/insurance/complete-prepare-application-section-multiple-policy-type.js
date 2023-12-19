@@ -58,6 +58,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   startNowLink().click();
 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
+  cy.completeAndSubmitConnectionToTheBuyerForm({});
   cy.completeAndSubmitWorkingWithBuyerForm({});
 
   // submit "your buyer - check your answers" forM

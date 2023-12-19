@@ -36,6 +36,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
@@ -91,6 +92,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
 
       // submit button to get to working with buyer page
       submitButton().click();
+      // submit connectionToBuyer form to get to working with buyer page
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
       workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().should('not.be.checked');
@@ -122,6 +125,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
 
       // submit button to get to working with buyer page
       submitButton().click();
+      // submit connectionToBuyer form to get to working with buyer page
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
       workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().should('be.checked');

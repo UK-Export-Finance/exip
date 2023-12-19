@@ -28,6 +28,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
       cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

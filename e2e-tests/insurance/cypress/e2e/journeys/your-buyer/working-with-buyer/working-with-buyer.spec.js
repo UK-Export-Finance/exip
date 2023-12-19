@@ -16,7 +16,7 @@ const {
 } = FIELD_IDS;
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { CONNECTION_TO_THE_BUYER, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
 } = ROUTES.INSURANCE;
 
 context('Insurance - Your Buyer - Working with buyer page - As an exporter, I want to confirm my buyer details', () => {
@@ -31,6 +31,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       cy.startInsuranceYourBuyerSection();
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -51,7 +52,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
