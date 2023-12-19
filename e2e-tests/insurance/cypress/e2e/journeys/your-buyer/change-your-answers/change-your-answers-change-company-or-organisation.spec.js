@@ -47,7 +47,6 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
       cy.completeAndSubmitWorkingWithBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
