@@ -127,7 +127,7 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
   BODY_1: "UK Export Finance (UKEF) puts small files (known as 'cookies') onto your computer to make this site work.",
-  BODY_2: "Cookies are anonymous and cannot be used to identify you personally.",
+  BODY_2: 'Cookies are anonymous and cannot be used to identify you personally.',
   TABLE_HEADINGS: {
     NAME: 'Name',
     PURPOSE: 'Purpose',
