@@ -1,0 +1,28 @@
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+
+{% macro render(params) %}
+
+  {# {% set text = params.text %}
+  {% set isStartButton = params.isStartButton %}
+  {% set classes = params.classes %}
+  {% set href = params.href %} #}
+
+  {% set fieldId = params.fieldId %}
+  {% set countries = params.countries %}
+  {% set integrity = params.integrity %}
+ 
+  <select class="govuk-select" id="{{ fieldId }}" name="{{ fieldId }}">
+    <option value="" disabled selected></option>
+
+    {% for country in countries %}
+      {% if country.selected %}
+        <option value="{{ country.text }}" selected>{{ country.text }}</option>
+      {% else %}
+        <option value="{{ country.text }}">{{ country.text }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ integrity }}" crossorigin="anonymous"></script>
+
+{% endmacro %}
