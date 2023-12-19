@@ -28,7 +28,7 @@ const { MAXIMUM } = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_D
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Connection to the buyer page - Page validation', () => {
+context('Insurance - Your Buyer - Connection to the buyer page - form validation', () => {
   let referenceNumber;
   let url;
 

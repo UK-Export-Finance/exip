@@ -1,4 +1,4 @@
-import { get, post, PAGE_VARIABLES, TEMPLATE, FIELD_IDS } from '.';
+import { get, post, pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -20,8 +20,6 @@ const {
 
 const { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
-const FIELD_ID = CONNECTED_WITH_BUYER;
-
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
@@ -41,19 +39,31 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(mockApplication.referenceNumber);
+
       const expected = {
-        FIELD_ID,
         FIELDS: {
+          CONNECTED_WITH_BUYER: {
+            ID: CONNECTED_WITH_BUYER,
+            HINT: PAGE_CONTENT_STRINGS.HINT,
+          },
           CONNECTION_WITH_BUYER_DESCRIPTION: {
             ID: CONNECTION_WITH_BUYER_DESCRIPTION,
             ...FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
             MAXIMUM: 1000,
           },
         },
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER,
+        PAGE_CONTENT_STRINGS,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct page content strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER);
     });
   });
 
@@ -77,14 +87,12 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
-        FIELD_HINT: PAGE_VARIABLES.PAGE_CONTENT_STRINGS.HINT,
+        ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -132,15 +140,13 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER,
+            PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...PAGE_VARIABLES,
-          FIELD_HINT: PAGE_VARIABLES.PAGE_CONTENT_STRINGS.HINT,
+          ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: payload,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });

@@ -18,23 +18,27 @@ const {
 
 const { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
-export const FIELD_ID = CONNECTED_WITH_BUYER;
-
 export const FIELD_IDS = [CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
 
 export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
 
-export const PAGE_VARIABLES = {
-  FIELD_ID,
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
+
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
+    CONNECTED_WITH_BUYER: {
+      ID: CONNECTED_WITH_BUYER,
+      HINT: PAGE_CONTENT_STRINGS.HINT,
+    },
     CONNECTION_WITH_BUYER_DESCRIPTION: {
       ID: CONNECTION_WITH_BUYER_DESCRIPTION,
       ...FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
       MAXIMUM: 1000,
     },
   },
-  PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER,
-};
+  PAGE_CONTENT_STRINGS,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+});
 
 /**
  * get
@@ -55,14 +59,12 @@ export const get = (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER,
+        PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...PAGE_VARIABLES,
-      FIELD_HINT: PAGE_VARIABLES.PAGE_CONTENT_STRINGS.HINT,
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
   } catch (err) {
     console.error('Error getting connection to the buyer %O', err);
@@ -94,15 +96,13 @@ export const post = async (req: Request, res: Response) => {
     if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...PAGE_VARIABLES,
-        FIELD_HINT: PAGE_VARIABLES.PAGE_CONTENT_STRINGS.HINT,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: payload,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });
     }
 

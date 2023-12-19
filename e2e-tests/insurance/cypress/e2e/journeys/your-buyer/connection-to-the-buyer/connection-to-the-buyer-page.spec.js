@@ -2,9 +2,9 @@ import {
   headingCaption, saveAndBackButton, field, yesRadio, noRadio, yesNoRadioHint, yesRadioInput,
 } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
-import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
@@ -18,7 +18,7 @@ const {
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_TO_THE_BUYER, WORKING_WITH_BUYER },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const FIELDS = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER;
 
@@ -94,7 +94,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
     describe(CONNECTION_WITH_BUYER_DESCRIPTION, () => {
       const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
 
-      describe(`${CONNECTED_WITH_BUYER} not selected`, () => {
+      describe(`when not selecting a ${CONNECTED_WITH_BUYER} radio`, () => {
         it('should not render a label', () => {
           field(fieldId).label().should('not.be.visible');
         });
@@ -104,7 +104,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
         });
       });
 
-      describe(`${CONNECTED_WITH_BUYER} yes radio selected`, () => {
+      describe(`when clicking the 'yes' ${CONNECTED_WITH_BUYER} radio`, () => {
         beforeEach(() => {
           yesRadioInput().click();
         });
