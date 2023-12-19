@@ -8,7 +8,7 @@ const {
     ROOT: INSURANCE_ROOT,
     POLICY: {
       SINGLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
+      NAME_ON_POLICY,
     },
   },
 } = ROUTES;
@@ -175,7 +175,7 @@ context('Insurance - Policy - Single contract policy page - form validation - to
     cy.keyboardInput(field.input(), '1,234');
     submitButton().click();
 
-    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
     cy.assertUrl(expectedUrl);
   });
 });

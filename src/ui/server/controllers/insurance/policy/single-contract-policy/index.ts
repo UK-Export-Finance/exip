@@ -18,7 +18,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
+    POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
   },
@@ -181,7 +181,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
   } catch (err) {
     console.error('Error updating application - policy - single contract policy %O', err);
 

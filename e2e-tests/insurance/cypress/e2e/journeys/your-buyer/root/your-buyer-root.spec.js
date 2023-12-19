@@ -53,7 +53,7 @@ context('Insurance - Your buyer - Start page - As an exporter, I want to provide
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 

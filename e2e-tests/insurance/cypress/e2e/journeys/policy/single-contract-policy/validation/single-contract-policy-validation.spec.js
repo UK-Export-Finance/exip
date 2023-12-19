@@ -1,25 +1,24 @@
 import { radios, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../../fixtures/application';
 
 const { INSURANCE } = ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        POLICY_CURRENCY_CODE,
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      SINGLE: {
+        CONTRACT_COMPLETION_DATE,
+        TOTAL_CONTRACT_VALUE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {

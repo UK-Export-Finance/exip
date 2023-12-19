@@ -49,7 +49,7 @@ context('Accessibility statement page - Insurance', () => {
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: ROUTES.INSURANCE.ACCESSIBILITY_STATEMENT,
       backLink: startRoute,
-      assertSubmitButton: false,
+      hasAForm: false,
       assertAuthenticatedHeader: false,
       isInsurancePage: true,
     });

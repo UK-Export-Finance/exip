@@ -19,7 +19,6 @@ const {
           MAXIMUM_BUYER_WILL_OWE,
         },
       },
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
     },
   },
 } = FIELD_IDS;
@@ -72,13 +71,5 @@ context('Insurance - Policy - Check your answers - Summary list - multiple contr
 
   it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {
     checkSummaryList[POLICY_CURRENCY_CODE]();
-  });
-
-  it(`should render a ${DESCRIPTION} summary list row`, () => {
-    checkSummaryList[DESCRIPTION]();
-  });
-
-  it(`should render a ${FINAL_DESTINATION} summary list row`, () => {
-    checkSummaryList[FINAL_DESTINATION]();
   });
 });

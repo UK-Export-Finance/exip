@@ -8,7 +8,7 @@ const {
     ROOT: INSURANCE_ROOT,
     POLICY: {
       MULTIPLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
+      NAME_ON_POLICY,
     },
   },
 } = ROUTES;
@@ -148,7 +148,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
       cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234');
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
   });

@@ -45,7 +45,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
-      assertSubmitButton: false,
+      hasAForm: false,
     });
   });
 });

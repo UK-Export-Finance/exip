@@ -11,11 +11,8 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import {
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-} from '../../../../../../constants';
+import { FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
 
@@ -30,25 +27,23 @@ const {
     POLICY: {
       TYPE_OF_POLICY,
       SINGLE_CONTRACT_POLICY,
-      ABOUT_GOODS_OR_SERVICES,
+      NAME_ON_POLICY,
     },
   },
 } = ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        POLICY_CURRENCY_CODE,
-        SINGLE: {
-          CONTRACT_COMPLETION_DATE,
-          TOTAL_CONTRACT_VALUE,
-        },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      SINGLE: {
+        CONTRACT_COMPLETION_DATE,
+        TOTAL_CONTRACT_VALUE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policy;
 
@@ -154,8 +149,8 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
-    it(`should redirect to ${ABOUT_GOODS_OR_SERVICES}`, () => {
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+    it(`should redirect to ${NAME_ON_POLICY}`, () => {
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
 

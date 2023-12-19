@@ -94,7 +94,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
         currentHref: EXPIRED_LINK,
         assertBackLink: false,
         assertAuthenticatedHeader: false,
-        assertSubmitButton: false,
+        hasAForm: false,
       });
 
       cy.checkText(linkExpiredPage.passwordNotReset(), CONTENT_STRINGS.PASSWORD_NOT_RESET);

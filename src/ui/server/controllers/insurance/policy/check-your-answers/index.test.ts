@@ -8,14 +8,14 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policySummaryList } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrencies, mockContact } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockContact } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
 const { INSURANCE_ROOT } = ROUTES.INSURANCE;
 const {
   INSURANCE: {
     POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    EXPORTER_BUSINESS: { ROOT: EXPORTER_BUSINESS_ROOT },
+    EXPORT_CONTRACT,
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -29,7 +29,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   let res: Response;
   let refNumber: number;
 
-  let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
 
   beforeEach(() => {
@@ -39,7 +38,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
 
-    api.keystone.countries.getAll = getCountriesSpy;
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -67,12 +65,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('get', () => {
-    it('should call api.keystone.countries.getAll', async () => {
-      await get(req, res);
-
-      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
-    });
-
     it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
@@ -87,7 +79,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryList(answers, mockContact, mockBroker, referenceNumber, mockCountries, mockCurrencies);
+      const summaryList = policySummaryList(answers, mockContact, mockBroker, referenceNumber, mockCurrencies);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -116,32 +108,6 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     });
 
     describe('api error handling', () => {
-      describe('when the get countries API call fails', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
-      describe('when the get countries response does not return a populated array', () => {
-        beforeEach(() => {
-          getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCountriesSpy;
-        });
-
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
-
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
-      });
-
       describe('when the get currencies API call fails', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
@@ -171,10 +137,10 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${EXPORTER_BUSINESS_ROOT}`, () => {
+    it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORTER_BUSINESS_ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORT_CONTRACT.ROOT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
