@@ -4,6 +4,7 @@
 {% from 'govuk/components/label/macro.njk' import govukLabel %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
 {% import '../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -31,33 +32,37 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
     <input type="hidden" name="{{ HIDDEN_FIELD_ID }}" id="{{ HIDDEN_FIELD_ID }}" value="{{ submittedValues[HIDDEN_FIELD_ID].name }}">
 
-    {{ govukLabel({
-      for: FIELD_ID_COUNTRY,
-      classes: "govuk-heading-l",
-      html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.PAGE_TITLE + "</label></h1>",
-      attributes: {
-        "data-cy": DATA_CY.HEADING
-      }
-    }) }}
+    {% set class = "govuk-form-group" %}
 
-    {{ govukHint({
-      id: FIELD_ID + "-hint",
-      text: FIELD_HINT,
-      attributes: {
-        "data-cy": FIELD_ID + "-hint"
-      }
-    }) }}
+    {% if validationErrors.errorList[FIELD_ID] %}
+      {% set class = "govuk-form-group govuk-form-group--error" %}
+    {% endif %}
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-half-from-desktop">
+    <div class="{{ class }}">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        {% set class = "govuk-form-group" %}
+          {{ govukLabel({
+            for: FIELD_ID_COUNTRY,
+            classes: "govuk-heading-l",
+            html: "<h1 class='govuk-heading-l' id='heading'><label for='" + FIELD_ID + "'>" + CONTENT_STRINGS.PAGE_TITLE + "</label></h1>",
+            attributes: {
+              "data-cy": DATA_CY.HEADING
+            }
+          }) }}
 
-        {% if validationErrors.errorList[FIELD_ID] %}
-          {% set class = "govuk-form-group govuk-form-group--error-message" %}
-        {% endif %}
+          {{ govukHint({
+            id: FIELD_ID + "-hint",
+            text: FIELD_HINT,
+            attributes: {
+              "data-cy": FIELD_ID + "-hint"
+            }
+          }) }}
+        </div>
+      </div>
 
-        <div class="{{ class }}">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-one-half-from-desktop">
           {{ govukErrorMessage({
             text: validationErrors.errorList[FIELD_ID].text,
             attributes: {
@@ -65,20 +70,14 @@
             }
           }) }}
 
-          <select class="govuk-select" id="{{ FIELD_ID }}" name="{{ FIELD_ID }}">
-            <option value="" disabled selected></option>
-
-            {% for country in countries %}
-              {% if country.selected %}
-                <option value="{{ country.text }}" selected>{{ country.text }}</option>
-              {% else %}
-                <option value="{{ country.text }}">{{ country.text }}</option>
-              {% endif %}
-            {% endfor %}
-          </select>
+          {{ accessibleAutoCompleteSelect.render({
+            fieldId: FIELD_ID,
+            countries: countries,
+            integrity: SRI.ACCESSIBILITY
+          }) }}
         </div>
-
       </div>
+
     </div>
 
     {{ submitButton.render({
@@ -86,7 +85,5 @@
     }) }}
 
   </form>
-
-  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
 
 {% endblock %}
