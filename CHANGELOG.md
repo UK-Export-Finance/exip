@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.3.6](https://github.com/UK-Export-Finance/exip/compare/v2.3.5...v2.3.6) (2023-12-19)
+
+
+### Bug Fixes
+
+* **EMS-2453:** Buyer country - fix styling issue ([#1540](https://github.com/UK-Export-Finance/exip/issues/1540)) ([57841df](https://github.com/UK-Export-Finance/exip/commit/57841df627ae72256ec45baf28dd26b1a342aa12))
+
 ## [2.3.5](https://github.com/UK-Export-Finance/exip/compare/v2.3.4...v2.3.5) (2023-12-19)
 
 
