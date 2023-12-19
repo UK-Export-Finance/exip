@@ -41,7 +41,7 @@
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop">
+      <div class="govuk-grid-column-one-half-from-desktop">
 
         {% set descriptionHintHtml %}
 
@@ -104,7 +104,6 @@
             }
           }
         }) }}
-
       </div>
     </div>
 
@@ -124,5 +123,7 @@
     </div>
 
   </form>
+
+  <script src="/assets/js/accessibleAutocomplete.js" type="text/javascript" integrity="{{ SRI.ACCESSIBILITY }}" crossorigin="anonymous"></script>
 
 {% endblock %}
