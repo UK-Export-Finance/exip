@@ -9,6 +9,7 @@ import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 
 const {
   INSURANCE_ROOT,
@@ -102,7 +103,7 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
-        submittedValues: payload,
+        submittedValues: sanitiseData(payload),
       });
     }
 

@@ -11,6 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 
 const {
   INSURANCE_ROOT,
@@ -146,7 +147,7 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
           ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
