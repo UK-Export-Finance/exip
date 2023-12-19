@@ -11,10 +11,10 @@ const {
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 /**
- * completeAndSubmitWorkingWithBuyerForm
- * Completes and submits the "working with buyer" form.
+ * completeAndSubmitConnectionToTheBuyerForm
+ * Completes and submits the "connection to the buyer" form.
  * @param {Object} Object with flags on how to complete the form.
- * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" form. Defaults to "yes".
+ * - hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio. Defaults to "no".
  */
 const completeAndSubmitConnectionToTheBuyerForm = ({ hasConnectionToBuyer = false }) => {
   if (hasConnectionToBuyer) {

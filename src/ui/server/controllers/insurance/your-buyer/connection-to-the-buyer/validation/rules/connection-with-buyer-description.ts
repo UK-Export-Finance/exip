@@ -24,9 +24,10 @@ const {
 const MAXIMUM = 1000;
 
 /**
- * tradedWithBuyerRule
- * Check submitted form data to see if traded with buyer field radio is selected
- * Returns generateValidationErrors if there are any errors.
+ * connectionWithBuyerDescriptionRule
+ * Check submitted form data to see if connected to the buyer field radio is selected
+ * Returns generateValidationErrors if input is empty.
+ * Returns inputValidation if field is not empty
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
