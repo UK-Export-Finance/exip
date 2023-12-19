@@ -127,7 +127,7 @@ const ACCESSIBILITY_STATEMENT_PAGE = {
 const COOKIES_PAGE = {
   PAGE_TITLE: 'Cookies',
   BODY_1: "UK Export Finance (UKEF) puts small files (known as 'cookies') onto your computer to make this site work.",
-  BODY_2: "Our cookies aren't used to identify you personally.",
+  BODY_2: "Cookies are anonymous and cannot be used to identify you personally.",
   TABLE_HEADINGS: {
     NAME: 'Name',
     PURPOSE: 'Purpose',
@@ -150,11 +150,11 @@ const COOKIES_PAGE = {
     ],
   },
   OPTIONAL_COOKIES: {
-    HEADING: 'Optional Cookies',
+    HEADING: 'Analytics cookies (optional)',
     BODY_1:
-      'With your permission, we use Google Analytics to collect how you use this service and your web performance experience while visiting so we can improve it based on user needs.',
+      'With your permission, we use Google Analytics and Google Tag Manager to collect information about how you use this service. This tells us how well the service works and where we can improve it, so we can provide a better experience for you.',
     BODY_2: 'We do not allow Google to use or share the data about how you use this service.',
-    BODY_3: 'Google Analytics stores anonymised information about:',
+    BODY_3: 'Google Analytics and Google Tag Manager stores anonymised information about:',
     ANALYTICS_INFO_LIST: [
       {
         text: 'how you got to this service',
