@@ -5,9 +5,7 @@ import { COOKIES_CONSENT } from '../../content-strings';
 const checkCookiesConsentBannerIsVisible = () => {
   partials.cookieBanner.heading().should('exist');
 
-  cy.checkText(partials.cookieBanner.question.copy(), COOKIES_CONSENT.QUESTION.COPY_1);
-
-  cy.checkText(partials.cookieBanner.question.copy2(), COOKIES_CONSENT.QUESTION.COPY_2);
+  cy.checkText(partials.cookieBanner.question.copy(), COOKIES_CONSENT.QUESTION.COPY);
 
   cy.checkText(partials.cookieBanner.question.acceptButton(), COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
 
