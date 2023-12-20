@@ -1,14 +1,24 @@
 import { insurance } from '../../../../pages';
 import { submitButton } from '../../../../pages/shared';
-import { BUTTONS, PAGES } from '../../../../content-strings';
-import { ROUTES } from '../../../../constants';
+import { BUTTONS, LINKS, PAGES } from '../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.START;
+
+const {
+  ACCOUNT,
+  ELIGIBILITY: { CHECK_IF_ELIGIBLE },
+  START,
+} = INSURANCE_ROUTES;
+
+const {
+  EXTERNAL: { GUIDANCE, EXPORT_FINANCE_MANAGERS },
+} = LINKS;
 
 const { startPage } = insurance;
 
 context('Insurance Eligibility - start page', () => {
-  const url = ROUTES.INSURANCE.START;
+  const url = START;
 
   before(() => {
     cy.navigateToUrl(url);
@@ -73,7 +83,7 @@ context('Insurance Eligibility - start page', () => {
 
       cy.checkText(signIn.youCan(), SIGN_IN.YOU_CAN);
 
-      cy.checkLink(signIn.link(), SIGN_IN.LINK.HREF, SIGN_IN.LINK.TEXT);
+      cy.checkLink(signIn.link(), ACCOUNT.SIGN_IN.ROOT, SIGN_IN.LINK.TEXT);
 
       cy.checkText(signIn.toContinueApplication(), SIGN_IN.TO_CONTINUE_APPLICATION);
     });
@@ -84,9 +94,18 @@ context('Insurance Eligibility - start page', () => {
 
       cy.checkText(findOutMore.youCan(), FIND_OUT_MORE.YOU_CAN);
 
-      cy.checkLink(findOutMore.link(), FIND_OUT_MORE.LINK.HREF, FIND_OUT_MORE.LINK.TEXT);
+      cy.checkLink(findOutMore.link(), GUIDANCE, FIND_OUT_MORE.LINK.TEXT);
 
       cy.checkText(findOutMore.toFindOutMore(), FIND_OUT_MORE.TO_FIND_OUT_MORE);
+    });
+
+    it('renders a "extra support" body text', () => {
+      const { EXTRA_SUPPORT } = CONTENT_STRINGS;
+      const { extraSupport } = startPage;
+
+      cy.checkText(extraSupport.intro(), EXTRA_SUPPORT.INTRO);
+
+      cy.checkLink(extraSupport.link(), EXPORT_FINANCE_MANAGERS, EXTRA_SUPPORT.LINK.TEXT);
     });
 
     it('renders a "get a quote" body text', () => {
@@ -102,12 +121,12 @@ context('Insurance Eligibility - start page', () => {
   });
 
   context('form submission', () => {
-    it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`, () => {
+    it(`should redirect to ${CHECK_IF_ELIGIBLE}`, () => {
       cy.navigateToUrl(url);
 
       submitButton().click();
 
-      const expected = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE}`;
+      const expected = `${Cypress.config('baseUrl')}${CHECK_IF_ELIGIBLE}`;
 
       cy.assertUrl(expected);
     });

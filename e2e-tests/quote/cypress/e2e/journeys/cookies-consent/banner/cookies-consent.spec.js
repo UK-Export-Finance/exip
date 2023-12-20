@@ -43,20 +43,14 @@ context('Cookies consent - initial/default', () => {
     });
 
     it('should render copy', () => {
-      partials.cookieBanner.question.copy1().should('exist');
-      cy.checkText(partials.cookieBanner.question.copy1(), COOKIES_CONSENT.QUESTION.COPY_1);
-
-      partials.cookieBanner.question.copy2().should('exist');
-      cy.checkText(partials.cookieBanner.question.copy2(), COOKIES_CONSENT.QUESTION.COPY_2);
+      cy.checkText(partials.cookieBanner.question.copy(), COOKIES_CONSENT.QUESTION.COPY);
     });
 
     it('should render an `accept` button', () => {
-      partials.cookieBanner.question.acceptButton().should('exist');
       cy.checkText(partials.cookieBanner.question.acceptButton(), COOKIES_CONSENT.QUESTION.ACCEPT_BUTTON);
     });
 
     it('should render a `reject` button', () => {
-      partials.cookieBanner.question.rejectButton().should('exist');
       cy.checkText(partials.cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
     });
 
