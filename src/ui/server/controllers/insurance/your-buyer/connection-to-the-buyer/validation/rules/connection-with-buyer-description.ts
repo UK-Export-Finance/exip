@@ -8,7 +8,7 @@ import inputValidation from '../../../../../../shared-validation/max-length';
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER_DESCRIPTION: FIELD_ID, CONNECTED_WITH_BUYER },
+      WORKING_WITH_BUYER: { CONNECTION_TO_THE_BUYER_DESCRIPTION: FIELD_ID, CONNECTED_WITH_BUYER },
     },
   },
 } = FIELD_IDS;

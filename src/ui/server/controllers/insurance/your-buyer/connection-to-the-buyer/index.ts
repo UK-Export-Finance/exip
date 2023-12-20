@@ -18,9 +18,9 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
+const { CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
-export const FIELD_IDS = [CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
+export const FIELD_IDS = [CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION];
 
 export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
 
@@ -32,9 +32,9 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: CONNECTED_WITH_BUYER,
       HINT: PAGE_CONTENT_STRINGS.HINT,
     },
-    CONNECTION_WITH_BUYER_DESCRIPTION: {
-      ID: CONNECTION_WITH_BUYER_DESCRIPTION,
-      ...FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
+    CONNECTION_TO_THE_BUYER_DESCRIPTION: {
+      ID: CONNECTION_TO_THE_BUYER_DESCRIPTION,
+      ...FIELDS.WORKING_WITH_BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION],
       MAXIMUM: 1000,
     },
   },
@@ -108,7 +108,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call to db
+    // if no errors, then runs save api call
     const saveResponse = await mapAndSave.yourBuyer(payload, application);
 
     if (!saveResponse) {

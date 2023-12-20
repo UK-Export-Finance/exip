@@ -7,7 +7,7 @@ import { YOUR_BUYER_FIELDS } from '../../../../../../../content-strings/fields/i
 const {
   WORKING_WITH_BUYER: {
     CONNECTED_WITH_BUYER,
-    CONNECTION_WITH_BUYER_DESCRIPTION,
+    CONNECTION_TO_THE_BUYER_DESCRIPTION,
   },
 } = FIELD_IDS;
 
@@ -24,7 +24,7 @@ const {
   YOUR_BUYER: { CONNECTION_TO_THE_BUYER },
 } = INSURANCE_ROUTES;
 
-const { MAXIMUM } = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
+const { MAXIMUM } = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -75,7 +75,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
   });
 
   describe(`${CONNECTED_WITH_BUYER} yes selected`, () => {
-    const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
+    const fieldId = CONNECTION_TO_THE_BUYER_DESCRIPTION;
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 
     beforeEach(() => {

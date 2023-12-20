@@ -20,7 +20,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
+const { CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
 
@@ -49,9 +49,9 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
             ID: CONNECTED_WITH_BUYER,
             HINT: PAGE_CONTENT_STRINGS.HINT,
           },
-          CONNECTION_WITH_BUYER_DESCRIPTION: {
-            ID: CONNECTION_WITH_BUYER_DESCRIPTION,
-            ...FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
+          CONNECTION_TO_THE_BUYER_DESCRIPTION: {
+            ID: CONNECTION_TO_THE_BUYER_DESCRIPTION,
+            ...FIELDS.WORKING_WITH_BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION],
             MAXIMUM: 1000,
           },
         },
@@ -77,7 +77,7 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
+      const expected = [CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION];
 
       expect(FIELD_IDS).toEqual(expected);
     });

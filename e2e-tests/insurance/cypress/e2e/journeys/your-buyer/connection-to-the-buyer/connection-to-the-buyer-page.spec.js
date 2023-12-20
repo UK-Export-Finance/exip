@@ -13,7 +13,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
 const {
   WORKING_WITH_BUYER: {
     CONNECTED_WITH_BUYER,
-    CONNECTION_WITH_BUYER_DESCRIPTION,
+    CONNECTION_TO_THE_BUYER_DESCRIPTION,
   },
 } = FIELD_IDS;
 
@@ -94,8 +94,8 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
       });
     });
 
-    describe(CONNECTION_WITH_BUYER_DESCRIPTION, () => {
-      const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
+    describe(CONNECTION_TO_THE_BUYER_DESCRIPTION, () => {
+      const fieldId = CONNECTION_TO_THE_BUYER_DESCRIPTION;
 
       describe(`when not selecting a ${CONNECTED_WITH_BUYER} radio`, () => {
         it('should not render a label', () => {
@@ -127,39 +127,35 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
     });
 
     describe('form submission', () => {
-      describe(`when selecting ${CONNECTION_TO_THE_BUYER} as no`, () => {
-        describe('when submitting a fully filled form', () => {
-          it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
-            cy.completeAndSubmitConnectionToTheBuyerForm({});
+      describe(`when submitting the form with ${CONNECTION_TO_THE_BUYER} as "no"`, () => {
+        it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+          cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-            cy.assertUrl(workingWithBuyerUrl);
-          });
+          cy.assertUrl(workingWithBuyerUrl);
+        });
 
-          describe('when going back to the page', () => {
-            it('should have the submitted values', () => {
-              cy.navigateToUrl(url);
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
 
-              noRadioInput().should('be.checked');
-            });
+            noRadioInput().should('be.checked');
           });
         });
       });
 
-      describe(`when selecting ${CONNECTION_TO_THE_BUYER} as yes`, () => {
-        describe('when submitting a fully filled form', () => {
-          it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
-            cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      describe(`when submitting the form with ${CONNECTION_TO_THE_BUYER} as "yes"`, () => {
+        it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+          cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
 
-            cy.assertUrl(workingWithBuyerUrl);
-          });
+          cy.assertUrl(workingWithBuyerUrl);
+        });
 
-          describe('when going back to the page', () => {
-            it('should have the submitted values', () => {
-              cy.navigateToUrl(url);
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
 
-              yesRadioInput().should('be.checked');
-              cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
-            });
+            yesRadioInput().should('be.checked');
+            cy.checkText(field(CONNECTION_TO_THE_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION]);
           });
         });
       });
