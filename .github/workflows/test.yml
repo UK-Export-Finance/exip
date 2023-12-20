@@ -88,6 +88,10 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci:all
+
       - name: UI
         working-directory: ./src/ui
         env:
@@ -97,9 +101,7 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-        run: |
-          npm ci --legacy-peer-deps
-          npm run test
+        run: npm run test
 
   # 3. API - API test cases
   api-tests:
@@ -126,6 +128,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Dependencies
+        working-directory: ./
+        run: npm ci:all
 
       - name: API
         working-directory: ./
@@ -156,7 +162,6 @@ jobs:
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
         run: |
           docker-compose up --build -d
-          npm ci --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
   # 4. E2E - Insurance
@@ -233,7 +238,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm ci:all
 
       - name: Docker
         run: docker-compose up --build -d
@@ -289,7 +294,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm ci:all
 
       - name: Docker
         run: docker-compose up --build -d
@@ -334,7 +339,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm ci:all
 
       - name: Docker
         run: docker-compose up --build -d
