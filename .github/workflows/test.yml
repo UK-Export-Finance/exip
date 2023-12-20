@@ -90,7 +90,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci:all
+        run: npm run ci:all
 
       - name: UI
         working-directory: ./src/ui
@@ -131,7 +131,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci:all
+        run: npm run ci:all
 
       - name: API
         working-directory: ./
@@ -238,7 +238,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci:all
+        run: npm run ci:all
 
       - name: Docker
         run: docker-compose up --build -d
@@ -294,7 +294,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci:all
+        run: npm run ci:all
 
       - name: Docker
         run: docker-compose up --build -d
@@ -339,7 +339,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci:all
+        run: npm run ci:all
 
       - name: Docker
         run: docker-compose up --build -d
