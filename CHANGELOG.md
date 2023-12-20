@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.8](https://github.com/UK-Export-Finance/exip/compare/v2.3.7...v2.3.8) (2023-12-20)
+
+
+### Bug Fixes
+
+* **EMS-2463:** ci:all execution prior to test run ([10c0a9a](https://github.com/UK-Export-Finance/exip/commit/10c0a9aaad644f3b1153a3ed433f02ea7233d2d9))
+* **gha:** ensure all packages are intalled with --legacy-peer-deps prior to test execution ([c227b10](https://github.com/UK-Export-Finance/exip/commit/c227b104ee8fef754ed9ffae2e2c1d0a10b76ddf))
+
 ## [2.3.7](https://github.com/UK-Export-Finance/exip/compare/v2.3.6...v2.3.7) (2023-12-20)
 
 
