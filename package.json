@@ -14,6 +14,7 @@
   "author": "UK Export Finance",
   "scripts": {
     "audit:all": "npm audit && npm audit --prefix ./src/ui && npm audit --prefix ./src/api && npm audit --prefix ./generate-exip-pricing-grid",
+    "ci:all": "npm ci --legacy-peer-deps && npm ci --legacy-peer-deps --prefix ./src/ui && npm ci --legacy-peer-deps --prefix ./src/api && npm ci --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
     "housekeeping": "npm run update:all && npm run install:all && npm run lint:fix:all && npm run audit:all",
     "postinstall": "husky install",
     "install:all": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && npm i --legacy-peer-deps --prefix ./src/api && npm i --legacy-peer-deps --prefix ./generate-exip-pricing-grid",
