@@ -1,5 +1,5 @@
 interface SummaryListCardTitle {
-  text: string
+  text: string;
 }
 
 interface SummaryListCard {
