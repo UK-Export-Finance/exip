@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.3.7](https://github.com/UK-Export-Finance/exip/compare/v2.3.6...v2.3.7) (2023-12-20)
+
+
+### Design improvements
+
+* **EMS-2447 2451:** Start page, cookies banner, cookies page content improvements ([#1545](https://github.com/UK-Export-Finance/exip/issues/1545)) ([3876b4a](https://github.com/UK-Export-Finance/exip/commit/3876b4a1599445a55eada672b8ca08e0ce6f2866))
+* **EMS-2449:** Get a quote - type of policy content updates ([#1549](https://github.com/UK-Export-Finance/exip/issues/1549)) ([ae07723](https://github.com/UK-Export-Finance/exip/commit/ae07723fb72006bcf4318d77dcfb0e792c2e5305))
+
 ## [2.3.6](https://github.com/UK-Export-Finance/exip/compare/v2.3.5...v2.3.6) (2023-12-19)
 
 
