@@ -11,6 +11,10 @@ const {
   START,
 } = INSURANCE_ROUTES;
 
+const {
+  EXTERNAL: { GUIDANCE, EXPORT_FINANCE_MANAGERS },
+} = LINKS;
+
 const { startPage } = insurance;
 
 context('Insurance Eligibility - start page', () => {
@@ -90,7 +94,7 @@ context('Insurance Eligibility - start page', () => {
 
       cy.checkText(findOutMore.youCan(), FIND_OUT_MORE.YOU_CAN);
 
-      cy.checkLink(findOutMore.link(), LINKS.EXTERNAL.GUIDANCE, FIND_OUT_MORE.LINK.TEXT);
+      cy.checkLink(findOutMore.link(), GUIDANCE, FIND_OUT_MORE.LINK.TEXT);
 
       cy.checkText(findOutMore.toFindOutMore(), FIND_OUT_MORE.TO_FIND_OUT_MORE);
     });
@@ -101,7 +105,7 @@ context('Insurance Eligibility - start page', () => {
 
       cy.checkText(extraSupport.intro(), EXTRA_SUPPORT.INTRO);
 
-      cy.checkLink(extraSupport.link(), LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS, EXTRA_SUPPORT.LINK.TEXT);
+      cy.checkLink(extraSupport.link(), EXPORT_FINANCE_MANAGERS, EXTRA_SUPPORT.LINK.TEXT);
     });
 
     it('renders a "get a quote" body text', () => {
