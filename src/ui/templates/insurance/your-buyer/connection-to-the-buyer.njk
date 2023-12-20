@@ -49,7 +49,7 @@
           'data-cy': FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID
         },
         maxlength: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.MAXIMUM,
-        value: submittedValues[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] or application.company.differentTradingAddress[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID],
+        value: submittedValues[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] or application.buyer[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID],
         errorMessage: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] and {
           text: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID].text,
           attributes: {
@@ -65,7 +65,7 @@
           fieldId: FIELDS.CONNECTED_WITH_BUYER.ID,
           legendText: CONTENT_STRINGS.PAGE_TITLE,
           hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
-          submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application[FIELDS.CONNECTED_WITH_BUYER.ID],
+          submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTED_WITH_BUYER.ID],
           errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
           conditionalYesHtml: conditionalYesHtml,
           horizontalRadios: true

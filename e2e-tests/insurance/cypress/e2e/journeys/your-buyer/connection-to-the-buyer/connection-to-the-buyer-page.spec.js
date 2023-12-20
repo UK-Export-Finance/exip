@@ -1,11 +1,12 @@
 import {
-  headingCaption, saveAndBackButton, field, yesRadio, noRadio, yesNoRadioHint, yesRadioInput,
+  headingCaption, saveAndBackButton, field, yesRadio, noRadio, yesNoRadioHint, yesRadioInput, noRadioInput,
 } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
 
@@ -23,6 +24,8 @@ const {
 const FIELDS = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const { BUYER } = application;
 
 context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have  trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
@@ -124,11 +127,40 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
     });
 
     describe('form submission', () => {
-      describe('when submitting a fully filled form', () => {
-        it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
-          cy.completeAndSubmitConnectionToTheBuyerForm({});
+      describe(`when selecting ${CONNECTION_TO_THE_BUYER} as no`, () => {
+        describe('when submitting a fully filled form', () => {
+          it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+            cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-          cy.assertUrl(workingWithBuyerUrl);
+            cy.assertUrl(workingWithBuyerUrl);
+          });
+
+          describe('when going back to the page', () => {
+            it('should have the submitted values', () => {
+              cy.navigateToUrl(url);
+
+              noRadioInput().should('be.checked');
+            });
+          });
+        });
+      });
+
+      describe(`when selecting ${CONNECTION_TO_THE_BUYER} as yes`, () => {
+        describe('when submitting a fully filled form', () => {
+          it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+            cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+
+            cy.assertUrl(workingWithBuyerUrl);
+          });
+
+          describe('when going back to the page', () => {
+            it('should have the submitted values', () => {
+              cy.navigateToUrl(url);
+
+              yesRadioInput().should('be.checked');
+              cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
+            });
+          });
         });
       });
     });

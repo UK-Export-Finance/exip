@@ -10,6 +10,7 @@ import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
@@ -105,6 +106,13 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
         submittedValues: sanitiseData(payload),
       });
+    }
+
+    // if no errors, then runs save api call to db
+    const saveResponse = await mapAndSave.yourBuyer(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`);

@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../../constants';
 import save from '../save-data';
 import { mockApplication } from '../../../../test-mocks';
 import generateValidationErrors from '../../../../helpers/validation';
+import mapSubmittedData from '../map-submitted-data';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS },
@@ -28,7 +29,7 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
           await mapAndSave.yourBuyer(mockFormBody, mockApplication, mockValidationErrors);
 
           expect(save.buyer).toHaveBeenCalledTimes(1);
-          expect(save.buyer).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+          expect(save.buyer).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
         });
 
         it('should return true', async () => {
@@ -43,7 +44,7 @@ describe('controllers/insurance/your-buyer/map-and-save', () => {
           await mapAndSave.yourBuyer(mockFormBody, mockApplication);
 
           expect(save.buyer).toHaveBeenCalledTimes(1);
-          expect(save.buyer).toHaveBeenCalledWith(mockApplication, mockFormBody);
+          expect(save.buyer).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
         });
 
         it('should return true', async () => {

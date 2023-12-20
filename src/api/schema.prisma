@@ -276,23 +276,24 @@ model CompanySicCode {
 }
 
 model Buyer {
-  id                           String        @id @default(cuid())
-  application                  Application?  @relation("Buyer_application", fields: [applicationId], references: [id])
-  applicationId                String?       @map("application")
-  companyOrOrganisationName    String        @default("")
-  address                      String        @default("") @mysql.VarChar(1000)
-  country                      Country?      @relation("Buyer_country", fields: [countryId], references: [id])
-  countryId                    String?       @map("country")
-  registrationNumber           String        @default("")
-  website                      String        @default("")
-  contactFirstName             String        @default("")
-  contactLastName              String        @default("")
-  contactPosition              String        @default("")
-  contactEmail                 String        @default("")
-  canContactBuyer              Boolean?
-  exporterIsConnectedWithBuyer Boolean?
-  exporterHasTradedWithBuyer   Boolean?
-  from_Application_buyer       Application[] @relation("Application_buyer")
+  id                             String        @id @default(cuid())
+  application                    Application?  @relation("Buyer_application", fields: [applicationId], references: [id])
+  applicationId                  String?       @map("application")
+  companyOrOrganisationName      String        @default("")
+  address                        String        @default("") @mysql.VarChar(1000)
+  country                        Country?      @relation("Buyer_country", fields: [countryId], references: [id])
+  countryId                      String?       @map("country")
+  registrationNumber             String        @default("")
+  website                        String        @default("")
+  contactFirstName               String        @default("")
+  contactLastName                String        @default("")
+  contactPosition                String        @default("")
+  contactEmail                   String        @default("")
+  canContactBuyer                Boolean?
+  exporterIsConnectedWithBuyer   Boolean?
+  exporterHasTradedWithBuyer     Boolean?
+  connectionWithBuyerDescription String        @default("") @mysql.VarChar(1000)
+  from_Application_buyer         Application[] @relation("Application_buyer")
 
   @@index([applicationId])
   @@index([countryId])
