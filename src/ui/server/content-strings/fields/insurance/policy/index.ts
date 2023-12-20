@@ -5,7 +5,7 @@ const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
 const { CONTRACT_POLICY, ABOUT_GOODS_OR_SERVICES, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY } = POLICY;
 const { EMAIL } = ACCOUNT;
 
-const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
+const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
@@ -20,7 +20,7 @@ export const POLICY_FIELDS = {
         TEXT: 'Single contract policy',
         HINT_LIST: [
           'Covers a single contract with a buyer, for one or more shipments',
-          `Cover for up to ${MAX_COVER_PERIOD_YEARS} years`,
+          `Cover for up to ${MAX_COVER_PERIOD_MONTHS} months`,
           'Best for a one off- project, when you know the exact value of your export contract now',
           'You pay for the insurance before the policy starts',
         ],
