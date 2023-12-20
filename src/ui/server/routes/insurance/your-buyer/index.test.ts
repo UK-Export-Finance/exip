@@ -5,6 +5,7 @@ import { get as getCompanyOrOrganisation, post as postCompanyOrOrganisation } fr
 import { post as postCompanyOrOrganisationSaveAndBack } from '../../../controllers/insurance/your-buyer/company-or-organisation/save-and-back';
 
 import { get as getConnectionToTheBuyer, post as postConnectionToTheBuyer } from '../../../controllers/insurance/your-buyer/connection-to-the-buyer';
+import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/connection-to-the-buyer/save-and-back';
 
 import { get as getWorkingWithBuyer, post as postWorkingWithBuyer } from '../../../controllers/insurance/your-buyer/working-with-buyer';
 import { post as postWorkingWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/working-with-buyer/save-and-back';
@@ -22,7 +23,7 @@ describe('routes/insurance/your-buyer', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(9);
-    expect(post).toHaveBeenCalledTimes(10);
+    expect(post).toHaveBeenCalledTimes(11);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -36,6 +37,7 @@ describe('routes/insurance/your-buyer', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER}`, getConnectionToTheBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER}`, postConnectionToTheBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER_SAVE_AND_BACK}`, postConnectionToTheBuyerSaveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, getWorkingWithBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, postWorkingWithBuyer);

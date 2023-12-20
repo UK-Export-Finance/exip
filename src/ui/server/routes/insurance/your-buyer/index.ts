@@ -8,6 +8,7 @@ import { get as getWorkingWithBuyer, post as postWorkingWithBuyer } from '../../
 import { post as postWorkingWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/working-with-buyer/save-and-back';
 
 import { get as getConnectionToTheBuyer, post as postConnectionToTheBuyer } from '../../../controllers/insurance/your-buyer/connection-to-the-buyer';
+import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/connection-to-the-buyer/save-and-back';
 
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
 
@@ -34,6 +35,7 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER}`, getConnectionToTheBuyer);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER}`, postConnectionToTheBuyer);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER_SAVE_AND_BACK}`, postConnectionToTheBuyerSaveAndBack);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
