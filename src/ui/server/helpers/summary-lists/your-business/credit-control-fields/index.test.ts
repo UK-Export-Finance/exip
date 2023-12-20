@@ -21,7 +21,7 @@ describe('server/helpers/summary-lists/your-business/credit-control-fields', () 
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
-  const expectedBase = [
+  const expectedFields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, HAS_CREDIT_CONTROL),
@@ -33,9 +33,14 @@ describe('server/helpers/summary-lists/your-business/credit-control-fields', () 
     ),
   ];
 
-  it('should return fields and values from the submitted data/answers', () => {
+  it('should return a title and fields from the submitted data/answers', () => {
     const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedBase);
+    const expected = {
+      title: 'Credit control',
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 });

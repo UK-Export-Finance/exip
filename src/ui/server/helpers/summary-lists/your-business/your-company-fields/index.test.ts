@@ -132,12 +132,17 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
       const checkAndChange = false;
       const financialYearEndDateValue = formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT);
 
-      const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+      const expectedFields = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
 
       it('should return fields and values from the submitted data/answers', () => {
         const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
 
-        expect(result).toEqual(expectedBase);
+        const expected = {
+          title: 'Company details',
+          fields: expectedFields,
+        };
+
+        expect(result).toEqual(expected);
       });
     });
 
@@ -147,12 +152,17 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
       const checkAndChange = false;
       const financialYearEndDateValue = DEFAULT.EMPTY;
 
-      const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+      const expectedFields = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
 
       it('should return fields and values from the submitted data/answers with dash for financial year end date', () => {
         const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
 
-        expect(result).toEqual(expectedBase);
+        const expected = {
+          title: 'Company details',
+          fields: expectedFields,
+        };
+
+        expect(result).toEqual(expected);
       });
     });
   });

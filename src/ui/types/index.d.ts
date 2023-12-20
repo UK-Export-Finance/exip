@@ -38,7 +38,7 @@ import {
   SubmittedDataInsuranceEligibility,
   SubmittedData,
 } from './submitted-data';
-import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary } from './summary-list';
+import { SummaryListItem, SummaryListItemData, SummaryListItemDataInput, SummaryListItemDataInputField, SummaryListItemDataFieldSummary, SummaryListGroup, SummaryListGroupData } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import { ValidationErrors } from './validation-errors';
 import {
@@ -122,6 +122,8 @@ export {
   SummaryListItemDataInput,
   SummaryListItemDataInputField,
   SummaryListItem,
+  SummaryListGroup,
+  SummaryListGroupData,
   TaskList,
   TaskListData,
   TaskListDataTask,

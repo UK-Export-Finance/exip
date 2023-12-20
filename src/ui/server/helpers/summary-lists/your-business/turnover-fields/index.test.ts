@@ -1,6 +1,6 @@
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateTurnoverFields from '.';
@@ -11,10 +11,8 @@ import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-appli
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  EXPORTER_BUSINESS: { TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 const {
   TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
@@ -25,7 +23,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
-  const expectedBase = [
+  const expectedFields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.TURNOVER, ESTIMATED_ANNUAL_TURNOVER),
@@ -49,6 +47,11 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   it('should return fields and values from the submitted data/answers', () => {
     const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedBase);
+    const expected = {
+      title: 'Turnover',
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 });

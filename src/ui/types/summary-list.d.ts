@@ -1,3 +1,11 @@
+interface SummaryListCardTitle {
+  text: string
+}
+
+interface SummaryListCard {
+  title: SummaryListCardTitle;
+}
+
 type SummaryListItemDataFieldSummary = {
   TITLE: string;
 };
@@ -60,6 +68,16 @@ interface SummaryListItem {
   value: SummaryListItemValue;
 }
 
+type SummaryListGroupData = {
+  title: string;
+  fields: Array<SummaryListItemData>;
+};
+
+interface SummaryListGroup {
+  card: SummaryListCard;
+  rows: Array<SummaryListItem>;
+}
+
 export {
   SummaryListItem,
   SummaryListItemActions,
@@ -71,4 +89,6 @@ export {
   SummaryListItemDataFieldSummary,
   SummaryListItemKey,
   SummaryListItemValue,
+  SummaryListGroup,
+  SummaryListGroupData,
 };

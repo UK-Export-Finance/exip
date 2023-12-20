@@ -5,7 +5,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import { ApplicationCompany, SummaryListItemData } from '../../../../../types';
+import { ApplicationCompany, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateAddressObject from '../../generate-address-object';
 
@@ -63,13 +63,13 @@ export const optionalFields = (answers: ApplicationCompany, referenceNumber: num
 
 /**
  * generateYourCompanyFields
- * Create all your company fields and values for the Insurance - Company details govukSummaryList
- * @param {ApplicationCompany} answers company data
- * @param {Number} referenceNumber application reference number
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * Create all Your company fields and values for the Insurance - Company details govukSummaryList
+ * @param {ApplicationCompany} answers: Company answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
  */
-const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange: boolean) => {
+const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem(
       {
@@ -110,7 +110,11 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
     }),
   ] as Array<SummaryListItemData>;
 
-  return fields;
+  // TODO: content strings
+  return {
+    title: 'Company details',
+    fields,
+  };
 };
 
 export default generateYourCompanyFields;
