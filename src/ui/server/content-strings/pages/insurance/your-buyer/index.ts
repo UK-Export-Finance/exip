@@ -28,7 +28,7 @@ const WORKING_WITH_BUYER = {
   PAGE_TITLE: 'Working with the buyer',
 };
 
-const CONNECTION_TO_THE_BUYER = {
+const CONNECTION_WITH_BUYER = {
   ...SHARED,
   PAGE_TITLE: 'Are you connected with the buyer in any way?',
   HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
@@ -43,6 +43,6 @@ export default {
   ROOT,
   COMPANY_OR_ORGANISATION,
   WORKING_WITH_BUYER,
-  CONNECTION_TO_THE_BUYER,
+  CONNECTION_WITH_BUYER,
   CHECK_YOUR_ANSWERS,
 };

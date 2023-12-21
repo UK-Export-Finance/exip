@@ -9,7 +9,7 @@ import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
 const {
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -32,7 +32,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
   });
 
   const validBody = {
-    [CONNECTED_WITH_BUYER]: mockBuyer[CONNECTED_WITH_BUYER],
+    [CONNECTION_WITH_BUYER]: mockBuyer[CONNECTION_WITH_BUYER],
     [TRADED_WITH_BUYER]: mockBuyer[TRADED_WITH_BUYER],
   };
 

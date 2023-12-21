@@ -1,6 +1,7 @@
 import hasFormData from '../../../../helpers/has-form-data';
 import save from '../save-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../types';
+import mapSubmittedData from '../map-submitted-data';
 
 /**
  * maps buyer request and calls save function
@@ -15,10 +16,12 @@ const yourBuyer = async (formBody: RequestBody, application: Application, valida
     if (hasFormData(formBody)) {
       let saveResponse;
 
+      const populatedData = mapSubmittedData(formBody);
+
       if (validationErrors) {
-        saveResponse = await save.buyer(application, formBody, validationErrors.errorList);
+        saveResponse = await save.buyer(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.buyer(application, formBody);
+        saveResponse = await save.buyer(application, populatedData);
       }
 
       if (!saveResponse) {

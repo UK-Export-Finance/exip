@@ -50,7 +50,7 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
+    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
       SUMMARY: {
         TITLE: 'Connected with the buyer in any way?',
       },
