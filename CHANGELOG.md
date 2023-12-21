@@ -1,7 +1,35 @@
 # Changelog
 
-<<<<<<< HEAD
-=======
+## [2.3.8](https://github.com/UK-Export-Finance/exip/compare/v2.3.7...v2.3.8) (2023-12-20)
+
+
+### Bug Fixes
+
+* **EMS-2463:** ci:all execution prior to test run ([10c0a9a](https://github.com/UK-Export-Finance/exip/commit/10c0a9aaad644f3b1153a3ed433f02ea7233d2d9))
+* **gha:** ensure all packages are installed with --legacy-peer-deps prior to test execution ([c227b10](https://github.com/UK-Export-Finance/exip/commit/c227b104ee8fef754ed9ffae2e2c1d0a10b76ddf))
+
+## [2.3.7](https://github.com/UK-Export-Finance/exip/compare/v2.3.6...v2.3.7) (2023-12-20)
+
+
+### Design improvements
+
+* **EMS-2447 2451:** Start page, cookies banner, cookies page content improvements ([#1545](https://github.com/UK-Export-Finance/exip/issues/1545)) ([3876b4a](https://github.com/UK-Export-Finance/exip/commit/3876b4a1599445a55eada672b8ca08e0ce6f2866))
+* **EMS-2449:** Get a quote - type of policy content updates ([#1549](https://github.com/UK-Export-Finance/exip/issues/1549)) ([ae07723](https://github.com/UK-Export-Finance/exip/commit/ae07723fb72006bcf4318d77dcfb0e792c2e5305))
+
+## [2.3.6](https://github.com/UK-Export-Finance/exip/compare/v2.3.5...v2.3.6) (2023-12-19)
+
+
+### Bug Fixes
+
+* **EMS-2453:** Buyer country - fix styling issue ([#1540](https://github.com/UK-Export-Finance/exip/issues/1540)) ([57841df](https://github.com/UK-Export-Finance/exip/commit/57841df627ae72256ec45baf28dd26b1a342aa12))
+
+## [2.3.5](https://github.com/UK-Export-Finance/exip/compare/v2.3.4...v2.3.5) (2023-12-19)
+
+
+### Miscellaneous
+
+* **deps:** dependencies updates ([#1535](https://github.com/UK-Export-Finance/exip/issues/1535)) ([6f814c4](https://github.com/UK-Export-Finance/exip/commit/6f814c49e1ff1676f991b6fdbd434baa0a113717))
+
 ## [2.3.4](https://github.com/UK-Export-Finance/exip/compare/v2.3.3...v2.3.4) (2023-12-15)
 
 
@@ -9,7 +37,6 @@
 
 * **EMS-2414:** Add enctype to all forms ([#1517](https://github.com/UK-Export-Finance/exip/issues/1517)) ([0e4af91](https://github.com/UK-Export-Finance/exip/commit/0e4af9135e35852ba860bc892b8d4a501104b7ac))
 
->>>>>>> main
 ## [2.3.3](https://github.com/UK-Export-Finance/exip/compare/v2.3.2...v2.3.3) (2023-12-14)
 
 

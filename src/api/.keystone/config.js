@@ -1798,6 +1798,11 @@ var typeDefs = `
     name: String!
   }
 
+  type MappedCurrency {
+    isoCode: String!
+    name: String!
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(

@@ -4,7 +4,7 @@ import { FIELD_IDS } from '../../constants/field-ids';
 import { FIELD_VALUES } from '../../constants/field-values';
 import { LINKS } from '../links';
 
-const { MAX_COVER_PERIOD_YEARS } = ELIGIBILITY;
+const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
@@ -115,7 +115,7 @@ export const FIELDS = {
         TEXT: 'Single contract policy',
         HINT: [
           'Covers a single contract with a buyer, for one or more shipments',
-          `Cover for up to ${MAX_COVER_PERIOD_YEARS} years`,
+          `Cover for up to ${MAX_COVER_PERIOD_MONTHS} months`,
           'Best for a one off- project, when you know the exact value of your export contract now',
           'You pay for the insurance before the policy starts',
         ],
@@ -151,7 +151,7 @@ export const FIELDS = {
   },
   [FIELD_IDS.POLICY_LENGTH]: {
     LABEL: 'How long do you need the policy for?',
-    HINT: 'You can get an online quote for up to 22 months.',
+    HINT: `You can get an online quote for up to ${MAX_COVER_PERIOD_MONTHS} months.`,
     SUMMARY: {
       TITLE: 'Policy length',
     },
