@@ -10,25 +10,26 @@ import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_TO_THE_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
+const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
-export const FIELD_IDS = [CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
+export const FIELD_IDS = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
 
-export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
+export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
 export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
-    CONNECTED_WITH_BUYER: {
-      ID: CONNECTED_WITH_BUYER,
+    CONNECTION_WITH_BUYER: {
+      ID: CONNECTION_WITH_BUYER,
       HINT: PAGE_CONTENT_STRINGS.HINT,
     },
     CONNECTION_WITH_BUYER_DESCRIPTION: {
@@ -105,6 +106,13 @@ export const post = async (req: Request, res: Response) => {
         validationErrors,
         submittedValues: sanitiseData(payload),
       });
+    }
+
+    // if no errors, then runs save api call
+    const saveResponse = await mapAndSave.yourBuyer(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`);

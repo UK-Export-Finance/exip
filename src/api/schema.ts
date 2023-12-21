@@ -534,6 +534,9 @@ export const lists = {
       canContactBuyer: nullableCheckbox(),
       exporterIsConnectedWithBuyer: nullableCheckbox(),
       exporterHasTradedWithBuyer: nullableCheckbox(),
+      connectionWithBuyerDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

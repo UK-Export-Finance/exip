@@ -12,18 +12,19 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_TO_THE_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
+const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
 
-describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
+describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   let req: Request;
   let res: Response;
 
@@ -44,8 +45,8 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
       const expected = {
         FIELDS: {
-          CONNECTED_WITH_BUYER: {
-            ID: CONNECTED_WITH_BUYER,
+          CONNECTION_WITH_BUYER: {
+            ID: CONNECTION_WITH_BUYER,
             HINT: PAGE_CONTENT_STRINGS.HINT,
           },
           CONNECTION_WITH_BUYER_DESCRIPTION: {
@@ -64,19 +65,19 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct page content strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
     });
   });
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
     });
   });
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
+      const expected = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -118,6 +119,10 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
       connectionWithBuyerDescription,
     };
 
+    beforeEach(() => {
+      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
+    });
+
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
@@ -128,6 +133,16 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${WORKING_WITH_BUYER}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
       });
     });
 
@@ -162,6 +177,36 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when mapAndSave.yourBuyer returns false', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when mapAndSave.yourBuyer fails', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

@@ -12,7 +12,7 @@ export const YOUR_BUYER = {
     CAN_CONTACT_BUYER: 'canContactBuyer',
   },
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER: 'exporterIsConnectedWithBuyer',
+    CONNECTION_WITH_BUYER: 'exporterIsConnectedWithBuyer',
     CONNECTION_WITH_BUYER_DESCRIPTION: 'connectionWithBuyerDescription',
     TRADED_WITH_BUYER: 'exporterHasTradedWithBuyer',
   },
