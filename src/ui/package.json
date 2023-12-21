@@ -53,7 +53,7 @@
     "express-rate-limit": "^6.11.2",
     "express-session": "^1.17.3",
     "google-libphonenumber": "^3.2.33",
-    "govuk-frontend": "^4.7.0",
+    "govuk-frontend": "^5.0.0",
     "graphql": "^16.8.1",
     "graphql-tag": "^2.12.6",
     "is-url": "^1.2.4",

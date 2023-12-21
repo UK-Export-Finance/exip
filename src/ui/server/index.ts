@@ -131,7 +131,7 @@ ui.use('/', insuranceRoutes);
 ui.use(
   '/assets',
   // @ts-ignore
-  express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'govuk', 'assets')),
+  express.static(path.join(__dirname, '..', 'node_modules', 'govuk-frontend', 'dist', 'govuk', 'assets')),
   // @ts-ignore
   express.static(path.join(__dirname, '..', 'public')),
 );
