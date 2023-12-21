@@ -34,7 +34,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeAndSubmitCompanyDetails({});
 
@@ -90,7 +90,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       // submit companies house number form
       submitButton().click();
@@ -124,7 +124,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       // company details submit
       submitButton().click();

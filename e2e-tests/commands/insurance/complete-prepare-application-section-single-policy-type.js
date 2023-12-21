@@ -1,69 +1,43 @@
-import { submitButton, startNowLink } from '../../pages/shared';
 import { FIELD_VALUES } from '../../constants';
+
+const { POLICY_TYPE } = FIELD_VALUES;
 
 /**
  * completePrepareYourApplicationSectionSingle
  * Runs through the full prepare your application journey for a single policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
- * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "your business - company details" form. Defaults to false.
+ * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyMaximumValue: Should submit an application with the maximum value of 500000
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
+ * - submitCheckYourAnswers: Should click each section's "check your answers" submit button
  */
-const completePrepareYourApplicationSectionSingle = ({
+const completePrepareApplicationSinglePolicyType = ({
   differentTradingAddress = false,
   exporterHasTradedWithBuyer,
   usingBroker,
   policyMaximumValue = false,
   differentPolicyContact,
+  submitCheckYourAnswers = true,
 }) => {
-  cy.startInsurancePolicySection();
+  cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
 
-  cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-  cy.completeAndSubmitSingleContractPolicyForm({ policyMaximumValue });
-  cy.completeAndSubmitNameOnPolicyForm({ sameName: !differentPolicyContact });
+  cy.completeBuyerSection({
+    viaTaskList: false,
+    exporterHasTradedWithBuyer,
+    submitCheckYourAnswers,
+  });
 
-  if (differentPolicyContact) {
-    cy.completeAndSubmitDifferentNameOnPolicyForm({});
-  }
+  cy.completePolicySection({
+    policyType: POLICY_TYPE.SINGLE,
+    sameName: !differentPolicyContact,
+    policyMaximumValue,
+    submitCheckYourAnswers,
+    usingBroker,
+  });
 
-  cy.completeAndSubmitBrokerForm({ usingBroker });
-
-  // submit "policy and exports - check your answers" form
-  submitButton().click();
-
-  // start "export contract" section
-  startNowLink().click();
-
-  cy.completeAndSubmitAboutGoodsOrServicesForm({});
-
-  // submit "export contract - check your answers" form
-  submitButton().click();
-
-  cy.startYourBusinessSection();
-
-  cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
-
-  if (differentTradingAddress) {
-    cy.completeAndSubmitAlternativeTradingAddressForm();
-  }
-
-  cy.completeAndSubmitNatureOfYourBusiness();
-  cy.completeAndSubmitTurnoverForm();
-  cy.completeAndSubmitCreditControlForm({});
-
-  // submit "your business - check your answers" form
-  submitButton().click();
-
-  // start "your buyer" section
-  startNowLink().click();
-
-  cy.completeAndSubmitCompanyOrOrganisationForm({});
-  cy.completeAndSubmitConnectionToTheBuyerForm({});
-  cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
-
-  submitButton().click();
+  cy.completeExportContractSection({ viaTaskList: false, submitCheckYourAnswers });
 };
 
-export default completePrepareYourApplicationSectionSingle;
+export default completePrepareApplicationSinglePolicyType;

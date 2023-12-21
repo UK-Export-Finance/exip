@@ -9,6 +9,8 @@ Cypress.Commands.add('completeAndSubmitNameOnPolicyForm', require('../../../../.
 Cypress.Commands.add('completeAndSubmitDifferentNameOnPolicyForm', require('../../../../../commands/insurance/complete-and-submit-different-name-on-policy-form'));
 Cypress.Commands.add('completeDifferentNameOnPolicyForm', require('../../../../../commands/insurance/complete-different-name-on-policy-form'));
 
+Cypress.Commands.add('completeBusinessSection', require('../../../../../commands/insurance/complete-business-section'));
+Cypress.Commands.add('completeBuyerSection', require('../../../../../commands/insurance/complete-buyer-section'));
 Cypress.Commands.add('completePolicySection', require('../../../../../commands/insurance/complete-policy-section'));
 Cypress.Commands.add('completeExportContractSection', require('../../../../../commands/insurance/complete-export-contract-section'));
 

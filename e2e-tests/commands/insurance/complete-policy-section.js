@@ -1,24 +1,34 @@
+import { submitButton } from '../../pages/shared';
 import { FIELD_VALUES } from '../../constants';
 
 const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
 
 /**
  * completePolicySection
- * completes policy section
- * handles policyType and if sameName on policy
- * @param {String} policyType - if single or multiple policy - defaults to single
- * @param {Boolean} sameName - if sameName on policy - defaults to true
- * @param {Boolean} usingBroker - if usingBroker on policy - defaults to false
+ * Complete the "policy" section
+ * @param {Boolean} viaTaskList: Start the "policy" section from the task list.
+ * @param {String} policyType: If single or multiple policy - defaults to single
+ * @param {Boolean} policyMaximumValue: If the value should be the maximum amount
+ * @param {Boolean} sameName: If sameName on policy - defaults to true
+ * @param {Boolean} usingBroker: If usingBroker on policy - defaults to false
+ * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
  */
-const completePolicySection = ({ policyType = SINGLE, sameName = true, usingBroker = false }) => {
-  cy.startInsurancePolicySection();
+const completePolicySection = ({
+  viaTaskList,
+  policyType = SINGLE,
+  policyMaximumValue = false,
+  sameName = true,
+  usingBroker = false,
+  submitCheckYourAnswers = false,
+}) => {
+  cy.startInsurancePolicySection({ viaTaskList });
 
   cy.completeAndSubmitPolicyTypeForm(policyType);
 
   if (policyType === SINGLE) {
-    cy.completeAndSubmitSingleContractPolicyForm({});
+    cy.completeAndSubmitSingleContractPolicyForm({ policyMaximumValue });
   } else {
-    cy.completeAndSubmitMultipleContractPolicyForm({});
+    cy.completeAndSubmitMultipleContractPolicyForm({ policyMaximumValue });
   }
 
   cy.completeAndSubmitNameOnPolicyForm({ sameName });
@@ -28,6 +38,10 @@ const completePolicySection = ({ policyType = SINGLE, sameName = true, usingBrok
   }
 
   cy.completeAndSubmitBrokerForm({ usingBroker });
+
+  if (submitCheckYourAnswers) {
+    submitButton().click();
+  }
 };
 
 export default completePolicySection;

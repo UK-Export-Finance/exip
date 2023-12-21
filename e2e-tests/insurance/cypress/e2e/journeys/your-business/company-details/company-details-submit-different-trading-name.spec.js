@@ -33,7 +33,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeCompanyDetailsForm({});
 

@@ -44,7 +44,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
@@ -98,7 +98,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it(`should retain the ${NAME} and ${CAN_CONTACT_BUYER} input on the page and the other fields should be empty`, () => {
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), BUYER[NAME]);
@@ -139,7 +139,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it('should retain all inputs on the page', () => {
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
       cy.checkValue(field(ADDRESS), BUYER[ADDRESS]);

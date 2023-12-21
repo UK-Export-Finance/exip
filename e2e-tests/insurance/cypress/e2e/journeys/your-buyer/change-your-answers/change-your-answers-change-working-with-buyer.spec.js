@@ -30,7 +30,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});

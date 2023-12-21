@@ -23,7 +23,7 @@ context('Insurance - Export contract - Check your answers - Summary list', () =>
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeExportContractSection();
+      cy.completeExportContractSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
     });
