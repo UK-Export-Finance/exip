@@ -9,12 +9,12 @@ import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
 const {
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/your-buyer/connection-to-the-buyer/save-and-back', () => {
+describe('controllers/insurance/your-buyer/connection-with-buyer/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -34,7 +34,7 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer/save-and-back
   const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
 
   const validBody = {
-    [CONNECTED_WITH_BUYER]: exporterIsConnectedWithBuyer,
+    [CONNECTION_WITH_BUYER]: exporterIsConnectedWithBuyer,
     [CONNECTION_WITH_BUYER_DESCRIPTION]: connectionWithBuyerDescription,
   };
 
@@ -72,7 +72,7 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer/save-and-back
 
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = {
-        [CONNECTED_WITH_BUYER]: exporterIsConnectedWithBuyer,
+        [CONNECTION_WITH_BUYER]: exporterIsConnectedWithBuyer,
       };
 
       await post(req, res);
