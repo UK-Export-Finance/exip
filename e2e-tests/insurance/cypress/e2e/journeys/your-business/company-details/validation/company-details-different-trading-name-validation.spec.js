@@ -26,7 +26,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeCompanyDetailsForm({});
 

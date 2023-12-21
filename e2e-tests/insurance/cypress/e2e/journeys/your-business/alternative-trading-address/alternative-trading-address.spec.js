@@ -53,7 +53,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeAndSubmitCompanyDetails({
         differentTradingAddress: true,

@@ -10,9 +10,13 @@ const task = taskList.prepareApplication.tasks.buyer;
  * Start the "your buyer" section of an application.
  * 1) Click the "your buyer" task list item.
  * 2) Click the "start now" link in the "your buyer" start page.
+ * @param {Boolean} viaTaskList: Start the "your buyer" section from the task list.
  */
-const startInsuranceYourBuyerSection = () => {
-  task.link().click();
+const startInsuranceYourBuyerSection = ({ viaTaskList = true }) => {
+  if (viaTaskList) {
+    task.link().click();
+  }
+
   startNowLink().click();
 };
 

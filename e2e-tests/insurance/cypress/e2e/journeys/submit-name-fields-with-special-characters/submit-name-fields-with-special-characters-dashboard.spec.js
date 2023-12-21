@@ -21,7 +21,7 @@ context('Insurance - Name fields - Dashboard fields should render special charac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({
         buyerName: nameWithSpecialCharacters,

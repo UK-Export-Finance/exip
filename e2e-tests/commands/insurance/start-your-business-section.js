@@ -10,9 +10,13 @@ const task = taskList.prepareApplication.tasks.business;
  * Start the "your business" section of an application.
  * 1) Click the "your business" task list item.
  * 2) Click the "start now" link in the "your business" start page.
+ * @param {Boolean} viaTaskList: Start the "your business" section from the task list.
  */
-const startYourBusinessSection = () => {
-  task.link().click();
+const startYourBusinessSection = ({ viaTaskList = true }) => {
+  if (viaTaskList) {
+    task.link().click();
+  }
+
   startNowLink().click();
 };
 

@@ -43,7 +43,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});

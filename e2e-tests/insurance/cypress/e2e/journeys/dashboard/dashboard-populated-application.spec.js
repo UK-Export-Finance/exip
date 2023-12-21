@@ -62,7 +62,7 @@ context('Insurance - Dashboard - populated application', () => {
       table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'your buyer' section via task list
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       // complete and submit the form
       cy.completeAndSubmitCompanyOrOrganisationForm({});
@@ -97,7 +97,7 @@ context('Insurance - Dashboard - populated application', () => {
       table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy' section via task list
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       // complete the first form - single contract policy
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
@@ -125,7 +125,7 @@ context('Insurance - Dashboard - populated application', () => {
       table.body.row(referenceNumber).submittedLink().click();
 
       // go to the 'policy' section via task list
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       // complete the first form - single contract policy
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);

@@ -36,7 +36,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitNameOnPolicyForm({});

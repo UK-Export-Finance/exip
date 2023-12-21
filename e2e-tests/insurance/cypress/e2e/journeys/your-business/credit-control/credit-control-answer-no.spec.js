@@ -17,7 +17,7 @@ context('Insurance - Your business - Credit control page - answer `no` - As an E
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
       cy.completeAndSubmitTurnoverForm();

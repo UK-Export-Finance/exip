@@ -46,7 +46,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_DETAILS}`;
       natureOfBusinessUrl = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeCompanyDetailsForm({});
 

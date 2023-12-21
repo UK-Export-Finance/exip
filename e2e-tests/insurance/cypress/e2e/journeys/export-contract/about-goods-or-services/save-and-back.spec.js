@@ -36,7 +36,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceExportContractSection();
+      cy.startInsuranceExportContractSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
       cy.assertUrl(url);
@@ -96,7 +96,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       saveAndBackButton().click();
 
       // go back to the page via the task list
-      cy.startInsuranceExportContractSection();
+      cy.startInsuranceExportContractSection({});
 
       aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
     });
@@ -130,7 +130,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it('should have no value in `description` when going back to the page', () => {
-      cy.startInsuranceExportContractSection();
+      cy.startInsuranceExportContractSection({});
 
       field.textarea().should('have.value', '');
     });
