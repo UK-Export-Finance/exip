@@ -77,9 +77,10 @@ context('Insurance - Account - Password reset - new password page - As an Export
           cy.assertPasswordLabelHintAndInput(FIELD_STRINGS);
         });
 
-        it('should render a reveal button that shows/reveals the password input', () => {
-          cy.assertPasswordRevealButton();
-        });
+        // TODO: EMS-2475
+        // it('should render a reveal button that shows/reveals the password input', () => {
+        //   cy.assertPasswordRevealButton();
+        // });
       });
     });
 

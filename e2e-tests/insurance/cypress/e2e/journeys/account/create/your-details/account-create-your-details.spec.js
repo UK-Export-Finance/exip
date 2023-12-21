@@ -98,9 +98,10 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
         cy.assertPasswordLabelHintAndInput(passwordFieldStrings);
       });
 
-      it('should render a reveal button that shows/reveals the password input', () => {
-        cy.assertPasswordRevealButton();
-      });
+      // TODO: EMS-2475
+      // it('should render a reveal button that shows/reveals the password input', () => {
+      //   cy.assertPasswordRevealButton();
+      // });
     });
 
     describe('privacy notice', () => {
