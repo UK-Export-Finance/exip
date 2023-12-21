@@ -1396,6 +1396,7 @@ type Buyer {
   canContactBuyer: Boolean
   exporterIsConnectedWithBuyer: Boolean
   exporterHasTradedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
 }
 
 input BuyerWhereUniqueInput {
@@ -1417,6 +1418,7 @@ input BuyerWhereInput {
   contactLastName: StringFilter
   contactPosition: StringFilter
   contactEmail: StringFilter
+  connectionWithBuyerDescription: StringFilter
 }
 
 input BuyerOrderByInput {
@@ -1429,6 +1431,7 @@ input BuyerOrderByInput {
   contactLastName: OrderDirection
   contactPosition: OrderDirection
   contactEmail: OrderDirection
+  connectionWithBuyerDescription: OrderDirection
 }
 
 input BuyerUpdateInput {
@@ -1445,6 +1448,7 @@ input BuyerUpdateInput {
   canContactBuyer: Boolean
   exporterIsConnectedWithBuyer: Boolean
   exporterHasTradedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
 }
 
 input CountryRelateToOneForUpdateInput {
@@ -1472,6 +1476,7 @@ input BuyerCreateInput {
   canContactBuyer: Boolean
   exporterIsConnectedWithBuyer: Boolean
   exporterHasTradedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
 }
 
 input CountryRelateToOneForCreateInput {

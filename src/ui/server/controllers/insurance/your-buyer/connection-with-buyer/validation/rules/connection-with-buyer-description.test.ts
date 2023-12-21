@@ -8,7 +8,7 @@ import inputValidation from '../../../../../../shared-validation/max-length';
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER_DESCRIPTION: FIELD_ID, CONNECTED_WITH_BUYER },
+      WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER_DESCRIPTION: FIELD_ID, CONNECTION_WITH_BUYER },
     },
   },
 } = FIELD_IDS;
@@ -31,12 +31,12 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
 
   const mockBody = {
     [FIELD_ID]: '',
-    [CONNECTED_WITH_BUYER]: true,
+    [CONNECTION_WITH_BUYER]: true,
   } as RequestBody;
 
-  describe(`${CONNECTED_WITH_BUYER} is false`, () => {
-    it(`should return "mockErrors" when ${CONNECTED_WITH_BUYER} is false`, () => {
-      mockBody[CONNECTED_WITH_BUYER] = false;
+  describe(`${CONNECTION_WITH_BUYER} is false`, () => {
+    it(`should return "mockErrors" when ${CONNECTION_WITH_BUYER} is false`, () => {
+      mockBody[CONNECTION_WITH_BUYER] = false;
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
 
@@ -44,9 +44,9 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
     });
   });
 
-  describe(`${CONNECTED_WITH_BUYER} is true`, () => {
+  describe(`${CONNECTION_WITH_BUYER} is true`, () => {
     it(`should return "IS_EMPTY" error message when ${FIELD_ID} is not provided`, () => {
-      mockBody[CONNECTED_WITH_BUYER] = 'true';
+      mockBody[CONNECTION_WITH_BUYER] = 'true';
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
 
@@ -56,7 +56,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
     });
 
     it(`should return the result of inputValidation when ${FIELD_ID} is over the maximum`, () => {
-      mockBody[CONNECTED_WITH_BUYER] = 'true';
+      mockBody[CONNECTION_WITH_BUYER] = 'true';
       mockBody[FIELD_ID] = 'a'.repeat(MAXIMUM + 1);
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
@@ -67,7 +67,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
     });
 
     it(`should return the result of inputValidation when ${FIELD_ID} is valid`, () => {
-      mockBody[CONNECTED_WITH_BUYER] = 'true';
+      mockBody[CONNECTION_WITH_BUYER] = 'true';
       mockBody[FIELD_ID] = 'test';
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);

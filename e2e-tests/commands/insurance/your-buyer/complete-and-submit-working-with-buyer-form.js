@@ -4,7 +4,6 @@ import { submitButton } from '../../../pages/shared';
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
@@ -16,8 +15,6 @@ const {
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" form. Defaults to "yes".
  */
 export default ({ exporterHasTradedWithBuyer = true }) => {
-  workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
-
   if (exporterHasTradedWithBuyer) {
     workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().click();
   } else {

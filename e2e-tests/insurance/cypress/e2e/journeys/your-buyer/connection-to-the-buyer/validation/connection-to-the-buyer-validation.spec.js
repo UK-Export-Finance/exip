@@ -6,7 +6,7 @@ import { YOUR_BUYER_FIELDS } from '../../../../../../../content-strings/fields/i
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
+    CONNECTION_WITH_BUYER,
     CONNECTION_WITH_BUYER_DESCRIPTION,
   },
 } = FIELD_IDS;
@@ -21,7 +21,7 @@ const {
 
 const {
   ROOT: INSURANCE_ROOT,
-  YOUR_BUYER: { CONNECTION_TO_THE_BUYER },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { MAXIMUM } = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
@@ -39,7 +39,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
 
       cy.assertUrl(url);
     });
@@ -59,14 +59,14 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
 
   const expectedErrorsCount = 1;
   const errorIndex = 0;
-  const errorMessage = ERRORS[CONNECTED_WITH_BUYER].IS_EMPTY;
+  const errorMessage = ERRORS[CONNECTION_WITH_BUYER].IS_EMPTY;
 
-  describe(`${CONNECTED_WITH_BUYER} not selected`, () => {
+  describe(`${CONNECTION_WITH_BUYER} not selected`, () => {
     it('should display validation errors', () => {
       cy.navigateToUrl(url);
 
       const radioField = {
-        ...field(CONNECTED_WITH_BUYER),
+        ...field(CONNECTION_WITH_BUYER),
         input: yesRadioInput,
       };
 
@@ -74,7 +74,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
     });
   });
 
-  describe(`${CONNECTED_WITH_BUYER} yes selected`, () => {
+  describe(`${CONNECTION_WITH_BUYER} yes selected`, () => {
     const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 

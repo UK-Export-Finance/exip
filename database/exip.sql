@@ -214,6 +214,7 @@ CREATE TABLE `Buyer` (
   `canContactBuyer` tinyint(1) DEFAULT NULL,
   `exporterIsConnectedWithBuyer` tinyint(1) DEFAULT NULL,
   `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
+  `connectionWithBuyerDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
   KEY `Buyer_country_idx` (`country`),

@@ -20,7 +20,7 @@ const {
     CAN_CONTACT_BUYER,
   },
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
+    CONNECTION_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
@@ -87,8 +87,8 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
     checkSummaryList[CAN_CONTACT_BUYER]();
   });
 
-  it(`should render a ${CONNECTED_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CONNECTED_WITH_BUYER]();
+  it(`should render a ${CONNECTION_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[CONNECTION_WITH_BUYER]();
   });
 
   it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {

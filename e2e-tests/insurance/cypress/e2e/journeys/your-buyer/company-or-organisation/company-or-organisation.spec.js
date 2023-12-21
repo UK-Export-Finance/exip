@@ -30,7 +30,7 @@ const {
 
 const {
   ROOT,
-  YOUR_BUYER: { CONNECTION_TO_THE_BUYER, COMPANY_OR_ORGANISATION },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -48,7 +48,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`;
 
-      connectionToTheBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`;
+      connectionToTheBuyerUrl = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`;
 
       cy.assertUrl(url);
     });
@@ -188,7 +188,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     const { BUYER } = application;
 
     describe('when submitting a fully filled form', () => {
-      it(`should redirect to ${CONNECTION_TO_THE_BUYER} page`, () => {
+      it(`should redirect to ${CONNECTION_WITH_BUYER} page`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitCompanyOrOrganisationForm({});

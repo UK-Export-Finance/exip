@@ -23,7 +23,7 @@ export const COMPANY_OR_ORGANISATION = {
   PAGE_TITLE: "Buyer's company or organisation",
 };
 
-export const CONNECTION_TO_THE_BUYER = {
+export const CONNECTION_WITH_BUYER = {
   ...SHARED,
   PAGE_TITLE: 'Are you connected with the buyer in any way?',
   HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",

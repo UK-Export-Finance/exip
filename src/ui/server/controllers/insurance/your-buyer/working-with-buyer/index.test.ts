@@ -23,7 +23,7 @@ const {
 
 const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, WORKING_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
-const { TRADED_WITH_BUYER, CONNECTED_WITH_BUYER } = WORKING_WITH_BUYER;
+const { TRADED_WITH_BUYER } = WORKING_WITH_BUYER;
 
 describe('controllers/insurance/your-buyer/working-with-buyer', () => {
   let req: Request;
@@ -44,10 +44,6 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELDS: {
-          CONNECTED_WITH_BUYER: {
-            ID: CONNECTED_WITH_BUYER,
-            ...FIELDS.WORKING_WITH_BUYER[CONNECTED_WITH_BUYER],
-          },
           TRADED_WITH_BUYER: {
             ID: TRADED_WITH_BUYER,
             ...FIELDS.WORKING_WITH_BUYER[TRADED_WITH_BUYER],
@@ -62,7 +58,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [TRADED_WITH_BUYER, CONNECTED_WITH_BUYER];
+      const EXPECTED_FIELD_IDS = [TRADED_WITH_BUYER];
 
       expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
     });
@@ -106,7 +102,6 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
   describe('post', () => {
     const validBody = {
-      [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
       [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
     };
 
@@ -152,7 +147,6 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.body = {
-            [CONNECTED_WITH_BUYER]: FIELD_VALUES.YES,
             [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
           };
 
