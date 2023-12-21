@@ -30,8 +30,7 @@ context('Cookies consent - accept', () => {
     });
 
     it('should not render the question banner', () => {
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.copy().should('not.exist');
       partials.cookieBanner.question.acceptButton().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
     });
@@ -52,7 +51,6 @@ context('Cookies consent - accept', () => {
         COOKIES_CONSENT.COOKIES_LINK,
       );
 
-      partials.cookieBanner.hideButton().should('exist');
       cy.checkText(partials.cookieBanner.hideButton(), COOKIES_CONSENT.HIDE_BUTTON);
     });
 
@@ -80,8 +78,7 @@ context('Cookies consent - accept', () => {
       partials.cookieBanner.hideButton().should('not.be.visible');
       partials.cookieBanner.cookiesLink().should('not.be.visible');
 
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.copy().should('not.exist');
       partials.cookieBanner.question.acceptButton().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
 
@@ -105,8 +102,7 @@ context('Cookies consent - accept', () => {
       partials.cookieBanner.hideButton().should('not.exist');
       partials.cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.copy().should('not.exist');
       partials.cookieBanner.question.acceptButton().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
 

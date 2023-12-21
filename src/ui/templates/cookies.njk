@@ -29,12 +29,16 @@
 
   <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
-  <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
-  <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <p class="govuk-body" data-cy="body-1">{{ CONTENT_STRINGS.BODY_1 }}</p>
+      <p class="govuk-body" data-cy="body-2">{{ CONTENT_STRINGS.BODY_2 }}</p>
 
-  <h2 class="govuk-heading-m" data-cy="essential-cookies-heading">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING }}</h2>
+      <h2 class="govuk-heading-m" data-cy="essential-cookies-heading">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.HEADING }}</h2>
 
-  <p class="govuk-body" data-cy="essential-cookies-intro">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO }}</p>
+      <p class="govuk-body" data-cy="essential-cookies-intro">{{ CONTENT_STRINGS.ESSENTIAL_COOKIES.INTRO }}</p>
+    </div>
+  </div>
 
   {{ govukTable({
     firstCellIsHeader: true,

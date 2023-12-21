@@ -46,12 +46,12 @@ export const FIELDS = {
     },
     [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: 'Different trading name?',
+        TITLE: 'Different trading name',
       },
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: 'Different trading address?',
+        TITLE: 'Different trading address',
       },
     },
     [WEBSITE]: {
@@ -81,7 +81,7 @@ export const FIELDS = {
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: 'UK employees',
+        TITLE: 'Number of employees',
       },
     },
   },

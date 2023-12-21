@@ -4,7 +4,7 @@ import { get as buyerRootGet } from '../../../controllers/insurance/your-buyer';
 import { get as getCompanyOrOrganisation, post as postCompanyOrOrganisation } from '../../../controllers/insurance/your-buyer/company-or-organisation';
 import { post as postCompanyOrOrganisationSaveAndBack } from '../../../controllers/insurance/your-buyer/company-or-organisation/save-and-back';
 
-import { get as getConnectionToTheBuyer, post as postConnectionToTheBuyer } from '../../../controllers/insurance/your-buyer/connection-to-the-buyer';
+import { get as getConnectionWithBuyer, post as postConnectionWithBuyer } from '../../../controllers/insurance/your-buyer/connection-with-buyer';
 import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/connection-to-the-buyer/save-and-back';
 
 import { get as getWorkingWithBuyer, post as postWorkingWithBuyer } from '../../../controllers/insurance/your-buyer/working-with-buyer';
@@ -35,9 +35,9 @@ describe('routes/insurance/your-buyer', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE}`, getCompanyOrOrganisation);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE}`, postCompanyOrOrganisation);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER}`, getConnectionToTheBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER}`, postConnectionToTheBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_TO_THE_BUYER_SAVE_AND_BACK}`, postConnectionToTheBuyerSaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER}`, getConnectionWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER}`, postConnectionWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_SAVE_AND_BACK}`, postConnectionToTheBuyerSaveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, getWorkingWithBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, postWorkingWithBuyer);

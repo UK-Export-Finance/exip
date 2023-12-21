@@ -42,7 +42,7 @@ export const ERROR_MESSAGES = {
     [FIELD_IDS.ELIGIBILITY.PERCENTAGE_OF_COVER]: {
       IS_EMPTY: 'Select the percentage of cover you need',
     },
-    [FIELD_IDS.POLICY_TYPE]: 'Select whether you need a single or multiple contract policy',
+    [FIELD_IDS.POLICY_TYPE]: 'Select what kind of policy you need',
     [FIELD_IDS.POLICY_LENGTH]: {
       NOT_A_NUMBER: 'Policy length must be a number',
       NOT_A_WHOLE_NUMBER: 'Policy length must be a whole number, like 10 - you cannot enter decimal points',
@@ -260,7 +260,7 @@ export const ERROR_MESSAGES = {
         },
       },
       WORKING_WITH_BUYER: {
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
           IS_EMPTY: "Select whether you're connected with the buyer in any way",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {

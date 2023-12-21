@@ -140,6 +140,7 @@ const applicationQuery = gql`
           canContactBuyer
           exporterIsConnectedWithBuyer
           exporterHasTradedWithBuyer
+          connectionWithBuyerDescription
         }
         sectionReview {
           id
