@@ -37,7 +37,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceExportContractSection();
+      cy.startInsuranceExportContractSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
     });

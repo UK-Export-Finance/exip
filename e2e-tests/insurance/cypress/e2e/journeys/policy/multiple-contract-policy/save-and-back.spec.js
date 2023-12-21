@@ -38,7 +38,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
@@ -103,7 +103,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
 
         saveAndBackButton().click();
 
-        cy.startInsurancePolicySection();
+        cy.startInsurancePolicySection({});
 
         submitButton().click();
       });
@@ -143,7 +143,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
 
         saveAndBackButton().click();
 
-        cy.startInsurancePolicySection();
+        cy.startInsurancePolicySection({});
         submitButton().click();
       });
 

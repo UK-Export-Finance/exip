@@ -39,7 +39,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
@@ -104,7 +104,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should not have saved the submitted values  going back to the page', () => {
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
       submitButton().click();
 
       field.dayInput().should('have.value', '');
@@ -137,7 +137,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should have the submitted values when going back to the page', () => {
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
       submitButton().click();
 
       field.dayInput().should('have.value', '1');

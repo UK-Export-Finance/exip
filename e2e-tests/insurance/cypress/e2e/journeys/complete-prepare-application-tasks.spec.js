@@ -44,10 +44,6 @@ context('Insurance - Complete `prepare your application` tasks', () => {
   });
 
   describe('`prepare application` tasks', () => {
-    it(`renders a 'type of policy' task with a status of ${COMPLETED}`, () => {
-      cy.checkText(prepareApplication.tasks.policy.status(), COMPLETED);
-    });
-
     it(`renders a 'your business' task with a status of ${COMPLETED}`, () => {
       cy.checkText(prepareApplication.tasks.business.status(), COMPLETED);
     });
@@ -55,6 +51,12 @@ context('Insurance - Complete `prepare your application` tasks', () => {
     it(`renders a 'your buyer' task with a status of ${COMPLETED}`, () => {
       cy.checkText(prepareApplication.tasks.buyer.status(), COMPLETED);
     });
+
+    it(`renders a 'type of policy' task with a status of ${COMPLETED}`, () => {
+      cy.checkText(prepareApplication.tasks.policy.status(), COMPLETED);
+    });
+
+    // TODO - export contract
   });
 
   describe('`submit application` tasks', () => {

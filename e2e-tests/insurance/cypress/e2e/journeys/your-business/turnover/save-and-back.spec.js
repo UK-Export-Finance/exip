@@ -35,7 +35,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
@@ -88,7 +88,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       // submit companies house number form
       submitButton().click();
@@ -121,7 +121,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain all the fields on the page', () => {
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       // submit company details form
       submitButton().click();
