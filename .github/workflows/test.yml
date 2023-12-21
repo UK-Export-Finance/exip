@@ -158,6 +158,7 @@ jobs:
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
         run: |
           docker-compose up --build -d
+          npm ci --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
   # 4. E2E - Insurance
