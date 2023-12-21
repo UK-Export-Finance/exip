@@ -30,8 +30,7 @@ context('Cookies consent - reject', () => {
     });
 
     it('should not render the question banner', () => {
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.copy().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
     });
@@ -79,8 +78,7 @@ context('Cookies consent - reject', () => {
       partials.cookieBanner.hideButton().should('not.be.visible');
       partials.cookieBanner.cookiesLink().should('not.be.visible');
 
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.copy().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
 
@@ -104,8 +102,7 @@ context('Cookies consent - reject', () => {
       partials.cookieBanner.hideButton().should('not.exist');
       partials.cookieBanner.cookiesLink().should('not.exist');
 
-      partials.cookieBanner.question.copy1().should('not.exist');
-      partials.cookieBanner.question.copy2().should('not.exist');
+      partials.cookieBanner.question.copy().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
       partials.cookieBanner.question.rejectButton().should('not.exist');
 
