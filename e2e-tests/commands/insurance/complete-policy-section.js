@@ -6,6 +6,7 @@ const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
 /**
  * completePolicySection
  * Complete the "policy" section
+ * @param {Boolean} viaTaskList: Start the "policy" section from the task list.
  * @param {String} policyType: If single or multiple policy - defaults to single
  * @param {Boolean} policyMaximumValue: If the value should be the maximum amount
  * @param {Boolean} sameName: If sameName on policy - defaults to true

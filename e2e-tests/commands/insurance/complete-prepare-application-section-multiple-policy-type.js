@@ -6,6 +6,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * completePrepareApplicationMultiplePolicyType
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
+ * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyMaximumValue: should submit an application with the maximum value of 500000
