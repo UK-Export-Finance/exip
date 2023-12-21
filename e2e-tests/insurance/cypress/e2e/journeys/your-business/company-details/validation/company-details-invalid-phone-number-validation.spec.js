@@ -42,7 +42,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeCompanyDetailsForm({});
 

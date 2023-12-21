@@ -32,7 +32,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
@@ -87,7 +87,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it('should retain all inputs on the page', () => {
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
 
       // submit button to get to working with buyer page
       submitButton().click();

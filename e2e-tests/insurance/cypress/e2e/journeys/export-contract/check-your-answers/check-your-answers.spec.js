@@ -27,7 +27,7 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeExportContractSection();
+      cy.completeExportContractSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 

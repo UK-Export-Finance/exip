@@ -32,7 +32,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeExportContractSection();
+      cy.completeExportContractSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);

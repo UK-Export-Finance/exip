@@ -44,7 +44,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
@@ -142,7 +142,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     });
 
     it('should have the originally submitted answers populated when going back to the page through policy and exports flow', () => {
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       submitButton().click();
       submitButton().click();

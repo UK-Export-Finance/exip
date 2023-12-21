@@ -38,7 +38,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startYourBusinessSection();
+      cy.startYourBusinessSection({});
 
       cy.completeAndSubmitCompanyDetails({});
 

@@ -92,7 +92,7 @@ context('Insurance - Name fields - Header and page fields should render special 
       beforeEach(() => {
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.startInsuranceYourBuyerSection();
+        cy.startInsuranceYourBuyerSection({});
 
         cy.completeAndSubmitCompanyOrOrganisationForm({
           buyerName: nameWithSpecialCharacters,
