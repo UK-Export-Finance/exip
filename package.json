@@ -1,6 +1,6 @@
 {
   "name": "@uk-export-finance/exip",
-  "version": "2.3.4",
+  "version": "2.3.8",
   "description": "Export Insurance Policies",
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "bugs": {
@@ -65,7 +65,7 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
     "eslint-plugin-cypress": "^2.15.1",
-    "eslint-plugin-import": "^2.29.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.8.0",
     "eslint-plugin-prettier": "^5.1.0",
     "husky": "^8.0.3",
