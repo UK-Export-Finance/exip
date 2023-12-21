@@ -7,7 +7,6 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/i
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = FIELD_IDS;
@@ -69,43 +68,10 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
   });
 
-  describe('when submitting a partially entered form', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
-
-      saveAndBackButton().click();
-    });
-
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-    });
-
-    it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
-    });
-
-    it(`should retain the ${CONNECTED_WITH_BUYER} radio button selection and the other fields should be empty`, () => {
-      cy.startInsuranceYourBuyerSection();
-
-      // submit button to get to working with buyer page
-      submitButton().click();
-      // submit connectionToBuyer form to get to working with buyer page
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
-
-      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
-      workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().should('not.be.checked');
-      workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().should('not.be.checked');
-    });
-  });
-
   describe('when submitting a fully filled form', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
       workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().click();
 
       saveAndBackButton().click();
@@ -128,7 +94,6 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       // submit connectionToBuyer form to get to working with buyer page
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
       workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().should('be.checked');
     });
   });

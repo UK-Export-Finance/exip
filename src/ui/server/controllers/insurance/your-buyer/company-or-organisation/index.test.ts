@@ -22,7 +22,7 @@ const {
 } = ROUTES.INSURANCE;
 
 const {
-  CONNECTION_TO_THE_BUYER,
+  CONNECTION_WITH_BUYER,
   COMPANY_OR_ORGANISATION_SAVE_AND_BACK,
   CHECK_YOUR_ANSWERS,
   COMPANY_OR_ORGANISATION_CHANGE,
@@ -158,7 +158,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONNECTION_TO_THE_BUYER}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONNECTION_WITH_BUYER}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

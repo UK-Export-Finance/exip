@@ -49,7 +49,7 @@
           'data-cy': FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID
         },
         maxlength: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.MAXIMUM,
-        value: submittedValues[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] or application.company.differentTradingAddress[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID],
+        value: submittedValues[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] or application.buyer[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID],
         errorMessage: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] and {
           text: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID].text,
           attributes: {
@@ -62,11 +62,11 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
-          fieldId: FIELDS.CONNECTED_WITH_BUYER.ID,
+          fieldId: FIELDS.CONNECTION_WITH_BUYER.ID,
           legendText: CONTENT_STRINGS.PAGE_TITLE,
-          hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
-          submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application[FIELDS.CONNECTED_WITH_BUYER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
+          hintText: FIELDS.CONNECTION_WITH_BUYER.HINT,
+          submittedAnswer: submittedValues[FIELDS.CONNECTION_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTION_WITH_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER.ID],
           conditionalYesHtml: conditionalYesHtml,
           horizontalRadios: true
         }) }}

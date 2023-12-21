@@ -19,7 +19,7 @@ const {
         CAN_CONTACT_BUYER,
       },
       WORKING_WITH_BUYER: {
-        CONNECTED_WITH_BUYER,
+        CONNECTION_WITH_BUYER,
         TRADED_WITH_BUYER,
       },
     },
@@ -93,8 +93,8 @@ const checkYourBusinessSummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [CONNECTED_WITH_BUYER]: () => {
-    const fieldId = CONNECTED_WITH_BUYER;
+  [CONNECTION_WITH_BUYER]: () => {
+    const fieldId = CONNECTION_WITH_BUYER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.WORKING_WITH_BUYER);
     const expectedValue = application.BUYER[fieldId];

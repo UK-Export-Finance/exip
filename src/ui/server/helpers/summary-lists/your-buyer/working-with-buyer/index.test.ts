@@ -17,7 +17,7 @@ const {
 } = ROUTES;
 
 const {
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', () => {
@@ -28,18 +28,18 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
   const expectedBase = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.WORKING_WITH_BUYER, CONNECTED_WITH_BUYER),
+        field: getFieldById(FIELDS.WORKING_WITH_BUYER, CONNECTION_WITH_BUYER),
         data: mockAnswers,
         href: generateChangeLink(
           WORKING_WITH_BUYER_CHANGE,
           WORKING_WITH_BUYER_CHECK_AND_CHANGE,
-          `#${CONNECTED_WITH_BUYER}-label`,
+          `#${CONNECTION_WITH_BUYER}-label`,
           referenceNumber,
           checkAndChange,
         ),
         renderChangeLink: true,
       },
-      mapYesNoField(mockAnswers[CONNECTED_WITH_BUYER]),
+      mapYesNoField(mockAnswers[CONNECTION_WITH_BUYER]),
     ),
     fieldGroupItem(
       {

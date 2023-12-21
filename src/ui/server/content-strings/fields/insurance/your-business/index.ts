@@ -14,12 +14,12 @@ export const FIELDS = {
   COMPANY_DETAILS: {
     [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: 'Different trading name?',
+        TITLE: 'Different trading name',
       },
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: 'Different trading address?',
+        TITLE: 'Different trading address',
       },
     },
     [WEBSITE]: {
@@ -60,7 +60,7 @@ export const FIELDS = {
     [EMPLOYEES_UK]: {
       LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
-        TITLE: 'UK employees',
+        TITLE: 'Number of employees',
       },
     },
   },

@@ -91,9 +91,10 @@ context('Insurance - Account - Sign in - As an Exporter, I want to sign in into 
         field.input().should('exist');
       });
 
-      it('should render a reveal button that shows/reveals the password input', () => {
-        cy.assertPasswordRevealButton();
-      });
+      // TODO: EMS-2475
+      // it('should render a reveal button that shows/reveals the password input', () => {
+      //   cy.assertPasswordRevealButton();
+      // });
     });
 
     it('renders a `reset password` link', () => {

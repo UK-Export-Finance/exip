@@ -21,7 +21,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { CONNECTION_TO_THE_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
+const { CONNECTION_WITH_BUYER, COMPANY_OR_ORGANISATION_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
@@ -127,7 +127,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call to db
+    // if no errors, then runs save api call
     const saveResponse = await mapAndSave.yourBuyer(payload, application);
 
     if (!saveResponse) {
@@ -142,7 +142,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`);
   } catch (err) {
     console.error('Error posting insurance - your buyer - buyers company or organisation %O', err);
 

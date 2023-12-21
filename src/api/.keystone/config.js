@@ -262,7 +262,8 @@ var YOUR_BUYER = {
     CAN_CONTACT_BUYER: "canContactBuyer"
   },
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER: "exporterIsConnectedWithBuyer",
+    CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
+    CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
     TRADED_WITH_BUYER: "exporterHasTradedWithBuyer"
   }
 };
@@ -1332,7 +1333,10 @@ var lists = {
       contactEmail: (0, import_fields.text)(),
       canContactBuyer: nullable_checkbox_default(),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
-      exporterHasTradedWithBuyer: nullable_checkbox_default()
+      exporterHasTradedWithBuyer: nullable_checkbox_default(),
+      connectionWithBuyerDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -4069,12 +4073,12 @@ var FIELDS = {
     },
     [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
-        TITLE: "Different trading name?"
+        TITLE: "Different trading name"
       }
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
-        TITLE: "Different trading address?"
+        TITLE: "Different trading address"
       }
     },
     [WEBSITE]: {
@@ -4104,7 +4108,7 @@ var FIELDS = {
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: "UK employees"
+        TITLE: "Number of employees"
       }
     }
   },
@@ -4177,7 +4181,7 @@ var YOUR_BUYER_FIELDS = {
     }
   },
   WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
+    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
       SUMMARY: {
         TITLE: "Connected with the buyer in any way?"
       }
@@ -4526,7 +4530,7 @@ var CONTENT_STRINGS4 = {
 };
 var {
   COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER }
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER }
 } = your_buyer_default;
 var mapBuyer = (application2) => {
   const { buyer } = application2;
@@ -4538,7 +4542,7 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
     xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
-    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTED_WITH_BUYER])),
+    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTION_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTION_WITH_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER]))
   ];
   return mapped;
