@@ -15,7 +15,7 @@ const {
 } = FIELD_IDS;
 
 const {
-  YOUR_BUYER: { CONNECTION_TO_THE_BUYER, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER, WORKING_WITH_BUYER, CHECK_YOUR_ANSWERS },
 } = ROUTES.INSURANCE;
 
 context('Insurance - Your Buyer - Working with buyer page - As an exporter, I want to confirm my buyer details', () => {
@@ -51,7 +51,7 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER}`,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.

@@ -5,7 +5,7 @@ import { mockConnectionWithBuyer } from '../../../../test-mocks/mock-buyer';
 
 const {
   COMPANY_OR_ORGANISATION: { CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
 } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/map-submitted-data', () => {
@@ -19,7 +19,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data', () => {
     };
   });
 
-  describe(`when ${CONNECTED_WITH_BUYER} is true and ${CONNECTION_TO_THE_BUYER_DESCRIPTION} is populated`, () => {
+  describe(`when ${CONNECTION_WITH_BUYER} is true and ${CONNECTION_WITH_BUYER_DESCRIPTION} is populated`, () => {
     it('should return mockFormBody without _csrf', () => {
       const response = mapSubmittedData(mockFormBody);
 
@@ -29,9 +29,9 @@ describe('controllers/insurance/your-buyer/map-submitted-data', () => {
     });
   });
 
-  describe(`when ${CONNECTED_WITH_BUYER} is false and ${CONNECTION_TO_THE_BUYER_DESCRIPTION} is populated`, () => {
-    it(`should change ${CONNECTION_TO_THE_BUYER_DESCRIPTION} to be an empty string`, () => {
-      mockFormBody[CONNECTED_WITH_BUYER] = 'false';
+  describe(`when ${CONNECTION_WITH_BUYER} is false and ${CONNECTION_WITH_BUYER_DESCRIPTION} is populated`, () => {
+    it(`should change ${CONNECTION_WITH_BUYER_DESCRIPTION} to be an empty string`, () => {
+      mockFormBody[CONNECTION_WITH_BUYER] = 'false';
 
       const response = mapSubmittedData(mockFormBody);
 
@@ -39,17 +39,17 @@ describe('controllers/insurance/your-buyer/map-submitted-data', () => {
 
       const expected = {
         ...expectedBody,
-        [CONNECTION_TO_THE_BUYER_DESCRIPTION]: '',
+        [CONNECTION_WITH_BUYER_DESCRIPTION]: '',
       };
 
       expect(response).toEqual(expected);
     });
   });
 
-  describe(`when ${CONNECTED_WITH_BUYER} is false and ${CONNECTION_TO_THE_BUYER_DESCRIPTION} is null`, () => {
-    it(`should change ${CONNECTION_TO_THE_BUYER_DESCRIPTION} to be an empty string`, () => {
-      mockFormBody[CONNECTED_WITH_BUYER] = 'false';
-      mockFormBody[CONNECTION_TO_THE_BUYER_DESCRIPTION] = null;
+  describe(`when ${CONNECTION_WITH_BUYER} is false and ${CONNECTION_WITH_BUYER_DESCRIPTION} is null`, () => {
+    it(`should change ${CONNECTION_WITH_BUYER_DESCRIPTION} to be an empty string`, () => {
+      mockFormBody[CONNECTION_WITH_BUYER] = 'false';
+      mockFormBody[CONNECTION_WITH_BUYER_DESCRIPTION] = null;
 
       const response = mapSubmittedData(mockFormBody);
 
@@ -57,7 +57,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data', () => {
 
       const expected = {
         ...expectedBody,
-        [CONNECTION_TO_THE_BUYER_DESCRIPTION]: '',
+        [CONNECTION_WITH_BUYER_DESCRIPTION]: '',
       };
 
       expect(response).toEqual(expected);

@@ -254,10 +254,10 @@ export const ERROR_MESSAGES = {
         },
       },
       WORKING_WITH_BUYER: {
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
           IS_EMPTY: "Select whether you're connected with the buyer in any way",
         },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_TO_THE_BUYER_DESCRIPTION]: {
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
           IS_EMPTY: 'Enter the connection you have with the buyer',
           ABOVE_MAXIMUM: 'The description of your connection to the buyer cannot be more than a 1000 characters',
         },

@@ -60,14 +60,14 @@ export const YOUR_BUYER_FIELDS = {
     },
   },
   WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTED_WITH_BUYER]: {
+    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
       LABEL: 'Are you connected with the buyer in any way?',
       HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
       SUMMARY: {
         TITLE: 'Connected with the buyer in any way?',
       },
     },
-    [WORKING_WITH_BUYER.CONNECTION_TO_THE_BUYER_DESCRIPTION]: {
+    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
       LABEL: 'Describe the connection with the buyer',
     },
     [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {

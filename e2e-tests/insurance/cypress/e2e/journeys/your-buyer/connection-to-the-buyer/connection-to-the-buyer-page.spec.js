@@ -8,17 +8,17 @@ import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/ro
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER;
+const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
-    CONNECTION_TO_THE_BUYER_DESCRIPTION,
+    CONNECTION_WITH_BUYER,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
   },
 } = FIELD_IDS;
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_TO_THE_BUYER, WORKING_WITH_BUYER },
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE, WORKING_WITH_BUYER },
 } = INSURANCE_ROUTES;
 
 const FIELDS = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER;
@@ -40,7 +40,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
       workingWithBuyerUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
 
       cy.assertUrl(url);
@@ -58,7 +58,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_TO_THE_BUYER}`,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_OR_ORGANISATION}`,
     });
   });
@@ -72,7 +72,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    describe(CONNECTED_WITH_BUYER, () => {
+    describe(CONNECTION_WITH_BUYER, () => {
       it('renders a hint', () => {
         cy.checkText(yesNoRadioHint(), CONTENT_STRINGS.HINT);
       });
@@ -94,10 +94,10 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
       });
     });
 
-    describe(CONNECTION_TO_THE_BUYER_DESCRIPTION, () => {
-      const fieldId = CONNECTION_TO_THE_BUYER_DESCRIPTION;
+    describe(CONNECTION_WITH_BUYER_DESCRIPTION, () => {
+      const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
 
-      describe(`when not selecting a ${CONNECTED_WITH_BUYER} radio`, () => {
+      describe(`when not selecting a ${CONNECTION_WITH_BUYER} radio`, () => {
         it('should not render a label', () => {
           field(fieldId).label().should('not.be.visible');
         });
@@ -107,7 +107,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
         });
       });
 
-      describe(`when clicking the 'yes' ${CONNECTED_WITH_BUYER} radio`, () => {
+      describe(`when clicking the 'yes' ${CONNECTION_WITH_BUYER} radio`, () => {
         beforeEach(() => {
           yesRadioInput().click();
         });
@@ -127,7 +127,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
     });
 
     describe('form submission', () => {
-      describe(`when submitting the form with ${CONNECTION_TO_THE_BUYER} as "no"`, () => {
+      describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "no"`, () => {
         it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
           cy.completeAndSubmitConnectionToTheBuyerForm({});
 
@@ -143,7 +143,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
         });
       });
 
-      describe(`when submitting the form with ${CONNECTION_TO_THE_BUYER} as "yes"`, () => {
+      describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "yes"`, () => {
         it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
           cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
 
@@ -155,7 +155,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
             cy.navigateToUrl(url);
 
             yesRadioInput().should('be.checked');
-            cy.checkText(field(CONNECTION_TO_THE_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION]);
+            cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
           });
         });
       });

@@ -35,25 +35,25 @@
 
     {% set conditionalYesHtml %}
       {{ govukCharacterCount({
-        name: FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID,
-        id: FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID,
+        name: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID,
+        id: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID,
         label: {
-          text: FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.LABEL,
+          text: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.LABEL,
           classes: "govuk-label--m",
           attributes: {
-            'data-cy': FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID + '-label',
-            id: FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID + '-label'
+            'data-cy': FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID + '-label',
+            id: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID + '-label'
           }
         },
         attributes: {
-          'data-cy': FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID
+          'data-cy': FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID
         },
-        maxlength: FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.MAXIMUM,
-        value: submittedValues[FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID] or application.buyer[FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID],
-        errorMessage: validationErrors.errorList[FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID] and {
-          text: validationErrors.errorList[FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID].text,
+        maxlength: FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.MAXIMUM,
+        value: submittedValues[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] or application.buyer[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID],
+        errorMessage: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID] and {
+          text: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID].text,
           attributes: {
-            "data-cy": FIELDS.CONNECTION_TO_THE_BUYER_DESCRIPTION.ID + "-error-message"
+            "data-cy": FIELDS.CONNECTION_WITH_BUYER_DESCRIPTION.ID + "-error-message"
           }
         }
       }) }}
@@ -62,11 +62,11 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
         {{ yesNoRadioButtons.render({
-          fieldId: FIELDS.CONNECTED_WITH_BUYER.ID,
+          fieldId: FIELDS.CONNECTION_WITH_BUYER.ID,
           legendText: CONTENT_STRINGS.PAGE_TITLE,
-          hintText: FIELDS.CONNECTED_WITH_BUYER.HINT,
-          submittedAnswer: submittedValues[FIELDS.CONNECTED_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTED_WITH_BUYER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.CONNECTED_WITH_BUYER.ID],
+          hintText: FIELDS.CONNECTION_WITH_BUYER.HINT,
+          submittedAnswer: submittedValues[FIELDS.CONNECTION_WITH_BUYER.ID] or application.buyer[FIELDS.CONNECTION_WITH_BUYER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.CONNECTION_WITH_BUYER.ID],
           conditionalYesHtml: conditionalYesHtml,
           horizontalRadios: true
         }) }}

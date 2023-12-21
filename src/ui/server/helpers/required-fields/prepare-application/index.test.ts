@@ -20,7 +20,7 @@ const {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
   YOUR_BUYER: {
-    WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER },
+    WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -40,7 +40,7 @@ describe('server/helpers/required-fields/section-review', () => {
         finalDestinationKnown: flatApplicationData[FINAL_DESTINATION_KNOWN],
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
-      ...requiredYourBuyerFields(flatApplicationData[CONNECTED_WITH_BUYER]),
+      ...requiredYourBuyerFields(flatApplicationData[CONNECTION_WITH_BUYER]),
     ];
 
     expect(result).toEqual(expected);

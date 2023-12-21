@@ -14,7 +14,7 @@ const CONTENT_STRINGS = {
 
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
 } = FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
@@ -31,7 +31,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
       xlsxRow(String(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE), buyer[WEBSITE]),
       xlsxRow(XLSX.FIELDS[FIRST_NAME], `${buyer[FIRST_NAME]} ${buyer[LAST_NAME]} ${NEW_LINE}${buyer[POSITION]} ${NEW_LINE}${buyer[EMAIL]}`),
       xlsxRow(String(CONTENT_STRINGS[CAN_CONTACT_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CAN_CONTACT_BUYER])),
-      xlsxRow(String(CONTENT_STRINGS[CONNECTED_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CONNECTED_WITH_BUYER])),
+      xlsxRow(String(CONTENT_STRINGS[CONNECTION_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[CONNECTION_WITH_BUYER])),
       xlsxRow(String(CONTENT_STRINGS[TRADED_WITH_BUYER].SUMMARY?.TITLE), mapYesNoField(buyer[TRADED_WITH_BUYER])),
     ];
 

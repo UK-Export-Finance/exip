@@ -17,7 +17,7 @@ const {
 
 const {
   WORKING_WITH_BUYER: {
-    // CONNECTED_WITH_BUYER,
+    // CONNECTION_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
@@ -70,8 +70,8 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
     cy.deleteApplication(referenceNumber);
   });
 
-  // describe(CONNECTED_WITH_BUYER, () => {
-  //   const fieldId = CONNECTED_WITH_BUYER;
+  // describe(CONNECTION_WITH_BUYER, () => {
+  //   const fieldId = CONNECTION_WITH_BUYER;
   //   let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
   //   describe('when clicking the `change` link', () => {

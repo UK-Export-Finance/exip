@@ -16,7 +16,7 @@ const {
 } = ROUTES;
 
 const {
-  WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER, TRADED_WITH_BUYER },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
 } = FIELD_IDS;
 
 /**
@@ -30,18 +30,18 @@ const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: numb
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.WORKING_WITH_BUYER, CONNECTED_WITH_BUYER),
+        field: getFieldById(FIELDS.WORKING_WITH_BUYER, CONNECTION_WITH_BUYER),
         data: answers,
         href: generateChangeLink(
           WORKING_WITH_BUYER_CHANGE,
           WORKING_WITH_BUYER_CHECK_AND_CHANGE,
-          `#${CONNECTED_WITH_BUYER}-label`,
+          `#${CONNECTION_WITH_BUYER}-label`,
           referenceNumber,
           checkAndChange,
         ),
         renderChangeLink: true,
       },
-      mapYesNoField(answers[CONNECTED_WITH_BUYER]),
+      mapYesNoField(answers[CONNECTION_WITH_BUYER]),
     ),
     fieldGroupItem(
       {

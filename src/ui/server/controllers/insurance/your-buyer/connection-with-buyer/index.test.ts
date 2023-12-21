@@ -16,15 +16,15 @@ import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_TO_THE_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
+const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
 
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
 
-describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
+describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   let req: Request;
   let res: Response;
 
@@ -45,13 +45,13 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
       const expected = {
         FIELDS: {
-          CONNECTED_WITH_BUYER: {
-            ID: CONNECTED_WITH_BUYER,
+          CONNECTION_WITH_BUYER: {
+            ID: CONNECTION_WITH_BUYER,
             HINT: PAGE_CONTENT_STRINGS.HINT,
           },
-          CONNECTION_TO_THE_BUYER_DESCRIPTION: {
-            ID: CONNECTION_TO_THE_BUYER_DESCRIPTION,
-            ...FIELDS.WORKING_WITH_BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION],
+          CONNECTION_WITH_BUYER_DESCRIPTION: {
+            ID: CONNECTION_WITH_BUYER_DESCRIPTION,
+            ...FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
             MAXIMUM: 1000,
           },
         },
@@ -65,19 +65,19 @@ describe('controllers/insurance/your-buyer/connection-to-the-buyer', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct page content strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
     });
   });
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_TO_THE_BUYER);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
     });
   });
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [CONNECTED_WITH_BUYER, CONNECTION_TO_THE_BUYER_DESCRIPTION];
+      const expected = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
 
       expect(FIELD_IDS).toEqual(expected);
     });

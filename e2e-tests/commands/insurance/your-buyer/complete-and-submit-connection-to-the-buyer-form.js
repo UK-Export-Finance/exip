@@ -6,7 +6,7 @@ import application from '../../../fixtures/application';
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTION_TO_THE_BUYER_DESCRIPTION,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
   },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
@@ -19,7 +19,7 @@ const {
 const completeAndSubmitConnectionToTheBuyerForm = ({ hasConnectionToBuyer = false }) => {
   if (hasConnectionToBuyer) {
     yesRadioInput().click();
-    cy.keyboardInput(field(CONNECTION_TO_THE_BUYER_DESCRIPTION).textarea(), application.BUYER[CONNECTION_TO_THE_BUYER_DESCRIPTION]);
+    cy.keyboardInput(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), application.BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
   } else {
     noRadioInput().click();
   }

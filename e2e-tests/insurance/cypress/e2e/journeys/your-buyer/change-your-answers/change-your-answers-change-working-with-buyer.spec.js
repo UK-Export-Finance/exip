@@ -48,8 +48,8 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.deleteApplication(referenceNumber);
   });
 
-  // describe(CONNECTED_WITH_BUYER, () => {
-  //   const fieldId = CONNECTED_WITH_BUYER;
+  // describe(CONNECTION_WITH_BUYER, () => {
+  //   const fieldId = CONNECTION_WITH_BUYER;
 
   //   describe('when clicking the `change` link', () => {
   //     it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
@@ -57,7 +57,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
   //       summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: WORKING_WITH_BUYER_CHANGE, fieldId: CONNECTED_WITH_BUYER });
+  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: WORKING_WITH_BUYER_CHANGE, fieldId: CONNECTION_WITH_BUYER });
   //     });
   //   });
 

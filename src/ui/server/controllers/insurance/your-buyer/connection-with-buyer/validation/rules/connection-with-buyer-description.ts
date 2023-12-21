@@ -8,7 +8,7 @@ import inputValidation from '../../../../../../shared-validation/max-length';
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      WORKING_WITH_BUYER: { CONNECTION_TO_THE_BUYER_DESCRIPTION: FIELD_ID, CONNECTED_WITH_BUYER },
+      WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER_DESCRIPTION: FIELD_ID, CONNECTION_WITH_BUYER },
     },
   },
 } = FIELD_IDS;
@@ -34,7 +34,7 @@ const MAXIMUM = 1000;
  */
 const connectionWithBuyerDescriptionRule = (formBody: RequestBody, errors: object) => {
   // if HAS_DIFFERENT_TRADING_NAME radio is yes then check validation
-  if (formBody[CONNECTED_WITH_BUYER] === 'true') {
+  if (formBody[CONNECTION_WITH_BUYER] === 'true') {
     if (!objectHasProperty(formBody, FIELD_ID)) {
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
     }

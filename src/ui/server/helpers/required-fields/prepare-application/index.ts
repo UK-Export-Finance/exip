@@ -18,7 +18,7 @@ const {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
   YOUR_BUYER: {
-    WORKING_WITH_BUYER: { CONNECTED_WITH_BUYER },
+    WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -36,7 +36,7 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
     finalDestinationKnown: application[FINAL_DESTINATION_KNOWN],
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
-  ...requiredYourBuyerFields(application[CONNECTED_WITH_BUYER]),
+  ...requiredYourBuyerFields(application[CONNECTION_WITH_BUYER]),
 ];
 
 export default requiredFields;
