@@ -22,7 +22,7 @@ const {
   ROOT,
 } = INSURANCE_ROUTES;
 
-const { YOUR_BUYER } = application;
+const { BUYER } = application;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -37,7 +37,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
@@ -93,7 +93,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
 
     it('should retain completed input on the page', () => {
       // get to connection to buyer form
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
       submitButton().click();
 
       yesRadioInput().should('be.checked');
@@ -121,11 +121,11 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
 
     it('should retain all inputs on the page', () => {
       // get to connection to buyer form
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
       submitButton().click();
 
       yesRadioInput().should('be.checked');
-      cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), YOUR_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
+      cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
     });
   });
 });

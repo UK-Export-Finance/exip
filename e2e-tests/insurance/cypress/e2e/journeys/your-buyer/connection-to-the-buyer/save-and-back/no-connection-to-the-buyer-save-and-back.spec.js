@@ -26,7 +26,7 @@ context('Insurance - Your buyer - Connection to buyer - No connection to buyer -
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
@@ -80,7 +80,7 @@ context('Insurance - Your buyer - Connection to buyer - No connection to buyer -
 
     it('should retain all inputs on the page', () => {
       // get to connection to buyer form
-      cy.startInsuranceYourBuyerSection();
+      cy.startInsuranceYourBuyerSection({});
       submitButton().click();
 
       noRadioInput().should('be.checked');
