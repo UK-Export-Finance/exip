@@ -56,7 +56,9 @@ context('Insurance - Complete `prepare your application` tasks', () => {
       cy.checkText(prepareApplication.tasks.policy.status(), COMPLETED);
     });
 
-    // TODO - export contract
+    it(`renders a 'export contract' task with a status of ${COMPLETED}`, () => {
+      cy.checkText(prepareApplication.tasks.exportContract.status(), COMPLETED);
+    });
   });
 
   describe('`submit application` tasks', () => {
