@@ -10,7 +10,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER;
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = FIELD_IDS;
@@ -71,21 +70,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`renders an ${CONNECTED_WITH_BUYER} label, hint and radio buttons`, () => {
-      const fieldId = CONNECTED_WITH_BUYER;
-      const field = workingWithBuyerPage[fieldId];
-
-      const labelCopy = FIELDS.WORKING_WITH_BUYER[fieldId].LABEL;
-
-      cy.checkText(field.label(), labelCopy);
-
-      cy.checkText(field.hint(), FIELDS.WORKING_WITH_BUYER[fieldId].HINT);
-
-      cy.checkAriaLabel(field.yesRadioInput(), `${labelCopy} Yes`);
-
-      cy.checkAriaLabel(field.noRadioInput(), `${labelCopy} No`);
-    });
-
     it(`renders an ${TRADED_WITH_BUYER} label, hint and radio buttons section`, () => {
       const fieldId = TRADED_WITH_BUYER;
       const field = workingWithBuyerPage[fieldId];
@@ -119,7 +103,6 @@ context('Insurance - Your Buyer - Working with buyer page - As an exporter, I wa
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().should('be.checked');
           workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().should('be.checked');
         });
       });
