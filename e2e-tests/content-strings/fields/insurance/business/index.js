@@ -4,7 +4,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {
     LABEL: 'Do you use a different trading name for this company?',
     SUMMARY: {
-      TITLE: 'Different trading name?',
+      TITLE: 'Different trading name',
     },
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
@@ -14,7 +14,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
     LABEL: 'Do you trade from a different address to your registered office address for this company?',
     SUMMARY: {
-      TITLE: 'Different trading address?',
+      TITLE: 'Different trading address',
     },
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
@@ -59,7 +59,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
       LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
-        TITLE: 'UK employees',
+        TITLE: 'Number of employees',
       },
     },
   },
