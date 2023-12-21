@@ -121,7 +121,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.buyer once with buyer and application', async () => {
+      it('should call mapAndSave.yourBuyer once with buyer and application', async () => {
         await post(req, res);
 
         expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
@@ -129,7 +129,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
         expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
       });
 
-      it('should call mapAndSave.buyer once with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
         req.body = {
           ...validBody,
           injection: 1,

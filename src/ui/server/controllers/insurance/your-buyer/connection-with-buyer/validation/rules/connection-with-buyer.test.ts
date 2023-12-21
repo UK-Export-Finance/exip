@@ -1,4 +1,4 @@
-import connectedWithBuyerRule from './connected-with-buyer';
+import connectionWithBuyerRule from './connection-with-buyer';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
@@ -16,7 +16,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/your-buyer/connection-with-buyer/validation/connected-with-buyer', () => {
+describe('controllers/insurance/your-buyer/connection-with-buyer/validation/connection-with-buyer', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
@@ -27,7 +27,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/conn
   } as RequestBody;
 
   it('should return `emptyFieldValidation`', () => {
-    const result = connectedWithBuyerRule(mockBody, mockErrors);
+    const result = connectionWithBuyerRule(mockBody, mockErrors);
 
     const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
