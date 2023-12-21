@@ -45,15 +45,15 @@
 
     {% include "partials/footer.njk" %}
 
-    <script src="/assets/js/jsEnabled.js" type="text/javascript" integrity="{{ SRI.JS }}" crossorigin="anonymous"></script>
-    <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
-    <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
-    <script src="/assets/js/cookies.js" type="text/javascript" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/jsEnabled.js" type="module" integrity="{{ SRI.JS }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/govukFrontend.js" type="module" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/formSubmission.js" type="module" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/cookies.js" type="module" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
 
     {% if cookieConsent %}
-      <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign-ga="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/googleAnalytics.js" type="module" data-campaign-ga="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
 
-      <script src="/assets/js/googleTagManager.js" type="text/javascript" data-campaign-gtm="{{ googleTagManagerId }}" integrity="{{ SRI.GA_TAG_MANAGER }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/googleTagManager.js" type="module" data-campaign-gtm="{{ googleTagManagerId }}" integrity="{{ SRI.GA_TAG_MANAGER }}" crossorigin="anonymous"></script>
 
       <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id={{ googleTagManagerId }}" height="0" width="0" class="ukef-hide-iframe"></iframe>
