@@ -88,6 +88,10 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Dependencies
+        working-directory: ./
+        run: npm run ci:all
+
       - name: UI
         working-directory: ./src/ui
         env:
@@ -97,9 +101,7 @@ jobs:
           GOV_NOTIFY_EMAIL_RECIPIENT_1: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_1 }}
           GOV_NOTIFY_EMAIL_RECIPIENT_2: ${{ secrets.GOV_NOTIFY_EMAIL_RECIPIENT_2 }}
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
-        run: |
-          npm ci --legacy-peer-deps
-          npm run test
+        run: npm run test
 
   # 3. API - API test cases
   api-tests:
@@ -233,7 +235,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm run ci:all
 
       - name: Docker
         run: docker-compose up --build -d
@@ -289,7 +291,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm run ci:all
 
       - name: Docker
         run: docker-compose up --build -d
@@ -334,7 +336,7 @@ jobs:
 
       - name: Dependencies
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm run ci:all
 
       - name: Docker
         run: docker-compose up --build -d

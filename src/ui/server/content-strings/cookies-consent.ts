@@ -3,8 +3,7 @@ export const COOKIES_CONSENT = {
   HIDE_BUTTON: 'Hide this message',
   COOKIES_LINK: 'cookies link',
   QUESTION: {
-    COPY_1: 'We use some essential cookies to make this service work.',
-    COPY_2: "We'd also like to use analytics cookies so we can understand how people use this service and make improvements.",
+    COPY: 'We use essential cookies to make this service work. We also use analytics cookies so we can understand how people use this service and make improvements.',
     ACCEPT_BUTTON: 'Accept analytics cookies',
     REJECT_BUTTON: 'Reject analytics cookies',
     VIEW_COOKIES: 'View cookies',
