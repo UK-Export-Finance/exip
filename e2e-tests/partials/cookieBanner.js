@@ -3,8 +3,7 @@ const cookieBanner = {
   hideButton: () => cy.get('[data-cy="cookies-banner-hide-button"]'),
   cookiesLink: () => cy.get('[data-cy="cookies-banner-cookies-link"]'),
   question: {
-    copy1: () => cy.get('[data-cy="cookies-question-banner-copy-1"]'),
-    copy2: () => cy.get('[data-cy="cookies-question-banner-copy-2"]'),
+    copy: () => cy.get('[data-cy="cookies-question-banner-copy"]'),
     acceptButton: () => cy.get('[data-cy="cookies-question-banner-accept-button"]'),
     rejectButton: () => cy.get('[data-cy="cookies-question-banner-reject-button"]'),
   },

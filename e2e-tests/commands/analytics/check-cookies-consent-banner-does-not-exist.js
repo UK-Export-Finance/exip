@@ -5,8 +5,7 @@ const checkCookiesConsentBannerDoesNotExist = () => {
   partials.cookieBanner.hideButton().should('not.exist');
   partials.cookieBanner.cookiesLink().should('not.exist');
 
-  partials.cookieBanner.question.copy1().should('not.exist');
-  partials.cookieBanner.question.copy2().should('not.exist');
+  partials.cookieBanner.question.copy().should('not.exist');
   partials.cookieBanner.question.acceptButton().should('not.exist');
   partials.cookieBanner.question.rejectButton().should('not.exist');
 
