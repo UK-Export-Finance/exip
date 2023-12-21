@@ -129,10 +129,6 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
-
       - name: API
         working-directory: ./
         env:
