@@ -22,6 +22,10 @@ const startPage = {
     link: () => cy.get('[data-cy="find-out-more-link"]'),
     toFindOutMore: () => cy.get('[data-cy="find-out-more-to-find-out-more"]'),
   },
+  extraSupport: {
+    intro: () => cy.get('[data-cy="export-support-intro"]'),
+    link: () => cy.get('[data-cy="finance-managers-link"]'),
+  },
   getAQuote: {
     text: () => cy.get('[data-cy="get-a-quote"]'),
     youCan: () => cy.get('[data-cy="get-a-quote-you-can"]'),

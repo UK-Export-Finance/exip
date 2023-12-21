@@ -99,6 +99,13 @@ const START = {
     },
     TO_FIND_OUT_MORE: "if you want to know who's eligible and what's covered.",
   },
+  EXTRA_SUPPORT: {
+    INTRO: "Export finance managers can help if you'd like extra support with your application or have questions about credit insurance.",
+    LINK: {
+      TEXT: 'Find your nearest export finance manager.',
+      HREF: LINKS.EXTERNAL.EXPORT_FINANCE_MANAGERS,
+    },
+  },
   QUOTE: {
     YOU_CAN: 'You can also',
     LINK: {
