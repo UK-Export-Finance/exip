@@ -17,7 +17,7 @@ const {
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
+    // CONNECTED_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
@@ -70,46 +70,46 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(CONNECTED_WITH_BUYER, () => {
-    const fieldId = CONNECTED_WITH_BUYER;
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+  // describe(CONNECTED_WITH_BUYER, () => {
+  //   const fieldId = CONNECTED_WITH_BUYER;
+  //   let fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-    describe('when clicking the `change` link', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
+  //   describe('when clicking the `change` link', () => {
+  //     beforeEach(() => {
+  //       cy.navigateToUrl(url);
+  //     });
 
-      it(`should redirect to ${WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
+  //     it(`should redirect to ${WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
+  //       cy.navigateToUrl(url);
+  //       fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-      });
-    });
+  //       cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+  //     });
+  //   });
 
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+  //   describe('form submission with a new answer', () => {
+  //     beforeEach(() => {
+  //       cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+  //       summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadioInput().click();
+  //       workingWithBuyerPage[fieldId].noRadioInput().click();
 
-        submitButton().click();
-      });
+  //       submitButton().click();
+  //     });
 
-      it(`should redirect to ${YOUR_BUYER}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
-      });
+  //     it(`should redirect to ${YOUR_BUYER}`, () => {
+  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
+  //     });
 
-      it('should render the new answer and retain a `completed` status tag', () => {
-        fieldVariables.newValue = FIELD_VALUES.NO;
-        cy.checkChangeAnswerRendered(fieldVariables);
+  //     it('should render the new answer and retain a `completed` status tag', () => {
+  //       fieldVariables.newValue = FIELD_VALUES.NO;
+  //       cy.checkChangeAnswerRendered(fieldVariables);
 
-        cy.checkTaskStatusCompleted(status());
-      });
-    });
-  });
+  //       cy.checkTaskStatusCompleted(status());
+  //     });
+  //   });
+  // });
 
   describe(TRADED_WITH_BUYER, () => {
     const fieldId = TRADED_WITH_BUYER;

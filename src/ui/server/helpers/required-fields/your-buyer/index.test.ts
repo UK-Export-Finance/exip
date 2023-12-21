@@ -33,7 +33,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
     describe('when connectedWithBuyer is "false"', () => {
       it('should return array of relevant working with buyer fields', () => {
-        const result = workingWithBuyerTasks(true);
+        const result = workingWithBuyerTasks(false);
 
         const expected = [CONNECTED_WITH_BUYER, TRADED_WITH_BUYER];
 

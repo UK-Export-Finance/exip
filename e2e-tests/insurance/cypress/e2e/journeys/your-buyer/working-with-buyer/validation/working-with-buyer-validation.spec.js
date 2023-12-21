@@ -8,7 +8,6 @@ import { INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance'
 
 const {
   WORKING_WITH_BUYER: {
-    CONNECTED_WITH_BUYER,
     TRADED_WITH_BUYER,
   },
 } = FIELD_IDS;
@@ -78,8 +77,6 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
 
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
-
           field.yesRadioInput().click();
 
           submitButton().click();
@@ -91,8 +88,6 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
       describe('no radio', () => {
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
-
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
 
           field.noRadioInput().click();
 

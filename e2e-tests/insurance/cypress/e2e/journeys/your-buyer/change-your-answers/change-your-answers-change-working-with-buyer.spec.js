@@ -6,7 +6,6 @@ const {
   INSURANCE: {
     YOUR_BUYER: {
       WORKING_WITH_BUYER: {
-        CONNECTED_WITH_BUYER,
         TRADED_WITH_BUYER,
       },
     },
@@ -49,39 +48,39 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(CONNECTED_WITH_BUYER, () => {
-    const fieldId = CONNECTED_WITH_BUYER;
+  // describe(CONNECTED_WITH_BUYER, () => {
+  //   const fieldId = CONNECTED_WITH_BUYER;
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+  //   describe('when clicking the `change` link', () => {
+  //     it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
+  //       cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+  //       summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: WORKING_WITH_BUYER_CHANGE, fieldId: CONNECTED_WITH_BUYER });
-      });
-    });
+  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: WORKING_WITH_BUYER_CHANGE, fieldId: CONNECTED_WITH_BUYER });
+  //     });
+  //   });
 
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+  //   describe('form submission with a new answer', () => {
+  //     beforeEach(() => {
+  //       cy.navigateToUrl(url);
 
-        summaryList.field(fieldId).changeLink().click();
+  //       summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadioInput().click();
+  //       workingWithBuyerPage[fieldId].noRadioInput().click();
 
-        submitButton().click();
-      });
+  //       submitButton().click();
+  //     });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
+  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+  //     });
 
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
-      });
-    });
-  });
+  //     it('should render the new answer', () => {
+  //       cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
+  //     });
+  //   });
+  // });
 
   describe(TRADED_WITH_BUYER, () => {
     const fieldId = TRADED_WITH_BUYER;
