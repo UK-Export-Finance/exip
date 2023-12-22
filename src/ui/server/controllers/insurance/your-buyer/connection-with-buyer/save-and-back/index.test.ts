@@ -9,12 +9,12 @@ import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME },
+  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back', () => {
+describe('controllers/insurance/your-buyer/connection-with-buyer/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -31,8 +31,12 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
     jest.resetAllMocks();
   });
 
-  const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
-  const validBody = companyOrOrganisationMock;
+  const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
+
+  const validBody = {
+    [CONNECTION_WITH_BUYER]: exporterIsConnectedWithBuyer,
+    [CONNECTION_WITH_BUYER_DESCRIPTION]: connectionWithBuyerDescription,
+  };
 
   describe('when there are no validation errors', () => {
     it('should redirect to all sections page', async () => {
@@ -59,9 +63,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
   describe('when there are validation errors', () => {
     it('should redirect to all sections page', async () => {
-      req.body = {
-        [NAME]: 'Test',
-      };
+      req.body = {};
 
       await post(req, res);
 
@@ -70,7 +72,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = {
-        [NAME]: 'Test',
+        [CONNECTION_WITH_BUYER]: exporterIsConnectedWithBuyer,
       };
 
       await post(req, res);
@@ -99,6 +101,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
   describe('api error handling', () => {
     describe('when mapAndSave.yourBuyer returns false', () => {
       beforeEach(() => {
+        req.body = validBody;
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.resolve(false));
         mapAndSave.yourBuyer = updateMapAndSave;
@@ -113,6 +116,8 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
 
     describe('when mapAndSave.yourBuyer fails', () => {
       beforeEach(() => {
+        req.body = validBody;
+
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.yourBuyer = updateMapAndSave;
