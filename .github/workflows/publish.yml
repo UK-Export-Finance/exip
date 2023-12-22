@@ -25,5 +25,5 @@ jobs:
           token: ${{ secrets.RELEASE_TOKEN }}
           release-type: node
           target-branch: fix/EMS-2484-release-please-v-4-update
-          config-file: release-config.json
-          manifest-file: release-manifest.json
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
