@@ -7,14 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#0b0c0c"/>
 
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-
-    <link rel="shortcut icon" sizes="16x16 32x32 48x48" href="/assets/images/favicon.ico" type="image/x-icon"/>
-    <link rel="mask-icon" href="/assets/images/govuk-mask-icon.svg" color="#0b0c0c">
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/govuk-apple-touch-icon-180x180.png">
-    <link rel="apple-touch-icon" sizes="167x167" href="/assets/images/govuk-apple-touch-icon-167x167.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152x152.png">
-    <link rel="apple-touch-icon" href="/assets/images/govuk-apple-touch-icon.png">
+    <link rel="icon" sizes="48x48" href="/assets/images/favicon.ico">
+    <link rel="icon" sizes="any" href="/assets/images/favicon.svg" type="image/svg+xml">
+    <link rel="mask-icon" href="/assets/images/govuk-icon-mask.svg" color="#0b0c0c">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/govuk-apple-touch-icon-180.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="/assets/images/govuk-apple-touch-icon-192.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/assets/images/govuk-apple-touch-icon-152.png">
 
     <link rel="stylesheet" href="/assets/css/styles.css"/>
 
@@ -47,15 +45,16 @@
 
     {% include "partials/footer.njk" %}
 
-    <script src="/assets/js/jsEnabled.js" type="text/javascript" integrity="{{ SRI.JS }}" crossorigin="anonymous"></script>
-    <script src="/assets/js/govukFrontend.js" type="text/javascript" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
-    <script src="/assets/js/formSubmission.js" type="text/javascript" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
-    <script src="/assets/js/cookies.js" type="text/javascript" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/jsEnabled.js" type="module" integrity="{{ SRI.JS }}" crossorigin="anonymous"></script>
+
+    <script src="/assets/js/govukFrontend.js" type="module" integrity="{{ SRI.GOVUK }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/formSubmission.js" type="module" integrity="{{ SRI.FORM }}" crossorigin="anonymous"></script>
+    <script src="/assets/js/cookies.js" type="module" integrity="{{ SRI.COOKIES }}" crossorigin="anonymous"></script>
 
     {% if cookieConsent %}
-      <script src="/assets/js/googleAnalytics.js" type="text/javascript" data-campaign-ga="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/googleAnalytics.js" type="module" data-campaign-ga="{{ googleAnalyticsId }}" integrity="{{ SRI.GA }}" crossorigin="anonymous"></script>
 
-      <script src="/assets/js/googleTagManager.js" type="text/javascript" data-campaign-gtm="{{ googleTagManagerId }}" integrity="{{ SRI.GA_TAG_MANAGER }}" crossorigin="anonymous"></script>
+      <script src="/assets/js/googleTagManager.js" type="module" data-campaign-gtm="{{ googleTagManagerId }}" integrity="{{ SRI.GA_TAG_MANAGER }}" crossorigin="anonymous"></script>
 
       <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id={{ googleTagManagerId }}" height="0" width="0" class="ukef-hide-iframe"></iframe>
