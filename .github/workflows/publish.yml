@@ -7,7 +7,7 @@ run-name: Executing release on ${{ github.repository }} 🚀
 
 on:
   push:
-    branches: [EMS-2484-release-please-v-4-update]
+    branches: [fix/EMS-2484-release-please-v-4-update]
 
 permissions:
   contents: write
@@ -24,6 +24,6 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
           release-type: node
-          target-branch: EMS-2484-release-please-v-4-update
+          target-branch: fix/EMS-2484-release-please-v-4-update
           config-file: release-config.json
           manifest-file: release-manifest.json
