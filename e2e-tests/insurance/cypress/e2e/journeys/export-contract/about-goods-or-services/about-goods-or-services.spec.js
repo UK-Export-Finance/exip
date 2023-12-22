@@ -107,6 +107,10 @@ context('Insurance - Export contract - About goods or services page - Final dest
     describe(`${FINAL_DESTINATION_KNOWN} label and input`, () => {
       const fieldId = FINAL_DESTINATION_KNOWN;
 
+      it('renders `yes` and `no` radio buttons in the correct order', () => {
+        cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+      });
+
       it('renders `no` radio button', () => {
         cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
