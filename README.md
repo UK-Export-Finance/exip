@@ -12,6 +12,7 @@ The repository is based on the [template-typescript-package](https://github.com/
 **Status** 🚦
 
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![codecov](https://codecov.io/github/UK-Export-Finance/exip/graph/badge.svg?token=Jpv0YhFTWg)](https://codecov.io/github/UK-Export-Finance/exip)
 
 **CI** 💫
 
