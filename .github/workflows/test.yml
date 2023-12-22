@@ -136,6 +136,10 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Dependencies
+        working-directory: ./src/api
+        run: npm ci --legacy-peer-deps
+
       - name: API
         working-directory: ./
         env:
@@ -165,7 +169,6 @@ jobs:
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
         run: |
           docker-compose up --build -d
-          npm ci --legacy-peer-deps --prefix ./src/api
           npm run test --prefix ./src/api
 
       - name: Coverage
