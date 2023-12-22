@@ -46,7 +46,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
@@ -97,7 +97,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       // submit policy type form
       submitButton().click();
@@ -142,7 +142,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       it('should retain all the fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.startInsurancePolicySection();
+        cy.startInsurancePolicySection({});
 
         // submit policy type form
         submitButton().click();
@@ -178,7 +178,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       it('should retain all the relevant fields on the page', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.startInsurancePolicySection();
+        cy.startInsurancePolicySection({});
 
         // submit policy type form
         submitButton().click();

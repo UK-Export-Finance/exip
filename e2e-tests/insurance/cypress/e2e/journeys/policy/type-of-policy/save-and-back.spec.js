@@ -20,7 +20,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.POLICY.TYPE_OF_POLICY}`;
       cy.assertUrl(url);
@@ -61,7 +61,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
 
       saveAndBackButton().click();
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       multiplePolicyField.input().click();
       saveAndBackButton().click();
@@ -81,7 +81,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
 
     describe('when going back to the page', () => {
       it('should have the originally submitted answer selected', () => {
-        cy.startInsurancePolicySection();
+        cy.startInsurancePolicySection({});
 
         multiplePolicyField.input().should('be.checked');
       });

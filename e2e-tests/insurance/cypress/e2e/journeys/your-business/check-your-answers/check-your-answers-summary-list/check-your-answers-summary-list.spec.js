@@ -45,7 +45,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection();
+        cy.startYourBusinessSection({});
 
         cy.completeAndSubmitCompanyDetails({});
         cy.completeAndSubmitNatureOfYourBusiness();
@@ -116,7 +116,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        cy.startYourBusinessSection();
+        cy.startYourBusinessSection({});
 
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
         cy.completeAndSubmitAlternativeTradingAddressForm();

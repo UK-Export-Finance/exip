@@ -43,7 +43,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
+    it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = validBody;
 
       await post(req, res);
@@ -68,7 +68,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.buyer once with data from constructPayload function', async () => {
+    it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = {
         [NAME]: 'Test',
       };
@@ -97,7 +97,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
   });
 
   describe('api error handling', () => {
-    describe('when mapAndSave.buyer returns false', () => {
+    describe('when mapAndSave.yourBuyer returns false', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.resolve(false));
@@ -111,7 +111,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
       });
     });
 
-    describe('when mapAndSave.buyer fails', () => {
+    describe('when mapAndSave.yourBuyer fails', () => {
       beforeEach(() => {
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));

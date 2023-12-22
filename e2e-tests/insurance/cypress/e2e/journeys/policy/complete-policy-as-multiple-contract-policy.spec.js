@@ -23,7 +23,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsurancePolicySection();
+      cy.startInsurancePolicySection({});
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       cy.completeAndSubmitMultipleContractPolicyForm({});

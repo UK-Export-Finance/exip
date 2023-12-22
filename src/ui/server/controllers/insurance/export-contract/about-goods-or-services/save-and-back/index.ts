@@ -17,7 +17,7 @@ const {
 
 /**
  * post
- * Save any valid About goods or services page fields and if successful, redirect to the all sections page
+ * Save any valid About goods or services form fields and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} All sections page or error page
@@ -37,8 +37,8 @@ export const post = async (req: Request, res: Response) => {
      * 1) generate a payload.
      * 2) generate validation errors.
      * 3) if FINAL_DESTINATION is provided, fetch countries.
-     * 4) call mapAndSave and redirect
-     * Otherwise, redirect to ALL_SECTIONS
+     * 4) call mapAndSave
+     * 5) redirect
      */
     if (hasFormData(req.body)) {
       const payload = constructPayload(req.body, FIELD_IDS);
