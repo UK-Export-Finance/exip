@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.3.9](https://github.com/UK-Export-Finance/exip/compare/v2.3.8...v2.3.9) (2023-12-22)
+
+
+### Bug Fixes
+
+* **release-please:** update syntax to support v4 ([1e58470](https://github.com/UK-Export-Finance/exip/commit/1e5847036b5789004d4c01330a960f7cfe15a5f5))
+* **release-please:** update syntax to support v4 ([cca6d98](https://github.com/UK-Export-Finance/exip/commit/cca6d985c61ae36a6f1a414e02318897dd81712b))
+* **release-please:** update syntax to support v4 ([f89a2d7](https://github.com/UK-Export-Finance/exip/commit/f89a2d7d9afa6b3f060bf5ef19714e1eb7d4447c))
+
 ## [2.3.8](https://github.com/UK-Export-Finance/exip/compare/v2.3.7...v2.3.8) (2023-12-20)
 
 
