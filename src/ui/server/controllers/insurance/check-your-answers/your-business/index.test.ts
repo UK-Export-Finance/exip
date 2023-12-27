@@ -5,7 +5,7 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import { yourBusinessSummaryLists } from '../../../../helpers/summary-lists/your-business';
 import requiredFields from '../../../../helpers/required-fields/business';
 import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
@@ -76,7 +76,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBusinessSummaryList(company, business, referenceNumber, checkAndChange);
+      const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
 
       const exporterFields = requiredFields(company.hasDifferentTradingName);
 
@@ -89,7 +89,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         status,
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryList,
         ...pageVariables(mockApplication.referenceNumber),
       };
 

@@ -1,4 +1,5 @@
 import { FIELD_IDS } from '../../../../constants';
+import { FORM_TITLES } from '../../../form-titles';
 
 const { EXPORTER_BUSINESS } = FIELD_IDS.INSURANCE;
 
@@ -10,26 +11,39 @@ const {
   HAS_CREDIT_CONTROL,
 } = EXPORTER_BUSINESS;
 
+const {
+  YOUR_BUSINESS: { COMPANY_DETAILS, NATURE_OF_BUSINESS, TURNOVER, CREDIT_CONTROL },
+} = FORM_TITLES;
+
 export const FIELDS = {
   COMPANY_DETAILS: {
     [HAS_DIFFERENT_TRADING_NAME]: {
       SUMMARY: {
         TITLE: 'Different trading name',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
+      SUMMARY: {
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [TRADING_ADDRESS]: {
       SUMMARY: {
         TITLE: 'Different trading address',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [WEBSITE]: {
       SUMMARY: {
         TITLE: 'Company website (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [PHONE_NUMBER]: {
       SUMMARY: {
         TITLE: 'UK telephone number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
   },
@@ -39,6 +53,7 @@ export const FIELDS = {
     REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
     SUMMARY: {
       TITLE: 'Different trading address',
+      FORM_TITLE: COMPANY_DETAILS,
     },
   },
   NATURE_OF_YOUR_BUSINESS: {
@@ -47,6 +62,7 @@ export const FIELDS = {
       HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
     [YEARS_EXPORTING]: {
@@ -55,12 +71,14 @@ export const FIELDS = {
       SUFFIX: 'Years',
       SUMMARY: {
         TITLE: 'Years exporting',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
     [EMPLOYEES_UK]: {
       LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
         TITLE: 'Number of employees',
+        FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
   },
@@ -69,6 +87,9 @@ export const FIELDS = {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
       DATE_FORMAT: 'd MMMM',
+      SUMMARY: {
+        FORM_TITLE: NATURE_OF_BUSINESS,
+      },
     },
     [ESTIMATED_ANNUAL_TURNOVER]: {
       LEGEND: 'Estimated annual turnover for this current financial year',
@@ -76,6 +97,7 @@ export const FIELDS = {
       PREFIX: '£',
       SUMMARY: {
         TITLE: 'Estimated turnover this current financial year',
+        FORM_TITLE: TURNOVER,
       },
     },
     [PERCENTAGE_TURNOVER]: {
@@ -83,6 +105,7 @@ export const FIELDS = {
       SUFFIX: '%',
       SUMMARY: {
         TITLE: 'Percentage of turnover from exports',
+        FORM_TITLE: TURNOVER,
       },
     },
   },
@@ -90,6 +113,7 @@ export const FIELDS = {
     HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',
     SUMMARY: {
       TITLE: 'Process for managing late payments',
+      FORM_TITLE: CREDIT_CONTROL,
     },
   },
 };

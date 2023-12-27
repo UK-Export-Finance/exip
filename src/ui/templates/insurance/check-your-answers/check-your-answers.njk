@@ -5,6 +5,7 @@
 {% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% import '../../components/status-tag.njk' as statusTag %}
+{% import '../../components/group-of-summary-lists.njk' as groupOfSummaryLists %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -47,9 +48,15 @@
     </div>
   </div>
 
-  {{ govukSummaryList({
-    rows: SUMMARY_LIST
-  }) }}
+  {% if SUMMARY_LISTS %}
+    {{ groupOfSummaryLists.render({
+      summaryLists: SUMMARY_LISTS
+    }) }}
+  {% else %}
+    {{ govukSummaryList({
+      rows: SUMMARY_LIST
+    }) }}
+  {% endif %}
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 

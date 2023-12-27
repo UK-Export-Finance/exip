@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import { yourBusinessSummaryLists } from '../../../../helpers/summary-lists/your-business';
 import { Request, Response } from '../../../../../types';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -17,10 +17,10 @@ const { INSURANCE_ROOT, ALL_SECTIONS, YOUR_BUYER: YOUR_BUYER_ROUTES, PROBLEM_WIT
 const { ROOT: YOUR_BUYER_ROOT } = YOUR_BUYER_ROUTES;
 
 /**
- * gets the template for check your answers page
+ * Get the application and render Business - check your answers page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders check your answers page with previously submitted details
+ * @returns {Express.Response.render} Business - check your answers page
  */
 const get = (req: Request, res: Response) => {
   try {
@@ -32,7 +32,7 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = yourBusinessSummaryList(application.company, application.business, refNumber);
+    const summaryLists = yourBusinessSummaryLists(application.company, application.business, refNumber);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -42,7 +42,7 @@ const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryLists,
     });
   } catch (err) {
     console.error('Error getting check your answers %O', err);
