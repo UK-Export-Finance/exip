@@ -29,14 +29,12 @@ describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
   });
 
   describe('when a value is not provided', () => {
-    it('should return the result of emptyFieldValidation', () => {
+    it('should return the provided errors', () => {
       mockBody[FIELD_ID] = '';
 
       const result = rule(mockBody, mockErrors);
 
-      const expected = emptyFieldValidation(mockBody, SINGLE_POLICY_TYPE, ERROR_MESSAGE, mockErrors);
-
-      expect(result).toEqual(expected);
+      expect(result).toEqual(mockErrors);
     });
   });
 });

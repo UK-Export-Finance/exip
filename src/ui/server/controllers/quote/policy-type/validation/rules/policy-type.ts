@@ -21,7 +21,7 @@ const policyTypeRules = (formBody: RequestBody, errors: object) => {
     return emptyFieldValidation({}, SINGLE_POLICY_TYPE, ERROR_MESSAGE, errors);
   }
 
-  return emptyFieldValidation(formBody, SINGLE_POLICY_TYPE, ERROR_MESSAGE, errors);
+  return errors;
 };
 
 export default policyTypeRules;
