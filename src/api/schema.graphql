@@ -2389,8 +2389,13 @@ type Query {
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
+<<<<<<< HEAD
   """ get Ordnance Survey address """
   getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
+=======
+  """ get CIS countries from APIM """
+  getApimCisCountries: [MappedCisCountry]
+>>>>>>> main
 
   """ get currencies from APIM """
   getApimCurrencies: [MappedCurrency]
@@ -2695,6 +2700,11 @@ type MappedCisCountry {
   canApplyForInsuranceOnline: Boolean
   canApplyForInsuranceOffline: Boolean
   noInsuranceSupport: Boolean
+}
+
+type MappedCurrency {
+  isoCode: String!
+  name: String!
 }
 
 type MappedCurrency {

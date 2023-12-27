@@ -1,6 +1,6 @@
 {
   "name": "@uk-export-finance/exip",
-  "version": "2.3.8",
+  "version": "2.4.0",
   "description": "Export Insurance Policies",
   "homepage": "https://github.com/UK-Export-Finance/exip#readme",
   "bugs": {
@@ -41,7 +41,7 @@
     "apollo-cache-inmemory": "^1.6.6",
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
-    "cypress": "^13.6.1",
+    "cypress": "^13.6.2",
     "date-fns": "^3.0.6",
     "dotenv": "^16.3.1",
     "graphql-tag": "^2.12.6",
