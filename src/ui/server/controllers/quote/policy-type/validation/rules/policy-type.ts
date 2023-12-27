@@ -4,7 +4,7 @@ import { isValidPolicyType } from '../../../../../helpers/policy-type';
 import emptyFieldValidation from '../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../types';
 
-const { POLICY_TYPE: FIELD_ID } = FIELD_IDS;
+const { POLICY_TYPE: FIELD_ID, SINGLE_POLICY_TYPE } = FIELD_IDS;
 const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 /**
@@ -18,10 +18,10 @@ const policyTypeRules = (formBody: RequestBody, errors: object) => {
   const value = formBody[FIELD_ID];
 
   if (!isValidPolicyType(value)) {
-    return emptyFieldValidation({}, FIELD_ID, ERROR_MESSAGE, errors);
+    return emptyFieldValidation({}, SINGLE_POLICY_TYPE, ERROR_MESSAGE, errors);
   }
 
-  return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
+  return emptyFieldValidation(formBody, SINGLE_POLICY_TYPE, ERROR_MESSAGE, errors);
 };
 
 export default policyTypeRules;

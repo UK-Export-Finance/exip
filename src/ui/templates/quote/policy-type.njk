@@ -109,8 +109,8 @@
               }
             }
           ],
-          errorMessage: validationError and {
-            text: validationError.text,
+          errorMessage: validationErrors.errorList[FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID] and {
+            text: validationErrors.errorList[FIELDS.POLICY_TYPE.OPTIONS.SINGLE.ID].text,
             attributes: {
               "data-cy": FIELDS.POLICY_TYPE.ID + "-error-message"
             }
