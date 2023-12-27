@@ -19,10 +19,8 @@ const {
         FIRST_NAME,
         CAN_CONTACT_BUYER,
       },
-      WORKING_WITH_BUYER: {
-        CONNECTION_WITH_BUYER,
-        TRADED_WITH_BUYER,
-      },
+      CONNECTION_WITH_BUYER,
+      TRADED_WITH_BUYER,
     },
   },
 } = FIELD_IDS;
@@ -43,7 +41,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
-      cy.completeAndSubmitWorkingWithBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });

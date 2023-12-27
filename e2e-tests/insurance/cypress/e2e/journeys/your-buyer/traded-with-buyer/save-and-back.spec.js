@@ -1,21 +1,13 @@
-import { saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { saveAndBackButton, submitButton, yesRadioInput } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { workingWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-
-const {
-  WORKING_WITH_BUYER: {
-    TRADED_WITH_BUYER,
-  },
-} = FIELD_IDS;
 
 const {
   ROOT,
   ALL_SECTIONS,
   YOUR_BUYER: {
-    WORKING_WITH_BUYER,
+    TRADED_WITH_BUYER,
   },
 } = INSURANCE_ROUTES;
 
@@ -37,7 +29,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
 
       cy.assertUrl(url);
     });
@@ -72,8 +64,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().click();
-
+      cy.completeTradedWithBuyerForm({ hasTradedWithBuyer: true });
       saveAndBackButton().click();
     });
 
@@ -94,7 +85,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       // submit connectionToBuyer form to get to working with buyer page
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().should('be.checked');
+      yesRadioInput().should('be.checked');
     });
   });
 });

@@ -8,9 +8,7 @@ import mapAndSave from '../../map-and-save';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
-const {
-  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
-} = INSURANCE_FIELD_IDS.YOUR_BUYER;
+const { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

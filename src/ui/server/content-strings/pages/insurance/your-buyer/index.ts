@@ -23,15 +23,15 @@ const COMPANY_OR_ORGANISATION = {
   PAGE_TITLE: "Buyer's company or organisation",
 };
 
-const WORKING_WITH_BUYER = {
-  ...SHARED,
-  PAGE_TITLE: 'Working with the buyer',
-};
-
 const CONNECTION_WITH_BUYER = {
   ...SHARED,
   PAGE_TITLE: 'Are you connected with the buyer in any way?',
   HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+};
+
+const TRADED_WITH_BUYER = {
+  ...SHARED,
+  PAGE_TITLE: 'Have you traded with this buyer before?',
 };
 
 const CHECK_YOUR_ANSWERS = {
@@ -42,7 +42,7 @@ const CHECK_YOUR_ANSWERS = {
 export default {
   ROOT,
   COMPANY_OR_ORGANISATION,
-  WORKING_WITH_BUYER,
   CONNECTION_WITH_BUYER,
+  TRADED_WITH_BUYER,
   CHECK_YOUR_ANSWERS,
 };

@@ -29,9 +29,9 @@ export const CONNECTION_WITH_BUYER = {
   HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
 };
 
-export const WORKING_WITH_BUYER = {
+export const TRADED_WITH_BUYER = {
   ...SHARED,
-  PAGE_TITLE: 'Working with the buyer',
+  PAGE_TITLE: 'Have you traded with this buyer before?',
 };
 
 export const CHECK_YOUR_ANSWERS = {

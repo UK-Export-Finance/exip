@@ -261,11 +261,9 @@ var YOUR_BUYER = {
     EMAIL: "contactEmail",
     CAN_CONTACT_BUYER: "canContactBuyer"
   },
-  WORKING_WITH_BUYER: {
-    CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
-    CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
-    TRADED_WITH_BUYER: "exporterHasTradedWithBuyer"
-  }
+  CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
+  CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
+  TRADED_WITH_BUYER: "exporterHasTradedWithBuyer"
 };
 var your_buyer_default = YOUR_BUYER;
 
@@ -4133,7 +4131,7 @@ var FIELDS = {
 
 // content-strings/fields/insurance/your-buyer/index.ts
 var {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER }
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER }
 } = insurance_default;
 var YOUR_BUYER_FIELDS = {
   COMPANY_OR_ORGANISATION: {
@@ -4180,16 +4178,14 @@ var YOUR_BUYER_FIELDS = {
       }
     }
   },
-  WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: "Connected with the buyer in any way?"
-      }
-    },
-    [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: "Have you traded with this buyer before?"
-      }
+  [CONNECTION_WITH_BUYER]: {
+    SUMMARY: {
+      TITLE: "Connected with the buyer in any way?"
+    }
+  },
+  [TRADED_WITH_BUYER]: {
+    SUMMARY: {
+      TITLE: "Have you traded with this buyer before?"
     }
   }
 };
@@ -4526,11 +4522,12 @@ var map_exporter_default = mapExporter;
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
 var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
-  ...YOUR_BUYER_FIELDS.WORKING_WITH_BUYER
+  ...YOUR_BUYER_FIELDS
 };
 var {
   COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER }
+  CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER2,
+  TRADED_WITH_BUYER: TRADED_WITH_BUYER2
 } = your_buyer_default;
 var mapBuyer = (application2) => {
   const { buyer } = application2;
@@ -4542,8 +4539,8 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
     xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
     xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
-    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTION_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTION_WITH_BUYER])),
-    xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER]))
+    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTION_WITH_BUYER2].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTION_WITH_BUYER2])),
+    xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER2].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER2]))
   ];
   return mapped;
 };

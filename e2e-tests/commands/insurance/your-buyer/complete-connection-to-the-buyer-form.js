@@ -5,9 +5,7 @@ import {
 import application from '../../../fixtures/application';
 
 const {
-  WORKING_WITH_BUYER: {
-    CONNECTION_WITH_BUYER_DESCRIPTION,
-  },
+  CONNECTION_WITH_BUYER_DESCRIPTION,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 /**

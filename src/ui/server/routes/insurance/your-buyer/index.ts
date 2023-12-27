@@ -4,8 +4,8 @@ import { get as buyerRootGet } from '../../../controllers/insurance/your-buyer';
 import { get as getCompanyOrOrganisation, post as postCompanyOrOrganisation } from '../../../controllers/insurance/your-buyer/company-or-organisation';
 import { post as postCompanyOrOrganisationSaveAndBack } from '../../../controllers/insurance/your-buyer/company-or-organisation/save-and-back';
 
-import { get as getWorkingWithBuyer, post as postWorkingWithBuyer } from '../../../controllers/insurance/your-buyer/working-with-buyer';
-import { post as postWorkingWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/working-with-buyer/save-and-back';
+import { get as getTradedWithBuyer, post as postTradedWithBuyer } from '../../../controllers/insurance/your-buyer/traded-with-buyer';
+import { post as postTradedWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/traded-with-buyer/save-and-back';
 
 import { get as getConnectionWithBuyer, post as postConnectionWithBuyer } from '../../../controllers/insurance/your-buyer/connection-with-buyer';
 import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/connection-with-buyer/save-and-back';
@@ -25,13 +25,13 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHAN
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE}`, getCompanyOrOrganisation);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE}`, postCompanyOrOrganisation);
 
-yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, getWorkingWithBuyer);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, postWorkingWithBuyer);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_SAVE_AND_BACK}`, postWorkingWithBuyerSaveAndBack);
-yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`, getWorkingWithBuyer);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`, postWorkingWithBuyer);
-yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, getWorkingWithBuyer);
-yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, postWorkingWithBuyer);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER}`, getTradedWithBuyer);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER}`, postTradedWithBuyer);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_SAVE_AND_BACK}`, postTradedWithBuyerSaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHANGE}`, getTradedWithBuyer);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHANGE}`, postTradedWithBuyer);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHECK_AND_CHANGE}`, getTradedWithBuyer);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHECK_AND_CHANGE}`, postTradedWithBuyer);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER}`, getConnectionWithBuyer);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER}`, postConnectionWithBuyer);

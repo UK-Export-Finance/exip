@@ -5,17 +5,13 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-id
 import { YOUR_BUYER_FIELDS } from '../../../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
-  WORKING_WITH_BUYER: {
-    CONNECTION_WITH_BUYER,
-    CONNECTION_WITH_BUYER_DESCRIPTION,
-  },
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
 } = FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: {
-      WORKING_WITH_BUYER: ERRORS,
-    },
+    YOUR_BUYER: ERRORS,
   },
 } = ERROR_MESSAGES;
 
@@ -24,7 +20,7 @@ const {
   YOUR_BUYER: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE },
 } = INSURANCE_ROUTES;
 
-const { MAXIMUM } = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
+const { MAXIMUM } = YOUR_BUYER_FIELDS[CONNECTION_WITH_BUYER_DESCRIPTION];
 
 const baseUrl = Cypress.config('baseUrl');
 

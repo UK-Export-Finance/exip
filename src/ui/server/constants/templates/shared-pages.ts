@@ -3,4 +3,5 @@ export const SHARED_PAGES = {
   EXPORTER_LOCATION: 'shared-pages/exporter-location.njk',
   NEED_TO_START_AGAIN: 'shared-pages/need-to-start-again.njk',
   SECTION_START: 'shared-pages/section-start.njk',
+  SINGLE_RADIO_PAGE: 'shared-pages/single-radio-page.njk',
 };

@@ -10,7 +10,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   YOUR_BUYER: {
-    WORKING_WITH_BUYER,
+    TRADED_WITH_BUYER,
     CHECK_YOUR_ANSWERS,
   },
 } = ROUTES.INSURANCE;
@@ -29,7 +29,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
-      cy.completeAndSubmitWorkingWithBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -49,7 +49,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`,
       submitButtonCopy: BUTTONS.SAVE_AND_BACK,
     });
   });

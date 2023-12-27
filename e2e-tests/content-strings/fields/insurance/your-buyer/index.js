@@ -1,7 +1,9 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION, TRADED_WITH_BUYER,
+  },
 } = FIELD_IDS.INSURANCE;
 
 export const YOUR_BUYER_FIELDS = {
@@ -59,24 +61,22 @@ export const YOUR_BUYER_FIELDS = {
       },
     },
   },
-  WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
-      LABEL: 'Are you connected with the buyer in any way?',
-      HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
-      SUMMARY: {
-        TITLE: 'Connected with the buyer in any way?',
-      },
+  [CONNECTION_WITH_BUYER]: {
+    LABEL: 'Are you connected with the buyer in any way?',
+    HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
+    SUMMARY: {
+      TITLE: 'Connected with the buyer in any way?',
     },
-    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
-      LABEL: 'Describe the connection with the buyer',
-      MAXIMUM: 1000,
-    },
-    [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-      LABEL: 'Have you traded with this buyer before?',
-      HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
-      SUMMARY: {
-        TITLE: 'Have you traded with this buyer before?',
-      },
+  },
+  [CONNECTION_WITH_BUYER_DESCRIPTION]: {
+    LABEL: 'Describe the connection with the buyer',
+    MAXIMUM: 1000,
+  },
+  [TRADED_WITH_BUYER]: {
+    LABEL: 'Have you traded with this buyer before?',
+    HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
+    SUMMARY: {
+      TITLE: 'Have you traded with this buyer before?',
     },
   },
 };
