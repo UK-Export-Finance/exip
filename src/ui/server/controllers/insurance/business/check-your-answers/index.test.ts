@@ -4,7 +4,7 @@ import { TEMPLATES, ROUTES } from '../../../../constants';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { yourBusinessSummaryList } from '../../../../helpers/summary-lists/your-business';
+import { yourBusinessSummaryLists } from '../../../../helpers/summary-lists/your-business';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import { mockCompany, mockBusiness } from '../../../../test-mocks/mock-application';
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/check-your-answers', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
-      const summaryList = yourBusinessSummaryList(mockCompany, mockBusiness, mockApplication.referenceNumber);
+      const summaryLists = yourBusinessSummaryLists(mockCompany, mockBusiness, mockApplication.referenceNumber);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -50,7 +50,7 @@ describe('controllers/insurance/business/check-your-answers', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS_ROUTE}`,
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryLists,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

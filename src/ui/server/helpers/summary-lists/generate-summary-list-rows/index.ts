@@ -21,7 +21,7 @@ export const generateItemText = (renderChangeLink?: boolean) => {
  * Map an array of fields with values for govukSummaryList component
  * @param {Array} Array of fields and answers
  * @param {Boolean} Add white text classes
- * @returns {Array} Array of fields/answers in govukSummaryList data structure
+ * @returns {Array} Array of fields/answers in data structure for govukSummaryList
  */
 const generateSummaryListRows = (fields: Array<SummaryListItemData>, whiteText?: boolean): Array<SummaryListItem> => {
   let rowClasses = '';

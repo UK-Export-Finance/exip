@@ -179,7 +179,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       it('should return validation error', () => {
         const mockSubmittedData = {
           [`${REQUESTED_START_DATE}-day`]: nextYear1week.getDate(),
-          [`${REQUESTED_START_DATE}-month`]: nextYear1week.getMonth(),
+          [`${REQUESTED_START_DATE}-month`]: nextYear1week.getMonth() + 1,
           [`${REQUESTED_START_DATE}-year`]: nextYear1week.getFullYear(),
           [`${CONTRACT_COMPLETION_DATE}-day`]: nextYear.getDate(),
           [`${CONTRACT_COMPLETION_DATE}-month`]: nextYear.getMonth(),

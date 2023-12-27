@@ -9,6 +9,24 @@ The repository is based on the [template-typescript-package](https://github.com/
 
 :warning: Currently, only the "Get a quote" tool, available in the `main` branch, is live. The full application/MVP is developed in the `main-application` branch.
 
+**Status** 🚦
+
+[![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-%23FE5196?logo=conventionalcommits&logoColor=white)](https://conventionalcommits.org)
+[![codecov](https://codecov.io/github/UK-Export-Finance/exip/graph/badge.svg?token=Jpv0YhFTWg)](https://codecov.io/github/UK-Export-Finance/exip)
+
+**CI** 💫
+
+![Lint](https://github.com/UK-Export-Finance/exip/actions/workflows/lint.yml/badge.svg)
+![SCA](https://github.com/UK-Export-Finance/exip/actions/workflows/sca.yml/badge.svg)
+![QA](https://github.com/UK-Export-Finance/exip/actions/workflows/test.yml/badge.svg)
+![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/publish.yml/badge.svg)
+
+**CD** 🚀
+
+![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev)
+![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)
+![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=production)
+
 ## Prerequisites :gear:
 
 Before getting started with this repository, ensure that you meet the following prerequisites:
@@ -371,7 +389,7 @@ These are the key aspects of the UK Export Finance EXIP service codebase and dev
 ---
 
 ## Sub-resource integrity [(SRI)](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity)
-JavaScript files are protected by SRI security feature which allows the browser to verify the authenticity of the JavaScript files in use.
+Client side JavaScript files are protected by SRI security feature which allows the browser to verify the authenticity of the JavaScript files in use.
 We use `SHA512` hashing algrothim for all our JavaScript files.
 
 To calculate file hash use the following Bash command with reference to the file in question (Webpack compiled JS file).
@@ -380,3 +398,4 @@ To calculate file hash use the following Bash command with reference to the file
 cat FILENAME.js | openssl dgst -sha512 -binary | openssl base64 -A
 ```
 
+:warning: If a client side JavaScript file is changed and recompiled, a new file hash will need to be generated. Otherwise, the script will not be executed.

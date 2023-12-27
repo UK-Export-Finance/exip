@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -12,6 +13,10 @@ import { DEFAULT } from '../../../../content-strings';
 import { ApplicationCompany } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateAddressObject from '../../generate-address-object';
+
+const {
+  YOUR_BUSINESS: { COMPANY_DETAILS: FORM_TITLE },
+} = FORM_TITLES;
 
 const {
   EXPORTER_BUSINESS: {
@@ -132,12 +137,17 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
       const checkAndChange = false;
       const financialYearEndDateValue = formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT);
 
-      const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+      const expectedFields = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
 
       it('should return fields and values from the submitted data/answers', () => {
         const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
 
-        expect(result).toEqual(expectedBase);
+        const expected = {
+          title: FORM_TITLE,
+          fields: expectedFields,
+        };
+
+        expect(result).toEqual(expected);
       });
     });
 
@@ -147,12 +157,17 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
       const checkAndChange = false;
       const financialYearEndDateValue = DEFAULT.EMPTY;
 
-      const expectedBase = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
+      const expectedFields = summaryList(mockAnswers, referenceNumber, financialYearEndDateValue);
 
       it('should return fields and values from the submitted data/answers with dash for financial year end date', () => {
         const result = generateYourCompanyFields(mockAnswers, referenceNumber, checkAndChange);
 
-        expect(result).toEqual(expectedBase);
+        const expected = {
+          title: FORM_TITLE,
+          fields: expectedFields,
+        };
+
+        expect(result).toEqual(expected);
       });
     });
   });
