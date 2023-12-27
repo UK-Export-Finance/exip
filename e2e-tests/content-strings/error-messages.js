@@ -2,7 +2,7 @@ import {
   APPLICATION,
   FIELD_IDS,
   ELIGIBILITY,
-  TOTAL_CONTRACT_VALUE
+  TOTAL_CONTRACT_VALUE,
 } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
