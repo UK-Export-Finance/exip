@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.4.0](https://github.com/UK-Export-Finance/exip/compare/v2.3.8...v2.4.0) (2023-12-27)
+
+
+### Features
+
+* **EMS-2485:** added code coverage to pipeline tests ([f65a321](https://github.com/UK-Export-Finance/exip/commit/f65a3215caa39b5c9d2a3ae00c29e6e23ee96316))
+
+
+### Bug Fixes
+
+* **cspell:** added codecov to cspell ([df67287](https://github.com/UK-Export-Finance/exip/commit/df67287de92a067d2b63d976c357900c7f03d5f9))
+* **EMS-2485:** fixed npm ci command ([9da0453](https://github.com/UK-Export-Finance/exip/commit/9da04532fc2ed9ad6bdcbc71feda2baab73400f1))
+* **EMS-2485:** fixed npm ci command ([ab1247c](https://github.com/UK-Export-Finance/exip/commit/ab1247c4bfb58830aa43c1dd803c43cad37dc6c5))
+* **EMS-2485:** fixed npm ci command ([f2e120f](https://github.com/UK-Export-Finance/exip/commit/f2e120f7bc4f72ac781597fbb4d85e32ceadd71a))
+* **EMS-2485:** fixed npm ci command ([0976291](https://github.com/UK-Export-Finance/exip/commit/0976291e148cd8ab5ed7929b1f0fe8666336db43))
+* **EMS-2485:** fixed npm ci command ([9baab74](https://github.com/UK-Export-Finance/exip/commit/9baab7424645074cb87d45a17e548170887acc49))
+* **EMS-2485:** spelling fix ([44d18f8](https://github.com/UK-Export-Finance/exip/commit/44d18f8832d90b46a833a67c4a152c0095f99433))
+
 ## [2.3.8](https://github.com/UK-Export-Finance/exip/compare/v2.3.7...v2.3.8) (2023-12-20)
 
 
