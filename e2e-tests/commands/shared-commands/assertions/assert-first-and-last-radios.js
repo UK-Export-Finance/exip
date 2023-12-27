@@ -12,23 +12,28 @@ import { radioInputs } from '../../../pages/shared';
  */
 const assertYesNoRadiosOrder = ({ noRadioFirst = false }) => {
   cy.get(radioInputs).each((element, index) => {
-    if (noRadioFirst) {
-      if (index === 0) {
+    switch (noRadioFirst) {
+      case true && index === 0:
         cy.wrap(element).should('have.attr', 'data-cy', 'no-input');
-      }
+        break;
 
-      if (index === 1) {
+      case true && index === 1:
         cy.wrap(element).should('have.attr', 'data-cy', 'yes-input');
-      }
-    } else {
-      if (index === 0) {
-        cy.wrap(element).should('have.attr', 'data-cy', 'yes-input');
-      }
+        break;
 
-      if (index === 1) {
+      case index === 0:
+        cy.wrap(element).should('have.attr', 'data-cy', 'yes-input');
+        break;
+
+      case index === 1:
         cy.wrap(element).should('have.attr', 'data-cy', 'no-input');
-      }
+        break;
+
+      default:
+        return null;
     }
+
+    return null;
   });
 };
 
