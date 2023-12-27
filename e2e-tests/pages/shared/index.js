@@ -34,6 +34,7 @@ const noRadio = (fieldId) => ({
 });
 const noRadioInput = () => cy.get('[data-cy="no-input"]');
 const outro = () => cy.get('[data-cy="outro"]');
+const radioInputs = () => cy.get('.govuk-radios__item > input');
 const submitButton = () => cy.get('[data-cy="submit-button"]');
 const saveAndBackButton = () => cy.get('[data-cy="save-and-back-button"]');
 const startNowLink = () => cy.get('[data-cy="start-now-link"]');
@@ -64,6 +65,7 @@ export {
   noRadio,
   noRadioInput,
   outro,
+  radioInputs,
   submitButton,
   saveAndBackButton,
   startNowLink,
