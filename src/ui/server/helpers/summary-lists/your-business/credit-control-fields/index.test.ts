@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -7,6 +8,10 @@ import generateTurnoverFields from '.';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+
+const {
+  YOUR_BUSINESS: { CREDIT_CONTROL: FORM_TITLE },
+} = FORM_TITLES;
 
 const {
   EXPORTER_BUSINESS: { CREDIT_CONTROL_CHANGE, CREDIT_CONTROL_CHECK_AND_CHANGE },
@@ -37,7 +42,7 @@ describe('server/helpers/summary-lists/your-business/credit-control-fields', () 
     const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = {
-      title: 'Credit control',
+      title: FORM_TITLE,
       fields: expectedFields,
     };
 

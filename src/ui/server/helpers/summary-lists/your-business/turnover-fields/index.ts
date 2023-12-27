@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -6,6 +7,10 @@ import getFieldById from '../../../get-field-by-id';
 import mapPercentage from '../../../map-percentage';
 import { ApplicationBusiness, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
+
+const {
+  YOUR_BUSINESS: { TURNOVER: FORM_TITLE },
+} = FORM_TITLES;
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -47,9 +52,8 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
     ),
   ] as Array<SummaryListItemData>;
 
-  // TODO: content strings
   return {
-    title: 'Turnover',
+    title: FORM_TITLE,
     fields,
   };
 };

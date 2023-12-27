@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -6,6 +7,10 @@ import getFieldById from '../../../get-field-by-id';
 import generateNatureOfYourBusinessFields from '.';
 import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
+
+const {
+  YOUR_BUSINESS: { NATURE_OF_BUSINESS: FORM_TITLE },
+} = FORM_TITLES;
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -47,7 +52,7 @@ describe('server/helpers/summary-lists/your-business/nature-of-your-business-fie
     const result = generateNatureOfYourBusinessFields(mockAnswers, referenceNumber, checkAndChange);
 
     const expected = {
-      title: 'Nature of your business',
+      title: FORM_TITLE,
       fields: expectedFields,
     };
 

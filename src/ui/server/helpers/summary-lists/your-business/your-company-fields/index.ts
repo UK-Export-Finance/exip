@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -8,6 +9,10 @@ import generateChangeLink from '../../../generate-change-link';
 import { ApplicationCompany, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateAddressObject from '../../generate-address-object';
+
+const {
+  YOUR_BUSINESS: { COMPANY_DETAILS: FORM_TITLE },
+} = FORM_TITLES;
 
 const {
   EXPORTER_BUSINESS: {
@@ -110,9 +115,8 @@ const generateYourCompanyFields = (answers: ApplicationCompany, referenceNumber:
     }),
   ] as Array<SummaryListItemData>;
 
-  // TODO: content strings
   return {
-    title: 'Company details',
+    title: FORM_TITLE,
     fields,
   };
 };

@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -5,6 +6,10 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import { ApplicationBusiness, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
+
+const {
+  YOUR_BUSINESS: { NATURE_OF_BUSINESS: FORM_TITLE },
+} = FORM_TITLES;
 
 const { EXPORTER_BUSINESS: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -46,9 +51,8 @@ const generateNatureOfYourBusinessFields = (answers: ApplicationBusiness, refere
     }),
   ] as Array<SummaryListItemData>;
 
-  // TODO: content strings
   return {
-    title: 'Nature of your business',
+    title: FORM_TITLE,
     fields,
   };
 };

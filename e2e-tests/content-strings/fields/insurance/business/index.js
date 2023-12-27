@@ -1,11 +1,17 @@
 import { FIELD_IDS } from '../../../../constants';
 
+const GROUP_TITLES = {
+  YOUR_COMPANY: 'Your company',
+};
+
 export const EXPORTER_BUSINESS_FIELDS = {
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {
     LABEL: 'Do you use a different trading name for this company?',
     SUMMARY: {
       TITLE: 'Different trading name',
     },
+
+    // Your company
   },
   [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
     LABEL: "What's your organisation's alternative trading name?",
