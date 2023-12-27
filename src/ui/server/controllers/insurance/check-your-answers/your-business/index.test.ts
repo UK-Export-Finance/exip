@@ -89,7 +89,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         status,
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryList,
         ...pageVariables(mockApplication.referenceNumber),
       };
 
