@@ -1,5 +1,5 @@
 import rule from './policy-type';
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import emptyFieldValidation from '../../../../../shared-validation/empty-field';
 
@@ -29,8 +29,20 @@ describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
   });
 
   describe('when a value is not provided', () => {
-    it('should return the provided errors', () => {
+    it('should return the result of emptyFieldValidation', () => {
       mockBody[FIELD_ID] = '';
+
+      const result = rule(mockBody, mockErrors);
+
+      const expected = emptyFieldValidation({}, SINGLE_POLICY_TYPE, ERROR_MESSAGE, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a valid policy type provided', () => {
+    it('should return the provided errors', () => {
+      mockBody[FIELD_ID] = FIELD_VALUES.POLICY_TYPE.SINGLE;
 
       const result = rule(mockBody, mockErrors);
 
