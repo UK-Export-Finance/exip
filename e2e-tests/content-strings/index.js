@@ -9,6 +9,7 @@ export * from './end-buyers-description';
 export * from './error-messages';
 export * from './footer';
 export * from './fields';
+export * from './form-titles';
 export * from './header';
 export * from './links';
 export * from './product';

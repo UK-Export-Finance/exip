@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -7,6 +8,10 @@ import generateTurnoverFields from '.';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+
+const {
+  YOUR_BUSINESS: { CREDIT_CONTROL: FORM_TITLE },
+} = FORM_TITLES;
 
 const {
   EXPORTER_BUSINESS: { CREDIT_CONTROL_CHANGE, CREDIT_CONTROL_CHECK_AND_CHANGE },
@@ -21,7 +26,7 @@ describe('server/helpers/summary-lists/your-business/credit-control-fields', () 
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
-  const expectedBase = [
+  const expectedFields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, HAS_CREDIT_CONTROL),
@@ -33,9 +38,14 @@ describe('server/helpers/summary-lists/your-business/credit-control-fields', () 
     ),
   ];
 
-  it('should return fields and values from the submitted data/answers', () => {
+  it('should return a title and fields from the submitted data/answers', () => {
     const result = generateTurnoverFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedBase);
+    const expected = {
+      title: FORM_TITLE,
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 });
