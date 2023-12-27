@@ -24,6 +24,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Your business - I want to confirm my selection for the your business section of my credit insurance application', () => {
   let referenceNumber;
   let url;
@@ -40,9 +42,9 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
       // To get past "Policy" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -88,7 +90,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
 
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
         cy.assertUrl(expectedUrl);
       });
 

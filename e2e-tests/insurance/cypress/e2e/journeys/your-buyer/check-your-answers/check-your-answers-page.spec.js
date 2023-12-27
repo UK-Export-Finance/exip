@@ -34,7 +34,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
       cy.completeAndSubmitWorkingWithBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -81,7 +81,8 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
 
       submitButton().click();
 
-      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expectedUrl = `${baseUrl}${allSectionsUrl}`;
+
       cy.assertUrl(expectedUrl);
     });
   });

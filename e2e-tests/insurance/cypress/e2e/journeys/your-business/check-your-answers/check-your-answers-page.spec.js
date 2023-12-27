@@ -42,7 +42,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -101,7 +101,9 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
         saveAndBackButton().click();
 
-        cy.assertUrl(allSectionsUrl);
+        const expectedUrl = `${baseUrl}${allSectionsUrl}`;
+
+        cy.assertUrl(expectedUrl);
       });
     });
   });

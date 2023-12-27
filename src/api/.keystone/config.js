@@ -530,11 +530,7 @@ var FIELD_VALUES = {
 };
 
 // constants/supported-currencies/index.ts
-<<<<<<< HEAD
 var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
-=======
-var SUPPORTED_CURRENCIES = ["EUR", "GBP", "USD"];
->>>>>>> main
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
@@ -5126,17 +5122,6 @@ var getApimCurrencies = async () => {
   } catch (err) {
     console.error("Error Getting and mapping currencies from APIM %O", err);
     throw new Error(`Getting and mapping currencies from APIM ${err}`);
-<<<<<<< HEAD
-=======
-  }
-};
-var get_APIM_currencies_default = getApimCurrencies;
-
-// helpers/create-full-timestamp-from-day-month/index.ts
-var createFullTimestampFromDayAndMonth = (day, month) => {
-  if (day && month) {
-    return /* @__PURE__ */ new Date(`${(/* @__PURE__ */ new Date()).getFullYear()}-${month}-${day}`);
->>>>>>> main
   }
 };
 var get_APIM_currencies_default = getApimCurrencies;

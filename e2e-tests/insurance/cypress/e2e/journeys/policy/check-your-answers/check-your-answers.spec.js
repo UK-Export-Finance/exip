@@ -32,7 +32,7 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
       cy.completePolicySection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
