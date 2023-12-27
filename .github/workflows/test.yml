@@ -103,6 +103,13 @@ jobs:
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
         run: npm run test
 
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit-test
+          verbose: true
+
   # 3. API - API test cases
   api-tests:
     name: API 👷
@@ -128,10 +135,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
-
-      - name: Dependencies
-        working-directory: ./
-        run: npm run ci:all
 
       - name: API
         working-directory: ./
@@ -162,7 +165,15 @@ jobs:
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
         run: |
           docker-compose up --build -d
+          npm run ci:all
           npm run test --prefix ./src/api
+
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: api-test
+          verbose: true
 
   # 4. E2E - Insurance
   e2e-tests-insurance:
@@ -252,6 +263,13 @@ jobs:
         working-directory: ./e2e-tests/insurance
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: e2e-test
+          verbose: true
+
   # 5. E2E - Quote
   e2e-tests-quote:
     name: E2E Quote 👷
@@ -308,6 +326,13 @@ jobs:
         working-directory: ./e2e-tests/quote
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
 
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: e2e-test
+          verbose: true
+
   # 6. E2E - Switch
   e2e-tests-switch:
     name: E2E Switch 👷
@@ -352,3 +377,10 @@ jobs:
       - name: Execute
         working-directory: ./e2e-tests/switch-between-services
         run: npx cypress run --config video=false,screenshotOnRunFailure=false --browser chrome --project ./ --record false --spec "cypress/e2e/journeys/${{ matrix.spec }}"
+
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: e2e-test
+          verbose: true
