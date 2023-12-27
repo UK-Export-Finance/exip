@@ -7,8 +7,7 @@ import {
   BUTTONS,
   PAGES,
 } from '../../../../../../content-strings';
-import { ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
@@ -20,13 +19,16 @@ const {
   YOUR_BUYER: {
     ROOT: YOUR_BUYER_ROOT,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.CHECK_YOUR_ANSWERS;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your Business - Check your answers - As an exporter, I want to check my answers to the your business section', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -39,7 +41,8 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -56,8 +59,8 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
+      currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
+      backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });
@@ -71,8 +74,12 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button/link', () => {
+      cy.checkLink(
+        saveAndBackButton(),
+        allSectionsUrl,
+        BUTTONS.SAVE_AND_BACK,
+      );
     });
   });
 
@@ -83,7 +90,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
         submitButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`;
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`;
         cy.assertUrl(expectedUrl);
       });
     });
@@ -94,8 +101,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
         saveAndBackButton().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        cy.assertUrl(expectedUrl);
+        cy.assertUrl(allSectionsUrl);
       });
     });
   });

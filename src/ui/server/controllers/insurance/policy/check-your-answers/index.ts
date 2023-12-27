@@ -1,4 +1,5 @@
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
@@ -9,19 +10,13 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { policySummaryList } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
+const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
 const { POLICY } = FIELD_IDS.INSURANCE;
-const {
-  INSURANCE: {
-    EXPORT_CONTRACT,
-    POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
 
 export const pageVariables = (referenceNumber: number) => ({
   FIELD: FIELDS[POLICY.POLICY_TYPE],
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;

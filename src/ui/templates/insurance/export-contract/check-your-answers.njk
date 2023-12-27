@@ -1,7 +1,6 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -39,14 +38,7 @@
         text: CONTENT_STRINGS.BUTTONS.CONTINUE_NEXT_SECTION
       }) }}
 
-      {{ govukButton({
-        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-        classes: "govuk-button--secondary",
-        attributes: {
-          formaction: SAVE_AND_BACK_URL,
-          'data-cy': 'save-and-back-button'
-        }
-      }) }}
+      <a class="govuk-button--secondary" href="{{ SAVE_AND_BACK_URL }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK }}</a>
     </div>
 
   </form>

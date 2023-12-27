@@ -1,5 +1,6 @@
 import { pageVariables, get, post, TEMPLATE } from '.';
-import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../constants';
+import { FIELD_IDS, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import api from '../../../../api';
@@ -11,14 +12,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies, mockContact } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
-const { INSURANCE_ROOT } = ROUTES.INSURANCE;
-const {
-  INSURANCE: {
-    POLICY: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-    EXPORT_CONTRACT,
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { POLICY } = FIELD_IDS.INSURANCE;
 
@@ -51,7 +45,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
       const expected = {
         FIELD: FIELDS[POLICY.POLICY_TYPE],
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`,
       };
 
       expect(result).toEqual(expected);
