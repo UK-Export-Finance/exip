@@ -42,6 +42,10 @@ const checkValidation = ({ errorSummaryLength }) => {
 
   return {
     day: {
+      /**
+       * Submit a date without a day.
+       * Check validation errors.
+       */
       notProvided: () => {
         cy.keyboardInput(field.monthInput(), '1');
         cy.keyboardInput(field.yearInput(), '2023');
@@ -54,6 +58,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit only a day.
+       * Check validation errors.
+       */
       providedWithoutOtherFields: () => {
         cy.keyboardInput(field.dayInput(), '1');
         field.monthInput().clear();
@@ -67,6 +75,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit only a day as a string, not a number.
+       * Check validation errors.
+       */
       notANumber: () => {
         cy.keyboardInput(field.dayInput().clear(), 'Test');
         submitButton().click();
@@ -80,6 +92,10 @@ const checkValidation = ({ errorSummaryLength }) => {
       },
     },
     month: {
+      /**
+       * Submit a date without a month.
+       * Check validation errors.
+       */
       notProvided: () => {
         cy.keyboardInput(field.dayInput(), '1');
         field.monthInput().clear();
@@ -93,6 +109,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit only a month.
+       * Check validation errors.
+       */
       providedWithoutOtherFields: () => {
         field.dayInput().clear();
         cy.keyboardInput(field.monthInput(), '1');
@@ -106,6 +126,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit only a month as a string, not a number.
+       * Check validation errors.
+       */
       notANumber: () => {
         field.dayInput().clear();
         cy.keyboardInput(field.monthInput(), 'One');
@@ -120,6 +144,10 @@ const checkValidation = ({ errorSummaryLength }) => {
       },
     },
     year: {
+      /**
+       * Submit a date without a year.
+       * Check validation errors.
+       */
       notProvided: () => {
         cy.keyboardInput(field.dayInput(), '1');
         cy.keyboardInput(field.monthInput(), '2');
@@ -133,6 +161,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit only a year.
+       * Check validation errors.
+       */
       providedWithoutOtherFields: () => {
         field.dayInput().clear();
         field.monthInput().clear();
@@ -146,6 +178,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit a year that is less than 4 digits.
+       * Check validation errors.
+       */
       notEnoughDigits: () => {
         cy.keyboardInput(field.dayInput(), '1');
         cy.keyboardInput(field.monthInput(), '2');
@@ -159,6 +195,10 @@ const checkValidation = ({ errorSummaryLength }) => {
           errorMessage,
         });
       },
+      /**
+       * Submit only a year as a string, not a number.
+       * Check validation errors.
+       */
       notANumber: () => {
         field.dayInput().clear();
         field.monthInput().clear();
@@ -173,6 +213,10 @@ const checkValidation = ({ errorSummaryLength }) => {
         });
       },
     },
+    /**
+     * Submit a date that is not in the future.
+     * Check validation errors.
+     */
     notInTheFuture: () => {
       const now = new Date();
       const day = now.getDate();
@@ -191,6 +235,10 @@ const checkValidation = ({ errorSummaryLength }) => {
         errorMessage,
       });
     },
+    /**
+     * Submit a date that has an invalid format.
+     * Check validation errors.
+     */
     invalidFormat: () => {
       const now = new Date();
       const day = now.getDate();
@@ -209,6 +257,10 @@ const checkValidation = ({ errorSummaryLength }) => {
         errorMessage,
       });
     },
+    /**
+     * Submit a date that is today.
+     * Check that validation errors are NOT rendered.
+     */
     isToday: () => {
       const now = new Date();
 
