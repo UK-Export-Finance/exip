@@ -1,5 +1,4 @@
 import { PAGES } from '../../../../content-strings';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -11,7 +10,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { WORKING_WITH_BUYER } = BUYER_FIELD_IDS;
+const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -20,24 +19,29 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
+const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
 
-const { TRADED_WITH_BUYER } = WORKING_WITH_BUYER;
+export const FIELD_ID = TRADED_WITH_BUYER;
 
-export const FIELD_IDS = [TRADED_WITH_BUYER];
+export const FIELD_IDS = [FIELD_ID];
 
 export const pageVariables = (referenceNumber: number) => ({
-  FIELDS: {
-    TRADED_WITH_BUYER: {
-      ID: TRADED_WITH_BUYER,
-      ...FIELDS.WORKING_WITH_BUYER[TRADED_WITH_BUYER],
-    },
-  },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER_SAVE_AND_BACK}`,
+  FIELD_ID,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
+  horizontalRadios: true,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER;
+
+/**
+ * get
+ * Render the traded with buyer page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} Traded with buyer page
+ */
 export const get = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
@@ -48,20 +52,27 @@ export const get = async (req: Request, res: Response) => {
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
+        PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
-      application: mapApplicationToFormFields(application),
+      submittedValues: application.buyer,
     });
   } catch (err) {
-    console.error('Error getting insurance - your buyer - working with the buyer %O', err);
+    console.error('Error getting insurance - your buyer - traded with buyer %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
+/**
+ * post
+ * Check traded with buyer validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
 export const post = async (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
@@ -80,7 +91,7 @@ export const post = async (req: Request, res: Response) => {
     if (validationErrors) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
@@ -104,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error posting insurance - your buyer - working with the buyer %O', err);
+    console.error('Error posting insurance - your buyer - traded with buyer %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

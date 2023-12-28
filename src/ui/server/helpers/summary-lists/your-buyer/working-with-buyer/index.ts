@@ -11,13 +11,11 @@ const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { WORKING_WITH_BUYER_CHANGE, WORKING_WITH_BUYER_CHECK_AND_CHANGE },
+    YOUR_BUYER: { TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
-const {
-  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
-} = FIELD_IDS;
+const { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER } = FIELD_IDS;
 
 /**
  * workingWithBuyerFields
@@ -30,11 +28,11 @@ const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: numb
   const fields = [
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.WORKING_WITH_BUYER, CONNECTION_WITH_BUYER),
+        field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
         data: answers,
         href: generateChangeLink(
-          WORKING_WITH_BUYER_CHANGE,
-          WORKING_WITH_BUYER_CHECK_AND_CHANGE,
+          TRADED_WITH_BUYER_CHANGE,
+          TRADED_WITH_BUYER_CHECK_AND_CHANGE,
           `#${CONNECTION_WITH_BUYER}-label`,
           referenceNumber,
           checkAndChange,
@@ -45,15 +43,9 @@ const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: numb
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.WORKING_WITH_BUYER, TRADED_WITH_BUYER),
+        field: getFieldById(FIELDS, TRADED_WITH_BUYER),
         data: answers,
-        href: generateChangeLink(
-          WORKING_WITH_BUYER_CHANGE,
-          WORKING_WITH_BUYER_CHECK_AND_CHANGE,
-          `#${TRADED_WITH_BUYER}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
+        href: generateChangeLink(TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE, `#${TRADED_WITH_BUYER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
       mapYesNoField(answers[TRADED_WITH_BUYER]),

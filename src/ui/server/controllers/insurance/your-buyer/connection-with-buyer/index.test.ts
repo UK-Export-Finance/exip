@@ -16,11 +16,11 @@ import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { WORKING_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: { TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS.WORKING_WITH_BUYER;
+const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
 
@@ -51,7 +51,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           },
           CONNECTION_WITH_BUYER_DESCRIPTION: {
             ID: CONNECTION_WITH_BUYER_DESCRIPTION,
-            ...FIELDS.WORKING_WITH_BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
+            ...FIELDS[CONNECTION_WITH_BUYER_DESCRIPTION],
             MAXIMUM: 1000,
           },
         },
@@ -130,7 +130,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${WORKING_WITH_BUYER}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

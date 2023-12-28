@@ -19,9 +19,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
-  YOUR_BUYER: {
-    WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER },
-  },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER },
 } = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/required-fields/section-review', () => {

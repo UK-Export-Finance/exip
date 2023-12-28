@@ -1,13 +1,10 @@
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { workingWithBuyerPage } from '../../../../../../pages/insurance/your-buyer';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
 
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      WORKING_WITH_BUYER: {
-        TRADED_WITH_BUYER,
-      },
+      TRADED_WITH_BUYER,
     },
   },
 } = FIELD_IDS;
@@ -15,7 +12,7 @@ const {
 const {
   ROOT,
   YOUR_BUYER: {
-    WORKING_WITH_BUYER_CHANGE,
+    TRADED_WITH_BUYER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = ROUTES.INSURANCE;
@@ -34,7 +31,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
-      cy.completeAndSubmitWorkingWithBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
@@ -86,12 +83,12 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     const fieldId = TRADED_WITH_BUYER;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
+      it(`should redirect to ${TRADED_WITH_BUYER_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: WORKING_WITH_BUYER_CHANGE, fieldId: TRADED_WITH_BUYER });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADED_WITH_BUYER_CHANGE, fieldId: TRADED_WITH_BUYER });
       });
     });
 
@@ -101,7 +98,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadioInput().click();
+        noRadioInput().click();
 
         submitButton().click();
       });

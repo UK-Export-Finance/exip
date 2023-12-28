@@ -265,17 +265,15 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select whether we can contact the buyer about your application',
         },
       },
-      WORKING_WITH_BUYER: {
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
-          IS_EMPTY: "Select whether you're connected with the buyer in any way",
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
-          IS_EMPTY: 'Enter the connection you have with the buyer',
-          ABOVE_MAXIMUM: 'The description of your connection to the buyer cannot be more than a 1000 characters',
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-          IS_EMPTY: "Select whether you've traded with this buyer before",
-        },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER]: {
+        IS_EMPTY: "Select whether you're connected with the buyer in any way",
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
+        IS_EMPTY: 'Enter the connection you have with the buyer',
+        ABOVE_MAXIMUM: 'The description of your connection to the buyer cannot be more than a 1000 characters',
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER]: {
+        IS_EMPTY: 'Select if you have traded with this buyer before',
       },
     },
     ACCOUNT: {

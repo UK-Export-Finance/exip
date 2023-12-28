@@ -4,19 +4,15 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../types';
 
-const {
-  WORKING_WITH_BUYER: { TRADED_WITH_BUYER: FIELD_ID },
-} = FIELD_IDS;
+const { TRADED_WITH_BUYER: FIELD_ID } = FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: {
-      WORKING_WITH_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
-    },
+    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/your-buyer/working-with-buyer/validation/rules/traded-with-buyer', () => {
+describe('controllers/insurance/your-buyer/traded-with-buyer/validation/rules/traded-with-buyer', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

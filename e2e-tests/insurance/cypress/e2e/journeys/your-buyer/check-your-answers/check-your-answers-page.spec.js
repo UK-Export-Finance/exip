@@ -9,7 +9,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   YOUR_BUYER: {
-    WORKING_WITH_BUYER,
+    TRADED_WITH_BUYER,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
@@ -31,7 +31,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
-      cy.completeAndSubmitWorkingWithBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -52,7 +52,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
-      backLink: `${ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`,
+      backLink: `${ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`,
       submitButtonCopy: BUTTONS.SAVE_AND_BACK,
     });
   });
