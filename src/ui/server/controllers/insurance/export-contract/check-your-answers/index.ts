@@ -9,15 +9,10 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { exportContractSummaryList } from '../../../../helpers/summary-lists/export-contract';
 import { Request, Response } from '../../../../../types';
 
-const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-  PROBLEM_WITH_SERVICE,
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 export const pageVariables = (referenceNumber: number) => ({
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.CHECK_YOUR_ANSWERS;
