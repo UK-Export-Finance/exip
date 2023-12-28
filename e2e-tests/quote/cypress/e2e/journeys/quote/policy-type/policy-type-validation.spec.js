@@ -1,4 +1,5 @@
 import { submitButton } from '../../../../../../pages/shared';
+import { policyTypePage } from '../../../../../../pages/quote';
 import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -40,12 +41,23 @@ context('Policy type page - policy type & length validation - single policy type
       submitButton().click();
 
       cy.checkErrorSummaryListHeading();
-
       partials.errorSummaryListItems().should('have.length', 1);
 
-      const expectedMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
+      const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
 
-      cy.checkText(partials.errorSummaryListItems().first(), expectedMessage);
+      cy.checkText(
+        partials.errorSummaryListItems().first(),
+        expectedErrorMessage,
+      );
+
+      partials.errorSummaryListItemLinks().first().click();
+
+      const singlePolicyTypeField = policyTypePage[POLICY_TYPE].single;
+      singlePolicyTypeField.input().should('have.focus');
+
+      const policyTypeField = policyTypePage[POLICY_TYPE];
+
+      cy.checkText(policyTypeField.errorMessage().first(), `Error: ${expectedErrorMessage}`);
     });
   });
 });
