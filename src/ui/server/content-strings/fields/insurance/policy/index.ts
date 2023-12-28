@@ -51,7 +51,7 @@ export const POLICY_FIELDS = {
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
       LABEL: 'When do you want your policy to start?',
-      HINT: 'For example, 6 11 2023',
+      HINT: 'For example, 06 11 2023 ',
       SUMMARY: {
         TITLE: 'Policy start date',
       },

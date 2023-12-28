@@ -3,6 +3,7 @@ Cypress.Commands.add('changeAnswerSelectField', require('./change-answer-select-
 Cypress.Commands.add('changeAnswerRadioField', require('./change-answer-radio-field'));
 
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
+Cypress.Commands.add('assertFieldErrors', require('./assert-field-errors'));
 Cypress.Commands.add('submitAndAssertRadioErrors', require('./submit-and-assert-radio-errors'));
 
 Cypress.Commands.add('submitInsuranceEligibilityAnswersHappyPath', require('../../insurance/eligibility/submit-answers-happy-path'));

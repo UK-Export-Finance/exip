@@ -131,8 +131,15 @@ export const ERROR_MESSAGES = {
       CONTRACT_POLICY: {
         [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.REQUESTED_START_DATE]: {
           INCORRECT_FORMAT: 'Enter when you want your policy to start in the correct format, like 06 11 2023',
-          NOT_A_NUMBER: 'Enter a policy start date in the correct format, like 06 11 2023',
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
+          MISSING_DAY_AND_MONTH: 'Policy start date must include a day and month',
+          MISSING_DAY_AND_YEAR: 'Policy start date must include a day and year',
+          MISSING_MONTH_AND_YEAR: 'Policy start date must include a month and year',
+          INVALID_DAY: 'Enter a valid day',
+          INVALID_MONTH: 'Enter a valid month',
+          INVALID_YEAR: 'Enter a valid year',
+          INVALID_YEAR_DIGITS: 'Year must include 4 numbers',
+          INVALID_DATE: 'Policy start date must be a real date',
         },
         [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
           IS_EMPTY: "Select currency you'd like your policy to be issued in",

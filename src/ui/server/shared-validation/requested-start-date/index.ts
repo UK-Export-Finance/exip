@@ -2,7 +2,6 @@ import { endOfDay, isFuture, isValid } from 'date-fns';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
-import { objectHasProperty } from '../../helpers/object';
 import createTimestampFromNumbers from '../../helpers/date/create-timestamp-from-numbers';
 import { isNumber } from '../../helpers/number';
 import { RequestBody } from '../../../types';
@@ -34,34 +33,102 @@ const requestedStartDateRules = (formBody: RequestBody, errors: object) => {
   const monthId = `${FIELD_ID}-month`;
   const yearId = `${FIELD_ID}-year`;
 
-  // check that no fields are empty.
-  if (!objectHasProperty(formBody, dayId) || !objectHasProperty(formBody, monthId) || !objectHasProperty(formBody, yearId)) {
+  const dayString = formBody[dayId];
+  const monthString = formBody[monthId];
+  const yearString = formBody[yearId];
+
+  if (!dayString && !monthString && !yearString) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
-  const day = formBody[dayId];
-  const month = formBody[monthId];
-  const year = formBody[yearId];
+  const day = isNumber(dayString);
+  const month = isNumber(monthString);
+  const year = isNumber(yearString);
 
-  // check that all fields are numbers.
-  if (!isNumber(day) || !isNumber(month) || !isNumber(year)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, errors);
+  /**
+   * All fields must be numbers.
+   */
+  if (!day && !month && !year) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
-  const submittedDate = createTimestampFromNumbers(Number(day), Number(month), Number(year));
+  /**
+   * has a day,
+   * no month or year.
+   */
+  if (day && !month && !year) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.MISSING_MONTH_AND_YEAR, errors);
+  }
+
+  /**
+   * has a month,
+   * no day or year.
+   */
+  if (!day && month && !year) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.MISSING_DAY_AND_YEAR, errors);
+  }
+
+  /**
+   * has a year,
+   * no day or month.
+   */
+  if (!day && !month && year) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.MISSING_DAY_AND_MONTH, errors);
+  }
+
+  /**
+   * Individual date field validation rules.
+   * I.e, all but 1 date fields are provided.
+   */
+  if (!day) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_DAY, errors);
+  }
+
+  if (!month) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_MONTH, errors);
+  }
+
+  if (!year) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_YEAR, errors);
+  }
+
+  /**
+   * Check that a year has 4 digits.
+   * E.g a year cannot be 200.
+   */
+  if (yearString.length < 4) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_YEAR_DIGITS, errors);
+  }
+
+  const dayNumber = Number(dayString);
+  const monthNumber = Number(monthString);
+  const yearNumber = Number(yearString);
+
+  const submittedDate = createTimestampFromNumbers(dayNumber, monthNumber, yearNumber);
 
   if (submittedDate) {
-    // check that the date is valid e.g not a month value of 24.
+    /**
+     * Check that the date is valid. E.g:
+     * A month cannot have a value of 13.
+     * A day cannot have a value of 50 or over the maximum days in a month.
+     */
     if (!isValid(submittedDate)) {
-      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
+      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_DATE, errors);
     }
 
-    // check that the date is in the future.
+    /**
+     * Check that the date is in the future.
+     * A start date cannot be in the past.
+     */
     if (!isFuture(endOfDay(submittedDate))) {
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BEFORE_EARLIEST, errors);
     }
   }
 
+  /**
+   * No date validation errors.
+   * Return the provided errors object.
+   */
   return errors;
 };
 
