@@ -9,6 +9,7 @@ const {
 
 const policyTypePage = {
   [POLICY_TYPE]: {
+    ...field(POLICY_TYPE),
     single: {
       ...field(SINGLE_POLICY_TYPE),
       hintListItem: (index) => cy.get(`[data-cy="${SINGLE_POLICY_TYPE}-hint-list-item-${index}"]`),

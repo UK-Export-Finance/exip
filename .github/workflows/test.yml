@@ -103,6 +103,13 @@ jobs:
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
         run: npm run test
 
+      - name: Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          flags: unit-test
+          verbose: true
+
   # 3. API - API test cases
   api-tests:
     name: API 👷
