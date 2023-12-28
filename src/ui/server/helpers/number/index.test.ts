@@ -17,6 +17,14 @@ describe('server/helpers/number', () => {
         expect(result).toEqual(true);
       });
     });
+
+    describe('when an empty string is provided', () => {
+      it('should return false', () => {
+        const result = isNumber('');
+
+        expect(result).toEqual(false);
+      });
+    });
   });
 
   describe('numberHasDecimal', () => {

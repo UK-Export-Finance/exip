@@ -4,7 +4,13 @@
  * @param {String | Number} Value to check
  * @returns {Boolean}
  */
-const isNumber = (value: string | number) => value && !Number.isNaN(Number(value));
+const isNumber = (value: string | number) => {
+  if (value) {
+    return !Number.isNaN(Number(value));
+  }
+
+  return false;
+};
 
 /**
  * numberHasDecimal
