@@ -22,6 +22,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Check your answers - As an exporter, I want to check my answers to the export contract section', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -30,6 +31,7 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
       cy.completeExportContractSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -61,8 +63,12 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button/link', () => {
+      cy.checkLink(
+        saveAndBackButton(),
+        allSectionsUrl,
+        BUTTONS.SAVE_AND_BACK,
+      );
     });
 
     describe('form submission', () => {
@@ -71,8 +77,7 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
 
         submitButton().click();
 
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        cy.assertUrl(expectedUrl);
+        cy.assertUrl(allSectionsUrl);
       });
     });
   });

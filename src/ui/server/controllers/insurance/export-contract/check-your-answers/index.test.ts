@@ -10,12 +10,7 @@ import { exportContractSummaryList } from '../../../../helpers/summary-lists/exp
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
-const {
-  INSURANCE_ROOT,
-  ALL_SECTIONS,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS_SAVE_AND_BACK },
-  PROBLEM_WITH_SERVICE,
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { exportContract, referenceNumber } = mockApplication;
 
@@ -45,7 +40,7 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
       const result = pageVariables(refNumber);
 
       const expected = {
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`,
       };
 
       expect(result).toEqual(expected);

@@ -11,6 +11,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
+  ALL_SECTIONS,
   POLICY,
   EXPORT_CONTRACT,
 } = INSURANCE_ROUTES;
@@ -22,6 +23,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Check your answers - As an exporter, I want to check my answers to the type of policy section', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -30,6 +32,7 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
       cy.completePolicySection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -61,8 +64,12 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    it('renders a `save and back` button/link', () => {
+      cy.checkLink(
+        saveAndBackButton(),
+        allSectionsUrl,
+        BUTTONS.SAVE_AND_BACK,
+      );
     });
 
     describe('form submission', () => {

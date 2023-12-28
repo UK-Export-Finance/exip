@@ -1,5 +1,43 @@
 # Changelog
 
+## [2.5.0](https://github.com/UK-Export-Finance/exip/compare/v2.2.4...v2.3.0) (2023-12-28)
+
+
+### Features
+
+* **EMS-2183:** No PDF - Different Trading Address - Data saving ([#1459](https://github.com/UK-Export-Finance/exip/issues/1459)) ([d4b2eb8](https://github.com/UK-Export-Finance/exip/commit/d4b2eb8591d556dca7fcd916a8acabdf7fa3e43d))
+* **EMS-2211:** No PDF - Alternative trading address - Save and back ([#1472](https://github.com/UK-Export-Finance/exip/issues/1472)) ([c6f5f44](https://github.com/UK-Export-Finance/exip/commit/c6f5f4414ea2b2d002ac52446ffbe5c8cb9eab79))
+* **EMS-2239-2240:** No PDF - Eligibility - Added sectionReview population ([#1435](https://github.com/UK-Export-Finance/exip/issues/1435)) ([7ad799c](https://github.com/UK-Export-Finance/exip/commit/7ad799cfc254dcd10cbb405b57270757fd9ba16d))
+* **EMS-2249:** No PDF - Your business - Check your answers - Multiple lists ([#1560](https://github.com/UK-Export-Finance/exip/issues/1560)) ([2f9cc0d](https://github.com/UK-Export-Finance/exip/commit/2f9cc0dfaf2bec94ebc8496440f920725e7106ef))
+* **EMS-2279-2280:** No PDF - Insurance policy - start page ([#1425](https://github.com/UK-Export-Finance/exip/issues/1425)) ([7270a6f](https://github.com/UK-Export-Finance/exip/commit/7270a6f69462eb87e450baba0160cbc091005d7e))
+* **EMS-2287 2347 2363:** No PDF - Single/multiple policy - currency enhancements ([#1439](https://github.com/UK-Export-Finance/exip/issues/1439)) ([1c0a730](https://github.com/UK-Export-Finance/exip/commit/1c0a730409248081cc6bc2665d665d977d789aab))
+* **EMS-2287:** No PDF - Policy - "Multiple contract policy" form updates, remove "Credit period with buyer" field ([#1434](https://github.com/UK-Export-Finance/exip/issues/1434)) ([4db22d8](https://github.com/UK-Export-Finance/exip/commit/4db22d806b840e33ec256b23b02cb1ba24ec6b9a))
+* **EMS-2300:** No PDF - Your buyer - start page ([#1513](https://github.com/UK-Export-Finance/exip/issues/1513)) ([9766bec](https://github.com/UK-Export-Finance/exip/commit/9766becf31d9be60b56a970fa058c5e00e8e2347))
+* **EMS-2336:** No PDF - Policy - Broker form ([#1460](https://github.com/UK-Export-Finance/exip/issues/1460)) ([0f6841c](https://github.com/UK-Export-Finance/exip/commit/0f6841cd962c5b267810ce3897ccd4390a2a9799))
+* **EMS-2345:** No PDF - Alternative Trading Address - Registered office address ([#1437](https://github.com/UK-Export-Finance/exip/issues/1437)) ([4c18ce5](https://github.com/UK-Export-Finance/exip/commit/4c18ce55bf5ec9a9f928183b83a43d750a9e1776))
+* **EMS-2361-2362:** No PDF - Connection with buyer - Save and Back ([#1570](https://github.com/UK-Export-Finance/exip/issues/1570)) ([5f27e80](https://github.com/UK-Export-Finance/exip/commit/5f27e806e937f0a8125125a21a498bf9bea71ff0))
+* **EMS-2366:** No PDF - Your Buyer - Connection to the buyer page ([#1538](https://github.com/UK-Export-Finance/exip/issues/1538)) ([a4f7bc3](https://github.com/UK-Export-Finance/exip/commit/a4f7bc3ebf67d8b5963d510f6a3c757a586ec8e6))
+* **EMS-2398:** No PDF - Export contract - start page ([#1480](https://github.com/UK-Export-Finance/exip/issues/1480)) ([93d0d42](https://github.com/UK-Export-Finance/exip/commit/93d0d420db32ceabb21c4105b180f428610aa188))
+* **EMS-2399-2400:** No PDF - Bump application version, About goods or services enhancements ([#1508](https://github.com/UK-Export-Finance/exip/issues/1508)) ([d2bbf81](https://github.com/UK-Export-Finance/exip/commit/d2bbf81e790c0d73cedc6c95845fe56c2247ffaf))
+* **EMS-2399:** no pdf - about goods or services content updates ([#1536](https://github.com/UK-Export-Finance/exip/issues/1536)) ([2be3646](https://github.com/UK-Export-Finance/exip/commit/2be3646d433c6a2124f027695c9413cfc853b283))
+* **EMS-2399:** No PDF - Export contract - About goods or services, initial "check your answers" setup ([#1522](https://github.com/UK-Export-Finance/exip/issues/1522)) ([d0be1ad](https://github.com/UK-Export-Finance/exip/commit/d0be1ad6cc14f3b4e8465d9546ab020835cee4dc))
+* **EMS-2424:** Check your answers - Alternative trading address ([#1509](https://github.com/UK-Export-Finance/exip/issues/1509)) ([395eebd](https://github.com/UK-Export-Finance/exip/commit/395eebdf7175d10b01bec152fd1480fc5960af54))
+* **EMS-2461:** No PDF - Connection with buyer - Data saving ([#1552](https://github.com/UK-Export-Finance/exip/issues/1552)) ([59362b4](https://github.com/UK-Export-Finance/exip/commit/59362b408ec7e0ea667654dae27f39dc91693ddf))
+
+
+### Bug Fixes
+
+* **EMS-2260:** No PDF - Companies House search - leading zero support ([#1485](https://github.com/UK-Export-Finance/exip/issues/1485)) ([31d3018](https://github.com/UK-Export-Finance/exip/commit/31d301844e6da12f73e9d686cfb5ea353119e1b3))
+* **EMS-2331 2364:** No PDF - Companies house unavailable, policy start page copy updates ([#1462](https://github.com/UK-Export-Finance/exip/issues/1462)) ([08c9d22](https://github.com/UK-Export-Finance/exip/commit/08c9d222a39c8a6fa0fa68ad09f823478fd54e6d))
+* **EMS-2364-2404:** No PDF - Total contract value field hint, section start page styling ([#1471](https://github.com/UK-Export-Finance/exip/issues/1471)) ([19ce4fe](https://github.com/UK-Export-Finance/exip/commit/19ce4fe7222fa959fcc7ffb086cba8ae223f7130))
+* **EMS-2365-2260:** No PDF - insurance policy route, strip empty spaces from Companies house search ([#1479](https://github.com/UK-Export-Finance/exip/issues/1479)) ([7c3317e](https://github.com/UK-Export-Finance/exip/commit/7c3317e54a0b9da4397e790ff40e8658f31188dc))
+* **EMS-2399-2418:** No PDF - About goods or services - yes/no radio ordering ([#1578](https://github.com/UK-Export-Finance/exip/issues/1578)) ([1e0331b](https://github.com/UK-Export-Finance/exip/commit/1e0331b9ebf6596d954f46d4d281bfe67419cad6))
+* **EMS-2407:** No PDF - Remove policy type intro. Minor tech improvements ([#1512](https://github.com/UK-Export-Finance/exip/issues/1512)) ([e99a1e0](https://github.com/UK-Export-Finance/exip/commit/e99a1e085ee101b01e70135587336b4959f67de5))
+* **EMS-2453:** Buyer country field - styling issue, DRY autocomplete component ([#1537](https://github.com/UK-Export-Finance/exip/issues/1537)) ([ecf7c1c](https://github.com/UK-Export-Finance/exip/commit/ecf7c1c56f4f32bedab9e9dc3e04c1d298972740))
+* **test:** added npm run ci:all before test execution ([61c45c8](https://github.com/UK-Export-Finance/exip/commit/61c45c88c81ae0f2b6ec2bb92d4aad65db180799))
+* **test:** added npm run ci:all before test execution ([af68c14](https://github.com/UK-Export-Finance/exip/commit/af68c148843d02cc543c2635b676fb75e9d2fa70))
+* **tests:** last month of the year unit tests ([#1438](https://github.com/UK-Export-Finance/exip/issues/1438)) ([f9bc7e6](https://github.com/UK-Export-Finance/exip/commit/f9bc7e6007d1fb60b799305635f4262ece658677))
+
 ## [2.4.0](https://github.com/UK-Export-Finance/exip/compare/v2.3.8...v2.4.0) (2023-12-27)
 
 
