@@ -7,5 +7,4 @@ export const EXPORT_CONTRACT = {
   ABOUT_GOODS_OR_SERVICES_CHANGE: `${ROOT}/about-goods-or-services/change`,
   ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE: `${ROOT}/about-goods-or-services/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
-  CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${ROOT}/check-your-answers/save-and-go-back`,
 };

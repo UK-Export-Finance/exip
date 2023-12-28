@@ -14,7 +14,6 @@ import { post as differentNameOnPolicySaveAndBackPost } from '../../../controlle
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/policy/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/policy/broker/save-and-back';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
-import { post as checkYourAnswersSaveAndBackPost } from '../../../controllers/insurance/policy/check-your-answers/save-and-back';
 
 // @ts-ignore
 const insurancePolicyRouter = express.Router();
@@ -73,7 +72,5 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CH
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
-
-insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS_SAVE_AND_BACK}`, checkYourAnswersSaveAndBackPost);
 
 export default insurancePolicyRouter;

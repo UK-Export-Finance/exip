@@ -28,5 +28,4 @@ export const POLICY = {
   BROKER_CHANGE: `${BROKER_ROOT}/change`,
   BROKER_CHECK_AND_CHANGE: `${BROKER_ROOT}/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
-  CHECK_YOUR_ANSWERS_SAVE_AND_BACK: `${ROOT}/check-your-answers/save-and-go-back`,
 };
