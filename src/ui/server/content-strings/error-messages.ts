@@ -148,7 +148,7 @@ export const ERROR_MESSAGES = {
       },
       CONTRACT_POLICY: {
         [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.REQUESTED_START_DATE]: {
-          INCORRECT_FORMAT: 'Enter a policy start date in the correct format, like 06 11 2023',
+          INCORRECT_FORMAT: 'Enter when you want your policy to start in the correct format, like 06 11 2023',
           NOT_A_NUMBER: 'Enter a policy start date in the correct format, like 06 11 2023',
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
         },
