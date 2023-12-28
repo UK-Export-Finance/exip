@@ -45,13 +45,13 @@ const totalMonthsOfCoverRules = (formBody: RequestBody, errors: object) => {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
-  const numb = Number(formBody[FIELD_ID]);
+  const monthsOfCover = Number(formBody[FIELD_ID]);
 
-  if (numb < MINIMUM) {
+  if (monthsOfCover < MINIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
   }
 
-  if (numb > MAXIMUM) {
+  if (monthsOfCover > MAXIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 
