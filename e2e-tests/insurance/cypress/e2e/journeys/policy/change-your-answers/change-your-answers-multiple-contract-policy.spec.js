@@ -114,7 +114,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          field(fieldId).input().select(newAnswer);
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
 
           submitButton().click();
         });

@@ -182,7 +182,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
         fieldSelector(REQUESTED_START_DATE).monthInput().should('have.value', application.POLICY[REQUESTED_START_DATE].month);
         fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
 
-        cy.checkText(fieldSelector(TOTAL_MONTHS_OF_COVER).inputOptionSelected(), `${application.POLICY[TOTAL_MONTHS_OF_COVER]} months`);
+        fieldSelector(TOTAL_MONTHS_OF_COVER).input().should('have.value', application.POLICY[TOTAL_MONTHS_OF_COVER]);
 
         fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
         fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
