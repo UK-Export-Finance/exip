@@ -39,13 +39,13 @@ describe('routes/insurance/your-buyer', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER}`, postConnectionWithBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_SAVE_AND_BACK}`, postConnectionToTheBuyerSaveAndBack);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER}`, getTradedWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER}`, postTradedWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_SAVE_AND_BACK}`, postTradedWithBuyerSaveAndBack);
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHANGE}`, getTradedWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHANGE}`, postTradedWithBuyer);
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHECK_AND_CHANGE}`, getTradedWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_WITH_BUYER_CHECK_AND_CHANGE}`, postTradedWithBuyer);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER}`, getTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER}`, postTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_SAVE_AND_BACK}`, postTradedWithBuyerSaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHANGE}`, getTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHANGE}`, postTradedWithBuyer);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, getTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, postTradedWithBuyer);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

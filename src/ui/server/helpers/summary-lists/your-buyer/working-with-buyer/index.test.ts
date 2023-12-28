@@ -12,7 +12,7 @@ const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { TRADING_WITH_BUYER, TRADING_WITH_BUYER_CHECK_AND_CHANGE },
+    YOUR_BUYER: { TRADED_WITH_BUYER: TRADED_WITH_BUYER_ROUTE, TRADED_WITH_BUYER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
@@ -28,7 +28,13 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
       {
         field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
         data: mockAnswers,
-        href: generateChangeLink(TRADING_WITH_BUYER, TRADING_WITH_BUYER_CHECK_AND_CHANGE, `#${CONNECTION_WITH_BUYER}-label`, referenceNumber, checkAndChange),
+        href: generateChangeLink(
+          TRADED_WITH_BUYER_ROUTE,
+          TRADED_WITH_BUYER_CHECK_AND_CHANGE,
+          `#${CONNECTION_WITH_BUYER}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
       mapYesNoField(mockAnswers[CONNECTION_WITH_BUYER]),
@@ -37,7 +43,7 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
       {
         field: getFieldById(FIELDS, TRADED_WITH_BUYER),
         data: mockAnswers,
-        href: generateChangeLink(TRADING_WITH_BUYER, TRADING_WITH_BUYER_CHECK_AND_CHANGE, `#${TRADED_WITH_BUYER}-label`, referenceNumber, checkAndChange),
+        href: generateChangeLink(TRADED_WITH_BUYER_ROUTE, TRADED_WITH_BUYER_CHECK_AND_CHANGE, `#${TRADED_WITH_BUYER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
       mapYesNoField(mockAnswers[TRADED_WITH_BUYER]),

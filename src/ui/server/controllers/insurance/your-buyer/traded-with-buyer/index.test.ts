@@ -18,7 +18,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { TRADING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADING_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
+const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADED_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
 const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
@@ -41,7 +41,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: TRADED_WITH_BUYER,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_WITH_BUYER_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
         horizontalRadios: true,
       };
 
@@ -59,7 +59,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO_PAGE);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -149,7 +149,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
             [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
           };
 
-          req.originalUrl = TRADING_WITH_BUYER_CHECK_AND_CHANGE;
+          req.originalUrl = TRADED_WITH_BUYER_CHECK_AND_CHANGE;
 
           await post(req, res);
 

@@ -16,7 +16,7 @@ import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: { TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -130,7 +130,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_WITH_BUYER}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
