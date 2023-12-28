@@ -1,18 +1,17 @@
-import { FIELD_IDS, APPLICATION } from '../../constants';
+import { APPLICATION } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { radios, field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        POLICY_CURRENCY_CODE,
-        SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeAndSubmitSingleContractPolicyForm
