@@ -1,5 +1,14 @@
-import { FIELD_IDS, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
+import {
+  APPLICATION,
+  FIELD_IDS,
+  ELIGIBILITY,
+  TOTAL_CONTRACT_VALUE,
+} from '../constants';
 import formatCurrency from '../helpers/format-currency';
+
+const {
+  POLICY: { TOTAL_MONTHS_OF_COVER },
+} = APPLICATION;
 
 export const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K);
 
@@ -155,7 +164,10 @@ export const ERROR_MESSAGES = {
         },
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
-            IS_EMPTY: 'Select how many months you want to be insured for',
+            INCORRECT_FORMAT: 'You must enter how many months you want to be insured for as a whole number. Do not use symbols or letters',
+            IS_EMPTY: 'Enter how many months you want to be insured for',
+            BELOW_MINIMUM: 'Your length of insurance must be 1 month or more',
+            ABOVE_MAXIMUM: `The maximum duration of coverage cannot be more than ${TOTAL_MONTHS_OF_COVER} months.`,
           },
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
             INCORRECT_FORMAT: 'Enter your estimated sales as a whole number - do not enter decimals',
