@@ -17,7 +17,7 @@ const START_NEW_APPLICATION = {
 
 const POLICY = {
   ...SHARED,
-  PAGE_TITLE: 'Type of policy and exports',
+  PAGE_TITLE: 'Your insurance coverage',
 };
 
 const YOUR_BUSINESS = {

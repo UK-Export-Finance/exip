@@ -9,7 +9,7 @@ export const START_NEW_APPLICATION = {
 
 export const POLICY = {
   ...SHARED,
-  PAGE_TITLE: 'Type of policy and exports',
+  PAGE_TITLE: 'Your insurance coverage',
 };
 
 export const YOUR_BUSINESS = {
