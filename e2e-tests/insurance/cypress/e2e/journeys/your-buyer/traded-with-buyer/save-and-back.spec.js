@@ -64,7 +64,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeTradedWithBuyerForm({ hasTradedWithBuyer: true });
+      cy.completeTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
       saveAndBackButton().click();
     });
 
