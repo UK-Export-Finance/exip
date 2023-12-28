@@ -5,17 +5,13 @@ import emptyFieldValidation from '../../../../../../shared-validation/empty-fiel
 
 const {
   INSURANCE: {
-    YOUR_BUYER: {
-      WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER: FIELD_ID },
-    },
+    YOUR_BUYER: { CONNECTION_WITH_BUYER: FIELD_ID },
   },
 } = FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: {
-      WORKING_WITH_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
-    },
+    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES;
 

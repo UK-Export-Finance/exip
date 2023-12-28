@@ -5,23 +5,19 @@ import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
 const {
-  WORKING_WITH_BUYER: {
-    CONNECTION_WITH_BUYER,
-    CONNECTION_WITH_BUYER_DESCRIPTION,
-  },
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
 } = FIELD_IDS;
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE, WORKING_WITH_BUYER },
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE, TRADED_WITH_BUYER },
 } = INSURANCE_ROUTES;
-
-const FIELDS = YOUR_BUYER_FIELDS.WORKING_WITH_BUYER;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -30,7 +26,7 @@ const { BUYER } = application;
 context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have  trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
-  let workingWithBuyerUrl;
+  let tradedWithBuyerUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -41,7 +37,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONNECTION_WITH_BUYER_ROUTE}`;
-      workingWithBuyerUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${WORKING_WITH_BUYER}`;
+      tradedWithBuyerUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
 
       cy.assertUrl(url);
     });
@@ -128,10 +124,10 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
 
     describe('form submission', () => {
       describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "no"`, () => {
-        it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+        it(`should redirect to ${TRADED_WITH_BUYER} page`, () => {
           cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-          cy.assertUrl(workingWithBuyerUrl);
+          cy.assertUrl(tradedWithBuyerUrl);
         });
 
         describe('when going back to the page', () => {
@@ -144,10 +140,10 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
       });
 
       describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "yes"`, () => {
-        it(`should redirect to ${WORKING_WITH_BUYER} page`, () => {
+        it(`should redirect to ${TRADED_WITH_BUYER} page`, () => {
           cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
 
-          cy.assertUrl(workingWithBuyerUrl);
+          cy.assertUrl(tradedWithBuyerUrl);
         });
 
         describe('when going back to the page', () => {

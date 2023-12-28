@@ -1,5 +1,9 @@
-import { FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
+import { APPLICATION, FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
+
+const {
+  POLICY: { TOTAL_MONTHS_OF_COVER },
+} = APPLICATION;
 
 type ErrorMessage = {
   [key: string]: any; // eslint-disable-line @typescript-eslint/no-explicit-any
@@ -180,7 +184,10 @@ export const ERROR_MESSAGES = {
         },
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
-            IS_EMPTY: 'Select how many months you want to be insured for',
+            INCORRECT_FORMAT: 'You must enter how many months you want to be insured for as a whole number. Do not use symbols or letters',
+            IS_EMPTY: 'Enter how many months you want to be insured for',
+            BELOW_MINIMUM: 'Your length of insurance must be 1 month or more',
+            ABOVE_MAXIMUM: `The maximum duration of coverage cannot be more than ${TOTAL_MONTHS_OF_COVER} months.`,
           },
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
             INCORRECT_FORMAT: 'Enter your estimated sales as a whole number - do not enter decimals',
@@ -266,17 +273,15 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select whether we can contact the buyer about your application',
         },
       },
-      WORKING_WITH_BUYER: {
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
-          IS_EMPTY: "Select whether you're connected with the buyer in any way",
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
-          IS_EMPTY: 'Enter the connection you have with the buyer',
-          ABOVE_MAXIMUM: 'The description of your connection to the buyer cannot be more than a 1000 characters',
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-          IS_EMPTY: "Select whether you've traded with this buyer before",
-        },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER]: {
+        IS_EMPTY: "Select whether you're connected with the buyer in any way",
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER_DESCRIPTION]: {
+        IS_EMPTY: 'Enter the connection you have with the buyer',
+        ABOVE_MAXIMUM: 'The description of your connection to the buyer cannot be more than a 1000 characters',
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER]: {
+        IS_EMPTY: 'Select if you have traded with this buyer before',
       },
     },
     ACCOUNT: {

@@ -1,23 +1,22 @@
-import { FIELD_IDS, APPLICATION } from '../../constants';
+import { APPLICATION } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { multipleContractPolicyPage } from '../../pages/insurance/policy';
 import { radios, field, submitButton } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * completeAndSubmitMultipleContractPolicyForm
@@ -29,7 +28,7 @@ export default ({ policyMaximumValue = false }) => {
   cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
   cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
 
-  field(TOTAL_MONTHS_OF_COVER).input().select(application.POLICY[TOTAL_MONTHS_OF_COVER]);
+  cy.keyboardInput(field(TOTAL_MONTHS_OF_COVER).input(), application.POLICY[TOTAL_MONTHS_OF_COVER]);
   cy.keyboardInput(field(TOTAL_SALES_TO_BUYER).input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
 
   if (policyMaximumValue) {

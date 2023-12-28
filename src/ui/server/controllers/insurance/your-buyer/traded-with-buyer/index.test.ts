@@ -1,18 +1,15 @@
-import { get, post, pageVariables, TEMPLATE, FIELD_IDS } from '.';
+import { get, post, pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
 import { PAGES } from '../../../../content-strings';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../constants';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import workingWithBuyerValidation from './validation';
+import tradedWithBuyerValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
-
-const { WORKING_WITH_BUYER } = BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -21,11 +18,11 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { WORKING_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, WORKING_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
+const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADED_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
-const { TRADED_WITH_BUYER } = WORKING_WITH_BUYER;
+const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
-describe('controllers/insurance/your-buyer/working-with-buyer', () => {
+describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
   let req: Request;
   let res: Response;
 
@@ -43,13 +40,9 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELDS: {
-          TRADED_WITH_BUYER: {
-            ID: TRADED_WITH_BUYER,
-            ...FIELDS.WORKING_WITH_BUYER[TRADED_WITH_BUYER],
-          },
-        },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${WORKING_WITH_BUYER_SAVE_AND_BACK}`,
+        FIELD_ID: TRADED_WITH_BUYER,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
+        horizontalRadios: true,
       };
 
       expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
@@ -66,7 +59,13 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+    });
+  });
+
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct template defined', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER);
     });
   });
 
@@ -76,12 +75,12 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplication),
         ...pageVariables(mockApplication.referenceNumber),
+        submittedValues: mockApplication.buyer,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -150,7 +149,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
             [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
           };
 
-          req.originalUrl = WORKING_WITH_BUYER_CHECK_AND_CHANGE;
+          req.originalUrl = TRADED_WITH_BUYER_CHECK_AND_CHANGE;
 
           await post(req, res);
 
@@ -167,17 +166,17 @@ describe('controllers/insurance/your-buyer/working-with-buyer', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const validationErrors = workingWithBuyerValidation(payload);
+        const validationErrors = tradedWithBuyerValidation(payload);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.YOUR_BUYER.WORKING_WITH_BUYER,
+            PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
+          ...pageVariables(mockApplication.referenceNumber),
           submittedValues: payload,
+          application: mapApplicationToFormFields(mockApplication),
           validationErrors,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

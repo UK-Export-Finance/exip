@@ -5,7 +5,8 @@ import { mockConnectionWithBuyer } from '../../../../test-mocks/mock-buyer';
 
 const {
   COMPANY_OR_ORGANISATION: { CAN_CONTACT_BUYER },
-  WORKING_WITH_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
 } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/map-submitted-data', () => {

@@ -11,9 +11,7 @@ import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constan
 import application from '../../../../../../../fixtures/application';
 
 const {
-  WORKING_WITH_BUYER: {
-    CONNECTION_WITH_BUYER_DESCRIPTION,
-  },
+  CONNECTION_WITH_BUYER_DESCRIPTION,
 } = YOUR_BUYER_FIELD_IDS;
 
 const {

@@ -19,10 +19,8 @@ const {
     FIRST_NAME,
     CAN_CONTACT_BUYER,
   },
-  WORKING_WITH_BUYER: {
-    CONNECTION_WITH_BUYER,
-    TRADED_WITH_BUYER,
-  },
+  CONNECTION_WITH_BUYER,
+  TRADED_WITH_BUYER,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;

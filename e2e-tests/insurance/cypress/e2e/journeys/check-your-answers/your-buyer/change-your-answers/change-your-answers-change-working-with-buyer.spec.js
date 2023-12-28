@@ -1,9 +1,10 @@
-import { submitButton, status, summaryList } from '../../../../../../../pages/shared';
+import {
+  submitButton, status, summaryList, noRadioInput,
+} from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { workingWithBuyerPage } from '../../../../../../../pages/insurance/your-buyer';
 
 const {
   ROOT,
@@ -11,15 +12,13 @@ const {
     YOUR_BUYER,
   },
   YOUR_BUYER: {
-    WORKING_WITH_BUYER_CHECK_AND_CHANGE,
+    TRADED_WITH_BUYER_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  WORKING_WITH_BUYER: {
-    // CONNECTION_WITH_BUYER,
-    TRADED_WITH_BUYER,
-  },
+  // CONNECTION_WITH_BUYER,
+  TRADED_WITH_BUYER,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
@@ -27,7 +26,7 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
-  route: WORKING_WITH_BUYER_CHECK_AND_CHANGE,
+  route: TRADED_WITH_BUYER_CHECK_AND_CHANGE,
   checkYourAnswersRoute: YOUR_BUYER,
   newValueInput: '',
   fieldId,
@@ -120,7 +119,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
@@ -134,7 +133,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
         summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadioInput().click();
+        noRadioInput().click();
 
         submitButton().click();
       });

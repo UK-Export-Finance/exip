@@ -12,7 +12,7 @@ const completeBuyerSection = ({ viaTaskList, exporterHasTradedWithBuyer, submitC
 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
   cy.completeAndSubmitConnectionToTheBuyerForm({});
-  cy.completeAndSubmitWorkingWithBuyerForm({ exporterHasTradedWithBuyer });
+  cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer });
 
   if (submitCheckYourAnswers) {
     submitButton().click();

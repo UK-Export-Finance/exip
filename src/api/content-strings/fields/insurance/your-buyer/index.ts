@@ -1,7 +1,7 @@
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, WORKING_WITH_BUYER },
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER },
 } = FIELD_IDS;
 
 export const YOUR_BUYER_FIELDS = {
@@ -49,16 +49,14 @@ export const YOUR_BUYER_FIELDS = {
       },
     },
   },
-  WORKING_WITH_BUYER: {
-    [WORKING_WITH_BUYER.CONNECTION_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: 'Connected with the buyer in any way?',
-      },
+  [CONNECTION_WITH_BUYER]: {
+    SUMMARY: {
+      TITLE: 'Connected with the buyer in any way?',
     },
-    [WORKING_WITH_BUYER.TRADED_WITH_BUYER]: {
-      SUMMARY: {
-        TITLE: 'Have you traded with this buyer before?',
-      },
+  },
+  [TRADED_WITH_BUYER]: {
+    SUMMARY: {
+      TITLE: 'Have you traded with this buyer before?',
     },
   },
 };

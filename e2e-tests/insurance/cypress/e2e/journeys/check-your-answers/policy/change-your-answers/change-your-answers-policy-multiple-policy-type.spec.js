@@ -138,7 +138,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = String(Number(application.POLICY[fieldId]) + 1);
-          cy.changeAnswerSelectField(fieldVariables, field(fieldId).input());
+          cy.changeAnswerField(fieldVariables, field(fieldId).input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

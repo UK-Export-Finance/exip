@@ -7,8 +7,8 @@ import { post as postCompanyOrOrganisationSaveAndBack } from '../../../controlle
 import { get as getConnectionWithBuyer, post as postConnectionWithBuyer } from '../../../controllers/insurance/your-buyer/connection-with-buyer';
 import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/connection-with-buyer/save-and-back';
 
-import { get as getWorkingWithBuyer, post as postWorkingWithBuyer } from '../../../controllers/insurance/your-buyer/working-with-buyer';
-import { post as postWorkingWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/working-with-buyer/save-and-back';
+import { get as getTradedWithBuyer, post as postTradedWithBuyer } from '../../../controllers/insurance/your-buyer/traded-with-buyer';
+import { post as postTradedWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/traded-with-buyer/save-and-back';
 
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
 
@@ -39,13 +39,13 @@ describe('routes/insurance/your-buyer', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER}`, postConnectionWithBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_SAVE_AND_BACK}`, postConnectionToTheBuyerSaveAndBack);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, getWorkingWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER}`, postWorkingWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_SAVE_AND_BACK}`, postWorkingWithBuyerSaveAndBack);
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`, getWorkingWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHANGE}`, postWorkingWithBuyer);
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, getWorkingWithBuyer);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, postWorkingWithBuyer);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER}`, getTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER}`, postTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_SAVE_AND_BACK}`, postTradedWithBuyerSaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHANGE}`, getTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHANGE}`, postTradedWithBuyer);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, getTradedWithBuyer);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, postTradedWithBuyer);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
