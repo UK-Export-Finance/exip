@@ -68,7 +68,7 @@
     "postcode-validator": "^3.8.20",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.3",
-    "terser-webpack-plugin": "^5.3.9",
+    "terser-webpack-plugin": "^5.3.10",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
