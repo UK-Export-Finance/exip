@@ -84,7 +84,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       typeOfPolicyPage[fieldId].multiple.input().click();
       submitButton().click();
 
-      cy.completeAndSubmitMultipleContractPolicyForm({});
+      cy.completeAndSubmitMultipleContractPolicyForm();
 
       const expectedUrl = `${checkYourAnswersUrl}#heading`;
 

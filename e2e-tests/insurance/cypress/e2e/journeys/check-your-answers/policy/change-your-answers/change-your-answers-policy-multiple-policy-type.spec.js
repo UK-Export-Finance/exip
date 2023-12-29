@@ -3,7 +3,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { field, summaryList } from '../../../../../../../pages/shared';
 import application from '../../../../../../../fixtures/application';
-import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
+import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
 import formatCurrency from '../../../../../../../helpers/format-currency';
 import { USD } from '../../../../../../../fixtures/currencies';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
@@ -216,7 +216,7 @@ context('Insurance - Change your answers - Policy - multiple contract policy - S
           summaryList.field(fieldId).changeLink().click();
 
           fieldVariables.newValueInput = Number(application.POLICY[fieldId]) + 1000;
-          cy.changeAnswerField(fieldVariables, multipleContractPolicyPage[fieldId].input());
+          cy.changeAnswerField(fieldVariables, multipleContractPolicyExportValuePage[fieldId].input());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

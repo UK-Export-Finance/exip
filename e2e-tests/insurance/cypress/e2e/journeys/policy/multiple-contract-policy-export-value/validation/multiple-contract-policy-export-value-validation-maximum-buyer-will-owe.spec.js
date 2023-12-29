@@ -1,5 +1,5 @@
 import { submitButton } from '../../../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../../../pages/insurance/policy';
+import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
@@ -41,7 +41,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy page - form validation - maximum buyer will owe', () => {
+context('Insurance - Policy - Multiple contract policy export value page - form validation - maximum buyer will owe', () => {
   let referenceNumber;
   let url;
 
@@ -68,7 +68,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE];
+  const field = multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE];
 
   it('should render a validation error when maximum buyer will owe is not provided', () => {
     submitButton().click();
@@ -85,7 +85,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
   });
 
   it('should render a validation error when maximum buyer will owe is not a number', () => {
-    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
+    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
     submitButton().click();
 
     cy.checkText(
@@ -100,7 +100,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
   });
 
   it('should render a validation error when maximum buyer will owe contains a decimal', () => {
-    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
+    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
     submitButton().click();
 
     cy.checkText(
@@ -115,7 +115,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
   });
 
   it('should render a validation error when maximum buyer will owe contains a comma and decimal', () => {
-    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
+    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
     submitButton().click();
 
     cy.checkText(
@@ -130,7 +130,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
   });
 
   it('should render a validation error when maximum buyer will owe is below the minimum', () => {
-    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
+    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
     submitButton().click();
 
     cy.checkText(
@@ -147,7 +147,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
   it('should render a validation error when maximum buyer will owe is above the maximum', () => {
     const MAXIMUM = APPLICATION.POLICY.MAXIMUM_BUYER_CAN_OWE;
 
-    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
+    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
     submitButton().click();
 
     cy.checkText(
@@ -162,10 +162,10 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
   });
 
   it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
-    cy.completeAndSubmitMultipleContractPolicyForm({});
+    cy.completeAndSubmitMultipleContractPolicyForm();
     cy.clickBackLink();
 
-    cy.keyboardInput(multipleContractPolicyPage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
+    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
     submitButton().click();
 
     const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;

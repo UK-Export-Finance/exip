@@ -51,7 +51,7 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;

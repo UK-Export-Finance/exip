@@ -1,5 +1,5 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy';
+import { multipleContractPolicyExportValuePage } from '../../../../../../pages/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -190,7 +190,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyPage[fieldId].input(), newAnswer);
+          cy.keyboardInput(multipleContractPolicyExportValuePage[fieldId].input(), newAnswer);
 
           submitButton().click();
         });

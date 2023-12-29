@@ -7,6 +7,7 @@ const {
     SINGLE_POLICY_TYPE,
     MULTIPLE_POLICY_TYPE,
     CONTRACT_POLICY,
+    EXPORT_VALUE,
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
     BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
@@ -75,13 +76,6 @@ export const POLICY_FIELDS = {
           TITLE: 'Date you expect contract to complete',
         },
       },
-      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        LABEL: "What's the total value of the contract you want to insure?",
-        HINT: 'Enter a whole number - do not enter decimals.',
-        SUMMARY: {
-          TITLE: 'Contract value',
-        },
-      },
     },
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
@@ -92,14 +86,27 @@ export const POLICY_FIELDS = {
           TITLE: 'How many months you want to be insured for',
         },
       },
-      [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+    },
+  },
+  EXPORT_VALUE: {
+    SINGLE: {
+      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        LABEL: "What's the total value of the contract you want to insure?",
+        HINT: 'Enter a whole number - do not enter decimals.',
+        SUMMARY: {
+          TITLE: 'Contract value',
+        },
+      },
+    },
+    MULTIPLE: {
+      [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: 'Estimate total sales to your buyer during this time',
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
           TITLE: 'Estimated sales during policy',
         },
       },
-      [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+      [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',

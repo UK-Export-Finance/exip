@@ -169,11 +169,6 @@ export const ERROR_MESSAGES = {
             CANNOT_BE_THE_SAME: 'Your contract completion date cannot be the same as your policy start date',
             CANNOT_BE_BEFORE: 'Your contract completion date must be after your policy start date',
           },
-          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-            INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
-            BELOW_MINIMUM: 'Your contract value must be 1 or more',
-            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
-          },
         },
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
@@ -182,11 +177,22 @@ export const ERROR_MESSAGES = {
             BELOW_MINIMUM: 'Your length of insurance must be 1 month or more',
             ABOVE_MAXIMUM: `The maximum duration of coverage cannot be more than ${TOTAL_MONTHS_OF_COVER} months.`,
           },
-          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+        },
+      },
+      EXPORT_VALUE: {
+        SINGLE: {
+          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+            INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'Your contract value must be 1 or more',
+            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
+          },
+        },
+        MULTIPLE: {
+          [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
             INCORRECT_FORMAT: 'Enter your estimated sales as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
           },
-          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+          [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
             INCORRECT_FORMAT: 'Enter the maximum the buyer will owe as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'The maximum the buyer will owe must be 1 or more',
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',

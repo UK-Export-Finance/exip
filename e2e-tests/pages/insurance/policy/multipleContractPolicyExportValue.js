@@ -3,7 +3,7 @@ import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
   POLICY: {
-    CONTRACT_POLICY: {
+    EXPORT_VALUE: {
       MULTIPLE: {
         MAXIMUM_BUYER_WILL_OWE,
       },
@@ -11,7 +11,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const multipleContractPolicy = {
+const multipleContractPolicyExportValue = {
   [MAXIMUM_BUYER_WILL_OWE]: {
     ...field(MAXIMUM_BUYER_WILL_OWE),
     hint: {
@@ -25,4 +25,4 @@ const multipleContractPolicy = {
   },
 };
 
-export default multipleContractPolicy;
+export default multipleContractPolicyExportValue;

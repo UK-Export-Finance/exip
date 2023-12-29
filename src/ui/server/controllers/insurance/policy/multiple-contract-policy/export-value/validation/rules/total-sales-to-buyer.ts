@@ -1,25 +1,23 @@
-import { FIELD_IDS } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
-import { stripCommas } from '../../../../../../helpers/string';
-import { RequestBody } from '../../../../../../../types';
+import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import generateValidationErrors from '../../../../../../../helpers/validation';
+import { objectHasProperty } from '../../../../../../../helpers/object';
+import wholeNumberValidation from '../../../../../../../helpers/whole-number-validation';
+import { stripCommas } from '../../../../../../../helpers/string';
+import { RequestBody } from '../../../../../../../../types';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_SALES_TO_BUYER: FIELD_ID },
-      },
+  POLICY: {
+    EXPORT_VALUE: {
+      MULTIPLE: { TOTAL_SALES_TO_BUYER: FIELD_ID },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
+      EXPORT_VALUE: {
         MULTIPLE: { [FIELD_ID]: ERROR_MESSAGE },
       },
     },

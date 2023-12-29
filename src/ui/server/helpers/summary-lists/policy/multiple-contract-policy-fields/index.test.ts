@@ -11,7 +11,10 @@ import generateChangeLink from '../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+  },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
 } = FIELD_IDS;
 

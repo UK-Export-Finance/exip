@@ -34,7 +34,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm tha
       cy.startInsurancePolicySection({});
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
