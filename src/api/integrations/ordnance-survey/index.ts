@@ -11,7 +11,7 @@ const { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
  * ordnanceSurvey
  * makes Ordnance Survey API call and returns address
  * @param {String} postcode
- * @returns {OrdanceSurveyAPIResponse} OrdanceSurveyAPIResponse object
+ * @returns {OrdnanceSurveyAPIResponse} OrdnanceSurveyAPIResponse object
  */
 const ordnanceSurvey = {
   get: async (postcode: string): Promise<OrdnanceSurveyAPIResponse> => {

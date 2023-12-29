@@ -1,9 +1,9 @@
 import rule from './policy-type';
-import { FIELD_IDS } from '../../../../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import emptyFieldValidation from '../../../../../shared-validation/empty-field';
 
-const { POLICY_TYPE: FIELD_ID } = FIELD_IDS;
+const { POLICY_TYPE: FIELD_ID, SINGLE_POLICY_TYPE } = FIELD_IDS;
 const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
@@ -22,7 +22,7 @@ describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
 
       const result = rule(mockBody, mockErrors);
 
-      const expected = emptyFieldValidation({}, FIELD_ID, ERROR_MESSAGE, mockErrors);
+      const expected = emptyFieldValidation({}, SINGLE_POLICY_TYPE, ERROR_MESSAGE, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -34,9 +34,19 @@ describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
 
       const result = rule(mockBody, mockErrors);
 
-      const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE, mockErrors);
+      const expected = emptyFieldValidation({}, SINGLE_POLICY_TYPE, ERROR_MESSAGE, mockErrors);
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a valid policy type provided', () => {
+    it('should return the provided errors', () => {
+      mockBody[FIELD_ID] = FIELD_VALUES.POLICY_TYPE.SINGLE;
+
+      const result = rule(mockBody, mockErrors);
+
+      expect(result).toEqual(mockErrors);
     });
   });
 });

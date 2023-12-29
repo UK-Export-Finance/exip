@@ -66,12 +66,13 @@ context('Exporter location page - as an exporter, I want to check if my company 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
+        const errorIndex = 0;
         const expectedErrorsCount = 1;
         const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
         cy.submitAndAssertRadioErrors(
           yesRadio(FIELD_ID),
-          0,
+          errorIndex,
           expectedErrorsCount,
           expectedErrorMessage,
         );
