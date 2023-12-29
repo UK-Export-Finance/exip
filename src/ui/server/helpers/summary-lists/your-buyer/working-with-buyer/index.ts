@@ -11,12 +11,63 @@ const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE },
+    YOUR_BUYER: { CONNECTION_WITH_BUYER_CHANGE, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE, TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE },
   },
 } = ROUTES;
 
-const { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER } = FIELD_IDS;
+const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION, TRADED_WITH_BUYER } = FIELD_IDS;
 
+/**
+ * optionalFields
+ * optionalFields for working with buyer summary list
+ * if CONNECTION_WITH_BUYER is true, then renders extra row in summary list
+ * @param {ApplicationBuyer} answers
+ * @param {Number} referenceNumber
+ * @param {Boolean} checkAndChange
+ * @returns {Object} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure
+ */
+export const optionalFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
+  const fields = [
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
+        data: answers,
+        href: generateChangeLink(
+          CONNECTION_WITH_BUYER_CHANGE,
+          CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
+          `#${CONNECTION_WITH_BUYER}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[CONNECTION_WITH_BUYER]),
+    ),
+  ] as Array<SummaryListItemData>;
+
+  /**
+   * if CONNECTION_WITH_BUYER is true
+   * pushes CONNECTION_WITH_BUYER_DESCRIPTION to the summary list
+   */
+  if (answers[CONNECTION_WITH_BUYER]) {
+    fields.push(
+      fieldGroupItem({
+        field: getFieldById(FIELDS, CONNECTION_WITH_BUYER_DESCRIPTION),
+        data: answers,
+        href: generateChangeLink(
+          CONNECTION_WITH_BUYER_CHANGE,
+          CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
+          `#${CONNECTION_WITH_BUYER_DESCRIPTION}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+        renderChangeLink: true,
+      }),
+    );
+  }
+
+  return fields;
+};
 /**
  * workingWithBuyerFields
  * Create all working with buyer fields and values for the Insurance - your buyer govukSummaryList
@@ -26,21 +77,7 @@ const { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER } = FIELD_IDS;
  */
 const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
-        data: answers,
-        href: generateChangeLink(
-          TRADED_WITH_BUYER_CHANGE,
-          TRADED_WITH_BUYER_CHECK_AND_CHANGE,
-          `#${CONNECTION_WITH_BUYER}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      },
-      mapYesNoField(answers[CONNECTION_WITH_BUYER]),
-    ),
+    ...optionalFields(answers, referenceNumber, checkAndChange),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, TRADED_WITH_BUYER),

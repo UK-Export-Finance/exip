@@ -20,6 +20,7 @@ const {
         CAN_CONTACT_BUYER,
       },
       CONNECTION_WITH_BUYER,
+      CONNECTION_WITH_BUYER_DESCRIPTION,
       TRADED_WITH_BUYER,
     },
   },
@@ -31,61 +32,97 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
   let referenceNumber;
   let url;
 
-  before(() => {
-    cy.deleteAccount();
+  describe(`${CONNECTION_WITH_BUYER} as no`, () => {
+    before(() => {
+      cy.deleteAccount();
 
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
+        cy.startInsuranceYourBuyerSection({});
 
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({});
+        cy.completeAndSubmitCompanyOrOrganisationForm({});
+        cy.completeAndSubmitConnectionToTheBuyerForm({});
+        cy.completeAndSubmitTradedWithBuyerForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    it(`should render a ${NAME} summary list row`, () => {
+      checkSummaryList[NAME]({});
+    });
+
+    it(`should render a ${ADDRESS} summary list row`, () => {
+      checkSummaryList[ADDRESS]();
+    });
+
+    it(`should render a ${REGISTRATION_NUMBER} summary list row`, () => {
+      checkSummaryList[REGISTRATION_NUMBER]();
+    });
+
+    it(`should render a ${WEBSITE} summary list row`, () => {
+      checkSummaryList[WEBSITE]();
+    });
+
+    it(`should render a ${FIRST_NAME} summary list row`, () => {
+      checkSummaryList[FIRST_NAME]();
+    });
+
+    it(`should render a ${CAN_CONTACT_BUYER} summary list row`, () => {
+      checkSummaryList[CAN_CONTACT_BUYER]();
+    });
+
+    it(`should render a ${CONNECTION_WITH_BUYER} summary list row`, () => {
+      checkSummaryList[CONNECTION_WITH_BUYER]();
+    });
+
+    it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
+      checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: false });
+    });
+
+    it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
+      checkSummaryList[TRADED_WITH_BUYER]();
     });
   });
 
-  beforeEach(() => {
-    cy.saveSession();
+  describe(`${CONNECTION_WITH_BUYER} as yes`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-    cy.navigateToUrl(url);
-  });
+        cy.startInsuranceYourBuyerSection({});
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+        cy.completeAndSubmitCompanyOrOrganisationForm({});
+        cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+        cy.completeAndSubmitTradedWithBuyerForm({});
 
-  it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]({});
-  });
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
 
-  it(`should render a ${ADDRESS} summary list row`, () => {
-    checkSummaryList[ADDRESS]();
-  });
+    beforeEach(() => {
+      cy.saveSession();
 
-  it(`should render a ${REGISTRATION_NUMBER} summary list row`, () => {
-    checkSummaryList[REGISTRATION_NUMBER]();
-  });
+      cy.navigateToUrl(url);
+    });
 
-  it(`should render a ${WEBSITE} summary list row`, () => {
-    checkSummaryList[WEBSITE]();
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  it(`should render a ${FIRST_NAME} summary list row`, () => {
-    checkSummaryList[FIRST_NAME]();
-  });
-
-  it(`should render a ${CAN_CONTACT_BUYER} summary list row`, () => {
-    checkSummaryList[CAN_CONTACT_BUYER]();
-  });
-
-  it(`should render a ${CONNECTION_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CONNECTION_WITH_BUYER]();
-  });
-
-  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[TRADED_WITH_BUYER]();
+    it(`should render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
+      checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({});
+    });
   });
 });

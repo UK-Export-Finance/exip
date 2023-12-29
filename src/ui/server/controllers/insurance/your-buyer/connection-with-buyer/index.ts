@@ -11,10 +11,13 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: { TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -113,6 +116,14 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`);
