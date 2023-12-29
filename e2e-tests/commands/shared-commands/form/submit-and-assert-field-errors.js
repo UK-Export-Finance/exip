@@ -1,15 +1,20 @@
 import { submitButton } from '../../../pages/shared';
-import partials from '../../../partials';
 
 /**
- * @param {String} field
- * @param {String} fieldValue - the value to input - can be null
- * @param {Number} errorIndex - index of error in errorSummary
- * @param {Number} errorSummaryLength - the number of expected errors in errorSummary
- * @param {String} errorMessage
+ * submitAndAssertFieldErrors
+ * Submit and assert errors for a field
+ * @param {String} field: Field selector
+ * @param {String} fieldValue: The value to input - can be null
+ * @param {Number} errorIndex: Index of summary list error
+ * @param {Number} errorSummaryLength: The number of expected errors in the summary list
+ * @param {String} errorMessage: Expected error message
+ * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true
  */
 const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryLength, errorMessage, clearInput = true) => {
-  // only type if a field value is provided
+  /**
+   * If a fieldValue is provided,
+   * Enter the value into the field's input.
+   */
   if (fieldValue) {
     cy.keyboardInput(field.input(), fieldValue);
   } else if (clearInput) {
@@ -18,19 +23,12 @@ const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryL
 
   submitButton().click();
 
-  cy.checkErrorSummaryListHeading();
-
-  partials.errorSummaryListItems().should('have.length', errorSummaryLength);
-
-  cy.checkText(
-    partials.errorSummaryListItems().eq(errorIndex),
+  cy.assertFieldErrors({
+    field,
+    errorIndex,
+    errorSummaryLength,
     errorMessage,
-  );
-
-  partials.errorSummaryListItemLinks().eq(errorIndex).click();
-  field.input().should('have.focus');
-
-  cy.checkText(field.errorMessage(), `Error: ${errorMessage}`);
+  });
 };
 
 export default submitAndAssertFieldErrors;

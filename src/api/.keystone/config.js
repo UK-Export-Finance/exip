@@ -4243,7 +4243,7 @@ var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY: "Type of policy and exports",
+    POLICY: "Your insurance coverage",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
     ELIGIBILITY: "Eligibility"
