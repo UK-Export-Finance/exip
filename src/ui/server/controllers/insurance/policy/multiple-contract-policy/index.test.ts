@@ -1,5 +1,6 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, totalMonthsOfCoverOptions, get, post } from '.';
-import { GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
+import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -16,13 +17,17 @@ import { mockReq, mockRes, mockCurrencies } from '../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
+  INSURANCE_ROOT,
+  POLICY: {
+    MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK,
+    MULTIPLE_CONTRACT_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    CHECK_YOUR_ANSWERS,
   },
-} = ROUTES;
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   CONTRACT_POLICY: {
@@ -287,7 +292,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_CHANGE;
+          req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHANGE;
 
           await post(req, res);
 
@@ -299,7 +304,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
+          req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
 
           await post(req, res);
 

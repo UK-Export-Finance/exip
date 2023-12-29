@@ -90,6 +90,8 @@ export const POLICY_FIELDS = {
   },
   EXPORT_VALUE: {
     SINGLE: {
+      // TODO
+      // typo - should be EXPORT_VALUE
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
         LABEL: "What's the total value of the contract you want to insure?",
         HINT: 'Enter a whole number - do not enter decimals.',
