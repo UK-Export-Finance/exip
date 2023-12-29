@@ -24,7 +24,7 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION, TRADED_WITH_BU
  * @param {ApplicationBuyer} answers
  * @param {Number} referenceNumber
  * @param {Boolean} checkAndChange
- * @returns {Object} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure
+ * @returns {Array<SummaryListItemData>} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure
  */
 export const optionalFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
@@ -73,7 +73,8 @@ export const optionalFields = (answers: ApplicationBuyer, referenceNumber: numbe
  * Create all working with buyer fields and values for the Insurance - your buyer govukSummaryList
  * @param {ApplicationBuyer} answers buyer data
  * @param {Number} referenceNumber application reference number
- * @returns {Object} All working with buyer fields and values in an object structure for GOVUK summary list structure
+ * @param {Boolean} checkAndChange
+ * @returns {Array<SummaryListItemData>} All working with buyer fields and values in an object structure for GOVUK summary list structure
  */
 const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [

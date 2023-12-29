@@ -118,10 +118,18 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    /**
+     * If is a change route
+     * redirect to CHECK_YOUR_ANSWERS
+     */
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If is a check-and-change route
+     * redirect to CHECK_AND_CHANGE_ROUTE
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
