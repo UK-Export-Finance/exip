@@ -1,9 +1,12 @@
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
+import application from '../../../../../../fixtures/application';
 
 const {
   INSURANCE: {
     YOUR_BUYER: {
+      CONNECTION_WITH_BUYER,
+      CONNECTION_WITH_BUYER_DESCRIPTION,
       TRADED_WITH_BUYER,
     },
   },
@@ -13,9 +16,12 @@ const {
   ROOT,
   YOUR_BUYER: {
     TRADED_WITH_BUYER_CHANGE,
+    CONNECTION_WITH_BUYER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = ROUTES.INSURANCE;
+
+const { BUYER } = application;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let url;
@@ -45,39 +51,63 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
     cy.deleteApplication(referenceNumber);
   });
 
-  // describe(CONNECTION_WITH_BUYER, () => {
-  //   const fieldId = CONNECTION_WITH_BUYER;
+  describe(CONNECTION_WITH_BUYER, () => {
+    const fieldId = CONNECTION_WITH_BUYER;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${WORKING_WITH_BUYER_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${CONNECTION_WITH_BUYER}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: WORKING_WITH_BUYER_CHANGE, fieldId: CONNECTION_WITH_BUYER });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CONNECTION_WITH_BUYER_CHANGE, fieldId: CONNECTION_WITH_BUYER });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+    describe(`form submission with a new answer - ${CONNECTION_WITH_BUYER} as yes`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       workingWithBuyerPage[fieldId].noRadioInput().click();
+        cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      });
 
-  //       submitButton().click();
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER}`, () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
+      });
 
-  //     it('should render the new answer', () => {
-  //       cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
-  //     });
-  //   });
-  // });
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
+        cy.assertSummaryListRowValue(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION, BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
+      });
+    });
+
+    describe(`form submission with a new answer - ${CONNECTION_WITH_BUYER} as no`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.completeAndSubmitConnectionToTheBuyerForm({});
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
+
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER}`, () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
+      });
+
+      it(`should not render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
+        cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
+      });
+    });
+  });
 
   describe(TRADED_WITH_BUYER, () => {
     const fieldId = TRADED_WITH_BUYER;
