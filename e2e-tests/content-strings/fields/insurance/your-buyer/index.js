@@ -65,18 +65,21 @@ export const YOUR_BUYER_FIELDS = {
     LABEL: 'Are you connected with the buyer in any way?',
     HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
     SUMMARY: {
-      TITLE: 'Connected with the buyer in any way?',
+      TITLE: 'Connected with the buyer',
     },
   },
   [CONNECTION_WITH_BUYER_DESCRIPTION]: {
     LABEL: 'Describe the connection with the buyer',
     MAXIMUM: 1000,
+    SUMMARY: {
+      TITLE: 'Details of connection',
+    },
   },
   [TRADED_WITH_BUYER]: {
     LABEL: 'Have you traded with this buyer before?',
     HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
     SUMMARY: {
-      TITLE: 'Have you traded with this buyer before?',
+      TITLE: 'Trading history',
     },
   },
 };

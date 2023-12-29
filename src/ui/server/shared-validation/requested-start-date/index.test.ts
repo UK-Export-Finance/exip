@@ -24,46 +24,25 @@ describe('shared-validation/requested-start-date', () => {
   const month = date.getMonth();
   const year = date.getFullYear();
 
+  const futureDate = new Date(date.setMonth(month + 6));
+
   const mockErrors = {
     summary: [],
     errorList: {},
   };
 
-  describe('when day field is not provided', () => {
+  const mockValidBody = {
+    [`${FIELD_ID}-day`]: futureDate.getDate(),
+    [`${FIELD_ID}-month`]: futureDate.getMonth(),
+    [`${FIELD_ID}-year`]: futureDate.getFullYear(),
+  };
+
+  describe('when no day/month/year fields are provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-month`]: month,
-        [`${FIELD_ID}-year`]: year,
-      };
-
-      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when month field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: day,
-        [`${FIELD_ID}-year`]: year,
-      };
-
-      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when year field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: day,
-        [`${FIELD_ID}-month`]: month,
+        [`${FIELD_ID}-day`]: '',
+        [`${FIELD_ID}-month`]: '',
+        [`${FIELD_ID}-year`]: '',
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
@@ -84,7 +63,115 @@ describe('shared-validation/requested-start-date', () => {
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.NOT_A_NUMBER, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a valid day is provided, but month and year are not', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-month`]: '',
+        [`${FIELD_ID}-year`]: '',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.MISSING_MONTH_AND_YEAR, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a valid month is provided, but day and year are not', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-day`]: '',
+        [`${FIELD_ID}-year`]: '',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.MISSING_DAY_AND_YEAR, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when a valid year is provided, but day and month are not', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-day`]: '',
+        [`${FIELD_ID}-month`]: '',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.MISSING_DAY_AND_MONTH, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when day is not provided', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-day`]: '',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_DAY, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when month is not provided', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-month`]: '',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_MONTH, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when year is not provided', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-year`]: '',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_YEAR, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when year has less than 4 digits', () => {
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-year`]: '202',
+      };
+
+      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_YEAR_DIGITS, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -93,14 +180,14 @@ describe('shared-validation/requested-start-date', () => {
   describe('when the date is invalid', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: day,
+        [`${FIELD_ID}-day`]: '50',
         [`${FIELD_ID}-month`]: '24',
         [`${FIELD_ID}-year`]: year,
       };
 
       const result = requestedStartDateRules(mockSubmittedData, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INVALID_DATE, mockErrors);
 
       expect(result).toEqual(expected);
     });
@@ -142,15 +229,7 @@ describe('shared-validation/requested-start-date', () => {
 
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
-      const futureDate = new Date(date.setMonth(month + 6));
-
-      const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: futureDate.getDate(),
-        [`${FIELD_ID}-month`]: futureDate.getMonth(),
-        [`${FIELD_ID}-year`]: futureDate.getFullYear(),
-      };
-
-      const result = requestedStartDateRules(mockSubmittedData, mockErrors);
+      const result = requestedStartDateRules(mockValidBody, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });

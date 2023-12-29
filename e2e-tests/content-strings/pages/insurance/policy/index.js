@@ -1,5 +1,5 @@
 const SHARED = {
-  HEADING_CAPTION: 'Type of policy and exports',
+  HEADING_CAPTION: 'Your insurance coverage',
 };
 
 const ROOT = {

@@ -19,6 +19,7 @@ const {
         CAN_CONTACT_BUYER,
       },
       CONNECTION_WITH_BUYER,
+      CONNECTION_WITH_BUYER_DESCRIPTION,
       TRADED_WITH_BUYER,
     },
   },
@@ -98,6 +99,18 @@ const checkYourBusinessSummaryList = ({
     const expectedValue = application.BUYER[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [CONNECTION_WITH_BUYER_DESCRIPTION]: ({ shouldRender = true }) => {
+    const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+      const expectedValue = application.BUYER[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
   },
   [TRADED_WITH_BUYER]: () => {
     const fieldId = TRADED_WITH_BUYER;

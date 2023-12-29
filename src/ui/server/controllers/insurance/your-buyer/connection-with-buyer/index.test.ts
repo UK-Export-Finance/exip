@@ -16,7 +16,14 @@ import mapAndSave from '../map-and-save';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK },
+  YOUR_BUYER: {
+    TRADED_WITH_BUYER,
+    CONNECTION_WITH_BUYER_SAVE_AND_BACK: SAVE_AND_BACK,
+    CONNECTION_WITH_BUYER_CHANGE,
+    CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -143,6 +150,32 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = CONNECTION_WITH_BUYER_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = validBody;
+          req.originalUrl = CONNECTION_WITH_BUYER_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

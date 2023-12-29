@@ -5,6 +5,7 @@ import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
@@ -13,11 +14,13 @@ const {
   },
   YOUR_BUYER: {
     TRADED_WITH_BUYER_CHECK_AND_CHANGE,
+    CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  // CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
   TRADED_WITH_BUYER,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
@@ -25,8 +28,10 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const getFieldVariables = (fieldId, referenceNumber) => ({
-  route: TRADED_WITH_BUYER_CHECK_AND_CHANGE,
+const { BUYER } = application;
+
+const getFieldVariables = (fieldId, referenceNumber, route) => ({
+  route,
   checkYourAnswersRoute: YOUR_BUYER,
   newValueInput: '',
   fieldId,
@@ -69,50 +74,85 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
     cy.deleteApplication(referenceNumber);
   });
 
-  // describe(CONNECTION_WITH_BUYER, () => {
-  //   const fieldId = CONNECTION_WITH_BUYER;
-  //   let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+  describe(CONNECTION_WITH_BUYER, () => {
+    const fieldId = CONNECTION_WITH_BUYER;
+    let fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
 
-  //   describe('when clicking the `change` link', () => {
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
-  //     });
+    describe('when clicking the `change` link', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-  //     it(`should redirect to ${WORKING_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
-  //       fieldVariables = getFieldVariables(fieldId, referenceNumber);
+      it(`should redirect to ${CONNECTION_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+        fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
 
-  //       cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-  //     });
-  //   });
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+    describe(`form submission with a new answer - ${CONNECTION_WITH_BUYER} as yes`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       workingWithBuyerPage[fieldId].noRadioInput().click();
+        cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      });
 
-  //       submitButton().click();
-  //     });
+      it(`should redirect to ${YOUR_BUYER}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
+      });
 
-  //     it(`should redirect to ${YOUR_BUYER}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
-  //     });
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
+        fieldVariables.newValue = FIELD_VALUES.YES;
+        cy.checkChangeAnswerRendered(fieldVariables);
 
-  //     it('should render the new answer and retain a `completed` status tag', () => {
-  //       fieldVariables.newValue = FIELD_VALUES.NO;
-  //       cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkTaskStatusCompleted(status());
+      });
 
-  //       cy.checkTaskStatusCompleted(status());
-  //     });
-  //   });
-  // });
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION} and retain a "completed" status tag`, () => {
+        fieldVariables = getFieldVariables(CONNECTION_WITH_BUYER_DESCRIPTION, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
+        fieldVariables.newValue = BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
+
+        cy.checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
+      });
+    });
+
+    describe(`form submission with a new answer - ${CONNECTION_WITH_BUYER} as no`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.completeAndSubmitConnectionToTheBuyerForm({});
+      });
+
+      it(`should redirect to ${YOUR_BUYER}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
+      });
+
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
+        fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
+        fieldVariables.newValue = FIELD_VALUES.NO;
+        cy.checkChangeAnswerRendered(fieldVariables);
+
+        cy.checkTaskStatusCompleted(status());
+      });
+
+      it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row and retain a "completed" status tag`, () => {
+        cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
+
+        cy.checkTaskStatusCompleted(status());
+      });
+    });
+  });
 
   describe(TRADED_WITH_BUYER, () => {
     const fieldId = TRADED_WITH_BUYER;
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+    let fieldVariables = getFieldVariables(fieldId, referenceNumber, TRADED_WITH_BUYER_CHECK_AND_CHANGE);
 
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
@@ -121,7 +161,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
       it(`should redirect to ${TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
+        fieldVariables = getFieldVariables(fieldId, referenceNumber, TRADED_WITH_BUYER_CHECK_AND_CHANGE);
 
         cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
