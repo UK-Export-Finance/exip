@@ -24,5 +24,4 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_TOKEN }}
           release-type: node
-          config-file: release-please-config.json
-          manifest-file: .release-please-manifest.json
+          target-branch: main
