@@ -238,7 +238,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     const futureDate = new Date(date.setDate(date.getDate() + 1));
 
     const day = futureDate.getDate();
-    const month = futureDate.getMonth();
+    const month = futureDate.getMonth() + 1;
     const year = futureDate.getFullYear();
 
     const oneYearFromNow = new Date(futureDate.setFullYear(year + 1)).getFullYear();
