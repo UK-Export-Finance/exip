@@ -48,7 +48,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE),
+        field: getFieldById(FIELDS.EXPORT_VALUE.SINGLE, TOTAL_CONTRACT_VALUE),
         renderChangeLink: true,
         href: generateChangeLink(
           SINGLE_CONTRACT_POLICY_CHANGE,

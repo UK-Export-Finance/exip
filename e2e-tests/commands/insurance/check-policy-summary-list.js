@@ -81,10 +81,10 @@ const checkPolicySummaryList = ({
     },
     [TOTAL_CONTRACT_VALUE]: () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
-      const expectedKey = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
+      const expectedKey = FIELDS.EXPORT_VALUE.SINGLE[fieldId].SUMMARY.TITLE;
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.SINGLE[fieldId].SUMMARY.TITLE;
+      const expectedChangeLinkText = FIELDS.EXPORT_VALUE.SINGLE[fieldId].SUMMARY.TITLE;
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
@@ -111,21 +111,21 @@ const checkPolicySummaryList = ({
     },
     [TOTAL_SALES_TO_BUYER]: () => {
       const fieldId = TOTAL_SALES_TO_BUYER;
-      const expectedKey = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+      const expectedKey = FIELDS.EXPORT_VALUE.MULTIPLE[fieldId].SUMMARY.TITLE;
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+      const expectedChangeLinkText = FIELDS.EXPORT_VALUE.MULTIPLE[fieldId].SUMMARY.TITLE;
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [MAXIMUM_BUYER_WILL_OWE]: () => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
-      const expectedKey = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+      const expectedKey = FIELDS.EXPORT_VALUE.MULTIPLE[fieldId].SUMMARY.TITLE;
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-      const expectedChangeLinkText = FIELDS.CONTRACT_POLICY.MULTIPLE[fieldId].SUMMARY.TITLE;
+      const expectedChangeLinkText = FIELDS.EXPORT_VALUE.MULTIPLE[fieldId].SUMMARY.TITLE;
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },

@@ -10,7 +10,10 @@ import mockApplication, { mockSinglePolicy } from '../../../../test-mocks/mock-a
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE },
+  },
+  EXPORT_VALUE: {
+    SINGLE: { TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
