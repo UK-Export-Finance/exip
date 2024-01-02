@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.4.1](https://github.com/UK-Export-Finance/exip/compare/v2.4.0...v2.4.1) (2024-01-02)
+
+
+### Bug Fixes
+
+* **EMS-2492:** Quote - Policy type form validation ([#1602](https://github.com/UK-Export-Finance/exip/issues/1602)) ([80a785a](https://github.com/UK-Export-Finance/exip/commit/80a785ab5160e3a0ab75ef695b4dc4b2e6fe6735))
+* **manifest:** updated manifest version ([d5644ae](https://github.com/UK-Export-Finance/exip/commit/d5644ae6530ed78f5896ffc9df92bf4a9b8770b3))
+* **release-please:** specified default target branch ([#1625](https://github.com/UK-Export-Finance/exip/issues/1625)) ([89a7aac](https://github.com/UK-Export-Finance/exip/commit/89a7aac65b14b7fd7af35c9be27728075c41c9db))
+* **test:** date issue ([b2ee757](https://github.com/UK-Export-Finance/exip/commit/b2ee757ba13632ad1a68636d391c057b8350a0fd))
+* **tests:** Mock months generated as 0 ([#1623](https://github.com/UK-Export-Finance/exip/issues/1623)) ([978a58b](https://github.com/UK-Export-Finance/exip/commit/978a58b3a8afc0642bafefef90c363dfaf866686))
+
 ## [2.4.0](https://github.com/UK-Export-Finance/exip/compare/v2.3.8...v2.4.0) (2023-12-27)
 
 
