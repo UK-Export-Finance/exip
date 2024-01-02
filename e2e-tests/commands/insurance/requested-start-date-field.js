@@ -125,11 +125,12 @@ const checkValidation = {
   notInTheFuture: () => {
     const now = new Date();
     const day = now.getDate();
+    const month = now.getMonth() + 1;
 
     const yesterday = new Date(now.setDate(day - 1));
 
     cy.keyboardInput(field.dayInput(), yesterday.getDate());
-    cy.keyboardInput(field.monthInput(), yesterday.getMonth());
+    cy.keyboardInput(field.monthInput(), month);
     cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
     submitButton().click();
 
