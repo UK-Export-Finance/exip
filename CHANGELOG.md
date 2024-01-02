@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.6.0](https://github.com/UK-Export-Finance/exip/compare/v2.5.0...v2.6.0) (2024-01-02)
+
+
+### Features
+
+* **EMS-2296:** No PDF - Multiple contract policy - update total months of cover field ([#1603](https://github.com/UK-Export-Finance/exip/issues/1603)) ([d2d06db](https://github.com/UK-Export-Finance/exip/commit/d2d06dbf877e777102193500126b903b7517580b))
+* **EMS-2366-2442-2368:** No PDF - Traded with buyer - Page setup, validation and save and back ([#1604](https://github.com/UK-Export-Finance/exip/issues/1604)) ([a54ce42](https://github.com/UK-Export-Finance/exip/commit/a54ce42fb62338f365a518d41afe375ddc441121))
+* **EMS-2452-2462:** No PDF - Policy type - Requested start date validation rules ([#1607](https://github.com/UK-Export-Finance/exip/issues/1607)) ([3eb704f](https://github.com/UK-Export-Finance/exip/commit/3eb704fa2b2e045484a3fc6a903e87c6645220c3))
+* **EMS-2499:** No PDF - Working with buyer/Trading with buyer - Check and Change your answers ([#1609](https://github.com/UK-Export-Finance/exip/issues/1609)) ([57be8d8](https://github.com/UK-Export-Finance/exip/commit/57be8d8e3ab0081df2269df637670cf692bb1dff))
+
 ## [2.4.0](https://github.com/UK-Export-Finance/exip/compare/v2.3.8...v2.4.0) (2023-12-27)
 
 
