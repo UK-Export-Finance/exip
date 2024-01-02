@@ -84,7 +84,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
       typeOfPolicyPage[POLICY_TYPE].single.input().click();
       submitButton().click();
 
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

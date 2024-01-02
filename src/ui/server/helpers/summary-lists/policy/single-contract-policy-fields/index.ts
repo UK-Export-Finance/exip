@@ -10,7 +10,10 @@ import generateChangeLink from '../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE },
+  },
+  EXPORT_VALUE: {
+    SINGLE: { TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 

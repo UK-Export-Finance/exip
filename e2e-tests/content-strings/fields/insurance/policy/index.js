@@ -87,7 +87,7 @@ export const POLICY_FIELDS = {
   },
   EXPORT_VALUE: {
     SINGLE: {
-      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+      [EXPORT_VALUE.SINGLE.TOTAL_CONTRACT_VALUE]: {
         LABEL: "What's the total value of the contract you want to insure?",
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {

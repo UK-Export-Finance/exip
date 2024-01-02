@@ -131,6 +131,20 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select if you have a process for dealing with late payments',
       },
     },
+    EXPORT_CONTRACT: {
+      ABOUT_GOODS_OR_SERVICES: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+          IS_EMPTY: 'Enter the goods or services you will supply to the buyer',
+          ABOVE_MAXIMUM: 'The goods or services you will supply to the buyer cannot be more than 1000 characters',
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN]: {
+          IS_EMPTY: 'Select if you know the final destination of the goods or services',
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
+          IS_EMPTY: 'Enter the final destination of the goods or services',
+        },
+      },
+    },
     POLICY: {
       TYPE_OF_POLICY: {
         [FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE]: {
