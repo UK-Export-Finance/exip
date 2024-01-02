@@ -21,7 +21,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
     date = new Date();
 
     day = date.getDate();
-    month = date.getMonth();
+    month = date.getMonth() + 1;
     year = date.getFullYear();
   });
 

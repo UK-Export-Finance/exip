@@ -82,12 +82,13 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
 
       // enter an invalid date
       const now = new Date();
-      const day = new Date(now).getDate();
+      const day = now.getDate();
+      const month = now.getMonth() + 1;
 
       const yesterday = new Date(now.setDate(day - 1));
 
       cy.keyboardInput(field.dayInput(), yesterday.getDate());
-      cy.keyboardInput(field.monthInput(), yesterday.getMonth());
+      cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
 
       saveAndBackButton().click();
@@ -115,12 +116,13 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
 
   describe('when entering a valid requested cover start date and submitting the form via `save and go back` button', () => {
     const field = fieldSelector(REQUESTED_START_DATE);
+    const month = new Date(futureDate).getMonth() + 1;
 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.dayInput(), '1');
-      cy.keyboardInput(field.monthInput(), new Date(futureDate).getMonth());
+      cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), new Date(futureDate).getFullYear());
 
       saveAndBackButton().click();
@@ -141,7 +143,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       submitButton().click();
 
       field.dayInput().should('have.value', '1');
-      field.monthInput().should('have.value', new Date(futureDate).getMonth());
+      field.monthInput().should('have.value', month);
       field.yearInput().should('have.value', new Date(futureDate).getFullYear());
     });
   });
