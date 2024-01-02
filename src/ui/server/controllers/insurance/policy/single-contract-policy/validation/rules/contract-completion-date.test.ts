@@ -118,7 +118,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
 
       const mockSubmittedData = {
         [`${CONTRACT_COMPLETION_DATE}-day`]: yesterday.getDate(),
-        [`${CONTRACT_COMPLETION_DATE}-month`]: yesterday.getMonth(),
+        [`${CONTRACT_COMPLETION_DATE}-month`]: yesterday.getMonth() + 1,
         [`${CONTRACT_COMPLETION_DATE}-year`]: yesterday.getFullYear(),
       };
 
@@ -132,6 +132,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
     let date = new Date();
+    const month = date.getMonth() + 1;
     let year = date.getFullYear();
 
     // Add 1 day
@@ -141,12 +142,14 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
     const futureDateYear = initFutureDate.getFullYear();
     const futureDate = new Date(initFutureDate.setFullYear(futureDateYear + 1));
 
+    const futureDateMonth = initFutureDate.getMonth() + 1;
+
     let requestedStartDateFields = {};
 
     beforeEach(() => {
       requestedStartDateFields = {
         [`${REQUESTED_START_DATE}-day`]: futureDate.getDate(),
-        [`${REQUESTED_START_DATE}-month`]: futureDate.getMonth(),
+        [`${REQUESTED_START_DATE}-month`]: futureDateMonth,
         [`${REQUESTED_START_DATE}-year`]: futureDate.getFullYear(),
       };
     });
@@ -156,7 +159,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
         const mockSubmittedData = {
           ...requestedStartDateFields,
           [`${CONTRACT_COMPLETION_DATE}-day`]: futureDate.getDate(),
-          [`${CONTRACT_COMPLETION_DATE}-month`]: futureDate.getMonth(),
+          [`${CONTRACT_COMPLETION_DATE}-month`]: futureDateMonth,
           [`${CONTRACT_COMPLETION_DATE}-year`]: futureDate.getFullYear(),
         };
 
@@ -182,7 +185,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
           [`${REQUESTED_START_DATE}-month`]: nextYear1week.getMonth() + 1,
           [`${REQUESTED_START_DATE}-year`]: nextYear1week.getFullYear(),
           [`${CONTRACT_COMPLETION_DATE}-day`]: nextYear.getDate(),
-          [`${CONTRACT_COMPLETION_DATE}-month`]: nextYear.getMonth(),
+          [`${CONTRACT_COMPLETION_DATE}-month`]: nextYear.getMonth() + 1,
           [`${CONTRACT_COMPLETION_DATE}-year`]: nextYear.getFullYear(),
         };
 
@@ -198,7 +201,6 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       date = new Date();
 
       const day = date.getDate();
-      const month = date.getMonth();
       year = date.getFullYear();
 
       const futureYear = new Date(futureDate.setFullYear(futureDateYear + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
@@ -210,7 +212,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
           [`${REQUESTED_START_DATE}-month`]: month,
           [`${REQUESTED_START_DATE}-year`]: year,
           [`${CONTRACT_COMPLETION_DATE}-day`]: completionDate.getDate(),
-          [`${CONTRACT_COMPLETION_DATE}-month`]: completionDate.getMonth(),
+          [`${CONTRACT_COMPLETION_DATE}-month`]: completionDate.getMonth() + 1,
           [`${CONTRACT_COMPLETION_DATE}-year`]: completionDate.getFullYear(),
         };
 
