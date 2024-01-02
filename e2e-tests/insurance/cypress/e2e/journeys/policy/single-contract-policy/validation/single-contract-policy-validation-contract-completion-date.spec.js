@@ -169,7 +169,8 @@ context('Insurance - Policy - Single contract policy page - form validation - co
 
     cy.keyboardInput(field.dayInput(), yesterday.getDate());
     cy.keyboardInput(field.monthInput(), month);
-    cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
+    cy.keyboardInput(field.yearInput(), year);
+
     submitButton().click();
 
     cy.checkText(
