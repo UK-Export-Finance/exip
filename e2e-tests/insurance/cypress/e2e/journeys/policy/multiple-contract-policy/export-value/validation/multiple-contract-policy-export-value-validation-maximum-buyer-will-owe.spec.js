@@ -1,13 +1,13 @@
-import { submitButton } from '../../../../../../../pages/shared';
-import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
-import partials from '../../../../../../../partials';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { submitButton } from '../../../../../../../../pages/shared';
+import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
+import partials from '../../../../../../../../partials';
+import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import {
   APPLICATION,
   FIELD_IDS,
   FIELD_VALUES,
   ROUTES,
-} from '../../../../../../../constants';
+} from '../../../../../../../../constants';
 
 const {
   INSURANCE: {

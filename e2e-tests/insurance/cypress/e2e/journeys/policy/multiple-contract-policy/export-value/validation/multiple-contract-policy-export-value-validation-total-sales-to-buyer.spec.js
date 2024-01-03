@@ -1,7 +1,7 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { field as fieldSelector, submitButton } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
+import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../../constants';
 
 const {
   INSURANCE: {

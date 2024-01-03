@@ -2,23 +2,24 @@ import {
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
-} from '../../../../../../pages/shared';
-import { multipleContractPolicyExportValuePage } from '../../../../../../pages/insurance/policy';
-import partials from '../../../../../../partials';
+} from '../../../../../../../pages/shared';
+import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
+import partials from '../../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
   TASKS,
-} from '../../../../../../content-strings';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { FIELD_VALUES } from '../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import application from '../../../../../../fixtures/application';
+} from '../../../../../../../content-strings';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../fixtures/application';
+import { GBP } from '../../../../../../../fixtures/currencies';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_EXPORT_VALUE;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -30,7 +31,7 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { CONTRACT_POLICY } = FIELDS;
+const { EXPORT_VALUE } = FIELDS;
 
 const {
   POLICY: {
@@ -45,9 +46,11 @@ const {
 
 const task = taskList.prepareApplication.tasks.policy;
 
+const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy export value page - As an Exporter, I want to provide the details of the multiple contract policy that I need a cover for, So that UKEF can issue a credit insurance cover that meet my export transaction need', () => {
+context('Insurance - Policy - Multiple contract policy export value page - As an exporter, I want to provide the details of the multiple contract policy that I need a cover for', () => {
   let referenceNumber;
   let url;
 
@@ -57,7 +60,7 @@ context('Insurance - Policy - Multiple contract policy export value page - As an
 
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitPolicyTypeForm(policyType);
       cy.completeAndSubmitMultipleContractPolicyForm();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
@@ -76,7 +79,7 @@ context('Insurance - Policy - Multiple contract policy export value page - As an
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      pageTitle: `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}`,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`,
     });
@@ -95,9 +98,9 @@ context('Insurance - Policy - Multiple contract policy export value page - As an
       const fieldId = TOTAL_SALES_TO_BUYER;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
-      cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
+      cy.checkText(field.hint(), EXPORT_VALUE.MULTIPLE[fieldId].HINT);
 
       cy.checkText(field.prefix(), '£');
 
@@ -107,11 +110,11 @@ context('Insurance - Policy - Multiple contract policy export value page - As an
     it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
       const field = multipleContractPolicyExportValuePage[fieldId];
-      const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
+      const { HINT } = EXPORT_VALUE.MULTIPLE[fieldId];
 
-      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
-      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
+      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
       cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
 
@@ -131,7 +134,7 @@ context('Insurance - Policy - Multiple contract policy export value page - As an
     });
 
     it(`should redirect to ${NAME_ON_POLICY}`, () => {
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitExportValueForm({ policyType });
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);

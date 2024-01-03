@@ -29,6 +29,10 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
+
+const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
+
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -46,7 +50,7 @@ export const pageVariables = (currencies: Array<Currency>, policyCurrencyCode: s
       ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
     },
   },
-  CURRENCY_NAME: getCurrencyByCode(currencies, policyCurrencyCode).name,
+  DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(currencies, policyCurrencyCode).name}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE;
@@ -78,12 +82,19 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const generatedPageVariables = pageVariables(currencies, String(policyCurrencyCode));
+
+    const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+        PAGE_CONTENT_STRINGS: {
+          ...PAGE_CONTENT_STRINGS,
+          PAGE_TITLE: DYNAMIC_PAGE_TITLE,
+        },
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(currencies, String(policyCurrencyCode)),
+      ...generatedPageVariables,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
     });
@@ -126,12 +137,19 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
+      const generatedPageVariables = pageVariables(currencies, String(policyCurrencyCode));
+
+      const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
+
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
+          PAGE_CONTENT_STRINGS: {
+            ...PAGE_CONTENT_STRINGS,
+            PAGE_TITLE: DYNAMIC_PAGE_TITLE,
+          },
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(currencies, String(policyCurrencyCode)),
+        ...generatedPageVariables,
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,

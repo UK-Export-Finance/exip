@@ -150,9 +150,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
         fieldSelector(TOTAL_MONTHS_OF_COVER).input().should('have.value', application.POLICY[TOTAL_MONTHS_OF_COVER]);
 
-        // fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-        // fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
-
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
         radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
       });

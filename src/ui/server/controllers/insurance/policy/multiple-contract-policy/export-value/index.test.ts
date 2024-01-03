@@ -1,4 +1,4 @@
-import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
+import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
@@ -29,6 +29,8 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
+const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
+
 const {
   policy: { policyCurrencyCode },
 } = mockApplication;
@@ -57,6 +59,12 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     jest.resetAllMocks();
   });
 
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE);
+    });
+  });
+
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const result = pageVariables(mockCurrencies, String(policyCurrencyCode));
@@ -72,7 +80,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
             ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
           },
         },
-        CURRENCY_NAME: getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name,
+        DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name}`,
       };
 
       expect(result).toEqual(expected);
@@ -103,12 +111,19 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     it('should render template', async () => {
       await get(req, res);
 
+      const generatedPageVariables = pageVariables(mockCurrencies, String(policyCurrencyCode));
+
+      const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
+
       const expectedVariables = {
         ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+          PAGE_CONTENT_STRINGS: {
+            ...PAGE_CONTENT_STRINGS,
+            PAGE_TITLE: DYNAMIC_PAGE_TITLE,
+          },
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockCurrencies, String(policyCurrencyCode)),
+        ...generatedPageVariables,
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
       };
@@ -228,12 +243,19 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
+        const generatedPageVariables = pageVariables(mockCurrencies, String(policyCurrencyCode));
+
+        const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
+
         const expectedVariables = {
           ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
+            PAGE_CONTENT_STRINGS: {
+              ...PAGE_CONTENT_STRINGS,
+              PAGE_TITLE: DYNAMIC_PAGE_TITLE,
+            },
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockCurrencies, String(policyCurrencyCode)),
+          ...generatedPageVariables,
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
