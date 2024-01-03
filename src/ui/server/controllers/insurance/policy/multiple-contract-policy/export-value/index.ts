@@ -46,7 +46,7 @@ export const pageVariables = (currencies: Array<Currency>, policyCurrencyCode: s
       ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
     },
   },
-  CURRENCY_NAME: getCurrencyByCode(currencies, policyCurrencyCode),
+  CURRENCY_NAME: getCurrencyByCode(currencies, policyCurrencyCode).name,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE;

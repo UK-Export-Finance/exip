@@ -72,7 +72,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
             ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
           },
         },
-        CURRENCY_NAME: getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)),
+        CURRENCY_NAME: getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name,
       };
 
       expect(result).toEqual(expected);
