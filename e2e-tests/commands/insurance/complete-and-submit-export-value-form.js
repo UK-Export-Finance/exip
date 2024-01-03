@@ -1,19 +1,6 @@
 import { FIELD_VALUES } from '../../constants';
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { multipleContractPolicyExportValuePage } from '../../pages/insurance/policy';
-import { field, submitButton } from '../../pages/shared';
-import application from '../../fixtures/application';
-
-const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
-    },
-  },
-} = INSURANCE_FIELD_IDS;
+import completeExportValueForm from './complete-export-value-form';
+import { submitButton } from '../../pages/shared';
 
 /**
  * completeAndSubmitExportValueForm
@@ -23,13 +10,8 @@ const {
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  */
 const completeAndSubmitExportValueForm = ({ policyType = FIELD_VALUES.POLICY_TYPE.SINGLE }) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
-    cy.keyboardInput(field(TOTAL_SALES_TO_BUYER).input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
-
-    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
-
-    submitButton().click();
-  }
+  completeExportValueForm({ policyType });
+  submitButton().click();
 };
 
 export default completeAndSubmitExportValueForm;

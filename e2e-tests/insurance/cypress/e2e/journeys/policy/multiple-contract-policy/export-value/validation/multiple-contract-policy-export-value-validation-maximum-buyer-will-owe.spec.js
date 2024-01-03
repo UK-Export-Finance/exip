@@ -2,42 +2,37 @@ import { submitButton } from '../../../../../../../../pages/shared';
 import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
-import {
-  APPLICATION,
-  FIELD_IDS,
-  FIELD_VALUES,
-  ROUTES,
-} from '../../../../../../../../constants';
+import { APPLICATION, FIELD_VALUES } from '../../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    POLICY: {
-      MULTIPLE_CONTRACT_POLICY,
-      NAME_ON_POLICY,
+  ROOT: INSURANCE_ROOT,
+  POLICY: {
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    NAME_ON_POLICY,
+  },
+} = INSURANCE_ROUTES;
+
+const {
+  POLICY: {
+    EXPORT_VALUE: {
+      MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = ROUTES;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
-      },
-    },
-  },
-} = FIELD_IDS;
-
-const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: CONTRACT_ERROR_MESSAGES,
+      EXPORT_VALUE: {
+        MULTIPLE: EXPORT_VALUE_ERROR_MESSAGES,
       },
     },
   },
 } = ERROR_MESSAGES;
+
+const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -50,9 +45,10 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitMultipleContractPolicyForm({ policyType });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
       cy.assertUrl(url);
     });
@@ -74,13 +70,13 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+      partials.errorSummaryListItems().eq(1),
+      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -89,13 +85,13 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+      partials.errorSummaryListItems().eq(1),
+      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -104,13 +100,13 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+      partials.errorSummaryListItems().eq(1),
+      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -119,13 +115,13 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
+      partials.errorSummaryListItems().eq(1),
+      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -134,13 +130,13 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM,
+      partials.errorSummaryListItems().eq(1),
+      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
     );
   });
 
@@ -151,18 +147,18 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM,
+      partials.errorSummaryListItems().eq(1),
+      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
     );
   });
 
   it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
-    cy.completeAndSubmitMultipleContractPolicyForm();
+    cy.completeExportValueForm({ policyType });
     cy.clickBackLink();
 
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
