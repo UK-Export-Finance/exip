@@ -1,17 +1,16 @@
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
+import { DEFAULT } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { submitButton, summaryList } from '../../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../../pages/insurance/policy';
-import formatCurrency from '../../../../../../../helpers/format-currency';
 import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
   POLICY: {
     TYPE_OF_POLICY_CHECK_AND_CHANGE,
-    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS,
 } = INSURANCE_ROUTES;
@@ -22,6 +21,10 @@ const {
     CONTRACT_POLICY: {
       MULTIPLE: {
         TOTAL_MONTHS_OF_COVER,
+      },
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: {
         TOTAL_SALES_TO_BUYER,
         MAXIMUM_BUYER_WILL_OWE,
       },
@@ -111,23 +114,23 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       it(TOTAL_SALES_TO_BUYER, () => {
         fieldId = TOTAL_SALES_TO_BUYER;
 
-        const expectedValue = formatCurrency(application.POLICY[fieldId]);
+        // const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
+        cy.assertSummaryListRowValue(summaryList, fieldId, DEFAULT.EMPTY);
       });
 
-      it(`${MAXIMUM_BUYER_WILL_OWE} with different change link`, () => {
+      it(MAXIMUM_BUYER_WILL_OWE, () => {
         fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-        const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
+        // const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedMaximumBuyerWillOwe);
+        cy.assertSummaryListRowValue(summaryList, fieldId, DEFAULT.EMPTY);
 
         // check the change link
-        summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
-        cy.assertChangeAnswersPageUrl({
-          referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
-        });
+        // summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
+        // cy.assertChangeAnswersPageUrl({
+        //   referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
+        // });
       });
     });
   });

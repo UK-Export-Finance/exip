@@ -49,7 +49,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, refere
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
+        field: getFieldById(FIELDS.EXPORT_VALUE.MULTIPLE, TOTAL_SALES_TO_BUYER),
         data: answers,
         renderChangeLink: true,
         href: generateChangeLink(
@@ -64,7 +64,7 @@ const generateMultipleContractPolicyFields = (answers: ApplicationPolicy, refere
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
+        field: getFieldById(FIELDS.EXPORT_VALUE.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
         data: answers,
         renderChangeLink: true,
         href: generateChangeLink(

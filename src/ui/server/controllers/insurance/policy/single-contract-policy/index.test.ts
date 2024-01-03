@@ -86,7 +86,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
           },
           TOTAL_CONTRACT_VALUE: {
             ID: TOTAL_CONTRACT_VALUE,
-            ...FIELDS.CONTRACT_POLICY.SINGLE[TOTAL_CONTRACT_VALUE],
+            ...FIELDS.EXPORT_VALUE.SINGLE[TOTAL_CONTRACT_VALUE],
           },
           POLICY_CURRENCY_CODE: {
             ID: POLICY_CURRENCY_CODE,

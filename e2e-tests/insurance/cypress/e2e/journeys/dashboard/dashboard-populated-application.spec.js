@@ -22,10 +22,8 @@ const {
     },
   },
   POLICY: {
-    CONTRACT_POLICY: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
     EXPORT_VALUE: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },

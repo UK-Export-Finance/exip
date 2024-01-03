@@ -1,11 +1,10 @@
 import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
-import { LINKS } from '../../../../../../content-strings';
+import { DEFAULT, LINKS } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
 
 const {
@@ -23,6 +22,10 @@ const {
     CONTRACT_POLICY: {
       MULTIPLE: {
         TOTAL_MONTHS_OF_COVER,
+      },
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: {
         TOTAL_SALES_TO_BUYER,
         MAXIMUM_BUYER_WILL_OWE,
       },
@@ -30,7 +33,10 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { CONTRACT_POLICY: { MULTIPLE: MULTIPLE_FIELD_STRINGS } } = FIELDS;
+const MULTIPLE_FIELD_STRINGS = {
+  ...FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...FIELDS.EXPORT_VALUE.MULTIPLE,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -122,28 +128,24 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
       it(TOTAL_SALES_TO_BUYER, () => {
         const fieldId = TOTAL_SALES_TO_BUYER;
 
-        const expectedTotalSalesToBuyer = formatCurrency(application.POLICY[fieldId]);
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedTotalSalesToBuyer);
+        cy.assertSummaryListRowValue(summaryList, fieldId, DEFAULT.EMPTY);
 
         cy.checkLink(
           summaryList.field(fieldId).changeLink(),
           `${changeLinkHref}#${fieldId}-label`,
-          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
+          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
         );
       });
 
       it(MAXIMUM_BUYER_WILL_OWE, () => {
         const fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-        const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedMaximumBuyerWillOwe);
+        cy.assertSummaryListRowValue(summaryList, fieldId, DEFAULT.EMPTY);
 
         cy.checkLink(
           summaryList.field(fieldId).changeLink(),
           `${changeLinkHref}#${fieldId}-label`,
-          `${LINKS.CHANGE} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
+          `${LINKS.ADD} ${MULTIPLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
         );
       });
     });

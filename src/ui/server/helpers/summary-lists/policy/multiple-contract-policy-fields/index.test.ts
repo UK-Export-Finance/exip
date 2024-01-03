@@ -42,7 +42,7 @@ describe('server/helpers/summary-lists/policy/multiple-contract-policy-fields', 
       ),
     },
     [TOTAL_SALES_TO_BUYER]: {
-      field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, TOTAL_SALES_TO_BUYER),
+      field: getFieldById(FIELDS.EXPORT_VALUE.MULTIPLE, TOTAL_SALES_TO_BUYER),
       renderChangeLink: true,
       href: generateChangeLink(
         MULTIPLE_CONTRACT_POLICY_CHANGE,
@@ -53,7 +53,7 @@ describe('server/helpers/summary-lists/policy/multiple-contract-policy-fields', 
       ),
     },
     [MAXIMUM_BUYER_WILL_OWE]: {
-      field: getFieldById(FIELDS.CONTRACT_POLICY.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
+      field: getFieldById(FIELDS.EXPORT_VALUE.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
       renderChangeLink: true,
       href: generateChangeLink(
         MULTIPLE_CONTRACT_POLICY_CHANGE,

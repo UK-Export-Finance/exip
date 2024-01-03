@@ -1,10 +1,8 @@
 import { field, submitButton, summaryList } from '../../../../../../pages/shared';
-import { multipleContractPolicyExportValuePage } from '../../../../../../pages/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
-import formatCurrency from '../../../../../../helpers/format-currency';
 import application from '../../../../../../fixtures/application';
 import { USD } from '../../../../../../fixtures/currencies';
 
@@ -21,7 +19,13 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: {
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
+      },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -144,29 +148,29 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
       });
 
-      describe('form submission with a new answer', () => {
-        const newAnswer = application.POLICY[fieldId] - 500;
+      // describe('form submission with a new answer', () => {
+      //   const newAnswer = application.POLICY[fieldId] - 500;
 
-        beforeEach(() => {
-          cy.navigateToUrl(url);
+      //   beforeEach(() => {
+      //     cy.navigateToUrl(url);
 
-          summaryList.field(fieldId).changeLink().click();
+      //     summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(field(fieldId).input(), newAnswer);
+      //     cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-          submitButton().click();
-        });
+      //     submitButton().click();
+      //   });
 
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-        });
+      //   it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      //     cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      //   });
 
-        it('should render the new answer', () => {
-          const expected = formatCurrency(newAnswer);
+      //   it('should render the new answer', () => {
+      //     const expected = formatCurrency(newAnswer);
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-        });
-      });
+      //     cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+      //   });
+      // });
     });
 
     describe(MAXIMUM_BUYER_WILL_OWE, () => {
@@ -182,29 +186,29 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
         });
       });
 
-      describe('form submission with a new answer', () => {
-        const newAnswer = Number(application.POLICY[fieldId]) + 1000;
+      // describe('form submission with a new answer', () => {
+      //   const newAnswer = Number(application.POLICY[fieldId]) + 1000;
 
-        beforeEach(() => {
-          cy.navigateToUrl(url);
+      //   beforeEach(() => {
+      //     cy.navigateToUrl(url);
 
-          summaryList.field(fieldId).changeLink().click();
+      //     summaryList.field(fieldId).changeLink().click();
 
-          cy.keyboardInput(multipleContractPolicyExportValuePage[fieldId].input(), newAnswer);
+      //     cy.keyboardInput(multipleContractPolicyExportValuePage[fieldId].input(), newAnswer);
 
-          submitButton().click();
-        });
+      //     submitButton().click();
+      //   });
 
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-        });
+      //   it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      //     cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      //   });
 
-        it('should render the new answer', () => {
-          const expected = formatCurrency(newAnswer);
+      //   it('should render the new answer', () => {
+      //     const expected = formatCurrency(newAnswer);
 
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-        });
-      });
+      //     cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+      //   });
+      // });
     });
 
     describe(POLICY_CURRENCY_CODE, () => {

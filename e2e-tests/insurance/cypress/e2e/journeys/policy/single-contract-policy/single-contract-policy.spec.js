@@ -39,8 +39,10 @@ const {
       POLICY_CURRENCY_CODE,
       SINGLE: {
         CONTRACT_COMPLETION_DATE,
-        TOTAL_CONTRACT_VALUE,
       },
+    },
+    EXPORT_VALUE: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -121,11 +123,11 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       const fieldId = TOTAL_CONTRACT_VALUE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
+      cy.checkText(field.label(), FIELDS.EXPORT_VALUE.SINGLE[fieldId].LABEL);
 
       cy.checkText(
         field.hint(),
-        FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT,
+        FIELDS.EXPORT_VALUE.SINGLE[fieldId].HINT,
       );
 
       cy.checkText(field.prefix(), '£');

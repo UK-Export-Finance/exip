@@ -22,7 +22,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     notInTheFuture,
     invalidFormat,
     isToday,
-  } = checkValidation({ errorSummaryLength: 5 });
+  } = checkValidation({ errorSummaryLength: 3 });
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
