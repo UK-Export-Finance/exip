@@ -1,34 +1,32 @@
 import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { FIELD_VALUES } from '../../../../../../../constants';
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    POLICY: {
-      SINGLE_CONTRACT_POLICY,
-      NAME_ON_POLICY,
-    },
+  ROOT: INSURANCE_ROOT,
+  POLICY: {
+    SINGLE_CONTRACT_POLICY,
+    NAME_ON_POLICY,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        SINGLE: {
-          TOTAL_CONTRACT_VALUE,
-        },
+  POLICY: {
+    EXPORT_VALUE: {
+      SINGLE: {
+        TOTAL_CONTRACT_VALUE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
+      EXPORT_VALUE: EXPORT_VALUE_ERROR_MESSAGES,
     },
   },
 } = ERROR_MESSAGES;
@@ -69,12 +67,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -84,12 +82,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -99,12 +97,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -114,12 +112,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -129,12 +127,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT}`,
     );
   });
 
@@ -144,12 +142,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].BELOW_MINIMUM}`,
     );
   });
 
@@ -159,12 +157,12 @@ context('Insurance - Policy - Single contract policy page - form validation - to
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
+      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
     );
 
     cy.checkText(
       field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
+      `Error: ${EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
     );
   });
 

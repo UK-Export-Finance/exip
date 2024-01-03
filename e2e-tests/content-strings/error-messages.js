@@ -189,7 +189,7 @@ export const ERROR_MESSAGES = {
       },
       EXPORT_VALUE: {
         SINGLE: {
-          [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+          [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.SINGLE.TOTAL_CONTRACT_VALUE]: {
             INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your contract value must be 1 or more',
             ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',

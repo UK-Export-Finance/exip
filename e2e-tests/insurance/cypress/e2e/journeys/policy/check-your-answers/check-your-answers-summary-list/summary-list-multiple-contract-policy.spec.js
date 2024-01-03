@@ -1,27 +1,31 @@
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   ROOT: INSURANCE_ROOT,
   POLICY,
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      TYPE_OF_POLICY: { POLICY_TYPE },
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        POLICY_CURRENCY_CODE,
-        MULTIPLE: {
-          TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
-        },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      POLICY_CURRENCY_CODE,
+      MULTIPLE: {
+        TOTAL_MONTHS_OF_COVER,
+      },
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: {
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
       },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
