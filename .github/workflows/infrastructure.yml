@@ -60,7 +60,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -321,7 +321,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -502,7 +502,7 @@ jobs:
             --policy-name waf${{ env.PRODUCT }}${{ env.TARGET }}${{ vars.VERSION }}
 
       - name: VPN 🧱
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
         uses: Azure/cli@v1.0.8
         with:
           inlineScript: |
@@ -532,7 +532,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -665,7 +665,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
@@ -768,7 +768,7 @@ jobs:
     runs-on: [self-hosted, EXIP, infrastructure]
     steps:
       - name: Pre-production 💫
-        if: contains('["dev", "staging"]', env.TARGET)
+        if: contains('["dev", "feature", "staging"]', env.TARGET)
         run: echo "TYPE=Preproduction" >> $GITHUB_ENV
 
       - name: Production 💫
