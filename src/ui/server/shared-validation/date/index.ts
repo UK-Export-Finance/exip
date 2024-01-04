@@ -15,9 +15,10 @@ interface DateRulesTempType {
  * dateRules
  * Check submitted form data for errors with a date field
  * Returns generateValidationErrors if there are any errors.
- * @param {Express.Response.body} Express response body
- * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @param {Express.Response.body} formBody: Express response body
+ * @param {Object} errors: Errors object from previous validation errors
+ * @param {String} fieldId: Date field ID
+ * @returns {Object} errorMessages: All possible error messages for the date field.
  */
 const dateRules = ({ formBody, errors, fieldId, errorMessages }: DateRulesTempType): ValidationErrors => {
   const dayId = `${fieldId}-day`;
