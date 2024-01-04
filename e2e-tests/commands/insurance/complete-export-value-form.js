@@ -5,7 +5,7 @@ import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  POLICY_TYPE: { SINGLE, MULTIPLE},
+  POLICY_TYPE: { SINGLE, MULTIPLE },
 } = FIELD_VALUES;
 
 const {
