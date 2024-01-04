@@ -71,7 +71,7 @@ export const POLICY_FIELDS = {
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
         LABEL: 'When do you expect to complete the export contract?',
-        HINT: 'For example, 6 11 2024',
+        HINT: 'For example, 06 11 2024',
         SUMMARY: {
           TITLE: 'Date you expect contract to complete',
         },
