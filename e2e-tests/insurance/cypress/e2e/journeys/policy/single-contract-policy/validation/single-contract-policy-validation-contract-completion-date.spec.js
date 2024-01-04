@@ -1,9 +1,9 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES, ELIGIBILITY } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import dateField from '../../../../../../../commands/insurance/date-field';
 
 const {
   POLICY: {
@@ -22,7 +22,9 @@ const {
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
+      CONTRACT_POLICY: {
+        SINGLE: CONTRACT_ERROR_MESSAGES,
+      },
     },
   },
 } = ERROR_MESSAGES;
@@ -33,9 +35,23 @@ context('Insurance - Policy - Single contract policy page - form validation - co
   let referenceNumber;
   let url;
 
-  let date = new Date();
-  let day = date.getDate();
-  let year = new Date(date).getFullYear();
+  const field = fieldSelector(CONTRACT_COMPLETION_DATE);
+
+  const {
+    day,
+    month,
+    year,
+    notInTheFuture,
+    invalidFormat,
+    isToday,
+    withTwoDateFields,
+  } = dateField.checkValidation({
+    errorSummaryLength: 4,
+    errorIndex: 1,
+    field,
+    fieldId: CONTRACT_COMPLETION_DATE,
+    errorMessages: CONTRACT_ERROR_MESSAGES[CONTRACT_COMPLETION_DATE],
+  });
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -60,215 +76,107 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = fieldSelector(CONTRACT_COMPLETION_DATE);
-
-  it('should render a validation error when day is not provided', () => {
-    cy.keyboardInput(field.monthInput(), '1');
-    cy.keyboardInput(field.yearInput(), year);
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
-    );
+  it('when the day is not provided', () => {
+    day.notProvided();
   });
 
-  it('should render a validation error when month is not provided', () => {
-    cy.keyboardInput(field.dayInput().clear(), '1');
-    field.monthInput().clear();
-    cy.keyboardInput(field.yearInput(), year);
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
-    );
+  it('when the month is not provided', () => {
+    month.notProvided();
   });
 
-  it('should render a validation error when year is not provided', () => {
-    cy.keyboardInput(field.dayInput(), '1');
-    field.monthInput().clear('2');
-    field.yearInput().clear();
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
-    );
+  it('when the year is not provided', () => {
+    year.notProvided();
   });
 
-  it('should render a validation error when day is not a number', () => {
-    cy.keyboardInput(field.dayInput(), 'Test');
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER}`,
-    );
+  it('when the day is provided, but month and year are not', () => {
+    day.providedWithoutOtherFields();
   });
 
-  it('should render a validation error when month is not a number', () => {
-    field.dayInput().clear();
-    cy.keyboardInput(field.monthInput(), 'Test');
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER}`,
-    );
+  it('when the month is provided, but day and year are not', () => {
+    month.providedWithoutOtherFields();
   });
 
-  it('should render a validation error when year is not a number', () => {
-    field.dayInput().clear();
-    field.monthInput().clear();
-    cy.keyboardInput(field.yearInput(), 'Test');
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].NOT_A_NUMBER}`,
-    );
+  it('when the year is provided, but day and month are not', () => {
+    year.providedWithoutOtherFields();
   });
 
-  it('should render a validation error when the date is not in the future', () => {
-    const yesterday = new Date(date.setDate(day - 1));
-    const month = yesterday.getMonth() + 1;
-
-    cy.keyboardInput(field.dayInput(), yesterday.getDate());
-    cy.keyboardInput(field.monthInput(), month);
-    cy.keyboardInput(field.yearInput(), year);
-
-    submitButton().click();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].BEFORE_EARLIEST,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].BEFORE_EARLIEST}`,
-    );
+  it('when the day is not a number', () => {
+    day.notANumber();
   });
 
-  it('should render a validation error when the date has an invalid format', () => {
-    date = new Date();
+  it('when the month is not a number', () => {
+    month.notANumber();
+  });
 
-    cy.keyboardInput(field.dayInput(), new Date(date).getDate());
-    cy.keyboardInput(field.monthInput(), '24');
-    cy.keyboardInput(field.yearInput(), new Date(date).getFullYear());
-    submitButton().click();
+  it('when the year is not a number', () => {
+    year.notANumber();
+  });
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT,
-    );
+  it('when the year does not have enough digits', () => {
+    year.notEnoughDigits();
+  });
 
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].INCORRECT_FORMAT}`,
-    );
+  it('when the the date is not in the future', () => {
+    notInTheFuture();
+  });
+
+  it('when the the date has an invalid format', () => {
+    invalidFormat();
+  });
+
+  it('should NOT render a validation error when the date is today', () => {
+    isToday();
   });
 
   describe(`when ${REQUESTED_START_DATE} is also provided`, () => {
-    date = new Date();
-    day = date.getDate();
-    year = date.getFullYear();
+    const date = new Date();
+    const initYear = date.getFullYear();
+    const startDate = new Date(date.setFullYear(initYear + 1));
 
-    const startDate = new Date(date.setFullYear(year + 1));
-    const month = startDate.getMonth() + 1;
+    const startDateObj = {
+      day: startDate.getDate(),
+      month: startDate.getMonth() + 1,
+      year: startDate.getFullYear(),
+    };
+
+    const fieldA = fieldSelector(REQUESTED_START_DATE);
+    const fieldB = fieldSelector(CONTRACT_COMPLETION_DATE);
+
+    const { cannotBeTheSame, cannotBeBefore, cannotBeAfter } = withTwoDateFields({
+      fieldA,
+      fieldB,
+      fieldBErrorIndex: 0,
+      expectedErrorSummaryLength: 3,
+    });
 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).dayInput(), day);
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).monthInput(), month);
-      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).yearInput(), startDate.getFullYear());
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).dayInput(), startDateObj.day);
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).monthInput(), startDateObj.month);
+      cy.keyboardInput(fieldSelector(REQUESTED_START_DATE).yearInput(), startDateObj.year);
     });
 
     it(`should render a validation error when the date is the same as ${REQUESTED_START_DATE}`, () => {
-      cy.keyboardInput(field.dayInput(), day);
-      cy.keyboardInput(field.monthInput(), month);
-      cy.keyboardInput(field.yearInput(), startDate.getFullYear());
-      submitButton().click();
-
-      cy.checkText(
-        partials.errorSummaryListItems().eq(0),
-        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_THE_SAME,
-      );
-
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_THE_SAME}`,
-      );
+      cannotBeTheSame(startDate);
     });
 
     it(`should render a validation error when the date is before the ${REQUESTED_START_DATE}`, () => {
-      cy.keyboardInput(field.dayInput(), day - 1);
-      cy.keyboardInput(field.monthInput(), month);
-      cy.keyboardInput(field.yearInput(), startDate.getFullYear());
-      submitButton().click();
+      const yesterday = new Date(date.setDate(startDateObj.day - 1));
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(0),
-        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_BEFORE,
-      );
-
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].CANNOT_BE_BEFORE}`,
-      );
+      cannotBeBefore(yesterday);
     });
 
     it(`should render a validation error when the date is over the maximum years allowed after ${REQUESTED_START_DATE}`, () => {
-      const endDateUnformatted = date.setFullYear(startDate.getFullYear() + ELIGIBILITY.MAX_COVER_PERIOD_YEARS);
-      const endDate = new Date(endDateUnformatted);
-      const endDateMonth = endDate.getMonth() + 1;
+      const additionalYears = startDateObj.year + ELIGIBILITY.MAX_COVER_PERIOD_YEARS;
 
-      cy.keyboardInput(field.dayInput(), endDate.getDate() + 1);
-      cy.keyboardInput(field.monthInput(), endDateMonth);
-      cy.keyboardInput(field.yearInput(), endDate.getFullYear());
-      submitButton().click();
+      const futureDate = new Date(startDate.setFullYear(additionalYears));
 
-      cy.checkText(
-        partials.errorSummaryListItems().eq(0),
-        CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].AFTER_LATEST,
-      );
+      const additionalDays = new Date(futureDate).getDate() + 1;
 
-      cy.checkText(
-        field.errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES.SINGLE[CONTRACT_COMPLETION_DATE].AFTER_LATEST}`,
-      );
+      const overMaxDate = new Date(futureDate.setDate(additionalDays));
+
+      cannotBeAfter(overMaxDate);
     });
   });
 });

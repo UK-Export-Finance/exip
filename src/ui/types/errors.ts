@@ -1,3 +1,19 @@
+interface DateErrorMessage {
+  INCORRECT_FORMAT: string;
+  BEFORE_EARLIEST: string;
+  MISSING_DAY_AND_MONTH: string;
+  MISSING_DAY_AND_YEAR: string;
+  MISSING_MONTH_AND_YEAR: string;
+  CANNOT_BE_THE_SAME: string;
+  CANNOT_BE_BEFORE: string;
+  INVALID_DAY: string;
+  INVALID_MONTH: string;
+  INVALID_YEAR: string;
+  INVALID_YEAR_DIGITS: string;
+  INVALID_DATE: string;
+  AFTER_LATEST: string;
+}
+
 interface NumberErrorMessage {
   IS_EMPTY: string;
   INCORRECT_FORMAT: string;
@@ -5,4 +21,4 @@ interface NumberErrorMessage {
   ABOVE_MAXIMUM: string;
 }
 
-export { NumberErrorMessage };
+export { DateErrorMessage, NumberErrorMessage };
