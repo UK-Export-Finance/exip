@@ -1,25 +1,5 @@
 import partials from '../../partials';
-import { field as fieldSelector, submitButton } from '../../pages/shared';
-import { ERROR_MESSAGES } from '../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-
-const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-    },
-  },
-} = INSURANCE_FIELD_IDS;
-
-const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-    },
-  },
-} = ERROR_MESSAGES;
-
-const field = fieldSelector(REQUESTED_START_DATE);
+import { submitButton } from '../../pages/shared';
 
 /**
  * checkValidation
@@ -30,12 +10,23 @@ const field = fieldSelector(REQUESTED_START_DATE);
  * 4) notInTheFuture
  * 5) invalidFormat
  * 6) isToday
+ * 7) withTwoDateFields.cannotBeTheSame
+ * 8) withTwoDateFields.cannotBeBefore
+ * 9) withTwoDateFields.cannotBeAfter
  * @param {Number} errorSummaryLength: The number of expected errors in the summary list
+ * @param {Number} errorIndex: Index of summary list error
+ * @param {String} fieldId: Field ID
+ * @param {Object} errorMessages: Error messages
  */
-const checkValidation = ({ errorSummaryLength }) => {
+const checkValidation = ({
+  errorSummaryLength,
+  errorIndex = 0,
+  field,
+  errorMessages,
+}) => {
   const assertFieldErrorsParams = {
     field,
-    errorIndex: 0,
+    errorIndex,
     errorSummaryLength,
     fieldShouldGainFocus: false,
   };
@@ -51,7 +42,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.yearInput(), '2023');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INVALID_DAY;
+        const errorMessage = errorMessages.INVALID_DAY;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -68,7 +59,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         field.yearInput().clear();
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].MISSING_MONTH_AND_YEAR;
+        const errorMessage = errorMessages.MISSING_MONTH_AND_YEAR;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -83,7 +74,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.dayInput().clear(), 'Test');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT;
+        const errorMessage = errorMessages.INCORRECT_FORMAT;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -102,7 +93,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.yearInput(), '2023');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INVALID_MONTH;
+        const errorMessage = errorMessages.INVALID_MONTH;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -119,7 +110,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         field.yearInput().clear();
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].MISSING_DAY_AND_YEAR;
+        const errorMessage = errorMessages.MISSING_DAY_AND_YEAR;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -135,7 +126,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.monthInput(), 'One');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT;
+        const errorMessage = errorMessages.INCORRECT_FORMAT;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -154,7 +145,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         field.yearInput().clear();
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INVALID_YEAR;
+        const errorMessage = errorMessages.INVALID_YEAR;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -171,7 +162,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.yearInput(), '2023');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].MISSING_DAY_AND_MONTH;
+        const errorMessage = errorMessages.MISSING_DAY_AND_MONTH;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -188,7 +179,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.yearInput(), '202');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INVALID_YEAR_DIGITS;
+        const errorMessage = errorMessages.INVALID_YEAR_DIGITS;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -205,7 +196,7 @@ const checkValidation = ({ errorSummaryLength }) => {
         cy.keyboardInput(field.yearInput(), 'One');
         submitButton().click();
 
-        const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INCORRECT_FORMAT;
+        const errorMessage = errorMessages.INCORRECT_FORMAT;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -229,7 +220,7 @@ const checkValidation = ({ errorSummaryLength }) => {
       cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
       submitButton().click();
 
-      const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST;
+      const errorMessage = errorMessages.BEFORE_EARLIEST;
 
       cy.assertFieldErrors({
         ...assertFieldErrorsParams,
@@ -251,7 +242,7 @@ const checkValidation = ({ errorSummaryLength }) => {
       cy.keyboardInput(field.yearInput(), futureDate.getFullYear());
       submitButton().click();
 
-      const errorMessage = CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].INVALID_DATE;
+      const errorMessage = errorMessages.INVALID_DATE;
 
       cy.assertFieldErrors({
         ...assertFieldErrorsParams,
@@ -272,11 +263,95 @@ const checkValidation = ({ errorSummaryLength }) => {
       submitButton().click();
 
       partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-        expect(text.trim()).not.equal(CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE].BEFORE_EARLIEST);
+        expect(text.trim()).not.equal(errorMessages.BEFORE_EARLIEST);
       });
 
       field.errorMessage().should('not.exist');
     },
+    /**
+     * Validations for when there are 2 date fields.
+     * E.g, start and end date fields.
+     */
+    withTwoDateFields: ({
+      fieldA, fieldB, expectedErrorSummaryLength, fieldBErrorIndex,
+    }) => ({
+      /**
+       * Enter the same date into both date fields.
+       * Check validation errors.
+       */
+      cannotBeTheSame: (dateValue) => {
+        const day = dateValue.getDate();
+        const month = dateValue.getMonth() + 1;
+        const year = dateValue.getFullYear();
+
+        cy.keyboardInput(fieldA.dayInput(), day);
+        cy.keyboardInput(fieldA.monthInput(), month);
+        cy.keyboardInput(fieldA.yearInput(), year);
+
+        cy.keyboardInput(fieldB.dayInput(), day);
+        cy.keyboardInput(fieldB.monthInput(), month);
+        cy.keyboardInput(fieldB.yearInput(), year);
+
+        submitButton().click();
+
+        const errorMessage = errorMessages.CANNOT_BE_THE_SAME;
+
+        cy.assertFieldErrors({
+          ...assertFieldErrorsParams,
+          errorMessage,
+          errorIndex: fieldBErrorIndex,
+          errorSummaryLength: expectedErrorSummaryLength,
+        });
+      },
+      /**
+       * Enter a date that is before the first date field.
+       * Check validation errors.
+       */
+      cannotBeBefore: (dateValue) => {
+        const day = dateValue.getDate();
+        const month = dateValue.getMonth() + 1;
+        const year = dateValue.getFullYear();
+
+        cy.keyboardInput(fieldB.dayInput(), day);
+        cy.keyboardInput(fieldB.monthInput(), month);
+        cy.keyboardInput(fieldB.yearInput(), year);
+
+        submitButton().click();
+
+        const errorMessage = errorMessages.CANNOT_BE_BEFORE;
+
+        cy.assertFieldErrors({
+          ...assertFieldErrorsParams,
+          errorMessage,
+          errorIndex: fieldBErrorIndex,
+          errorSummaryLength: expectedErrorSummaryLength,
+        });
+      },
+      /**
+       * Enter a date that is after the first date field.
+       * Check validation errors.
+       */
+      cannotBeAfter: (dateValue) => {
+        const day = dateValue.getDate();
+        const month = dateValue.getMonth() + 1;
+        const year = dateValue.getFullYear();
+
+        cy.keyboardInput(fieldB.dayInput(), day);
+        cy.keyboardInput(fieldB.monthInput(), month);
+        cy.keyboardInput(fieldB.yearInput(), year);
+
+        submitButton().click();
+
+        const errorMessage = errorMessages.AFTER_LATEST;
+
+        cy.assertFieldErrors({
+          ...assertFieldErrorsParams,
+          errorMessage,
+          errorIndex: fieldBErrorIndex,
+          errorSummaryLength: expectedErrorSummaryLength,
+        });
+      },
+    }),
   };
 };
 

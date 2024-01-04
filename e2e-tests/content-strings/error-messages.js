@@ -170,12 +170,19 @@ export const ERROR_MESSAGES = {
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
             INCORRECT_FORMAT: 'Enter a contract completion date in the correct format, like 06 11 2023',
-            NOT_A_NUMBER: 'Enter a contract completion date in the correct format, like 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a contract completion date in the past - enter a future date',
+            MISSING_DAY_AND_MONTH: 'Policy completion date must include a day and month',
+            MISSING_DAY_AND_YEAR: 'Policy completion date must include a day and year',
+            MISSING_MONTH_AND_YEAR: 'Policy completion date must include a month and year',
             AFTER_LATEST:
               "Your contract completion date is more than 2 years after your policy start date. You'll need to speak with an export finance manager, if you still want to apply",
             CANNOT_BE_THE_SAME: 'Your contract completion date cannot be the same as your policy start date',
-            CANNOT_BE_BEFORE: 'Your contract completion date must be after your policy start date',
+            CANNOT_BE_BEFORE: 'The date you expect to complete your export contract must be after the policy start date',
+            INVALID_DAY: 'Enter a valid day',
+            INVALID_MONTH: 'Enter a valid month',
+            INVALID_YEAR: 'Enter a valid year',
+            INVALID_YEAR_DIGITS: 'Year must include 4 numbers',
+            INVALID_DATE: 'Policy completion date must be a real date',
           },
         },
         MULTIPLE: {
