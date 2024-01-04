@@ -18,6 +18,10 @@ const {
       POLICY_CURRENCY_CODE,
       MULTIPLE: {
         TOTAL_MONTHS_OF_COVER,
+      },
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: {
         TOTAL_SALES_TO_BUYER,
         MAXIMUM_BUYER_WILL_OWE,
       },

@@ -1,5 +1,6 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, totalMonthsOfCoverOptions, get, post } from '.';
-import { GBP_CURRENCY_CODE, ROUTES, TEMPLATES } from '../../../../constants';
+import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -16,13 +17,17 @@ import { mockReq, mockRes, mockCurrencies } from '../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
+  INSURANCE_ROOT,
+  POLICY: {
+    MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK,
+    MULTIPLE_CONTRACT_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    CHECK_YOUR_ANSWERS,
   },
-} = ROUTES;
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   CONTRACT_POLICY: {
@@ -30,7 +35,7 @@ const {
     REQUESTED_START_DATE_DAY,
     REQUESTED_START_DATE_MONTH,
     REQUESTED_START_DATE_YEAR,
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     POLICY_CURRENCY_CODE,
   },
 } = POLICY_FIELD_IDS;
@@ -85,14 +90,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
             ID: TOTAL_MONTHS_OF_COVER,
             ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER],
           },
-          TOTAL_SALES_TO_BUYER: {
-            ID: TOTAL_SALES_TO_BUYER,
-            ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_SALES_TO_BUYER],
-          },
-          MAXIMUM_BUYER_WILL_OWE: {
-            ID: MAXIMUM_BUYER_WILL_OWE,
-            ...FIELDS.CONTRACT_POLICY.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
-          },
           POLICY_CURRENCY_CODE: {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
@@ -121,15 +118,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [
-        REQUESTED_START_DATE_DAY,
-        REQUESTED_START_DATE_MONTH,
-        REQUESTED_START_DATE_YEAR,
-        TOTAL_MONTHS_OF_COVER,
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-        POLICY_CURRENCY_CODE,
-      ];
+      const expected = [REQUESTED_START_DATE_DAY, REQUESTED_START_DATE_MONTH, REQUESTED_START_DATE_YEAR, TOTAL_MONTHS_OF_COVER, POLICY_CURRENCY_CODE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -275,8 +264,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
       [`${REQUESTED_START_DATE}-month`]: date.getMonth() + 1,
       [`${REQUESTED_START_DATE}-year`]: date.getFullYear() + 1,
       [TOTAL_MONTHS_OF_COVER]: '1',
-      [TOTAL_SALES_TO_BUYER]: '1000',
-      [MAXIMUM_BUYER_WILL_OWE]: '500',
       [POLICY_CURRENCY_CODE]: GBP_CURRENCY_CODE,
     };
 
@@ -295,17 +282,17 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${NAME_ON_POLICY}`, async () => {
+      it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${NAME_ON_POLICY}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_CHANGE;
+          req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHANGE;
 
           await post(req, res);
 
@@ -317,7 +304,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
+          req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
 
           await post(req, res);
 

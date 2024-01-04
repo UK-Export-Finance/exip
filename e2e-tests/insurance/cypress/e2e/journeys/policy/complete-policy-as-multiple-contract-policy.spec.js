@@ -14,6 +14,8 @@ const {
 
 const task = taskList.prepareApplication.tasks.policy;
 
+const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Complete the entire section as a multiple contract policy', () => {
@@ -25,8 +27,9 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
 
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      cy.completeAndSubmitMultipleContractPolicyForm({});
+      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitExportValueForm({ policyType });
       cy.completeAndSubmitNameOnPolicyForm({});
       cy.completeAndSubmitBrokerForm({});
 

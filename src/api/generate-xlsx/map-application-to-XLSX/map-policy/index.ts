@@ -1,6 +1,6 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance';
 import { XLSX } from '../../../content-strings';
-import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
+import { POLICY_FIELDS, EXPORT_CONTRACT_FIELDS } from '../../../content-strings/fields/insurance';
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 import xlsxRow from '../helpers/xlsx-row';
@@ -12,21 +12,31 @@ import { Application } from '../../../types';
 const CONTENT_STRINGS = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.ABOUT_GOODS_OR_SERVICES,
-  SINGLE: POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  MULTIPLE: POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
+  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.SINGLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
+  ...EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES,
 };
 
 const {
-  TYPE_OF_POLICY: { POLICY_TYPE },
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    POLICY_CURRENCY_CODE,
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+      POLICY_CURRENCY_CODE,
+    },
+    EXPORT_VALUE: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    },
   },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY },
-} = FIELD_IDS.POLICY;
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+  },
+} = FIELD_IDS;
 
 export const mapPolicyIntro = (application: Application) => {
   const { policy } = application;
@@ -44,19 +54,21 @@ export const mapSinglePolicyFields = (application: Application) => {
   const { policy } = application;
 
   return [
-    xlsxRow(String(CONTENT_STRINGS.SINGLE[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policy[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
-    xlsxRow(String(CONTENT_STRINGS.SINGLE[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
+    xlsxRow(String(CONTENT_STRINGS[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policy[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
+    xlsxRow(String(CONTENT_STRINGS[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
   ];
 };
 
 export const mapMultiplePolicyFields = (application: Application) => {
   const { policy } = application;
 
-  return [
-    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
-    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsxRow(String(CONTENT_STRINGS.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
+  const mapped = [
+    xlsxRow(String(CONTENT_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
+    xlsxRow(String(CONTENT_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsxRow(String(CONTENT_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
   ];
+
+  return mapped;
 };
 
 export const mapPolicyOutro = (application: Application) => {
@@ -65,7 +77,7 @@ export const mapPolicyOutro = (application: Application) => {
   const mapped = [
     xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-    xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_COUNTRY].name),
+    xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name),
   ];
 
   return mapped;

@@ -22,7 +22,7 @@ const {
     },
   },
   POLICY: {
-    CONTRACT_POLICY: {
+    EXPORT_VALUE: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
@@ -91,6 +91,8 @@ context('Insurance - Dashboard - populated application', () => {
 
   describe('when completing the `policy - tell us about your policy` form - single policy type', () => {
     beforeEach(() => {
+      const policyType = FIELD_VALUES.POLICY_TYPE.SINGLE;
+
       cy.navigateToUrl(url);
 
       // go to application
@@ -100,7 +102,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.startInsurancePolicySection({});
 
       // complete the first form - single contract policy
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm(policyType);
 
       // complete and submit the form
       cy.completeAndSubmitSingleContractPolicyForm({});
@@ -121,6 +123,8 @@ context('Insurance - Dashboard - populated application', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
+      const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
       // go to application
       table.body.row(referenceNumber).submittedLink().click();
 
@@ -128,10 +132,12 @@ context('Insurance - Dashboard - populated application', () => {
       cy.startInsurancePolicySection({});
 
       // complete the first form - single contract policy
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitPolicyTypeForm(policyType);
 
       // complete and submit the form
-      cy.completeAndSubmitMultipleContractPolicyForm({});
+      cy.completeAndSubmitMultipleContractPolicyForm();
+
+      cy.completeAndSubmitExportValueForm({ policyType });
     });
 
     it(`should render a formatted value of ${MAXIMUM_BUYER_WILL_OWE} in the ${TABLE_HEADERS.VALUE} cell`, () => {

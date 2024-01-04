@@ -32,6 +32,16 @@ const MULTIPLE_CONTRACT_POLICY = {
   PAGE_TITLE: 'Tell us about the multiple contract policy you need',
 };
 
+const SINGLE_CONTRACT_POLICY_EXPORT_VALUE = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the total value of your export in',
+};
+
+const MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the total value of your export in',
+};
+
 const NAME_ON_POLICY = {
   ...SHARED,
   PAGE_TITLE: 'Whose name should be on the policy?',
@@ -65,6 +75,8 @@ module.exports = {
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
   MULTIPLE_CONTRACT_POLICY,
+  SINGLE_CONTRACT_POLICY_EXPORT_VALUE,
+  MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
   NAME_ON_POLICY,
   DIFFERENT_NAME_ON_POLICY,
   BROKER,

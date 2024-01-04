@@ -33,7 +33,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const expectedErrors = 5;
+const expectedErrors = 3;
 const errorIndex = 1;
 
 context('Insurance - Policy - Multiple contract policy page - form validation - total months of cover', () => {

@@ -1,8 +1,8 @@
-import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+// import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import application from '../../../../../../fixtures/application';
+import { FIELD_VALUES, ROUTES } from '../../../../../../constants';
 
 const { taskList } = partials.insurancePartials;
 
@@ -15,16 +15,6 @@ const {
     },
   },
 } = ROUTES;
-
-const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_SALES_TO_BUYER },
-      },
-    },
-  },
-} = FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policy;
 
@@ -73,83 +63,83 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     });
   });
 
-  describe('when entering an invalid total sales to buyer and submitting the form via `save and go back` button', () => {
-    const field = fieldSelector(TOTAL_SALES_TO_BUYER);
-    const invalidValue = 'Not a number';
+  // describe('when entering an invalid total sales to buyer and submitting the form via `save and go back` button', () => {
+  //   const field = fieldSelector(TOTAL_SALES_TO_BUYER);
+  //   const invalidValue = 'Not a number';
 
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+  //   beforeEach(() => {
+  //     cy.navigateToUrl(url);
 
-      cy.keyboardInput(field.input(), invalidValue);
+  //     cy.keyboardInput(field.input(), invalidValue);
 
-      saveAndBackButton().click();
-    });
+  //     saveAndBackButton().click();
+  //   });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+  //   it(`should redirect to ${ALL_SECTIONS}`, () => {
+  //     const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.assertUrl(expected);
-    });
+  //     cy.assertUrl(expected);
+  //   });
 
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-    });
+  //   it('should retain the `type of policy` task status as `in progress`', () => {
+  //     cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+  //   });
 
-    describe('when going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+  //   describe('when going back to the page', () => {
+  //     beforeEach(() => {
+  //       cy.navigateToUrl(url);
 
-        cy.keyboardInput(field.input(), invalidValue);
+  //       cy.keyboardInput(field.input(), invalidValue);
 
-        saveAndBackButton().click();
+  //       saveAndBackButton().click();
 
-        cy.startInsurancePolicySection({});
+  //       cy.startInsurancePolicySection({});
 
-        submitButton().click();
-      });
+  //       submitButton().click();
+  //     });
 
-      it('should not have saved the submitted value', () => {
-        field.input().should('have.value', '');
-      });
-    });
-  });
+  //     it('should not have saved the submitted value', () => {
+  //       field.input().should('have.value', '');
+  //     });
+  //   });
+  // });
 
-  describe('when entering a valid total sales to buyer and submitting the form via `save and go back` button', () => {
-    const field = fieldSelector(TOTAL_SALES_TO_BUYER);
+  // describe('when entering a valid total sales to buyer and submitting the form via `save and go back` button', () => {
+  //   const field = fieldSelector(TOTAL_SALES_TO_BUYER);
 
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+  //   beforeEach(() => {
+  //     cy.navigateToUrl(url);
 
-      cy.keyboardInput(field.input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
+  //     cy.keyboardInput(field.input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
 
-      saveAndBackButton().click();
-    });
+  //     saveAndBackButton().click();
+  //   });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+  //   it(`should redirect to ${ALL_SECTIONS}`, () => {
+  //     const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      cy.assertUrl(expected);
-    });
+  //     cy.assertUrl(expected);
+  //   });
 
-    it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
-    });
+  //   it('should retain the `type of policy` task status as `in progress`', () => {
+  //     cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+  //   });
 
-    describe('when going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+  //   describe('when going back to the page', () => {
+  //     beforeEach(() => {
+  //       cy.navigateToUrl(url);
 
-        cy.keyboardInput(field.input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
+  //       cy.keyboardInput(field.input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
 
-        saveAndBackButton().click();
+  //       saveAndBackButton().click();
 
-        cy.startInsurancePolicySection({});
-        submitButton().click();
-      });
+  //       cy.startInsurancePolicySection({});
+  //       submitButton().click();
+  //     });
 
-      it('should have the submitted value', () => {
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-      });
-    });
-  });
+  //     it('should have the submitted value', () => {
+  //       fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
+  //     });
+  //   });
+  // });
 });

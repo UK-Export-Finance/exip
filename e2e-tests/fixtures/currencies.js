@@ -22,6 +22,7 @@ export const USD = {
   name: 'US Dollars',
   isoCode: USD_CURRENCY_CODE,
 };
+
 const mockCurrencies = [
   EUR,
   GBP,

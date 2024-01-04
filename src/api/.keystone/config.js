@@ -174,20 +174,20 @@ var POLICY = {
   CONTRACT_POLICY: {
     ...SHARED_CONTRACT_POLICY,
     SINGLE: {
-      CONTRACT_COMPLETION_DATE: "contractCompletionDate",
+      CONTRACT_COMPLETION_DATE: "contractCompletionDate"
+    },
+    MULTIPLE: {
+      TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover"
+    }
+  },
+  EXPORT_VALUE: {
+    SINGLE: {
       TOTAL_CONTRACT_VALUE: "totalValueOfContract"
     },
     MULTIPLE: {
-      TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover",
       TOTAL_SALES_TO_BUYER: "totalSalesToBuyer",
       MAXIMUM_BUYER_WILL_OWE: "maximumBuyerWillOwe"
     }
-  },
-  ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION: "goodsOrServicesDescription",
-    FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
-    FINAL_DESTINATION: "finalDestinationCountryCode",
-    FINAL_DESTINATION_COUNTRY: "finalDestinationCountry"
   },
   BROKER: {
     HEADING: "broker",
@@ -246,6 +246,17 @@ var EXPORTER_BUSINESS = {
   HAS_CREDIT_CONTROL: "hasCreditControlProcess"
 };
 var business_default = EXPORTER_BUSINESS;
+
+// constants/field-ids/insurance/export-contract/index.ts
+var EXPORT_CONTRACT = {
+  ...shared_default,
+  ABOUT_GOODS_OR_SERVICES: {
+    DESCRIPTION: "goodsOrServicesDescription",
+    FINAL_DESTINATION_KNOWN: "finalDestinationKnown",
+    FINAL_DESTINATION: "finalDestinationCountryCode"
+  }
+};
+var export_contract_default = EXPORT_CONTRACT;
 
 // constants/field-ids/insurance/your-buyer/index.ts
 var YOUR_BUYER = {
@@ -307,6 +318,7 @@ var INSURANCE_FIELD_IDS = {
   ACCOUNT: account_default,
   POLICY: policy_default,
   EXPORTER_BUSINESS: business_default,
+  EXPORT_CONTRACT: export_contract_default,
   YOUR_BUYER: your_buyer_default,
   DECLARATIONS: declarations_default,
   CHECK_YOUR_ANSWERS: check_your_answers_default
@@ -3942,11 +3954,45 @@ var FIELDS_ELIGIBILITY = {
   }
 };
 
+// content-strings/fields/insurance/export-contract/index.ts
+var {
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES }
+} = insurance_default;
+var EXPORT_CONTRACT_FIELDS = {
+  ABOUT_GOODS_OR_SERVICES: {
+    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+      LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",
+      HINT: {
+        INTRO: "For example:",
+        LIST: [
+          "fast moving consumer goods, like vegan protein bars",
+          "construction materials to build commercial property",
+          "educational services such as teacher training"
+        ],
+        OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment."
+      },
+      MAXIMUM: 1e3,
+      SUMMARY: {
+        TITLE: "Goods or services you're exporting"
+      }
+    },
+    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN]: {
+      LABEL: "Do you know the final destination of the goods or services?"
+    },
+    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
+      LABEL: "What's the final destination of the goods or services?",
+      SUMMARY: {
+        TITLE: "Final destination of export"
+      }
+    }
+  }
+};
+
 // content-strings/fields/insurance/policy/index.ts
 var {
   POLICY: {
     CONTRACT_POLICY,
-    ABOUT_GOODS_OR_SERVICES,
+    EXPORT_VALUE,
     BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 },
     POLICY_TYPE: POLICY_TYPE3
   }
@@ -3974,11 +4020,6 @@ var POLICY_FIELDS = {
         SUMMARY: {
           TITLE: "Date you expect contract to complete"
         }
-      },
-      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        SUMMARY: {
-          TITLE: "Contract value"
-        }
       }
     },
     MULTIPLE: {
@@ -3986,28 +4027,36 @@ var POLICY_FIELDS = {
         SUMMARY: {
           TITLE: "How many months you want to be insured for"
         }
-      },
-      [CONTRACT_POLICY.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+      }
+    }
+  },
+  EXPORT_VALUE: {
+    SINGLE: {
+      [EXPORT_VALUE.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        LABEL: "What's the total value of the contract you want to insure?",
+        HINT: "Enter a whole number - do not enter decimals.",
+        SUMMARY: {
+          TITLE: "Contract value"
+        }
+      }
+    },
+    MULTIPLE: {
+      [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+        LABEL: "Estimate total sales to your buyer during this time",
+        HINT: "Enter a whole number - do not enter decimals.",
         SUMMARY: {
           TITLE: "Estimated sales during policy"
         }
       },
-      [CONTRACT_POLICY.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+      [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+        LABEL: "Estimate the maximum amount your buyer will owe you at any single point during this time",
+        HINT: {
+          FOR_EXAMPLE: "For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.",
+          NO_DECIMALS: "Enter a whole number - do not enter decimals."
+        },
         SUMMARY: {
           TITLE: "Maximum owed at any single point during policy"
         }
-      }
-    }
-  },
-  ABOUT_GOODS_OR_SERVICES: {
-    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
-      SUMMARY: {
-        TITLE: "Goods or services you're exporting"
-      }
-    },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
-      SUMMARY: {
-        TITLE: "Final destination of export"
       }
     }
   },
@@ -4365,20 +4414,30 @@ var map_month_string_default = mapMonthString;
 var CONTENT_STRINGS2 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.ABOUT_GOODS_OR_SERVICES,
-  SINGLE: POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  MULTIPLE: POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
+  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.SINGLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
+  ...EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES
 };
 var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER, TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    POLICY_CURRENCY_CODE
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+      POLICY_CURRENCY_CODE
+    },
+    EXPORT_VALUE: {
+      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
+    }
   },
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_COUNTRY }
-} = insurance_default.POLICY;
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION }
+  }
+} = insurance_default;
 var mapPolicyIntro = (application2) => {
   const { policy } = application2;
   const mapped = [
@@ -4391,24 +4450,25 @@ var mapPolicyIntro = (application2) => {
 var mapSinglePolicyFields = (application2) => {
   const { policy } = application2;
   return [
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2.SINGLE[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+    xlsx_row_default(String(CONTENT_STRINGS2[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
 };
 var mapMultiplePolicyFields = (application2) => {
   const { policy } = application2;
-  return [
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(String(CONTENT_STRINGS2.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+  const mapped = [
+    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
+    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+    xlsx_row_default(String(CONTENT_STRINGS2[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
   ];
+  return mapped;
 };
 var mapPolicyOutro = (application2) => {
   const { exportContract, policy } = application2;
   const mapped = [
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION_COUNTRY].name)
+    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name)
   ];
   return mapped;
 };

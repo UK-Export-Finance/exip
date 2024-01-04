@@ -4,7 +4,6 @@ import {
   headingCaption,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
-import { multipleContractPolicyPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
 import {
   BUTTONS,
@@ -28,7 +27,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY,
     MULTIPLE_CONTRACT_POLICY,
-    NAME_ON_POLICY,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
   },
 } = INSURANCE_ROUTES;
 
@@ -39,11 +38,7 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -117,35 +112,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       field.input().should('exist');
     });
 
-    it('renders `total sales to buyer` label, hint, prefix and input', () => {
-      const fieldId = TOTAL_SALES_TO_BUYER;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-
-      cy.checkText(field.hint(), CONTRACT_POLICY.MULTIPLE[fieldId].HINT);
-
-      cy.checkText(field.prefix(), '£');
-
-      field.input().should('exist');
-    });
-
-    it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
-      const fieldId = MAXIMUM_BUYER_WILL_OWE;
-      const field = multipleContractPolicyPage[fieldId];
-      const { HINT } = CONTRACT_POLICY.MULTIPLE[fieldId];
-
-      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-
-      cy.checkText(field.label(), CONTRACT_POLICY.MULTIPLE[fieldId].LABEL);
-
-      cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
-
-      cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
-
-      field.input().should('exist');
-    });
-
     it('renders `currency` label and radio inputs', () => {
       checkPolicyCurrencyCodeInput();
     });
@@ -160,10 +126,10 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${NAME_ON_POLICY}`, () => {
-      cy.completeAndSubmitMultipleContractPolicyForm({});
+    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`, () => {
+      cy.completeAndSubmitMultipleContractPolicyForm();
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -183,9 +149,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
         fieldSelector(REQUESTED_START_DATE).yearInput().should('have.value', application.POLICY[REQUESTED_START_DATE].year);
 
         fieldSelector(TOTAL_MONTHS_OF_COVER).input().should('have.value', application.POLICY[TOTAL_MONTHS_OF_COVER]);
-
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-        fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
         radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');

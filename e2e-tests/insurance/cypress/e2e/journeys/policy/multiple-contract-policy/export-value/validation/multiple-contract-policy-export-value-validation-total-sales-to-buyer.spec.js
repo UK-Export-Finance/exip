@@ -1,41 +1,41 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { field as fieldSelector, submitButton } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    POLICY: {
-      MULTIPLE_CONTRACT_POLICY,
-      NAME_ON_POLICY,
+  ROOT: INSURANCE_ROOT,
+  POLICY: {
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    NAME_ON_POLICY,
+  },
+} = INSURANCE_ROUTES;
+
+const {
+  POLICY: {
+    EXPORT_VALUE: {
+      MULTIPLE: { TOTAL_SALES_TO_BUYER },
     },
   },
-} = ROUTES;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_SALES_TO_BUYER },
-      },
-    },
-  },
-} = FIELD_IDS;
-
-const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
+      EXPORT_VALUE: {
         MULTIPLE: CONTRACT_ERROR_MESSAGES,
       },
     },
   },
 } = ERROR_MESSAGES;
 
+const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy page - form validation - total sales to buyer', () => {
+context('Insurance - Policy - Multiple contract policy export value page - form validation - total sales to buyer', () => {
   let referenceNumber;
   let url;
 
@@ -44,9 +44,10 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitMultipleContractPolicyForm({ policyType });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
       cy.assertUrl(url);
     });
@@ -68,7 +69,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(2),
+      partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
     );
 
@@ -83,7 +84,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(2),
+      partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
     );
 
@@ -98,7 +99,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(2),
+      partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
     );
 
@@ -113,7 +114,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(2),
+      partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
     );
 
@@ -128,7 +129,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     submitButton().click();
 
     cy.checkText(
-      partials.errorSummaryListItems().eq(2),
+      partials.errorSummaryListItems().eq(0),
       CONTRACT_ERROR_MESSAGES[TOTAL_SALES_TO_BUYER].BELOW_MINIMUM,
     );
 
@@ -142,7 +143,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     it('should redirect to the next page as all fields are valid', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitMultipleContractPolicyForm({});
+      cy.completeExportValueForm({ policyType });
       cy.clickBackLink();
 
       cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234');

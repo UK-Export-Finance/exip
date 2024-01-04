@@ -11,7 +11,7 @@ const { MINIMUM, MAXIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
+      EXPORT_VALUE: {
         SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
       },
     },
@@ -21,7 +21,7 @@ const {
 const {
   INSURANCE: {
     POLICY: {
-      CONTRACT_POLICY: {
+      EXPORT_VALUE: {
         SINGLE: { [FIELD_ID]: ERROR_MESSAGE },
       },
     },

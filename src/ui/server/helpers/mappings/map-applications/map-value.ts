@@ -8,7 +8,7 @@ import { Application } from '../../../../types';
 const {
   POLICY: {
     POLICY_TYPE,
-    CONTRACT_POLICY: {
+    EXPORT_VALUE: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },

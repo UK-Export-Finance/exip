@@ -14,8 +14,6 @@ const {
         POLICY_CURRENCY_CODE,
         MULTIPLE: {
           TOTAL_MONTHS_OF_COVER,
-          TOTAL_SALES_TO_BUYER,
-          MAXIMUM_BUYER_WILL_OWE,
         },
       },
     },
@@ -64,7 +62,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
 
     cy.checkErrorSummaryListHeading();
 
-    const TOTAL_REQUIRED_FIELDS = 5;
+    const TOTAL_REQUIRED_FIELDS = 3;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
@@ -79,16 +77,6 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[TOTAL_SALES_TO_BUYER].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(3),
-      CONTRACT_ERROR_MESSAGES.MULTIPLE[MAXIMUM_BUYER_WILL_OWE].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(4),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );
   });

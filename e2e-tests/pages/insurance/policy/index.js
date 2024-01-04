@@ -1,9 +1,9 @@
 import typeOfPolicyPage from './typeOfPolicy';
-import multipleContractPolicyPage from './multipleContractPolicy';
+import multipleContractPolicyExportValuePage from './multipleContractPolicyExportValue';
 import brokerPage from './broker';
 
 export {
   typeOfPolicyPage,
-  multipleContractPolicyPage,
+  multipleContractPolicyExportValuePage,
   brokerPage,
 };

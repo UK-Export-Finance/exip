@@ -8,7 +8,10 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+    },
+    EXPORT_VALUE: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -18,7 +21,7 @@ const {
  * @param {Object} Object with flags completing and submitting single contract policy form
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  */
-export default ({ policyMaximumValue = false }) => {
+const completeAndSubmitSingleContractPolicyForm = ({ policyMaximumValue = false }) => {
   cy.keyboardInput(field(REQUESTED_START_DATE).dayInput(), application.POLICY[REQUESTED_START_DATE].day);
   cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
   cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
@@ -38,3 +41,5 @@ export default ({ policyMaximumValue = false }) => {
 
   submitButton().click();
 };
+
+export default completeAndSubmitSingleContractPolicyForm;
