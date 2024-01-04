@@ -165,7 +165,7 @@ export const ERROR_MESSAGES = {
           INVALID_DATE: 'Policy start date must be a real date',
         },
         [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
-          IS_EMPTY: "Select the currency you would like your policy to be issued in",
+          IS_EMPTY: 'Select the currency you would like your policy to be issued in',
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
