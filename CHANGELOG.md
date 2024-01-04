@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.4.2](https://github.com/UK-Export-Finance/exip/compare/v2.4.1...v2.4.2) (2024-01-04)
+
+
+### Bug Fixes
+
+* **feature-deployment:** added feature environment for deployment ([68df6ae](https://github.com/UK-Export-Finance/exip/commit/68df6ae48b0f2c79a2e87433a0367728c11ba71d))
+* **feature-deployment:** renamed GHA pull_request target branch name ([2b58999](https://github.com/UK-Export-Finance/exip/commit/2b58999a4b638c6a893ddaa51d5677320a77e164))
+* **iac:** added feature environment to infrastructure.yml ([75505e2](https://github.com/UK-Export-Finance/exip/commit/75505e21bbfa4ac31110fbeb851b547b7ccbe9e7))
+
 ## [2.4.1](https://github.com/UK-Export-Finance/exip/compare/v2.4.0...v2.4.1) (2024-01-02)
 
 
