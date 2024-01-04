@@ -146,7 +146,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
       fieldA,
       fieldB,
       fieldBErrorIndex: 0,
-      errorSummaryLength: 3,
+      expectedErrorSummaryLength: 3,
     });
 
     beforeEach(() => {
