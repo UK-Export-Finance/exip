@@ -1,19 +1,38 @@
+import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import requestedCoverStartDate from '../../../../../../../commands/insurance/requested-start-date-field';
+import dateField from '../../../../../../../commands/insurance/date-field';
 
 const {
   ROOT,
   POLICY: { SINGLE_CONTRACT_POLICY },
 } = INSURANCE_ROUTES;
 
-const { checkValidation } = requestedCoverStartDate;
+const {
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+    },
+  },
+} = INSURANCE_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    POLICY: {
+      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
+    },
+  },
+} = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Single contract policy page - form validation - requested start date', () => {
   let referenceNumber;
   let url;
+
+  const field = fieldSelector(REQUESTED_START_DATE);
 
   const {
     day,
@@ -22,7 +41,13 @@ context('Insurance - Policy - Single contract policy page - form validation - re
     notInTheFuture,
     invalidFormat,
     isToday,
-  } = checkValidation({ errorSummaryLength: 4 });
+  } = dateField.checkValidation({
+    errorSummaryLength: 4,
+    errorIndex: 0,
+    field,
+    fieldId: REQUESTED_START_DATE,
+    errorMessages: CONTRACT_ERROR_MESSAGES[REQUESTED_START_DATE],
+  });
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {

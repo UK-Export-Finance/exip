@@ -11,12 +11,11 @@ run-name: Executing various SCAs on ${{ github.repository }} 🔍️
 
 on:
   pull_request:
-    branches:
-      - '*'
+    branches: [main, main-*]
 
 env:
-  environment: 'qa'
-  timezone: 'Europe/London'
+  environment: "qa"
+  timezone: "Europe/London"
 
 jobs:
   # 1. Setup test infrastructure

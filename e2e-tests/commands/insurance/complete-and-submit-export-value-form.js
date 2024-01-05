@@ -1,5 +1,4 @@
 import { FIELD_VALUES } from '../../constants';
-import completeExportValueForm from './complete-export-value-form';
 import { submitButton } from '../../pages/shared';
 
 /**
@@ -10,7 +9,7 @@ import { submitButton } from '../../pages/shared';
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  */
 const completeAndSubmitExportValueForm = ({ policyType = FIELD_VALUES.POLICY_TYPE.SINGLE }) => {
-  completeExportValueForm({ policyType });
+  cy.completeExportValueForm({ policyType });
   submitButton().click();
 };
 

@@ -5,6 +5,10 @@ import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
+  POLICY_TYPE: { SINGLE, MULTIPLE },
+} = FIELD_VALUES;
+
+const {
   POLICY: {
     EXPORT_VALUE: {
       MULTIPLE: {
@@ -22,8 +26,8 @@ const {
  * - policyType: type of policy
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  */
-const completeExportValueForm = ({ policyType = FIELD_VALUES.POLICY_TYPE.SINGLE }) => {
-  if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
+const completeExportValueForm = ({ policyType = SINGLE }) => {
+  if (policyType === MULTIPLE) {
     cy.keyboardInput(field(TOTAL_SALES_TO_BUYER).input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
 
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
