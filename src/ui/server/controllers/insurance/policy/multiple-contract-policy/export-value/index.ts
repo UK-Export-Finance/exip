@@ -18,7 +18,7 @@ import { Currency, Request, Response } from '../../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
+  POLICY: { NAME_ON_POLICY, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -39,7 +39,7 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
  * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = (currencies: Array<Currency>, policyCurrencyCode: string) => ({
+export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => ({
   FIELDS: {
     TOTAL_SALES_TO_BUYER: {
       ID: TOTAL_SALES_TO_BUYER,
@@ -51,6 +51,7 @@ export const pageVariables = (currencies: Array<Currency>, policyCurrencyCode: s
     },
   },
   DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(currencies, policyCurrencyCode).name}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE;
@@ -82,7 +83,10 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const generatedPageVariables = pageVariables(currencies, String(policyCurrencyCode));
+    const { referenceNumber } = req.params;
+    const refNumber = Number(referenceNumber);
+
+    const generatedPageVariables = pageVariables(refNumber, currencies, String(policyCurrencyCode));
 
     const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -107,7 +111,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Multiple contract policy validation errors and if successful, redirect to the next part of the flow.
+ * Check Multiple contract policy - Export value validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -124,6 +128,7 @@ export const post = async (req: Request, res: Response) => {
   } = application;
 
   const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -137,7 +142,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const generatedPageVariables = pageVariables(currencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(refNumber, currencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 

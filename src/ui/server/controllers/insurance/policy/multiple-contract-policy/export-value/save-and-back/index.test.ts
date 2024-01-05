@@ -1,19 +1,19 @@
 import { post } from '.';
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '..';
-import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save/policy';
+import constructPayload from '../../../../../../helpers/construct-payload';
+import mapAndSave from '../../../map-and-save/policy';
 import generateValidationErrors from '../validation';
-import { Request, Response } from '../../../../../../types';
-import { mockApplication, mockReq, mockRes } from '../../../../../test-mocks';
+import { Request, Response } from '../../../../../../../types';
+import { mockApplication, mockReq, mockRes } from '../../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/policy/multiple-contract-policy/save-and-back', () => {
+describe('controllers/insurance/policy/multiple-contract-policy/export-value/save-and-back', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save/policy');
+  jest.mock('../../../map-and-save/policy');
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.policy = mockMapAndSave;

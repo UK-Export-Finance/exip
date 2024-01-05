@@ -1,16 +1,16 @@
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import hasFormData from '../../../../../helpers/has-form-data';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import hasFormData from '../../../../../../helpers/has-form-data';
 import { FIELD_IDS } from '..';
-import constructPayload from '../../../../../helpers/construct-payload';
+import constructPayload from '../../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import callMapAndSave from '../../call-map-and-save';
-import { Request, Response } from '../../../../../../types';
+import callMapAndSave from '../../../call-map-and-save';
+import { Request, Response } from '../../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 /**
  * post
- * Save any valid Multiple contract policy fields and if successful, redirect to the all sections page
+ * Save any valid Multiple contract policy export value fields and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} All sections page or error page
