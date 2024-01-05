@@ -35,7 +35,7 @@
     "apollo-server-express": "^3.13.0",
     "axios": "^1.6.4",
     "axios-mock-adapter": "^1.22.0",
-    "date-fns": "^3.0.6",
+    "date-fns": "^3.1.0",
     "dotenv": "16.3.1",
     "exceljs": "^4.4.0",
     "express-rate-limit": "^6.11.2",
