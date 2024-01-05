@@ -36,7 +36,9 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array} currencies: Currencies
+ * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => ({
