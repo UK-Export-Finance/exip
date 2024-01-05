@@ -5,7 +5,7 @@ import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insura
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { policySummaryList } from '../../../../helpers/summary-lists/policy';
+import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import api from '../../../../api';
 import requiredFields from '../../../../helpers/required-fields/policy';
 import sectionStatus from '../../../../helpers/section-status';
@@ -87,7 +87,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryList(answers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
+      const summaryList = policySummaryLists(answers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
 
       const { policyType } = policy;
       const { isUsingBroker } = mockBroker;

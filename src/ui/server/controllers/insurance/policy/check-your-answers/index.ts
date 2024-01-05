@@ -7,7 +7,7 @@ import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { policySummaryList } from '../../../../helpers/summary-lists/policy';
+import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
@@ -49,7 +49,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryList = policySummaryList(answers, policyContact, broker, referenceNumber, currencies);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, currencies);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -59,7 +59,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(res.locals.application),
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryLists,
     });
   } catch (err) {
     console.error('Error getting currencies %O', err);

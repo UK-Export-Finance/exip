@@ -4018,7 +4018,7 @@ var POLICY_FIELDS = {
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
         SUMMARY: {
-          TITLE: "Date you expect contract to complete"
+          TITLE: "Date you expect it to complete"
         }
       }
     },
@@ -4045,7 +4045,7 @@ var POLICY_FIELDS = {
         LABEL: "Estimate total sales to your buyer during this time",
         HINT: "Enter a whole number - do not enter decimals.",
         SUMMARY: {
-          TITLE: "Estimated sales during policy"
+          TITLE: "Estimated total sales to the buyer"
         }
       },
       [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
@@ -4055,7 +4055,7 @@ var POLICY_FIELDS = {
           NO_DECIMALS: "Enter a whole number - do not enter decimals."
         },
         SUMMARY: {
-          TITLE: "Maximum owed at any single point during policy"
+          TITLE: "Estimated maximum amount owed by the buyer"
         }
       }
     }
@@ -4063,7 +4063,7 @@ var POLICY_FIELDS = {
   BROKER: {
     [USING_BROKER2]: {
       SUMMARY: {
-        TITLE: "Using a broker for this insurance?"
+        TITLE: "Using a broker"
       }
     },
     [NAME]: {

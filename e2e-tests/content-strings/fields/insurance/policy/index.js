@@ -4,17 +4,26 @@ import {
   FIELD_IDS,
   FIELD_VALUES,
 } from '../../../../constants';
+import { FORM_TITLES } from '../../../form-titles';
 
 const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
+
 const {
   BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
 } = POLICY;
+
 const { EMAIL } = ACCOUNT;
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
+
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
+
+const {
+  // POLICY: { CONTRACT_POLICY, NAME_ON_POLICY, BROKER },
+  POLICY: POLICY_FORM_TITLES,
+} = FORM_TITLES;
 
 export const POLICY_FIELDS = {
   [POLICY.POLICY_TYPE]: {
@@ -44,6 +53,7 @@ export const POLICY_FIELDS = {
     },
     SUMMARY: {
       TITLE: 'Policy type',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   CONTRACT_POLICY: {
@@ -52,12 +62,14 @@ export const POLICY_FIELDS = {
       HINT: 'For example, 06 11 2023',
       SUMMARY: {
         TITLE: 'Policy start date',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       LEGEND: "Select currency you'd like your policy to be issued in",
       SUMMARY: {
         TITLE: 'Policy currency',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
       [CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE]: {
         TEXT: 'Another currency',
@@ -70,7 +82,8 @@ export const POLICY_FIELDS = {
         LABEL: 'When do you expect to complete the export contract?',
         HINT: 'For example, 06 11 2024',
         SUMMARY: {
-          TITLE: 'Date you expect contract to complete',
+          TITLE: 'Date you expect it to complete',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -81,6 +94,7 @@ export const POLICY_FIELDS = {
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -92,6 +106,7 @@ export const POLICY_FIELDS = {
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -100,7 +115,8 @@ export const POLICY_FIELDS = {
         LABEL: 'Estimate total sales to your buyer during this time',
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
-          TITLE: 'Estimated sales during policy',
+          TITLE: 'Estimated total sales to the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
       [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
@@ -110,7 +126,8 @@ export const POLICY_FIELDS = {
           NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
         },
         SUMMARY: {
-          TITLE: 'Maximum owed at any single point during policy',
+          TITLE: 'Estimated maximum amount owed by the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -131,11 +148,13 @@ export const POLICY_FIELDS = {
       LABEL: "What's your position at the company?",
       SUMMARY: {
         TITLE: 'Position at company',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
     [NAME_ON_POLICY.NAME]: {
       SUMMARY: {
-        TITLE: 'Name on the policy',
+        TITLE: 'Contact name',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
   },
@@ -146,6 +165,7 @@ export const POLICY_FIELDS = {
     [EMAIL]: {
       SUMMARY: {
         TITLE: 'Contact email',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
   },
@@ -155,19 +175,22 @@ export const POLICY_FIELDS = {
     },
     [BROKER.USING_BROKER]: {
       SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
+        TITLE: 'Using a broker',
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [BROKER.NAME]: {
       LABEL: 'Name of broker or company',
       SUMMARY: {
         TITLE: "Broker's name or company",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [BROKER.ADDRESS_LINE_1]: {
       LABEL: 'Address line 1',
       SUMMARY: {
         TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [BROKER.ADDRESS_LINE_2]: {
@@ -186,6 +209,7 @@ export const POLICY_FIELDS = {
       LABEL: 'Email address',
       SUMMARY: {
         TITLE: "Broker's email",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [BROKER.DETAILS]: {

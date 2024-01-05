@@ -1,12 +1,13 @@
-import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { GBP_CURRENCY_CODE, ROUTES } from '../../../../constants';
-import fieldGroupItem from '../../generate-field-group-item';
-import getFieldById from '../../../get-field-by-id';
-import formatDate from '../../../date/format-date';
-import formatCurrency from '../../../format-currency';
-import { ApplicationPolicy, SummaryListItemData } from '../../../../../types';
-import generateChangeLink from '../../../generate-change-link';
+import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { GBP_CURRENCY_CODE } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import fieldGroupItem from '../../../generate-field-group-item';
+import getFieldById from '../../../../get-field-by-id';
+import formatDate from '../../../../date/format-date';
+import formatCurrency from '../../../../format-currency';
+import { ApplicationPolicy, SummaryListItemData } from '../../../../../../types';
+import generateChangeLink from '../../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
@@ -18,10 +19,8 @@ const {
 } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    POLICY: { SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  POLICY: { SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 /**
  * generateSingleContractPolicyFields

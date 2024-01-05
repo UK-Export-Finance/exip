@@ -1,3 +1,4 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -8,10 +9,15 @@ import getFieldById from '../../../get-field-by-id';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
+  POLICY: { NAME_ON_POLICY: FORM_TITLE },
+} = FORM_TITLES;
+
+const {
   POLICY: {
     NAME_ON_POLICY: { NAME, POSITION, IS_SAME_AS_OWNER },
   },
 } = INSURANCE_FIELD_IDS;
+
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const {
@@ -97,14 +103,20 @@ const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, 
 const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [nameOnPolicyField(answers, referenceNumber, checkAndChange)] as Array<SummaryListItemData>;
 
-  // if IS_SAME_AS_OWNER is false, then add email field
+  /**
+   * If IS_SAME_AS_OWNER is false,
+   * add email field.
+   */
   if (!answers[IS_SAME_AS_OWNER]) {
     fields.push(emailField(answers, referenceNumber, checkAndChange));
   }
 
   fields.push(positionField(answers, referenceNumber, checkAndChange, answers[IS_SAME_AS_OWNER]));
 
-  return fields;
+  return {
+    title: FORM_TITLE,
+    fields,
+  };
 };
 
 export default generatePolicyContactFields;

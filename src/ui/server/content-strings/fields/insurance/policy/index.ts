@@ -73,7 +73,7 @@ export const POLICY_FIELDS = {
         LABEL: 'When do you expect to complete the export contract?',
         HINT: 'For example, 06 11 2024',
         SUMMARY: {
-          TITLE: 'Date you expect contract to complete',
+          TITLE: 'Date you expect it to complete',
         },
       },
     },
@@ -103,7 +103,7 @@ export const POLICY_FIELDS = {
         LABEL: 'Estimate total sales to your buyer during this time',
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
-          TITLE: 'Estimated sales during policy',
+          TITLE: 'Estimated total sales to the buyer',
         },
       },
       [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
@@ -113,7 +113,7 @@ export const POLICY_FIELDS = {
           NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
         },
         SUMMARY: {
-          TITLE: 'Maximum owed at any single point during policy',
+          TITLE: 'Estimated maximum amount owed by the buyer',
         },
       },
     },
@@ -138,7 +138,7 @@ export const POLICY_FIELDS = {
     },
     [NAME_ON_POLICY.NAME]: {
       SUMMARY: {
-        TITLE: 'Name on the policy',
+        TITLE: 'Contact name',
       },
     },
   },
@@ -158,7 +158,7 @@ export const POLICY_FIELDS = {
     },
     [USING_BROKER]: {
       SUMMARY: {
-        TITLE: 'Using a broker for this insurance?',
+        TITLE: 'Using a broker',
       },
     },
     [NAME]: {

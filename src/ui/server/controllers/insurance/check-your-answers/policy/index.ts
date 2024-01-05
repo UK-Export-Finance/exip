@@ -4,7 +4,7 @@ import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insura
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { policySummaryList } from '../../../../helpers/summary-lists/policy';
+import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { isPopulatedArray } from '../../../../helpers/array';
 import api from '../../../../api';
 import requiredFields from '../../../../helpers/required-fields/policy';
@@ -72,7 +72,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryList = policySummaryList(answers, policyContact, broker, referenceNumber, currencies, checkAndChange);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, currencies, checkAndChange);
 
     const fields = requiredFields({ policyType, isUsingBroker });
 
@@ -85,7 +85,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       status,
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LIST: summaryLists,
       ...pageVariables(referenceNumber),
     });
   } catch (err) {

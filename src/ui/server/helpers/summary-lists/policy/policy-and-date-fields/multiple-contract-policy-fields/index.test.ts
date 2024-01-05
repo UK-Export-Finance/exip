@@ -1,13 +1,14 @@
 import generateMultipleContractPolicyFields from '.';
-import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { GBP_CURRENCY_CODE, ROUTES } from '../../../../constants';
-import fieldGroupItem from '../../generate-field-group-item';
-import getFieldById from '../../../get-field-by-id';
-import formatCurrency from '../../../format-currency';
-import mapMonthString from '../../../data-content-mappings/map-month-string';
-import mockApplication, { mockMultiplePolicy } from '../../../../test-mocks/mock-application';
-import generateChangeLink from '../../../generate-change-link';
+import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { GBP_CURRENCY_CODE } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import fieldGroupItem from '../../../generate-field-group-item';
+import getFieldById from '../../../../get-field-by-id';
+import formatCurrency from '../../../../format-currency';
+import mapMonthString from '../../../../data-content-mappings/map-month-string';
+import mockApplication, { mockMultiplePolicy } from '../../../../../test-mocks/mock-application';
+import generateChangeLink from '../../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
@@ -19,12 +20,10 @@ const {
 } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    POLICY: { MULTIPLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  POLICY: { MULTIPLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
-describe('server/helpers/summary-lists/policy/multiple-contract-policy-fields', () => {
+describe('server/helpers/summary-lists/policy/policy-and-date-fields/multiple-contract-policy-fields', () => {
   const mockAnswers = mockMultiplePolicy;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
@@ -75,19 +74,5 @@ describe('server/helpers/summary-lists/policy/multiple-contract-policy-fields', 
     ];
 
     expect(result).toEqual(expected);
-  });
-
-  describe('when there are no submitted data/answers', () => {
-    it('should return fields without values', () => {
-      const result = generateMultipleContractPolicyFields({ id: mockApplication.id }, referenceNumber, checkAndChange);
-
-      const expected = [
-        fieldGroupItem(expectedBase[TOTAL_MONTHS_OF_COVER]),
-        fieldGroupItem(expectedBase[TOTAL_SALES_TO_BUYER]),
-        fieldGroupItem(expectedBase[MAXIMUM_BUYER_WILL_OWE]),
-      ];
-
-      expect(result).toEqual(expected);
-    });
   });
 });

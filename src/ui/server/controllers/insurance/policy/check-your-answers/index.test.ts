@@ -7,7 +7,7 @@ import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { policySummaryList } from '../../../../helpers/summary-lists/policy';
+import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies, mockContact } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
@@ -73,7 +73,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryList(answers, mockContact, mockBroker, referenceNumber, mockCurrencies);
+      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, referenceNumber, mockCurrencies);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -83,7 +83,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LIST: summaryLists,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
