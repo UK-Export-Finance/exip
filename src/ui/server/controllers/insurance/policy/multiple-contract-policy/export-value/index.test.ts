@@ -18,7 +18,13 @@ import { mockApplicationMultiplePolicy as mockApplication } from '../../../../..
 
 const {
   INSURANCE_ROOT,
-  POLICY: { NAME_ON_POLICY, CHECK_YOUR_ANSWERS, MULTIPLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+  POLICY: {
+    NAME_ON_POLICY,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+    MULTIPLE_CONTRACT_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -67,7 +73,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockCurrencies, String(policyCurrencyCode));
+      const result = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
 
       const expected = {
         FIELDS: {
@@ -81,6 +87,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
           },
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -111,7 +118,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     it('should render template', async () => {
       await get(req, res);
 
-      const generatedPageVariables = pageVariables(mockCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -243,7 +250,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const generatedPageVariables = pageVariables(mockCurrencies, String(policyCurrencyCode));
+        const generatedPageVariables = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
 
         const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 

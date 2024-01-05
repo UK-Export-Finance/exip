@@ -16,6 +16,7 @@ export const POLICY = {
   MULTIPLE_CONTRACT_POLICY_CHANGE: `${ROOT}/multi-contract-policy/change`,
   MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE: `${ROOT}/multi-contract-policy/check-and-change`,
   MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE: `${ROOT}/multi-contract-policy/export-value`,
+  MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK: `${ROOT}/multi-contract-policy/export-value/save-and-go-back`,
   NAME_ON_POLICY: `${ROOT}/name-on-policy`,
   NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/name-on-policy/save-and-go-back`,
   NAME_ON_POLICY_CHANGE: `${ROOT}/name-on-policy/change`,
