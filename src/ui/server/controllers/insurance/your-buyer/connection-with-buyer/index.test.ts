@@ -27,6 +27,13 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_PARTIALS },
+  },
+} = TEMPLATES;
+
 const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
@@ -65,7 +72,8 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         },
         PAGE_CONTENT_STRINGS,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
-        CONDITIONAL_YES_HTML: 'partials/connection-to-the-buyer-conditional-yes-html.njk',
+        CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
+        HORIZONTAL_RADIOS: true,
       };
 
       expect(result).toEqual(expected);
@@ -80,7 +88,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -104,7 +112,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        horizontalRadios: true,
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         applicationAnswer: mockApplication.buyer[CONNECTION_WITH_BUYER],
       };
@@ -201,7 +208,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: sanitiseData(payload),
-          horizontalRadios: true,
           FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

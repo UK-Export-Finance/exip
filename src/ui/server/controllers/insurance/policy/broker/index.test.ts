@@ -27,6 +27,18 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { BROKER: BROKER_PARTIALS },
+  },
+  ATTRIBUTES: {
+    CLASSES: {
+      LEGEND: { XL },
+    },
+  },
+} = TEMPLATES;
+
 describe('controllers/insurance/policy/broker', () => {
   let req: Request;
   let res: Response;
@@ -42,7 +54,7 @@ describe('controllers/insurance/policy/broker', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -102,8 +114,8 @@ describe('controllers/insurance/policy/broker', () => {
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_SAVE_AND_BACK}`,
-        CONDITIONAL_YES_HTML: 'partials/broker-conditional-yes-html.njk',
-        CUSTOM_CONTENT_HTML: 'partials/broker-details.njk',
+        CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
+        CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
       };
 
       expect(result).toEqual(expected);
@@ -123,7 +135,7 @@ describe('controllers/insurance/policy/broker', () => {
         application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.broker[USING_BROKER],
         ...pageVariables(mockApplication.referenceNumber),
-        legendClass: 'govuk-fieldset__legend--xl',
+        legendClass: XL,
       });
     });
 
@@ -165,7 +177,7 @@ describe('controllers/insurance/policy/broker', () => {
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
-          legendClass: 'govuk-fieldset__legend--xl',
+          legendClass: XL,
         });
       });
     });

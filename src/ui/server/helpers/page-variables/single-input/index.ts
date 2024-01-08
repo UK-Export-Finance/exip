@@ -23,6 +23,9 @@ const singleInputPageVariables = ({
   CUSTOM_CONTENT_HTML,
   CONDITIONAL_YES_HTML,
   CONDITIONAL_NO_HTML,
+  HINT_HTML,
+  LEGEND_CLASS,
+  HORIZONTAL_RADIOS,
 }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
@@ -34,6 +37,9 @@ const singleInputPageVariables = ({
       CUSTOM_CONTENT_HTML,
       CONDITIONAL_YES_HTML,
       CONDITIONAL_NO_HTML,
+      HINT_HTML,
+      LEGEND_CLASS,
+      HORIZONTAL_RADIOS,
     }),
     FIELD_ID,
   };

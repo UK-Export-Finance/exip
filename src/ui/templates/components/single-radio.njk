@@ -1,31 +1,31 @@
 {% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 {% import './yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../components/submit-button.njk' as submitButton %}
-{% from "govuk/components/details/macro.njk" import govukDetails %}
 
 {% macro render(params) %}
 
-  {% set fieldId = params.fieldId %}
-  {% set legendText = params.legendText %}
-  {% set hintText = params.hintText %}
-  {% set hasHintHtml = params.hasHintHtml %}
-  {% set submittedAnswer = params.submittedAnswer %}
-  {% set horizontalRadios = params.horizontalRadios %}
-  {% set errorMessage = params.errorMessage %}
-  {% set conditionalYes = params.conditionalYes %}
+  {% set application = params.application %}
   {% set conditionalNo = params.conditionalNo %}
+  {% set conditionalYes = params.conditionalYes %}
+  {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
   {% set continueButtonText = params.continueButtonText %}
+  {% set customContentHTML = params.customContentHTML %}
+  {% set errorMessage = params.errorMessage %}
+  {% set fieldId = params.fieldId %}
+  {% set FIELDS = params.FIELDS %}
+  {% set legendText = params.legendText %}
+  {% set hasHintHtml = params.hasHintHtml %}
+  {% set hasSaveAndBack = params.hasSaveAndBack %}
+  {% set hintText = params.hintText %}
+  {% set horizontalRadios = params.horizontalRadios %}
+  {% set legendClass = params.legendClass %}
+  {% set legendText = params.legendText %}
   {% set saveAndBackButtonText = params.saveAndBackButtonText %}
   {% set saveAndBackUrl = params.saveAndBackUrl %}
-  {% set hasSaveAndBack = params.hasSaveAndBack %}
-  {% set hasCustomContent = params.hasCustomContent %}
-  {% set customContentHTML = params.customContentHTML %}
-  {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
-  {% set validationErrors = params.validationErrors %}
+  {% set submittedAnswer = params.submittedAnswer %}
   {% set submittedValues = params.submittedValues %}
-  {% set FIELDS = params.FIELDS %}
-  {% set application = params.application %}
-  {% set legendClass = params.legendClass %}
+  {% set validationErrors = params.validationErrors %}
 
   {% if conditionalYes %}
     {% set conditionalYesHtml %}

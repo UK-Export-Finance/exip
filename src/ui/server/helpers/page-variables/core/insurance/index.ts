@@ -20,6 +20,9 @@ const insuranceCorePageVariables = ({
   CUSTOM_CONTENT_HTML,
   CONDITIONAL_YES_HTML,
   CONDITIONAL_NO_HTML,
+  HINT_HTML,
+  LEGEND_CLASS,
+  HORIZONTAL_RADIOS,
 }: CorePageVariablesInitialInput): CorePageVariables => ({
   ...corePageVariables({
     PAGE_CONTENT_STRINGS,
@@ -30,6 +33,9 @@ const insuranceCorePageVariables = ({
     CUSTOM_CONTENT_HTML,
     CONDITIONAL_YES_HTML,
     CONDITIONAL_NO_HTML,
+    HINT_HTML,
+    LEGEND_CLASS,
+    HORIZONTAL_RADIOS,
   }),
 });
 

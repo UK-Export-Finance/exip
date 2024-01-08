@@ -20,6 +20,9 @@ const quoteSingleInputPageVariables = ({
   CUSTOM_CONTENT_HTML,
   CONDITIONAL_YES_HTML,
   CONDITIONAL_NO_HTML,
+  HINT_HTML,
+  LEGEND_CLASS,
+  HORIZONTAL_RADIOS,
 }: SingleInputPageVariablesInitialInput) =>
   singleInputPageVariables({
     PAGE_CONTENT_STRINGS,
@@ -31,6 +34,9 @@ const quoteSingleInputPageVariables = ({
     CUSTOM_CONTENT_HTML,
     CONDITIONAL_YES_HTML,
     CONDITIONAL_NO_HTML,
+    HINT_HTML,
+    LEGEND_CLASS,
+    HORIZONTAL_RADIOS,
   });
 
 export default quoteSingleInputPageVariables;

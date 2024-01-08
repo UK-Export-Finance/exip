@@ -13,6 +13,13 @@ import { mockReq, mockRes } from '../../../../test-mocks';
 
 const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES.ELIGIBILITY;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { END_BUYER },
+  },
+} = TEMPLATES;
+
 describe('controllers/insurance/eligibility/end-buyer', () => {
   let req: Request;
   let res: Response;
@@ -43,7 +50,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
           ...FIELDS_ELIGIBILITY[FIELD_ID],
         },
         HAS_SAVE_AND_BACK: false,
-        CUSTOM_CONTENT_HTML: 'partials/end-buyer-details.njk',
+        CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -52,7 +59,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

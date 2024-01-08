@@ -14,6 +14,13 @@ const {
   ELIGIBILITY: { UK_GOODS_OR_SERVICES_CHANGE, CANNOT_APPLY, END_BUYER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { UK_GOODS_OR_SERVICES },
+  },
+} = TEMPLATES;
+
 describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
   let req: Request;
   let res: Response;
@@ -41,7 +48,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
         HAS_SAVE_AND_BACK: false,
-        CUSTOM_CONTENT_HTML: 'partials/uk-goods-and-services-details.njk',
+        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -50,7 +57,7 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

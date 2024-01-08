@@ -76,6 +76,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
+        applicationAnswer: mockApplication.declaration[FIELD_ID],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

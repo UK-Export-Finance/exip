@@ -7,15 +7,22 @@ import generateValidationErrors from '../../../shared-validation/yes-no-radios-f
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    QUOTE: { BUYER_BODY },
+  },
+} = TEMPLATES;
+
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
-  CUSTOM_CONTENT_HTML: 'partials/buyer-body-details.njk',
+  CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
 };
 
-export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * mapAnswer

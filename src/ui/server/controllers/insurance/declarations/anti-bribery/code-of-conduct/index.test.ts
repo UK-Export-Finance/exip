@@ -20,6 +20,13 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { CODE_OF_CONDUCT },
+  },
+} = TEMPLATES;
+
 const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_CONDUCT;
 
 describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () => {
@@ -55,7 +62,9 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
           ...DECLARATIONS_FIELDS[FIELD_ID],
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
-        CONDITIONAL_YES_HTML: 'partials/code-of-conduct-conditional-yes-html.njk',
+        CONDITIONAL_YES_HTML: CODE_OF_CONDUCT.CONDITIONAL_YES_HTML,
+        HINT_HTML: CODE_OF_CONDUCT.HINT_HTML,
+        HORIZONTAL_RADIOS: true,
       };
 
       expect(result).toEqual(expected);
@@ -64,7 +73,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -78,8 +87,6 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
         applicationAnswer: mockApplication.declaration[FIELD_ID],
-        horizontalRadios: true,
-        HINT_HTML: 'partials/code-of-conduct-hint.njk',
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -157,8 +164,6 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
           ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
-          horizontalRadios: true,
-          HINT_HTML: 'partials/code-of-conduct-hint.njk',
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

@@ -42,7 +42,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
       const expected = {
         FIELD_ID: TRADED_WITH_BUYER,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
-        horizontalRadios: true,
+        HORIZONTAL_RADIOS: true,
       };
 
       expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);

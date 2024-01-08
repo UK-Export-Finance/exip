@@ -29,6 +29,9 @@ interface CorePageVariablesInitialInput {
   CUSTOM_CONTENT_HTML?: string;
   CONDITIONAL_YES_HTML?: string;
   CONDITIONAL_NO_HTML?: string;
+  HINT_HTML?: string;
+  LEGEND_CLASS?: string;
+  HORIZONTAL_RADIOS?: boolean;
 }
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
@@ -46,6 +49,9 @@ interface CorePageVariables {
   CUSTOM_CONTENT_HTML?: string;
   CONDITIONAL_YES_HTML?: string;
   CONDITIONAL_NO_HTML?: string;
+  HINT_HTML?: string;
+  LEGEND_CLASS?: string;
+  HORIZONTAL_RADIOS?: boolean;
 }
 
 interface SectionStartPageVariables extends CorePageVariables {
@@ -67,6 +73,9 @@ interface SingleInputPageVariablesInitialInput {
   CUSTOM_CONTENT_HTML?: string;
   CONDITIONAL_YES_HTML?: string;
   CONDITIONAL_NO_HTML?: string;
+  HINT_HTML?: string;
+  LEGEND_CLASS?: string;
+  HORIZONTAL_RADIOS?: boolean;
 }
 
 interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {

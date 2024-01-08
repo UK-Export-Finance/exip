@@ -8,6 +8,13 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    QUOTE: { UK_GOODS_OR_SERVICES },
+  },
+} = TEMPLATES;
+
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
 export const PAGE_VARIABLES = {
@@ -18,10 +25,10 @@ export const PAGE_VARIABLES = {
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
   HAS_SAVE_AND_BACK: false,
-  CUSTOM_CONTENT_HTML: 'partials/quote-uk-goods-and-services-details.njk',
+  CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
 };
 
-export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {

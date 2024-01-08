@@ -9,7 +9,12 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import { Request, Response } from '../../../../types';
 import { mockReq, mockRes } from '../../../test-mocks';
 
-const { SINGLE_RADIO } = TEMPLATES.SHARED_PAGES;
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    QUOTE: { UK_GOODS_OR_SERVICES },
+  },
+} = TEMPLATES;
 
 describe('controllers/quote/uk-goods-or-services', () => {
   let req: Request;
@@ -38,7 +43,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
         HAS_SAVE_AND_BACK: false,
-        CUSTOM_CONTENT_HTML: 'partials/quote-uk-goods-and-services-details.njk',
+        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -47,7 +52,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(SINGLE_RADIO);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -55,7 +60,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(SINGLE_RADIO, {
+      expect(res.render).toHaveBeenCalledWith(SHARED_PAGES.SINGLE_RADIO, {
         userName: getUserNameFromSession(req.session.user),
         ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
         BACK_LINK: req.headers.referer,
@@ -71,7 +76,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.render).toHaveBeenCalledWith(SINGLE_RADIO, {
+        expect(res.render).toHaveBeenCalledWith(SHARED_PAGES.SINGLE_RADIO, {
           userName: getUserNameFromSession(req.session.user),
           ...singleInputPageVariables(PAGE_VARIABLES),
           BACK_LINK: req.headers.referer,

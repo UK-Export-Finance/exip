@@ -33,6 +33,9 @@ const corePageVariables = ({
   CUSTOM_CONTENT_HTML,
   CONDITIONAL_YES_HTML,
   CONDITIONAL_NO_HTML,
+  HINT_HTML,
+  LEGEND_CLASS,
+  HORIZONTAL_RADIOS,
 }: CorePageVariablesInput): CorePageVariables => {
   /**
    * checks if rhe ORIGINAL_URL is an insurance route or not
@@ -84,6 +87,9 @@ const corePageVariables = ({
     CUSTOM_CONTENT_HTML,
     CONDITIONAL_YES_HTML,
     CONDITIONAL_NO_HTML,
+    HINT_HTML,
+    LEGEND_CLASS,
+    HORIZONTAL_RADIOS,
   };
 };
 

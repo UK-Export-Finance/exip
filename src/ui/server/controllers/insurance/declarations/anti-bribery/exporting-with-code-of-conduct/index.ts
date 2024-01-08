@@ -60,6 +60,7 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
+    applicationAnswer: application.declaration[FIELD_ID],
   });
 };
 

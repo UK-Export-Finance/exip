@@ -11,6 +11,13 @@ import { Request, Response } from '../../../../../types';
 
 const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES.ELIGIBILITY;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { END_BUYER },
+  },
+} = TEMPLATES;
+
 export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
 
 export const PAGE_VARIABLES = {
@@ -24,10 +31,10 @@ export const PAGE_VARIABLES = {
     ...FIELDS_ELIGIBILITY[FIELD_ID],
   },
   HAS_SAVE_AND_BACK: false,
-  CUSTOM_CONTENT_HTML: 'partials/end-buyer-details.njk',
+  CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
 };
 
-export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get

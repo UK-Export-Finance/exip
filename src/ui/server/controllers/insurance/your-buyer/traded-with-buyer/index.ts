@@ -28,7 +28,7 @@ export const FIELD_IDS = [FIELD_ID];
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
-  horizontalRadios: true,
+  HORIZONTAL_RADIOS: true,
 });
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;

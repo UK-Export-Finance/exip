@@ -25,10 +25,12 @@
   {% endif %}
 
   {# if applicationAnswer is null or undefined, then should set submitted answer to submittedValues value #}
-  {% if applicationAnswer === null or applicationAnswer === undefined %}
-    {% set submittedAnswer = submittedValues[FIELD_ID] %}
-  {% else %}
+  {% set hasApplicationAnswer = applicationAnswer !== null or applicationAnswer !== undefined %}
+
+  {% if hasApplicationAnswer %}
     {% set submittedAnswer = submittedValues[FIELD_ID] or applicationAnswer %}
+  {% else %}
+    {% set submittedAnswer = submittedValues[FIELD_ID] %}
   {% endif %}
 
   <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
@@ -39,8 +41,8 @@
 
     {{ singleRadio.render({
       application: application,
-      conditionalYes: CONDITIONAL_YES_HTML,
       conditionalNo: CONDITIONAL_NO_HTML,
+      conditionalYes: CONDITIONAL_YES_HTML,
       CONTENT_STRINGS: CONTENT_STRINGS,
       continueButtonText: CONTENT_STRINGS.BUTTONS.CONTINUE,
       customContentHTML: CUSTOM_CONTENT_HTML,
@@ -50,14 +52,14 @@
       hasHintHtml: HINT_HTML,
       hasSaveAndBack: HAS_SAVE_AND_BACK,
       hintText: FIELD_HINT,
-      horizontalRadios: horizontalRadios,
-      legendClass: legendClass
+      horizontalRadios: HORIZONTAL_RADIOS,
+      legendClass: legendClass,
       legendText: CONTENT_STRINGS.PAGE_TITLE,
       saveAndBackButtonText: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
       saveAndBackUrl: SAVE_AND_BACK_URL,
       submittedAnswer: submittedAnswer,
       submittedValues: submittedValues,
-      validationErrors: validationErrors,
+      validationErrors: validationErrors
     }) }}
 
   </form>
