@@ -44,7 +44,6 @@ const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`;
 
 const baseUrl = Cypress.config('baseUrl');
 
-
 context('Insurance - Policy - Single contract policy - total contract value page - As an exporter, I want to provide the details of the single contract policy that I need cover for', () => {
   let referenceNumber;
   let url;
