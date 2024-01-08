@@ -1,4 +1,5 @@
 import generatePolicyContactFields from '.';
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -9,10 +10,15 @@ import generateChangeLink from '../../../generate-change-link';
 import { mockApplication, mockContact } from '../../../../test-mocks';
 
 const {
+  POLICY: { NAME_ON_POLICY: FORM_TITLE },
+} = FORM_TITLES;
+
+const {
   POLICY: {
     NAME_ON_POLICY: { NAME, POSITION, IS_SAME_AS_OWNER },
   },
 } = INSURANCE_FIELD_IDS;
+
 const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 
 const {
@@ -25,7 +31,7 @@ describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
   const checkAndChange = false;
 
   it(`should return relevant fields and values when ${IS_SAME_AS_OWNER} is true`, () => {
-    const expectedArray = [
+    const expectedFields = [
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.NAME_ON_POLICY, NAME),
@@ -48,13 +54,18 @@ describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
 
     const result = generatePolicyContactFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedArray);
+    const expected = {
+      title: FORM_TITLE,
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 
   it(`should return the relevant fields and values when ${IS_SAME_AS_OWNER} is false`, () => {
     mockAnswers[IS_SAME_AS_OWNER] = false;
 
-    const expectedArray = [
+    const expectedFields = [
       fieldGroupItem(
         {
           field: getFieldById(FIELDS.NAME_ON_POLICY, NAME),
@@ -95,6 +106,11 @@ describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
 
     const result = generatePolicyContactFields(mockAnswers, referenceNumber, checkAndChange);
 
-    expect(result).toEqual(expectedArray);
+    const expected = {
+      title: FORM_TITLE,
+      fields: expectedFields,
+    };
+
+    expect(result).toEqual(expected);
   });
 });

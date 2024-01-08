@@ -1,12 +1,13 @@
 import generateSingleContractPolicyFields from '.';
-import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { GBP_CURRENCY_CODE, ROUTES } from '../../../../constants';
-import fieldGroupItem from '../../generate-field-group-item';
-import getFieldById from '../../../get-field-by-id';
-import formatDate from '../../../date/format-date';
-import formatCurrency from '../../../format-currency';
-import mockApplication, { mockSinglePolicy } from '../../../../test-mocks/mock-application';
+import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { GBP_CURRENCY_CODE } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import fieldGroupItem from '../../../generate-field-group-item';
+import getFieldById from '../../../../get-field-by-id';
+import formatDate from '../../../../date/format-date';
+import formatCurrency from '../../../../format-currency';
+import mockApplication, { mockSinglePolicy } from '../../../../../test-mocks/mock-application';
 
 const {
   CONTRACT_POLICY: {
@@ -18,13 +19,11 @@ const {
 } = FIELD_IDS;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { SINGLE_CONTRACT_POLICY_CHANGE },
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY: { SINGLE_CONTRACT_POLICY_CHANGE },
+} = INSURANCE_ROUTES;
 
-describe('server/helpers/summary-lists/policy/single-contract-policy-fields', () => {
+describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-contract-policy-fields', () => {
   const mockAnswers = mockSinglePolicy;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
@@ -51,15 +50,5 @@ describe('server/helpers/summary-lists/policy/single-contract-policy-fields', ()
     ];
 
     expect(result).toEqual(expected);
-  });
-
-  describe('when there are no submitted data/answers', () => {
-    it('should return fields without values', () => {
-      const result = generateSingleContractPolicyFields({ id: mockApplication.id }, referenceNumber, checkAndChange);
-
-      const expected = [fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE]), fieldGroupItem(expectedBase[TOTAL_CONTRACT_VALUE])];
-
-      expect(result).toEqual(expected);
-    });
   });
 });

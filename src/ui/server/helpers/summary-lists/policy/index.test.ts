@@ -1,65 +1,36 @@
-import { generateFields, policySummaryList } from '.';
+import { generateFields, policySummaryLists } from '.';
 import generatePolicyAndDateFields from './policy-and-date-fields';
-import generateCreditPeriodAndCurrencyFields from './credit-period-and-currency-fields';
-import generateSingleContractPolicyFields from './single-contract-policy-fields';
-import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import generatePolicyContactFields from './policy-contact-fields';
 import { generateBrokerFields } from './broker-fields';
-import generateSummaryListRows from '../generate-summary-list-rows';
+import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { mockCurrencies, mockContact } from '../../../test-mocks';
-import mockApplication, { mockBroker, mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
+import mockApplication, { mockBroker } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/policy', () => {
   const { referenceNumber } = mockApplication;
+
+  const mockAnswers = mockApplication.policy;
   const checkAndChange = false;
 
-  describe('generateFields', () => {
-    describe('when the policy type is single policy type', () => {
-      const mockAnswers = mockSinglePolicy;
+  it('should return fields and values from the submitted data/answers', () => {
+    const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
 
-      it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
+    const expected = [
+      generatePolicyAndDateFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
+      generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
+      generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
+    ];
 
-        const expected = [
-          ...generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateSingleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
-          ...generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
-          ...generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when the policy type is multiple policy type', () => {
-      const mockAnswers = mockMultiplePolicy;
-
-      it('should return fields and values from the submitted data/answers', () => {
-        const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
-
-        const expected = [
-          ...generatePolicyAndDateFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateMultipleContractPolicyFields(mockAnswers, referenceNumber, checkAndChange),
-          ...generateCreditPeriodAndCurrencyFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
-          ...generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
-          ...generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
+    expect(result).toEqual(expected);
   });
 
-  describe('policySummaryList', () => {
-    const mockAnswers = mockSinglePolicy;
-
+  describe('policySummaryLists', () => {
     it('should return an array of summary list rows', () => {
-      const result = policySummaryList(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies);
+      const result = policySummaryLists(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies);
 
       const fields = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
 
-      const expected = generateSummaryListRows(fields);
+      const expected = generateGroupsOfSummaryLists(fields);
 
       expect(result).toEqual(expected);
     });

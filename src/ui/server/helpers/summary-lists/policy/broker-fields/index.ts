@@ -1,6 +1,7 @@
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
@@ -9,16 +10,18 @@ import generateChangeLink from '../../../generate-change-link';
 import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
 
 const {
+  POLICY: { BROKER: FORM_TITLE },
+} = FORM_TITLES;
+
+const {
   POLICY: {
     BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
 /**
  * optionalBrokerFields
@@ -31,7 +34,10 @@ const {
 const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange: boolean) => {
   let fields = [] as Array<SummaryListItemData>;
 
-  // if yes selected then will populate optional fields, else will return empty array
+  /**
+   * If using a broker,
+   * populate optional fields.
+   */
   if (answers[USING_BROKER]) {
     // address for HTML mapping
     const address = {
@@ -90,7 +96,10 @@ const generateBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
     ...optionalBrokerFields(answers, referenceNumber, checkAndChange),
   ] as Array<SummaryListItemData>;
 
-  return fields;
+  return {
+    title: FORM_TITLE,
+    fields,
+  };
 };
 
 export { generateBrokerFields, optionalBrokerFields };
