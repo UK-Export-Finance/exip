@@ -34,6 +34,13 @@ const {
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
 } = INSURANCE_FIELD_IDS;
 
+const {
+  CONTRACT_POLICY,
+  EXPORT_VALUE,
+  NAME_ON_POLICY,
+  DIFFERENT_NAME_ON_POLICY,
+} = FIELDS;
+
 const { POLICY_CONTACT } = application;
 
 const checkPolicySummaryList = ({
@@ -43,14 +50,14 @@ const checkPolicySummaryList = ({
     const timestamp = createTimestampFromNumbers(day, month, year);
     const expectedValue = formatDate(timestamp);
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTRACT_POLICY);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY);
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [POLICY_CURRENCY_CODE]: () => {
     const fieldId = POLICY_CURRENCY_CODE;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTRACT_POLICY);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY);
 
     const currency = CURRENCIES.find((c) => c.isoCode === application.POLICY[fieldId]);
     const expectedValue = currency.name;
@@ -69,7 +76,7 @@ const checkPolicySummaryList = ({
     [CONTRACT_COMPLETION_DATE]: () => {
       const fieldId = CONTRACT_COMPLETION_DATE;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTRACT_POLICY.SINGLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.SINGLE);
 
       const { day, month, year } = application.POLICY[fieldId];
       const timestamp = createTimestampFromNumbers(day, month, year);
@@ -80,7 +87,7 @@ const checkPolicySummaryList = ({
     [TOTAL_CONTRACT_VALUE]: () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.EXPORT_VALUE.SINGLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.SINGLE);
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
@@ -100,7 +107,7 @@ const checkPolicySummaryList = ({
     [TOTAL_MONTHS_OF_COVER]: () => {
       const fieldId = TOTAL_MONTHS_OF_COVER;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.CONTRACT_POLICY.MULTIPLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.MULTIPLE);
 
       const expectedValue = `${application.POLICY[fieldId]} months`;
 
@@ -109,7 +116,7 @@ const checkPolicySummaryList = ({
     [TOTAL_SALES_TO_BUYER]: () => {
       const fieldId = TOTAL_SALES_TO_BUYER;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.EXPORT_VALUE.MULTIPLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.MULTIPLE);
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
@@ -118,7 +125,7 @@ const checkPolicySummaryList = ({
     [MAXIMUM_BUYER_WILL_OWE]: () => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.EXPORT_VALUE.MULTIPLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.MULTIPLE);
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
@@ -128,7 +135,7 @@ const checkPolicySummaryList = ({
   [NAME]: ({ sameName = true }) => {
     const fieldId = NAME;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NAME_ON_POLICY);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, NAME_ON_POLICY);
 
     let expectedValue = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
 
@@ -141,7 +148,7 @@ const checkPolicySummaryList = ({
   [EMAIL]: () => {
     const fieldId = EMAIL;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.DIFFERENT_NAME_ON_POLICY);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, DIFFERENT_NAME_ON_POLICY);
 
     const expectedValue = POLICY_CONTACT[EMAIL];
 
@@ -150,7 +157,7 @@ const checkPolicySummaryList = ({
   [POSITION]: () => {
     const fieldId = POSITION;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.NAME_ON_POLICY);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, NAME_ON_POLICY);
 
     const expectedValue = POLICY_CONTACT[POSITION];
 
