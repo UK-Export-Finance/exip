@@ -105,7 +105,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryList,
         ...pageVariables(referenceNumber),
         status,
       };
