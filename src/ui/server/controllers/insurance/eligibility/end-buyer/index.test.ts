@@ -42,6 +42,8 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
           ID: FIELD_ID,
           ...FIELDS_ELIGIBILITY[FIELD_ID],
         },
+        HAS_SAVE_AND_BACK: false,
+        CUSTOM_CONTENT_HTML: 'partials/end-buyer-details.njk',
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -50,7 +52,7 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.END_BUYER);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

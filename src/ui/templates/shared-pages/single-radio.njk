@@ -1,10 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
-{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
-{% import '../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
-{% import '../components/submit-button.njk' as submitButton %}
+{% import '../components/single-radio.njk' as singleRadio %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -27,43 +24,41 @@
     }) }}
   {% endif %}
 
+  {# if applicationAnswer is null or undefined, then should set submitted answer to submittedValues value #}
+  {% if applicationAnswer === null or applicationAnswer === undefined %}
+    {% set submittedAnswer = submittedValues[FIELD_ID] %}
+  {% else %}
+    {% set submittedAnswer = submittedValues[FIELD_ID] or applicationAnswer %}
+  {% endif %}
+
   <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ yesNoRadioButtons.render({
-          fieldId: FIELD_ID,
-          legendText: CONTENT_STRINGS.PAGE_TITLE,
-          hintText: FIELD_HINT,
-          submittedAnswer: submittedValues[FIELD_ID],
-          errorMessage: validationErrors.errorList[FIELD_ID],
-          horizontalRadios: horizontalRadios
-        }) }}
-      </div>
-    </div>
-
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        <div class="govuk-button-group">
-          {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE
-          }) }}
-
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': 'save-and-back-button',
-              'formaction': SAVE_AND_BACK_URL
-            }
-          }) }}
-        </div>
-      </div>
-    </div>
+    {{ singleRadio.render({
+      fieldId: FIELD_ID,
+      legendText: CONTENT_STRINGS.PAGE_TITLE,
+      hintText: FIELD_HINT,
+      hasHintHtml: HINT_HTML,
+      submittedAnswer: submittedAnswer,
+      errorMessage: validationErrors.errorList[FIELD_ID],
+      horizontalRadios: horizontalRadios,
+      continueButtonText: CONTENT_STRINGS.BUTTONS.CONTINUE,
+      saveAndBackButtonText: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+      saveAndBackUrl: SAVE_AND_BACK_URL,
+      hasSaveAndBack: HAS_SAVE_AND_BACK,
+      customContentHTML: CUSTOM_CONTENT_HTML,
+      CONTENT_STRINGS: CONTENT_STRINGS,
+      conditionalYes: CONDITIONAL_YES_HTML,
+      conditionalNo: CONDITIONAL_NO_HTML,
+      validationErrors: validationErrors,
+      submittedValues: submittedValues,
+      FIELDS: FIELDS,
+      application: application,
+      legendClass: legendClass
+    }) }}
 
   </form>
 

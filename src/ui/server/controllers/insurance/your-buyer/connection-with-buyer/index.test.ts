@@ -51,6 +51,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
+        FIELD_ID: CONNECTION_WITH_BUYER,
         FIELDS: {
           CONNECTION_WITH_BUYER: {
             ID: CONNECTION_WITH_BUYER,
@@ -64,6 +65,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         },
         PAGE_CONTENT_STRINGS,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
+        CONDITIONAL_YES_HTML: 'partials/connection-to-the-buyer-conditional-yes-html.njk',
       };
 
       expect(result).toEqual(expected);
@@ -78,7 +80,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -102,6 +104,9 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
+        horizontalRadios: true,
+        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+        applicationAnswer: mockApplication.buyer[CONNECTION_WITH_BUYER],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -196,6 +201,8 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: sanitiseData(payload),
+          horizontalRadios: true,
+          FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });

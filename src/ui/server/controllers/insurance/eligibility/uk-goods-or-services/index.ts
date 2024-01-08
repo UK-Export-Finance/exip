@@ -22,9 +22,11 @@ export const PAGE_VARIABLES = {
     UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
+  HAS_SAVE_AND_BACK: false,
+  CUSTOM_CONTENT_HTML: 'partials/uk-goods-and-services-details.njk',
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {

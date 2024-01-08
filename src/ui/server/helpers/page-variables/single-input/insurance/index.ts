@@ -12,12 +12,24 @@ const { FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
  * @param {String} Link to the previous page
  * @returns {Object} Common page content strings combined with field specifics
  */
-const insuranceSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK }: SingleInputPageVariablesInitialInput) =>
+const insuranceSingleInputPageVariables = ({
+  FIELD_ID,
+  PAGE_CONTENT_STRINGS,
+  BACK_LINK,
+  HAS_SAVE_AND_BACK = true,
+  CUSTOM_CONTENT_HTML,
+  CONDITIONAL_YES_HTML,
+  CONDITIONAL_NO_HTML,
+}: SingleInputPageVariablesInitialInput) =>
   singleInputPageVariables({
     PAGE_CONTENT_STRINGS,
     BACK_LINK,
     FIELD_ID,
     FEEDBACK_ROUTE: feedbackRoute,
+    HAS_SAVE_AND_BACK,
+    CUSTOM_CONTENT_HTML,
+    CONDITIONAL_YES_HTML,
+    CONDITIONAL_NO_HTML,
   });
 
 export default insuranceSingleInputPageVariables;

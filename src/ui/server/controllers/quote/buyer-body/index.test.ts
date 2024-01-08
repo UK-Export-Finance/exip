@@ -39,6 +39,7 @@ describe('controllers/quote/buyer-body', () => {
       const expected = {
         FIELD_ID: PAGE_VARIABLES.FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
+        CUSTOM_CONTENT_HTML: 'partials/buyer-body-details.njk',
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -47,7 +48,7 @@ describe('controllers/quote/buyer-body', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.QUOTE.BUYER_BODY);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

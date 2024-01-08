@@ -34,6 +34,7 @@ describe('controllers/insurance/eligibility/do-you-have-an-account', () => {
       const expected = {
         FIELD_ID: FIELD_IDS.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT,
+        HAS_SAVE_AND_BACK: false,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -42,7 +43,7 @@ describe('controllers/insurance/eligibility/do-you-have-an-account', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.HAVE_AN_ACCOUNT);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

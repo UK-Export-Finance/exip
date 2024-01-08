@@ -1,0 +1,90 @@
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import './yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../components/submit-button.njk' as submitButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+
+{% macro render(params) %}
+
+  {% set fieldId = params.fieldId %}
+  {% set legendText = params.legendText %}
+  {% set hintText = params.hintText %}
+  {% set hasHintHtml = params.hasHintHtml %}
+  {% set submittedAnswer = params.submittedAnswer %}
+  {% set horizontalRadios = params.horizontalRadios %}
+  {% set errorMessage = params.errorMessage %}
+  {% set conditionalYes = params.conditionalYes %}
+  {% set conditionalNo = params.conditionalNo %}
+  {% set continueButtonText = params.continueButtonText %}
+  {% set saveAndBackButtonText = params.saveAndBackButtonText %}
+  {% set saveAndBackUrl = params.saveAndBackUrl %}
+  {% set hasSaveAndBack = params.hasSaveAndBack %}
+  {% set hasCustomContent = params.hasCustomContent %}
+  {% set customContentHTML = params.customContentHTML %}
+  {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
+  {% set validationErrors = params.validationErrors %}
+  {% set submittedValues = params.submittedValues %}
+  {% set FIELDS = params.FIELDS %}
+  {% set application = params.application %}
+  {% set legendClass = params.legendClass %}
+
+  {% if conditionalYes %}
+    {% set conditionalYesHtml %}
+      {% include conditionalYes %}
+    {% endset %}
+  {% endif %}
+
+  {% if conditionalNo %}
+    {% set conditionalNoHtml %}
+      {% include conditionalNo %}
+    {% endset %}
+  {% endif %}
+
+  {% if hasHintHtml %}
+    {% set hintHtml %}
+      {% include hasHintHtml %}
+    {% endset %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      {{ yesNoRadioButtons.render({
+        fieldId: fieldId,
+        legendText: legendText,
+        legendClass: legendClass,
+        hintText: hintText,
+        hintHtml: hintHtml,
+        submittedAnswer: submittedAnswer,
+        errorMessage: errorMessage,
+        horizontalRadios: horizontalRadios,
+        conditionalYesHtml: conditionalYesHtml,
+        conditionalNoHtml: conditionalNoHtml
+      }) }}
+    </div>
+  </div>
+
+  {% if customContentHTML %}
+    {% include customContentHTML %}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-button-group">
+        {{ submitButton.render({
+          text: continueButtonText
+        }) }}
+
+        {% if hasSaveAndBack %}
+          {{ govukButton({
+            text: saveAndBackButtonText,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': saveAndBackUrl
+            }
+          }) }}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endmacro %}

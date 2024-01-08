@@ -1,0 +1,13 @@
+{% set detailsHtml %}
+  {% include "partials/broker-description.njk" %}
+{% endset %}
+
+<div class="govuk-grid-column-three-quarters-from-desktop">
+  {{ govukDetails({
+    summaryText: CONTENT_STRINGS.SUMMARY,
+    html: detailsHtml,
+    attributes: {
+      'data-cy': FIELDS.DETAILS.ID
+    }
+  }) }}
+</div>

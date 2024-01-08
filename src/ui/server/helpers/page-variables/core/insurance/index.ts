@@ -12,12 +12,24 @@ const { FEEDBACK: feedbackRoute } = ROUTES.INSURANCE;
  * @param {String} ORIGINAL_URL for the page user is on
  * @returns {Object} Common page content strings
  */
-const insuranceCorePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL }: CorePageVariablesInitialInput): CorePageVariables => ({
+const insuranceCorePageVariables = ({
+  PAGE_CONTENT_STRINGS,
+  BACK_LINK,
+  ORIGINAL_URL,
+  HAS_SAVE_AND_BACK = true,
+  CUSTOM_CONTENT_HTML,
+  CONDITIONAL_YES_HTML,
+  CONDITIONAL_NO_HTML,
+}: CorePageVariablesInitialInput): CorePageVariables => ({
   ...corePageVariables({
     PAGE_CONTENT_STRINGS,
     BACK_LINK,
     FEEDBACK_ROUTE: feedbackRoute,
     ORIGINAL_URL,
+    HAS_SAVE_AND_BACK,
+    CUSTOM_CONTENT_HTML,
+    CONDITIONAL_YES_HTML,
+    CONDITIONAL_NO_HTML,
   }),
 });
 

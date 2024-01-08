@@ -36,6 +36,7 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
       const expected = {
         FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER,
+        HAS_SAVE_AND_BACK: false,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -44,7 +45,7 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

@@ -59,7 +59,7 @@ describe('controllers/insurance/business/credit-control', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -75,6 +75,7 @@ describe('controllers/insurance/business/credit-control', () => {
         FIELD_HINT: FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),
         application: res.locals.application?.business,
+        applicationAnswer: mockApplication.business[FIELD_ID],
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });
     });

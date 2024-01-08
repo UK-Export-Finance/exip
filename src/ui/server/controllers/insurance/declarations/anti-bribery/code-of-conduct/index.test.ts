@@ -50,11 +50,12 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
-        FIELD: {
+        FIELDS: {
           ID: FIELD_ID,
           ...DECLARATIONS_FIELDS[FIELD_ID],
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+        CONDITIONAL_YES_HTML: 'partials/code-of-conduct-conditional-yes-html.njk',
       };
 
       expect(result).toEqual(expected);
@@ -63,7 +64,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -76,6 +77,9 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
+        applicationAnswer: mockApplication.declaration[FIELD_ID],
+        horizontalRadios: true,
+        HINT_HTML: 'partials/code-of-conduct-hint.njk',
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -153,6 +157,8 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
           ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY),
+          horizontalRadios: true,
+          HINT_HTML: 'partials/code-of-conduct-hint.njk',
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

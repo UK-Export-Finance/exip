@@ -17,9 +17,11 @@ export const PAGE_VARIABLES = {
     ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
+  HAS_SAVE_AND_BACK: false,
+  CUSTOM_CONTENT_HTML: 'partials/quote-uk-goods-and-services-details.njk',
 };
 
-export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {

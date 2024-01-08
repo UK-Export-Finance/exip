@@ -23,9 +23,11 @@ export const PAGE_VARIABLES = {
     ID: FIELD_ID,
     ...FIELDS_ELIGIBILITY[FIELD_ID],
   },
+  HAS_SAVE_AND_BACK: false,
+  CUSTOM_CONTENT_HTML: 'partials/end-buyer-details.njk',
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.END_BUYER;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get

@@ -19,7 +19,6 @@ const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
 const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.POLICY;
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.POLICY;
 
 const {
   INSURANCE_ROOT,
@@ -43,7 +42,7 @@ describe('controllers/insurance/policy/broker', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(BROKER_TEMPLATE);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -60,6 +59,7 @@ describe('controllers/insurance/policy/broker', () => {
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
+        FIELD_ID: USING_BROKER,
         FIELDS: {
           USING_BROKER: {
             ID: USING_BROKER,
@@ -102,6 +102,8 @@ describe('controllers/insurance/policy/broker', () => {
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_SAVE_AND_BACK}`,
+        CONDITIONAL_YES_HTML: 'partials/broker-conditional-yes-html.njk',
+        CUSTOM_CONTENT_HTML: 'partials/broker-details.njk',
       };
 
       expect(result).toEqual(expected);
@@ -112,14 +114,16 @@ describe('controllers/insurance/policy/broker', () => {
     it('should render the broker template with correct variables', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(BROKER_TEMPLATE, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: BROKER,
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
+        applicationAnswer: mockApplication.broker[USING_BROKER],
         ...pageVariables(mockApplication.referenceNumber),
+        legendClass: 'govuk-fieldset__legend--xl',
       });
     });
 
@@ -161,6 +165,7 @@ describe('controllers/insurance/policy/broker', () => {
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
+          legendClass: 'govuk-fieldset__legend--xl',
         });
       });
     });

@@ -23,7 +23,7 @@ const { HAS_CREDIT_CONTROL } = BUSINESS_FIELD_IDS;
 
 export const FIELD_ID = HAS_CREDIT_CONTROL;
 
-export const TEMPLATE = TEMPLATES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_VARIABLES = {
   FIELD_ID,
@@ -55,6 +55,7 @@ export const get = (req: Request, res: Response) => {
       FIELD_HINT: FIELDS[FIELD_ID].HINT,
       userName: getUserNameFromSession(req.session.user),
       application: application.business,
+      applicationAnswer: application.business[FIELD_ID],
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });
   } catch (err) {

@@ -36,7 +36,7 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.EXPORTING_WITH_CODE_OF_CONDUCT;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get

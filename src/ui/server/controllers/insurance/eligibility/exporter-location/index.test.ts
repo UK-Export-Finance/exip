@@ -38,6 +38,7 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         FIELD_ID: FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION,
         FIELD: FIELDS[FIELD_ID],
         PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
+        HAS_SAVE_AND_BACK: false,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -46,7 +47,7 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.EXPORTER_LOCATION);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 

@@ -16,9 +16,8 @@ import { Request, Response } from '../../../../../types';
 const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.POLICY;
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.POLICY;
 
-export const TEMPLATE = BROKER_TEMPLATE;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const FIELD_IDS = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
 
@@ -32,6 +31,7 @@ const {
 const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
 
 const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID: USING_BROKER,
   FIELDS: {
     USING_BROKER: {
       ID: USING_BROKER,
@@ -73,6 +73,8 @@ const pageVariables = (referenceNumber: number) => ({
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_SAVE_AND_BACK}`,
+  CONDITIONAL_YES_HTML: 'partials/broker-conditional-yes-html.njk',
+  CUSTOM_CONTENT_HTML: 'partials/broker-details.njk',
 });
 
 /**
@@ -96,7 +98,9 @@ const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      applicationAnswer: application.broker[USING_BROKER],
       ...pageVariables(application.referenceNumber),
+      legendClass: 'govuk-fieldset__legend--xl',
     });
   } catch (err) {
     console.error('Error getting broker %O', err);
@@ -142,6 +146,7 @@ const post = async (req: Request, res: Response) => {
         validationErrors,
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
+        legendClass: 'govuk-fieldset__legend--xl',
       });
     }
 

@@ -25,6 +25,10 @@ interface CorePageVariablesInitialInput {
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
   ORIGINAL_URL?: string;
+  HAS_SAVE_AND_BACK?: boolean;
+  CUSTOM_CONTENT_HTML?: string;
+  CONDITIONAL_YES_HTML?: string;
+  CONDITIONAL_NO_HTML?: string;
 }
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
@@ -38,6 +42,10 @@ interface CorePageVariables {
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
   DATA_CY: PageVariablesDataCy;
+  HAS_SAVE_AND_BACK?: boolean;
+  CUSTOM_CONTENT_HTML?: string;
+  CONDITIONAL_YES_HTML?: string;
+  CONDITIONAL_NO_HTML?: string;
 }
 
 interface SectionStartPageVariables extends CorePageVariables {
@@ -55,6 +63,10 @@ interface SingleInputPageVariablesInitialInput {
   BACK_LINK?: string;
   FIELD_ID: string;
   ORIGINAL_URL?: string;
+  HAS_SAVE_AND_BACK?: boolean;
+  CUSTOM_CONTENT_HTML?: string;
+  CONDITIONAL_YES_HTML?: string;
+  CONDITIONAL_NO_HTML?: string;
 }
 
 interface SingleInputPageVariablesInput extends SingleInputPageVariablesInitialInput {

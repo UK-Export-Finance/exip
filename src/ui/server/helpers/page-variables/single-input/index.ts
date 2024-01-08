@@ -19,6 +19,10 @@ const singleInputPageVariables = ({
   BACK_LINK,
   FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK,
   ORIGINAL_URL,
+  HAS_SAVE_AND_BACK,
+  CUSTOM_CONTENT_HTML,
+  CONDITIONAL_YES_HTML,
+  CONDITIONAL_NO_HTML,
 }: SingleInputPageVariablesInput) => {
   const pageVariables: SingleInputPageVariables = {
     ...corePageVariables({
@@ -26,6 +30,10 @@ const singleInputPageVariables = ({
       BACK_LINK,
       FEEDBACK_ROUTE,
       ORIGINAL_URL,
+      HAS_SAVE_AND_BACK,
+      CUSTOM_CONTENT_HTML,
+      CONDITIONAL_YES_HTML,
+      CONDITIONAL_NO_HTML,
     }),
     FIELD_ID,
   };

@@ -30,14 +30,15 @@ const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_C
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  FIELD: {
+  FIELDS: {
     ID: FIELD_ID,
     ...DECLARATIONS_FIELDS[FIELD_ID],
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+  CONDITIONAL_YES_HTML: 'partials/code-of-conduct-conditional-yes-html.njk',
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.DECLARATIONS.ANTI_BRIBERY.CODE_OF_CONDUCT;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get
@@ -61,6 +62,9 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
+    applicationAnswer: application.declaration[FIELD_ID],
+    horizontalRadios: true,
+    HINT_HTML: 'partials/code-of-conduct-hint.njk',
   });
 };
 
@@ -91,6 +95,8 @@ export const post = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
+      horizontalRadios: true,
+      HINT_HTML: 'partials/code-of-conduct-hint.njk',
     });
   }
 

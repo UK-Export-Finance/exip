@@ -25,11 +25,12 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_
 
 export const FIELD_IDS = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
 
-export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
 export const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID: CONNECTION_WITH_BUYER,
   FIELDS: {
     CONNECTION_WITH_BUYER: {
       ID: CONNECTION_WITH_BUYER,
@@ -43,6 +44,7 @@ export const pageVariables = (referenceNumber: number) => ({
   },
   PAGE_CONTENT_STRINGS,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+  CONDITIONAL_YES_HTML: 'partials/connection-to-the-buyer-conditional-yes-html.njk',
 });
 
 /**
@@ -70,6 +72,9 @@ export const get = (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      horizontalRadios: true,
+      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+      applicationAnswer: application.buyer[CONNECTION_WITH_BUYER],
     });
   } catch (err) {
     console.error('Error getting connection to the buyer %O', err);
@@ -108,6 +113,8 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
+        horizontalRadios: true,
+        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       });
     }
 

@@ -11,13 +11,26 @@ import { SingleInputPageVariablesInitialInput } from '../../../../../types';
  * @param {String} ORIGINAL_URL for the page user is on
  * @returns {Object} Common page content strings combined with field specifics
  */
-const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL }: SingleInputPageVariablesInitialInput) =>
+const quoteSingleInputPageVariables = ({
+  FIELD_ID,
+  PAGE_CONTENT_STRINGS,
+  BACK_LINK,
+  ORIGINAL_URL,
+  HAS_SAVE_AND_BACK = false,
+  CUSTOM_CONTENT_HTML,
+  CONDITIONAL_YES_HTML,
+  CONDITIONAL_NO_HTML,
+}: SingleInputPageVariablesInitialInput) =>
   singleInputPageVariables({
     PAGE_CONTENT_STRINGS,
     BACK_LINK,
     FIELD_ID,
     FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     ORIGINAL_URL,
+    HAS_SAVE_AND_BACK,
+    CUSTOM_CONTENT_HTML,
+    CONDITIONAL_YES_HTML,
+    CONDITIONAL_NO_HTML,
   });
 
 export default quoteSingleInputPageVariables;
