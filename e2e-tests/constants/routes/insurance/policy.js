@@ -11,6 +11,7 @@ export const POLICY = {
   SINGLE_CONTRACT_POLICY_SAVE_AND_BACK: `${ROOT}/single-contract-policy/save-and-go-back`,
   SINGLE_CONTRACT_POLICY_CHANGE: `${ROOT}/single-contract-policy/change`,
   SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE: `${ROOT}/single-contract-policy/check-and-change`,
+  SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE: `${ROOT}/single-contract-policy/total-contract-value`,
   MULTIPLE_CONTRACT_POLICY: `${ROOT}/multi-contract-policy`,
   MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK: `${ROOT}/multi-contract-policy/save-and-go-back`,
   MULTIPLE_CONTRACT_POLICY_CHANGE: `${ROOT}/multi-contract-policy/change`,

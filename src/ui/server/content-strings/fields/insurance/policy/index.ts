@@ -76,6 +76,12 @@ export const POLICY_FIELDS = {
           TITLE: 'Date you expect it to complete',
         },
       },
+      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        HINT: 'Enter a whole number - do not enter decimals.',
+        SUMMARY: {
+          TITLE: 'Contract value',
+        },
+      },
     },
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
@@ -89,15 +95,6 @@ export const POLICY_FIELDS = {
     },
   },
   EXPORT_VALUE: {
-    SINGLE: {
-      [EXPORT_VALUE.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        LABEL: "What's the total value of the contract you want to insure?",
-        HINT: 'Enter a whole number - do not enter decimals.',
-        SUMMARY: {
-          TITLE: 'Contract value',
-        },
-      },
-    },
     MULTIPLE: {
       [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: 'Estimate total sales to your buyer during this time',

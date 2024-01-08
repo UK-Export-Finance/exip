@@ -3,7 +3,6 @@ import {
   headingCaption,
   saveAndBackButton,
 } from '../../../../../../../pages/shared';
-import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../partials';
 import {
   BUTTONS,
@@ -12,45 +11,41 @@ import {
 } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../../fixtures/application';
 import { GBP } from '../../../../../../../fixtures/currencies';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_EXPORT_VALUE;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
   POLICY: {
-    MULTIPLE_CONTRACT_POLICY,
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    SINGLE_CONTRACT_POLICY,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
     NAME_ON_POLICY,
   },
 } = INSURANCE_ROUTES;
 
-const { EXPORT_VALUE } = FIELDS;
-
 const {
   POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+    CONTRACT_POLICY: {
+      SINGLE: { TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policy;
 
-const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy - export value page - As an exporter, I want to provide the details of the multiple contract policy that I need a cover for', () => {
+
+context('Insurance - Policy - Single contract policy - total contract value page - As an exporter, I want to provide the details of the single contract policy that I need cover for', () => {
   let referenceNumber;
   let url;
 
@@ -59,11 +54,10 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
 
-      cy.completeAndSubmitPolicyTypeForm(policyType);
-      cy.completeAndSubmitMultipleContractPolicyForm();
-
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
 
       cy.assertUrl(url);
     });
@@ -79,9 +73,9 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}`,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`,
+      pageTitle: expectedPageTitle,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
     });
   });
 
@@ -94,31 +88,16 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders `total sales to buyer` label, hint, prefix and input', () => {
-      const fieldId = TOTAL_SALES_TO_BUYER;
+    it('renders `total contract value` hint, prefix and input', () => {
+      const fieldId = TOTAL_CONTRACT_VALUE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
-
-      cy.checkText(field.hint(), EXPORT_VALUE.MULTIPLE[fieldId].HINT);
+      cy.checkText(
+        field.hint(),
+        FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT,
+      );
 
       cy.checkText(field.prefix(), '£');
-
-      field.input().should('exist');
-    });
-
-    it('renders `maximum buyer will owe` label, hint, prefix, input', () => {
-      const fieldId = MAXIMUM_BUYER_WILL_OWE;
-      const field = multipleContractPolicyExportValuePage[fieldId];
-      const { HINT } = EXPORT_VALUE.MULTIPLE[fieldId];
-
-      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
-
-      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
-
-      cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
-
-      cy.checkText(field.hint.noDecimals(), HINT.NO_DECIMALS);
 
       field.input().should('exist');
     });
@@ -131,11 +110,11 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
   describe('form submission', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      cy.completeAndSubmitTotalContractValueForm({});
     });
 
     it(`should redirect to ${NAME_ON_POLICY}`, () => {
-      cy.completeAndSubmitExportValueForm({ policyType });
-
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
@@ -151,8 +130,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        fieldSelector(TOTAL_SALES_TO_BUYER).input().should('have.value', application.POLICY[TOTAL_SALES_TO_BUYER]);
-        fieldSelector(MAXIMUM_BUYER_WILL_OWE).input().should('have.value', application.POLICY[MAXIMUM_BUYER_WILL_OWE]);
+        fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
       });
     });
   });

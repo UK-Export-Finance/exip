@@ -1,4 +1,5 @@
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -16,13 +17,11 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { Request, Response } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   CONTRACT_POLICY: {
@@ -32,9 +31,6 @@ const {
     REQUESTED_START_DATE_YEAR,
     SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR },
     POLICY_CURRENCY_CODE,
-  },
-  EXPORT_VALUE: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
   },
 } = POLICY_FIELD_IDS;
 
@@ -54,10 +50,6 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: CONTRACT_COMPLETION_DATE,
       ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE],
     },
-    TOTAL_CONTRACT_VALUE: {
-      ID: TOTAL_CONTRACT_VALUE,
-      ...FIELDS.EXPORT_VALUE.SINGLE[TOTAL_CONTRACT_VALUE],
-    },
     POLICY_CURRENCY_CODE: {
       ID: POLICY_CURRENCY_CODE,
       ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
@@ -75,7 +67,6 @@ export const FIELD_IDS = [
   CONTRACT_COMPLETION_DATE_DAY,
   CONTRACT_COMPLETION_DATE_MONTH,
   CONTRACT_COMPLETION_DATE_YEAR,
-  TOTAL_CONTRACT_VALUE,
   POLICY_CURRENCY_CODE,
 ];
 
@@ -184,7 +175,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`);
   } catch (err) {
     console.error('Error updating application - policy - single contract policy %O', err);
 

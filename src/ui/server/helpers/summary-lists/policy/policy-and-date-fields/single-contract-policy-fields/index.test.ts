@@ -11,10 +11,7 @@ import mockApplication, { mockSinglePolicy } from '../../../../../test-mocks/moc
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE },
-  },
-  EXPORT_VALUE: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
@@ -35,7 +32,7 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-cont
       href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${CONTRACT_COMPLETION_DATE}-label`,
     },
     [TOTAL_CONTRACT_VALUE]: {
-      field: getFieldById(FIELDS.EXPORT_VALUE.SINGLE, TOTAL_CONTRACT_VALUE),
+      field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE),
       renderChangeLink: true,
       href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
     },

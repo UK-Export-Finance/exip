@@ -36,7 +36,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy export value page - form validation - maximum buyer will owe', () => {
+context('Insurance - Policy - Multiple contract policy - export value page - form validation - maximum buyer will owe', () => {
   let referenceNumber;
   let url;
 
@@ -158,7 +158,7 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
   });
 
   it('should redirect to the next page when maximum buyer will owe is valid and contains a comma as all fields are valid', () => {
-    cy.completeExportValueForm({ policyType });
+    cy.completeExportValueForm();
     cy.clickBackLink();
 
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');

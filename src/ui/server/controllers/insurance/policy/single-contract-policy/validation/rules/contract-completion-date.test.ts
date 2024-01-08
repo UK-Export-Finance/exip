@@ -1,19 +1,18 @@
 import contractCompletionDateRules from './contract-completion-date';
-import { FIELD_IDS, ELIGIBILITY } from '../../../../../../constants';
+import { ELIGIBILITY } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import dateRules from '../../../../../../shared-validation/date';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        REQUESTED_START_DATE,
-        SINGLE: { CONTRACT_COMPLETION_DATE },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {

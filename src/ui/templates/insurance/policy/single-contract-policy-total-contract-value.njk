@@ -1,0 +1,109 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      {# <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }} {{ CURRENCY_NAME }}?</h1> #}
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {% call govukFieldset({
+          legend: {
+            html: fieldsetLegend.render({
+              id: FIELD.ID,
+              legendText: CONTENT_STRINGS.PAGE_TITLE,
+              isPageHeading: true
+            })
+          }
+        }) %}
+
+          {{ govukHint({
+            text: FIELD.HINT,
+            attributes: {
+              "data-cy": FIELD.ID + "-hint"
+            }
+          }) }}
+
+          {{ govukInput({
+            classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
+            attributes: {
+              'data-cy': FIELD.ID + '-input'
+            },
+            id: FIELD.ID,
+            name: FIELD.ID,
+            inputmode: "numeric",
+            pattern: "[0-9]*",
+            prefix: {
+              text: "£",
+              attributes: {
+                'data-cy': FIELD.ID + '-prefix'
+              }
+            },
+            spellcheck: false,
+            value: submittedValues[FIELD.ID] or application.policy[FIELD.ID],
+            errorMessage: validationErrors.errorList[FIELD.ID] and {
+              text: validationErrors.errorList[FIELD.ID].text,
+              attributes: {
+                "data-cy": FIELD.ID + "-error-message"
+              }
+            }
+          }) }}
+        {% endcall %}
+
+      </div>
+    </div>
+
+    <div class="govuk-button-group">
+      {{ submitButton.render({
+        text: CONTENT_STRINGS.BUTTONS.CONTINUE
+      }) }}
+
+      {{ govukButton({
+        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+        classes: "govuk-button--secondary",
+        attributes: {
+          formaction: SAVE_AND_BACK_URL,
+          'data-cy': 'save-and-back-button'
+        }
+      }) }}
+    </div>
+
+  </form>
+
+{% endblock %}

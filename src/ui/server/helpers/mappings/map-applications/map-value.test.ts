@@ -6,8 +6,10 @@ import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../
 
 const {
   POLICY: {
-    EXPORT_VALUE: {
+    CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
+    },
+    EXPORT_VALUE: {
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },

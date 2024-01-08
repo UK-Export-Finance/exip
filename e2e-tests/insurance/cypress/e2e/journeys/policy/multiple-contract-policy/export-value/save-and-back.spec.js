@@ -151,7 +151,7 @@ context('Insurance - Policy - Multiple contract policy export value page - Save 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeExportValueForm({ policyType });
+      cy.completeExportValueForm();
       saveAndBackButton().click();
     });
 

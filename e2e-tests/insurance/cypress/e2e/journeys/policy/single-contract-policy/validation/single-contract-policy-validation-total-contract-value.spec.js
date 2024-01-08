@@ -167,7 +167,7 @@ context('Insurance - Policy - Single contract policy page - form validation - to
   });
 
   it('should redirect to the next page when total contract value is valid and contains a comma as all fields are valid', () => {
-    cy.completeAndSubmitSingleContractPolicyForm({});
+    cy.completeAndSubmitSingleContractPolicyForm();
     cy.clickBackLink();
 
     cy.keyboardInput(field.input(), '1,234');
