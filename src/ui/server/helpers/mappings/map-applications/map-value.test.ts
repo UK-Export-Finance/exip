@@ -1,5 +1,6 @@
 import mapInsuredFor from './map-value';
-import { FIELD_IDS, GBP_CURRENCY_CODE } from '../../../constants';
+import { GBP_CURRENCY_CODE } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { DEFAULT } from '../../../content-strings';
 import formatCurrency from '../../format-currency';
 import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
@@ -13,7 +14,7 @@ const {
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/mappings/map-applications/map-value', () => {
   describe('when the policy type is single policy type', () => {

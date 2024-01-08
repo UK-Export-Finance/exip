@@ -17,7 +17,7 @@ const {
 
 const {
   INSURANCE_ROOT,
-  POLICY: { SINGLE_CONTRACT_POLICY_CHANGE },
+  POLICY: { SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE },
 } = INSURANCE_ROUTES;
 
 describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-contract-policy-fields', () => {
@@ -34,7 +34,7 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-cont
     [TOTAL_CONTRACT_VALUE]: {
       field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE),
       renderChangeLink: true,
-      href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}#${TOTAL_CONTRACT_VALUE}-label`,
     },
   };
 

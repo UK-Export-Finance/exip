@@ -22,8 +22,10 @@ const {
     },
   },
   POLICY: {
-    EXPORT_VALUE: {
+    CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
+    },
+    EXPORT_VALUE: {
       MULTIPLE: { MAXIMUM_BUYER_WILL_OWE },
     },
   },
@@ -104,8 +106,9 @@ context('Insurance - Dashboard - populated application', () => {
       // complete the first form - single contract policy
       cy.completeAndSubmitPolicyTypeForm(policyType);
 
-      // complete and submit the form
+      // complete and submit the next 2 forms
       cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
     });
 
     it(`should render a formatted value of ${TOTAL_CONTRACT_VALUE} in the ${TABLE_HEADERS.VALUE} cell`, () => {
@@ -134,9 +137,8 @@ context('Insurance - Dashboard - populated application', () => {
       // complete the first form - single contract policy
       cy.completeAndSubmitPolicyTypeForm(policyType);
 
-      // complete and submit the form
+      // complete and submit the next 2 forms
       cy.completeAndSubmitMultipleContractPolicyForm();
-
       cy.completeAndSubmitExportValueForm({ policyType });
     });
 
