@@ -36,7 +36,6 @@ describe('controllers/insurance/eligibility/companies-house-number', () => {
       const expected = {
         FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.ELIGIBILITY.HAS_COMPANIES_HOUSE_NUMBER,
-        HAS_SAVE_AND_BACK: false,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);

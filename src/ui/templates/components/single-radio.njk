@@ -16,7 +16,6 @@
   {% set FIELDS = params.FIELDS %}
   {% set legendText = params.legendText %}
   {% set hasHintHtml = params.hasHintHtml %}
-  {% set hasSaveAndBack = params.hasSaveAndBack %}
   {% set hintText = params.hintText %}
   {% set horizontalRadios = params.horizontalRadios %}
   {% set legendClass = params.legendClass %}
@@ -73,7 +72,7 @@
           text: continueButtonText
         }) }}
 
-        {% if hasSaveAndBack %}
+        {% if saveAndBackUrl %}
           {{ govukButton({
             text: saveAndBackButtonText,
             classes: "govuk-button--secondary",

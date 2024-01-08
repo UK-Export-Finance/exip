@@ -11,6 +11,12 @@ import { SingleInputPageVariablesInput, SingleInputPageVariables } from '../../.
  * @param {String} Product string
  * @param {String} Link to the previous page
  * @param {String} Link to the start route for the header
+ * @param {String} CUSTOM_CONTENT_HTML string for the location of the partial which contains HTML for custom content for single radio page
+ * @param {String} CONDITIONAL_YES_HTML string for the location of the partial which contains HTML for conditional yes reveal single radio page
+ * @param {String} CONDITIONAL_NO_HTML string for the location of the partial which contains HTML for conditional no reveal single radio page
+ * @param {String} HINT_HTML string for the location of the partial which contains HTML for the hint for single radio page
+ * @param {String} LEGEND_CLASS class for the legend on a single radio page
+ * @param {Boolean} HORIZONTAL_RADIOS if radios are horizontal or not
  * @returns {Object} Common page content strings combined with field specifics
  */
 const singleInputPageVariables = ({
@@ -19,7 +25,6 @@ const singleInputPageVariables = ({
   BACK_LINK,
   FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK,
   ORIGINAL_URL,
-  HAS_SAVE_AND_BACK,
   CUSTOM_CONTENT_HTML,
   CONDITIONAL_YES_HTML,
   CONDITIONAL_NO_HTML,
@@ -33,7 +38,6 @@ const singleInputPageVariables = ({
       BACK_LINK,
       FEEDBACK_ROUTE,
       ORIGINAL_URL,
-      HAS_SAVE_AND_BACK,
       CUSTOM_CONTENT_HTML,
       CONDITIONAL_YES_HTML,
       CONDITIONAL_NO_HTML,

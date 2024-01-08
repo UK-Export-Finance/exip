@@ -38,7 +38,6 @@ describe('controllers/insurance/eligibility/exporter-location', () => {
         FIELD_ID: FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION,
         FIELD: FIELDS[FIELD_ID],
         PAGE_CONTENT_STRINGS: PAGES.EXPORTER_LOCATION,
-        HAS_SAVE_AND_BACK: false,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);

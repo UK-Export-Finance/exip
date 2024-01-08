@@ -14,7 +14,7 @@ describe('server/helpers/page-variables/single-input/insurance', () => {
     FIELD_ID: 'mock',
   };
 
-  it('should return singleInputPageVariables with BACK_LINK, insurance/application product description, FIELD_ID and HAS_SAVE_AND_BACK', () => {
+  it('should return singleInputPageVariables with BACK_LINK, insurance/application product description, FIELD_ID', () => {
     const result = insuranceSingleInputPageVariables(mock);
 
     const expected = singleInputPageVariables({
@@ -22,15 +22,8 @@ describe('server/helpers/page-variables/single-input/insurance', () => {
       BACK_LINK: mock.BACK_LINK,
       FIELD_ID: mock.FIELD_ID,
       FEEDBACK_ROUTE: feedbackRoute,
-      HAS_SAVE_AND_BACK: true,
     });
 
     expect(result).toEqual(expected);
-  });
-
-  it('should return HAS_SAVE_AND_BACK as true when it is not provided', () => {
-    const result = insuranceSingleInputPageVariables(mock);
-
-    expect(result.HAS_SAVE_AND_BACK).toEqual(true);
   });
 });

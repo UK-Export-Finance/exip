@@ -42,7 +42,6 @@ describe('controllers/quote/uk-goods-or-services', () => {
           ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
-        HAS_SAVE_AND_BACK: false,
         CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
       };
 

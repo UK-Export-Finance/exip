@@ -20,15 +20,8 @@ describe('server/helpers/page-variables/single-input/quote', () => {
       BACK_LINK: mock.BACK_LINK,
       FIELD_ID: mock.FIELD_ID,
       FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
-      HAS_SAVE_AND_BACK: false,
     });
 
     expect(result).toEqual(expected);
-  });
-
-  it('should return HAS_SAVE_AND_BACK as false when it is not provided', () => {
-    const result = quoteSingleInputPageVariables(mock);
-
-    expect(result.HAS_SAVE_AND_BACK).toEqual(false);
   });
 });

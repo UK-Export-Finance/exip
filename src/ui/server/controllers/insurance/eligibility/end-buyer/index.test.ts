@@ -49,7 +49,6 @@ describe('controllers/insurance/eligibility/end-buyer', () => {
           ID: FIELD_ID,
           ...FIELDS_ELIGIBILITY[FIELD_ID],
         },
-        HAS_SAVE_AND_BACK: false,
         CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
       };
 

@@ -20,15 +20,8 @@ describe('server/helpers/page-variables/core/insurance', () => {
       PAGE_CONTENT_STRINGS: mock.PAGE_CONTENT_STRINGS,
       BACK_LINK: mock.BACK_LINK,
       FEEDBACK_ROUTE: feedbackRoute,
-      HAS_SAVE_AND_BACK: true,
     });
 
     expect(result).toEqual(expected);
-  });
-
-  it('should return HAS_SAVE_AND_BACK as true when it is not provided', () => {
-    const result = insuranceCorePageVariables(mock);
-
-    expect(result.HAS_SAVE_AND_BACK).toEqual(true);
   });
 });

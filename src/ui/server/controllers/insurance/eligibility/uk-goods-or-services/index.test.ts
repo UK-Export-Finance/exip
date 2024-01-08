@@ -47,7 +47,6 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
           UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
-        HAS_SAVE_AND_BACK: false,
         CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
       };
 
