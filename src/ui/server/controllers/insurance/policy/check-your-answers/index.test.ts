@@ -83,7 +83,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        SUMMARY_LIST: summaryLists,
+        SUMMARY_LISTS: summaryLists,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

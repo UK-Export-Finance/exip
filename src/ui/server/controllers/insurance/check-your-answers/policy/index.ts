@@ -85,7 +85,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       status,
-      SUMMARY_LIST: summaryLists,
+      SUMMARY_LISTS: summaryLists,
       ...pageVariables(referenceNumber),
     });
   } catch (err) {
