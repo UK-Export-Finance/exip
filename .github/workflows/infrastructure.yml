@@ -450,7 +450,7 @@ jobs:
 
       - name: VPN 🧱
         if: contains('["dev", "feature", "staging"]', env.TARGET)
-        uses: Azure/cli@v1.0.8
+        uses: Azure/cli@v1.0.9
         with:
           inlineScript: |
             # Custom rule - IP
