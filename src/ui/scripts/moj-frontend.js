@@ -1,16 +1,14 @@
-// TODO: EMS-2475
-
-// import $ from 'jquery';
-// import MOJFrontend, { initAll } from '@ministryofjustice/frontend';
+import $ from 'jquery';
+import MOJFrontend, { initAll } from '@ministryofjustice/frontend';
 
 const init = () => {
-  // window.$ = $;
+  window.$ = $;
 
-  // initAll();
+  initAll();
 
-  // window.MOJFrontend = MOJFrontend;
+  window.MOJFrontend = MOJFrontend;
 
-  // return MOJFrontend;
+  return MOJFrontend;
 };
 
 export default init();
