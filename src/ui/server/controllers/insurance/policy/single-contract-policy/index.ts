@@ -179,6 +179,13 @@ export const post = async (req: Request, res: Response) => {
 
     const isSinglePolicyWithoutTotalContractValue = isSinglePolicyType(policy[POLICY_TYPE]) && !policy[TOTAL_CONTRACT_VALUE];
 
+    /**
+     * If the route is a "change" route,
+     * the application is a "single" policy type.
+     * and there is no TOTAL_CONTRACT_VALUE saved,
+     * redirect to the TOTAL_CONTRACT_VALUE form.
+     * Otherwise, redirect to "check your answers".
+     */
     if (isChangeRoute(req.originalUrl)) {
       if (isSinglePolicyWithoutTotalContractValue) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`);
@@ -187,6 +194,13 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "check and change" route,
+     * the application is a "single" policy type.
+     * and there is no TOTAL_CONTRACT_VALUE saved,
+     * redirect to the TOTAL_CONTRACT_VALUE form.
+     * Otherwise, redirect to "check and change" route.
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (isSinglePolicyWithoutTotalContractValue) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`);
