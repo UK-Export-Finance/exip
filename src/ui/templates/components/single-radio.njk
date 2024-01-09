@@ -14,8 +14,7 @@
   {% set errorMessage = params.errorMessage %}
   {% set fieldId = params.fieldId %}
   {% set FIELDS = params.FIELDS %}
-  {% set legendText = params.legendText %}
-  {% set hasHintHtml = params.hasHintHtml %}
+  {% set hintHtmlPartial = params.hasHintHtml %}
   {% set hintText = params.hintText %}
   {% set horizontalRadios = params.horizontalRadios %}
   {% set legendClass = params.legendClass %}
@@ -38,9 +37,9 @@
     {% endset %}
   {% endif %}
 
-  {% if hasHintHtml %}
+  {% if hintHtmlPartial %}
     {% set hintHtml %}
-      {% include hasHintHtml %}
+      {% include hintHtmlPartial %}
     {% endset %}
   {% endif %}
 
