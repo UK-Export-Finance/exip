@@ -14,11 +14,17 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { isSinglePolicyType } from '../../../../helpers/policy-type';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE, CHECK_YOUR_ANSWERS },
+  POLICY: {
+    SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -29,9 +35,10 @@ const {
     REQUESTED_START_DATE_DAY,
     REQUESTED_START_DATE_MONTH,
     REQUESTED_START_DATE_YEAR,
-    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR },
+    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
     POLICY_CURRENCY_CODE,
   },
+  POLICY_TYPE,
 } = POLICY_FIELD_IDS;
 
 /**
@@ -125,6 +132,8 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const { policy } = application;
+
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
@@ -172,6 +181,10 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (isSinglePolicyType(policy[POLICY_TYPE]) && !policy[TOTAL_CONTRACT_VALUE]) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 

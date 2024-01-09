@@ -11,6 +11,7 @@ const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
     SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
@@ -33,7 +34,6 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
-  checkYourAnswersRoute: TYPE_OF_POLICY,
   newValueInput: '',
   fieldId,
   referenceNumber,
@@ -165,18 +165,24 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
     describe(TOTAL_CONTRACT_VALUE, () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
 
-      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+      const fieldVariables = {
+        route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+        newValueInput: application.POLICY[fieldId] - 500,
+        fieldId,
+        referenceNumber,
+        summaryList,
+        changeLink: summaryList.field(fieldId).changeLink,
+      };
 
       describe('when clicking the `change` link', () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
-        });
-
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
-          cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
           cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+        });
+
+        it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: fieldVariables.route, fieldId });
         });
       });
 

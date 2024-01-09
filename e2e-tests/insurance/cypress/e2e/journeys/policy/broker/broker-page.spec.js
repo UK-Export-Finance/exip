@@ -63,6 +63,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
