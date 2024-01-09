@@ -14,6 +14,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const { NEED_PRE_CREDIT_PERIOD } = POLICY_FIELD_IDS;
+const { SHARED_PAGES } = TEMPLATES;
 
 /**
  * pageVariables
@@ -31,7 +32,7 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD_SAVE_AND_BACK}`,
 });
 
-export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get

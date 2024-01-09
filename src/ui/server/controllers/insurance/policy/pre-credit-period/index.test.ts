@@ -17,6 +17,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const { NEED_PRE_CREDIT_PERIOD } = POLICY_FIELD_IDS;
+const { SHARED_PAGES } = TEMPLATES;
 
 describe('controllers/insurance/policy/pre-credit-perido', () => {
   let req: Request;
@@ -57,7 +58,7 @@ describe('controllers/insurance/policy/pre-credit-perido', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.PRE_CREDIT_PERIOD);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
