@@ -16,9 +16,20 @@ import { Request, Response } from '../../../../../types';
 const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.POLICY;
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.POLICY;
 
-export const TEMPLATE = BROKER_TEMPLATE;
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { BROKER: BROKER_PARTIALS },
+  },
+  ATTRIBUTES: {
+    CLASSES: {
+      LEGEND: { XL },
+    },
+  },
+} = TEMPLATES;
+
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const FIELD_IDS = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
 
@@ -32,6 +43,7 @@ const {
 const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
 
 const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID: USING_BROKER,
   FIELDS: {
     USING_BROKER: {
       ID: USING_BROKER,
@@ -76,6 +88,16 @@ const pageVariables = (referenceNumber: number) => ({
 });
 
 /**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+const HTML_FLAGS = {
+  CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
+  CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
+  LEGEND_CLASS: XL,
+};
+
+/**
  * gets the template for broker page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
@@ -93,9 +115,11 @@ const get = (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: BROKER,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      applicationAnswer: application.broker[USING_BROKER],
       ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
@@ -136,6 +160,7 @@ const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: BROKER,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
@@ -163,4 +188,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, post };
+export { pageVariables, HTML_FLAGS, get, post };
