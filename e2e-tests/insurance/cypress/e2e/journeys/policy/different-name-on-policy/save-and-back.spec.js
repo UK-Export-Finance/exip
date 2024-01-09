@@ -148,6 +148,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       submitButton().click();
       submitButton().click();
       submitButton().click();
+      submitButton().click();
 
       cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
       cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);
