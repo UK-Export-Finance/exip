@@ -55,10 +55,10 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_
 
 /**
  * get
- * Get the application and render the Single contract policy - Export value page
+ * Get the application and render the Single contract policy - Total contract value page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Single contract policy - Export value page
+ * @returns {Express.Response.render} Single contract policy - Total contract value page
  */
 export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -103,7 +103,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check Single contract policy - Export value validation errors and if successful, redirect to the next part of the flow.
+ * Check Single contract policy - Total contract value validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page

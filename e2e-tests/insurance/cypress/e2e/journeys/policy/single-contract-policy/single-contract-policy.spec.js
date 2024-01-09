@@ -159,8 +159,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].month);
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
-        // fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
         radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
       });
