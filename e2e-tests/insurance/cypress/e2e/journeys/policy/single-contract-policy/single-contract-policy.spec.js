@@ -135,7 +135,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.input().should('exist');
     });
 
-    it('renders `currency` label and radio inputs', () => {
+    it('renders `currency` label, hint and radio inputs', () => {
       checkPolicyCurrencyCodeInput();
     });
 
