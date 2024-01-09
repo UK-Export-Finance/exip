@@ -12,7 +12,7 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -21,7 +21,6 @@ const {
   INSURANCE: {
     POLICY: {
       CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-      EXPORT_VALUE: EXPORT_VALUE_ERROR_MESSAGES,
     },
   },
 } = ERROR_MESSAGES;
@@ -75,11 +74,6 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(3),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );
   });
