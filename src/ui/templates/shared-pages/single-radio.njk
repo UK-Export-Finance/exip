@@ -25,12 +25,12 @@
   {% endif %}
 
   {# if applicationAnswer is null or undefined, then should set submitted answer to submittedValues value #}
-  {% set hasApplicationAnswer = applicationAnswer !== null or applicationAnswer !== undefined %}
+  {% set hasNoApplicationAnswer = applicationAnswer === null or applicationAnswer === undefined %}
 
-  {% if hasApplicationAnswer %}
-    {% set submittedAnswer = submittedValues[FIELD_ID] or applicationAnswer %}
-  {% else %}
+  {% if hasNoApplicationAnswer %}
     {% set submittedAnswer = submittedValues[FIELD_ID] %}
+  {% else %}
+    {% set submittedAnswer = submittedValues[FIELD_ID] or applicationAnswer %}
   {% endif %}
 
   <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
