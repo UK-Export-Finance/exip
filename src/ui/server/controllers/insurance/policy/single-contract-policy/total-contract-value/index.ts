@@ -38,7 +38,6 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} referenceNumber: Application reference number
  * @param {Array} currencies: Currencies
  * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
@@ -176,7 +175,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`);
   } catch (err) {
-    console.error('Error updating application - policy - single contract policy %O', err);
+    console.error('Error updating application - policy - single contract policy - total contract value %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
