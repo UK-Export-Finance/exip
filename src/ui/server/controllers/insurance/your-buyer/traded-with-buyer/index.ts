@@ -30,6 +30,10 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
 });
 
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
 export const HTML_FLAGS = {
   HORIZONTAL_RADIOS: true,
 };

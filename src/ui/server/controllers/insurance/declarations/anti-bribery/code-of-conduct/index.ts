@@ -44,6 +44,10 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
 });
 
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
 export const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: CODE_OF_CONDUCT.CONDITIONAL_YES_HTML,
   HINT_HTML: CODE_OF_CONDUCT.HINT_HTML,

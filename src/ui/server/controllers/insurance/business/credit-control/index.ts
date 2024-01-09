@@ -54,7 +54,6 @@ export const get = (req: Request, res: Response) => {
       }),
       FIELD_HINT: FIELDS[FIELD_ID].HINT,
       userName: getUserNameFromSession(req.session.user),
-      application: application.business,
       applicationAnswer: application.business[FIELD_ID],
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
     });

@@ -26,6 +26,10 @@ export const PAGE_VARIABLES = {
   },
 };
 
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
 export const HTML_FLAGS = {
   CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
 };

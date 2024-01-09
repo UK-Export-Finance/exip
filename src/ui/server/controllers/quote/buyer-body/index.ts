@@ -21,6 +21,10 @@ export const PAGE_VARIABLES = {
   PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
 };
 
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
 export const HTML_FLAGS = {
   CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
 };

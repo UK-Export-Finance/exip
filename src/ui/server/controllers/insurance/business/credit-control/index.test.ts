@@ -74,7 +74,6 @@ describe('controllers/insurance/business/credit-control', () => {
         }),
         FIELD_HINT: FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),
-        application: res.locals.application?.business,
         applicationAnswer: mockApplication.business[FIELD_ID],
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       });

@@ -4,7 +4,6 @@ import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../../../constants';
 import singleInputPageVariables from '../../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapApplicationToFormFields from '../../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import save from '../../save-data';
 import { Request, Response } from '../../../../../../types';
@@ -59,7 +58,6 @@ export const get = (req: Request, res: Response) => {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
-    application: mapApplicationToFormFields(res.locals.application),
     applicationAnswer: application.declaration[FIELD_ID],
   });
 };
