@@ -29,6 +29,9 @@ export const PAGE_VARIABLES = {
     UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
+};
+
+export const HTML_FLAGS = {
   CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
 };
 
@@ -36,7 +39,7 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -51,6 +54,7 @@ export const post = (req: Request, res: Response) => {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

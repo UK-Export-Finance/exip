@@ -30,6 +30,9 @@ export const PAGE_VARIABLES = {
     ID: FIELD_ID,
     ...FIELDS_ELIGIBILITY[FIELD_ID],
   },
+};
+
+export const HTML_FLAGS = {
   CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
 };
 
@@ -44,7 +47,7 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -66,6 +69,7 @@ export const post = (req: Request, res: Response) => {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

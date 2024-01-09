@@ -51,9 +51,12 @@ export const pageVariables = (referenceNumber: number) => ({
   },
   PAGE_CONTENT_STRINGS,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+});
+
+export const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
   HORIZONTAL_RADIOS: true,
-});
+};
 
 /**
  * get
@@ -76,6 +79,7 @@ export const get = (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
@@ -115,6 +119,7 @@ export const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),

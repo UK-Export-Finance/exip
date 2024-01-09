@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
+import { pageVariables, HTML_FLAGS, get, post, TEMPLATE, FIELD_IDS } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
@@ -114,11 +114,21 @@ describe('controllers/insurance/policy/broker', () => {
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_SAVE_AND_BACK}`,
-        CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
-        CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
       };
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
+        CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
+        LEGEND_CLASS: XL,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -130,12 +140,12 @@ describe('controllers/insurance/policy/broker', () => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: BROKER,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.broker[USING_BROKER],
         ...pageVariables(mockApplication.referenceNumber),
-        legendClass: XL,
       });
     });
 
@@ -171,13 +181,13 @@ describe('controllers/insurance/policy/broker', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
-          legendClass: XL,
         });
       });
     });

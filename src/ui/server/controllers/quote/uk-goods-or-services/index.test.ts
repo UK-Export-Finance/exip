@@ -1,4 +1,4 @@
-import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { ERROR_MESSAGES, PAGES, UK_GOODS_AND_SERVICES_DESCRIPTION } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -42,10 +42,19 @@ describe('controllers/quote/uk-goods-or-services', () => {
           ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
           UK_GOODS_AND_SERVICES_DESCRIPTION,
         },
-        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -61,7 +70,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
       expect(res.render).toHaveBeenCalledWith(SHARED_PAGES.SINGLE_RADIO, {
         userName: getUserNameFromSession(req.session.user),
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
         BACK_LINK: req.headers.referer,
         submittedValues: req.session.submittedData.quoteEligibility,
       });
@@ -77,7 +86,7 @@ describe('controllers/quote/uk-goods-or-services', () => {
 
         expect(res.render).toHaveBeenCalledWith(SHARED_PAGES.SINGLE_RADIO, {
           userName: getUserNameFromSession(req.session.user),
-          ...singleInputPageVariables(PAGE_VARIABLES),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
           BACK_LINK: req.headers.referer,
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });

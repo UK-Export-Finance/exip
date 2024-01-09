@@ -19,6 +19,9 @@ export const FIELD_ID = FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY;
 export const PAGE_VARIABLES = {
   FIELD_ID,
   PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
+};
+
+export const HTML_FLAGS = {
   CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
 };
 
@@ -64,7 +67,7 @@ export const get = (req: Request, res: Response) => {
   const mappedAnswer = mapSubmittedAnswer(req.session.submittedData.quoteEligibility[FIELD_ID]);
 
   return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: {
       ...req.session.submittedData.quoteEligibility,
@@ -80,7 +83,7 @@ export const post = (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });

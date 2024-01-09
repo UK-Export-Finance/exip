@@ -85,9 +85,13 @@ const pageVariables = (referenceNumber: number) => ({
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_SAVE_AND_BACK}`,
+});
+
+const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
   CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
-});
+  LEGEND_CLASS: XL,
+};
 
 /**
  * gets the template for broker page
@@ -107,12 +111,12 @@ const get = (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: BROKER,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       applicationAnswer: application.broker[USING_BROKER],
       ...pageVariables(application.referenceNumber),
-      legendClass: XL,
     });
   } catch (err) {
     console.error('Error getting broker %O', err);
@@ -152,13 +156,13 @@ const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: BROKER,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        legendClass: XL,
       });
     }
 
@@ -180,4 +184,4 @@ const post = async (req: Request, res: Response) => {
   }
 };
 
-export { pageVariables, get, post };
+export { pageVariables, HTML_FLAGS, get, post };

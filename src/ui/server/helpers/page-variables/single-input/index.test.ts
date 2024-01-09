@@ -53,12 +53,4 @@ describe('server/helpers/page-variables/single-input', () => {
       expect(result.FIELD_HINT).toEqual(expectedHint);
     });
   });
-
-  describe('when CONDITIONAL_YES_HTML is provided', () => {
-    it('should return CONDITIONAL_YES_HTML populated', () => {
-      const result = singleInputPageVariables(mock);
-
-      expect(result.CONDITIONAL_YES_HTML).toEqual(mock.CONDITIONAL_YES_HTML);
-    });
-  });
 });

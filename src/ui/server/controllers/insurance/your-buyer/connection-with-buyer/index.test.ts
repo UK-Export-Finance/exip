@@ -1,4 +1,4 @@
-import { get, post, pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS } from '.';
+import { get, post, pageVariables, HTML_FLAGS, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -72,11 +72,20 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         },
         PAGE_CONTENT_STRINGS,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
         CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
         HORIZONTAL_RADIOS: true,
       };
 
-      expect(result).toEqual(expected);
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -108,6 +117,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
@@ -203,6 +213,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),

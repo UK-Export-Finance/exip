@@ -24,6 +24,9 @@ export const PAGE_VARIABLES = {
     ...PAGES.QUOTE.UK_GOODS_OR_SERVICES,
     UK_GOODS_AND_SERVICES_DESCRIPTION,
   },
+};
+
+export const HTML_FLAGS = {
   CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
 };
 
@@ -35,6 +38,7 @@ export const get = (req: Request, res: Response) =>
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       ORIGINAL_URL: req.originalUrl,
+      HTML_FLAGS,
     }),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,
@@ -48,7 +52,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
-      ...singleInputPageVariables(PAGE_VARIABLES),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
       BACK_LINK: req.headers.referer,
       validationErrors,
     });

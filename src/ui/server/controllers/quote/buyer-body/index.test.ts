@@ -1,4 +1,4 @@
-import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, mapAnswer, mapSubmittedAnswer, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../content-strings';
 import { FIELD_IDS, ROUTES, TEMPLATES } from '../../../constants';
 import singleInputPageVariables from '../../../helpers/page-variables/single-input/quote';
@@ -46,10 +46,19 @@ describe('controllers/quote/buyer-body', () => {
       const expected = {
         FIELD_ID: PAGE_VARIABLES.FIELD_ID,
         PAGE_CONTENT_STRINGS: PAGES.QUOTE.BUYER_BODY,
-        CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CUSTOM_CONTENT_HTML: BUYER_BODY.CUSTOM_CONTENT_HTML,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -108,7 +117,7 @@ describe('controllers/quote/buyer-body', () => {
       await get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: {
           ...req.session.submittedData.quoteEligibility,
@@ -128,7 +137,7 @@ describe('controllers/quote/buyer-body', () => {
         const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl }),
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID]),
         });

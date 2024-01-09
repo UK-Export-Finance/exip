@@ -42,10 +42,13 @@ export const pageVariables = (referenceNumber: number) => ({
     ...DECLARATIONS_FIELDS[FIELD_ID],
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT_SAVE_AND_BACK}`,
+});
+
+export const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: CODE_OF_CONDUCT.CONDITIONAL_YES_HTML,
   HINT_HTML: CODE_OF_CONDUCT.HINT_HTML,
   HORIZONTAL_RADIOS: true,
-});
+};
 
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
@@ -67,7 +70,7 @@ export const get = (req: Request, res: Response) => {
   const refNumber = Number(referenceNumber);
 
   return res.render(TEMPLATE, {
-    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(res.locals.application),
@@ -98,7 +101,7 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

@@ -9,38 +9,17 @@ import { SingleInputPageVariablesInitialInput } from '../../../../../types';
  * @param {Object} Page content strings bespoke to the page
  * @param {String} Link to the previous page
  * @param {String} ORIGINAL_URL for the page user is on
- * @param {String} CUSTOM_CONTENT_HTML string for the location of the partial which contains HTML for custom content for single radio page
- * @param {String} CONDITIONAL_YES_HTML string for the location of the partial which contains HTML for conditional yes reveal single radio page
- * @param {String} CONDITIONAL_NO_HTML string for the location of the partial which contains HTML for conditional no reveal single radio page
- * @param {String} HINT_HTML string for the location of the partial which contains HTML for the hint for single radio page
- * @param {String} LEGEND_CLASS class for the legend on a single radio page
- * @param {Boolean} HORIZONTAL_RADIOS if radios are horizontal or not
+ * @param {Object} HTML_FLAGS object containing HTML flags - CUSTOM_CONTENT_HTML, CONDITIONAL_YES/NO_HTML, HINT_HTML, LEGEND_CLASS, HORIZONTAL_RADIOS
  * @returns {Object} Common page content strings combined with field specifics
  */
-const quoteSingleInputPageVariables = ({
-  FIELD_ID,
-  PAGE_CONTENT_STRINGS,
-  BACK_LINK,
-  ORIGINAL_URL,
-  CUSTOM_CONTENT_HTML,
-  CONDITIONAL_YES_HTML,
-  CONDITIONAL_NO_HTML,
-  HINT_HTML,
-  LEGEND_CLASS,
-  HORIZONTAL_RADIOS,
-}: SingleInputPageVariablesInitialInput) =>
+const quoteSingleInputPageVariables = ({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, HTML_FLAGS }: SingleInputPageVariablesInitialInput) =>
   singleInputPageVariables({
     PAGE_CONTENT_STRINGS,
     BACK_LINK,
     FIELD_ID,
     FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
     ORIGINAL_URL,
-    CUSTOM_CONTENT_HTML,
-    CONDITIONAL_YES_HTML,
-    CONDITIONAL_NO_HTML,
-    HINT_HTML,
-    LEGEND_CLASS,
-    HORIZONTAL_RADIOS,
+    HTML_FLAGS,
   });
 
 export default quoteSingleInputPageVariables;
