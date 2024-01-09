@@ -34,41 +34,13 @@
       <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-          <span class="govuk-caption-xl" data-cy="heading-caption">
-            {{ CONTENT_STRINGS.HEADING_CAPTION }}
-          </span>
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{ CONTENT_STRINGS.HEADING_CAPTION }}
+        </span>
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
       </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        <div class="companies-house-search">
-
-          {{ govukInput({
-            hint: {
-              html: FIELDS.COMPANIES_HOUSE_NUMBER.HINT,
-              attributes: {
-                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-hint"
-              }
-            },
-            attributes: {
-              "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-input"
-            },
-            id: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
-            name: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
-            value: submittedValues[FIELDS.COMPANIES_HOUSE_NUMBER.ID],
-            errorMessage: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID] and {
-              text: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID].text,
-              attributes: {
-                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-error-message"
-              }
-            }
-          }) }}
-        </div>
-
-        <p class="govuk-!-margin-bottom-6"><a class="govuk-link" href="{{EXIT_PAGE_URL}}" data-cy="do-not-have-number">{{CONTENT_STRINGS.NO_COMPANIES_HOUSE_NUMBER}}</a></p>
-      </div>
-
-      <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-grid-column-three-quarters-from-desktop govuk-!-margin-top-5">
         <div class="govuk-button-group">
           {{ submitButton.render({
             text: CONTENT_STRINGS.BUTTONS.CONTINUE

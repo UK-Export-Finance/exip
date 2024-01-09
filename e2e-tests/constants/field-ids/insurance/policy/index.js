@@ -48,6 +48,7 @@ export const POLICY = {
     POLICY_CONTACT_DETAIL: 'policyContactDetail',
     POSITION: 'position',
   },
+  NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

@@ -9,7 +9,7 @@ import { FORM_TITLES } from '../../../form-titles';
 const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
 
 const {
-  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
+  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY, NEED_PRE_CREDIT_PERIOD,
 } = POLICY;
 
 const { EMAIL } = ACCOUNT;
@@ -166,6 +166,14 @@ export const POLICY_FIELDS = {
         TITLE: 'Contact email',
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
+    },
+  },
+  NEED_PRE_CREDIT_PERIOD: {
+    [NEED_PRE_CREDIT_PERIOD]: {
+      HINT: 'This is known as the pre-credit period.',
+    },
+    SUMMARY: {
+      TITLE: 'Pre-credit period',
     },
   },
   BROKER: {

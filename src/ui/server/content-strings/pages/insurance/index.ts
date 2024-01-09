@@ -45,7 +45,6 @@ const APPLY_OFFLINE = {
     INTRO: 'This is because',
     OTHER_PARTIES_INVOLVED: 'there are other parties involved in your exports and we need to make extra checks.',
     WILL_BE_PAID_BY_LETTER_OF_CREDIT: "you'll be paid by a letter of credit.",
-    NEED_PRE_CREDIT_PERIOD_COVER: 'you need pre-credit cover and we need to make extra checks.',
     NO_COMPANIES_HOUSE_NUMBER: "This is because you do not have a UK Companies House registration number for a company that's actively trading.",
   },
   ACTIONS: {

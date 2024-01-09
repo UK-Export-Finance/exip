@@ -10,6 +10,7 @@ const {
     EXPORT_VALUE,
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
+    NEED_PRE_CREDIT_PERIOD,
     BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
   },
 } = FIELD_IDS.INSURANCE;
@@ -150,6 +151,14 @@ export const POLICY_FIELDS = {
       SUMMARY: {
         TITLE: 'Contact email',
       },
+    },
+  },
+  NEED_PRE_CREDIT_PERIOD: {
+    [NEED_PRE_CREDIT_PERIOD]: {
+      HINT: 'This is known as the pre-credit period.',
+    },
+    SUMMARY: {
+      TITLE: 'Pre-credit period',
     },
   },
   BROKER: {
