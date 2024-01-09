@@ -19,7 +19,7 @@ import { GBP } from '../../../../../../../fixtures/currencies';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_EXPORT_VALUE;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
 
 const {
   ROOT: INSURANCE_ROOT,

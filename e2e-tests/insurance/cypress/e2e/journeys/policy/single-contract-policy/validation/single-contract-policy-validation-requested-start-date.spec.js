@@ -42,7 +42,7 @@ context('Insurance - Policy - Single contract policy page - form validation - re
     invalidFormat,
     isToday,
   } = dateField.checkValidation({
-    errorSummaryLength: 4,
+    errorSummaryLength: 3,
     errorIndex: 0,
     field,
     fieldId: REQUESTED_START_DATE,

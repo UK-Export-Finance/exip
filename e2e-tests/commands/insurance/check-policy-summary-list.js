@@ -86,7 +86,7 @@ const checkPolicySummaryList = ({
     [TOTAL_CONTRACT_VALUE]: () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.SINGLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.SINGLE);
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 

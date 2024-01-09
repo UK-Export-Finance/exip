@@ -9,7 +9,7 @@ import formatCurrency from '../../../../../../../helpers/format-currency';
 import application from '../../../../../../../fixtures/application';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   POLICY: {
     TYPE_OF_POLICY_CHECK_AND_CHANGE,
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
@@ -34,7 +34,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Change your answers - Policy - Change multiple to single policy type - Summary List', () => {
   let checkYourAnswersUrl;
-  let changeTotalContractValueUrl;
+  let checkAndChangeTotalContractValueUrl;
   let referenceNumber;
 
   before(() => {
@@ -44,8 +44,8 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
       task.link().click();
 
-      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
-      changeTotalContractValueUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
+      checkAndChangeTotalContractValueUrl = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -69,7 +69,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
     });
 
     it(`should redirect to ${TYPE_OF_POLICY_CHECK_AND_CHANGE} with heading anchor`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHECK_AND_CHANGE}#heading`;
+      const expected = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHECK_AND_CHANGE}#heading`;
 
       cy.assertUrl(expected);
     });
@@ -86,12 +86,12 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
       cy.completeAndSubmitSingleContractPolicyForm();
 
-      cy.assertUrl(`${changeTotalContractValueUrl}#heading`);
+      cy.assertUrl(`${checkAndChangeTotalContractValueUrl}#heading`);
     });
 
     describe(`after submitting a new ${TOTAL_CONTRACT_VALUE} answer`, () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
-        cy.navigateToUrl(`${changeTotalContractValueUrl}#heading`);
+        cy.navigateToUrl(`${checkAndChangeTotalContractValueUrl}#heading`);
 
         cy.completeAndSubmitTotalContractValueForm({ });
 

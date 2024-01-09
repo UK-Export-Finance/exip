@@ -22,6 +22,7 @@ const {
   POLICY: {
     SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -176,12 +177,18 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const isSinglePolicyWithoutTotalContractValue = isSinglePolicyType(policy[POLICY_TYPE]) && !policy[TOTAL_CONTRACT_VALUE];
+
     if (isChangeRoute(req.originalUrl)) {
+      if (isSinglePolicyWithoutTotalContractValue) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      if (isSinglePolicyType(policy[POLICY_TYPE]) && !policy[TOTAL_CONTRACT_VALUE]) {
+      if (isSinglePolicyWithoutTotalContractValue) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`);
       }
 

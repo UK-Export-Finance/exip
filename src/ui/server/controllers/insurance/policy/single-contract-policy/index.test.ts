@@ -20,6 +20,7 @@ const {
   POLICY: {
     SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
     SINGLE_CONTRACT_POLICY_CHANGE,
@@ -39,6 +40,22 @@ const {
     POLICY_CURRENCY_CODE,
   },
 } = POLICY_FIELD_IDS;
+
+const applicationWithTotalContractValue = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    [TOTAL_CONTRACT_VALUE]: '1234',
+  },
+};
+
+const applicationWithoutTotalContractValue = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    [TOTAL_CONTRACT_VALUE]: null,
+  },
+};
 
 describe('controllers/insurance/policy/single-contract-policy', () => {
   let req: Request;
@@ -271,27 +288,39 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       });
 
       describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = SINGLE_CONTRACT_POLICY_CHANGE;
+        describe(`when an application already has ${TOTAL_CONTRACT_VALUE}`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            res.locals.application = applicationWithTotalContractValue;
 
-          await post(req, res);
+            req.originalUrl = SINGLE_CONTRACT_POLICY_CHANGE;
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when an application does NOT already have ${TOTAL_CONTRACT_VALUE}`, () => {
+          it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`, async () => {
+            res.locals.application = applicationWithoutTotalContractValue;
+
+            req.originalUrl = SINGLE_CONTRACT_POLICY_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
         describe(`when an application already has ${TOTAL_CONTRACT_VALUE}`, () => {
           it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-            res.locals.application = {
-              ...mockApplication,
-              policy: {
-                ...mockApplication.policy,
-                [TOTAL_CONTRACT_VALUE]: '1234',
-              },
-            };
+            res.locals.application = applicationWithTotalContractValue;
 
             req.originalUrl = SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
 
@@ -303,15 +332,9 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
           });
         });
 
-        describe(`when an application does NOT already has ${TOTAL_CONTRACT_VALUE}`, () => {
+        describe(`when an application does NOT already have ${TOTAL_CONTRACT_VALUE}`, () => {
           it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`, async () => {
-            res.locals.application = {
-              ...mockApplication,
-              policy: {
-                ...mockApplication.policy,
-                [TOTAL_CONTRACT_VALUE]: null,
-              },
-            };
+            res.locals.application = applicationWithoutTotalContractValue;
 
             req.originalUrl = SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
 

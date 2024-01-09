@@ -22,7 +22,7 @@ const {
     BROKER_ROOT,
     DIFFERENT_NAME_ON_POLICY,
     NAME_ON_POLICY,
-    SINGLE_CONTRACT_POLICY,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
   },
 } = INSURANCE_ROUTES;
 
@@ -53,6 +53,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
       cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
@@ -72,7 +73,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
     });
   });
 

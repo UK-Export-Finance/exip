@@ -11,6 +11,7 @@ const {
   POLICY: {
     CHECK_YOUR_ANSWERS,
     SINGLE_CONTRACT_POLICY_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -137,12 +138,12 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
       const fieldId = TOTAL_CONTRACT_VALUE;
 
       describe('when clicking the `change` link', () => {
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
+        it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE, fieldId });
         });
       });
 
