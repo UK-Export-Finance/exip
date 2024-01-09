@@ -2,19 +2,14 @@ import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { LINKS } from '../../../../../../content-strings';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
-import formatCurrency from '../../../../../../helpers/format-currency';
-import application from '../../../../../../fixtures/application';
+import checkSummaryList from '../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   ROOT,
   POLICY: {
     CHECK_YOUR_ANSWERS,
     TYPE_OF_POLICY_CHANGE,
-    SINGLE_CONTRACT_POLICY_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -30,18 +25,12 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const SINGLE_FIELD_STRINGS = {
-  ...FIELDS.CONTRACT_POLICY.SINGLE,
-  ...FIELDS.EXPORT_VALUE.SINGLE,
-};
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Change your answers - Policy type - multiple to single', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
   let typeOfPolicyUrl;
-  let changeLinkHref;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -53,7 +42,6 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
 
       checkYourAnswersUrl = `${baseUrl}${applicationRouteUrl}${CHECK_YOUR_ANSWERS}`;
       typeOfPolicyUrl = `${baseUrl}${applicationRouteUrl}${TYPE_OF_POLICY_CHANGE}`;
-      changeLinkHref = `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -105,36 +93,15 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
       });
 
       it(POLICY_TYPE, () => {
-        cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.SINGLE);
+        checkSummaryList.singleContractPolicy[POLICY_TYPE]();
       });
 
       it(CONTRACT_COMPLETION_DATE, () => {
-        const fieldId = CONTRACT_COMPLETION_DATE;
-        const newAnswer = application.POLICY[fieldId];
-
-        const expectedDate = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedDate);
-
-        cy.checkLink(
-          summaryList.field(fieldId).changeLink(),
-          `${changeLinkHref}#${fieldId}-label`,
-          `${LINKS.CHANGE} ${SINGLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
-        );
+        checkSummaryList.singleContractPolicy[CONTRACT_COMPLETION_DATE]();
       });
 
       it(TOTAL_CONTRACT_VALUE, () => {
-        const fieldId = TOTAL_CONTRACT_VALUE;
-
-        const expectedTotalContractValue = formatCurrency(application.POLICY[fieldId]);
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedTotalContractValue);
-
-        cy.checkLink(
-          summaryList.field(fieldId).changeLink(),
-          `${changeLinkHref}#${fieldId}-label`,
-          `${LINKS.CHANGE} ${SINGLE_FIELD_STRINGS[fieldId].SUMMARY.TITLE}`,
-        );
+        checkSummaryList.singleContractPolicy[TOTAL_CONTRACT_VALUE]();
       });
     });
   });
