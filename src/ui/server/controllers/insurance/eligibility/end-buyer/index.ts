@@ -11,6 +11,13 @@ import { Request, Response } from '../../../../../types';
 
 const { CANNOT_APPLY_MULTIPLE_RISKS, CHECK_YOUR_ANSWERS } = INSURANCE_ROUTES.ELIGIBILITY;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { END_BUYER },
+  },
+} = TEMPLATES;
+
 export const FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.HAS_END_BUYER;
 
 export const PAGE_VARIABLES = {
@@ -25,7 +32,15 @@ export const PAGE_VARIABLES = {
   },
 };
 
-export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.END_BUYER;
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CUSTOM_CONTENT_HTML: END_BUYER.CUSTOM_CONTENT_HTML,
+};
+
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get
@@ -36,7 +51,7 @@ export const TEMPLATE = TEMPLATES.INSURANCE.ELIGIBILITY.END_BUYER;
  */
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
-    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+    ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     userName: getUserNameFromSession(req.session.user),
     submittedValues: req.session.submittedData.insuranceEligibility,
   });
@@ -58,6 +73,7 @@ export const post = (req: Request, res: Response) => {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,

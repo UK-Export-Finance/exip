@@ -1,6 +1,7 @@
 import { QUOTE_TEMPLATES } from './quote';
 import { INSURANCE_TEMPLATES } from './insurance';
 import { SHARED_PAGES } from './shared-pages';
+import { PARTIALS } from './partials';
 
 export const TEMPLATES = {
   ACCESSIBILITY_STATEMENT: 'accessibility-statement.njk',
@@ -12,4 +13,12 @@ export const TEMPLATES = {
   QUOTE: QUOTE_TEMPLATES,
   INSURANCE: INSURANCE_TEMPLATES,
   SHARED_PAGES,
+  PARTIALS,
+  ATTRIBUTES: {
+    CLASSES: {
+      LEGEND: {
+        XL: 'govuk-fieldset__legend--xl',
+      },
+    },
+  },
 };

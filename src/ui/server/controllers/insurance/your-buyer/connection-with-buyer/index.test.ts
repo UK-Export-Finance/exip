@@ -1,4 +1,4 @@
-import { get, post, pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS } from '.';
+import { get, post, pageVariables, HTML_FLAGS, PAGE_CONTENT_STRINGS, TEMPLATE, FIELD_IDS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -27,6 +27,13 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_PARTIALS },
+  },
+} = TEMPLATES;
+
 const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
 const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
@@ -51,6 +58,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
+        FIELD_ID: CONNECTION_WITH_BUYER,
         FIELDS: {
           CONNECTION_WITH_BUYER: {
             ID: CONNECTION_WITH_BUYER,
@@ -70,6 +78,17 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
+        HORIZONTAL_RADIOS: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct page content strings', () => {
       expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
@@ -78,7 +97,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -98,10 +117,13 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
+        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+        applicationAnswer: mockApplication.buyer[CONNECTION_WITH_BUYER],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -191,11 +213,13 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           ...pageVariables(mockApplication.referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: sanitiseData(payload),
+          FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });

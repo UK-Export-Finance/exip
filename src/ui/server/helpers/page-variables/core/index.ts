@@ -22,9 +22,11 @@ const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
  * @param {String} Link to the previous page
  * @param {String} Link to feedback
  * @param {String} ORIGINAL_URL for the page user is on
+ * @param {String} USE_GENERIC_HEADER
+ * @param {Object} HTML_FLAGS object containing HTML flags - CUSTOM_CONTENT_HTML, CONDITIONAL_YES/NO_HTML, HINT_HTML, LEGEND_CLASS, HORIZONTAL_RADIOS
  * @returns {Object} Common page content strings
  */
-const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER }: CorePageVariablesInput): CorePageVariables => {
+const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER, HTML_FLAGS }: CorePageVariablesInput): CorePageVariables => {
   /**
    * checks if rhe ORIGINAL_URL is an insurance route or not
    * if insurance - either contains insurance or is undefined
@@ -71,6 +73,7 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
       HEADING: 'heading',
       BACK_LINK: 'back-link',
     },
+    ...HTML_FLAGS,
   };
 };
 

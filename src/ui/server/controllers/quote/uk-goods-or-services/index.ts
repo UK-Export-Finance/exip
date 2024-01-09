@@ -8,6 +8,13 @@ import { updateSubmittedData } from '../../../helpers/update-submitted-data/quot
 import isChangeRoute from '../../../helpers/is-change-route';
 import { Request, Response } from '../../../../types';
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    QUOTE: { UK_GOODS_OR_SERVICES },
+  },
+} = TEMPLATES;
+
 export const FIELD_ID = FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES;
 
 export const PAGE_VARIABLES = {
@@ -19,7 +26,15 @@ export const PAGE_VARIABLES = {
   },
 };
 
-export const TEMPLATE = TEMPLATES.QUOTE.UK_GOODS_OR_SERVICES;
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
+};
+
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const get = (req: Request, res: Response) =>
   res.render(TEMPLATE, {
@@ -27,6 +42,7 @@ export const get = (req: Request, res: Response) =>
     ...singleInputPageVariables({
       ...PAGE_VARIABLES,
       ORIGINAL_URL: req.originalUrl,
+      HTML_FLAGS,
     }),
     BACK_LINK: req.headers.referer,
     submittedValues: req.session.submittedData.quoteEligibility,
@@ -40,7 +56,7 @@ export const post = (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       userName: getUserNameFromSession(req.session.user),
-      ...singleInputPageVariables(PAGE_VARIABLES),
+      ...singleInputPageVariables({ ...PAGE_VARIABLES, ORIGINAL_URL: req.originalUrl, HTML_FLAGS }),
       BACK_LINK: req.headers.referer,
       validationErrors,
     });
