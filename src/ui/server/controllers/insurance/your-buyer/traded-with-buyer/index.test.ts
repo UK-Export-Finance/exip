@@ -1,4 +1,4 @@
-import { get, post, pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
+import { get, post, pageVariables, HTML_FLAGS, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../constants';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
@@ -42,10 +42,19 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
       const expected = {
         FIELD_ID: TRADED_WITH_BUYER,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
-        horizontalRadios: true,
       };
 
       expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        HORIZONTAL_RADIOS: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -77,6 +86,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(mockApplication.referenceNumber),
@@ -172,6 +182,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),

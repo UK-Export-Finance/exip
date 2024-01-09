@@ -21,15 +21,23 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_PARTIALS },
+  },
+} = TEMPLATES;
+
 const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
 export const FIELD_IDS = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
 
-export const TEMPLATE = TEMPLATES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
+export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
 export const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID: CONNECTION_WITH_BUYER,
   FIELDS: {
     CONNECTION_WITH_BUYER: {
       ID: CONNECTION_WITH_BUYER,
@@ -44,6 +52,15 @@ export const pageVariables = (referenceNumber: number) => ({
   PAGE_CONTENT_STRINGS,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
 });
+
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
+  HORIZONTAL_RADIOS: true,
+};
 
 /**
  * get
@@ -66,10 +83,13 @@ export const get = (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+      applicationAnswer: application.buyer[CONNECTION_WITH_BUYER],
     });
   } catch (err) {
     console.error('Error getting connection to the buyer %O', err);
@@ -103,11 +123,13 @@ export const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
+        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       });
     }
 

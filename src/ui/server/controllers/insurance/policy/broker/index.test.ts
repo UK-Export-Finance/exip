@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
+import { pageVariables, HTML_FLAGS, get, post, TEMPLATE, FIELD_IDS } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
@@ -19,7 +19,6 @@ const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
 const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
 
 const { BROKER } = PAGES.INSURANCE.POLICY;
-const { BROKER: BROKER_TEMPLATE } = TEMPLATES.INSURANCE.POLICY;
 
 const {
   INSURANCE_ROOT,
@@ -27,6 +26,18 @@ const {
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
+
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { BROKER: BROKER_PARTIALS },
+  },
+  ATTRIBUTES: {
+    CLASSES: {
+      LEGEND: { XL },
+    },
+  },
+} = TEMPLATES;
 
 describe('controllers/insurance/policy/broker', () => {
   let req: Request;
@@ -43,7 +54,7 @@ describe('controllers/insurance/policy/broker', () => {
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(BROKER_TEMPLATE);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -60,6 +71,7 @@ describe('controllers/insurance/policy/broker', () => {
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
+        FIELD_ID: USING_BROKER,
         FIELDS: {
           USING_BROKER: {
             ID: USING_BROKER,
@@ -108,17 +120,31 @@ describe('controllers/insurance/policy/broker', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
+        CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
+        LEGEND_CLASS: XL,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     it('should render the broker template with correct variables', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(BROKER_TEMPLATE, {
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: BROKER,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
+        applicationAnswer: mockApplication.broker[USING_BROKER],
         ...pageVariables(mockApplication.referenceNumber),
       });
     });
@@ -155,6 +181,7 @@ describe('controllers/insurance/policy/broker', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: BROKER,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),

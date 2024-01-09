@@ -1,11 +1,9 @@
 import { Request, Response } from '../../../../../../types';
-import { TEMPLATES, ROUTES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
 import { FIELD_IDS } from '..';
-
-export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

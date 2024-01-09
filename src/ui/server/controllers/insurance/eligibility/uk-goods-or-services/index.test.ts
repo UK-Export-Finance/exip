@@ -1,4 +1,4 @@
-import { FIELD_ID, PAGE_VARIABLES, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_VARIABLES, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { PAGES, UK_GOODS_AND_SERVICES_CALCULATE_DESCRIPTION, UK_GOODS_AND_SERVICES_DESCRIPTION, ERROR_MESSAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -13,6 +13,13 @@ import { mockReq, mockRes } from '../../../../test-mocks';
 const {
   ELIGIBILITY: { UK_GOODS_OR_SERVICES_CHANGE, CANNOT_APPLY, END_BUYER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
+
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: { UK_GOODS_OR_SERVICES },
+  },
+} = TEMPLATES;
 
 describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
   let req: Request;
@@ -46,9 +53,19 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        CUSTOM_CONTENT_HTML: UK_GOODS_OR_SERVICES.CUSTOM_CONTENT_HTML,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES);
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -56,8 +73,8 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
     it('should render template', () => {
       get(req, res);
 
-      expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
-        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+      expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+        ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: req.session.submittedData.insuranceEligibility,
       });
@@ -71,8 +88,8 @@ describe('controllers/insurance/eligibility/uk-goods-or-services', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.INSURANCE.ELIGIBILITY.UK_GOODS_OR_SERVICES, {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer }),
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload, PAGE_VARIABLES.FIELD_ID, ERROR_MESSAGES.ELIGIBILITY[PAGE_VARIABLES.FIELD_ID].IS_EMPTY),
         });
