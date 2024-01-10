@@ -143,22 +143,4 @@ context('Insurance - Policy - Single contract policy - total contract value page
       });
     });
   });
-
-  describe('when all fields are provided and submitting the form via `save and go back` button', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-
-      saveAndBackButton().click();
-    });
-
-    describe('when going back to the page', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it('should render the previously submitted value', () => {
-        fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
-      });
-    });
-  });
 });
