@@ -3,7 +3,7 @@
  * Complete and submit the "pre-credit period" form
  */
 const completeAndSubmitPreCreditPeriodForm = () => {
-  cy.clickSubmitButton()
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitPreCreditPeriodForm;
