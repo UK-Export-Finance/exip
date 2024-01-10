@@ -18,7 +18,13 @@ import { mockApplicationMultiplePolicy as mockApplication } from '../../../../..
 
 const {
   INSURANCE_ROOT,
-  POLICY: { NAME_ON_POLICY, CHECK_YOUR_ANSWERS, SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+  POLICY: {
+    NAME_ON_POLICY,
+    CHECK_YOUR_ANSWERS,
+    SINGLE_CONTRACT_POLICY_CHANGE,
+    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -32,6 +38,7 @@ const {
 const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
 
 const {
+  referenceNumber,
   policy: { policyCurrencyCode },
 } = mockApplication;
 
@@ -67,7 +74,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockCurrencies, String(policyCurrencyCode));
+      const result = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
 
       const expected = {
         FIELD: {
@@ -75,6 +82,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
           ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name}?`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -103,7 +111,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
     it('should render template', async () => {
       await get(req, res);
 
-      const generatedPageVariables = pageVariables(mockCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -234,7 +242,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        const generatedPageVariables = pageVariables(mockCurrencies, String(policyCurrencyCode));
+        const generatedPageVariables = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
 
         const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
