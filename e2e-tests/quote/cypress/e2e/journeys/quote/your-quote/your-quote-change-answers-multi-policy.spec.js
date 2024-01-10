@@ -74,11 +74,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answer in the quote', () => {
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '£200';
       cy.checkText(row.value(), expected);
@@ -118,11 +115,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answer in the quote', () => {
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '95%';
       cy.checkText(row.value(), expected);
@@ -169,11 +163,8 @@ context('Your quote page - change answers (policy type and length from multiple 
       const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expectedUrl = `${url}#heading`;
 

@@ -1,6 +1,5 @@
 import {
   saveAndBackButton,
-  submitButton,
   yesRadioInput,
   noRadioInput,
 } from '../../../../../../../pages/shared';
@@ -28,14 +27,8 @@ const baseUrl = Cypress.config('baseUrl');
 const navigateBackToPage = () => {
   task.link().click();
 
-  // go through the 1st declaration - confidentiality
-  submitButton().click();
-
-  // go through the 2nd declaration - anti-bribery
-  submitButton().click();
-
-  // go through the 3rd declaration - anti-bribery - code of conduct
-  submitButton().click();
+  // go through the first 3 declaration forms.
+  cy.clickSubmitButtonMultipleTimes({ count: 3 });
 };
 
 context('Insurance - Declarations - Exporting with code of conduct page - Save and go back', () => {

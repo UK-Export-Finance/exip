@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials';
-import { field, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
@@ -90,12 +90,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
       cy.startYourBusinessSection({});
 
-      // submit companies house number form
-      submitButton().click();
-      // submit company details form
-      submitButton().click();
-      // submit nature of business form
-      submitButton().click();
+      // go through 3 business forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
       field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
       field(PERCENTAGE_TURNOVER).input().should('have.value', '');
@@ -123,10 +119,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     it('should retain all the fields on the page', () => {
       cy.startYourBusinessSection({});
 
-      // submit company details form
-      submitButton().click();
-      // submit nature of business form
-      submitButton().click();
+      // go through 2 business forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       field(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
       field(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
