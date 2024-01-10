@@ -1,4 +1,5 @@
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { TEMPLATES } from '../../../../constants';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -13,13 +14,11 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import { Request, Response } from '../../../../../types';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { BROKER_ROOT, DIFFERENT_NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
-  },
-} = ROUTES;
+  INSURANCE_ROOT,
+  POLICY: { DIFFERENT_NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, PRE_CREDIT_PERIOD },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   NAME_ON_POLICY: { NAME, POSITION, OTHER_NAME, SAME_NAME },
@@ -129,7 +128,7 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
+    let redirectRoute = `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
     const differentNameOnPolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 

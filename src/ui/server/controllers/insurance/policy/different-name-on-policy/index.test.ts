@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test
 const {
   INSURANCE_ROOT,
   POLICY: {
-    BROKER_ROOT,
+    PRE_CREDIT_PERIOD,
     CHECK_YOUR_ANSWERS,
     DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
     DIFFERENT_NAME_ON_POLICY_CHANGE,
@@ -144,10 +144,10 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, async () => {
+      it(`should redirect to ${PRE_CREDIT_PERIOD}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRE_CREDIT_PERIOD}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

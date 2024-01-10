@@ -41,6 +41,8 @@ const completePolicySection = ({
     cy.completeAndSubmitDifferentNameOnPolicyForm({});
   }
 
+  cy.completeAndSubmitPreCreditPeriodForm();
+
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
   if (submitCheckYourAnswers) {
