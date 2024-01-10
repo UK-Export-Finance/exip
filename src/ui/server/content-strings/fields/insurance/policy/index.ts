@@ -59,6 +59,7 @@ export const POLICY_FIELDS = {
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       LEGEND: "Select currency you'd like your policy to be issued in",
+      HINT: 'This is the currency your policy will be issued in',
       SUMMARY: {
         TITLE: 'Policy currency',
       },

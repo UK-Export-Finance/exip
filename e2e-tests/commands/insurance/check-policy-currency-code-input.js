@@ -27,6 +27,11 @@ const checkPolicyCurrencyCodeInput = () => {
     CONTENT_STRINGS.LEGEND,
   );
 
+  cy.checkText(
+    field.hint(),
+    CONTENT_STRINGS.HINT,
+  );
+
   const { option: option1 } = radios(fieldId, EUR.isoCode);
   const { option: option2 } = radios(fieldId, GBP.isoCode);
   const { option: option3 } = radios(fieldId, USD.isoCode);
