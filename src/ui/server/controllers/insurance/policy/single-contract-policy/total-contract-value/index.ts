@@ -18,7 +18,7 @@ import { Currency, Request, Response } from '../../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
+  POLICY: { NAME_ON_POLICY, CHECK_YOUR_ANSWERS, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -38,16 +38,18 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
  * @param {Array} currencies: Currencies
  * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
  */
-export const pageVariables = (currencies: Array<Currency>, policyCurrencyCode: string) => ({
+export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => ({
   FIELD: {
     ID: FIELD_ID,
     ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
   },
   DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(currencies, policyCurrencyCode).name}?`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
 });
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
@@ -67,6 +69,7 @@ export const get = async (req: Request, res: Response) => {
   }
 
   const {
+    referenceNumber,
     policy: { policyCurrencyCode },
   } = application;
 
@@ -77,7 +80,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const generatedPageVariables = pageVariables(currencies, String(policyCurrencyCode));
+    const generatedPageVariables = pageVariables(referenceNumber, currencies, String(policyCurrencyCode));
 
     const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -115,10 +118,9 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const {
+    referenceNumber,
     policy: { policyCurrencyCode },
   } = application;
-
-  const { referenceNumber } = req.params;
 
   const payload = constructPayload(req.body, [TOTAL_CONTRACT_VALUE]);
 
@@ -132,7 +134,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const generatedPageVariables = pageVariables(currencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(referenceNumber, currencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 

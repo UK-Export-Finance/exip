@@ -21,7 +21,7 @@ const { taskList } = partials.insurancePartials;
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   ALL_SECTIONS,
   POLICY: {
     SINGLE_CONTRACT_POLICY,
@@ -56,7 +56,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm();
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
 
       cy.assertUrl(url);
     });
@@ -73,8 +73,8 @@ context('Insurance - Policy - Single contract policy - total contract value page
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: expectedPageTitle,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
+      currentHref: `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
+      backLink: `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
     });
   });
 
@@ -114,12 +114,12 @@ context('Insurance - Policy - Single contract policy - total contract value page
     });
 
     it(`should redirect to ${NAME_ON_POLICY}`, () => {
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);
     });
 
     it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
-      cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
       const expected = TASKS.STATUS.IN_PROGRESS;
       cy.checkText(task.status(), expected);
