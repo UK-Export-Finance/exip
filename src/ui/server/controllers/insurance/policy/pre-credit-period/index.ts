@@ -9,7 +9,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { PRE_CREDIT_PERIOD_SAVE_AND_BACK },
+  POLICY: { PRE_CREDIT_PERIOD_SAVE_AND_BACK, BROKER_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -90,4 +90,23 @@ export const get = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     application,
   });
+};
+
+/**
+ * post
+ * Check Pre-credit period validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };

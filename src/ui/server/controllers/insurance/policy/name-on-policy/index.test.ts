@@ -16,7 +16,6 @@ const {
   INSURANCE: {
     INSURANCE_ROOT,
     POLICY: {
-      BROKER_ROOT,
       CHECK_YOUR_ANSWERS,
       NAME_ON_POLICY_SAVE_AND_BACK,
       DIFFERENT_NAME_ON_POLICY,
@@ -24,6 +23,7 @@ const {
       DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
       NAME_ON_POLICY_CHANGE,
       NAME_ON_POLICY_CHECK_AND_CHANGE,
+      PRE_CREDIT_PERIOD,
     },
     CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
     PROBLEM_WITH_SERVICE,
@@ -138,10 +138,10 @@ describe('controllers/insurance/policy/name-on-policy', () => {
           req.body = validBody;
         });
 
-        it(`should redirect to ${BROKER_ROOT}`, async () => {
+        it(`should redirect to ${PRE_CREDIT_PERIOD}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRE_CREDIT_PERIOD}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

@@ -16,7 +16,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, PRE_CREDIT_PERIOD },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -143,7 +143,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`);
   } catch (err) {
     console.error('Error updating application - policy - Different name on policy %O', err);
 
