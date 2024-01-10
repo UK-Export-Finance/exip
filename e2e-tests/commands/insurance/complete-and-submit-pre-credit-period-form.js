@@ -1,11 +1,9 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeAndSubmitPreCreditPeriodForm
  * Complete and submit the "pre-credit period" form
  */
 const completeAndSubmitPreCreditPeriodForm = () => {
-  submitButton().click();
+  cy.clickSubmitButton()
 };
 
 export default completeAndSubmitPreCreditPeriodForm;

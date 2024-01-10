@@ -1,9 +1,11 @@
+import { submitButton } from '../../../pages/shared';
+
 /**
  * clickSubmitButton
  * Click the submit button.
  */
 const clickSubmitButton = () => {
-  cy.clickSubmitButton();
+  submitButton().click();
 };
 
 export default clickSubmitButton;
