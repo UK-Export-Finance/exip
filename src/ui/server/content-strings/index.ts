@@ -12,6 +12,7 @@ export * from './header';
 export * from './links';
 export * from './pages';
 export * from './phase-banner';
+export * from './pre-credit-period-description';
 export * from './product';
 export * from './quote-titles';
 export * from './summary-answers';

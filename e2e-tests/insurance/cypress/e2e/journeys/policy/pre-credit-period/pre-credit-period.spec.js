@@ -2,11 +2,15 @@ import {
   headingCaption,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
+import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
+  PRE_CREDIT_PERIOD_DESCRIPTION,
 } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+
+const { preCreditPeriodDescription } = partials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 
@@ -61,6 +65,22 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
 
     it('renders a `save and back` button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
+
+    describe('expandable details - what is the pre-credit period', () => {
+      it('renders summary text', () => {
+        cy.checkText(preCreditPeriodDescription.summary(), PRE_CREDIT_PERIOD_DESCRIPTION.INTRO);
+
+        preCreditPeriodDescription.details().should('not.have.attr', 'open');
+      });
+
+      describe('when clicking the summary text', () => {
+        it('should expand the collapsed `description` content', () => {
+          cy.checkText(preCreditPeriodDescription.protectsYou(), PRE_CREDIT_PERIOD_DESCRIPTION.PROTECTS_YOU);
+          cy.checkText(preCreditPeriodDescription.insuresYou(), PRE_CREDIT_PERIOD_DESCRIPTION.INSURES_YOU);
+          cy.checkText(preCreditPeriodDescription.happensBefore(), PRE_CREDIT_PERIOD_DESCRIPTION.HAPPENS_BEFORE);
+        });
+      });
     });
   });
 });

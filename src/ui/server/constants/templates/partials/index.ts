@@ -17,6 +17,11 @@ export const PARTIALS = {
     UK_GOODS_OR_SERVICES: {
       CUSTOM_CONTENT_HTML: 'partials/insurance/uk-goods-and-services-details.njk',
     },
+    POLICY: {
+      PRE_CREDIT_PERIOD: {
+        CUSTOM_CONTENT_HTML: 'partials/insurance/pre-credit-period-description.njk',
+      },
+    },
   },
   QUOTE: {
     BUYER_BODY: {

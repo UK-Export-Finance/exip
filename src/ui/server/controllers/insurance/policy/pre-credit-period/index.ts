@@ -1,7 +1,7 @@
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { PAGES } from '../../../../content-strings';
+import { PAGES, PRE_CREDIT_PERIOD_DESCRIPTION } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -14,7 +14,15 @@ const {
 } = INSURANCE_ROUTES;
 
 const { NEED_PRE_CREDIT_PERIOD } = POLICY_FIELD_IDS;
-const { SHARED_PAGES } = TEMPLATES;
+
+const {
+  SHARED_PAGES,
+  PARTIALS: {
+    INSURANCE: {
+      POLICY: { PRE_CREDIT_PERIOD },
+    },
+  },
+} = TEMPLATES;
 
 /**
  * pageVariables
@@ -32,7 +40,20 @@ export const pageVariables = (referenceNumber: number) => ({
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD_SAVE_AND_BACK}`,
 });
 
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CUSTOM_CONTENT_HTML: PRE_CREDIT_PERIOD.CUSTOM_CONTENT_HTML,
+};
+
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
+
+export const PAGE_CONTENT_STRINGS = {
+  ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
+  PRE_CREDIT_PERIOD_DESCRIPTION,
+};
 
 /**
  * get
@@ -53,8 +74,9 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
+      PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
+      HTML_FLAGS,
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
