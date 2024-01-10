@@ -1,0 +1,98 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/submit-button.njk' as submitButton %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{ CONTENT_STRINGS.HEADING_CAPTION }}
+        </span>
+
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+        {{ govukHint({
+          text: CONTENT_STRINGS.HINT,
+          attributes: {
+          "data-cy": DATA_CY.HINT
+          }
+        }) }}
+
+
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+          {{ yesNoRadioButtons.render({
+            fieldId: FIELDS.OUTSTANDING_PAYMENTS.ID,
+            legendText: FIELDS.OUTSTANDING_PAYMENTS.LABEL,
+            legendClass: 'govuk-fieldset__legend--m',
+            legendSpan: true,
+            submittedAnswer: submittedValues[FIELDS.OUTSTANDING_PAYMENTS.ID] or application.buyer[FIELDS.OUTSTANDING_PAYMENTS.ID],
+            errorMessage: validationErrors.errorList[FIELDS.OUTSTANDING_PAYMENTS.ID],
+            dataCyLegend: FIELDS.OUTSTANDING_PAYMENTS.ID + '-legend',
+            horizontalRadios: true
+          }) }}
+
+          {{ yesNoRadioButtons.render({
+            fieldId: FIELDS.FAILED_PAYMENTS.ID,
+            legendText: FIELDS.FAILED_PAYMENTS.LABEL,
+            legendClass: 'govuk-fieldset__legend--m',
+            legendSpan: true,
+            submittedAnswer: submittedValues[FIELDS.FAILED_PAYMENTS.ID] or application.buyer[FIELDS.OUTSTANDING_PAYMENTS.ID],
+            errorMessage: validationErrors.errorList[FIELDS.FAILED_PAYMENTS.ID],
+            dataCyLegend: FIELDS.FAILED_PAYMENTS.ID + '-legend',
+            horizontalRadios: true
+          }) }}
+        </div>
+
+        <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              formaction : SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

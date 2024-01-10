@@ -14,6 +14,7 @@ const body = () => cy.get('[data-cy="body"]');
 const form = () => cy.get('[data-cy="form"]');
 const heading = () => cy.get('[data-cy="heading"]');
 const headingCaption = () => cy.get('[data-cy="heading-caption"]');
+const hint = () => cy.get('[data-cy="hint"]');
 const intro = () => cy.get('[data-cy="intro"]');
 const listIntro = () => cy.get('[data-cy="list-intro"]');
 const listItem = (index) => cy.get(`[data-cy="list-item-${index}"]`);
@@ -54,6 +55,7 @@ export {
   form,
   heading,
   headingCaption,
+  hint,
   intro,
   listIntro,
   listItem,
