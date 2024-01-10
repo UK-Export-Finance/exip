@@ -9,7 +9,7 @@ import { FORM_TITLES } from '../../../form-titles';
 const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
 
 const {
-  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY, NEED_PRE_CREDIT_PERIOD,
+  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY, NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION,
 } = POLICY;
 
 const { EMAIL } = ACCOUNT;
@@ -168,12 +168,17 @@ export const POLICY_FIELDS = {
       },
     },
   },
-  NEED_PRE_CREDIT_PERIOD: {
-    [NEED_PRE_CREDIT_PERIOD]: {
-      HINT: 'This is known as the pre-credit period.',
-    },
+  [NEED_PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period',
     SUMMARY: {
       TITLE: 'Pre-credit period',
+    },
+  },
+  [PRE_CREDIT_PERIOD_DESCRIPTION]: {
+    LABEL: 'What period of pre-credit cover do you require?',
+    MAXIMUM: 1000,
+    SUMMARY: {
+      TITLE: 'Period of pre-credit cover',
     },
   },
   BROKER: {
