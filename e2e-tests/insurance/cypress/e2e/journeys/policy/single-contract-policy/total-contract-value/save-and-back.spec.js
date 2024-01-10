@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -104,8 +104,8 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
         cy.startInsurancePolicySection({});
 
-        submitButton().click();
-        submitButton().click();
+        // go through the first 2 single contract policy forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 2 });
       });
 
       it('should not have saved the submitted value', () => {
