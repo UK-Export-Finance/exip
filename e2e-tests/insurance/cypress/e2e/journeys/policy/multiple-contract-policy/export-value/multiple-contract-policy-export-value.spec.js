@@ -19,7 +19,7 @@ import { GBP } from '../../../../../../../fixtures/currencies';
 
 const { taskList } = partials.insurancePartials;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_EXPORT_VALUE;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -50,7 +50,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy export value page - As an exporter, I want to provide the details of the multiple contract policy that I need a cover for', () => {
+context('Insurance - Policy - Multiple contract policy - export value page - As an exporter, I want to provide the details of the multiple contract policy that I need a cover for', () => {
   let referenceNumber;
   let url;
 

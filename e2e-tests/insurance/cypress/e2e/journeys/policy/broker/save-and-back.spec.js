@@ -49,7 +49,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       cy.startInsurancePolicySection({});
 
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
@@ -103,6 +104,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       submitButton().click();
       // submit single contract policy form
       submitButton().click();
+      // submit total contract value form
+      submitButton().click();
       // submit name on policy form
       submitButton().click();
 
@@ -148,6 +151,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         submitButton().click();
         // submit single contract policy form
         submitButton().click();
+        // submit total contract value form
+        submitButton().click();
         // submit name on policy form
         submitButton().click();
 
@@ -183,6 +188,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         // submit policy type form
         submitButton().click();
         // submit single contract policy form
+        submitButton().click();
+        // submit total contract value form
         submitButton().click();
         // submit name on policy form
         submitButton().click();

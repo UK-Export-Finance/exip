@@ -5,8 +5,8 @@ export const POLICY_TEMPLATES = {
   MULTIPLE_CONTRACT_POLICY: 'insurance/policy/multiple-contract-policy.njk',
   EXPORT_VALUE: {
     MULTIPLE: 'insurance/policy/multiple-contract-policy-export-value.njk',
-    SINGLE: 'insurance/policy/single-contract-policy-export-value.njk',
   },
+  SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE: 'insurance/policy/single-contract-policy-total-contract-value.njk',
   NAME_ON_POLICY: 'insurance/policy/name-on-policy.njk',
   DIFFERENT_NAME_ON_POLICY: 'insurance/policy/different-name-on-policy.njk',
   CHECK_YOUR_ANSWERS: 'insurance/policy/check-your-answers.njk',

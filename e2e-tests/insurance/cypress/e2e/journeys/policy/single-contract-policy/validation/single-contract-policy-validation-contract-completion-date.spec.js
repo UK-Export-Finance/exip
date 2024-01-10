@@ -46,7 +46,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     isToday,
     withTwoDateFields,
   } = dateField.checkValidation({
-    errorSummaryLength: 4,
+    errorSummaryLength: 3,
     errorIndex: 1,
     field,
     fieldId: CONTRACT_COMPLETION_DATE,
@@ -146,7 +146,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
       fieldA,
       fieldB,
       fieldBErrorIndex: 0,
-      expectedErrorSummaryLength: 3,
+      expectedErrorSummaryLength: 2,
     });
 
     beforeEach(() => {

@@ -11,15 +11,17 @@ import generateChangeLink from '../../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE },
-  },
-  EXPORT_VALUE: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
 
 const {
-  POLICY: { SINGLE_CONTRACT_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+  POLICY: {
+    SINGLE_CONTRACT_POLICY_CHANGE,
+    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 /**
@@ -47,11 +49,11 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
     ),
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.EXPORT_VALUE.SINGLE, TOTAL_CONTRACT_VALUE),
+        field: getFieldById(FIELDS.CONTRACT_POLICY.SINGLE, TOTAL_CONTRACT_VALUE),
         renderChangeLink: true,
         href: generateChangeLink(
-          SINGLE_CONTRACT_POLICY_CHANGE,
-          SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+          SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
+          SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
           `#${TOTAL_CONTRACT_VALUE}-label`,
           referenceNumber,
           checkAndChange,
