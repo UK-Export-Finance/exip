@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * clickSubmitButtonMultipleTimes
  * Click the submit button multiple times.
@@ -11,7 +9,7 @@ const clickSubmitButtonMultipleTimes = ({ count }) => {
   const arr = new Array(count).fill();
 
   arr.forEach(() => {
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 };
 
