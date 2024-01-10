@@ -60,6 +60,7 @@ describe('server/helpers/page-variables/core', () => {
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          HINT: 'hint',
         },
       };
 
@@ -94,6 +95,7 @@ describe('server/helpers/page-variables/core', () => {
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          HINT: 'hint',
         },
       };
 
@@ -128,6 +130,7 @@ describe('server/helpers/page-variables/core', () => {
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          HINT: 'hint',
         },
       };
 
@@ -163,6 +166,7 @@ describe('server/helpers/page-variables/core', () => {
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          HINT: 'hint',
         },
       };
 
@@ -197,6 +201,7 @@ describe('server/helpers/page-variables/core', () => {
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
+          HINT: 'hint',
         },
         ...HTML_FLAGS,
       };
