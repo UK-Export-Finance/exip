@@ -32,7 +32,7 @@ const {
   POLICY: {
     BROKER_ROOT,
     CHECK_YOUR_ANSWERS,
-    NAME_ON_POLICY,
+    PRE_CREDIT_PERIOD,
   },
 } = INSURANCE_ROUTES;
 
@@ -65,6 +65,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitPreCreditPeriodForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -85,7 +86,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
+      backLink: `${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`,
       assertSubmitButton: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
