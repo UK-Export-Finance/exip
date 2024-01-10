@@ -1,27 +1,26 @@
-import { FIELD_IDS, APPLICATION } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
-import { stripCommas } from '../../../../../../helpers/string';
-import { RequestBody } from '../../../../../../../types';
+import { APPLICATION } from '../../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import generateValidationErrors from '../../../../../../../helpers/validation';
+import { objectHasProperty } from '../../../../../../../helpers/object';
+import wholeNumberValidation from '../../../../../../../helpers/whole-number-validation';
+import { stripCommas } from '../../../../../../../helpers/string';
+import { RequestBody } from '../../../../../../../../types';
 
 const { MINIMUM, MAXIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
 
 const {
-  INSURANCE: {
-    POLICY: {
-      EXPORT_VALUE: {
-        SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      EXPORT_VALUE: {
+      CONTRACT_POLICY: {
         SINGLE: { [FIELD_ID]: ERROR_MESSAGE },
       },
     },

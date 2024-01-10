@@ -32,9 +32,9 @@ const MULTIPLE_CONTRACT_POLICY = {
   PAGE_TITLE: 'Tell us about the multiple contract policy you need',
 };
 
-const SINGLE_CONTRACT_POLICY_EXPORT_VALUE = {
+const SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE = {
   ...SHARED,
-  PAGE_TITLE: 'Tell us about the total value of your export in',
+  PAGE_TITLE: "What's the total value of the contract you want to insure in",
 };
 
 const MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE = {
@@ -80,7 +80,7 @@ module.exports = {
   TYPE_OF_POLICY,
   SINGLE_CONTRACT_POLICY,
   MULTIPLE_CONTRACT_POLICY,
-  SINGLE_CONTRACT_POLICY_EXPORT_VALUE,
+  SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
   MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
   NAME_ON_POLICY,
   DIFFERENT_NAME_ON_POLICY,

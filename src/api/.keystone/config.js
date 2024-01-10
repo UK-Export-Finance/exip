@@ -174,16 +174,14 @@ var POLICY = {
   CONTRACT_POLICY: {
     ...SHARED_CONTRACT_POLICY,
     SINGLE: {
-      CONTRACT_COMPLETION_DATE: "contractCompletionDate"
+      CONTRACT_COMPLETION_DATE: "contractCompletionDate",
+      TOTAL_CONTRACT_VALUE: "totalValueOfContract"
     },
     MULTIPLE: {
       TOTAL_MONTHS_OF_COVER: "totalMonthsOfCover"
     }
   },
   EXPORT_VALUE: {
-    SINGLE: {
-      TOTAL_CONTRACT_VALUE: "totalValueOfContract"
-    },
     MULTIPLE: {
       TOTAL_SALES_TO_BUYER: "totalSalesToBuyer",
       MAXIMUM_BUYER_WILL_OWE: "maximumBuyerWillOwe"
@@ -4020,6 +4018,12 @@ var POLICY_FIELDS = {
         SUMMARY: {
           TITLE: "Date you expect it to complete"
         }
+      },
+      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        HINT: "Enter a whole number - do not enter decimals.",
+        SUMMARY: {
+          TITLE: "Contract value"
+        }
       }
     },
     MULTIPLE: {
@@ -4031,15 +4035,6 @@ var POLICY_FIELDS = {
     }
   },
   EXPORT_VALUE: {
-    SINGLE: {
-      [EXPORT_VALUE.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        LABEL: "What's the total value of the contract you want to insure?",
-        HINT: "Enter a whole number - do not enter decimals.",
-        SUMMARY: {
-          TITLE: "Contract value"
-        }
-      }
-    },
     MULTIPLE: {
       [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: "Estimate total sales to your buyer during this time",
@@ -4416,7 +4411,7 @@ var CONTENT_STRINGS2 = {
   ...POLICY_FIELDS.CONTRACT_POLICY,
   ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
   ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
-  ...POLICY_FIELDS.EXPORT_VALUE.SINGLE,
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
   ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
   ...EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES
 };
@@ -4427,10 +4422,10 @@ var {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-      POLICY_CURRENCY_CODE
+      POLICY_CURRENCY_CODE,
+      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
     },
     EXPORT_VALUE: {
-      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 },
       MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
     }
   },

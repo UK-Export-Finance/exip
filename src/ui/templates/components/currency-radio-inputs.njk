@@ -5,6 +5,7 @@
 
   {% set id = params.id %}
   {% set legend = params.legend %}
+  {% set hint = params.hint %}
   {% set supportedCurrencies = params.supportedCurrencies %}
   {% set error = params.error %}
   {% set submittedValue = params.submittedValue %}
@@ -13,7 +14,13 @@
     name: id,
     fieldset: {
       legend: {
-        html: fieldsetLegend.render({ id: id , legendText: legend })
+        html: fieldsetLegend.render({ id: id, legendText: legend })
+      }
+    },
+    hint: {
+      text: hint,
+      attributes: {
+        "data-cy": id + '-hint'
       }
     },
     items: [

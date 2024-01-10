@@ -35,7 +35,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy export value page - form validation - total sales to buyer', () => {
+context('Insurance - Policy - Multiple contract policy - export value page - form validation - total sales to buyer', () => {
   let referenceNumber;
   let url;
 
@@ -143,7 +143,7 @@ context('Insurance - Policy - Multiple contract policy export value page - form 
     it('should redirect to the next page as all fields are valid', () => {
       cy.navigateToUrl(url);
 
-      cy.completeExportValueForm({ policyType });
+      cy.completeExportValueForm();
       cy.clickBackLink();
 
       cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234');

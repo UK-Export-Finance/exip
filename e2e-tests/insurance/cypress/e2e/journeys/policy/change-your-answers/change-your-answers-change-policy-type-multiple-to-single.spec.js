@@ -10,6 +10,7 @@ const {
   POLICY: {
     CHECK_YOUR_ANSWERS,
     TYPE_OF_POLICY_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -17,10 +18,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
-      SINGLE: { CONTRACT_COMPLETION_DATE },
-    },
-    EXPORT_VALUE: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -31,6 +29,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
   let referenceNumber;
   let checkYourAnswersUrl;
   let typeOfPolicyUrl;
+  let checkAndChangeTotalContractValueUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -42,6 +41,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
 
       checkYourAnswersUrl = `${baseUrl}${applicationRouteUrl}${CHECK_YOUR_ANSWERS}`;
       typeOfPolicyUrl = `${baseUrl}${applicationRouteUrl}${TYPE_OF_POLICY_CHANGE}`;
+      checkAndChangeTotalContractValueUrl = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -78,13 +78,23 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
       typeOfPolicyPage[POLICY_TYPE].single.input().click();
       submitButton().click();
 
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitSingleContractPolicyForm();
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      const expectedUrl = `${checkYourAnswersUrl}#heading`;
+    it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE} because the policy type has changed`, () => {
+      const expectedUrl = `${checkAndChangeTotalContractValueUrl}#heading`;
 
       cy.assertUrl(expectedUrl);
+    });
+
+    describe(`after submitting a new ${TOTAL_CONTRACT_VALUE} answer`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.completeAndSubmitTotalContractValueForm({});
+
+        const expectedUrl = `${checkYourAnswersUrl}#heading`;
+
+        cy.assertUrl(expectedUrl);
+      });
     });
 
     describe('should render new answers and change links for new single policy fields', () => {

@@ -14,9 +14,6 @@ const {
       POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
     },
-    EXPORT_VALUE: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -24,7 +21,6 @@ const {
   INSURANCE: {
     POLICY: {
       CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
-      EXPORT_VALUE: EXPORT_VALUE_ERROR_MESSAGES,
     },
   },
 } = ERROR_MESSAGES;
@@ -63,7 +59,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkErrorSummaryListHeading();
 
-    const TOTAL_REQUIRED_FIELDS = 4;
+    const TOTAL_REQUIRED_FIELDS = 3;
     partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
@@ -78,11 +74,6 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      EXPORT_VALUE_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].INCORRECT_FORMAT,
-    );
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(3),
       CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
     );
   });

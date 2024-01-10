@@ -15,13 +15,12 @@ const {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
-      SINGLE: { CONTRACT_COMPLETION_DATE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
       MULTIPLE: {
         TOTAL_MONTHS_OF_COVER,
       },
     },
     EXPORT_VALUE: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
       MULTIPLE: {
         TOTAL_SALES_TO_BUYER,
         MAXIMUM_BUYER_WILL_OWE,
@@ -87,7 +86,7 @@ const checkPolicySummaryList = ({
     [TOTAL_CONTRACT_VALUE]: () => {
       const fieldId = TOTAL_CONTRACT_VALUE;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.SINGLE);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.SINGLE);
 
       const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
