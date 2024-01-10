@@ -19,7 +19,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.NAME_ON_POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    BROKER_ROOT,
+    PRE_CREDIT_PERIOD,
     DIFFERENT_NAME_ON_POLICY,
     NAME_ON_POLICY,
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
@@ -121,12 +121,12 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
 
   describe('form submission', () => {
     describe(SAME_NAME, () => {
-      it(`should redirect to ${BROKER_ROOT} when ${SAME_NAME} is selected`, () => {
+      it(`should redirect to ${PRE_CREDIT_PERIOD} when ${SAME_NAME} is selected`, () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitNameOnPolicyForm({});
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
         cy.assertUrl(expectedUrl);
       });
 
