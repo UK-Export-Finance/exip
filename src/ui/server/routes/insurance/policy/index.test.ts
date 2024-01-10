@@ -9,6 +9,7 @@ import {
   get as singleContractPolicyContractValueGet,
   post as singleContractPolicyContractValuePost,
 } from '../../../controllers/insurance/policy/single-contract-policy/total-contract-value';
+import { post as contractValueSaveAndBackPost } from '../../../controllers/insurance/policy/single-contract-policy/total-contract-value/save-and-back';
 import { get as multipleContractPolicyGet, post as multipleContractPolicyPost } from '../../../controllers/insurance/policy/multiple-contract-policy';
 import { post as multipleContractPolicySaveAndBackPost } from '../../../controllers/insurance/policy/multiple-contract-policy/save-and-back';
 import {
@@ -36,7 +37,7 @@ describe('routes/insurance/policy', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(25);
-    expect(post).toHaveBeenCalledTimes(30);
+    expect(post).toHaveBeenCalledTimes(31);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -62,6 +63,11 @@ describe('routes/insurance/policy', () => {
     expect(post).toHaveBeenCalledWith(
       `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
       singleContractPolicyContractValuePost,
+    );
+
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
+      contractValueSaveAndBackPost,
     );
 
     expect(get).toHaveBeenCalledWith(

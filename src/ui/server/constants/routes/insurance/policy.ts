@@ -12,6 +12,7 @@ export const POLICY = {
   SINGLE_CONTRACT_POLICY_CHANGE: `${ROOT}/single-contract-policy/change`,
   SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE: `${ROOT}/single-contract-policy/check-and-change`,
   SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE: `${ROOT}/single-contract-policy/total-contract-value`,
+  SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK: `${ROOT}/single-contract-policy/total-contract-value/save-and-go-back`,
   SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE: `${ROOT}/single-contract-policy/total-contract-value/change`,
   SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE: `${ROOT}/single-contract-policy/total-contract-value/check-and-change`,
   MULTIPLE_CONTRACT_POLICY: `${ROOT}/multi-contract-policy`,
