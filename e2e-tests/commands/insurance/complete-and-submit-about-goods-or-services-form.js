@@ -2,7 +2,6 @@ import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/export-contract';
 import {
   countryInput,
-  submitButton,
   noRadio,
   yesRadio,
 } from '../../pages/shared';
@@ -40,7 +39,7 @@ const completeAndSubmitAboutGoodsOrServicesForm = ({
     noRadio().input().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitAboutGoodsOrServicesForm;

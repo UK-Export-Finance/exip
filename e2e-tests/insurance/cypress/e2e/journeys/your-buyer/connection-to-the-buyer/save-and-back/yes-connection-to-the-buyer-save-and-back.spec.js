@@ -1,6 +1,5 @@
 import {
   saveAndBackButton,
-  submitButton,
   yesRadioInput,
   field,
 } from '../../../../../../../pages/shared';
@@ -92,7 +91,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     it('should retain completed input on the page', () => {
       // get to connection to buyer form
       cy.startInsuranceYourBuyerSection({});
-      submitButton().click();
+      cy.clickSubmitButton();
 
       yesRadioInput().should('be.checked');
       cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), '');
@@ -120,7 +119,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     it('should retain all inputs on the page', () => {
       // get to connection to buyer form
       cy.startInsuranceYourBuyerSection({});
-      submitButton().click();
+      cy.clickSubmitButton();
 
       yesRadioInput().should('be.checked');
       cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);

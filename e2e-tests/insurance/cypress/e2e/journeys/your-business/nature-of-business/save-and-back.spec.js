@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials';
-import { field, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
@@ -125,7 +125,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
       cy.startYourBusinessSection({});
 
       // company details submit
-      submitButton().click();
+      cy.clickSubmitButton();
 
       field(GOODS_OR_SERVICES).textarea().should('have.value', application.EXPORTER_BUSINESS[GOODS_OR_SERVICES]);
       field(YEARS_EXPORTING).input().should('have.value', application.EXPORTER_BUSINESS[YEARS_EXPORTING]);

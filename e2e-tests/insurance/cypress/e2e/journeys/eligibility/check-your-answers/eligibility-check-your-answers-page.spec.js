@@ -1,4 +1,4 @@
-import { submitButton, warning, body } from '../../../../../../pages/shared';
+import { warning, body } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -95,7 +95,7 @@ context('Insurance - Eligibility - as an exporter, I want to confirm my selectio
 
   describe('form submission', () => {
     it(`should redirect to ${ELIGIBLE_TO_APPLY_ONLINE}`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${ELIGIBLE_TO_APPLY_ONLINE}`;
 

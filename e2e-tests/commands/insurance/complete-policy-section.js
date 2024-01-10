@@ -1,4 +1,3 @@
-import { submitButton } from '../../pages/shared';
 import { FIELD_VALUES } from '../../constants';
 
 const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
@@ -44,7 +43,7 @@ const completePolicySection = ({
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
   if (submitCheckYourAnswers) {
-    submitButton().click();
+    cy.clickSubmitButton();
   }
 };
 

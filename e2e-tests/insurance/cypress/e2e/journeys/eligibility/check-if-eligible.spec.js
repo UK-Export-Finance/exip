@@ -1,4 +1,4 @@
-import { intro, submitButton } from '../../../../../pages/shared';
+import { intro } from '../../../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { checkIfEligiblePage } from '../../../../../pages/insurance/eligibility';
@@ -65,7 +65,7 @@ context('Insurance Eligibility - check if eligible page', () => {
 
     context('form submission', () => {
       it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 

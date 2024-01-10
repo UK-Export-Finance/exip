@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../../../pages/shared';
 import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
@@ -67,7 +66,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
   const field = multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE];
 
   it('should render a validation error when maximum buyer will owe is not provided', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
@@ -82,7 +81,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when maximum buyer will owe is not a number', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), 'ten!');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
@@ -97,7 +96,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when maximum buyer will owe contains a decimal', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1.2');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
@@ -112,7 +111,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when maximum buyer will owe contains a comma and decimal', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234.56');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
@@ -127,7 +126,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when maximum buyer will owe is below the minimum', () => {
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '0');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
@@ -144,7 +143,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
     const MAXIMUM = APPLICATION.POLICY.MAXIMUM_BUYER_CAN_OWE;
 
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(1),
@@ -162,7 +161,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
     cy.clickBackLink();
 
     cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), '1,234');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
     cy.assertUrl(expectedUrl);

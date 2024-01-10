@@ -1,5 +1,5 @@
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
@@ -65,7 +65,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
 
     it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItemLinks().first().click();
       field.textarea().should('have.focus');
@@ -75,7 +75,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
   describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
     beforeEach(() => {
       cy.keyboardInput(field.textarea(), 'a'.repeat(MAXIMUM + 1));
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
@@ -99,7 +99,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.textarea(), 'test');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 2);

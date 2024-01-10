@@ -1,5 +1,5 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -73,7 +73,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -117,7 +117,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
         cy.keyboardInput(field(COUNTY).input(), country);
         cy.keyboardInput(field(POSTCODE).input(), postcode);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -167,7 +167,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -203,7 +203,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -237,7 +237,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         brokerPage[fieldId].noRadioInput().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

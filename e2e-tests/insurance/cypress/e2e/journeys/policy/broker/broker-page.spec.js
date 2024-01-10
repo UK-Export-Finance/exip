@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
 import {
   PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
@@ -236,7 +236,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
         describe(`when selecting no for ${USING_BROKER}`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
             brokerPage[USING_BROKER].noRadioInput().click();
-            submitButton().click();
+            cy.clickSubmitButton();
 
             cy.assertUrl(checkYourAnswersUrl);
           });

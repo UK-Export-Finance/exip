@@ -1,7 +1,6 @@
 import {
   backLink,
   field,
-  submitButton,
   summaryList,
 } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
@@ -40,13 +39,13 @@ const changeFromSingleToMultiple = () => {
 
   policyTypePage[POLICY_TYPE].multiple.input().click();
 
-  submitButton().click();
+  cy.clickSubmitButton();
 
   // max amount owed and credit period fields are now required because it's a multiple policy
   cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
   field(CREDIT_PERIOD).input().select('1');
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 /**
@@ -61,7 +60,7 @@ const changeFromMultipleToSingle = () => {
 
   policyTypePage[POLICY_TYPE].single.input().click();
 
-  submitButton().click();
+  cy.clickSubmitButton();
 
   /**
    * "Policy length" and "contract value fields" are now required,
@@ -70,7 +69,7 @@ const changeFromMultipleToSingle = () => {
   cy.keyboardInput(field(POLICY_LENGTH).input(), '3');
 
   cy.keyboardInput(field(CONTRACT_VALUE).input(), '150');
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 context('Change your answers - as an exporter, I want to change the details before submitting the proposal', () => {
@@ -115,7 +114,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
     it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
 
@@ -137,12 +136,12 @@ context('Change your answers - as an exporter, I want to change the details befo
       row.changeLink().click();
 
       policyTypePage[POLICY_TYPE].multiple.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
       field(CREDIT_PERIOD).input().select('1');
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('renders the new answers in `Check your answers` page (multi, 8 months)', () => {
@@ -212,7 +211,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
       it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
         policyTypePage[POLICY_TYPE].multiple.input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
 
@@ -304,7 +303,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
       it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
         policyTypePage[POLICY_TYPE].single.input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
 

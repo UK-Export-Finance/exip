@@ -1,4 +1,4 @@
-import { radios, submitButton } from '../../../pages/shared';
+import { radios } from '../../../pages/shared';
 /**
  * changes radio input/option
  * @param {Object} fieldVariables
@@ -8,7 +8,7 @@ const changeAnswerRadioField = (fieldVariables) => {
 
   radios(fieldId, newValueInput).option.input().click();
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default changeAnswerRadioField;

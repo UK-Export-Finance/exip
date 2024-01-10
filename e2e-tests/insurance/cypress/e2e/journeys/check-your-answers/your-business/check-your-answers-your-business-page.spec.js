@@ -1,7 +1,6 @@
 import {
   headingCaption,
   status,
-  submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
@@ -88,7 +87,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
       it(`should redirect to ${YOUR_BUYER}`, () => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
         cy.assertUrl(expectedUrl);

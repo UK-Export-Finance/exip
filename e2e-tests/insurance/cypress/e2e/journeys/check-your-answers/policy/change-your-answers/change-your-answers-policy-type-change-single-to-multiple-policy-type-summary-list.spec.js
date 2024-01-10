@@ -3,7 +3,7 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 import { DEFAULT } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { submitButton, summaryList } from '../../../../../../../pages/shared';
+import { summaryList } from '../../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../../pages/insurance/policy';
 import application from '../../../../../../../fixtures/application';
 
@@ -85,7 +85,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       summaryList.field(fieldId).changeLink().click();
 
       typeOfPolicyPage[fieldId].multiple.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.completeAndSubmitMultipleContractPolicyForm();
 

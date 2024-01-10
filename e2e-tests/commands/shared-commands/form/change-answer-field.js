@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * takes an input value, types it into the input box and submits form
  * @param {Object} fieldVariables
@@ -12,7 +10,7 @@ const changeAnswerField = (fieldVariables, input, shouldSubmit = true) => {
   cy.keyboardInput(input, newValueInput);
 
   if (shouldSubmit) {
-    submitButton().click();
+    cy.clickSubmitButton();
   }
 };
 export default changeAnswerField;

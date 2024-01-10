@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../../../commands/quote/forms';
-import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -42,7 +42,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('should render validation errors for all required fields', () => {
@@ -120,7 +120,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), 'a');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
@@ -139,7 +139,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '1234.56');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
@@ -158,7 +158,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '0');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(1),
@@ -176,7 +176,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
     it('should render a validation error', () => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(3),
@@ -197,7 +197,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       fieldSelector(CURRENCY).input().select('GBP');
       cy.keyboardInput(fieldSelector(MAX_AMOUNT_OWED).input(), '10');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       fieldSelector(CURRENCY).inputOptionSelected().contains('GBP');
 
@@ -215,7 +215,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
 
       field.input().select('85');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       field.inputOptionSelected().contains('85');
     });
@@ -231,7 +231,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       currencyField.input().select(GBP_CURRENCY_CODE);
       cy.keyboardInput(maxAmountOwedField.input(), '10');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       currencyField.inputOptionSelected().contains(GBP_CURRENCY_CODE);
 

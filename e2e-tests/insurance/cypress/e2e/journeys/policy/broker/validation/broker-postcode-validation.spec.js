@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { FIELD_VALUES, INVALID_POSTCODES, VALID_POSTCODES } from '../../../../../../../constants';
 import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -213,7 +213,7 @@ context('Insurance - Policy - Broker Page - Validation - Postcode', () => {
       field.yesRadioInput().click();
 
       cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITH_SPACE);
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().should('have.length', 4);
     });
@@ -224,7 +224,7 @@ context('Insurance - Policy - Broker Page - Validation - Postcode', () => {
       field.yesRadioInput().click();
 
       cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITHOUT_SPACE);
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().should('have.length', 4);
     });

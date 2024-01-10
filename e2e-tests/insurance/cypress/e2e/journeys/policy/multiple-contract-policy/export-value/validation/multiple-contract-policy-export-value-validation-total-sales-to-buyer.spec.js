@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../../constants';
@@ -66,7 +66,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
   const field = fieldSelector(TOTAL_SALES_TO_BUYER);
 
   it('should render a validation error when total sales to buyer is not provided', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -81,7 +81,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when total sales to buyer is not a number', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), 'ten!');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -96,7 +96,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when total sales to buyer contains a decimal', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1.2');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -111,7 +111,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234.56');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -126,7 +126,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
 
   it('should render a validation error when total sales to buyer is below the minimum', () => {
     cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '0');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -147,7 +147,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
       cy.clickBackLink();
 
       cy.keyboardInput(fieldSelector(TOTAL_SALES_TO_BUYER).input(), '1,234');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);

@@ -1,4 +1,4 @@
-import { intro, submitButton } from '../../../../../../../pages/shared';
+import { intro } from '../../../../../../../pages/shared';
 import { enterCodePage, requestNewCodePage } from '../../../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -94,7 +94,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${ENTER_CODE}`, () => {

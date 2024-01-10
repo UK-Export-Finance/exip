@@ -1,6 +1,6 @@
 import partials from '../../../../../../partials';
 import manageAccountPage from '../../../../../../pages/insurance/account/manage';
-import { field, intro, submitButton } from '../../../../../../pages/shared';
+import { field, intro } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../constants/routes/insurance';
@@ -62,7 +62,7 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
 
         cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         partials.header.navigation.manageAccount().click();
       });

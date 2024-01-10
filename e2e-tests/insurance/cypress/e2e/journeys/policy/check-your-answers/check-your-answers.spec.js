@@ -1,6 +1,5 @@
 import {
   headingCaption,
-  submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import {
@@ -76,7 +75,7 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
       it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
         cy.assertUrl(expectedUrl);

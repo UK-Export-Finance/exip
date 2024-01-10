@@ -1,4 +1,4 @@
-import { countryInput, submitButton } from '../../../../pages/shared';
+import { countryInput } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -34,7 +34,7 @@ context('Insurance - apply offline exit page', () => {
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${APPLY_OFFLINE}`;
 

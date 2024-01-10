@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { radios, field, submitButton } from '../../pages/shared';
+import { radios, field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -28,7 +28,7 @@ const completeAndSubmitSingleContractPolicyForm = () => {
   const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
   radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitSingleContractPolicyForm;

@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { summaryList, noRadio, submitButton } from '../../../../../../pages/shared';
+import { summaryList, noRadio } from '../../../../../../pages/shared';
 
 const { HAS_COMPANIES_HOUSE_NUMBER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -44,7 +44,7 @@ context('Insurance - Eligibility - Change your answers - Has companies house num
 
       summaryList.field(fieldId).changeLink().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -59,7 +59,7 @@ context('Insurance - Eligibility - Change your answers - Has companies house num
       summaryList.field(fieldId).changeLink().click();
 
       noRadio().input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER}`, () => {

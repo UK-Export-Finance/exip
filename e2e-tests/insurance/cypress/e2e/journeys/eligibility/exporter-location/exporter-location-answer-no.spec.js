@@ -1,5 +1,5 @@
 import {
-  backLink, cannotApplyPage, noRadio, noRadioInput, submitButton,
+  backLink, cannotApplyPage, noRadio, noRadioInput,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -31,7 +31,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     cy.navigateToUrl(url);
 
     noRadio().input().click();
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it('redirects to exit page', () => {

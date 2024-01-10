@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -58,7 +58,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm tha
       const field = brokerPage[FIELD_ID];
 
       field.noRadioInput().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().should('have.length', 0);
       cy.assertUrl(checkYourAnswersUrl);

@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import {
   LINKS,
   QUOTE_TITLES,
@@ -43,7 +43,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
     cy.login();
 
     cy.submitQuoteAnswersHappyPathMultiplePolicy();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });

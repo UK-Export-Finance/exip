@@ -1,5 +1,5 @@
 import {
-  backLink, yesRadio, yesRadioInput, submitButton,
+  backLink, yesRadio, yesRadioInput,
 } from '../../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../../pages/quote';
 import { PAGES, LINKS } from '../../../../../../content-strings';
@@ -28,7 +28,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     cy.navigateToUrl(url);
 
     yesRadio().input().click();
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it('redirects to exit page', () => {

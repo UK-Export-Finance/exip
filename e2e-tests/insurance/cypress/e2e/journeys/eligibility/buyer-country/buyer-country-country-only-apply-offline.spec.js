@@ -1,4 +1,4 @@
-import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { backLink, countryInput } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
@@ -40,7 +40,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it('redirects to `apply offline` exit page', () => {

@@ -1,4 +1,4 @@
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
@@ -78,7 +78,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
           cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
           cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), newAnswer.year + 1);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it('should redirect to the check answers page', () => {
@@ -119,7 +119,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -157,7 +157,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
 
           cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

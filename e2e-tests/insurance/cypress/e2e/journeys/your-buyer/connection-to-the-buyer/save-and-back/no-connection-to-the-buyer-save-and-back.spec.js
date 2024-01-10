@@ -1,7 +1,6 @@
 import {
   noRadioInput,
   saveAndBackButton,
-  submitButton,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
@@ -81,7 +80,7 @@ context('Insurance - Your buyer - Connection to buyer - No connection to buyer -
     it('should retain all inputs on the page', () => {
       // get to connection to buyer form
       cy.startInsuranceYourBuyerSection({});
-      submitButton().click();
+      cy.clickSubmitButton();
 
       noRadioInput().should('be.checked');
     });

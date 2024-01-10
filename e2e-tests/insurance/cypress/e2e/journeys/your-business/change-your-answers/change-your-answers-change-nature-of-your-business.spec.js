@@ -1,4 +1,4 @@
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -70,7 +70,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         cy.keyboardInput(field(fieldId).textarea(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -106,7 +106,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -142,7 +142,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

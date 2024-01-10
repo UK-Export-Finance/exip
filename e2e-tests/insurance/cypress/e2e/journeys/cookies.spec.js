@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../pages/shared';
 import { cookiesPage, cookiesSavedPage } from '../../../../pages';
 import partials from '../../../../partials';
 import {
@@ -173,7 +172,7 @@ context('Cookies page - Insurance', () => {
 
           cy.navigateToUrl(url);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it('should render validation errors', () => {
@@ -194,7 +193,7 @@ context('Cookies page - Insurance', () => {
           cy.saveSession();
 
           cookiesPage[FIELD_ID].accept.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${COOKIES_SAVED}`, () => {
@@ -233,7 +232,7 @@ context('Cookies page - Insurance', () => {
           cy.saveSession();
 
           cookiesPage[FIELD_ID].reject.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${COOKIES_SAVED}`, () => {
@@ -274,7 +273,7 @@ context('Cookies page - Insurance', () => {
           cy.navigateToUrl(url);
 
           cookiesPage[FIELD_ID].accept.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
@@ -295,7 +294,7 @@ context('Cookies page - Insurance', () => {
           cy.navigateToUrl(url);
 
           cookiesPage[FIELD_ID].reject.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {

@@ -1,4 +1,4 @@
-import { saveAndBackButton, submitButton, yesRadioInput } from '../../../../../../pages/shared';
+import { saveAndBackButton, yesRadioInput } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -81,7 +81,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.startInsuranceYourBuyerSection({});
 
       // submit button to get to working with buyer page
-      submitButton().click();
+      cy.clickSubmitButton();
       // submit connectionToBuyer form to get to working with buyer page
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 

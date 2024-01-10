@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, WEBSITE_EXAMPLES } from '../../../../../../../constants';
@@ -76,7 +76,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     it('should not display validation errors', () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), WEBSITE_EXAMPLES.VALID);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().should('have.length', 7);
     });

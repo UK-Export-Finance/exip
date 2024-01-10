@@ -1,5 +1,5 @@
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -62,7 +62,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
 
       it(`should focus to the ${YEARS_EXPORTING} section when clicking the error`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         partials.errorSummaryListItemLinks().eq(1).click();
         field.input().should('have.focus');
@@ -117,7 +117,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.input(), '5');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 2);
@@ -129,7 +129,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field.input(), '5,00');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 2);

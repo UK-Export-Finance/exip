@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, field, submitButton, summaryList,
+  backLink, countryInput, field, summaryList,
 } from '../../../../../../pages/shared';
 import {
   policyTypePage,
@@ -40,7 +40,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     cy.login();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });
@@ -74,7 +74,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CONTRACT_VALUE}-label`;
       cy.assertUrl(expectedUrl);
@@ -122,7 +122,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       field(PERCENTAGE_OF_COVER).input().select('85');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
 
@@ -211,7 +211,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#heading`;
 

@@ -1,10 +1,6 @@
-import {
-
-  FIELD_VALUES,
-} from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
 import {
   field,
-  submitButton,
   summaryList,
   noRadioInput,
   yesRadioInput,
@@ -86,7 +82,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
 
         yesRadioInput().eq(1).click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, () => {
@@ -127,7 +123,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
 
         cy.keyboardInput(field(FULL_ADDRESS).textarea(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -161,7 +157,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
 
         noRadioInput().eq(1).click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

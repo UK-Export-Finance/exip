@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeMultiForm,
 } from '../../../../../../commands/quote/forms';
-import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import {
   LINKS,
@@ -194,7 +194,7 @@ context('Tell us about your multiple policy page - as an exporter, I want to pro
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 

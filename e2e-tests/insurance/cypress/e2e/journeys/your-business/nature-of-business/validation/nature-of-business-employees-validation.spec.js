@@ -1,5 +1,5 @@
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -140,7 +140,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5');
-        submitButton().click();
+        cy.clickSubmitButton();
         partials.errorSummaryListItems().should('have.length', 2);
       });
     });
@@ -153,7 +153,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
         const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5,000');
-        submitButton().click();
+        cy.clickSubmitButton();
         partials.errorSummaryListItems().should('have.length', 2);
       });
     });

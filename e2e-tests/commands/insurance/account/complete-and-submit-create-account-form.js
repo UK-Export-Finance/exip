@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import passwordField from '../../../partials/insurance/passwordField';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
@@ -29,5 +29,5 @@ export default (params) => {
   cy.keyboardInput(field(EMAIL).input(), account[EMAIL]);
   cy.keyboardInput(passwordField.input(), account[PASSWORD]);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };

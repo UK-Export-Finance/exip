@@ -1,4 +1,4 @@
-import { body, submitButton } from '../../../../../../pages/shared';
+import { body } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -73,7 +73,7 @@ context('Insurance - Eligibility - You are eligible to apply online page - I wan
 
     describe('form submission', () => {
       it(`should redirect to ${HAVE_AN_ACCOUNT}`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${HAVE_AN_ACCOUNT}`;
 

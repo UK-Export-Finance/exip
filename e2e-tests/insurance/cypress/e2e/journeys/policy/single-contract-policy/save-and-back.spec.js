@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -106,7 +106,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
 
     it('should not have saved the submitted values  going back to the page', () => {
       cy.startInsurancePolicySection({});
-      submitButton().click();
+      cy.clickSubmitButton();
 
       field.dayInput().should('have.value', '');
       field.monthInput().should('have.value', '');
@@ -140,7 +140,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
 
     it('should have the submitted values when going back to the page', () => {
       cy.startInsurancePolicySection({});
-      submitButton().click();
+      cy.clickSubmitButton();
 
       field.dayInput().should('have.value', '1');
       field.monthInput().should('have.value', month);

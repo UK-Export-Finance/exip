@@ -5,7 +5,6 @@ import {
 } from '../../../../../../constants';
 import {
   field,
-  submitButton,
   summaryList,
   noRadioInput,
 } from '../../../../../../pages/shared';
@@ -82,7 +81,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         noRadioInput().first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -120,7 +119,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         cy.keyboardInput(field(PHONE_NUMBER).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -156,7 +155,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         cy.keyboardInput(field(WEBSITE).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

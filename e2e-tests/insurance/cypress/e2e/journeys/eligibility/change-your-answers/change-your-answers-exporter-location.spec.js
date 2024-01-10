@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { summaryList, noRadio, submitButton } from '../../../../../../pages/shared';
+import { summaryList, noRadio } from '../../../../../../pages/shared';
 
 const { VALID_EXPORTER_LOCATION } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -44,7 +44,7 @@ context('Insurance - Eligibility - Change your answers - Exporter location - As 
 
       summaryList.field(fieldId).changeLink().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -59,7 +59,7 @@ context('Insurance - Eligibility - Change your answers - Exporter location - As 
       summaryList.field(fieldId).changeLink().click();
 
       noRadio().input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CANNOT_APPLY}`, () => {
