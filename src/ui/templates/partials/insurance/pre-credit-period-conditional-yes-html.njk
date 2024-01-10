@@ -1,0 +1,24 @@
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+
+{{ govukCharacterCount({
+  name: FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID,
+  id: FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID,
+  label: {
+    text: FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.LABEL,
+    classes: "govuk-label--m",
+    attributes: {
+      'data-cy': FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID + '-label',
+      id: FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID + '-label'
+    }
+  },
+  attributes: {
+    'data-cy': FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID
+  },
+  maxlength: FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.MAXIMUM,
+  errorMessage: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID] and {
+    text: validationErrors.errorList[FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID].text,
+    attributes: {
+      "data-cy": FIELDS.PRE_CREDIT_PERIOD_DESCRIPTION.ID + "-error-message"
+    }
+  }
+}) }}

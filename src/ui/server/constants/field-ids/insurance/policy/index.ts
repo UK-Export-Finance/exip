@@ -48,6 +48,8 @@ const POLICY = {
     POLICY_CONTACT_DETAIL: 'policyContactDetail',
     POSITION: 'position',
   },
+  NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
+  PRE_CREDIT_PERIOD_DESCRIPTION: 'preCreditPeriodDescription',
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

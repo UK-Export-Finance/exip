@@ -54,6 +54,11 @@ const DIFFERENT_NAME_ON_POLICY = {
   HINT: "We'll contact both you and the policy holder to let you know the outcome of your application. We'll store their contact details securely and in line with GDPR.",
 };
 
+const PRE_CREDIT_PERIOD = {
+  ...SHARED,
+  PAGE_TITLE: 'Do you need cover for a period before you supply the goods or services to the buyer?',
+};
+
 const BROKER = {
   ...SHARED,
   PAGE_TITLE: 'Are you using a broker to get this insurance?',
@@ -80,5 +85,6 @@ export default {
   NAME_ON_POLICY,
   BROKER,
   DIFFERENT_NAME_ON_POLICY,
+  PRE_CREDIT_PERIOD,
   CHECK_YOUR_ANSWERS,
 };
