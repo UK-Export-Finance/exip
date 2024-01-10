@@ -89,6 +89,7 @@
         {{ radiosInputs.render({
           id: FIELDS.POLICY_CURRENCY_CODE.ID,
           legend: FIELDS.POLICY_CURRENCY_CODE.LEGEND,
+          hint: FIELDS.POLICY_CURRENCY_CODE.HINT,
           supportedCurrencies: currencies,
           error: validationErrors.errorList[FIELDS.POLICY_CURRENCY_CODE.ID],
           submittedValue: submittedValues[FIELDS.POLICY_CURRENCY_CODE.ID] or application.policy[FIELDS.POLICY_CURRENCY_CODE.ID]
