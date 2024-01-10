@@ -112,7 +112,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       field.input().should('exist');
     });
 
-    it('renders `currency` label and radio inputs', () => {
+    it('renders `currency` label, hint and radio inputs', () => {
       checkPolicyCurrencyCodeInput();
     });
 

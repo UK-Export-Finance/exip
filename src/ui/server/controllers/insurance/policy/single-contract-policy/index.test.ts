@@ -1,5 +1,6 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
-import { ROUTES, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -15,13 +16,19 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    POLICY: { SINGLE_CONTRACT_POLICY_SAVE_AND_BACK, NAME_ON_POLICY, CHECK_YOUR_ANSWERS },
-    CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-    PROBLEM_WITH_SERVICE,
+  INSURANCE_ROOT,
+  POLICY: {
+    SINGLE_CONTRACT_POLICY_SAVE_AND_BACK,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+    SINGLE_CONTRACT_POLICY_CHANGE,
+    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   },
-} = ROUTES;
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   CONTRACT_POLICY: {
@@ -29,13 +36,26 @@ const {
     REQUESTED_START_DATE_DAY,
     REQUESTED_START_DATE_MONTH,
     REQUESTED_START_DATE_YEAR,
-    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR },
+    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
     POLICY_CURRENCY_CODE,
   },
-  EXPORT_VALUE: {
-    SINGLE: { TOTAL_CONTRACT_VALUE },
-  },
 } = POLICY_FIELD_IDS;
+
+const applicationWithTotalContractValue = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    [TOTAL_CONTRACT_VALUE]: '1234',
+  },
+};
+
+const applicationWithoutTotalContractValue = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    [TOTAL_CONTRACT_VALUE]: null,
+  },
+};
 
 describe('controllers/insurance/policy/single-contract-policy', () => {
   let req: Request;
@@ -84,10 +104,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
             ID: CONTRACT_COMPLETION_DATE,
             ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE],
           },
-          TOTAL_CONTRACT_VALUE: {
-            ID: TOTAL_CONTRACT_VALUE,
-            ...FIELDS.EXPORT_VALUE.SINGLE[TOTAL_CONTRACT_VALUE],
-          },
           POLICY_CURRENCY_CODE: {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
@@ -115,7 +131,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         CONTRACT_COMPLETION_DATE_DAY,
         CONTRACT_COMPLETION_DATE_MONTH,
         CONTRACT_COMPLETION_DATE_YEAR,
-        TOTAL_CONTRACT_VALUE,
         POLICY_CURRENCY_CODE,
       ];
 
@@ -246,7 +261,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       [`${CONTRACT_COMPLETION_DATE}-day`]: day,
       [`${CONTRACT_COMPLETION_DATE}-month`]: month,
       [`${CONTRACT_COMPLETION_DATE}-year`]: twoYearsFromNow,
-      [TOTAL_CONTRACT_VALUE]: '150000',
       [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
     };
 
@@ -265,35 +279,71 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${NAME_ON_POLICY}`, async () => {
+      it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${NAME_ON_POLICY}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_CHANGE;
+        describe(`when an application already has ${TOTAL_CONTRACT_VALUE}`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            res.locals.application = applicationWithTotalContractValue;
 
-          await post(req, res);
+            req.originalUrl = SINGLE_CONTRACT_POLICY_CHANGE;
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when an application does NOT already have ${TOTAL_CONTRACT_VALUE}`, () => {
+          it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`, async () => {
+            res.locals.application = applicationWithoutTotalContractValue;
+
+            req.originalUrl = SINGLE_CONTRACT_POLICY_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = ROUTES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
+        describe(`when an application already has ${TOTAL_CONTRACT_VALUE}`, () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            res.locals.application = applicationWithTotalContractValue;
 
-          await post(req, res);
+            req.originalUrl = SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when an application does NOT already have ${TOTAL_CONTRACT_VALUE}`, () => {
+          it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`, async () => {
+            res.locals.application = applicationWithoutTotalContractValue;
+
+            req.originalUrl = SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });

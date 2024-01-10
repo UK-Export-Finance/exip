@@ -9,7 +9,7 @@ import { FORM_TITLES } from '../../../form-titles';
 const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
 
 const {
-  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY,
+  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY, NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION,
 } = POLICY;
 
 const { EMAIL } = ACCOUNT;
@@ -66,6 +66,7 @@ export const POLICY_FIELDS = {
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
       LEGEND: "Select currency you'd like your policy to be issued in",
+      HINT: 'This is the currency your policy will be issued in',
       SUMMARY: {
         TITLE: 'Policy currency',
         FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -85,6 +86,13 @@ export const POLICY_FIELDS = {
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
+      [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+        HINT: 'Enter a whole number - do not enter decimals.',
+        SUMMARY: {
+          TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
+        },
+      },
     },
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
@@ -99,16 +107,6 @@ export const POLICY_FIELDS = {
     },
   },
   EXPORT_VALUE: {
-    SINGLE: {
-      [EXPORT_VALUE.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        LABEL: "What's the total value of the contract you want to insure?",
-        HINT: 'Enter a whole number - do not enter decimals.',
-        SUMMARY: {
-          TITLE: 'Contract value',
-          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
-        },
-      },
-    },
     MULTIPLE: {
       [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: 'Estimate total sales to your buyer during this time',
@@ -166,6 +164,19 @@ export const POLICY_FIELDS = {
         TITLE: 'Contact email',
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
+    },
+  },
+  [NEED_PRE_CREDIT_PERIOD]: {
+    HINT: 'This is known as the pre-credit period',
+    SUMMARY: {
+      TITLE: 'Pre-credit period',
+    },
+  },
+  [PRE_CREDIT_PERIOD_DESCRIPTION]: {
+    LABEL: 'What period of pre-credit cover do you require?',
+    MAXIMUM: 1000,
+    SUMMARY: {
+      TITLE: 'Period of pre-credit cover',
     },
   },
   BROKER: {

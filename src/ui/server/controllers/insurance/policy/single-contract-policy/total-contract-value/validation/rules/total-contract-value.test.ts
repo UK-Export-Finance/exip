@@ -1,22 +1,21 @@
 import totalContractValueRules from './total-contract-value';
-import { FIELD_IDS, APPLICATION } from '../../../../../../constants';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import { APPLICATION } from '../../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import generateValidationErrors from '../../../../../../../helpers/validation';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      EXPORT_VALUE: {
-        SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { TOTAL_CONTRACT_VALUE: FIELD_ID },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      EXPORT_VALUE: {
+      CONTRACT_POLICY: {
         SINGLE: { [FIELD_ID]: ERROR_MESSAGE },
       },
     },
@@ -25,7 +24,7 @@ const {
 
 const { MAXIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
 
-describe('controllers/insurance/policy/single-contract-policy/validation/rules/total-contract-value', () => {
+describe('controllers/insurance/policy/single-contract-policy//total-contract-value/validation/rules/total-contract-value', () => {
   const mockErrors = {
     summary: [],
     errorList: {},

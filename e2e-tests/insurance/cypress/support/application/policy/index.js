@@ -1,5 +1,9 @@
 Cypress.Commands.add('completeAndSubmitPolicyTypeForm', require('../../../../../commands/insurance/complete-and-submit-policy-type-form'));
+
 Cypress.Commands.add('completeAndSubmitSingleContractPolicyForm', require('../../../../../commands/insurance/complete-and-submit-single-contract-policy-form'));
+Cypress.Commands.add('completeAndSubmitTotalContractValueForm', require('../../../../../commands/insurance/complete-and-submit-total-contract-value-form'));
+Cypress.Commands.add('completeTotalContractValueForm', require('../../../../../commands/insurance/complete-total-contract-value-form'));
+
 Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('../../../../../commands/insurance/complete-and-submit-multiple-contract-policy-form'));
 
 Cypress.Commands.add('completeAndSubmitExportValueForm', require('../../../../../commands/insurance/complete-and-submit-export-value-form'));

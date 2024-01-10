@@ -5,6 +5,11 @@ import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../../contr
 import { post as typeOfPolicySaveAndBackPost } from '../../../controllers/insurance/policy/type-of-policy/save-and-back';
 import { get as singleContractPolicyGet, post as singleContractPolicyPost } from '../../../controllers/insurance/policy/single-contract-policy';
 import { post as singleContractPolicySaveAndBackPost } from '../../../controllers/insurance/policy/single-contract-policy/save-and-back';
+import {
+  get as singleContractPolicyContractValueGet,
+  post as singleContractPolicyContractValuePost,
+} from '../../../controllers/insurance/policy/single-contract-policy/total-contract-value';
+import { post as contractValueSaveAndBackPost } from '../../../controllers/insurance/policy/single-contract-policy/total-contract-value/save-and-back';
 import { get as multipleContractPolicyGet, post as multipleContractPolicyPost } from '../../../controllers/insurance/policy/multiple-contract-policy';
 import {
   get as multipleContractPolicyExportValueGet,
@@ -15,6 +20,7 @@ import { post as multipleContractPolicySaveAndBackPost } from '../../../controll
 import { get as nameOnPolicyGet, post as nameOnPolicyPost } from '../../../controllers/insurance/policy/name-on-policy';
 import { post as nameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/name-on-policy/save-and-back';
 import { get as differentNameOnPolicyGet, post as differentNameOnPolicyPost } from '../../../controllers/insurance/policy/different-name-on-policy';
+import { get as preCreditPeriodGet } from '../../../controllers/insurance/policy/pre-credit-period';
 import { post as differentNameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/different-name-on-policy/save-and-back';
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/policy/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/policy/broker/save-and-back';
@@ -40,6 +46,32 @@ insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CON
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_CHANGE}`, singleContractPolicyPost);
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, singleContractPolicyGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, singleContractPolicyPost);
+
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`, singleContractPolicyContractValueGet);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`, singleContractPolicyContractValuePost);
+
+insurancePolicyRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
+  contractValueSaveAndBackPost,
+);
+
+insurancePolicyRouter.get(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`,
+  singleContractPolicyContractValueGet,
+);
+insurancePolicyRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`,
+  singleContractPolicyContractValuePost,
+);
+
+insurancePolicyRouter.get(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`,
+  singleContractPolicyContractValueGet,
+);
+insurancePolicyRouter.post(
+  `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`,
+  singleContractPolicyContractValuePost,
+);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY}`, multipleContractPolicyGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY}`, multipleContractPolicyPost);
@@ -73,6 +105,8 @@ insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_NAME_ON_POLICY_CHANGE}`, differentNameOnPolicyPost);
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`, differentNameOnPolicyGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`, differentNameOnPolicyPost);
+
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD}`, preCreditPeriodGet);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, getBroker);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, postBroker);

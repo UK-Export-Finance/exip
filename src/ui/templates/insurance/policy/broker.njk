@@ -1,0 +1,160 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/address-fields.njk' as addressInput %}
+{% import '../../components/submit-button.njk' as submitButton %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
+{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% set brokerHTML %}
+  {% call govukFieldset({
+    legend: {
+      html: fieldsetLegend.render({ id: FIELDS.LEGEND.ID, legendText: FIELDS.LEGEND.LEGEND })
+    }
+  }) %}
+
+    {{ govukInput({
+      id: FIELDS.NAME.ID,
+      name: FIELDS.NAME.ID,
+      value: submittedValues[FIELDS.NAME.ID] or application.broker[FIELDS.NAME.ID],
+      label: {
+        text: FIELDS.NAME.LABEL,
+        classes: "govuk-body govuk-!-font-weight-bold",
+        attributes: {
+          id: FIELDS.NAME.ID + '-label',
+          "data-cy": FIELDS.NAME.ID + "-label"
+        }
+      },
+      classes: "govuk-input--width-20",
+      attributes: {
+        "data-cy": FIELDS.NAME.ID + "-input"
+      },
+      errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+        text: validationErrors.errorList[FIELDS.NAME.ID].text,
+        attributes: {
+          "data-cy": FIELDS.NAME.ID + "-error-message"
+        }
+      }
+    }) }}
+
+    {{ addressInput.render({
+      addressLineOne: FIELDS.ADDRESS_LINE_1,
+      addressLineTwo: FIELDS.ADDRESS_LINE_2,
+      town: FIELDS.TOWN,
+      country: FIELDS.COUNTY,
+      postcode: FIELDS.POSTCODE,
+      validationErrors: validationErrors,
+      submittedValues: submittedValues,
+      application: application.broker
+    }) }}
+
+    {{ govukInput({
+      id: FIELDS.EMAIL.ID,
+      name: FIELDS.EMAIL.ID,
+      value: submittedValues[FIELDS.EMAIL.ID] or application.broker[FIELDS.EMAIL.ID],
+      label: {
+        text: FIELDS.EMAIL.LABEL,
+        classes: "govuk-body govuk-!-font-weight-bold",
+        attributes: {
+          id: FIELDS.EMAIL.ID + '-label',
+          "data-cy": FIELDS.EMAIL.ID + "-label"
+        }
+      },
+      classes: "govuk-input--width-20",
+      attributes: {
+        "data-cy": FIELDS.EMAIL.ID + "-input"
+      },
+      errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+        text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
+        attributes: {
+          "data-cy": FIELDS.EMAIL.ID + "-error-message"
+        }
+      }
+    }) }}
+  {% endcall %}
+{% endset %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <span class="govuk-caption-xl" data-cy="heading-caption">
+          {{ CONTENT_STRINGS.HEADING_CAPTION }}
+        </span>
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ yesNoRadioButtons.render({
+          fieldId: FIELDS.USING_BROKER.ID,
+          legendText: CONTENT_STRINGS.PAGE_TITLE,
+          legendClass: 'govuk-fieldset__legend--xl',
+          submittedAnswer: submittedValues[FIELDS.USING_BROKER.ID] or application.broker[FIELDS.USING_BROKER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.USING_BROKER.ID],
+          conditionalYesHtml: brokerHTML,
+          horizontalRadios: true
+        }) }}
+      </div>
+
+      {% set detailsHtml %}
+        {% include "partials/broker-description.njk" %}
+      {% endset %}
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        {{ govukDetails({
+          summaryText: CONTENT_STRINGS.SUMMARY,
+          html: detailsHtml,
+          attributes: {
+            'data-cy': FIELDS.DETAILS.ID
+          }
+        }) }}
+      </div>
+
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
+          }) }}
+
+          {{ govukButton({
+            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+            classes: "govuk-button--secondary",
+            attributes: {
+              'data-cy': 'save-and-back-button',
+              'formaction': SAVE_AND_BACK_URL
+            }
+          }) }}
+        </div>
+      </div>
+    </form>
+  </div>
+
+{% endblock %}

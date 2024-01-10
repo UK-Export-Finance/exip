@@ -24,15 +24,13 @@ const POLICY = {
       CONTRACT_COMPLETION_DATE_DAY: `${CONTRACT_COMPLETION_DATE}-day`,
       CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
       CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
+      TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
     },
     MULTIPLE: {
       TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',
     },
   },
   EXPORT_VALUE: {
-    SINGLE: {
-      TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
-    },
     MULTIPLE: {
       TOTAL_SALES_TO_BUYER: 'totalSalesToBuyer',
       MAXIMUM_BUYER_WILL_OWE: 'maximumBuyerWillOwe',
@@ -50,6 +48,8 @@ const POLICY = {
     POLICY_CONTACT_DETAIL: 'policyContactDetail',
     POSITION: 'position',
   },
+  NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
+  PRE_CREDIT_PERIOD_DESCRIPTION: 'preCreditPeriodDescription',
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

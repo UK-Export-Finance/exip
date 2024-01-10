@@ -5,6 +5,11 @@ import { get as typeOfPolicyGet, post as typeOfPolicyPost } from '../../../contr
 import { post as typeOfPolicySaveAndBackPost } from '../../../controllers/insurance/policy/type-of-policy/save-and-back';
 import { get as singleContractPolicyGet, post as singleContractPolicyPost } from '../../../controllers/insurance/policy/single-contract-policy';
 import { post as singleContractPolicySaveAndBackPost } from '../../../controllers/insurance/policy/single-contract-policy/save-and-back';
+import {
+  get as singleContractPolicyContractValueGet,
+  post as singleContractPolicyContractValuePost,
+} from '../../../controllers/insurance/policy/single-contract-policy/total-contract-value';
+import { post as contractValueSaveAndBackPost } from '../../../controllers/insurance/policy/single-contract-policy/total-contract-value/save-and-back';
 import { get as multipleContractPolicyGet, post as multipleContractPolicyPost } from '../../../controllers/insurance/policy/multiple-contract-policy';
 import { post as multipleContractPolicySaveAndBackPost } from '../../../controllers/insurance/policy/multiple-contract-policy/save-and-back';
 import {
@@ -15,6 +20,7 @@ import { post as multipleContractPolicyExportValueSaveAndBackPost } from '../../
 import { get as nameOnPolicyGet, post as nameOnPolicyPost } from '../../../controllers/insurance/policy/name-on-policy';
 import { post as nameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/name-on-policy/save-and-back';
 import { get as differentNameOnPolicyGet, post as differentNameOnPolicyPost } from '../../../controllers/insurance/policy/different-name-on-policy';
+import { get as preCreditPeriodGet } from '../../../controllers/insurance/policy/pre-credit-period';
 import { post as differentNameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/different-name-on-policy/save-and-back';
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/policy/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/policy/broker/save-and-back';
@@ -30,8 +36,8 @@ describe('routes/insurance/policy', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(21);
-    expect(post).toHaveBeenCalledTimes(27);
+    expect(get).toHaveBeenCalledTimes(25);
+    expect(post).toHaveBeenCalledTimes(31);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -49,6 +55,38 @@ describe('routes/insurance/policy', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_CHANGE}`, singleContractPolicyPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, singleContractPolicyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, singleContractPolicyPost);
+
+    expect(get).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
+      singleContractPolicyContractValueGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
+      singleContractPolicyContractValuePost,
+    );
+
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
+      contractValueSaveAndBackPost,
+    );
+
+    expect(get).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`,
+      singleContractPolicyContractValueGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`,
+      singleContractPolicyContractValuePost,
+    );
+
+    expect(get).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`,
+      singleContractPolicyContractValueGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`,
+      singleContractPolicyContractValuePost,
+    );
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY}`, multipleContractPolicyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY}`, multipleContractPolicyPost);
@@ -89,6 +127,8 @@ describe('routes/insurance/policy', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_NAME_ON_POLICY_CHANGE}`, differentNameOnPolicyPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`, differentNameOnPolicyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`, differentNameOnPolicyPost);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD}`, preCreditPeriodGet);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, getBroker);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, postBroker);

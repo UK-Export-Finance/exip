@@ -14,15 +14,13 @@ const POLICY = {
     ...SHARED_CONTRACT_POLICY,
     SINGLE: {
       CONTRACT_COMPLETION_DATE: 'contractCompletionDate',
+      TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
     },
     MULTIPLE: {
       TOTAL_MONTHS_OF_COVER: 'totalMonthsOfCover',
     },
   },
   EXPORT_VALUE: {
-    SINGLE: {
-      TOTAL_CONTRACT_VALUE: 'totalValueOfContract',
-    },
     MULTIPLE: {
       TOTAL_SALES_TO_BUYER: 'totalSalesToBuyer',
       MAXIMUM_BUYER_WILL_OWE: 'maximumBuyerWillOwe',

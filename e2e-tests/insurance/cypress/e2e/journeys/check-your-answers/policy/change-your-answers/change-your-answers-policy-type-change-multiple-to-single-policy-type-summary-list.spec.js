@@ -9,10 +9,10 @@ import formatCurrency from '../../../../../../../helpers/format-currency';
 import application from '../../../../../../../fixtures/application';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   POLICY: {
     TYPE_OF_POLICY_CHECK_AND_CHANGE,
-    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS,
 } = INSURANCE_ROUTES;
@@ -21,10 +21,7 @@ const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     CONTRACT_POLICY: {
-      SINGLE: { CONTRACT_COMPLETION_DATE },
-    },
-    EXPORT_VALUE: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -37,6 +34,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Change your answers - Policy - Change multiple to single policy type - Summary List', () => {
   let checkYourAnswersUrl;
+  let checkAndChangeTotalContractValueUrl;
   let referenceNumber;
 
   before(() => {
@@ -46,7 +44,9 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
       task.link().click();
 
-      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
+      checkAndChangeTotalContractValueUrl = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
+
       cy.assertUrl(checkYourAnswersUrl);
     });
   });
@@ -69,14 +69,14 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
     });
 
     it(`should redirect to ${TYPE_OF_POLICY_CHECK_AND_CHANGE} with heading anchor`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHECK_AND_CHANGE}#heading`;
+      const expected = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHECK_AND_CHANGE}#heading`;
 
       cy.assertUrl(expected);
     });
   });
 
   describe('after submitting a new policy type (single) and completing (now required) fields for a single policy', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
+    it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE} because the policy type has changed`, () => {
       cy.navigateToUrl(checkYourAnswersUrl);
 
       summaryList.field(fieldId).changeLink().click();
@@ -84,11 +84,21 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
       typeOfPolicyPage[fieldId].single.input().click();
       submitButton().click();
 
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitSingleContractPolicyForm();
 
-      const expectedUrl = `${checkYourAnswersUrl}#heading`;
+      cy.assertUrl(`${checkAndChangeTotalContractValueUrl}#heading`);
+    });
 
-      cy.assertUrl(expectedUrl);
+    describe(`after submitting a new ${TOTAL_CONTRACT_VALUE} answer`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
+        cy.navigateToUrl(`${checkAndChangeTotalContractValueUrl}#heading`);
+
+        cy.completeAndSubmitTotalContractValueForm({ });
+
+        const expectedUrl = `${checkYourAnswersUrl}#heading`;
+
+        cy.assertUrl(expectedUrl);
+      });
     });
 
     describe('should render new answers and change links for new single policy fields', () => {
@@ -119,7 +129,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
         // check the change link
         summaryList.field(TOTAL_CONTRACT_VALUE).changeLink().click();
         cy.assertChangeAnswersPageUrl({
-          referenceNumber, route: SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: TOTAL_CONTRACT_VALUE, fragmentSuffix: 'label',
+          referenceNumber, route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE, fieldId: TOTAL_CONTRACT_VALUE, fragmentSuffix: 'label',
         });
       });
     });

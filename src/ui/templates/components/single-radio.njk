@@ -17,6 +17,7 @@
   {% set hintHtmlPartial = params.hasHintHtml %}
   {% set hintText = params.hintText %}
   {% set horizontalRadios = params.horizontalRadios %}
+  {% set noRadioAsFirstOption = params.noRadioAsFirstOption %}
   {% set legendClass = params.legendClass %}
   {% set legendText = params.legendText %}
   {% set saveAndBackButtonText = params.saveAndBackButtonText %}
@@ -54,6 +55,7 @@
         submittedAnswer: submittedAnswer,
         errorMessage: errorMessage,
         horizontalRadios: horizontalRadios,
+        noRadioAsFirstOption: noRadioAsFirstOption,
         conditionalYesHtml: conditionalYesHtml,
         conditionalNoHtml: conditionalNoHtml
       }) }}

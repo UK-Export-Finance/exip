@@ -11,7 +11,8 @@ import {
   TASKS,
 } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../fixtures/application';
 import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
@@ -21,16 +22,14 @@ const { taskList } = partials.insurancePartials;
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY;
 
 const {
-  INSURANCE: {
-    ROOT: INSURANCE_ROOT,
-    ALL_SECTIONS,
-    POLICY: {
-      TYPE_OF_POLICY,
-      SINGLE_CONTRACT_POLICY,
-      NAME_ON_POLICY,
-    },
+  ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY: {
+    TYPE_OF_POLICY,
+    SINGLE_CONTRACT_POLICY,
+    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
   },
-} = ROUTES;
+} = INSURANCE_ROUTES;
 
 const {
   POLICY: {
@@ -40,9 +39,6 @@ const {
       SINGLE: {
         CONTRACT_COMPLETION_DATE,
       },
-    },
-    EXPORT_VALUE: {
-      SINGLE: { TOTAL_CONTRACT_VALUE },
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -119,22 +115,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.yearInput().should('exist');
     });
 
-    it('renders `total contract value` label, hint, prefix and input', () => {
-      const fieldId = TOTAL_CONTRACT_VALUE;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELDS.EXPORT_VALUE.SINGLE[fieldId].LABEL);
-
-      cy.checkText(
-        field.hint(),
-        FIELDS.EXPORT_VALUE.SINGLE[fieldId].HINT,
-      );
-
-      cy.checkText(field.prefix(), '£');
-
-      field.input().should('exist');
-    });
-
     it('renders `currency` label and radio inputs', () => {
       checkPolicyCurrencyCodeInput();
     });
@@ -148,11 +128,11 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.completeAndSubmitSingleContractPolicyForm();
     });
 
-    it(`should redirect to ${NAME_ON_POLICY}`, () => {
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
+    it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`, () => {
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -167,7 +147,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitSingleContractPolicyForm({});
+        cy.completeAndSubmitSingleContractPolicyForm();
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
@@ -178,8 +158,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).dayInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].day);
         fieldSelector(CONTRACT_COMPLETION_DATE).monthInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].month);
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
-
-        fieldSelector(TOTAL_CONTRACT_VALUE).input().should('have.value', application.POLICY[TOTAL_CONTRACT_VALUE]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
         radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');

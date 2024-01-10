@@ -5,6 +5,7 @@ import header from './header';
 import insurancePartials from './insurance';
 import pagination from './pagination';
 import phaseBanner from './phaseBanner';
+import preCreditPeriodDescription from './preCreditPeriodDescription';
 import ukGoodsOrServicesCalculateDescription from './ukGoodsOrServicesCalculateDescription';
 import ukGoodsOrServicesDescription from './ukGoodsAndServicesDescription';
 
@@ -21,6 +22,7 @@ const partials = {
   insurancePartials,
   pagination,
   phaseBanner,
+  preCreditPeriodDescription,
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   ukGoodsOrServicesDescription,
   html: (id) => cy.get(`[data-cy="${id}-html"]`),
