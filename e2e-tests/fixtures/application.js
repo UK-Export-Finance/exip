@@ -134,8 +134,6 @@ const application = {
     [TOTAL_MONTHS_OF_COVER]: '2',
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',
-  },
-  POLICY_CREDIT_PERIOD: {
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
   },

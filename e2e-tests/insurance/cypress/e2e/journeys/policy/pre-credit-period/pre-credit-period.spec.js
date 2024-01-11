@@ -194,7 +194,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
 
         cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
       });
-      
+
       it(`should redirect to ${BROKER_ROOT}`, () => {
         cy.assertUrl(brokerUrl);
       });
@@ -205,7 +205,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
 
           yesRadioInput().should('be.checked');
 
-          const expectedValue = mockApplication.POLICY_CREDIT_PERIOD[CREDIT_PERIOD_WITH_BUYER];
+          const expectedValue = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER];
 
           fieldSelector(CREDIT_PERIOD_WITH_BUYER).textarea().should('have.value', expectedValue);
         });

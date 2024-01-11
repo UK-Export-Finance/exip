@@ -14,7 +14,7 @@ const completeAndSubmitPreCreditPeriodForm = ({ needPreCreditPeriod = false }) =
 
     const descriptionField = field(CREDIT_PERIOD_WITH_BUYER);
 
-    const value = mockApplication.POLICY_CREDIT_PERIOD[CREDIT_PERIOD_WITH_BUYER];
+    const value = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER];
 
     cy.keyboardInput(descriptionField.textarea(), value);
   } else {
