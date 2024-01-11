@@ -305,6 +305,8 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
           const payload = constructPayload(req.body, FIELD_IDS);
 
+          const submittedCountryName = payload[FINAL_DESTINATION];
+
           const expectedVariables = {
             ...insuranceCorePageVariables({
               PAGE_CONTENT_STRINGS,
@@ -314,7 +316,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
             userName: getUserNameFromSession(req.session.user),
             application: mockApplicationWithoutCountryCode,
             submittedValues: payload,
-            countries: mapCountries(mockCountries, countryIsoCode),
+            countries: mapCountries(mockCountries, submittedCountryName.isoCode),
             validationErrors: generateValidationErrors(payload),
           };
 

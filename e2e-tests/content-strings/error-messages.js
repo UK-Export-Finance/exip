@@ -19,7 +19,7 @@ export const ERROR_MESSAGES = {
     [FIELD_IDS.ELIGIBILITY.VALID_BUYER_BODY]: 'Select if your buyer is a government or public sector body',
     [FIELD_IDS.ELIGIBILITY.VALID_EXPORTER_LOCATION]: "Select whether you're exporting from a business base in the UK, Channel Islands, Isle of Man or not",
     [FIELD_IDS.ELIGIBILITY.HAS_MINIMUM_UK_GOODS_OR_SERVICES]: {
-      IS_EMPTY: 'Select if 20% of your export contract value is made up from UK goods/services or not',
+      IS_EMPTY: 'Select whether at least 20% of your export contract value is made up from UK goods or services or not',
     },
     [FIELD_IDS.ELIGIBILITY.CURRENCY]: {
       IS_EMPTY: 'Select currency',
@@ -135,7 +135,7 @@ export const ERROR_MESSAGES = {
       ABOUT_GOODS_OR_SERVICES: {
         [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
           IS_EMPTY: 'Enter the goods or services you will supply to the buyer',
-          ABOVE_MAXIMUM: 'The goods or services you will supply to the buyer cannot be more than 1000 characters',
+          ABOVE_MAXIMUM: 'The description of the goods or services you want to insure cannot be more than 1000 characters',
         },
         [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN]: {
           IS_EMPTY: 'Select if you know the final destination of the goods or services',
@@ -195,14 +195,14 @@ export const ERROR_MESSAGES = {
             INCORRECT_FORMAT: 'You must enter how many months you want to be insured for as a whole number. Do not use symbols or letters',
             IS_EMPTY: 'Enter how many months you want to be insured for',
             BELOW_MINIMUM: 'Your length of insurance must be 1 month or more',
-            ABOVE_MAXIMUM: `The maximum duration of coverage cannot be more than ${TOTAL_MONTHS_OF_COVER} months.`,
+            ABOVE_MAXIMUM: `The maximum length of your insurance cannot be more than ${TOTAL_MONTHS_OF_COVER} months.`,
           },
         },
       },
       EXPORT_VALUE: {
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
-            INCORRECT_FORMAT: 'Enter your estimated sales as a whole number - do not enter decimals',
+            INCORRECT_FORMAT: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
           },
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
@@ -233,6 +233,13 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: 'Enter the position at the company of the person to be named on the policy',
         },
+      },
+      [FIELD_IDS.INSURANCE.POLICY.NEED_PRE_CREDIT_PERIOD]: {
+        IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
+      },
+      [FIELD_IDS.INSURANCE.POLICY.PRE_CREDIT_PERIOD_DESCRIPTION]: {
+        IS_EMPTY: 'Enter the period of pre-credit cover your require',
+        ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
       },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',

@@ -5,6 +5,9 @@ import { PAGES, PRE_CREDIT_PERIOD_DESCRIPTION as PRE_CREDIT_PERIOD_DESCRIPTION_S
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -22,6 +25,12 @@ const {
   },
 } = TEMPLATES;
 
+export const PAGE_CONTENT_STRINGS = {
+  ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
+  HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
+  PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+};
+
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -29,6 +38,8 @@ const {
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID: NEED_PRE_CREDIT_PERIOD,
+  FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
   FIELDS: {
     NEED_PRE_CREDIT_PERIOD: {
       ID: NEED_PRE_CREDIT_PERIOD,
@@ -55,11 +66,7 @@ export const HTML_FLAGS = {
 
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
-export const PAGE_CONTENT_STRINGS = {
-  ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
-  HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
-  PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
-};
+export const FIELD_IDS = [NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION];
 
 /**
  * get
@@ -85,8 +92,6 @@ export const get = (req: Request, res: Response) => {
       HTML_FLAGS,
     }),
     ...pageVariables(refNumber),
-    FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-    FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
     userName: getUserNameFromSession(req.session.user),
     application,
   });
@@ -107,6 +112,27 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  const payload = constructPayload(req.body, FIELD_IDS);
+  const sanitisedData = sanitiseData(payload);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
+      }),
+      ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application,
+      submittedValues: sanitisedData,
+      validationErrors,
+    });
+  }
 
   res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };

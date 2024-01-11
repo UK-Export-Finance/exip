@@ -44,7 +44,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm tha
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
-      cy.completeAndSubmitPreCreditPeriodForm();
+      cy.completeAndSubmitPreCreditPeriodForm({});
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 

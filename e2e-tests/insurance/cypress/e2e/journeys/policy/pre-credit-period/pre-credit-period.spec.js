@@ -23,7 +23,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 
 const {
   ROOT,
-  POLICY: { PRE_CREDIT_PERIOD, BROKER_ROOT },
+  POLICY: { BROKER_ROOT, NAME_ON_POLICY, PRE_CREDIT_PERIOD },
 } = INSURANCE_ROUTES;
 
 const {
@@ -42,9 +42,16 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
+      cy.startInsurancePolicySection({});
+
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
+      cy.completeAndSubmitNameOnPolicyForm({});
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
-      cy.navigateToUrl(url);
       cy.assertUrl(url);
     });
   });
@@ -61,7 +68,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`,
-      backLink: `${url}#`,
+      backLink: `${ROOT}/${referenceNumber}${NAME_ON_POLICY}`,
     });
   });
 
@@ -149,7 +156,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitPreCreditPeriodForm();
+      cy.completeAndSubmitPreCreditPeriodForm({});
 
       const expected = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 

@@ -31,7 +31,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
       cy.completeAndSubmitMultipleContractPolicyForm();
       cy.completeAndSubmitExportValueForm({ policyType });
       cy.completeAndSubmitNameOnPolicyForm({});
-      cy.completeAndSubmitPreCreditPeriodForm();
+      cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitBrokerForm({});
 
       // go back to the all sections page
