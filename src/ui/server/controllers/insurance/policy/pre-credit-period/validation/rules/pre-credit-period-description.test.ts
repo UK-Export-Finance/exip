@@ -1,0 +1,77 @@
+import preCreditPeriodDescriptionRule, { MAXIMUM } from './pre-credit-period-description';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import generateValidationErrors from '../../../../../../helpers/validation';
+import inputValidation from '../../../../../../shared-validation/max-length';
+
+const {
+  POLICY: { NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+  },
+} = ERROR_MESSAGES;
+
+describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-credit-period-description', () => {
+  const mockErrors = {
+    summary: [],
+    errorList: {},
+  };
+
+  describe(`when ${NEED_PRE_CREDIT_PERIOD} is true and ${FIELD_ID} is not provided`, () => {
+    it('should return validation errors', () => {
+      const mockFormBody = {
+        [NEED_PRE_CREDIT_PERIOD]: 'true',
+        [FIELD_ID]: '',
+      };
+
+      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${NEED_PRE_CREDIT_PERIOD} is true and ${FIELD_ID} is over ${MAXIMUM} characters`, () => {
+    it('should return the result of inputValidation', () => {
+      const mockFormBody = {
+        [NEED_PRE_CREDIT_PERIOD]: 'true',
+        [FIELD_ID]: 'a'.repeat(MAXIMUM + 1),
+      };
+
+      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+
+      const expected = inputValidation(mockFormBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${NEED_PRE_CREDIT_PERIOD} is true and ${FIELD_ID} is NOT over ${MAXIMUM} characters`, () => {
+    it('should return the provided errors', () => {
+      const mockFormBody = {
+        [NEED_PRE_CREDIT_PERIOD]: 'true',
+        [FIELD_ID]: 'mock description',
+      };
+
+      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+
+  describe(`when ${NEED_PRE_CREDIT_PERIOD} is false`, () => {
+    it('should return the provided errors', () => {
+      const mockFormBody = {
+        [NEED_PRE_CREDIT_PERIOD]: 'false',
+      };
+
+      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+
+      expect(result).toEqual(mockErrors);
+    });
+  });
+});

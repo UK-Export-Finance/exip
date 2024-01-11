@@ -42,6 +42,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // TODO - go to page to test
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
       cy.navigateToUrl(url);

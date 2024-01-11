@@ -5,6 +5,8 @@ import { PAGES, PRE_CREDIT_PERIOD_DESCRIPTION as PRE_CREDIT_PERIOD_DESCRIPTION_S
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -61,6 +63,8 @@ export const PAGE_CONTENT_STRINGS = {
   PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
 };
 
+export const FIELD_IDS = [NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION];
+
 /**
  * get
  * Get the application and render the Pre-credit period page
@@ -107,6 +111,27 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
+      }),
+      ...pageVariables(refNumber),
+      FIELD_ID: NEED_PRE_CREDIT_PERIOD,
+      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+      userName: getUserNameFromSession(req.session.user),
+      application,
+      validationErrors,
+    });
+  }
 
   res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };
