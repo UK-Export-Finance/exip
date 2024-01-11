@@ -1,4 +1,3 @@
-import { submitButton } from '../../../pages/shared';
 import partials from '../../../partials';
 
 /**
@@ -9,7 +8,7 @@ import partials from '../../../partials';
  * @param {Number} inlineErrorIndex - the index of radios to find error
  */
 const submitAndAssertRadioErrors = (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
-  submitButton().click();
+  cy.clickSubmitButton();
 
   cy.checkErrorSummaryListHeading();
 

@@ -1,5 +1,5 @@
 import {
-  field, submitButton, status, summaryList, noRadioInput, yesRadioInput,
+  field, status, summaryList, noRadioInput, yesRadioInput,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -103,7 +103,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
 
         yesRadioInput().eq(1).click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, () => {
@@ -144,7 +144,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
 
         cy.keyboardInput(field(FULL_ADDRESS).textarea(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -182,7 +182,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
 
         noRadioInput().eq(1).click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

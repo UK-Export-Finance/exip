@@ -1,5 +1,5 @@
 import {
-  submitButton, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
+  yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
 } from '../../../../../../pages/shared';
 import {
   ERROR_MESSAGES,
@@ -77,7 +77,7 @@ context('Insurance - Eligibility - Have an account page - I want to confirm that
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {
@@ -97,7 +97,7 @@ context('Insurance - Eligibility - Have an account page - I want to confirm that
         cy.navigateToUrl(url);
 
         yesRadioInput().click();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expected = `${baseUrl}${SIGN_IN.ROOT}`;
         cy.assertUrl(expected);

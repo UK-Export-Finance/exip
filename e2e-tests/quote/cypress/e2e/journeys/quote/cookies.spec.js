@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
 import { cookiesPage, cookiesSavedPage } from '../../../../../pages';
 import partials from '../../../../../partials';
 import {
@@ -195,7 +194,7 @@ context('Cookies page - Quote', () => {
           partials.footer.supportLinks.cookies().click();
 
           accept.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${COOKIES_SAVED}`, () => {
@@ -234,7 +233,7 @@ context('Cookies page - Quote', () => {
           partials.footer.supportLinks.cookies().click();
 
           reject.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${COOKIES_SAVED}`, () => {
@@ -271,7 +270,7 @@ context('Cookies page - Quote', () => {
           cy.navigateToUrl(COOKIES);
 
           accept.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {
@@ -292,7 +291,7 @@ context('Cookies page - Quote', () => {
           cy.navigateToUrl(COOKIES);
 
           accept.input().click();
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should render a link button with the URL to ${SIGN_IN_ROOT}`, () => {

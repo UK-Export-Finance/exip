@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { field, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -101,16 +101,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // submit policy type form
-      submitButton().click();
-      // submit single contract policy form
-      submitButton().click();
-      // submit total contract value form
-      submitButton().click();
-      // submit name on policy form
-      submitButton().click();
-      // submit pre-credit period form
-      submitButton().click();
+      // go through 5 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -150,16 +142,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.startInsurancePolicySection({});
 
-        // submit policy type form
-        submitButton().click();
-        // submit single contract policy form
-        submitButton().click();
-        // submit total contract value form
-        submitButton().click();
-        // submit name on policy form
-        submitButton().click();
-        // submit pre-credit period form
-        submitButton().click();
+        // go through 5 policy forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -190,16 +174,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.startInsurancePolicySection({});
 
-        // submit policy type form
-        submitButton().click();
-        // submit single contract policy form
-        submitButton().click();
-        // submit total contract value form
-        submitButton().click();
-        // submit name on policy form
-        submitButton().click();
-        // submit pre-credit period form
-        submitButton().click();
+        // go through 5 policy forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });

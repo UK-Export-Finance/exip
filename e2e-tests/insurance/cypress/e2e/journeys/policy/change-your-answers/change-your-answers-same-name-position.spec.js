@@ -1,4 +1,4 @@
-import { summaryList, field, submitButton } from '../../../../../../pages/shared';
+import { summaryList, field } from '../../../../../../pages/shared';
 import account from '../../../../../../fixtures/account';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -65,7 +65,7 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
 
         cy.keyboardInput(field(POSITION).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render the new answers when completing the same name on policy form', () => {

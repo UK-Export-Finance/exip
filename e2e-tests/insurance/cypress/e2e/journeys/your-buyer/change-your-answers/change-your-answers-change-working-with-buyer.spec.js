@@ -1,5 +1,5 @@
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { submitButton, summaryList, noRadioInput } from '../../../../../../pages/shared';
+import { summaryList, noRadioInput } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 
 const {
@@ -130,7 +130,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         noRadioInput().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

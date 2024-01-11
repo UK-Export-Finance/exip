@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, yesRadioInput, submitButton, summaryList,
+  backLink, countryInput, yesRadioInput, summaryList,
 } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
@@ -84,7 +84,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
         const results = countryInput.field(BUYER_COUNTRY).results();
         results.first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`redirects to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -132,7 +132,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${checkYourAnswersUrl}#heading`;
 
@@ -169,7 +169,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when resubmitting`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${checkYourAnswersUrl}#heading`;
 

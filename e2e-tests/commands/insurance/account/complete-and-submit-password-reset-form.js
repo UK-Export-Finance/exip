@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import mockAccount from '../../../fixtures/account';
@@ -22,7 +22,7 @@ const linkSentUrl = `${Cypress.config('baseUrl')}${LINK_SENT}`;
 const completeAndSubmitPasswordResetForm = ({ assertRedirectUrl = true }) => {
   cy.keyboardInput(field(EMAIL).input(), mockAccount[EMAIL]);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 
   if (assertRedirectUrl) {
     cy.assertUrl(linkSentUrl);

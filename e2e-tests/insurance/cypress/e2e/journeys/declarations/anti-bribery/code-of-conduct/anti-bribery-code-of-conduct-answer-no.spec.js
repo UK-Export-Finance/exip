@@ -1,4 +1,4 @@
-import { submitButton, noRadioInput, backLink } from '../../../../../../../pages/shared';
+import { noRadioInput, backLink } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -44,7 +44,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     cy.navigateToUrl(url);
 
     noRadioInput().click();
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   after(() => {

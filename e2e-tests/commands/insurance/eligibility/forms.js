@@ -1,6 +1,6 @@
 import { FIELD_VALUES } from '../../../constants';
 import {
-  yesRadio, noRadio, submitButton, field,
+  yesRadio, noRadio, field,
 } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
@@ -33,15 +33,15 @@ const selectRadioAndSubmit = (answer) => {
     noRadio().input().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export const completeStartForm = () => {
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export const completeCheckIfEligibleForm = () => {
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export const completeExporterLocationForm = () => {
@@ -53,7 +53,7 @@ export const completeCompaniesHouseNumberForm = () => {
 };
 
 export const completeCompanyDetailsForm = () => {
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 /**
@@ -70,7 +70,7 @@ export const completeAndSubmitTotalValueInsuredForm = ({ underThreshold = true }
   }
 
   field(fieldId).input().click();
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 /**
@@ -87,7 +87,7 @@ export const completeCoverPeriodForm = ({ underThreshold = true }) => {
   }
 
   field(fieldId).input().click();
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export const completeUkGoodsAndServicesForm = () => {
@@ -99,11 +99,11 @@ export const completeEndBuyerForm = () => {
 };
 
 export const submitCheckYourAnswers = () => {
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export const completeEligibleToApplyOnlineForm = () => {
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export const completeAccountToApplyOnlineForm = () => {

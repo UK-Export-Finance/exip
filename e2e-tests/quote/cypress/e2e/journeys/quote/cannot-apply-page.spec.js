@@ -1,5 +1,5 @@
 import {
-  actions, cannotApplyPage, noRadio, submitButton,
+  actions, cannotApplyPage, noRadio,
 } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
@@ -26,7 +26,7 @@ context('Cannot apply exit page', () => {
     cy.assertUrl(expectedUrl);
 
     noRadio().input().click();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
 

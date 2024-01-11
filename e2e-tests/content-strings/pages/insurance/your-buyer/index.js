@@ -34,6 +34,12 @@ export const TRADED_WITH_BUYER = {
   PAGE_TITLE: 'Have you traded with this buyer before?',
 };
 
+export const TRADING_HISTORY = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about your trading history with the buyer',
+  INTRO: 'We will request a copy of your trading history once the application has been submitted.',
+};
+
 export const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',

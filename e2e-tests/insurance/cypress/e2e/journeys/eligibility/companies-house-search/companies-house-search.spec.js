@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import {
   ROUTES,
@@ -142,7 +142,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
           VALID_COMPANIES_HOUSE_NUMBER,
         );
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${COMPANY_DETAILS}`, () => {
@@ -174,7 +174,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
           COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO,
         );
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${COMPANY_DETAILS}`, () => {
@@ -205,7 +205,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
           COMPANIES_HOUSE_NUMBER_WITH_SPACES,
         );
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${COMPANY_DETAILS}`, () => {
@@ -238,7 +238,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
           lowerCaseCompaniesHouseNumber,
         );
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${COMPANY_DETAILS}`, () => {

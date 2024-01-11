@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, cannotApplyPage, submitButton,
+  backLink, countryInput, cannotApplyPage,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -38,7 +38,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it('redirects to `cannot apply` exit page', () => {

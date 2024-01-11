@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * submitAndAssertSummaryListRowValue
  * Submits and asserts a summary list row's value.
@@ -8,7 +6,7 @@ import { submitButton } from '../../../pages/shared';
  * @param {String} Expected value
  */
 const submitAndAssertSummaryListRowValue = (summaryList, fieldId, expected) => {
-  submitButton().click();
+  cy.clickSubmitButton();
   cy.assertSummaryListRowValue(summaryList, fieldId, expected);
 };
 

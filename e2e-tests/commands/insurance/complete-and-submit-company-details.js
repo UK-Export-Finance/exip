@@ -1,5 +1,3 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeAndSubmitCompanyDetails
  * Runs through and submits the "company details" form in the "your business" section
@@ -11,6 +9,6 @@ import { submitButton } from '../../pages/shared';
 const completeAndSubmitCompanyDetails = ({ differentTradingAddress = false, differentTradingName = false, completeDifferentTradingName = true }) => {
   cy.completeCompanyDetailsForm({ differentTradingAddress, differentTradingName, completeDifferentTradingName });
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 export default completeAndSubmitCompanyDetails;

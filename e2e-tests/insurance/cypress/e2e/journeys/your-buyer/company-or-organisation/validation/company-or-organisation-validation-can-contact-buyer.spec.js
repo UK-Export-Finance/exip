@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -71,7 +70,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   it('should NOT display validation errors when yes radio is selected', () => {
     field.yesRadioInput().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkErrorSummaryListHeading();
     partials.errorSummaryListItems().should('have.length', 6);
@@ -80,7 +79,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   it('should NOT display validation errors when no radio is selected', () => {
     field.noRadioInput().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkErrorSummaryListHeading();
     partials.errorSummaryListItems().should('have.length', 6);

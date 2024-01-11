@@ -1,4 +1,4 @@
-import { submitButton, needToStartAgainPage } from '../../../../../pages/shared';
+import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
@@ -47,7 +47,7 @@ context('Insurance Eligibility - Need to start again exit page', () => {
 
   describe('clicking the submit button', () => {
     it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.assertUrl(exporterLocationUrl);
     });

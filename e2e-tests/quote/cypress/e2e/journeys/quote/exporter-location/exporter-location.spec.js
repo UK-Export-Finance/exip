@@ -2,7 +2,6 @@ import {
   yesRadio,
   yesNoRadioHint,
   noRadio,
-  submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS } from '../../../../../../content-strings/fields';
@@ -82,7 +81,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
         yesRadio().input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;
 

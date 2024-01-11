@@ -1,6 +1,5 @@
 import {
   headingCaption,
-  submitButton,
   saveAndBackButton,
   yesRadio,
   yesRadioInput,
@@ -238,7 +237,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
         cy.clickBackLink();
 
         cy.keyboardInput(descriptionField.textarea(), submittedValue);
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should retain the submitted value when going back to the page', () => {

@@ -2,7 +2,6 @@ import {
   intro,
   listItem,
   yesRadio,
-  submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -39,7 +38,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
     cy.completeUkGoodsAndServicesForm();
 
     yesRadio().input().click();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });

@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton, noRadioInput } from '../../../../../../../pages/shared';
+import { noRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -38,7 +38,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     noRadioInput().first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   after(() => {

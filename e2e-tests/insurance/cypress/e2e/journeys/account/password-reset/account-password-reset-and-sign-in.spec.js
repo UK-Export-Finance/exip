@@ -1,7 +1,7 @@
 import { successPage } from '../../../../../../pages/insurance/account/password-reset';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { field, submitButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import api from '../../../../../../commands/api';
 import account from '../../../../../../fixtures/account';
 
@@ -88,7 +88,7 @@ context('Insurance - Account - Password reset and sign in - As an Exporter, I wa
 
         cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${DASHBOARD}`;
 

@@ -1,6 +1,5 @@
 import {
   field,
-  submitButton,
   status,
   summaryList,
 } from '../../../../../../../pages/shared';
@@ -148,7 +147,7 @@ context('Insurance - Check your answers - Broker - Policy - Summary list', () =>
         cy.keyboardInput(field(COUNTY).input(), country);
         cy.keyboardInput(field(POSTCODE).input(), postcode);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -239,7 +238,7 @@ context('Insurance - Check your answers - Broker - Policy - Summary list', () =>
 
         brokerPage[fieldId].noRadioInput().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${TYPE_OF_POLICY}`, () => {

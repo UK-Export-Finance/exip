@@ -1,5 +1,5 @@
 import { brokerPage } from '../../pages/insurance/policy';
-import { field, submitButton } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import application from '../../fixtures/application';
 
@@ -40,7 +40,7 @@ const completeAndSubmitBrokerForm = ({
     brokerPage[USING_BROKER].noRadioInput().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitBrokerForm;

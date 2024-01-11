@@ -10,6 +10,8 @@ import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controller
 import { get as getTradedWithBuyer, post as postTradedWithBuyer } from '../../../controllers/insurance/your-buyer/traded-with-buyer';
 import { post as postTradedWithBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/traded-with-buyer/save-and-back';
 
+import { get as getTradingHistory, post as postTradingHistory } from '../../../controllers/insurance/your-buyer/trading-history';
+
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
 
 describe('routes/insurance/your-buyer', () => {
@@ -22,8 +24,8 @@ describe('routes/insurance/your-buyer', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(11);
-    expect(post).toHaveBeenCalledTimes(13);
+    expect(get).toHaveBeenCalledTimes(12);
+    expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -50,6 +52,9 @@ describe('routes/insurance/your-buyer', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHANGE}`, postTradedWithBuyer);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, getTradedWithBuyer);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, postTradedWithBuyer);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, getTradingHistory);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, postTradingHistory);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

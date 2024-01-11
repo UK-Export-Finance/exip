@@ -1,6 +1,6 @@
 import { FIELD_IDS } from '../../../constants';
 import { companyOrOrganisationPage } from '../../../pages/insurance/your-buyer';
-import { field, submitButton } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import mockApplication from '../../../fixtures/application';
 
 const {
@@ -34,7 +34,7 @@ const completeAndSubmitCompanyOrOrganisationForm = ({
   cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
   companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitCompanyOrOrganisationForm;

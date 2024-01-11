@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * completeAndSubmitConnectionToTheBuyerForm
  * Completes and submits the "connection to the buyer" form.
@@ -9,7 +7,7 @@ import { submitButton } from '../../../pages/shared';
 const completeAndSubmitConnectionToTheBuyerForm = ({ hasConnectionToBuyer = false }) => {
   cy.completeConnectionToTheBuyerForm({ hasConnectionToBuyer });
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitConnectionToTheBuyerForm;

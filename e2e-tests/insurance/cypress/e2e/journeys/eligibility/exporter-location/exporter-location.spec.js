@@ -3,7 +3,6 @@ import {
   yesRadioInput,
   yesNoRadioHint,
   noRadio,
-  submitButton,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS } from '../../../../../../content-strings/fields';
@@ -79,14 +78,14 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
           ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
         );
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
     });
 
     describe('when submitting the answer as `yes`', () => {
       beforeEach(() => {
         yesRadio().input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${COMPANIES_HOUSE_NUMBER}`, () => {

@@ -1,4 +1,4 @@
-import { body, submitButton } from '../../../../../../pages/shared';
+import { body } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { companyDetailsPage } from '../../../../../../pages/insurance/eligibility';
@@ -89,7 +89,7 @@ context('Insurance - Eligibility - Companies details page - I want to check if I
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${BUYER_COUNTRY}`, () => {

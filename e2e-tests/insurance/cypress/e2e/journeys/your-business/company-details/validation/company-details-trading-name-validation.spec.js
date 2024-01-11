@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
-import { submitButton, yesRadioInput } from '../../../../../../../pages/shared';
+import { yesRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -38,7 +38,7 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
     yesRadioInput().eq(1).click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   after(() => {

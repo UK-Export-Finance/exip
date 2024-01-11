@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * completeAndSubmitConnectionToTheBuyerForm
  * Completes and submits the "traded with buyer" form.
@@ -9,7 +7,7 @@ import { submitButton } from '../../../pages/shared';
 const completeAndSubmitTradedWithBuyerForm = ({ exporterHasTradedWithBuyer = false }) => {
   cy.completeTradedWithBuyerForm({ exporterHasTradedWithBuyer });
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitTradedWithBuyerForm;

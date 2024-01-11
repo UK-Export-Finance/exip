@@ -1,7 +1,6 @@
 import {
   field,
   headingCaption,
-  submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
@@ -147,7 +146,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       it(`should redirect to ${SINGLE_CONTRACT_POLICY}`, () => {
         singlePolicyField.input().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 

@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../../../commands/quote/forms';
-import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
@@ -41,7 +41,7 @@ context('Tell us about the policy you need page - form validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('should render validation errors for all required fields', () => {
@@ -119,7 +119,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), 'a');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
@@ -138,7 +138,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '1.2');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
@@ -157,7 +157,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '0');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
@@ -176,7 +176,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(fieldSelector(POLICY_LENGTH).input(), '23');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(0),
@@ -196,7 +196,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), 'a');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
@@ -216,7 +216,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), '1234.56');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
@@ -236,7 +236,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.keyboardInput(fieldSelector(CONTRACT_VALUE).input(), '0');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),
@@ -259,7 +259,7 @@ context('Tell us about the policy you need page - form validation', () => {
       const field = fieldSelector(PERCENTAGE_OF_COVER);
 
       field.input().select('90');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       field.inputOptionSelected().contains('90');
     });
@@ -279,7 +279,7 @@ context('Tell us about the policy you need page - form validation', () => {
 
       cy.keyboardInput(contractValueField.input(), '10');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkValue(policyLengthField, '1');
 

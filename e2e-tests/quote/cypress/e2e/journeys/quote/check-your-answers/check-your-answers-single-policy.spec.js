@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { checkYourAnswersPage } from '../../../../../../pages/quote';
 import {
   FIELDS,
@@ -244,7 +244,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
     it(`should redirect to ${YOUR_QUOTE}`, () => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
 

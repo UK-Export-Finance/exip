@@ -1,5 +1,4 @@
 import partials from '../../partials';
-import { submitButton } from '../../pages/shared';
 
 /**
  * checkValidation
@@ -40,7 +39,7 @@ const checkValidation = ({
       notProvided: () => {
         cy.keyboardInput(field.monthInput(), '1');
         cy.keyboardInput(field.yearInput(), '2023');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_DAY;
 
@@ -57,7 +56,7 @@ const checkValidation = ({
         cy.keyboardInput(field.dayInput(), '1');
         field.monthInput().clear();
         field.yearInput().clear();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.MISSING_MONTH_AND_YEAR;
 
@@ -72,7 +71,7 @@ const checkValidation = ({
        */
       notANumber: () => {
         cy.keyboardInput(field.dayInput().clear(), 'Test');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INCORRECT_FORMAT;
 
@@ -91,7 +90,7 @@ const checkValidation = ({
         cy.keyboardInput(field.dayInput(), '1');
         field.monthInput().clear();
         cy.keyboardInput(field.yearInput(), '2023');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_MONTH;
 
@@ -108,7 +107,7 @@ const checkValidation = ({
         field.dayInput().clear();
         cy.keyboardInput(field.monthInput(), '1');
         field.yearInput().clear();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.MISSING_DAY_AND_YEAR;
 
@@ -124,7 +123,7 @@ const checkValidation = ({
       notANumber: () => {
         field.dayInput().clear();
         cy.keyboardInput(field.monthInput(), 'One');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INCORRECT_FORMAT;
 
@@ -143,7 +142,7 @@ const checkValidation = ({
         cy.keyboardInput(field.dayInput(), '1');
         cy.keyboardInput(field.monthInput(), '2');
         field.yearInput().clear();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_YEAR;
 
@@ -160,7 +159,7 @@ const checkValidation = ({
         field.dayInput().clear();
         field.monthInput().clear();
         cy.keyboardInput(field.yearInput(), '2023');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.MISSING_DAY_AND_MONTH;
 
@@ -177,7 +176,7 @@ const checkValidation = ({
         cy.keyboardInput(field.dayInput(), '1');
         cy.keyboardInput(field.monthInput(), '2');
         cy.keyboardInput(field.yearInput(), '202');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_YEAR_DIGITS;
 
@@ -194,7 +193,7 @@ const checkValidation = ({
         field.dayInput().clear();
         field.monthInput().clear();
         cy.keyboardInput(field.yearInput(), 'One');
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INCORRECT_FORMAT;
 
@@ -218,7 +217,7 @@ const checkValidation = ({
       cy.keyboardInput(field.dayInput(), yesterday.getDate());
       cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const errorMessage = errorMessages.BEFORE_EARLIEST;
 
@@ -240,7 +239,7 @@ const checkValidation = ({
       cy.keyboardInput(field.dayInput(), '50');
       cy.keyboardInput(field.monthInput(), '24');
       cy.keyboardInput(field.yearInput(), futureDate.getFullYear());
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const errorMessage = errorMessages.INVALID_DATE;
 
@@ -260,7 +259,7 @@ const checkValidation = ({
       cy.keyboardInput(field.monthInput(), now.getMonth() + 1);
       cy.keyboardInput(field.yearInput(), now.getFullYear());
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
         expect(text.trim()).not.equal(errorMessages.BEFORE_EARLIEST);
@@ -292,7 +291,7 @@ const checkValidation = ({
         cy.keyboardInput(fieldB.monthInput(), month);
         cy.keyboardInput(fieldB.yearInput(), year);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.CANNOT_BE_THE_SAME;
 
@@ -316,7 +315,7 @@ const checkValidation = ({
         cy.keyboardInput(fieldB.monthInput(), month);
         cy.keyboardInput(fieldB.yearInput(), year);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.CANNOT_BE_BEFORE;
 
@@ -340,7 +339,7 @@ const checkValidation = ({
         cy.keyboardInput(fieldB.monthInput(), month);
         cy.keyboardInput(fieldB.yearInput(), year);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const errorMessage = errorMessages.AFTER_LATEST;
 

@@ -1,6 +1,5 @@
 import {
   field,
-  submitButton,
   status,
   summaryList,
 } from '../../../../../../../pages/shared';
@@ -284,7 +283,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         cy.keyboardInput(field(LAST_NAME).input(), newAnswerLastName);
         cy.keyboardInput(field(POSITION).input(), newAnswerPosition);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -337,7 +336,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         companyOrOrganisationPage[fieldId].noRadioInput().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {

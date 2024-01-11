@@ -1,6 +1,5 @@
 import partials from '../../../../../../partials';
 import {
-  submitButton,
   saveAndBackButton,
   yesNoRadioHint,
   yesRadioInput,
@@ -99,7 +98,7 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {

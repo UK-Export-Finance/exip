@@ -1,4 +1,4 @@
-import { backLink, submitButton } from '../../../../../../../pages/shared';
+import { backLink } from '../../../../../../../pages/shared';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -82,7 +82,7 @@ context('Insurance - Account - Password reset - expired link page - send new lin
 
       cy.assertUrl(expectedUrl);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       expectedUrl = `${baseUrl}${LINK_SENT}`;
 

@@ -10,6 +10,8 @@ import { post as postTradedWithBuyerSaveAndBack } from '../../../controllers/ins
 import { get as getConnectionWithBuyer, post as postConnectionWithBuyer } from '../../../controllers/insurance/your-buyer/connection-with-buyer';
 import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controllers/insurance/your-buyer/connection-with-buyer/save-and-back';
 
+import { get as getTradingHistory, post as postTradingHistory } from '../../../controllers/insurance/your-buyer/trading-history';
+
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
 
 // @ts-ignore
@@ -40,6 +42,9 @@ yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_CHANGE}
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_CHANGE}`, postConnectionWithBuyer);
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_CHECK_AND_CHANGE}`, getConnectionWithBuyer);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_CHECK_AND_CHANGE}`, postConnectionWithBuyer);
+
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, getTradingHistory);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, postTradingHistory);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

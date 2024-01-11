@@ -1,9 +1,4 @@
-import {
-  noRadioInput,
-  yesRadioInput,
-  field,
-  submitButton,
-} from '../../pages/shared';
+import { noRadioInput, yesRadioInput, field } from '../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import mockApplication from '../../fixtures/application';
 
@@ -26,7 +21,7 @@ const completeAndSubmitPreCreditPeriodForm = ({ needPreCreditPeriod = false }) =
     noRadioInput().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitPreCreditPeriodForm;

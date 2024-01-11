@@ -1,5 +1,5 @@
 import {
-  yesRadio, yesRadioInput, noRadio, submitButton,
+  yesRadio, yesRadioInput, noRadio,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
@@ -86,7 +86,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
         cy.navigateToUrl(url);
 
         yesRadio().input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${ROUTES.INSURANCE.ELIGIBILITY.ENTER_COMPANIES_HOUSE_NUMBER}`, () => {

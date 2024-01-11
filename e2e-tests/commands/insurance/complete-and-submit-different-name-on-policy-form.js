@@ -1,5 +1,4 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { submitButton } from '../../pages/shared';
 import mockApplication from '../../fixtures/application';
 
 const {
@@ -25,7 +24,7 @@ const completeAndSubmitDifferentNameOnPolicyForm = ({
   email = POLICY_CONTACT[EMAIL],
 }) => {
   cy.completeDifferentNameOnPolicyForm({ firstName, lastName, email });
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitDifferentNameOnPolicyForm;

@@ -1,4 +1,4 @@
-import { singleInputField, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { singleInputField, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -93,20 +93,8 @@ context('Insurance - Declarations - How your data will be used page - Save and g
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
 
-      // go through the 1st declaration - confidentiality
-      submitButton().click();
-
-      // go through the 2nd declaration - anti-bribery
-      submitButton().click();
-
-      // go through the 3rd declaration - anti-bribery - code of conduct
-      submitButton().click();
-
-      // go through the 4th declaration - anti-bribery - exporting with code of conduct
-      submitButton().click();
-
-      // go through the 5th declaration - confirmation and acknowledgements
-      submitButton().click();
+      // go through 5 declaration forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 

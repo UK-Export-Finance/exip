@@ -1,5 +1,3 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeAndSubmitTotalContractValueForm
  * Complete and submit the "Total contract value" form
@@ -9,7 +7,7 @@ import { submitButton } from '../../pages/shared';
 const completeAndSubmitTotalContractValueForm = ({ policyMaximumValue = false }) => {
   cy.completeTotalContractValueForm({ policyMaximumValue });
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitTotalContractValueForm;

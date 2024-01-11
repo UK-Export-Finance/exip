@@ -1,4 +1,4 @@
-import { field, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { field, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -145,10 +145,8 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     it('should have the originally submitted answers populated when going back to the page through policy and exports flow', () => {
       cy.startInsurancePolicySection({});
 
-      submitButton().click();
-      submitButton().click();
-      submitButton().click();
-      submitButton().click();
+      // go through 4 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       cy.checkValue(field(FIRST_NAME), POLICY_CONTACT[FIRST_NAME]);
       cy.checkValue(field(LAST_NAME), POLICY_CONTACT[LAST_NAME]);

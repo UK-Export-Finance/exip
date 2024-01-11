@@ -1,6 +1,4 @@
-import {
-  yesRadio, noRadio, submitButton,
-} from '../../../../../../pages/shared';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
@@ -114,7 +112,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
         cy.navigateToUrl(url);
 
         yesRadio().input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${POLICY_TYPE}`;
 

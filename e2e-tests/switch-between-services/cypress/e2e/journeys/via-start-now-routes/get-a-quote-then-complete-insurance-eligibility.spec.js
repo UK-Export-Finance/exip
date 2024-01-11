@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
 import { ROUTES } from '../../../../../constants';
 
@@ -15,7 +14,7 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
     cy.navigateToUrl(ROOT);
 
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
 

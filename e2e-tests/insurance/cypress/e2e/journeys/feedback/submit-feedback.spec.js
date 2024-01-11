@@ -1,5 +1,5 @@
 import partials from '../../../../../partials';
-import { field, submitButton } from '../../../../../pages/shared';
+import { field } from '../../../../../pages/shared';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
 
@@ -26,7 +26,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     describe('when submitting a valid feedback form', () => {
@@ -37,7 +37,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
     describe('when clicking the "back to service button"', () => {
       it(`should redirect to ${startUrl}`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         cy.assertUrl(startUrl);
       });
@@ -54,7 +54,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       field(SATISFIED).input().click();
       cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
       cy.keyboardInput(field(OTHER_COMMENTS).textarea(), 'test');
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     describe('when submitting a valid feedback form', () => {
@@ -65,7 +65,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
     describe('when clicking the "back to service button"', () => {
       it(`should redirect to ${startUrl}`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         cy.assertUrl(startUrl);
       });
@@ -84,7 +84,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       field(SATISFIED).input().click();
       cy.keyboardInput(field(IMPROVEMENT).textarea(), longString);
       cy.keyboardInput(field(OTHER_COMMENTS).textarea(), longString);
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     describe('when submitting a valid feedback form', () => {
@@ -95,7 +95,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
     describe('when clicking the "back to service button"', () => {
       it(`should redirect to ${startUrl}`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         cy.assertUrl(startUrl);
       });
@@ -110,7 +110,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       partials.phaseBanner.feedbackLink().click();
 
       cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     describe('when submitting a valid feedback form', () => {
@@ -121,7 +121,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
 
     describe('when clicking the "back to service button"', () => {
       it(`should redirect to ${startUrl}`, () => {
-        submitButton().click();
+        cy.clickSubmitButton();
 
         cy.assertUrl(startUrl);
       });

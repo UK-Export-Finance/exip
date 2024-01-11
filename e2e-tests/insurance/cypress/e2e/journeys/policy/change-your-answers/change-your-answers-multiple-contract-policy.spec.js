@@ -1,4 +1,4 @@
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -82,7 +82,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -120,7 +120,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
           cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-          submitButton().click();
+          cy.clickSubmitButton();
         });
 
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -158,7 +158,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
       //     cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-      //     submitButton().click();
+      //     cy.clickSubmitButton();
       //   });
 
       //   it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -196,7 +196,7 @@ context('Insurance - Policy - Change your answers - Multiple contract policy - A
 
       //     cy.keyboardInput(multipleContractPolicyExportValuePage[fieldId].input(), newAnswer);
 
-      //     submitButton().click();
+      //     cy.clickSubmitButton();
       //   });
 
       //   it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

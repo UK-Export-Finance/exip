@@ -1,4 +1,4 @@
-import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { backLink, countryInput } from '../../../../../../pages/shared';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
@@ -28,7 +28,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it('redirects to `get a quote via email` exit page', () => {

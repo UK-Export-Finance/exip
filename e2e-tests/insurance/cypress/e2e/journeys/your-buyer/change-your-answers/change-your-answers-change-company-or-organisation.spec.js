@@ -5,7 +5,7 @@ import {
   WEBSITE_EXAMPLES,
 } from '../../../../../../constants';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
@@ -84,7 +84,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -120,7 +120,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -166,7 +166,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -202,7 +202,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -242,7 +242,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
         cy.keyboardInput(field(LAST_NAME).input(), newAnswerLastName);
         cy.keyboardInput(field(POSITION).input(), newAnswerPosition);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -289,7 +289,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         companyOrOrganisationPage[fieldId].noRadioInput().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

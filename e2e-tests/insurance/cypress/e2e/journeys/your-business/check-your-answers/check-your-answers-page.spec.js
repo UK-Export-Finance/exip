@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  submitButton,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -88,7 +84,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       it(`should redirect to ${YOUR_BUYER_ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`;
         cy.assertUrl(expectedUrl);

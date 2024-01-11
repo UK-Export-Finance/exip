@@ -302,6 +302,12 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER]: {
         IS_EMPTY: 'Select if you have traded with this buyer before',
       },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.OUTSTANDING_PAYMENTS]: {
+        IS_EMPTY: 'Select if you have any outstanding or overdue payments from the buyer',
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.FAILED_PAYMENTS]: {
+        IS_EMPTY: 'Select if the end buyer has ever failed to pay you on time',
+      },
     },
     ACCOUNT: {
       CREATE: {

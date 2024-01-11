@@ -1,6 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { field, submitButton, backLink } from '../../../../../pages/shared';
+import { field, backLink } from '../../../../../pages/shared';
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import mockAccount from '../../../../../fixtures/account';
@@ -51,7 +51,7 @@ context('Insurance - Name fields - Header and page fields should render special 
         cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
         // submit the OTP security code
-        submitButton().click();
+        cy.clickSubmitButton();
       });
     });
   });

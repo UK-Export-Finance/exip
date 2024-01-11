@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../../constants';
-import { field, submitButton } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
@@ -15,5 +15,5 @@ export default () => {
   cy.keyboardInput(field(YEARS_EXPORTING).input(), application.EXPORTER_BUSINESS[YEARS_EXPORTING]);
   cy.keyboardInput(field(EMPLOYEES_UK).input(), application.EXPORTER_BUSINESS[EMPLOYEES_UK]);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };

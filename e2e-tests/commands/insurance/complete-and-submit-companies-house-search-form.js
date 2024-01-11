@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import { COMPANIES_HOUSE_NUMBER } from '../../constants/examples';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 
@@ -15,7 +15,7 @@ const completeAndSubmitCompaniesHouseSearchForm = ({ companyNumber = COMPANIES_H
   cy.interceptCompaniesHousePost({ companyNumber });
 
   cy.keyboardInput(field(FIELD_ID).input(), companyNumber);
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitCompaniesHouseSearchForm;

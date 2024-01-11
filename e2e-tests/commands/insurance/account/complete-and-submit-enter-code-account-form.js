@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 
 const {
@@ -13,7 +13,7 @@ const {
 const completeAndSubmitEnterCodeAccountForm = (securityCode) => {
   cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitEnterCodeAccountForm;

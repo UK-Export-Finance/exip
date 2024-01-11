@@ -1,5 +1,5 @@
 import {
-  field, submitButton, status, summaryList, noRadioInput,
+  field, status, summaryList, noRadioInput,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
@@ -106,7 +106,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         noRadioInput().first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -147,7 +147,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         noRadioInput().eq(1).click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
