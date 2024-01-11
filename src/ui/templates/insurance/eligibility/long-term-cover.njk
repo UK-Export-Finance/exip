@@ -1,5 +1,5 @@
 {% extends 'index.njk' %}
-{% from "govuk/components/back-link/macro.njk" import govukBackLink %}  
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -21,8 +21,8 @@
     </div>
   </div>
 
-  
-  <p class="govuk-body" data-cy="intro">{{ CONTENT_STRINGS.INTRO }}</p>
+
+  <p class="govuk-body" data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
 
   <p class="govuk-body">
     <span data-cy="action-pdf-form">

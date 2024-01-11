@@ -1,7 +1,7 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
+  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS },
 } = FIELD_IDS.INSURANCE;
 
 export const YOUR_BUYER_FIELDS = {
@@ -76,5 +76,11 @@ export const YOUR_BUYER_FIELDS = {
     SUMMARY: {
       TITLE: 'Trading history',
     },
+  },
+  [OUTSTANDING_PAYMENTS]: {
+    LABEL: 'Do you currently have any outstanding or overdue payments from the buyer?',
+  },
+  [FAILED_PAYMENTS]: {
+    LABEL: 'Has the buyer ever failed to pay you on time?',
   },
 };
