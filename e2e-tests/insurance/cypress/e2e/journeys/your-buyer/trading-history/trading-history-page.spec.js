@@ -21,6 +21,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your Buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
@@ -35,8 +37,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       // cy.completeAndSubmitCompanyOrOrganisationForm({});
       // cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      // checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
+      // checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.navigateToUrl(url);
 
