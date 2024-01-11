@@ -36,6 +36,8 @@ const {
         MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
       },
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
+      NEED_PRE_CREDIT_PERIOD,
+      PRE_CREDIT_PERIOD_DESCRIPTION,
       BROKER: {
         USING_BROKER,
         NAME,
@@ -132,6 +134,10 @@ const application = {
     [TOTAL_MONTHS_OF_COVER]: '2',
     [TOTAL_SALES_TO_BUYER]: '1000',
     [MAXIMUM_BUYER_WILL_OWE]: '500',
+  },
+  POLICY_CREDIT_PERIOD: {
+    [NEED_PRE_CREDIT_PERIOD]: 'false',
+    [PRE_CREDIT_PERIOD_DESCRIPTION]: 'Mock description',
   },
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',

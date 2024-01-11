@@ -233,6 +233,13 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the position at the company of the person to be named on the policy',
         },
       },
+      [FIELD_IDS.INSURANCE.POLICY.NEED_PRE_CREDIT_PERIOD]: {
+        IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
+      },
+      [FIELD_IDS.INSURANCE.POLICY.PRE_CREDIT_PERIOD_DESCRIPTION]: {
+        IS_EMPTY: 'Enter the period of pre-credit cover your require',
+        ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
+      },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },

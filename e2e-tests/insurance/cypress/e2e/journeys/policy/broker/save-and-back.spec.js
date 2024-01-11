@@ -52,7 +52,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
-      cy.completeAndSubmitPreCreditPeriodForm();
+      cy.completeAndSubmitPreCreditPeriodForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -101,8 +101,11 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // go through 5 policy forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 5 });
+      // go through 4 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 4 });
+
+      // TODO: EMS-2558 - this will not be required once pre-credit period has data saving.
+      cy.completeAndSubmitPreCreditPeriodForm({});
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -142,8 +145,11 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.startInsurancePolicySection({});
 
-        // go through 5 policy forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 5 });
+        // go through 4 policy forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 4 });
+
+        // TODO: EMS-2558 - this will not be required once pre-credit period has data saving.
+        cy.completeAndSubmitPreCreditPeriodForm({});
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -174,8 +180,11 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.startInsurancePolicySection({});
 
-        // go through 5 policy forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 5 });
+        // go through 4 policy forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 4 });
+
+        // TODO: EMS-2558 - this will not be required once pre-credit period has data saving.
+        cy.completeAndSubmitPreCreditPeriodForm({});
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });
