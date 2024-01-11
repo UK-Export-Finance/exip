@@ -24,7 +24,7 @@ export const UK_GOODS_AND_SERVICES_DESCRIPTION = {
   },
   DOES_NOT_COUNT: {
     HEADING: 'What does not count as UK goods and services',
-    TEXT: "Goods or services from outside the UK that are sent directly to the buyer without processing or modifying them. Instead, these are classed as foreign goods and services.",
+    TEXT: 'Goods or services from outside the UK that are sent directly to the buyer without processing or modifying them. Instead, these are classed as foreign goods and services.',
   },
   STAFFING_COSTS: {
     HEADING: 'Staffing costs for this export contract',
