@@ -150,7 +150,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitPreCreditPeriodForm();
+      cy.completeAndSubmitPreCreditPeriodForm({});
 
       const expected = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 

@@ -52,7 +52,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       cy.completeAndSubmitSingleContractPolicyForm();
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
-      cy.completeAndSubmitPreCreditPeriodForm();
+      cy.completeAndSubmitPreCreditPeriodForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;

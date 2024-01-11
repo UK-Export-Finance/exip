@@ -7,6 +7,7 @@ import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insu
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
@@ -173,6 +174,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
+        const sanitisedData = sanitiseData(payload);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -185,6 +187,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
           FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
           userName: getUserNameFromSession(req.session.user),
           application: res.locals.application,
+          submittedValues: sanitisedData,
           validationErrors: generateValidationErrors(payload),
         };
 
