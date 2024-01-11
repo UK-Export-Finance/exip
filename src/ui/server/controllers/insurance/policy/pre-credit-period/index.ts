@@ -5,6 +5,7 @@ import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } f
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
@@ -94,7 +95,8 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
-    application,
+    application: mapApplicationToFormFields(application),
+    applicationAnswer: application.policy[NEED_PRE_CREDIT_PERIOD],
   });
 };
 

@@ -1,24 +1,27 @@
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 
+{% set fieldId = FIELDS.CREDIT_PERIOD_WITH_BUYER.ID %}
+
 {{ govukCharacterCount({
-  name: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
-  id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID,
+  name: fieldId,
+  id: fieldId,
   label: {
     text: FIELDS.CREDIT_PERIOD_WITH_BUYER.LABEL,
     classes: "govuk-label--m",
     attributes: {
-      'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-label',
-      id: FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + '-label'
+      'data-cy': fieldId + '-label',
+      id: fieldId + '-label'
     }
   },
   attributes: {
-    'data-cy': FIELDS.CREDIT_PERIOD_WITH_BUYER.ID
+    'data-cy': fieldId
   },
   maxlength: FIELDS.CREDIT_PERIOD_WITH_BUYER.MAXIMUM,
-  errorMessage: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID] and {
-    text: validationErrors.errorList[FIELDS.CREDIT_PERIOD_WITH_BUYER.ID].text,
+  errorMessage: validationErrors.errorList[fieldId] and {
+    text: validationErrors.errorList[fieldId].text,
     attributes: {
-      "data-cy": FIELDS.CREDIT_PERIOD_WITH_BUYER.ID + "-error-message"
+      "data-cy": fieldId + "-error-message"
     }
-  }
+  },
+  value: submittedValues[fieldId] or application.policy[fieldId]
 }) }}
