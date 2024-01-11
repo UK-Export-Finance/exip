@@ -236,7 +236,7 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.NEED_PRE_CREDIT_PERIOD]: {
         IS_EMPTY: 'Select whether you need cover for a period before you supply the goods or services to the buyer',
       },
-      [FIELD_IDS.INSURANCE.POLICY.PRE_CREDIT_PERIOD_DESCRIPTION]: {
+      [FIELD_IDS.INSURANCE.POLICY.CREDIT_PERIOD_WITH_BUYER]: {
         IS_EMPTY: 'Enter the period of pre-credit cover your require',
         ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
       },

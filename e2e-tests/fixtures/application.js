@@ -37,7 +37,7 @@ const {
       },
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
       NEED_PRE_CREDIT_PERIOD,
-      PRE_CREDIT_PERIOD_DESCRIPTION,
+      CREDIT_PERIOD_WITH_BUYER,
       BROKER: {
         USING_BROKER,
         NAME,
@@ -137,7 +137,7 @@ const application = {
   },
   POLICY_CREDIT_PERIOD: {
     [NEED_PRE_CREDIT_PERIOD]: 'false',
-    [PRE_CREDIT_PERIOD_DESCRIPTION]: 'Mock description',
+    [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
   },
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',

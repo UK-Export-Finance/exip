@@ -1,11 +1,11 @@
-import preCreditPeriodDescriptionRule, { MAXIMUM } from './pre-credit-period-description';
+import creditPeriodWithBuyerRule, { MAXIMUM } from './credit-period-with-buyer-description';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import inputValidation from '../../../../../../shared-validation/max-length';
 
 const {
-  POLICY: { NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION: FIELD_ID },
+  POLICY: { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -14,7 +14,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-credit-period-description', () => {
+describe('controllers/insurance/policy/pre-credit-period/validation/rules/credit-period-with-buyer-description', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
@@ -27,7 +27,7 @@ describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-cr
         [FIELD_ID]: '',
       };
 
-      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+      const result = creditPeriodWithBuyerRule(mockFormBody, mockErrors);
 
       const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
 
@@ -42,7 +42,7 @@ describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-cr
         [FIELD_ID]: 'a'.repeat(MAXIMUM + 1),
       };
 
-      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+      const result = creditPeriodWithBuyerRule(mockFormBody, mockErrors);
 
       const expected = inputValidation(mockFormBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
 
@@ -57,7 +57,7 @@ describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-cr
         [FIELD_ID]: 'mock description',
       };
 
-      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+      const result = creditPeriodWithBuyerRule(mockFormBody, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });
@@ -69,7 +69,7 @@ describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-cr
         [NEED_PRE_CREDIT_PERIOD]: 'false',
       };
 
-      const result = preCreditPeriodDescriptionRule(mockFormBody, mockErrors);
+      const result = creditPeriodWithBuyerRule(mockFormBody, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });

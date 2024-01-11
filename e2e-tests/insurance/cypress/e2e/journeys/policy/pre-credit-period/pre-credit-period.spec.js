@@ -10,14 +10,14 @@ import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
-  PRE_CREDIT_PERIOD_DESCRIPTION as PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+  CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS,
 } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 
-const { preCreditPeriodDescription } = partials;
+const { creditPeriodWithBuyer } = partials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 
@@ -27,7 +27,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION,
+  NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -109,8 +109,8 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       });
     });
 
-    describe(PRE_CREDIT_PERIOD_DESCRIPTION, () => {
-      const fieldId = PRE_CREDIT_PERIOD_DESCRIPTION;
+    describe(CREDIT_PERIOD_WITH_BUYER, () => {
+      const fieldId = CREDIT_PERIOD_WITH_BUYER;
       const field = fieldSelector(fieldId);
 
       it('should NOT by visible by default', () => {
@@ -134,19 +134,19 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
         PROTECTS_YOU,
         INSURES_YOU,
         HAPPENS_BEFORE,
-      } = PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS;
+      } = CREDIT_PERIOD_WITH_BUYER_STRINGS;
 
       it('renders summary text', () => {
-        cy.checkText(preCreditPeriodDescription.summary(), INTRO);
+        cy.checkText(creditPeriodWithBuyer.summary(), INTRO);
 
-        preCreditPeriodDescription.details().should('not.have.attr', 'open');
+        creditPeriodWithBuyer.details().should('not.have.attr', 'open');
       });
 
       describe('when clicking the summary text', () => {
         it('should expand the collapsed `description` content', () => {
-          cy.checkText(preCreditPeriodDescription.protectsYou(), PROTECTS_YOU);
-          cy.checkText(preCreditPeriodDescription.insuresYou(), INSURES_YOU);
-          cy.checkText(preCreditPeriodDescription.happensBefore(), HAPPENS_BEFORE);
+          cy.checkText(creditPeriodWithBuyer.protectsYou(), PROTECTS_YOU);
+          cy.checkText(creditPeriodWithBuyer.insuresYou(), INSURES_YOU);
+          cy.checkText(creditPeriodWithBuyer.happensBefore(), HAPPENS_BEFORE);
         });
       });
     });

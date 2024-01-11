@@ -47,7 +47,7 @@ export const POLICY = {
     POSITION: 'position',
   },
   NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
-  PRE_CREDIT_PERIOD_DESCRIPTION: 'preCreditPeriodDescription',
+  CREDIT_PERIOD_WITH_BUYER: 'creditPeriodWithBuyer',
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

@@ -6,7 +6,7 @@ import generateValidationErrors from '../../../../../../helpers/validation';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  POLICY: { NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION: FIELD_ID },
+  POLICY: { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -18,14 +18,14 @@ const {
 export const MAXIMUM = 1000;
 
 /**
- * preCreditPeriodDescriptionRule
+ * creditPeriodWithBuyerRule
  * Returns the result of emptyFieldValidation if NEED_PRE_CREDIT_PERIOD is true
  * else returns provided errors object
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const preCreditPeriodDescriptionRule = (formBody: RequestBody, errors: object) => {
+const creditPeriodWithBuyerRule = (formBody: RequestBody, errors: object) => {
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'true') {
     // if body is empty
     if (!objectHasProperty(formBody, FIELD_ID)) {
@@ -39,4 +39,4 @@ const preCreditPeriodDescriptionRule = (formBody: RequestBody, errors: object) =
   return errors;
 };
 
-export default preCreditPeriodDescriptionRule;
+export default creditPeriodWithBuyerRule;

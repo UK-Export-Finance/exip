@@ -21,8 +21,8 @@ export const PARTIALS = {
       PRE_CREDIT_PERIOD: {
         CUSTOM_CONTENT_HTML: 'partials/insurance/pre-credit-period-conditional-yes-html.njk',
       },
-      PRE_CREDIT_PERIOD_DESCRIPTION: {
-        CUSTOM_CONTENT_HTML: 'partials/insurance/pre-credit-period-description.njk',
+      CREDIT_PERIOD_WITH_BUYER: {
+        CUSTOM_CONTENT_HTML: 'partials/insurance/credit-period-with-buyer-description.njk',
       },
     },
   },

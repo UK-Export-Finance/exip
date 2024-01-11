@@ -13,7 +13,7 @@ export * from './form-titles';
 export * from './header';
 export * from './links';
 export * from './phase-banner';
-export * from './pre-credit-period-description';
+export * from './credit-period-with-buyer-description';
 export * from './product';
 export * from './quote-titles';
 export * from './summary-answers';
