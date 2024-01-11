@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
@@ -49,7 +48,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   it('should render validation errors for all required fields', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkErrorSummaryListHeading();
 

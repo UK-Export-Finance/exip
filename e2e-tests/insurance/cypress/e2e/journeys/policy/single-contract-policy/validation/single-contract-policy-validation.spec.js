@@ -1,4 +1,4 @@
-import { radios, submitButton } from '../../../../../../../pages/shared';
+import { radios } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -55,7 +55,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
   });
 
   it('should render validation errors for all required fields', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkErrorSummaryListHeading();
 
@@ -86,7 +86,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
       const isoCode = application.POLICY[fieldId];
 
       radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       radios(fieldId, isoCode).option.input().should('be.checked');
     });

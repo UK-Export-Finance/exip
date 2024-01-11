@@ -1,5 +1,5 @@
 import { companyDetails } from '../../../../../../pages/your-business';
-import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
@@ -62,7 +62,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.keyboardInput(fieldSelector(WEBSITE).input(), WEBSITE_EXAMPLES.INVALID);
     cy.keyboardInput(fieldSelector(PHONE_NUMBER).input(), INVALID_PHONE_NUMBERS.LANDLINE.LONG);
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   after(() => {
@@ -119,7 +119,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
         cy.completeCompanyDetailsForm({});
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${natureOfBusinessUrl}`, () => {
@@ -133,7 +133,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
         cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${natureOfBusinessUrl}`, () => {

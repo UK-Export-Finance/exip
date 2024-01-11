@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * submitAndAssertFieldErrors
  * Submit and assert errors for a field
@@ -21,7 +19,7 @@ const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryL
     field.input().clear();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 
   cy.assertFieldErrors({
     field,

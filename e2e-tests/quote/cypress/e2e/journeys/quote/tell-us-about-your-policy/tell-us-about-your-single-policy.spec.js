@@ -5,7 +5,7 @@ import {
   completeAndSubmitUkContentForm,
   completeAndSubmitPolicyTypeSingleForm,
 } from '../../../../../../commands/quote/forms';
-import { field as fieldSelector, submitButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -165,7 +165,7 @@ context('Tell us about your single policy page - as an exporter, I want to provi
       fieldSelector(CURRENCY).input().select(GBP.isoCode);
       fieldSelector(PERCENTAGE_OF_COVER).input().select('90');
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 

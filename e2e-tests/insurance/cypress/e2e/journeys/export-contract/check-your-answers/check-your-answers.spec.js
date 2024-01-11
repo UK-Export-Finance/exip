@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  submitButton,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -75,7 +71,7 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         cy.assertUrl(allSectionsUrl);
       });

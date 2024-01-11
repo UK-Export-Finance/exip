@@ -1,5 +1,5 @@
-import { submitButton } from '../../../pages/shared';
-
-export default () => {
-  submitButton().click();
+const submitCheckYourAnswersForm = () => {
+  cy.clickSubmitButton();
 };
+
+export default submitCheckYourAnswersForm;

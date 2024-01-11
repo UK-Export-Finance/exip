@@ -1,4 +1,4 @@
-import { singleInputField, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { singleInputField, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -92,17 +92,8 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
 
-      // go through the 1st declaration - confidentiality
-      submitButton().click();
-
-      // go through the 2nd declaration - anti-bribery
-      submitButton().click();
-
-      // go through the 3rd declaration - anti-bribery - code of conduct
-      submitButton().click();
-
-      // go through the 4th declaration - anti-bribery - exporting with code of conduct
-      submitButton().click();
+      // go through the first 4 declaration forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 

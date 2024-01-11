@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, field, submitButton, summaryList,
+  backLink, countryInput, field, summaryList,
 } from '../../../../../../pages/shared';
 import {
   policyTypePage,
@@ -40,7 +40,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     cy.login();
 
     cy.submitQuoteAnswersHappyPathSinglePolicy();
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.assertUrl(url);
   });
@@ -74,7 +74,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${CONTRACT_VALUE}-label`;
       cy.assertUrl(expectedUrl);
@@ -83,11 +83,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders the new answer in the quote', () => {
       cy.keyboardInput(field(CONTRACT_VALUE).input(), '1000');
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '£1,000';
       cy.checkText(row.value(), expected);
@@ -125,7 +122,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
       field(PERCENTAGE_OF_COVER).input().select('85');
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#${PERCENTAGE_OF_COVER}-label`;
 
@@ -135,11 +132,8 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders the new answer in the quote', () => {
       field(PERCENTAGE_OF_COVER).input().select('85');
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = '85%';
       cy.checkText(row.value(), expected);
@@ -160,18 +154,16 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     it('renders the new answers and `insured for` in the quote after submitting a new answer', () => {
       policyTypePage[POLICY_TYPE].multiple.input().click();
-      submitButton().click();
 
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
+
       // max amount owed and credit period fields are now required because it's a multiple policy
       cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '120000');
       tellUsAboutYourPolicyPage[CREDIT_PERIOD].input().select('1');
 
-      // submit the "tell us about your policy" form
-      submitButton().click();
-
-      // submit the "check your answers" form
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expectedUrl = `${baseUrl}${YOUR_QUOTE}#heading`;
 
@@ -219,7 +211,7 @@ context('Your quote page - change answers (single policy type to multiple policy
       const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${CHECK_YOUR_ANSWERS}#heading`;
 
@@ -231,11 +223,8 @@ context('Your quote page - change answers (single policy type to multiple policy
       const results = countryInput.field(BUYER_COUNTRY).results();
       results.first().click();
 
-      // form submit
-      submitButton().click();
-
-      // submit check your answers
-      submitButton().click();
+      // go through 2 get a quote forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
       const expected = 'Bahrain';
       cy.checkText(row.value(), expected);

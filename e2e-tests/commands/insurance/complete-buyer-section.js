@@ -1,5 +1,3 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeBuyerSection
  * Complete the "Buyer" section
@@ -15,7 +13,7 @@ const completeBuyerSection = ({ viaTaskList, exporterHasTradedWithBuyer, submitC
   cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer });
 
   if (submitCheckYourAnswers) {
-    submitButton().click();
+    cy.clickSubmitButton();
   }
 };
 

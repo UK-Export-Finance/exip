@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../pages/shared';
 import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
@@ -16,7 +15,7 @@ context('Insurance - Feedback confirmation page - Signed in', () => {
     cy.completeSignInAndGoToApplication({});
     partials.phaseBanner.feedbackLink().click();
     // to reach confirmation page
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   beforeEach(() => {
@@ -30,12 +29,7 @@ context('Insurance - Feedback confirmation page - Signed in', () => {
       currentHref: url,
       assertAuthenticatedHeader: true,
       assertBackLink: false,
+      submitButtonCopy: BUTTONS.BACK_TO_SERVICE,
     });
-  });
-
-  it('renders a "submit button"/link', () => {
-    cy.navigateToUrl(url);
-
-    cy.checkText(submitButton(), BUTTONS.BACK_TO_SERVICE);
   });
 });

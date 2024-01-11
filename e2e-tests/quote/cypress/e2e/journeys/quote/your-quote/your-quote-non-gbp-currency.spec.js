@@ -1,4 +1,4 @@
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../pages/shared';
 import { QUOTE_TITLES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -32,9 +32,9 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
     summaryList.field(CONTRACT_VALUE).changeLink().click();
 
     field(CURRENCY).input().select(EUR_CURRENCY_CODE);
-    submitButton().click();
 
-    submitButton().click();
+    // go through 2 get a quote forms.
+    cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
     const expectedUrl = `${url}#${CONTRACT_VALUE}-label`;
 

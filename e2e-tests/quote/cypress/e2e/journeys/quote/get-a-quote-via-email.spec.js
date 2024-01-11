@@ -1,4 +1,4 @@
-import { countryInput, submitButton } from '../../../../../pages/shared';
+import { countryInput } from '../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../pages/quote';
 import { PAGES } from '../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../constants';
@@ -18,7 +18,7 @@ context('Get a quote via email exit page', () => {
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
 

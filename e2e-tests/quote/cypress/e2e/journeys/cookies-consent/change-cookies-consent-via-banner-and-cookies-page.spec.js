@@ -1,5 +1,5 @@
 import partials from '../../../../../partials';
-import { submitButton } from '../../../../../pages/shared';
+
 import { cookiesPage } from '../../../../../pages';
 import { FIELD_IDS, ROUTES } from '../../../../../constants';
 
@@ -51,7 +51,7 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should allow user to immediately change their answer to `reject` and have scripts & cookies changed via the cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].reject.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkAnalyticsScriptsAreNotRendered();
       cy.checkAnalyticsCookieIsFalse();
@@ -59,7 +59,7 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should NOT render the cookie consent banner when going to another page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].reject.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.navigateToUrl(BUYER_COUNTRY);
 
@@ -101,7 +101,7 @@ context('Cookies consent - change via banner and cookies page', () => {
 
     it('should allow user to immediately change their answer to `approve` and have scripts & cookies changed via the cookies page', () => {
       cookiesPage[FIELD_IDS.OPTIONAL_COOKIES].accept.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkAnalyticsScriptsAreRendered();
       cy.checkAnalyticsCookieIsTrue();

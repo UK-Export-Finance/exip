@@ -1,5 +1,3 @@
-import { submitButton } from '../../../pages/shared';
-
 /**
  * submitAndAssertChangeAnswersPageUrl
  * submits and construct and check a page URL for any "change/check answers" page.
@@ -13,7 +11,7 @@ import { submitButton } from '../../../pages/shared';
 const submitAndAssertChangeAnswersPageUrl = ({
   referenceNumber, route, fieldId, fragmentSuffix, isInsuranceEligibility = false,
 }) => {
-  submitButton().click();
+  cy.clickSubmitButton();
   cy.assertChangeAnswersPageUrl({
     referenceNumber, route, fieldId, fragmentSuffix, isInsuranceEligibility,
   });

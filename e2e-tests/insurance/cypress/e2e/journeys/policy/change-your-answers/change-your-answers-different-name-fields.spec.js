@@ -1,4 +1,4 @@
-import { summaryList, field, submitButton } from '../../../../../../pages/shared';
+import { summaryList, field } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -68,7 +68,7 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
 
         cy.keyboardInput(field(fieldId).input(), newPosition);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render the new answers when completing the different name on policy form', () => {
@@ -98,7 +98,7 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
 
         cy.keyboardInput(field(fieldId).input(), newEmail);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render the new answers when completing the different name on policy form', () => {
@@ -127,12 +127,12 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
         summaryList.field(fieldId).changeLink().click();
 
         // to get to different name on policy page
-        submitButton().click();
+        cy.clickSubmitButton();
 
         cy.keyboardInput(field(FIRST_NAME).input(), newFirstName);
         cy.keyboardInput(field(LAST_NAME).input(), newLastName);
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render the new answers when completing the different name on policy form', () => {

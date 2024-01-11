@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../../constants';
@@ -51,7 +51,7 @@ context('Insurance - Policy - Single contract policy page - form validation - po
 
   describe('when policy currency code is not provided', () => {
     it('should render a validation error', () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkText(
         partials.errorSummaryListItems().eq(2),

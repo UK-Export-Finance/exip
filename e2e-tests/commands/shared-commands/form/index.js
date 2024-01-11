@@ -1,6 +1,8 @@
 Cypress.Commands.add('changeAnswerField', require('./change-answer-field'));
 Cypress.Commands.add('changeAnswerSelectField', require('./change-answer-select-field'));
 Cypress.Commands.add('changeAnswerRadioField', require('./change-answer-radio-field'));
+Cypress.Commands.add('clickSubmitButton', require('./click-submit-button'));
+Cypress.Commands.add('clickSubmitButtonMultipleTimes', require('./click-submit-button-multiple-times'));
 
 Cypress.Commands.add('submitAndAssertFieldErrors', require('./submit-and-assert-field-errors'));
 Cypress.Commands.add('assertFieldErrors', require('./assert-field-errors'));

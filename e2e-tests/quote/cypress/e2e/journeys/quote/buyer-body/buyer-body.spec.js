@@ -1,6 +1,4 @@
-import {
-  yesRadio, noRadio, submitButton,
-} from '../../../../../../pages/shared';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import buyerBodyPage from '../../../../../../pages/quote/buyerBody';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
@@ -97,7 +95,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     describe('when submitting the answer as `no`', () => {
       it(`should redirect to ${EXPORTER_LOCATION}`, () => {
         noRadio().input().click();
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
 

@@ -1,4 +1,4 @@
-import { countryInput, submitButton } from '../../../../../../pages/shared';
+import { countryInput } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
 import { PAGES } from '../../../../../../content-strings';
@@ -79,7 +79,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       beforeEach(() => {
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {
@@ -98,7 +98,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
         const results = countryInput.field(FIELD_ID).results();
         results.first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${TOTAL_VALUE_INSURED}`, () => {

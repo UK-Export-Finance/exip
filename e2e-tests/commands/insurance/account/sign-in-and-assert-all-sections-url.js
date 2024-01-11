@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { field, submitButton } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 
 const {
   ACCOUNT: { SECURITY_CODE },
@@ -36,7 +36,7 @@ const signInAndAssertAllSectionsUrl = ({
     cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
     // submit the OTP security code
-    submitButton().click();
+    cy.clickSubmitButton();
 
     if (referenceNumber) {
       // assert that we are on the "all sections" application page.

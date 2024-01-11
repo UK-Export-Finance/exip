@@ -2,7 +2,6 @@ import {
   actions,
   countryInput,
   cannotApplyPage,
-  submitButton,
 } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
@@ -37,7 +36,7 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${CANNOT_APPLY}`;
 

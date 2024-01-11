@@ -1,4 +1,4 @@
-import { submitButton, field as fieldSelector } from '../../pages/shared';
+import { field as fieldSelector } from '../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import application from '../../fixtures/application';
 
@@ -14,7 +14,7 @@ const { DIFFERENT_TRADING_ADDRESS } = application;
  */
 const completeAndSubmitAlternativeTradingAddressForm = () => {
   fieldSelector(FULL_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitAlternativeTradingAddressForm;

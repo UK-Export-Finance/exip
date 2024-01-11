@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
-import { summaryList, submitButton } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { country } from '../../../../../../fixtures/application';
 import mockCountries from '../../../../../../fixtures/countries';
 
@@ -49,7 +49,7 @@ context('Insurance - Eligibility - Change your answers - Buyer country - As an e
 
       summaryList.field(fieldId).changeLink().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

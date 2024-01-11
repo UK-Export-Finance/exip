@@ -1,7 +1,6 @@
 import {
   headingCaption,
   status,
-  submitButton,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
@@ -88,7 +87,7 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         cy.navigateToUrl(url);
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
         cy.assertUrl(expectedUrl);

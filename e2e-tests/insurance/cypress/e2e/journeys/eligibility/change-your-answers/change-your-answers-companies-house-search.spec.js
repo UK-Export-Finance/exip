@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { summaryList, submitButton } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE, COMPANIES_HOUSE_NUMBER } from '../../../../../../constants/examples';
 import mockCompanies from '../../../../../../fixtures/companies';
 
@@ -51,7 +51,7 @@ context('Insurance - Eligibility - Change your answers - Companies house search 
 
       summaryList.field(fieldId).changeLink().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {

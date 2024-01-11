@@ -1,5 +1,5 @@
 import {
-  yesNoRadioHint, yesRadio, noRadio, noRadioInput, submitButton,
+  yesNoRadioHint, yesRadio, noRadio, noRadioInput,
 } from '../../../../../../pages/shared';
 import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -127,7 +127,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
       cy.navigateToUrl(url);
 
       noRadio().input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -150,7 +150,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
       cy.navigateToUrl(url);
 
       yesRadio().input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CANNOT_APPLY_MULTIPLE_RISKS}`, () => {

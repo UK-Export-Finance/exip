@@ -1,4 +1,4 @@
-import { singleInputField, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import { singleInputField, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -94,7 +94,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
       task.link().click();
 
       // go to the page
-      submitButton().click();
+      cy.clickSubmitButton();
 
       singleInputField(FIELD_ID).input().should('be.checked');
     });

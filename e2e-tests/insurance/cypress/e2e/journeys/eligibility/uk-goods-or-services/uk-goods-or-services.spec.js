@@ -1,5 +1,5 @@
 import {
-  yesNoRadioHint, yesRadio, yesRadioInput, noRadio, submitButton,
+  yesNoRadioHint, yesRadio, yesRadioInput, noRadio,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -142,7 +142,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       cy.navigateToUrl(url);
 
       yesRadio().input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${END_BUYER}`, () => {

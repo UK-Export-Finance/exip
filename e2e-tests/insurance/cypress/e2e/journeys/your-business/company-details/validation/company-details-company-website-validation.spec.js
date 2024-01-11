@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import {
@@ -95,7 +95,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       cy.completeCompanyDetailsForm({});
 
       field(WEBSITE).input().clear();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('should not display validation errors', () => {
@@ -114,7 +114,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       cy.completeCompanyDetailsForm({});
 
       field(WEBSITE).input().clear().type(WEBSITE_EXAMPLES.VALID);
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('should not display validation errors', () => {

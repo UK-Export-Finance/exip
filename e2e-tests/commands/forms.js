@@ -1,4 +1,4 @@
-import { countryInput, submitButton } from '../pages/shared';
+import { countryInput } from '../pages/shared';
 import { FIELD_IDS } from '../constants';
 import mockCountries from '../fixtures/countries';
 
@@ -13,7 +13,7 @@ export const completeAndSubmitBuyerCountryForm = ({ countryName = mockCountries[
   cy.keyboardInput(countryInput.field(FIELD_ID).input(), countryName);
   const results = countryInput.field(FIELD_ID).results();
   results.first().click();
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitBuyerCountryForm;

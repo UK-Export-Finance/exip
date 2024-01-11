@@ -1,5 +1,3 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeExportContractSection
  * Complete the "Export contract" section
@@ -12,7 +10,7 @@ const completeExportContractSection = ({ viaTaskList, submitCheckYourAnswers = f
   cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
   if (submitCheckYourAnswers) {
-    submitButton().click();
+    cy.clickSubmitButton();
   }
 };
 

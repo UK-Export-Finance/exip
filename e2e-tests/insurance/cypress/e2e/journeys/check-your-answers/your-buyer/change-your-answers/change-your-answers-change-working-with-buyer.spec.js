@@ -1,6 +1,4 @@
-import {
-  submitButton, status, summaryList, noRadioInput,
-} from '../../../../../../../pages/shared';
+import { status, summaryList, noRadioInput } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -175,7 +173,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
         noRadioInput().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {

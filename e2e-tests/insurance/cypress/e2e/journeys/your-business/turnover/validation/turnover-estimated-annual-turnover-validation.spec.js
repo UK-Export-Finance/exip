@@ -1,5 +1,5 @@
 import partials from '../../../../../../../partials';
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
@@ -90,7 +90,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '5');
-    submitButton().click();
+    cy.clickSubmitButton();
     partials.errorSummaryListItems().should('have.length', 1);
   });
 
@@ -99,7 +99,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '5,00');
-    submitButton().click();
+    cy.clickSubmitButton();
     partials.errorSummaryListItems().should('have.length', 1);
   });
 
@@ -108,7 +108,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '0');
-    submitButton().click();
+    cy.clickSubmitButton();
     partials.errorSummaryListItems().should('have.length', 1);
   });
 
@@ -117,7 +117,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     const field = fieldSelector(fieldId);
 
     cy.keyboardInput(field.input(), '-256');
-    submitButton().click();
+    cy.clickSubmitButton();
     partials.errorSummaryListItems().should('have.length', 1);
   });
 });

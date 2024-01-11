@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -51,7 +50,7 @@ describe(`Insurance - Your business - Company details page - submit ${TRADING_AD
         differentTradingAddress: true,
       });
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${alternativeTradingAddressUrl}`, () => {

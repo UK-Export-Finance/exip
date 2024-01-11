@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
@@ -70,7 +70,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     it(`should NOT display validation errors when ${FIRST_NAME_FIELD_ID} is correctly entered`, () => {
       cy.keyboardInput(fieldSelector(FIRST_NAME_FIELD_ID).input(), application.BUYER[FIRST_NAME_FIELD_ID]);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().should('have.length', 6);
     });
@@ -99,7 +99,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     it(`should NOT display validation errors when ${LAST_NAME_FIELD_ID} is correctly entered`, () => {
       cy.keyboardInput(fieldSelector(LAST_NAME_FIELD_ID).input(), application.BUYER[LAST_NAME_FIELD_ID]);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       partials.errorSummaryListItems().should('have.length', 5);
     });

@@ -1,4 +1,4 @@
-import { submitButton, needToStartAgainPage } from '../../../../../pages/shared';
+import { needToStartAgainPage } from '../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
@@ -48,7 +48,7 @@ context('Get a Quote - Need to start again exit page', () => {
 
   describe('clicking the submit button', () => {
     it(`should redirect to ${BUYER_COUNTRY}`, () => {
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${BUYER_COUNTRY}`;
 

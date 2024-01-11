@@ -1,5 +1,5 @@
 import {
-  backLink, noRadio, noRadioInput, submitButton,
+  backLink, noRadio, noRadioInput,
 } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -28,7 +28,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
     cy.navigateToUrl(url);
 
     noRadio().input().click();
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it(`should redirect to ${NO_COMPANIES_HOUSE_NUMBER} exit page`, () => {

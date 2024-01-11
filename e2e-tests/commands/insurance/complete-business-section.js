@@ -1,5 +1,3 @@
-import { submitButton } from '../../pages/shared';
-
 /**
  * completeBusinessSection
  * Complete the "business" section
@@ -21,7 +19,7 @@ const completeBusinessSection = ({ viaTaskList, differentTradingAddress = false,
   cy.completeAndSubmitCreditControlForm({});
 
   if (submitCheckYourAnswers) {
-    submitButton().click();
+    cy.clickSubmitButton();
   }
 };
 

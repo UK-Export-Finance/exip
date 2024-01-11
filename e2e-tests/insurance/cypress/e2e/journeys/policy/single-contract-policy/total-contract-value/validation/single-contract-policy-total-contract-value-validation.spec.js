@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
@@ -64,7 +64,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
   const field = fieldSelector(TOTAL_CONTRACT_VALUE);
 
   it('should render a validation error when total contract value is not provided', () => {
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -79,7 +79,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
   it('should render a validation error when total contract value is not a number', () => {
     cy.keyboardInput(field.input(), 'Fifty');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -94,7 +94,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
   it('should render a validation error when total contract value is not a whole number', () => {
     cy.keyboardInput(field.input().clear(), '123.456');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -109,7 +109,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
   it('should render a validation error when total sales to buyer contains a decimal', () => {
     cy.keyboardInput(field.input().clear(), '1.2');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -124,7 +124,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
   it('should render a validation error when total sales to buyer contains a comma and decimal', () => {
     cy.keyboardInput(field.input(), '1,234.56');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -139,7 +139,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
   it('should render a validation error when total contract value is below the minimum', () => {
     cy.keyboardInput(field.input(), '0');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -154,7 +154,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
   it('should render a validation error when total contract value is above the maximum', () => {
     cy.keyboardInput(field.input(), '500001');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),
@@ -172,7 +172,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
     cy.clickBackLink();
 
     cy.keyboardInput(field.input(), '1,234');
-    submitButton().click();
+    cy.clickSubmitButton();
 
     const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
     cy.assertUrl(expectedUrl);

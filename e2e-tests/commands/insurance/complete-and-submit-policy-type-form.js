@@ -1,6 +1,5 @@
 import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { typeOfPolicyPage } from '../../pages/insurance/policy';
-import { submitButton } from '../../pages/shared';
 
 const {
   INSURANCE: {
@@ -17,5 +16,5 @@ export default (policyType) => {
     typeOfPolicyPage[fieldId].multiple.input().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };

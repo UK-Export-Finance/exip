@@ -1,4 +1,4 @@
-import { yesRadio, noRadio, submitButton } from '../../../pages/shared';
+import { yesRadio, noRadio } from '../../../pages/shared';
 import { FIELD_VALUES } from '../../../constants';
 
 /**
@@ -12,7 +12,7 @@ const completeAndSubmitAntiBriberyExportingWithCodeOfConductForm = (answer) => {
     yesRadio().input().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitAntiBriberyExportingWithCodeOfConductForm;

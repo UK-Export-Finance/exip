@@ -1,4 +1,4 @@
-import { field as fieldSelector, submitButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -31,7 +31,7 @@ const submitAndAssertFieldErrors = (fieldValue) => {
 
   cy.keyboardInput(field.input(), fieldValue);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 
   cy.checkText(
     partials.errorSummaryListItems().eq(2),

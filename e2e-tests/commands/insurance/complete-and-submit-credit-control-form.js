@@ -1,4 +1,4 @@
-import { submitButton, noRadioInput, yesRadioInput } from '../../pages/shared';
+import { noRadioInput, yesRadioInput } from '../../pages/shared';
 
 /**
  * completeAndSubmitCreditControlForm
@@ -12,7 +12,7 @@ const completeAndSubmitCreditControlForm = ({ hasCreditControlProcess = true }) 
     noRadioInput().click();
   }
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 export default completeAndSubmitCreditControlForm;

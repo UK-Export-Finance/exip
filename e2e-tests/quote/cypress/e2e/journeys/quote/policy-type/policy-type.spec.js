@@ -4,7 +4,7 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../../../commands/quote/forms';
-import { submitButton } from '../../../../../../pages/shared';
+
 import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELDS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -94,7 +94,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
       it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
         policyTypePage[FIELD_ID].single.input().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}`;
 

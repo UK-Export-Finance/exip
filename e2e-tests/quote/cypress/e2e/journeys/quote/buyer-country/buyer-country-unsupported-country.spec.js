@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, cannotApplyPage, submitButton,
+  backLink, countryInput, cannotApplyPage,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -35,7 +35,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     const results = countryInput.field(FIELD_ID).results();
     results.first().click();
 
-    submitButton().click();
+    cy.clickSubmitButton();
   });
 
   it('redirects to `cannot obtain cover` exit page', () => {

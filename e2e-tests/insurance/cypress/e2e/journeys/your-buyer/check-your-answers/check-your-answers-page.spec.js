@@ -1,4 +1,4 @@
-import { headingCaption, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -79,7 +79,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${allSectionsUrl}`;
 

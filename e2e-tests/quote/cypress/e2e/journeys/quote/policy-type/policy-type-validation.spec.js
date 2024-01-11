@@ -1,4 +1,3 @@
-import { submitButton } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import partials from '../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -38,7 +37,7 @@ context('Policy type page - policy type & length validation - single policy type
   describe('when submitting an empty form', () => {
     it('should render a validation error when submitting an empty form', () => {
       cy.navigateToUrl(url);
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
       partials.errorSummaryListItems().should('have.length', 1);

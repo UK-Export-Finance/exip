@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 
 const { COVER_PERIOD } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -44,7 +44,7 @@ context('Insurance - Eligibility - Change your answers - Cover period - As an ex
 
       summaryList.field(fieldId).changeLink().click();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

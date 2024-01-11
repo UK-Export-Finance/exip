@@ -1,5 +1,5 @@
 import { insurance } from '../../../../pages';
-import { intro, submitButton } from '../../../../pages/shared';
+import { intro } from '../../../../pages/shared';
 import { BUTTONS, LINKS, PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 
@@ -124,7 +124,7 @@ context('Insurance Eligibility - start page', () => {
     it(`should redirect to ${CHECK_IF_ELIGIBLE}`, () => {
       cy.navigateToUrl(url);
 
-      submitButton().click();
+      cy.clickSubmitButton();
 
       const expected = `${Cypress.config('baseUrl')}${CHECK_IF_ELIGIBLE}`;
 

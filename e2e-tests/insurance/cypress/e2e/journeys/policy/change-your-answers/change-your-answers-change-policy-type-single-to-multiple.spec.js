@@ -1,4 +1,4 @@
-import { submitButton, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -81,7 +81,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
       summaryList.field(POLICY_TYPE).changeLink().click();
 
       typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
-      submitButton().click();
+      cy.clickSubmitButton();
 
       cy.completeAndSubmitMultipleContractPolicyForm();
     });

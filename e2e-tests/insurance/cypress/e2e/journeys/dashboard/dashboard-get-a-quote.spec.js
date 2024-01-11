@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import { submitButton } from '../../../../../pages/shared';
 import header from '../../../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
@@ -22,7 +21,7 @@ context('Insurance - Dashboard - Get a quote button - As an Exporter, I want to 
 
       cy.submitQuoteAnswersHappyPathSinglePolicy();
 
-      submitButton().click();
+      cy.clickSubmitButton();
     });
   });
 

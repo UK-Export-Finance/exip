@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import {
   ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
@@ -25,7 +25,7 @@ const completeAllFields = (phoneNumber) => {
 
   cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-  submitButton().click();
+  cy.clickSubmitButton();
 };
 
 const baseUrl = Cypress.config('baseUrl');
@@ -66,7 +66,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
       field(PHONE_NUMBER).input().clear();
-      submitButton().click();
+      cy.clickSubmitButton();
     });
 
     it('should not display validation errors', () => {

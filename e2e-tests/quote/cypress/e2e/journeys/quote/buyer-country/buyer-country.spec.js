@@ -1,4 +1,4 @@
-import { backLink, countryInput, submitButton } from '../../../../../../pages/shared';
+import { backLink, countryInput } from '../../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
@@ -70,7 +70,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       beforeEach(() => {
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {
@@ -101,7 +101,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
         const results = field.results();
         results.first().click();
 
-        submitButton().click();
+        cy.clickSubmitButton();
       });
 
       it(`should redirect to ${BUYER_BODY}`, () => {

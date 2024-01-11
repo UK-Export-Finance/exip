@@ -1,4 +1,4 @@
-import { field, submitButton } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../constants';
 
 const {
@@ -34,7 +34,7 @@ const signInAndGoToUrl = (url) => {
     cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
 
     // submit the OTP security code
-    submitButton().click();
+    cy.clickSubmitButton();
 
     cy.navigateToUrl(url);
     cy.assertUrl(url);
