@@ -1,8 +1,10 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/export-contract';
-import { countryInput } from '../../../../../../../pages/shared';
+import { countryInput, yesRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/export-contract';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../../fixtures/countries';
 
 const {
   EXPORT_CONTRACT: {
@@ -22,6 +24,21 @@ const {
     },
   },
 } = ERROR_MESSAGES;
+
+const {
+  ABOUT_GOODS_OR_SERVICES: {
+    [DESCRIPTION]: { MAXIMUM },
+  },
+} = FIELDS;
+
+const descriptionField = aboutGoodsOrServicesPage[DESCRIPTION];
+
+const textareaField = {
+  ...descriptionField,
+  input: descriptionField.textarea,
+};
+
+const descriptionOverMaximum = 'a'.repeat(MAXIMUM + 1);
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -52,10 +69,6 @@ context('Insurance - Export contract - About goods or services page - form valid
   it('should render validation errors for all required fields', () => {
     const expectedErrorsCount = 2;
 
-    const descriptionField = aboutGoodsOrServicesPage[DESCRIPTION];
-
-    const textareaField = { ...descriptionField, input: descriptionField.textarea };
-
     // description
     cy.submitAndAssertFieldErrors(
       textareaField,
@@ -77,6 +90,24 @@ context('Insurance - Export contract - About goods or services page - form valid
     );
   });
 
+  it(`should display validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+    cy.navigateToUrl(url);
+
+    const errorIndex = 0;
+    const expectedErrorsCount = 2;
+
+    const errorMessage = ABOUT_ERROR_MESSAGES[DESCRIPTION].ABOVE_MAXIMUM;
+
+    cy.submitAndAssertFieldErrors(
+      textareaField,
+      descriptionOverMaximum,
+      errorIndex,
+      expectedErrorsCount,
+      errorMessage,
+      true,
+    );
+  });
+
   describe(`when ${FINAL_DESTINATION_KNOWN} is 'yes', but ${FINAL_DESTINATION} is not provided`, () => {
     it(`should render a ${FINAL_DESTINATION} validation error`, () => {
       cy.navigateToUrl(url);
@@ -95,6 +126,23 @@ context('Insurance - Export contract - About goods or services page - form valid
         ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
         false,
       );
+    });
+  });
+
+  describe(`when ${FINAL_DESTINATION_KNOWN} is 'yes', ${FINAL_DESTINATION} is provided, but ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+    it('should retain all submitted values', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitAboutGoodsOrServicesForm({
+        description: descriptionOverMaximum,
+        includeFinalDestination: true,
+      });
+
+      descriptionField.textarea().should('have.value', descriptionOverMaximum);
+
+      yesRadioInput().should('be.checked');
+
+      cy.checkText(countryInput.field(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
     });
   });
 });

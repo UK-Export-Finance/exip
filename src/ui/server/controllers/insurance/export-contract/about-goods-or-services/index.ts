@@ -10,6 +10,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
+import getCountryByName from '../../../../helpers/get-country-by-name';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save';
@@ -139,7 +140,11 @@ export const post = async (req: Request, res: Response) => {
       let mappedCountries;
 
       if (objectHasProperty(payload, FINAL_DESTINATION)) {
-        mappedCountries = mapCountries(countries, payload[FINAL_DESTINATION]);
+        const submittedCountryName = payload[FINAL_DESTINATION];
+
+        const country = getCountryByName(countries, submittedCountryName);
+
+        mappedCountries = mapCountries(countries, country?.isoCode);
       } else {
         mappedCountries = mapCountries(countries);
       }
