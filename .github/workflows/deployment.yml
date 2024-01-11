@@ -5,6 +5,12 @@
 # https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
 #
 #
+# Following Azure services are consumed:
+# 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
+# 2. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
+# 3. Azure WebApp - https://learn.microsoft.com/en-us/azure/app-service/overview
+#
+#
 # Execution
 # *********
 # GHA is only invoked when following conditions are satisfied:
@@ -156,8 +162,6 @@ jobs:
             NODE_ENV='${{ vars.NODE_ENV }}' \
             PORT='${{ vars.API_PORT }}' \
             WEBSITES_PORT='${{ vars.API_PORT }}' \
-            TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
-            TLS_KEY='${{ secrets.TLS_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
@@ -261,12 +265,9 @@ jobs:
             NODE_ENV='${{ vars.NODE_ENV }}' \
             PORT='${{ vars.UI_PORT }}' \
             WEBSITES_PORT='${{ vars.UI_PORT }}' \
-            TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
-            TLS_KEY='${{ secrets.TLS_KEY }}' \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
             GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
-
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
