@@ -55,6 +55,48 @@ jobs:
       - name: Timezone 🌐
         run: echo "Timezone set to ${{ env.TIMEZONE }}"
 
+  db:
+    name: Database 💾
+    needs: setup
+    environment: ${{ needs.setup.outputs.environment }}
+    if: ${{ '1' == vars.DATABASE }}
+    env:
+      ENVIRONMENT: ${{ needs.setup.outputs.environment }}
+    runs-on: [self-hosted, EXIP, deployment]
+    steps:
+      - name: Repository 🗃️
+        uses: actions/checkout@v4
+
+      - name: Azure 🔐
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Defaults ✨
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            # Basic
+            az configure --defaults location=${{ vars.REGION }}
+            az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
+
+      - name: Extension ➕
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+
+      - name: Import ⬇
+        uses: Azure/cli@v1.0.8
+        with:
+          inlineScript: |
+            az mysql flexible-server execute \
+            --name sqldb-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }} \
+            --admin-user ${{ secrets.MYSQL_USER }} \
+            --admin-password ${{ secrets.MYSQL_PASSWORD }} \
+            --database-name ${{ env.PRODUCT }} \
+            --file-path "database/exip.sql"
+
   api:
     name: API 📦️
     needs: setup
@@ -122,9 +164,6 @@ jobs:
             WEBSITES_PORT='${{ vars.API_PORT }}' \
             TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
             TLS_KEY='${{ secrets.TLS_KEY }}' \
-            DATABASE_URL='${{ secrets.DATABASE_URL }}' \
-            MYSQL_DATABASE='${{ secrets.MYSQL_DATABASE }}' \
-            MYSQL_ROOT_PASSWORD='${{ secrets.MYSQL_ROOT_PASSWORD }}' \
             API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
