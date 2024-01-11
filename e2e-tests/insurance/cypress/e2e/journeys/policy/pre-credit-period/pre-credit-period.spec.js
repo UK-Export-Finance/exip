@@ -22,8 +22,8 @@ const { preCreditPeriodDescription } = partials;
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 
 const {
-  ROOT: INSURANCE_ROOT,
-  POLICY: { PRE_CREDIT_PERIOD },
+  ROOT,
+  POLICY: { PRE_CREDIT_PERIOD, BROKER_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -42,7 +42,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
       cy.navigateToUrl(url);
       cy.assertUrl(url);
@@ -60,7 +60,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`,
+      currentHref: `${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`,
       backLink: `${url}#`,
     });
   });
@@ -142,6 +142,18 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
           cy.checkText(preCreditPeriodDescription.happensBefore(), HAPPENS_BEFORE);
         });
       });
+    });
+  });
+
+  context('form submission', () => {
+    it(`should redirect to ${BROKER_ROOT}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitPreCreditPeriodForm();
+
+      const expected = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+
+      cy.assertUrl(expected);
     });
   });
 });
