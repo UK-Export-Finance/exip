@@ -165,6 +165,7 @@ jobs:
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}' \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
             COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
@@ -270,7 +271,8 @@ jobs:
             GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
 
       - name: Slot 🔀
         uses: azure/cli@v1.0.9
