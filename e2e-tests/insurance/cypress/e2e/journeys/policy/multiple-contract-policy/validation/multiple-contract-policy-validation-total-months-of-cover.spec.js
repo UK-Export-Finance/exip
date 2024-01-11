@@ -89,6 +89,18 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     });
   });
 
+  describe('when total months of cover contains a decimal', () => {
+    it('should render a validation error', () => {
+      cy.submitAndAssertFieldErrors(
+        field,
+        '7.5',
+        errorIndex,
+        expectedErrors,
+        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
+      );
+    });
+  });
+
   describe('when total months of cover is below the minimum', () => {
     it('should render a validation error', () => {
       cy.submitAndAssertFieldErrors(
