@@ -17,7 +17,7 @@ interface PageVariablesContentStrings {
 interface PageVariablesDataCy {
   HEADING: string;
   BACK_LINK: string;
-  HINT: string;
+  INTRO: string;
 }
 
 interface PageVariablesHTMLFlags {

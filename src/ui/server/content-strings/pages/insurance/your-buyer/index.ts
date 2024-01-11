@@ -37,7 +37,7 @@ const TRADED_WITH_BUYER = {
 const TRADING_HISTORY = {
   ...SHARED,
   PAGE_TITLE: 'Tell us about your trading history with the buyer',
-  HINT: 'We will request a copy of your trading history once the application has been submitted.',
+  INTRO: 'We will request a copy of your trading history once the application has been submitted.',
 };
 
 const CHECK_YOUR_ANSWERS = {

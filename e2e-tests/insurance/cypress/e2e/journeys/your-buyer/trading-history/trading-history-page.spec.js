@@ -1,5 +1,5 @@
 import {
-  headingCaption, hint, saveAndBackButton, yesRadio, noRadio, field,
+  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field,
 } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
@@ -26,7 +26,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your Buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
-  // let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,11 +33,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
 
       cy.startInsuranceYourBuyerSection({});
 
-      // cy.completeAndSubmitCompanyOrOrganisationForm({});
-      // cy.completeAndSubmitConnectionToTheBuyerForm({});
-
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      // checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.navigateToUrl(url);
 
@@ -71,8 +66,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a hint', () => {
-      cy.checkText(hint(), CONTENT_STRINGS.HINT);
+    it('renders an intro', () => {
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     describe(OUTSTANDING_PAYMENTS, () => {
@@ -143,42 +138,4 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       );
     });
   });
-
-  // describe('form submission', () => {
-  //   beforeEach(() => {
-  //     cy.navigateToUrl(url);
-  //   });
-
-  //   describe('when submitting the form as "yes"', () => {
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-  //       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-
-  //       cy.assertUrl(checkYourAnswersUrl);
-  //     });
-
-  //     describe('when going back to the page', () => {
-  //       it('should have the submitted values', () => {
-  //         cy.navigateToUrl(url);
-
-  //         yesRadioInput().should('be.checked');
-  //       });
-  //     });
-  //   });
-
-  //   describe('when submitting the form as "no"', () => {
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-  //       cy.completeAndSubmitTradedWithBuyerForm({});
-
-  //       cy.assertUrl(checkYourAnswersUrl);
-  //     });
-
-  //     describe('when going back to the page', () => {
-  //       it('should have the submitted values', () => {
-  //         cy.navigateToUrl(url);
-
-  //         noRadioInput().should('be.checked');
-  //       });
-  //     });
-  //   });
-  // });
 });
