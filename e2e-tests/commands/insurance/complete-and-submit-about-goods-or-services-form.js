@@ -20,14 +20,16 @@ const {
 /**
  * completeAndSubmitAboutGoodsOrServicesForm
  * Complete and submit the "About goods or services" form
+ * @param {Boolean} description: description value
  * @param {Boolean} finalDestinationKnown: flag for if the final destination is known
  * @param {Boolean} includeFinalDestination: flag for if the final destination should be included.
  */
 const completeAndSubmitAboutGoodsOrServicesForm = ({
+  description = application.EXPORT_CONTRACT[DESCRIPTION],
   finalDestinationKnown = true,
   includeFinalDestination = true,
 }) => {
-  cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
+  cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), description);
 
   if (finalDestinationKnown) {
     yesRadio().input().click();
