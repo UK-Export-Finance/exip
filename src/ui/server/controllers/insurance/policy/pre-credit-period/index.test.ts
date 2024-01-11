@@ -1,4 +1,4 @@
-import { pageVariables, HTML_FLAGS, TEMPLATE, PAGE_CONTENT_STRINGS, FIELD_IDS, get, post } from '.';
+import { PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
@@ -46,11 +46,25 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
     jest.resetAllMocks();
   });
 
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct properties', () => {
+      const expected = {
+        ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
+        HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
+        PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+      };
+
+      expect(PAGE_CONTENT_STRINGS).toEqual(expected);
+    });
+  });
+
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const result = pageVariables(refNumber);
 
       const expected = {
+        FIELD_ID: NEED_PRE_CREDIT_PERIOD,
+        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         FIELDS: {
           NEED_PRE_CREDIT_PERIOD: {
             ID: NEED_PRE_CREDIT_PERIOD,
@@ -87,18 +101,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
     });
   });
 
-  describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct properties', () => {
-      const expected = {
-        ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
-        HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
-        PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
-      };
-
-      expect(PAGE_CONTENT_STRINGS).toEqual(expected);
-    });
-  });
-
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
       const expected = [NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION];
@@ -118,8 +120,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
           HTML_FLAGS,
         }),
         ...pageVariables(refNumber),
-        FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         userName: getUserNameFromSession(req.session.user),
         application: res.locals.application,
       };
@@ -183,8 +183,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
             HTML_FLAGS,
           }),
           ...pageVariables(refNumber),
-          FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-          FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
           userName: getUserNameFromSession(req.session.user),
           application: res.locals.application,
           submittedValues: sanitisedData,

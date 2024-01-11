@@ -25,6 +25,12 @@ const {
   },
 } = TEMPLATES;
 
+export const PAGE_CONTENT_STRINGS = {
+  ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
+  HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
+  PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+};
+
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -32,6 +38,8 @@ const {
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
+  FIELD_ID: NEED_PRE_CREDIT_PERIOD,
+  FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
   FIELDS: {
     NEED_PRE_CREDIT_PERIOD: {
       ID: NEED_PRE_CREDIT_PERIOD,
@@ -57,12 +65,6 @@ export const HTML_FLAGS = {
 };
 
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
-
-export const PAGE_CONTENT_STRINGS = {
-  ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
-  HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
-  PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
-};
 
 export const FIELD_IDS = [NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION];
 
@@ -90,8 +92,6 @@ export const get = (req: Request, res: Response) => {
       HTML_FLAGS,
     }),
     ...pageVariables(refNumber),
-    FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-    FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
     userName: getUserNameFromSession(req.session.user),
     application,
   });
@@ -127,8 +127,6 @@ export const post = async (req: Request, res: Response) => {
         HTML_FLAGS,
       }),
       ...pageVariables(refNumber),
-      FIELD_ID: NEED_PRE_CREDIT_PERIOD,
-      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       userName: getUserNameFromSession(req.session.user),
       application,
       submittedValues: sanitisedData,
