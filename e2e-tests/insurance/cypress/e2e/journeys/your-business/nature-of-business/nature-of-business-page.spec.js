@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials';
-import { field as fieldSelector, submitButton, saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -104,9 +104,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       field.input().should('exist');
     });
 
-    it('should display the continue and save and go back button', () => {
-      cy.checkText(submitButton(), BUTTONS.CONTINUE);
-
+    it('should display save and go back button', () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
