@@ -14,4 +14,6 @@ export const YOUR_BUYER = {
   CONNECTION_WITH_BUYER: 'exporterIsConnectedWithBuyer',
   CONNECTION_WITH_BUYER_DESCRIPTION: 'connectionWithBuyerDescription',
   TRADED_WITH_BUYER: 'exporterHasTradedWithBuyer',
+  OUTSTANDING_PAYMENTS: 'outstandingPayments',
+  FAILED_PAYMENTS: 'failedPayments',
 };
