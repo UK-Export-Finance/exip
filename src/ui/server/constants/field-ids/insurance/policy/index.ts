@@ -50,6 +50,7 @@ const POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
   PRE_CREDIT_PERIOD_DESCRIPTION: 'preCreditPeriodDescription',
+  // creditPeriodWithBuyer SHOULD BE THIS.
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

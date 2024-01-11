@@ -8,6 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -134,5 +135,18 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  try {
+    // save the application
+    const saveResponse = await mapAndSave.policy(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - policy - pre-credit period %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

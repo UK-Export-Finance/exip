@@ -9,6 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -31,6 +32,10 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
+
+  jest.mock('../map-and-save/policy');
+
+  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -141,18 +146,28 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   });
 
   describe('post', () => {
-    describe('when there are no validation errors', () => {
-      const validBody = {
-        [NEED_PRE_CREDIT_PERIOD]: 'true',
-        [PRE_CREDIT_PERIOD_DESCRIPTION]: 'mock description',
-      };
+    const validBody = {
+      [NEED_PRE_CREDIT_PERIOD]: 'true',
+      [PRE_CREDIT_PERIOD_DESCRIPTION]: 'Mock description',
+    };
 
+    describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, () => {
-        post(req, res);
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
@@ -170,8 +185,8 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         req.body = mockInvalidBody;
       });
 
-      it('should render template with validation errors', () => {
-        post(req, res);
+      it('should render template with validation errors', async () => {
+        await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
         const sanitisedData = sanitiseData(payload);
@@ -202,6 +217,42 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.policy call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.policy = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.policy = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });
