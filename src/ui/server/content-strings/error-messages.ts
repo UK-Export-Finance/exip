@@ -307,6 +307,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.YOUR_BUYER.FAILED_PAYMENTS]: {
         IS_EMPTY: 'Select if the end buyer has ever failed to pay you on time',
       },
+      [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
+        IS_EMPTY: 'You must select the currency the outstanding or overdue payments are in',
+      },
     },
     ACCOUNT: {
       CREATE: {
