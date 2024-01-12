@@ -21,6 +21,7 @@ import { get as nameOnPolicyGet, post as nameOnPolicyPost } from '../../../contr
 import { post as nameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/name-on-policy/save-and-back';
 import { get as differentNameOnPolicyGet, post as differentNameOnPolicyPost } from '../../../controllers/insurance/policy/different-name-on-policy';
 import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../../controllers/insurance/policy/pre-credit-period';
+import { post as preCreditPeriodSaveAndBackPost } from '../../../controllers/insurance/policy/pre-credit-period/save-and-back';
 import { post as differentNameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/different-name-on-policy/save-and-back';
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/policy/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/policy/broker/save-and-back';
@@ -37,7 +38,7 @@ describe('routes/insurance/policy', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(25);
-    expect(post).toHaveBeenCalledTimes(32);
+    expect(post).toHaveBeenCalledTimes(33);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -130,6 +131,7 @@ describe('routes/insurance/policy', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD}`, preCreditPeriodGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD}`, preCreditPeriodPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD_SAVE_AND_BACK}`, preCreditPeriodSaveAndBackPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, getBroker);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, postBroker);
