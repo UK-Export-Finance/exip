@@ -11,7 +11,7 @@ const {
     NAME_ON_POLICY,
     DIFFERENT_NAME_ON_POLICY,
     NEED_PRE_CREDIT_PERIOD,
-    PRE_CREDIT_PERIOD_DESCRIPTION,
+    CREDIT_PERIOD_WITH_BUYER,
     BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
   },
 } = FIELD_IDS.INSURANCE;
@@ -158,7 +158,7 @@ export const POLICY_FIELDS = {
       TITLE: 'Pre-credit period',
     },
   },
-  [PRE_CREDIT_PERIOD_DESCRIPTION]: {
+  [CREDIT_PERIOD_WITH_BUYER]: {
     LABEL: 'What period of pre-credit cover do you require?',
     MAXIMUM: 1000,
     SUMMARY: {

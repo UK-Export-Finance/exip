@@ -1,18 +1,16 @@
 import totalMonthsOfCover, { MAXIMUM } from './total-months-of-cover';
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER: FIELD_ID },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: FIELD_ID },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -56,6 +54,18 @@ describe('controllers/insurance/policy/multiple-contract-policy/validation/rules
     });
   });
 
+  describe('when a value contains a decimal', () => {
+    it('should return a validation error', () => {
+      mockBody[FIELD_ID] = '7.5';
+
+      const result = totalMonthsOfCover(mockBody, mockErrors);
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when a value is below the minimum', () => {
     it('should return a validation error', () => {
       mockBody[FIELD_ID] = '0';
@@ -68,7 +78,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/validation/rules
     });
   });
 
-  describe('when a value is above the minimum', () => {
+  describe('when a value is above the maximum', () => {
     it('should return a validation error', () => {
       mockBody[FIELD_ID] = String(MAXIMUM + 1);
 

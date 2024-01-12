@@ -1,13 +1,15 @@
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { PAGES, PRE_CREDIT_PERIOD_DESCRIPTION as PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS } from '../../../../content-strings';
+import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -16,7 +18,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION } = POLICY_FIELD_IDS;
+const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const {
   SHARED_PAGES,
@@ -28,7 +30,7 @@ const {
 export const PAGE_CONTENT_STRINGS = {
   ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
   HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
-  PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+  CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER_STRINGS,
 };
 
 /**
@@ -45,9 +47,9 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: NEED_PRE_CREDIT_PERIOD,
       ...FIELDS[NEED_PRE_CREDIT_PERIOD],
     },
-    PRE_CREDIT_PERIOD_DESCRIPTION: {
-      ID: PRE_CREDIT_PERIOD_DESCRIPTION,
-      ...FIELDS[PRE_CREDIT_PERIOD_DESCRIPTION],
+    CREDIT_PERIOD_WITH_BUYER: {
+      ID: CREDIT_PERIOD_WITH_BUYER,
+      ...FIELDS[CREDIT_PERIOD_WITH_BUYER],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD_SAVE_AND_BACK}`,
@@ -61,12 +63,12 @@ export const HTML_FLAGS = {
   HORIZONTAL_RADIOS: true,
   NO_RADIO_AS_FIRST_OPTION: true,
   CONDITIONAL_YES_HTML: POLICY.PRE_CREDIT_PERIOD.CUSTOM_CONTENT_HTML,
-  CUSTOM_CONTENT_HTML: POLICY.PRE_CREDIT_PERIOD_DESCRIPTION.CUSTOM_CONTENT_HTML,
+  CUSTOM_CONTENT_HTML: POLICY.CREDIT_PERIOD_WITH_BUYER.CUSTOM_CONTENT_HTML,
 };
 
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
-export const FIELD_IDS = [NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION];
+export const FIELD_IDS = [NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER];
 
 /**
  * get
@@ -93,7 +95,8 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
-    application,
+    application: mapApplicationToFormFields(application),
+    applicationAnswer: application.policy[NEED_PRE_CREDIT_PERIOD],
   });
 };
 
@@ -134,5 +137,18 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  try {
+    // save the application
+    const saveResponse = await mapAndSave.policy(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - policy - pre-credit period %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

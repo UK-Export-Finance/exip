@@ -2,13 +2,15 @@ import { PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, FIELD_IDS, g
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { PAGES, PRE_CREDIT_PERIOD_DESCRIPTION as PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS } from '../../../../content-strings';
+import { PAGES, CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -18,7 +20,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION } = POLICY_FIELD_IDS;
+const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const {
   SHARED_PAGES,
@@ -31,6 +33,10 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
+
+  jest.mock('../map-and-save/policy');
+
+  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -51,7 +57,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD,
         HINT: FIELDS[NEED_PRE_CREDIT_PERIOD].HINT,
-        PRE_CREDIT_PERIOD_DESCRIPTION: PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+        CREDIT_PERIOD_WITH_BUYER: CREDIT_PERIOD_WITH_BUYER_STRINGS,
       };
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
@@ -70,9 +76,9 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
             ID: NEED_PRE_CREDIT_PERIOD,
             ...FIELDS[NEED_PRE_CREDIT_PERIOD],
           },
-          PRE_CREDIT_PERIOD_DESCRIPTION: {
-            ID: PRE_CREDIT_PERIOD_DESCRIPTION,
-            ...FIELDS[PRE_CREDIT_PERIOD_DESCRIPTION],
+          CREDIT_PERIOD_WITH_BUYER: {
+            ID: CREDIT_PERIOD_WITH_BUYER,
+            ...FIELDS[CREDIT_PERIOD_WITH_BUYER],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRE_CREDIT_PERIOD_SAVE_AND_BACK}`,
@@ -88,7 +94,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         HORIZONTAL_RADIOS: true,
         NO_RADIO_AS_FIRST_OPTION: true,
         CONDITIONAL_YES_HTML: POLICY.PRE_CREDIT_PERIOD.CUSTOM_CONTENT_HTML,
-        CUSTOM_CONTENT_HTML: POLICY.PRE_CREDIT_PERIOD_DESCRIPTION.CUSTOM_CONTENT_HTML,
+        CUSTOM_CONTENT_HTML: POLICY.CREDIT_PERIOD_WITH_BUYER.CUSTOM_CONTENT_HTML,
       };
 
       expect(HTML_FLAGS).toEqual(expected);
@@ -103,7 +109,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION];
+      const expected = [NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -121,7 +127,8 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: res.locals.application,
+        application: mapApplicationToFormFields(mockApplication),
+        applicationAnswer: mockApplication.policy[NEED_PRE_CREDIT_PERIOD],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -141,18 +148,28 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   });
 
   describe('post', () => {
-    describe('when there are no validation errors', () => {
-      const validBody = {
-        [NEED_PRE_CREDIT_PERIOD]: 'true',
-        [PRE_CREDIT_PERIOD_DESCRIPTION]: 'mock description',
-      };
+    const validBody = {
+      [NEED_PRE_CREDIT_PERIOD]: 'true',
+      [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+    };
 
+    describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, () => {
-        post(req, res);
+      it('should call mapAndSave.policy with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.policy).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
@@ -163,15 +180,15 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
     describe('when there are validation errors', () => {
       const mockInvalidBody = {
         [NEED_PRE_CREDIT_PERIOD]: '',
-        [PRE_CREDIT_PERIOD_DESCRIPTION]: '',
+        [CREDIT_PERIOD_WITH_BUYER]: '',
       };
 
       beforeEach(() => {
         req.body = mockInvalidBody;
       });
 
-      it('should render template with validation errors', () => {
-        post(req, res);
+      it('should render template with validation errors', async () => {
+        await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
         const sanitisedData = sanitiseData(payload);
@@ -202,6 +219,42 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.policy call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.policy = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.policy = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

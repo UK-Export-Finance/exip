@@ -15,16 +15,16 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION,
+  NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
 } = POLICY_FIELD_IDS;
 
 const {
-  [PRE_CREDIT_PERIOD_DESCRIPTION]: { MAXIMUM },
+  [CREDIT_PERIOD_WITH_BUYER]: { MAXIMUM },
 } = FIELDS;
 
 const POLICY_ERROR_MESSAGES = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const descriptionField = fieldSelector(PRE_CREDIT_PERIOD_DESCRIPTION);
+const descriptionField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
 
 const textareaField = {
   ...descriptionField,
@@ -86,8 +86,8 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
       yesRadio().input().click();
     });
 
-    it(`should render a validation error when ${PRE_CREDIT_PERIOD_DESCRIPTION} is not provided`, () => {
-      const fieldId = PRE_CREDIT_PERIOD_DESCRIPTION;
+    it(`should render a validation error when ${CREDIT_PERIOD_WITH_BUYER} is not provided`, () => {
+      const fieldId = CREDIT_PERIOD_WITH_BUYER;
       const submittedValue = '';
 
       const errorIndex = 0;
@@ -103,8 +103,8 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
       );
     });
 
-    it(`should render a validation error when ${PRE_CREDIT_PERIOD_DESCRIPTION} is above the maximum`, () => {
-      const fieldId = PRE_CREDIT_PERIOD_DESCRIPTION;
+    it(`should render a validation error when ${CREDIT_PERIOD_WITH_BUYER} is above the maximum`, () => {
+      const fieldId = CREDIT_PERIOD_WITH_BUYER;
       const submittedValue = 'a'.repeat(MAXIMUM + 1);
 
       const errorIndex = 0;
@@ -120,7 +120,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
       );
     });
 
-    it(`should not render any validation errors when ${PRE_CREDIT_PERIOD_DESCRIPTION} is below the minimum`, () => {
+    it(`should not render any validation errors when ${CREDIT_PERIOD_WITH_BUYER} is below the minimum`, () => {
       cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
 
       partials.errorSummaryListItems().should('not.exist');

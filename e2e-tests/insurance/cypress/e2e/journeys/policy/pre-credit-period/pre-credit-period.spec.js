@@ -3,32 +3,40 @@ import {
   yesRadio,
   yesNoRadioHint,
   noRadio,
+  noRadioInput,
   field as fieldSelector,
   saveAndBackButton,
+  yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
   BUTTONS,
   PAGES,
-  PRE_CREDIT_PERIOD_DESCRIPTION as PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS,
+  CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS,
+  TASKS,
 } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import mockApplication from '../../../../../../fixtures/application';
 
-const { preCreditPeriodDescription } = partials;
+const { creditPeriodWithBuyer } = partials;
+const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 
 const {
   ROOT,
+  ALL_SECTIONS,
   POLICY: { BROKER_ROOT, NAME_ON_POLICY, PRE_CREDIT_PERIOD },
 } = INSURANCE_ROUTES;
 
 const {
-  NEED_PRE_CREDIT_PERIOD, PRE_CREDIT_PERIOD_DESCRIPTION,
+  NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
 } = POLICY_FIELD_IDS;
+
+const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -37,6 +45,7 @@ const story = 'As an exporter, I want to state whether I require pre-credit cove
 context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
   let referenceNumber;
   let url;
+  let brokerUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -51,6 +60,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -109,8 +119,8 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       });
     });
 
-    describe(PRE_CREDIT_PERIOD_DESCRIPTION, () => {
-      const fieldId = PRE_CREDIT_PERIOD_DESCRIPTION;
+    describe(CREDIT_PERIOD_WITH_BUYER, () => {
+      const fieldId = CREDIT_PERIOD_WITH_BUYER;
       const field = fieldSelector(fieldId);
 
       it('should NOT by visible by default', () => {
@@ -134,33 +144,72 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
         PROTECTS_YOU,
         INSURES_YOU,
         HAPPENS_BEFORE,
-      } = PRE_CREDIT_PERIOD_DESCRIPTION_STRINGS;
+      } = CREDIT_PERIOD_WITH_BUYER_STRINGS;
 
       it('renders summary text', () => {
-        cy.checkText(preCreditPeriodDescription.summary(), INTRO);
+        cy.checkText(creditPeriodWithBuyer.summary(), INTRO);
 
-        preCreditPeriodDescription.details().should('not.have.attr', 'open');
+        creditPeriodWithBuyer.details().should('not.have.attr', 'open');
       });
 
       describe('when clicking the summary text', () => {
         it('should expand the collapsed `description` content', () => {
-          cy.checkText(preCreditPeriodDescription.protectsYou(), PROTECTS_YOU);
-          cy.checkText(preCreditPeriodDescription.insuresYou(), INSURES_YOU);
-          cy.checkText(preCreditPeriodDescription.happensBefore(), HAPPENS_BEFORE);
+          cy.checkText(creditPeriodWithBuyer.protectsYou(), PROTECTS_YOU);
+          cy.checkText(creditPeriodWithBuyer.insuresYou(), INSURES_YOU);
+          cy.checkText(creditPeriodWithBuyer.happensBefore(), HAPPENS_BEFORE);
         });
       });
     });
   });
 
   context('form submission', () => {
-    it(`should redirect to ${BROKER_ROOT}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitPreCreditPeriodForm({});
+    });
 
-      const expected = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+    it(`should redirect to ${BROKER_ROOT}`, () => {
+      cy.assertUrl(brokerUrl);
+    });
 
-      cy.assertUrl(expected);
+    it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
+      cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+
+      const expected = TASKS.STATUS.IN_PROGRESS;
+      cy.checkText(task.status(), expected);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        noRadioInput().should('be.checked');
+      });
+    });
+
+    describe(`when submitting ${NEED_PRE_CREDIT_PERIOD} as yes and submitting a ${CREDIT_PERIOD_WITH_BUYER}`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, () => {
+        cy.assertUrl(brokerUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          yesRadioInput().should('be.checked');
+
+          const expectedValue = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER];
+
+          fieldSelector(CREDIT_PERIOD_WITH_BUYER).textarea().should('have.value', expectedValue);
+        });
+      });
     });
   });
 });

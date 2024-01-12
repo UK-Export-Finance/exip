@@ -1,4 +1,4 @@
-import positionRule from './pre-credit-period-description';
+import positionRule from './credit-period-with-buyer-description';
 import nameOnPolicyRule from './pre-credit-period';
 import { ValidationErrors } from '../../../../../../../types';
 
