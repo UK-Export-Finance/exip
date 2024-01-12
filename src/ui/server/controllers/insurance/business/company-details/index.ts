@@ -155,7 +155,7 @@ const post = async (req: Request, res: Response) => {
      * - Regular form POST.
      * - Change answers form POST.
      * - Check/change answers form POST.
-     * 2) When TRADING_ADDRESS is "no"/false
+     * 2) When TRADING_ADDRESS is "no"/false:
      * - Regular form POST.
      * - Change answers form POST.
      * - Check/change answers form POST.
