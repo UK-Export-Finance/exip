@@ -7,19 +7,21 @@ import {
   field,
   summaryList,
   noRadioInput,
+  yesRadioInput,
 } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-// TODO - missing TRADING_ADDRESS
+import application from '../../../../../../fixtures/application';
 
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
+      TRADING_ADDRESS,
       HAS_DIFFERENT_TRADING_NAME,
       WEBSITE,
       PHONE_NUMBER,
     },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -27,6 +29,7 @@ const {
   ROOT,
   EXPORTER_BUSINESS: {
     COMPANY_DETAILS_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
@@ -94,6 +97,50 @@ context('Insurance - Your business - Change your answers - Company details - As 
         const expected = FIELD_VALUES.NO;
 
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+      });
+    });
+  });
+
+  describe(TRADING_ADDRESS, () => {
+    const fieldId = TRADING_ADDRESS;
+
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
+      });
+    });
+
+    describe(`form submission with a new answer (change ${TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES})`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        yesRadioInput().last().click();
+
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_TRADING_ADDRESS_CHANGE, fieldId });
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} after submitting new ${TRADING_ADDRESS} and ${FULL_ADDRESS} answers`, () => {
+        cy.completeAndSubmitAlternativeTradingAddressForm();
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+
+        // TRADING_ADDRESS
+        cy.assertSummaryListRowValue(summaryList, TRADING_ADDRESS, FIELD_VALUES.YES);
+
+        // DIFFERENT_TRADING_ADDRESS.FULL_ADDRESS
+        const expectedFullAddress = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
+
+        cy.assertSummaryListRowValue(summaryList, FULL_ADDRESS, expectedFullAddress);
       });
     });
   });

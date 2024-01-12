@@ -110,11 +110,13 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
+    const sanitisedHasTradingAddress = sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] });
+
     // populate submittedValues
     const submittedValues = {
       // if trading name is string true, then convert to boolean true
       [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
-      [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
+      [TRADING_ADDRESS]: sanitisedHasTradingAddress,
       [WEBSITE]: payload[WEBSITE],
       [PHONE_NUMBER]: payload[PHONE_NUMBER],
       [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
@@ -158,7 +160,7 @@ const post = async (req: Request, res: Response) => {
      * - Change answers form POST.
      * - Check/change answers form POST.
      */
-    const tradingAddressIsRequired = payload[TRADING_ADDRESS] && !application.company.differentTradingAddress.fullAddress;
+    const tradingAddressIsRequired = sanitisedHasTradingAddress && !application.company.differentTradingAddress.fullAddress;
 
     /**
      * If "different trading address" has been submitted as "yes"/true,
