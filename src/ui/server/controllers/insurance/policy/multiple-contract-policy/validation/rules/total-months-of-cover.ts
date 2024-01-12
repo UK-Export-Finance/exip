@@ -1,20 +1,19 @@
-import { APPLICATION, FIELD_IDS } from '../../../../../../constants';
+import { APPLICATION } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
-import { isNumber } from '../../../../../../helpers/number';
+import { isNumber, numberHasDecimal } from '../../../../../../helpers/number';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { RequestBody } from '../../../../../../../types';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: {
-        MULTIPLE: { TOTAL_MONTHS_OF_COVER: FIELD_ID },
-      },
+  POLICY: {
+    CONTRACT_POLICY: {
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: FIELD_ID },
     },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -41,14 +40,20 @@ const totalMonthsOfCoverRules = (formBody: RequestBody, errors: object) => {
     return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
-  if (!isNumber(formBody[FIELD_ID])) {
+  const submittedValue = formBody[FIELD_ID];
+
+  if (!isNumber(submittedValue)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
-  const monthsOfCover = Number(formBody[FIELD_ID]);
+  const monthsOfCover = Number(submittedValue);
 
   if (monthsOfCover < MINIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
+  }
+
+  if (numberHasDecimal(Number(submittedValue))) {
+    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   if (monthsOfCover > MAXIMUM) {
