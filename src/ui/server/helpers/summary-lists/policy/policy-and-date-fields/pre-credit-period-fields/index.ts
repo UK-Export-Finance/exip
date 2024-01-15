@@ -5,7 +5,7 @@ import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
 import generateChangeLink from '../../../../generate-change-link';
 import mapYesNoField from '../../../../mappings/map-yes-no-field';
-import { ApplicationPolicy, SummaryListItemData } from '../../../../../../types';
+import { ApplicationPolicy } from '../../../../../../types';
 
 const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
@@ -22,9 +22,7 @@ const {
  * @returns {Array<SummaryListItemData>}
  */
 const generatePreCreditPeriodFields = (answers: ApplicationPolicy, referenceNumber: number, checkAndChange: boolean) => {
-  let fields = [] as Array<SummaryListItemData>;
-
-  fields = [
+  const fields = [
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, NEED_PRE_CREDIT_PERIOD),
