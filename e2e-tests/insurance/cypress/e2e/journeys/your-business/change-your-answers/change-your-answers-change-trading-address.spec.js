@@ -61,6 +61,22 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
     cy.deleteApplication(referenceNumber);
   });
 
+  describe(`do NOT change any answers (${TRADING_ADDRESS} remains as ${FIELD_VALUES.NO})`, () => {
+    const fieldId = TRADING_ADDRESS;
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.clickSubmitButton();
+    });
+
+    it(`should should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+    });
+  });
+
   describe(`change ${TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES}`, () => {
     const fieldId = TRADING_ADDRESS;
 

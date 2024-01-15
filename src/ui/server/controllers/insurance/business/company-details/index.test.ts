@@ -40,6 +40,14 @@ const {
 
 const IS_APPLICATION_SUMMARY_LIST = true;
 
+const applicationWithoutDifferentTradingAddress = {
+  ...mockApplication,
+  company: {
+    ...mockApplication.company,
+    differentTradingAddress: { id: '' },
+  },
+};
+
 describe('controllers/insurance/business/companies-details', () => {
   let req: Request;
   let res: Response;
@@ -189,49 +197,57 @@ describe('controllers/insurance/business/companies-details', () => {
         expect(mapAndSave.companyDetails).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' but is not a check or check-and-change route`, () => {
-        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}`, async () => {
-          req.body = {
-            ...validBody,
-            [TRADING_ADDRESS]: 'true',
-          };
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+      describe('when an application does NOT have application.company.differentTradingAddress.fullAddress', () => {
+        beforeEach(() => {
+          res.locals.application = applicationWithoutDifferentTradingAddress;
         });
-      });
 
-      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' and is a check route`, () => {
-        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, async () => {
-          req.body = {
-            ...validBody,
-            [TRADING_ADDRESS]: 'true',
-          };
+        describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true'`, () => {
+          describe('when the route is NOT a check or check-and-change route', () => {
+            it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}`, async () => {
+              req.body = {
+                ...validBody,
+                [TRADING_ADDRESS]: 'true',
+              };
 
-          req.originalUrl = COMPANY_DETAILS_CHANGE;
+              await post(req, res);
 
-          await post(req, res);
+              const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
+              expect(res.redirect).toHaveBeenCalledWith(expected);
+            });
+          });
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
+          describe('when the route is a is a check route', () => {
+            it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, async () => {
+              req.body = {
+                ...validBody,
+                [TRADING_ADDRESS]: 'true',
+              };
 
-      describe(`when req.body has ${TRADING_ADDRESS} with a value of 'true' and is a check-and-change route`, () => {
-        it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, async () => {
-          req.body = {
-            ...validBody,
-            [TRADING_ADDRESS]: 'true',
-          };
+              req.originalUrl = COMPANY_DETAILS_CHANGE;
 
-          req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
+              await post(req, res);
 
-          await post(req, res);
+              const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
+              expect(res.redirect).toHaveBeenCalledWith(expected);
+            });
+          });
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+          describe('when the route is a check-and-change route', () => {
+            it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, async () => {
+              req.body = {
+                ...validBody,
+                [TRADING_ADDRESS]: 'true',
+              };
+
+              req.originalUrl = COMPANY_DETAILS_CHECK_AND_CHANGE;
+
+              await post(req, res);
+
+              const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
+              expect(res.redirect).toHaveBeenCalledWith(expected);
+            });
+          });
         });
       });
 
