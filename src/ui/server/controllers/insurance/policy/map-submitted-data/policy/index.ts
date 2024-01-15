@@ -1,15 +1,15 @@
 import { RequestBody } from '../../../../../../types';
-import { FIELD_IDS } from '../../../../../constants';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE },
-    },
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    SINGLE: { CONTRACT_COMPLETION_DATE },
   },
-} = FIELD_IDS.INSURANCE;
+  NEED_PRE_CREDIT_PERIOD,
+  CREDIT_PERIOD_WITH_BUYER,
+} = POLICY_FIELD_IDS;
 
 /**
  * mapSubmittedData
@@ -35,6 +35,10 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   const { start, end } = dateFieldIds;
 
+  /**
+   * If REQUESTED_START_DATE and/or CONTRACT_COMPLETION_DATE fields are provided,
+   * transform the day/month/year fields into a timestamp.
+   */
   if (formBody[start.day] && formBody[start.month] && formBody[start.year]) {
     const day = Number(formBody[start.day]);
     const month = Number(formBody[start.month]);
@@ -49,6 +53,14 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     const year = Number(formBody[end.year]);
 
     populatedData[CONTRACT_COMPLETION_DATE] = createTimestampFromNumbers(day, month, year);
+  }
+
+  /**
+   * If NEED_PRE_CREDIT_PERIOD is answered as "no",
+   * wipe the CREDIT_PERIOD_WITH_BUYER field.
+   */
+  if (formBody[NEED_PRE_CREDIT_PERIOD] === 'false') {
+    populatedData[CREDIT_PERIOD_WITH_BUYER] = '';
   }
 
   return populatedData;

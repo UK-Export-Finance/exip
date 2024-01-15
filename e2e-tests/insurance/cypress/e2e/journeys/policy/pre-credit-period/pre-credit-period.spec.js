@@ -210,6 +210,25 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
           fieldSelector(CREDIT_PERIOD_WITH_BUYER).textarea().should('have.value', expectedValue);
         });
       });
+
+      // TODO: EMS-2621 - move this test into "check/change" answers.
+      describe(`when changing ${NEED_PRE_CREDIT_PERIOD} from 'yes' to 'no'`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: false });
+        });
+
+        describe('when going back to the page', () => {
+          it(`should have the submitted 'yes' value and an empty ${CREDIT_PERIOD_WITH_BUYER} value`, () => {
+            cy.navigateToUrl(url);
+
+            noRadioInput().should('be.checked');
+
+            fieldSelector(CREDIT_PERIOD_WITH_BUYER).textarea().should('have.value', '');
+          });
+        });
+      });
     });
   });
 });

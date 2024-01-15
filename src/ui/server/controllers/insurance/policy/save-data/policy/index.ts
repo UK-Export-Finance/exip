@@ -1,5 +1,4 @@
 import api from '../../../../../api';
-import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
@@ -14,7 +13,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @returns {Object} Saved data
  */
 const policy = async (application: Application, formBody: RequestBody, errorList?: object) => {
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
+  const dataToSave = getDataToSave(formBody, errorList);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
