@@ -80,23 +80,25 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     });
   });
 
-  describe('when submitting an empty form', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-    it('should render validation errors', () => {
-      cy.clickSubmitButton();
+      it('should render validation errors', () => {
+        cy.clickSubmitButton();
 
-      cy.checkText(
-        partials.errorSummaryListItems().first(),
-        ERRORS[CURRENCY_CODE].IS_EMPTY,
-      );
+        cy.checkText(
+          partials.errorSummaryListItems().first(),
+          ERRORS[CURRENCY_CODE].IS_EMPTY,
+        );
 
-      cy.checkText(
-        field(CURRENCY_CODE).errorMessage(),
-        `Error: ${ERRORS[CURRENCY_CODE].IS_EMPTY}`,
-      );
+        cy.checkText(
+          field(CURRENCY_CODE).errorMessage(),
+          `Error: ${ERRORS[CURRENCY_CODE].IS_EMPTY}`,
+        );
+      });
     });
   });
 });
