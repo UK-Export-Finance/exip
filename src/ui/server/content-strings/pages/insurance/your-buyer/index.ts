@@ -40,6 +40,11 @@ const TRADING_HISTORY = {
   INTRO: 'We will request a copy of your trading history once the application has been submitted.',
 };
 
+const ALTERNATIVE_CURRENCY = {
+  ...SHARED,
+  PAGE_TITLE: 'What currency are the outstanding or overdue payments in?',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -51,5 +56,6 @@ export default {
   CONNECTION_WITH_BUYER,
   TRADED_WITH_BUYER,
   TRADING_HISTORY,
+  ALTERNATIVE_CURRENCY,
   CHECK_YOUR_ANSWERS,
 };

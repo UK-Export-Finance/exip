@@ -3,6 +3,7 @@ const COMPANY_OR_ORGANISATION_ROOT = `${YOUR_BUYER_ROOT}/buyer-company-organisat
 const CONNECTION_WITH_BUYER_ROOT = `${YOUR_BUYER_ROOT}/connection-with-the-buyer`;
 const TRADED_WITH_BUYER_ROOT = `${YOUR_BUYER_ROOT}/prior-trade-history`;
 const TRADING_HISTORY_ROOT = `${YOUR_BUYER_ROOT}/trading-history`;
+const ALTERNATIVE_CURRENCY_ROOT = `${YOUR_BUYER_ROOT}/alternative-currency`;
 const CHECK_YOUR_ANSWERS = `${YOUR_BUYER_ROOT}/check-your-answers`;
 
 export const YOUR_BUYER = {
@@ -21,5 +22,6 @@ export const YOUR_BUYER = {
   TRADING_HISTORY_SAVE_AND_BACK: `${TRADING_HISTORY_ROOT}/save-and-back`,
   TRADING_HISTORY_CHANGE: `${TRADING_HISTORY_ROOT}/change`,
   TRADING_HISTORY_CHECK_AND_CHANGE: `${TRADING_HISTORY_ROOT}/check-and-change`,
+  ALTERNATIVE_CURRENCY: ALTERNATIVE_CURRENCY_ROOT,
   CHECK_YOUR_ANSWERS,
 };

@@ -38,6 +38,7 @@ const {
     REQUESTED_START_DATE_YEAR,
     SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
     POLICY_CURRENCY_CODE,
+    ALTERNATIVE_POLICY_CURRENCY_CODE,
   },
   POLICY_TYPE,
 } = POLICY_FIELD_IDS;
@@ -110,7 +111,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mapCurrenciesAsRadioOptions(currencies),
+      currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
     });
   } catch (err) {
     console.error('Error getting currencies %O', err);
@@ -159,7 +160,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mapCurrenciesAsRadioOptions(currencies),
+        currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
         validationErrors,
       });
     } catch (err) {

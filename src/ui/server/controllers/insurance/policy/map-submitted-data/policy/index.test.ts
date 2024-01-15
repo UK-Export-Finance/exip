@@ -1,10 +1,8 @@
 import mapSubmittedData from '.';
-import { FIELD_IDS } from '../../../../../constants';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
 
-const {
-  POLICY: { CONTRACT_POLICY },
-} = FIELD_IDS.INSURANCE;
+const { CONTRACT_POLICY, NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
 const {
   REQUESTED_START_DATE,
@@ -100,7 +98,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
     });
   });
 
-  describe('when form body does not have any day/month/year fields', () => {
+  describe(`when form body does not have any day/month/year ${NEED_PRE_CREDIT_PERIOD} fields`, () => {
     it('should return the form body', () => {
       const mockBody = {
         anotherField: true,
@@ -109,6 +107,24 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
       const result = mapSubmittedData(mockBody);
 
       expect(result).toEqual(mockBody);
+    });
+  });
+
+  describe(`when a ${NEED_PRE_CREDIT_PERIOD} field with a value of 'false' is provided`, () => {
+    it(`should return an object with empty ${CREDIT_PERIOD_WITH_BUYER} field`, () => {
+      const mockBody = {
+        [NEED_PRE_CREDIT_PERIOD]: 'false',
+        [CREDIT_PERIOD_WITH_BUYER]: 'mock',
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      const expected = {
+        ...mockBody,
+        [CREDIT_PERIOD_WITH_BUYER]: '',
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });

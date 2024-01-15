@@ -12,6 +12,8 @@ import { post as postConnectionToTheBuyerSaveAndBack } from '../../../controller
 
 import { get as getTradingHistory, post as postTradingHistory } from '../../../controllers/insurance/your-buyer/trading-history';
 
+import { get as getAlternativeCurrency, post as postAlternativeCurrency } from '../../../controllers/insurance/your-buyer/alternative-currency';
+
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
 
 // @ts-ignore
@@ -45,6 +47,9 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_CHECK_
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, getTradingHistory);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, postTradingHistory);
+
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, getAlternativeCurrency);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, postAlternativeCurrency);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

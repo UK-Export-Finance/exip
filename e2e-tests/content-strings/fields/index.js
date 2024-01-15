@@ -188,6 +188,12 @@ export const FIELDS = {
     LABEL: 'Your UK telephone number (optional)',
     HINT: 'We may need to contact you about your application',
   },
+  [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+    TEXT: 'Another currency',
+  },
+  [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE]: {
+    TEXT: 'Another currency',
+  },
   [FIELD_IDS.FEEDBACK.SATISFACTION]: {
     TITLE: 'Satisfaction survey',
     LABEL: 'Overall, how did you feel about the service you received today?',

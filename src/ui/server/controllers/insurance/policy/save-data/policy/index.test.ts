@@ -1,6 +1,5 @@
 import save from '.';
 import api from '../../../../../api';
-import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import generateValidationErrors from '../../type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
@@ -33,7 +32,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody.invalid, mockErrorList));
+      const dataToSave = getDataToSave(mockFormBody.invalid, mockErrorList);
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);
@@ -52,7 +51,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody.valid));
+      const dataToSave = getDataToSave(mockFormBody.valid);
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);
