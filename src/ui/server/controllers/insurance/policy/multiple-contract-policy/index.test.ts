@@ -37,6 +37,7 @@ const {
     REQUESTED_START_DATE_YEAR,
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     POLICY_CURRENCY_CODE,
+    ALTERNATIVE_POLICY_CURRENCY_CODE,
   },
 } = POLICY_FIELD_IDS;
 
@@ -142,7 +143,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
-        currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
+        currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -172,7 +173,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithCurrency),
-          currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
+          currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -203,7 +204,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithMonths),
-          currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
+          currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -336,7 +337,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
           submittedValues: payload,
-          currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
+          currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
           validationErrors: generateValidationErrors(payload),
         };
 
@@ -366,7 +367,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationWithoutOptionsSubmission),
             submittedValues: payload,
-            currencies: mapCurrenciesAsRadioOptions(mockCurrencies),
+            currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
             validationErrors: generateValidationErrors(payload),
           };
 

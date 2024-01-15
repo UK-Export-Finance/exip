@@ -4,6 +4,7 @@ const {
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION, TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS,
   },
+  CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
 
 export const YOUR_BUYER_FIELDS = {
@@ -87,5 +88,8 @@ export const YOUR_BUYER_FIELDS = {
   },
   [FAILED_PAYMENTS]: {
     LABEL: 'Has the buyer ever failed to pay you on time?',
+  },
+  [CURRENCY_CODE]: {
+    LEGEND: 'What currency are the outstanding or overdue payments in?',
   },
 };

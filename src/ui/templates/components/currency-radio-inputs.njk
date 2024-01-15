@@ -4,6 +4,7 @@
 {% macro render(params) %}
 
   {% set id = params.id %}
+  {% set isPageHeading = params.isPageHeading %}
   {% set legend = params.legend %}
   {% set hint = params.hint %}
   {% set supportedCurrencies = params.supportedCurrencies %}
@@ -14,7 +15,7 @@
     name: id,
     fieldset: {
       legend: {
-        html: fieldsetLegend.render({ id: id, legendText: legend })
+        html: fieldsetLegend.render({ id: id, legendText: legend, isPageHeading: isPageHeading })
       }
     },
     hint: {

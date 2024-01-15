@@ -38,6 +38,7 @@ const {
     REQUESTED_START_DATE_YEAR,
     SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
     POLICY_CURRENCY_CODE,
+    ALTERNATIVE_POLICY_CURRENCY_CODE,
   },
 } = POLICY_FIELD_IDS;
 
@@ -148,7 +149,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
+      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -180,7 +181,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       it('should render template with currencies mapped to submitted currency', async () => {
         await get(req, res);
 
-        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
+        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -360,7 +361,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
+        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
