@@ -5,6 +5,12 @@
 # https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
 #
 #
+# Following Azure services are consumed:
+# 1. Azure resource group - https://learn.microsoft.com/en-us/cli/azure/group?view=azure-cli-latest#az-group-create
+# 2. Azure container registry - https://learn.microsoft.com/en-us/cli/azure/acr?view=azure-cli-latest#az-acr-create
+# 3. Azure WebApp - https://learn.microsoft.com/en-us/azure/app-service/overview
+#
+#
 # Execution
 # *********
 # GHA is only invoked when following conditions are satisfied:
@@ -67,7 +73,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -75,13 +81,13 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
 
       - name: Extension ➕
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
 
       - name: Import ⬇
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az mysql flexible-server execute \
@@ -109,7 +115,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -146,7 +152,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Environment 🧱
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -156,12 +162,10 @@ jobs:
             NODE_ENV='${{ vars.NODE_ENV }}' \
             PORT='${{ vars.API_PORT }}' \
             WEBSITES_PORT='${{ vars.API_PORT }}' \
-            TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
-            TLS_KEY='${{ secrets.TLS_KEY }}' \
-            API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
             APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}' \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOV_NOTIFY_API_KEY='${{ secrets.GOV_NOTIFY_API_KEY }}' \
             COMPANIES_HOUSE_API_URL='${{ secrets.COMPANIES_HOUSE_API_URL }}' \
@@ -171,7 +175,7 @@ jobs:
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Create new temporary slot
@@ -193,7 +197,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp restart \
@@ -217,7 +221,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -252,7 +256,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Environment 🧱
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -262,18 +266,16 @@ jobs:
             NODE_ENV='${{ vars.NODE_ENV }}' \
             PORT='${{ vars.UI_PORT }}' \
             WEBSITES_PORT='${{ vars.UI_PORT }}' \
-            TLS_CERTIFICATE='${{ secrets.TLS_CERTIFICATE }}' \
-            TLS_KEY='${{ secrets.TLS_KEY }}' \
             SESSION_SECRET='${{ secrets.SESSION_SECRET }}' \
             GOOGLE_ANALYTICS_ID='${{ secrets.GOOGLE_ANALYTICS_ID }}' \
             GOOGLE_TAG_MANAGER_ID='${{ secrets.GOOGLE_TAG_MANAGER_ID }}' \
-            API_KEY='${{ secrets.API_KEY }}' \
             APIM_MDM_URL='${{ secrets.APIM_MDM_URL }}' \
             APIM_MDM_KEY='${{ secrets.APIM_MDM_KEY }}' \
-            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}'
+            APIM_MDM_VALUE='${{ secrets.APIM_MDM_VALUE }}' \
+            API_KEY='${{ secrets.API_KEY }}'
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Create new temporary slot
@@ -295,7 +297,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp restart \
