@@ -110,11 +110,13 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(req.body, FIELD_IDS);
 
+    const sanitisedHasTradingAddress = sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] });
+
     // populate submittedValues
     const submittedValues = {
       // if trading name is string true, then convert to boolean true
       [HAS_DIFFERENT_TRADING_NAME]: sanitiseValue({ key: HAS_DIFFERENT_TRADING_NAME, value: payload[HAS_DIFFERENT_TRADING_NAME] }),
-      [TRADING_ADDRESS]: sanitiseValue({ key: TRADING_ADDRESS, value: payload[TRADING_ADDRESS] }),
+      [TRADING_ADDRESS]: sanitisedHasTradingAddress,
       [WEBSITE]: payload[WEBSITE],
       [PHONE_NUMBER]: payload[PHONE_NUMBER],
       [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
@@ -146,30 +148,55 @@ const post = async (req: Request, res: Response) => {
     }
 
     /**
+     * Flag to determine if "alternative trading address" field is required.
+     * This field is required if TRADING_ADDRESS is "yes"/true and an address has not been provided.
+     * This enables us to handle many scenarios that require different redirects:
+     * 1) When TRADING_ADDRESS is "yes"/true:
+     * - Regular form POST.
+     * - Change answers form POST.
+     * - Check/change answers form POST.
+     * 2) When TRADING_ADDRESS is "no"/false:
+     * - Regular form POST.
+     * - Change answers form POST.
+     * - Check/change answers form POST.
+     */
+    const tradingAddressIsRequired = sanitisedHasTradingAddress && !application.company.differentTradingAddress.fullAddress;
+
+    /**
      * If "different trading address" has been submitted as "yes"/true,
-     * Redirect to the "alternative trading address" route if not a check/check or change route.
+     * the trading address does not exist
+     * and the route is NOT a check-and-change route,
+     * redirect to ALTERNATIVE_TRADING_ADDRESS_ROOT.
      */
     if (submittedValues[TRADING_ADDRESS] && !(isChangeRoute(req.originalUrl) || isCheckAndChangeRoute(req.originalUrl))) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`);
     }
 
-    // check and check-and-change routes
+    /**
+     * Default routes for:
+     * 1) Check your answers.
+     * 2) Check and change your answers.
+     */
     let changeRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     let checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
     /**
-     * If is a change route and TRADING_ADDRESS is true,
+     * If "different trading address" has been submitted as "yes"/true,
+     * the trading address does not exist
+     * and the route is a change route,
      * redirect to ALTERNATIVE_TRADING_ADDRESS_CHANGE
      */
-    if (submittedValues[TRADING_ADDRESS] && isChangeRoute(req.originalUrl)) {
+    if (tradingAddressIsRequired && isChangeRoute(req.originalUrl)) {
       changeRoute = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
     }
 
     /**
-     * If is a check-and-change route and TRADING_ADDRESS is true,
+     * If "different trading address" has been submitted as "yes"/true,
+     * the trading address does not exist
+     * and the route is a check-and-change route,
      * redirect to ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE
      */
-    if (submittedValues[TRADING_ADDRESS] && isCheckAndChangeRoute(req.originalUrl)) {
+    if (tradingAddressIsRequired && isCheckAndChangeRoute(req.originalUrl)) {
       checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
     }
 
