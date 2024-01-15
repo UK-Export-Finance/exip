@@ -10,7 +10,6 @@ import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-// import mapAndSave from '../map-and-save';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import api from '../../../../api';
@@ -24,7 +23,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CURRENCY: { CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
 export const FIELD_IDS = [CURRENCY_CODE];
@@ -72,7 +71,7 @@ export const get = async (req: Request, res: Response) => {
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mapCurrenciesAsRadioOptions(currencies),
+      currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_CURRENCY_CODE),
     });
   } catch (err) {
     console.error('Error getting alternative currency %O', err);
@@ -117,16 +116,9 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
-        currencies: mapCurrenciesAsRadioOptions(currencies),
+        currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_CURRENCY_CODE),
       });
     }
-
-    // if no errors, then runs save api call
-    // const saveResponse = await mapAndSave.yourBuyer(payload, application);
-
-    // if (!saveResponse) {
-    //   return res.redirect(PROBLEM_WITH_SERVICE);
-    // }
 
     /**
      * If is a change route

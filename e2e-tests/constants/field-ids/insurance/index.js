@@ -24,6 +24,7 @@ export const INSURANCE_FIELD_IDS = {
   ...SHARED_FIELD_IDS,
   CURRENCY: {
     CURRENCY_CODE: 'currencyCode',
+    ALTERNATIVE_CURRENCY_CODE: 'alternativeCurrencyCode',
   },
   SUBMISSION_DEADLINE: 'submissionDeadline',
   ACCOUNT,

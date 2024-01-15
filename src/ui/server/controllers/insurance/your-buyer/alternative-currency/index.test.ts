@@ -9,7 +9,6 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import tradingHistoryValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-// import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 import api from '../../../../api';
@@ -22,7 +21,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CURRENCY: { CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/alternative-currency', () => {
@@ -89,7 +88,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
+      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -169,29 +168,6 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      // it('should call mapAndSave.yourBuyer once with buyer and application', async () => {
-      //   await post(req, res);
-
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
-
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
-      // });
-
-      // it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
-      //   req.body = {
-      //     ...validBody,
-      //     injection: 1,
-      //   };
-
-      //   await post(req, res);
-
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
-
-      //   const payload = constructPayload(req.body, FIELD_IDS);
-
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
-      // });
-
       describe("when the url's last substring is `check`", () => {
         it(`should redirect to ${TRADING_HISTORY_CHANGE}`, async () => {
           req.originalUrl = TRADING_HISTORY_CHANGE;
@@ -230,7 +206,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         const validationErrors = tradingHistoryValidation(payload);
-        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies);
+        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -287,34 +263,6 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           });
         });
       });
-
-      //   describe('when mapAndSave.yourBuyer returns false', () => {
-      //     beforeEach(() => {
-      //       req.body = validBody;
-      //       res.locals = mockRes().locals;
-      //       mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
-      //     });
-
-      //     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      //       await post(req, res);
-
-      //       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      //     });
-      //   });
-
-      //   describe('when mapAndSave.yourBuyer fails', () => {
-      //     beforeEach(() => {
-      //       req.body = validBody;
-      //       res.locals = mockRes().locals;
-      //       mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
-      //     });
-
-      //     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-      //       await post(req, res);
-
-      //       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-      //     });
-      //   });
     });
   });
 });

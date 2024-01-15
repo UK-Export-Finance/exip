@@ -1,23 +1,16 @@
-import FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import nameAndIsoCodeText from '../../../name-and-iso-code-text';
 import { Currency, CurrencyRadios } from '../../../../../types';
-
-const {
-  POLICY: {
-    CONTRACT_POLICY: { ALTERNATIVE_POLICY_CURRENCY_CODE, POLICY_CURRENCY_CODE },
-  },
-} = FIELD_IDS;
-
-const { CONTRACT_POLICY } = POLICY_FIELDS;
+import { FIELDS } from '../../../../content-strings';
 
 /**
  * mapCurrenciesAsRadioOptions
  * Map supported currencies into the required structure for GOV radios component.
+ * for alternative currency, returns text based on provided fieldId
  * @param {Array} Array of currency objects
+ * @param {String} alternativeCurrencyFieldId fieldId for alternative currency
  * @returns {Object} Mapped currencies with an "alternative" option.
  */
-const mapCurrenciesAsRadioOptions = (currencies: Array<Currency>) => {
+const mapCurrenciesAsRadioOptions = (currencies: Array<Currency>, alternativeCurrencyFieldId: string) => {
   const mappedObj = {} as CurrencyRadios;
 
   currencies.forEach((country) => {
@@ -30,8 +23,8 @@ const mapCurrenciesAsRadioOptions = (currencies: Array<Currency>) => {
   });
 
   mappedObj.ALTERNATIVE = {
-    text: CONTRACT_POLICY[POLICY_CURRENCY_CODE][ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
-    value: CONTRACT_POLICY[POLICY_CURRENCY_CODE][ALTERNATIVE_POLICY_CURRENCY_CODE].ID,
+    text: FIELDS[alternativeCurrencyFieldId].TEXT as string,
+    value: alternativeCurrencyFieldId,
   };
 
   return mappedObj;

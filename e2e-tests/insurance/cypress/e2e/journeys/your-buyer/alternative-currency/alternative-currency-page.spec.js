@@ -2,8 +2,8 @@ import {
   headingCaption, field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { PAGES, ERROR_MESSAGES, FIELDS } from '../../../../../../content-strings';
+import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -15,7 +15,7 @@ const {
   YOUR_BUYER: { ALTERNATIVE_CURRENCY },
 } = ROUTES.INSURANCE;
 
-const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -53,14 +53,20 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: FIELDS[CURRENCY_CODE].LEGEND,
+      pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
       backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
     });
   });
 
   describe('page tests', () => {
-    const { radios } = assertAlternativeCurrencyForm({ FIELD_ID: CURRENCY_CODE, LEGEND: FIELDS[CURRENCY_CODE].LEGEND });
+    const { radios } = assertAlternativeCurrencyForm({
+      FIELD_ID: CURRENCY_CODE,
+      LEGEND: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
+      ALTERNATIVE_CURRENCY_FIELD_ID: ALTERNATIVE_CURRENCY_CODE,
+      ALTERNATIVE_CURRENCY_TEXT: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+    });
+
     beforeEach(() => {
       cy.navigateToUrl(url);
     });

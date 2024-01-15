@@ -17,7 +17,7 @@ import {
  * - ALTERNATIVE_CURRENCY_CODE - fieldId for "another currency" input
  */
 const assertAlternativeCurrencyForm = ({
-  FIELD_ID, LEGEND, HINT, ALTERNATIVE_CURRENCY_TEXT, ALTERNATIVE_CURRENCY_CODE,
+  FIELD_ID, LEGEND, HINT, ALTERNATIVE_CURRENCY_TEXT, ALTERNATIVE_CURRENCY_FIELD_ID,
 }) => ({
   legend: () => cy.checkText(field(FIELD_ID).legend(), LEGEND),
   hint: () => cy.checkText(field(FIELD_ID).hint(), HINT),
@@ -26,29 +26,23 @@ const assertAlternativeCurrencyForm = ({
     const { option: option2 } = radios(FIELD_ID, GBP.isoCode);
     const { option: option3 } = radios(FIELD_ID, USD.isoCode);
     const { option: option4 } = radios(FIELD_ID, JPY.isoCode);
+    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
 
     // EUR
-    cy.checkText(option1.label(), `${EUR.name} (${EUR.isoCode})`);
-    cy.checkValue(option1, EUR.isoCode);
+    cy.checkCurrencyOption(option1, EUR);
 
     // GBP
-    cy.checkText(option2.label(), `${GBP.name} (${GBP.isoCode})`);
-    cy.checkValue(option2, GBP.isoCode);
+    cy.checkCurrencyOption(option2, GBP);
 
     // USD
-    cy.checkText(option3.label(), `${USD.name} (${USD.isoCode})`);
-    cy.checkValue(option3, USD.isoCode);
+    cy.checkCurrencyOption(option3, USD);
 
     // JPY
-    cy.checkText(option4.label(), `${JPY.name} (${JPY.isoCode})`);
-    cy.checkValue(option4, JPY.isoCode);
-  },
-  alternativeCurrencyInput: () => {
-    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_CODE);
+    cy.checkCurrencyOption(option4, JPY);
 
     // Alternative currency
     cy.checkText(option5.label(), ALTERNATIVE_CURRENCY_TEXT);
-    cy.checkValue(option5, ALTERNATIVE_CURRENCY_CODE);
+    cy.checkValue(option5, ALTERNATIVE_CURRENCY_FIELD_ID);
   },
 });
 
