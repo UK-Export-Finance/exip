@@ -70,6 +70,10 @@ Cypress.Commands.add('assertSummaryListRowChangeText', require('./assert-summary
 Cypress.Commands.add('assertSummaryListRowValue', require('./assert-summary-list-row-value'));
 Cypress.Commands.add('submitAndAssertSummaryListRowValue', require('./submit-and-assert-summary-list-row-value'));
 
+Cypress.Commands.add('assertGenericPolicySummaryListRows', require('./assert-generic-policy-summary-list-rows'));
+Cypress.Commands.add('assertGenericSinglePolicySummaryListRows', require('./assert-generic-single-policy-summary-list-rows'));
+Cypress.Commands.add('assertGenericMultiplePolicySummaryListRows', require('./assert-generic-multiple-policy-summary-list-rows'));
+
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));
 
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));

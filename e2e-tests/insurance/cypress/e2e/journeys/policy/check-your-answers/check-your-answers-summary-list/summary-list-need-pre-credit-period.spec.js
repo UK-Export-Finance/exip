@@ -1,6 +1,6 @@
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -16,7 +16,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - single contract policy', () => {
+context('Insurance - Policy - Check your answers - Summary list - need pre-credit-period', () => {
   let referenceNumber;
   let url;
 
@@ -24,7 +24,7 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({});
+      cy.completePolicySection({ needPreCreditPeriod: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
@@ -45,11 +45,11 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
   });
 
   it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {
-    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({});
+    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({ needPreCreditPeriod: true });
   });
 
-  it(`should NOT render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({});
+  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({ shouldRender: true });
   });
 
   it(`should render a ${NAME} summary list row`, () => {

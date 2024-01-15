@@ -12,6 +12,8 @@ import { createTimestampFromNumbers, formatDate } from '../../helpers/date';
 const {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       POLICY_CURRENCY_CODE,
@@ -47,9 +49,10 @@ const checkPolicySummaryList = ({
     const fieldId = REQUESTED_START_DATE;
     const { day, month, year } = application.POLICY[fieldId];
     const timestamp = createTimestampFromNumbers(day, month, year);
-    const expectedValue = formatDate(timestamp);
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY);
+
+    const expectedValue = formatDate(timestamp);
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -62,6 +65,32 @@ const checkPolicySummaryList = ({
     const expectedValue = currency.name;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [NEED_PRE_CREDIT_PERIOD]: ({ needPreCreditPeriod = false }) => {
+    const fieldId = NEED_PRE_CREDIT_PERIOD;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+
+    let expectedValue = FIELD_VALUES.NO;
+
+    if (needPreCreditPeriod) {
+      expectedValue = FIELD_VALUES.YES;
+    }
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [CREDIT_PERIOD_WITH_BUYER]: ({ shouldRender = false }) => {
+    const fieldId = CREDIT_PERIOD_WITH_BUYER;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+
+    if (shouldRender) {
+      const expectedValue = application.POLICY[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
   },
   singleContractPolicy: {
     [POLICY_TYPE]: () => {
@@ -162,11 +191,16 @@ const checkPolicySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [USING_BROKER]: () => {
+  [USING_BROKER]: ({ usingBroker = false }) => {
     const fieldId = BROKER.USING_BROKER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
-    const expectedValue = application.EXPORTER_BROKER[fieldId];
+
+    let expectedValue = FIELD_VALUES.NO;
+
+    if (usingBroker) {
+      expectedValue = FIELD_VALUES.YES;
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

@@ -37,8 +37,8 @@ describe('routes/insurance/policy', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(25);
-    expect(post).toHaveBeenCalledTimes(33);
+    expect(get).toHaveBeenCalledTimes(27);
+    expect(post).toHaveBeenCalledTimes(35);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -132,6 +132,11 @@ describe('routes/insurance/policy', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD}`, preCreditPeriodGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD}`, preCreditPeriodPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD_SAVE_AND_BACK}`, preCreditPeriodSaveAndBackPost);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD_CHANGE}`, preCreditPeriodGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD_CHANGE}`, preCreditPeriodPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD_CHECK_AND_CHANGE}`, preCreditPeriodGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDIT_PERIOD_CHECK_AND_CHANGE}`, preCreditPeriodPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, getBroker);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, postBroker);

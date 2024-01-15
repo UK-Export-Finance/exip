@@ -8,8 +8,9 @@ const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
  * @param {Boolean} viaTaskList: Start the "policy" section from the task list.
  * @param {String} policyType: If single or multiple policy - defaults to single
  * @param {Boolean} policyMaximumValue: If the value should be the maximum amount
- * @param {Boolean} sameName: If sameName on policy - defaults to true
- * @param {Boolean} usingBroker: If usingBroker on policy - defaults to false
+ * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
+ * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
+ * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
  * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
  */
 const completePolicySection = ({
@@ -17,6 +18,7 @@ const completePolicySection = ({
   policyType = SINGLE,
   policyMaximumValue = false,
   sameName = true,
+  needPreCreditPeriod = false,
   usingBroker = false,
   submitCheckYourAnswers = false,
 }) => {
@@ -40,7 +42,7 @@ const completePolicySection = ({
     cy.completeAndSubmitDifferentNameOnPolicyForm({});
   }
 
-  cy.completeAndSubmitPreCreditPeriodForm({});
+  cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod });
 
   cy.completeAndSubmitBrokerForm({ usingBroker });
 

@@ -17,6 +17,8 @@ const mockGenericPolicy = {
   id: 'clav8by1i0007kgoqies0dbfc',
   requestedStartDate: add(new Date(), { months: 1 }),
   policyCurrencyCode: mockCurrencies[0].isoCode,
+  needPreCreditPeriodCover: false,
+  creditPeriodWithBuyer: 'Mock credit period description',
 };
 
 export const mockSinglePolicy = {

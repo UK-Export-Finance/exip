@@ -31,6 +31,8 @@ export const POLICY = {
   DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/different-name-on-policy/check-and-change`,
   PRE_CREDIT_PERIOD: `${ROOT}/pre-credit-period`,
   PRE_CREDIT_PERIOD_SAVE_AND_BACK: `${ROOT}/pre-credit-period/save-and-go-back`,
+  PRE_CREDIT_PERIOD_CHANGE: `${ROOT}/pre-credit-period/change`,
+  PRE_CREDIT_PERIOD_CHECK_AND_CHANGE: `${ROOT}/pre-credit-period/check-and-change`,
   BROKER_ROOT,
   BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
   BROKER_CHANGE: `${BROKER_ROOT}/change`,

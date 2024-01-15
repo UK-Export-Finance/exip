@@ -1,6 +1,6 @@
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
@@ -11,26 +11,12 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      POLICY_CURRENCY_CODE,
-      MULTIPLE: {
-        TOTAL_MONTHS_OF_COVER,
-      },
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
-    },
-    NAME_ON_POLICY: { NAME, POSITION },
-    USING_BROKER,
-    BROKER,
-  },
-} = INSURANCE_FIELD_IDS;
+  NEED_PRE_CREDIT_PERIOD,
+  CREDIT_PERIOD_WITH_BUYER,
+  NAME_ON_POLICY: { NAME },
+  USING_BROKER,
+  BROKER,
+} = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -63,41 +49,25 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render a ${POLICY_TYPE} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[POLICY_TYPE]();
+  it('should render generic policy summary list rows', () => {
+    cy.assertGenericMultiplePolicySummaryListRows();
   });
 
-  it(`should render a ${REQUESTED_START_DATE} summary list row`, () => {
-    checkSummaryList[REQUESTED_START_DATE]();
+  it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {
+    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({});
   });
 
-  it(`should render a ${TOTAL_MONTHS_OF_COVER} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[TOTAL_MONTHS_OF_COVER]();
-  });
-
-  it(`should render a ${TOTAL_SALES_TO_BUYER} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[TOTAL_SALES_TO_BUYER]();
-  });
-
-  it(`should render a ${MAXIMUM_BUYER_WILL_OWE} summary list row`, () => {
-    checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
-  });
-
-  it(`should render a ${POLICY_CURRENCY_CODE} summary list row`, () => {
-    checkSummaryList[POLICY_CURRENCY_CODE]();
+  it(`should NOT render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({});
   });
 
   it(`should render a ${NAME} summary list row`, () => {
     checkSummaryList[NAME]({});
   });
 
-  it(`should render a ${POSITION} summary list row`, () => {
-    checkSummaryList[POSITION]();
-  });
-
   describe('`broker`', () => {
     it(`should render a ${USING_BROKER} summary list row`, () => {
-      checkSummaryList[USING_BROKER]();
+      checkSummaryList[USING_BROKER]({});
     });
 
     it(`should render a ${BROKER.NAME} summary list row`, () => {
