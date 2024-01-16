@@ -11,12 +11,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CONTRACT_POLICY: {
-    NEED_PRE_CREDIT_PERIOD,
-    CREDIT_PERIOD_WITH_BUYER,
-  },
+  NEED_PRE_CREDIT_PERIOD,
+  CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
-  USING_BROKER,
+  BROKER: { USING_BROKER },
 } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;

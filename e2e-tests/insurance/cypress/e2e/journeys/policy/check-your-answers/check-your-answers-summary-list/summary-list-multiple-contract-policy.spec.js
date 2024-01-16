@@ -12,7 +12,7 @@ const {
   NEED_PRE_CREDIT_PERIOD,
   CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
-  USING_BROKER,
+  BROKER: { USING_BROKER },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
