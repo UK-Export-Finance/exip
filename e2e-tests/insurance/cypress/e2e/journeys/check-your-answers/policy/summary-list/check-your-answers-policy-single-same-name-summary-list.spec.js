@@ -14,7 +14,6 @@ const {
   NEED_PRE_CREDIT_PERIOD,
   CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
-  USING_BROKER,
   BROKER,
 } = POLICY_FIELD_IDS;
 
@@ -68,8 +67,8 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
   });
 
   describe('`broker`', () => {
-    it(`should render a ${USING_BROKER} summary list row`, () => {
-      checkSummaryList[USING_BROKER]({ usingBroker: true });
+    it(`should render a ${BROKER.USING_BROKER} summary list row`, () => {
+      checkSummaryList[BROKER.USING_BROKER]({ usingBroker: true });
     });
 
     it(`should render a ${BROKER.NAME} summary list row`, () => {

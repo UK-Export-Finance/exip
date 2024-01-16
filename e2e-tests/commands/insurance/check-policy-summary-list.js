@@ -29,7 +29,6 @@ const {
       },
     },
     NAME_ON_POLICY: { NAME, POSITION },
-    USING_BROKER,
     BROKER,
   },
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
@@ -191,7 +190,7 @@ const checkPolicySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [USING_BROKER]: ({ usingBroker = false }) => {
+  [BROKER.USING_BROKER]: ({ usingBroker = false }) => {
     const fieldId = BROKER.USING_BROKER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
