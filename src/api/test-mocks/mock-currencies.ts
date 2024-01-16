@@ -1,26 +1,30 @@
 import { Currency } from '../types';
 
-const mockCurrencies = [
-  {
-    name: 'Euros',
-    isoCode: 'EUR',
-  },
-  {
-    name: 'Hong Kong Dollars',
-    isoCode: 'HKD',
-  },
-  {
-    name: 'Japanese Yen',
-    isoCode: 'JPY',
-  },
-  {
-    name: 'UK Sterling',
-    isoCode: 'GBP',
-  },
-  {
-    name: 'US Dollars',
-    isoCode: 'USD',
-  },
-] as Array<Currency>;
+export const EUR = {
+  name: 'Euros',
+  isoCode: 'EUR',
+};
+
+export const HKD = {
+  name: 'Hong Kong Dollars',
+  isoCode: 'HKD',
+};
+
+export const JPY = {
+  name: 'Japanese Yen',
+  isoCode: 'JPY',
+};
+
+export const GBP = {
+  name: 'UK Sterling',
+  isoCode: 'GBP',
+};
+
+export const USD = {
+  name: 'US Dollars',
+  isoCode: 'USD',
+};
+
+const mockCurrencies = [EUR, HKD, JPY, GBP, USD] as Array<Currency>;
 
 export default mockCurrencies;
