@@ -48,8 +48,7 @@ export const FIELDS = {
     },
   },
   [FIELD_IDS.ELIGIBILITY.CURRENCY]: {
-    LABEL:
-      'Select a currency (pounds sterling, euros or US dollars). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
+    LABEL: 'Select a currency (UK sterling, Euros, US dollars, or Japanese yen). You can send out your invoices in most currencies but UKEF only issues policies in these 3 currencies.',
   },
   [FIELD_IDS.ELIGIBILITY.CONTRACT_VALUE]: {
     LABEL: 'Contract value',
