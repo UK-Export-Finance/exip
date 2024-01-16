@@ -47,7 +47,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Policy - multiple contract policy - Summary List', () => {
+context('Insurance - Change your answers - Policy - Multiple contract policy - Summary List', () => {
   let url;
   let referenceNumber;
 

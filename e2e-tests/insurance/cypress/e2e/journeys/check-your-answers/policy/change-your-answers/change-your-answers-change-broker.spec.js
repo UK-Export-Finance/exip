@@ -47,7 +47,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context('Insurance - Check your answers - Broker - Policy - Summary list', () => {
+context('Insurance - Check your answers - Policy - Broker - Summary list', () => {
   let referenceNumber;
   let url;
 

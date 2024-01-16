@@ -11,14 +11,16 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * - policyMaximumValue: should submit an application with the maximum value of 500000
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
+ * - needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * - submitCheckYourAnswers: Should click each section's "check your answers" submit button
  */
 const completePrepareApplicationMultiplePolicyType = ({
   differentTradingAddress = false,
   exporterHasTradedWithBuyer = false,
-  differentPolicyContact = false,
-  policyMaximumValue = false,
   usingBroker = false,
+  policyMaximumValue = false,
+  differentPolicyContact = false,
+  needPreCreditPeriod = false,
   submitCheckYourAnswers = true,
 }) => {
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
@@ -35,6 +37,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     policyMaximumValue,
     submitCheckYourAnswers,
     usingBroker,
+    needPreCreditPeriod,
   });
 
   cy.completeExportContractSection({ viaTaskList: false, submitCheckYourAnswers });

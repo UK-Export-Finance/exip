@@ -150,7 +150,7 @@ const application = {
     [HAS_CREDIT_CONTROL]: true,
   },
   EXPORTER_BROKER: {
-    [USING_BROKER]: FIELD_VALUES.YES,
+    [USING_BROKER]: true,
     [NAME]: 'name',
     [ADDRESS_LINE_1]: 'Address line 1',
     [ADDRESS_LINE_2]: 'Address line 2',

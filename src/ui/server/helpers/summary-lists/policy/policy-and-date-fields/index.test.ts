@@ -1,12 +1,13 @@
 import generatePolicyAndDateFields from '.';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import changeLink from '../change-link';
+import generatePreCreditPeriodFields from './pre-credit-period-fields';
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import getCurrencyByCode from '../../../get-currency-by-code';
@@ -18,11 +19,9 @@ const {
 } = FORM_TITLES;
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-    CONTRACT_POLICY: { REQUESTED_START_DATE, POLICY_CURRENCY_CODE },
-  },
-} = INSURANCE_FIELD_IDS;
+  TYPE_OF_POLICY: { POLICY_TYPE },
+  CONTRACT_POLICY: { REQUESTED_START_DATE, POLICY_CURRENCY_CODE },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -42,6 +41,7 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields', () => {
       href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_CHANGE}#heading`,
       renderChangeLink: true,
     }),
+    ...generatePreCreditPeriodFields(answers, referenceNumber, checkAndChange),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.CONTRACT_POLICY, REQUESTED_START_DATE),

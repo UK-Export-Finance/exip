@@ -1,5 +1,5 @@
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -8,18 +8,15 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NEED_PRE_CREDIT_PERIOD,
-    CREDIT_PERIOD_WITH_BUYER,
-    NAME_ON_POLICY: { NAME },
-    BROKER: { USING_BROKER },
-  },
-  ACCOUNT: { EMAIL },
-} = INSURANCE_FIELD_IDS;
+  NEED_PRE_CREDIT_PERIOD,
+  CREDIT_PERIOD_WITH_BUYER,
+  NAME_ON_POLICY: { NAME },
+  BROKER: { USING_BROKER },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - single contract policy', () => {
+context('Insurance - Policy - Check your answers - Summary list - need pre-credit-period', () => {
   let referenceNumber;
   let url;
 
@@ -27,7 +24,7 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ sameName: false });
+      cy.completePolicySection({ needPreCreditPeriod: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
     });
@@ -48,19 +45,15 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
   });
 
   it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {
-    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({});
+    checkSummaryList[NEED_PRE_CREDIT_PERIOD]({ needPreCreditPeriod: true });
   });
 
-  it(`should NOT render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({});
+  it(`should render a ${CREDIT_PERIOD_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[CREDIT_PERIOD_WITH_BUYER]({ shouldRender: true });
   });
 
   it(`should render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]({ sameName: false });
-  });
-
-  it(`should render a ${EMAIL} summary list row`, () => {
-    checkSummaryList[EMAIL]({ sameName: false });
+    checkSummaryList[NAME]({});
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {

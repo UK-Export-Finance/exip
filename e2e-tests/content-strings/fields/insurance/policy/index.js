@@ -169,6 +169,7 @@ export const POLICY_FIELDS = {
     HINT: 'This is known as the pre-credit period',
     SUMMARY: {
       TITLE: 'Pre-credit period',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
@@ -176,6 +177,7 @@ export const POLICY_FIELDS = {
     MAXIMUM: 1000,
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   BROKER: {
