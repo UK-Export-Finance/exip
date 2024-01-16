@@ -203,7 +203,7 @@ export const ERROR_MESSAGES = {
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
             INCORRECT_FORMAT: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
-            BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
+            BELOW_MINIMUM: 'Your total sales must be 1 or more',
           },
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
             INCORRECT_FORMAT: 'Enter the maximum the buyer will owe as a whole number - do not enter decimals',
