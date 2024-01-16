@@ -18,7 +18,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Pre-credit perido - As an exporter, I want to check my answers for the pre-credit cover questions', () => {
+context('Insurance - Policy - Change your answers - Pre-credit period - As an exporter, I want to check my answers for the pre-credit cover questions', () => {
   let referenceNumber;
   let url;
   let needPreCreditPeriodUrl;

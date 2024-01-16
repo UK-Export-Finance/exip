@@ -42,7 +42,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Pre-credit period - Summary list', () => {
+context('Insurance - Change your answers - Policy - Pre-credit period - Change from yes to no - Summary List', () => {
   let referenceNumber;
   let url;
   let needPreCreditPeriodUrl;
