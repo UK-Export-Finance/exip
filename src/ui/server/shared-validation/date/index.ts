@@ -1,16 +1,9 @@
 import { endOfDay, isFuture, isValid } from 'date-fns';
 import generateValidationErrors from '../../helpers/validation';
+import validDateFormatRules from './valid-format';
 import createTimestampFromNumbers from '../../helpers/date/create-timestamp-from-numbers';
-import { isNumber } from '../../helpers/number';
 import getDaysInAMonth from '../../helpers/date/get-days-in-a-month';
-import { RequestBody, DateErrorMessage, ValidationErrors } from '../../../types';
-
-interface DateRulesTempType {
-  formBody: RequestBody;
-  errors: object;
-  fieldId: string;
-  errorMessages: DateErrorMessage;
-}
+import { DateValidationRulesParams, ValidationErrors } from '../../../types';
 
 /**
  * dateRules
@@ -19,9 +12,10 @@ interface DateRulesTempType {
  * @param {Express.Response.body} formBody: Express response body
  * @param {Object} errors: Errors object from previous validation errors
  * @param {String} fieldId: Date field ID
- * @returns {Object} errorMessages: All possible error messages for the date field.
+ * @param {Object} errorMessages: All possible error messages for the date field.
+ * @returns {ValidationErrors}
  */
-const dateRules = ({ formBody, errors, fieldId, errorMessages }: DateRulesTempType): ValidationErrors => {
+const dateRules = ({ formBody, errors, fieldId, errorMessages }: DateValidationRulesParams): ValidationErrors => {
   const dayId = `${fieldId}-day`;
   const monthId = `${fieldId}-month`;
   const yearId = `${fieldId}-year`;
@@ -34,63 +28,18 @@ const dateRules = ({ formBody, errors, fieldId, errorMessages }: DateRulesTempTy
     return generateValidationErrors(fieldId, errorMessages.INCORRECT_FORMAT, errors);
   }
 
-  const day = isNumber(dayString);
-  const month = isNumber(monthString);
-  const year = isNumber(yearString);
+  const { hasErrors, errors: formatErrors } = validDateFormatRules({
+    formBody,
+    dayString,
+    monthString,
+    yearString,
+    errors,
+    errorMessages,
+    fieldId,
+  });
 
-  /**
-   * All fields must be numbers.
-   */
-  if (!day && !month && !year) {
-    return generateValidationErrors(fieldId, errorMessages.INCORRECT_FORMAT, errors);
-  }
-
-  /**
-   * has a day,
-   * no month or year.
-   */
-  if (day && !month && !year) {
-    return generateValidationErrors(fieldId, errorMessages.MISSING_MONTH_AND_YEAR, errors);
-  }
-
-  /**
-   * has a month,
-   * no day or year.
-   */
-  if (!day && month && !year) {
-    return generateValidationErrors(fieldId, errorMessages.MISSING_DAY_AND_YEAR, errors);
-  }
-
-  /**
-   * has a year,
-   * no day or month.
-   */
-  if (!day && !month && year) {
-    return generateValidationErrors(fieldId, errorMessages.MISSING_DAY_AND_MONTH, errors);
-  }
-
-  /**
-   * Individual date field validation rules.
-   * I.e, all but 1 date fields are provided.
-   */
-  if (!day) {
-    return generateValidationErrors(fieldId, errorMessages.INVALID_DAY, errors);
-  }
-
-  if (!month) {
-    return generateValidationErrors(fieldId, errorMessages.INVALID_MONTH, errors);
-  }
-
-  if (!year) {
-    return generateValidationErrors(fieldId, errorMessages.INVALID_YEAR, errors);
-  }
-
-  /**
-   * Check that a year has 4 digits.
-   * E.g a year cannot be 200.
-   */
-  if (yearString.length < 4) {
-    return generateValidationErrors(fieldId, errorMessages.INVALID_YEAR_DIGITS, errors);
+  if (hasErrors) {
+    return formatErrors;
   }
 
   const dayNumber = Number(dayString);

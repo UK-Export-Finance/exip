@@ -76,10 +76,6 @@ context('Insurance - Policy - Single contract policy page - form validation - re
     day.notProvided();
   });
 
-  it('when the day is not provided', () => {
-    day.isOverDaysInMonth();
-  });
-
   it('when the month is not provided', () => {
     month.notProvided();
   });

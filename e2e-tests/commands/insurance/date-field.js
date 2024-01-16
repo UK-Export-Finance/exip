@@ -262,7 +262,7 @@ const checkValidation = ({
 
       const futureDate = new Date(now.setDate(day + 1));
 
-      cy.keyboardInput(field.dayInput(), '50');
+      cy.keyboardInput(field.dayInput(), day);
       cy.keyboardInput(field.monthInput(), '24');
       cy.keyboardInput(field.yearInput(), futureDate.getFullYear());
       cy.clickSubmitButton();
