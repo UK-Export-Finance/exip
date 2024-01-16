@@ -258,7 +258,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.POSTCODE]: {
         IS_EMPTY: 'Enter the postcode for your broker',
-        INCORRECT_FORMAT: 'Enter the postcode for your broker in the correct format, like KT3 3QQ',
+        INCORRECT_FORMAT: 'Enter the postcode for your broker in the correct format - for example KT3 3QQ',
       },
     },
     YOUR_BUYER: {
@@ -274,7 +274,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: "Select the buyer's country",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.WEBSITE]: {
-          INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",
+          INCORRECT_FORMAT: "Enter the buyer's website in the correct format - for example www.example.com",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.FIRST_NAME]: {
           IS_EMPTY: "Enter the first name of your contact at the buyer's company or organisation",
