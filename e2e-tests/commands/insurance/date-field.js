@@ -80,6 +80,32 @@ const checkValidation = ({
           errorMessage,
         });
       },
+      /**
+       * Submit a full date, but with the day over the current month's last day.
+       * Check validation errors.
+       */
+      isGreaterThanLastDayOfMonth: () => {
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        const daysInMonth = new Date(year, month, 0).getDate();
+
+        const invalidMonthDay = daysInMonth + 1;
+
+        cy.keyboardInput(field.dayInput().clear(), invalidMonthDay);
+        cy.keyboardInput(field.monthInput().clear(), month);
+        cy.keyboardInput(field.yearInput().clear(), year);
+
+        cy.clickSubmitButton();
+
+        const errorMessage = errorMessages.INVALID_DAY;
+
+        cy.assertFieldErrors({
+          ...assertFieldErrorsParams,
+          errorMessage,
+        });
+      },
     },
     month: {
       /**

@@ -2,6 +2,7 @@ import dateRules from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
 import generateValidationErrors from '../../helpers/validation';
+import getDaysInAMonth from '../../helpers/date/get-days-in-a-month';
 
 const {
   POLICY: {
@@ -183,12 +184,30 @@ describe('shared-validation/date', () => {
     });
   });
 
+  describe('when the day is greater than the current month', () => {
+    const daysInMonth = getDaysInAMonth(month, year);
+
+    const invalidDay = daysInMonth + 1;
+
+    it('should return validation error', () => {
+      const mockSubmittedData = {
+        ...mockValidBody,
+        [`${FIELD_ID}-day`]: invalidDay,
+      };
+
+      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
+
+      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.INVALID_DAY, mockErrors);
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when the date is invalid', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: '50',
+        ...mockValidBody,
         [`${FIELD_ID}-month`]: '24',
-        [`${FIELD_ID}-year`]: year,
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });

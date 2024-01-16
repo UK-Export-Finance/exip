@@ -2,6 +2,7 @@ import { endOfDay, isFuture, isValid } from 'date-fns';
 import generateValidationErrors from '../../helpers/validation';
 import createTimestampFromNumbers from '../../helpers/date/create-timestamp-from-numbers';
 import { isNumber } from '../../helpers/number';
+import getDaysInAMonth from '../../helpers/date/get-days-in-a-month';
 import { RequestBody, DateErrorMessage, ValidationErrors } from '../../../types';
 
 interface DateRulesTempType {
@@ -101,9 +102,15 @@ const dateRules = ({ formBody, errors, fieldId, errorMessages }: DateRulesTempTy
   if (submittedDate) {
     /**
      * Check that the date is valid. E.g:
+     * A day cannot be greater than the last day in a month.
      * A month cannot have a value of 13.
-     * A day cannot have a value of 50 or over the maximum days in a month.
      */
+    const daysInMonth = getDaysInAMonth(monthNumber, yearNumber);
+
+    if (dayNumber > daysInMonth) {
+      return generateValidationErrors(fieldId, errorMessages.INVALID_DAY, errors);
+    }
+
     if (!isValid(submittedDate)) {
       return generateValidationErrors(fieldId, errorMessages.INVALID_DATE, errors);
     }

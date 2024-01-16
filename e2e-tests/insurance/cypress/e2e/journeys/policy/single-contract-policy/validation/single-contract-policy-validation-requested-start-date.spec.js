@@ -76,6 +76,10 @@ context('Insurance - Policy - Single contract policy page - form validation - re
     day.notProvided();
   });
 
+  it('when the day is not provided', () => {
+    day.isOverDaysInMonth();
+  });
+
   it('when the month is not provided', () => {
     month.notProvided();
   });
@@ -106,6 +110,10 @@ context('Insurance - Policy - Single contract policy page - form validation - re
 
   it('when the year is not a number', () => {
     year.notANumber();
+  });
+
+  it('when the day is greater than the last day of month', () => {
+    day.isGreaterThanLastDayOfMonth();
   });
 
   it('when the year does not have enough digits', () => {
