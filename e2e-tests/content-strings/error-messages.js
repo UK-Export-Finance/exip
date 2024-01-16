@@ -153,7 +153,7 @@ export const ERROR_MESSAGES = {
       },
       CONTRACT_POLICY: {
         [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.REQUESTED_START_DATE]: {
-          INCORRECT_FORMAT: 'Enter when you want your policy to start in the correct format, like 06 11 2023',
+          INCORRECT_FORMAT: 'Enter when you want your policy to start in the correct format - for example 06 11 2023',
           BEFORE_EARLIEST: 'You cannot enter a policy start date in the past - enter a future date',
           MISSING_DAY_AND_MONTH: 'Policy start date must include a day and month',
           MISSING_DAY_AND_YEAR: 'Policy start date must include a day and year',
@@ -169,7 +169,7 @@ export const ERROR_MESSAGES = {
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
-            INCORRECT_FORMAT: 'Enter a contract completion date in the correct format, like 06 11 2023',
+            INCORRECT_FORMAT: 'Enter a contract completion date in the correct format - for example 06 11 2023',
             BEFORE_EARLIEST: 'You cannot enter a contract completion date in the past - enter a future date',
             MISSING_DAY_AND_MONTH: 'Policy completion date must include a day and month',
             MISSING_DAY_AND_YEAR: 'Policy completion date must include a day and year',
@@ -203,7 +203,7 @@ export const ERROR_MESSAGES = {
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
             INCORRECT_FORMAT: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
-            BELOW_MINIMUM: 'Your estimated sales must be 1 or more',
+            BELOW_MINIMUM: 'Your total sales must be 1 or more',
           },
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
             INCORRECT_FORMAT: 'Enter the maximum the buyer will owe as a whole number - do not enter decimals',

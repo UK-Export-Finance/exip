@@ -1,17 +1,15 @@
-import mapSelectOption from '../../map-select-option';
+import mapAndSortCurrencies from './map-and-sort-currencies';
 import { Currency } from '../../../../../types';
 
 /**
  * mapCurrenciesAsSelectOptions
  * Map all currencies into the required structure for GOV select component.
- * @param {Array} Array of currency objects
- * @param {String} Selected currency
- * @returns {Array} Array of mapped currencies
+ * @param {Array} currencies: Array of currency objects
+ * @param {String} selectedValue: Selected currency
+ * @returns {Array} Array of mapped and sorted currencies
  */
 const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue?: string) => {
-  const renderValueInText = true;
-
-  const mappedCurrencies = currencies.map(({ name, isoCode }) => mapSelectOption(name, isoCode, renderValueInText, selectedValue));
+  const mappedCurrencies = mapAndSortCurrencies(currencies, selectedValue);
 
   if (!selectedValue) {
     const defaultOption = {
