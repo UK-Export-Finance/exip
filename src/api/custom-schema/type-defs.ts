@@ -371,7 +371,9 @@ const typeDefs = `
     getApimCisCountries: [MappedCisCountry]
 
     """ get currencies from APIM """
-    getApimCurrencies: [MappedCurrency]
+    getApimCurrencies(
+      allCurrencies: Boolean!
+    ): [MappedCurrency]
   }
 `;
 

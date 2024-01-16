@@ -27,9 +27,13 @@ const APIM = {
       throw new Error('Getting APIM - CIS countries API');
     }
   },
-  getCurrencies: async () => {
+  getCurrencies: async (allCurrencies = false) => {
     try {
-      const response = (await apollo('GET', getApimCurrencies, {})) as ApolloResponse;
+      const queryParams = {
+        allCurrencies,
+      };
+
+      const response = (await apollo('GET', getApimCurrencies, queryParams)) as ApolloResponse;
 
       if (response.errors) {
         console.error('GraphQL network error querying APIM - currencies API %O', response.errors);

@@ -5,9 +5,10 @@ const init = () => {
 
   var buyerCountry = document.getElementById('buyerCountry');
   var finalDestinationCountryCode = document.getElementById('finalDestinationCountryCode');
+  var alternativeCurrency = document.getElementById('alternativeCurrencyCode');
 
   accessibleAutocomplete.enhanceSelectElement({
-    selectElement: buyerCountry || finalDestinationCountryCode,
+    selectElement: buyerCountry || finalDestinationCountryCode || alternativeCurrency,
     defaultValue: '',
   });
 

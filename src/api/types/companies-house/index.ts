@@ -41,6 +41,10 @@ export interface GetCompaniesHouseInformationVariables {
   companiesHouseNumber: string;
 }
 
+export interface GetCurrencyVariables {
+  allCurrencies: boolean;
+}
+
 export interface IndustrySector {
   id?: number;
   ukefIndustryId?: string;

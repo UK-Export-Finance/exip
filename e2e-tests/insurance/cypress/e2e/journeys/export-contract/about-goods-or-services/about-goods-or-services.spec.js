@@ -170,7 +170,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
         });
 
         it('allows user to remove a selected country and search again', () => {
-          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, COUNTRIES[0].NAME, COUNTRIES[1].NAME);
+          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, COUNTRIES[0].NAME, COUNTRIES[1].NAME, COUNTRIES[1].NAME);
         });
       });
     });

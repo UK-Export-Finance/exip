@@ -13,6 +13,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
 import api from '../../../../api';
 import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
+import mapCurrencies from '../../../../helpers/mappings/map-currencies';
 
 const {
   INSURANCE_ROOT,
@@ -50,6 +51,9 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
             ID: CURRENCY_CODE,
             ...FIELDS[CURRENCY_CODE],
           },
+          ALTERNATIVE_CURRENCY_CODE: {
+            ID: ALTERNATIVE_CURRENCY_CODE,
+          },
         },
         PAGE_CONTENT_STRINGS,
       };
@@ -82,7 +86,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     it('should call api.keystone.APIM.getCurrencies', async () => {
       await get(req, res);
 
-      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(2);
     });
 
     it('should render template', async () => {
@@ -99,6 +103,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         ...PAGE_VARIABLES,
         application: mapApplicationToFormFields(mockApplication),
         currencies: expectedCurrencies,
+        allCurrencies: mapCurrencies(mockCurrencies),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -197,7 +202,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
       it('should call api.keystone.APIM.getCurrencies', async () => {
         await get(req, res);
 
-        expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(2);
       });
 
       it('should render template with validation errors', async () => {
@@ -218,6 +223,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           submittedValues: payload,
           validationErrors,
           currencies: expectedCurrencies,
+          allCurrencies: mapCurrencies(mockCurrencies),
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });

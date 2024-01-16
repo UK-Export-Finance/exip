@@ -15,14 +15,26 @@ describe('helpers/map-currencies', () => {
   });
 
   describe('mapCurrencies', () => {
-    it('should return an array of currencies sorted alphabetically', () => {
-      const result = mapCurrencies(mockCurrencies);
+    describe('allCurrencies as "false"', () => {
+      it('should return an array of supported currencies sorted alphabetically', () => {
+        const result = mapCurrencies(mockCurrencies, false);
 
-      const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
+        const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
 
-      const expected = sortArrayAlphabetically(supportedCurrencies, FIELD_IDS.NAME);
+        const expected = sortArrayAlphabetically(supportedCurrencies, FIELD_IDS.NAME);
 
-      expect(result).toEqual(expected);
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('allCurrencies as "true"', () => {
+      it('should return an array of all currencies sorted alphabetically', () => {
+        const result = mapCurrencies(mockCurrencies, true);
+
+        const expected = sortArrayAlphabetically(mockCurrencies, FIELD_IDS.NAME);
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 });

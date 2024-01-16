@@ -20,12 +20,24 @@ export const getSupportedCurrencies = (currencies: Array<Currency>) => {
  * 1) Filter supported currencies.
  * 2) Sort the currencies alphabetically.
  * @param {Array} Array of currency objects
+ * @param {Boolean} allCurrencies if all currencies should be returned
  * @returns {Array} Array supported currencies
  */
-const mapCurrencies = (currencies: Array<Currency>) => {
-  const supportedCurrencies = getSupportedCurrencies(currencies);
+const mapCurrencies = (currencies: Array<Currency>, allCurrencies: boolean) => {
+  let currenciesArray = currencies;
 
-  const sorted = sortArrayAlphabetically(supportedCurrencies, FIELD_IDS.NAME);
+  // if not all currencies, then get the supported currencies only
+  if (!allCurrencies) {
+    currenciesArray = getSupportedCurrencies(currencies);
+  }
+
+  const sorted = sortArrayAlphabetically(currenciesArray, FIELD_IDS.NAME);
+
+  return sorted;
+};
+
+export const mapAndSortAllCurrencies = (currencies: Array<Currency>) => {
+  const sorted = sortArrayAlphabetically(currencies, FIELD_IDS.NAME);
 
   return sorted;
 };

@@ -1,8 +1,8 @@
 import gql from 'graphql-tag';
 
 const getApimCurrencies = gql`
-  query getApimCurrencies {
-    getApimCurrencies {
+  query getApimCurrencies($allCurrencies: Boolean!) {
+    getApimCurrencies(allCurrencies: $allCurrencies) {
       isoCode
       name
     }

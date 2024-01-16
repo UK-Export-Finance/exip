@@ -1,10 +1,11 @@
-import { field, radios } from '../../pages/shared';
+import { field, radios, countryInput } from '../../pages/shared';
 import {
   EUR,
   GBP,
   JPY,
   USD,
 } from '../../fixtures/currencies';
+import checkAutocompleteInput from '../shared-commands/assertions/check-autocomplete-input';
 
 /**
  * assertAlternativeCurrencyForm
@@ -43,6 +44,20 @@ const assertAlternativeCurrencyForm = ({
     // Alternative currency
     cy.checkText(option5.label(), ALTERNATIVE_CURRENCY_TEXT);
     cy.checkValue(option5, ALTERNATIVE_CURRENCY_FIELD_ID);
+  },
+  alternativeCurrencyInput: () => {
+    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+
+    option5.input().click();
+
+    checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
+    checkAutocompleteInput.rendersInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'test');
+    checkAutocompleteInput.rendersSingleResult(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Alg');
+    checkAutocompleteInput.rendersMultipleResults(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Be');
+
+    const expectedValue = `${GBP.name} (${GBP.isoCode})`;
+    checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Algeria', GBP.name, expectedValue);
   },
 });
 
