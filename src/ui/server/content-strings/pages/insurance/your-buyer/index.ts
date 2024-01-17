@@ -45,6 +45,11 @@ const ALTERNATIVE_CURRENCY = {
   PAGE_TITLE: 'What currency are the outstanding or overdue payments in?',
 };
 
+const CREDIT_INSURANCE_COVER = {
+  ...SHARED,
+  PAGE_TITLE: 'Have you in the past held credit insurance cover on the buyer?',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -57,5 +62,6 @@ export default {
   TRADED_WITH_BUYER,
   TRADING_HISTORY,
   ALTERNATIVE_CURRENCY,
+  CREDIT_INSURANCE_COVER,
   CHECK_YOUR_ANSWERS,
 };
