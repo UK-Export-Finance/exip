@@ -3,7 +3,7 @@ import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/expo
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import COUNTRIES from '../../../../../../fixtures/countries';
+import { XAD } from '../../../../../../fixtures/countries';
 
 const {
   EXPORT_CONTRACT: {
@@ -20,7 +20,7 @@ const {
   },
 } = FIELD_IDS;
 
-const NEW_COUNTRY_INPUT = COUNTRIES[0].NAME;
+const NEW_COUNTRY_INPUT = XAD.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 

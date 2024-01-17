@@ -10,9 +10,10 @@ import tradingHistoryValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
 import api from '../../../../api';
 import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
+import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
 
 const {
   INSURANCE_ROOT,
@@ -28,7 +29,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
   let req: Request;
   let res: Response;
 
-  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
@@ -49,6 +50,9 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           CURRENCY_CODE: {
             ID: CURRENCY_CODE,
             ...FIELDS[CURRENCY_CODE],
+          },
+          ALTERNATIVE_CURRENCY_CODE: {
+            ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
         PAGE_CONTENT_STRINGS,
@@ -99,6 +103,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         ...PAGE_VARIABLES,
         application: mapApplicationToFormFields(mockApplication),
         currencies: expectedCurrencies,
+        allCurrencies: mapCurrenciesAsSelectOptions(mockCurrencies, '', true),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -132,7 +137,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -151,7 +156,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     };
 
     beforeEach(() => {
-      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       //   mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
     });
@@ -218,6 +223,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           submittedValues: payload,
           validationErrors,
           currencies: expectedCurrencies,
+          allCurrencies: mapCurrenciesAsSelectOptions(mockCurrencies, '', true),
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
@@ -252,7 +258,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

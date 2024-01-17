@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../../helpers/mappings/map-appl
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/policy';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrencies } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse } from '../../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../../test-mocks/mock-application';
 
 const {
@@ -49,7 +49,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
   jest.mock('../../map-and-save/policy');
 
   mapAndSave.policy = jest.fn(() => Promise.resolve(true));
-  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
@@ -166,7 +166,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -181,7 +181,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
   describe('post', () => {
     beforeEach(() => {
-      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
     });
 
@@ -302,7 +302,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

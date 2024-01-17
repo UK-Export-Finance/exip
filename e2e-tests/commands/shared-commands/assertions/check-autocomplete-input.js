@@ -41,7 +41,7 @@ const checkAutocompleteInput = {
 
     results.should('have.length.greaterThan', 1);
   },
-  allowsUserToRemoveCountryAndSearchAgain: (field, country1, country2) => {
+  allowsUserToRemoveCountryAndSearchAgain: (field, country1, country2, expectedValue) => {
     cy.keyboardInput(field.input(), country1);
     const results = field.results();
 
@@ -53,9 +53,6 @@ const checkAutocompleteInput = {
 
     // search for a different country, submit with enter key
     cy.keyboardInput(field.input(), `${country2}{enter}`);
-
-    // check hidden input value
-    const expectedValue = country2;
 
     cy.checkText(field.results(), expectedValue);
   },

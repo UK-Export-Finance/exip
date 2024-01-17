@@ -3,6 +3,7 @@ import {
 } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
+import { BRA } from '../../../../../../fixtures/countries';
 
 const {
   ELIGIBILITY: {
@@ -80,7 +81,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
         cy.navigateToUrl(url);
         row.changeLink().click();
 
-        cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Brazil');
+        cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), BRA.NAME);
         const results = countryInput.field(BUYER_COUNTRY).results();
         results.first().click();
 
@@ -96,7 +97,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
       it('renders the new answer in `Check your answers` page', () => {
         row = summaryList.field(BUYER_COUNTRY);
 
-        const expected = 'Brazil';
+        const expected = BRA.NAME;
         cy.checkText(row.value(), expected);
       });
     });

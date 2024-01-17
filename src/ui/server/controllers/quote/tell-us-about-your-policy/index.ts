@@ -105,18 +105,18 @@ export const TEMPLATE = TEMPLATES.QUOTE.TELL_US_ABOUT_YOUR_POLICY;
 const get = async (req: Request, res: Response) => {
   try {
     const { submittedData } = req.session;
-    const currencies = await api.keystone.APIM.getCurrencies();
+    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(supportedCurrencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
     let mappedCurrencies;
 
     if (objectHasProperty(submittedData.quoteEligibility, CURRENCY)) {
-      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, submittedData.quoteEligibility[CURRENCY].isoCode);
+      mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies, submittedData.quoteEligibility[CURRENCY].isoCode);
     } else {
-      mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
+      mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies);
     }
 
     let mappedPercentageOfCover;
@@ -176,9 +176,9 @@ const post = async (req: Request, res: Response) => {
       ...payload,
     });
 
-    const currencies = await api.keystone.APIM.getCurrencies();
+    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(supportedCurrencies)) {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
@@ -189,9 +189,9 @@ const post = async (req: Request, res: Response) => {
       let mappedCurrencies = [];
 
       if (submittedCurrencyCode) {
-        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies, submittedCurrencyCode);
+        mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies, submittedCurrencyCode);
       } else {
-        mappedCurrencies = mapCurrenciesAsSelectOptions(currencies);
+        mappedCurrencies = mapCurrenciesAsSelectOptions(supportedCurrencies);
       }
 
       // map percentage of cover drop down options
@@ -243,7 +243,7 @@ const post = async (req: Request, res: Response) => {
 
     const populatedData = {
       ...payload,
-      [CURRENCY]: getCurrencyByCode(currencies, submittedCurrencyCode),
+      [CURRENCY]: getCurrencyByCode(supportedCurrencies, submittedCurrencyCode),
     };
 
     req.session.submittedData.quoteEligibility = updateSubmittedData(populatedData, req.session.submittedData.quoteEligibility);
