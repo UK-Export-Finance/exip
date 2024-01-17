@@ -109,6 +109,9 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
           },
+          ALTERNATIVE_POLICY_CURRENCY_CODE: {
+            ID: ALTERNATIVE_POLICY_CURRENCY_CODE,
+          },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       };
