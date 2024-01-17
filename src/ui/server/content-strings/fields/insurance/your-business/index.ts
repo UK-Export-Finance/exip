@@ -77,7 +77,7 @@ export const FIELDS = {
     [EMPLOYEES_UK]: {
       LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
-        TITLE: 'Number of employees',
+        TITLE: 'Number of UK employees',
         FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },

@@ -1,7 +1,9 @@
 import partials from '../../../../../../../partials';
 import { field, summaryList } from '../../../../../../../pages/shared';
+import { GBP_CURRENCY_CODE } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import formatCurrency from '../../../../../../../helpers/format-currency';
 
 const {
   ROOT,
@@ -98,7 +100,8 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
       });
 
       it('should render the new answer', () => {
-        fieldVariables.newValue = `£${fieldVariables.newValueInput}`;
+        fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput, GBP_CURRENCY_CODE);
+
         cy.checkChangeAnswerRendered(fieldVariables);
       });
     });

@@ -1,9 +1,11 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
+import { GBP_CURRENCY_CODE } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
+import formatCurrency from '../../../format-currency';
 import mapPercentage from '../../../map-percentage';
 import { ApplicationBusiness, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
@@ -39,7 +41,7 @@ const generateTurnoverFields = (answers: ApplicationBusiness, referenceNumber: n
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      `£${answers[ESTIMATED_ANNUAL_TURNOVER]}`,
+      formatCurrency(answers[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE),
     ),
     fieldGroupItem(
       {
