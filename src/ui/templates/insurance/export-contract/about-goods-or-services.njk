@@ -5,9 +5,8 @@
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
-{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -138,20 +137,10 @@
       </div>
     </div>
 
-    <div class="govuk-button-group">
-      {{ submitButton.render({
-        text: CONTENT_STRINGS.BUTTONS.CONTINUE
-      }) }}
-
-      {{ govukButton({
-        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-        classes: "govuk-button--secondary",
-        attributes: {
-          formaction: SAVE_AND_BACK_URL,
-          'data-cy': 'save-and-back-button'
-        }
-      }) }}
-    </div>
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
 
   </form>
 

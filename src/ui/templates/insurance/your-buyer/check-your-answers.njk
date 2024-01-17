@@ -3,7 +3,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
-{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -34,13 +34,12 @@
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-    <div class="govuk-button-group">
-      {{ submitButton.render({
-        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK
-      }) }}
-
-      <a class="govuk-button--secondary" href="{{ SAVE_AND_BACK_URL }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK }}</a>
-    </div>
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      submitText: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
+      saveAndBackUrl: SAVE_AND_BACK_URL,
+      saveAndBackAsALink: true
+    }) }}
 
   </form>
 

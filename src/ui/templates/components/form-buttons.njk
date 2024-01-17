@@ -1,0 +1,44 @@
+{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../components/submit-button.njk' as submitButton %}
+
+{% macro render(params) %}
+
+  {% set contentStrings = params.contentStrings %}
+  {% set submitText = params.submitButtonText %}
+  {% set saveAndBackUrl = params.saveAndBackUrl %}
+  {% set saveAndBackAsALink = params.saveAndBackAsALink %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <div class="govuk-button-group">
+        {{ submitButton.render({
+          text: submitText or contentStrings.CONTINUE
+        }) }}
+
+        {# 
+          Only render a "save and back" button/link, if a saveAndBackUrl param is provided.
+          If a saveAndBackAsALink param is provided, the button will render as a link.
+          This is required because some forms do not need "save and back" to actually make a form POST and save data,
+          rather, they just need to redirect to somewhere.
+        #}
+
+        {% if saveAndBackUrl %}
+          {% if saveAndBackAsALink %}
+            <a class="govuk-button govuk-button--secondary" href="{{ saveAndBackUrl }}" data-cy="save-and-back-button">{{ contentStrings.SAVE_AND_BACK }}</a>
+
+            {% else %}
+              {{ govukButton({
+                text: contentStrings.SAVE_AND_BACK,
+                classes: "govuk-button--secondary",
+                attributes: {
+                  'data-cy': 'save-and-back-button',
+                  'formaction': saveAndBackUrl
+                }
+              }) }}
+          {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+{% endmacro %}
