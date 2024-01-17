@@ -8,13 +8,13 @@ export const PARTIALS = {
       CREDIT_INSURANCE_COVER: {
         CONDITIONAL_YES_HTML: 'partials/insurance/credit-insurance-cover-conditional-yes-html.njk',
       },
+      CONNECTION_WITH_BUYER: {
+        CONDITIONAL_YES_HTML: 'partials/insurance/connection-to-the-buyer-conditional-yes-html.njk',
+      },
     },
     CODE_OF_CONDUCT: {
       HINT_HTML: 'partials/insurance/code-of-conduct-hint.njk',
       CONDITIONAL_YES_HTML: 'partials/insurance/code-of-conduct-conditional-yes-html.njk',
-    },
-    CONNECTION_WITH_BUYER: {
-      CONDITIONAL_YES_HTML: 'partials/insurance/connection-to-the-buyer-conditional-yes-html.njk',
     },
     END_BUYER: {
       CUSTOM_CONTENT_HTML: 'partials/insurance/end-buyer-details.njk',
