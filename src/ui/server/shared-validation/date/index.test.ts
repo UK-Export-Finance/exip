@@ -1,7 +1,9 @@
 import dateRules from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
+import validDateFormatRules from './valid-format';
 import generateValidationErrors from '../../helpers/validation';
+import getDaysInAMonth from '../../helpers/date/get-days-in-a-month';
 
 const {
   POLICY: {
@@ -43,91 +45,41 @@ describe('shared-validation/date', () => {
     [`${FIELD_ID}-year`]: futureDate.getFullYear(),
   };
 
-  describe('when no day/month/year fields are provided', () => {
-    it('should return validation error', () => {
+  describe('when a data has an invalid format', () => {
+    it('should return the result of validDateFormatRules', () => {
+      const mockEmptyString = '';
+
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: '',
-        [`${FIELD_ID}-month`]: '',
-        [`${FIELD_ID}-year`]: '',
+        [`${FIELD_ID}-day`]: mockEmptyString,
+        [`${FIELD_ID}-month`]: mockEmptyString,
+        [`${FIELD_ID}-year`]: mockEmptyString,
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT, mockErrors);
+      const formatErrors = validDateFormatRules({
+        ...baseParams,
+        formBody: mockSubmittedData,
+        dayString: mockEmptyString,
+        monthString: mockEmptyString,
+        yearString: mockEmptyString,
+      });
+
+      const expected = formatErrors.errors;
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('when any day/month/year field is NOT a number', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: 'One',
-        [`${FIELD_ID}-month`]: 'Two',
-        [`${FIELD_ID}-year`]: 'Three',
-      };
+  describe('when the day is greater than the current month', () => {
+    const daysInMonth = getDaysInAMonth(month, year);
 
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
+    const invalidDay = daysInMonth + 1;
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when a valid day is provided, but month and year are not', () => {
-    it('should return validation error', () => {
+    it('should a return validation error', () => {
       const mockSubmittedData = {
         ...mockValidBody,
-        [`${FIELD_ID}-month`]: '',
-        [`${FIELD_ID}-year`]: '',
-      };
-
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.MISSING_MONTH_AND_YEAR, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when a valid month is provided, but day and year are not', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        ...mockValidBody,
-        [`${FIELD_ID}-day`]: '',
-        [`${FIELD_ID}-year`]: '',
-      };
-
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.MISSING_DAY_AND_YEAR, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when a valid year is provided, but day and month are not', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        ...mockValidBody,
-        [`${FIELD_ID}-day`]: '',
-        [`${FIELD_ID}-month`]: '',
-      };
-
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.MISSING_DAY_AND_MONTH, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when day is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        ...mockValidBody,
-        [`${FIELD_ID}-day`]: '',
+        [`${FIELD_ID}-day`]: invalidDay,
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
@@ -138,57 +90,11 @@ describe('shared-validation/date', () => {
     });
   });
 
-  describe('when month is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        ...mockValidBody,
-        [`${FIELD_ID}-month`]: '',
-      };
-
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.INVALID_MONTH, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when year is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        ...mockValidBody,
-        [`${FIELD_ID}-year`]: '',
-      };
-
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.INVALID_YEAR, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when year has less than 4 digits', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        ...mockValidBody,
-        [`${FIELD_ID}-year`]: '202',
-      };
-
-      const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.INVALID_YEAR_DIGITS, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('when the date is invalid', () => {
-    it('should return validation error', () => {
+    it('should a return validation error', () => {
       const mockSubmittedData = {
-        [`${FIELD_ID}-day`]: '50',
+        ...mockValidBody,
         [`${FIELD_ID}-month`]: '24',
-        [`${FIELD_ID}-year`]: year,
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });
@@ -200,7 +106,7 @@ describe('shared-validation/date', () => {
   });
 
   describe('when the date is in the past', () => {
-    it('should return validation error', () => {
+    it('should a return validation error', () => {
       const yesterday = new Date(date.setDate(day - 1));
 
       const mockSubmittedData = {
