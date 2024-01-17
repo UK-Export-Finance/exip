@@ -17,7 +17,7 @@ const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 const { START: quoteStart } = ROUTES.QUOTE;
 const { START: insuranceStart } = ROUTES.INSURANCE;
 
-const { CONDITIONAL_YES_HTML } = TEMPLATES.PARTIALS.INSURANCE.CONNECTION_WITH_BUYER;
+const { CONDITIONAL_YES_HTML } = TEMPLATES.PARTIALS.INSURANCE.BUYER.CONNECTION_WITH_BUYER;
 
 describe('server/helpers/page-variables/core', () => {
   const mock = {

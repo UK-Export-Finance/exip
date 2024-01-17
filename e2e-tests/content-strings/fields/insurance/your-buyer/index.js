@@ -2,7 +2,14 @@ import { FIELD_IDS } from '../../../../constants';
 
 const {
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION, TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS,
+    COMPANY_OR_ORGANISATION,
+    CONNECTION_WITH_BUYER,
+    TRADED_WITH_BUYER,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
+    OUTSTANDING_PAYMENTS,
+    FAILED_PAYMENTS,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
   },
   CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
@@ -91,5 +98,12 @@ export const YOUR_BUYER_FIELDS = {
   },
   [CURRENCY_CODE]: {
     LEGEND: 'What currency are the outstanding or overdue payments in?',
+  },
+  [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: 'Have you in the past held credit insurance cover on the buyer?',
+  },
+  [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: 'Tell us about the credit insurance cover you had on the buyer',
+    HINT: 'Include the name of the insurer(s) and the credit limit.',
   },
 };

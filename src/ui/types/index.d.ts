@@ -48,7 +48,7 @@ import {
   SummaryListGroupData,
 } from './summary-list';
 import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
-import { ValidationErrors } from './validation-errors';
+import { DateValidationRulesParams, DateValidationFormatRulesParams, DateValidationFormatRules, ValidationErrors } from './validation-errors';
 import {
   CorePageVariablesInitialInput,
   CorePageVariablesInput,
@@ -93,6 +93,9 @@ export {
   Currency,
   CurrencyRadios,
   DateErrorMessage,
+  DateValidationRulesParams,
+  DateValidationFormatRulesParams,
+  DateValidationFormatRules,
   NumberErrorMessage,
   Business,
   InsuranceEligibility,
