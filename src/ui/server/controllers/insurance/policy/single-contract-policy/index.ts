@@ -97,9 +97,9 @@ export const get = async (req: Request, res: Response) => {
   const refNumber = Number(referenceNumber);
 
   try {
-    const currencies = await api.keystone.APIM.getCurrencies();
+    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(supportedCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -111,7 +111,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
+      currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
     });
   } catch (err) {
     console.error('Error getting currencies %O', err);
@@ -145,9 +145,9 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     try {
-      const currencies = await api.keystone.APIM.getCurrencies();
+      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      if (!isPopulatedArray(currencies)) {
+      if (!isPopulatedArray(supportedCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
@@ -160,7 +160,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
+        currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
         validationErrors,
       });
     } catch (err) {

@@ -12,7 +12,7 @@ import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-co
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import { mockReq, mockRes, mockAnswers, mockCurrencies, mockSession } from '../../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockCurrencies, mockCurrenciesResponse, mockSession } from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
 const {
@@ -161,7 +161,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   });
 
   describe('get', () => {
-    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
       req.session.submittedData = {
@@ -343,7 +343,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -356,7 +356,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
   });
 
   describe('post', () => {
-    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+    let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
     beforeEach(() => {
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
@@ -599,7 +599,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

@@ -15,7 +15,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import api from '../../../../api';
 import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
 import { isPopulatedArray } from '../../../../helpers/array';
-import mapCurrencies from '../../../../helpers/mappings/map-currencies';
+import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
 
 const {
   INSURANCE_ROOT,
@@ -61,21 +61,14 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const currencies = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    /**
-     * returns all currencies from API call to APIM
-     * used by alternative currency input select
-     */
-    const allCurrenciesRequired = true;
-    const allCurrencies = await api.keystone.APIM.getCurrencies(allCurrenciesRequired);
-
-    if (!isPopulatedArray(currencies) || !isPopulatedArray(allCurrencies)) {
+    if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    // TODO: Add  if (currencyValue) once data saving completed
-    const mappedCurrencies = mapCurrencies(allCurrencies);
+    // TODO: Add  if (currencyValue) once data saving completed and change ''
+    const mappedCurrencies = mapCurrenciesAsSelectOptions(allCurrencies, '', true);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -85,7 +78,7 @@ export const get = async (req: Request, res: Response) => {
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_CURRENCY_CODE),
+      currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_CURRENCY_CODE),
       allCurrencies: mappedCurrencies,
     });
   } catch (err) {
@@ -116,20 +109,14 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
-      const currencies = await api.keystone.APIM.getCurrencies();
+      const { allCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      /**
-       * returns all currencies from API call to APIM
-       * used by alternative currency input select
-       */
-      const allCurrenciesRequired = true;
-      const allCurrencies = await api.keystone.APIM.getCurrencies(allCurrenciesRequired);
-
-      if (!isPopulatedArray(currencies) || !isPopulatedArray(allCurrencies)) {
+      if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(allCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const mappedCurrencies = mapCurrencies(allCurrencies);
+      // TODO: Add  if (currencyValue) once data saving completed and change ''
+      const mappedCurrencies = mapCurrenciesAsSelectOptions(allCurrencies, '', true);
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -140,7 +127,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
-        currencies: mapCurrenciesAsRadioOptions(currencies, ALTERNATIVE_CURRENCY_CODE),
+        currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_CURRENCY_CODE),
         allCurrencies: mappedCurrencies,
       });
     }

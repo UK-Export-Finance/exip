@@ -6,6 +6,7 @@ import {
   USD,
 } from '../../fixtures/currencies';
 import checkAutocompleteInput from '../shared-commands/assertions/check-autocomplete-input';
+import { DZA } from '../../fixtures/countries';
 
 /**
  * assertAlternativeCurrencyForm
@@ -57,7 +58,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersMultipleResults(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Be');
 
     const expectedValue = `${GBP.name} (${GBP.isoCode})`;
-    checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Algeria', GBP.name, expectedValue);
+    checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), DZA.NAME, GBP.name, expectedValue);
   },
 });
 

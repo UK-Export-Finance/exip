@@ -4,7 +4,7 @@ import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
 import mockQuote from './mock-quote';
 import mockCountries from './mock-countries';
-import mockCurrencies, { EUR, HKD, JPY, GBP, USD } from './mock-currencies';
+import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse } from './mock-currencies';
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
 import mockApplication, { mockApplicationMultiplePolicy, mockBusiness, mockCompanyDifferentTradingAddress } from './mock-application';
@@ -111,6 +111,7 @@ export {
   mockCompaniesHouseResponse,
   mockCompany,
   mockCurrencies,
+  mockCurrenciesResponse,
   mockDeclarations,
   mockCompanyDifferentTradingAddress,
   mockEligibility,

@@ -214,24 +214,9 @@ const typeDefs = `
     name: String!
   }
 
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
-  }
-
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
-  }
-
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
-  }
-
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
+  type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
   }
 
   type Mutation {
@@ -371,9 +356,7 @@ const typeDefs = `
     getApimCisCountries: [MappedCisCountry]
 
     """ get currencies from APIM """
-    getApimCurrencies(
-      allCurrencies: Boolean!
-    ): [MappedCurrency]
+    getApimCurrencies: GetApimCurrencyResponse
   }
 `;
 

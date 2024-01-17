@@ -1,7 +1,7 @@
 import { backLink, countryInput } from '../../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
+import { COUNTRY_QUOTE_SUPPORT, DZA, BRA } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
@@ -63,7 +63,10 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     });
 
     it('allows user to remove a selected country and search again', () => {
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(FIELD_ID), 'Algeria', 'Brazil', 'Brazil');
+      const algeria = DZA.NAME;
+      const brazil = BRA.NAME;
+
+      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(FIELD_ID), algeria, brazil, brazil);
     });
   });
 

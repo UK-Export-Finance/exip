@@ -8,8 +8,8 @@ import { Currency } from '../../../../../types';
  * @param {String} selectedValue: Selected currency
  * @returns {Array} Array of mapped and sorted currencies
  */
-const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue?: string) => {
-  const mappedCurrencies = mapAndSortCurrencies(currencies, selectedValue);
+const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue?: string, allCurrencies = false) => {
+  const mappedCurrencies = mapAndSortCurrencies(currencies, selectedValue, allCurrencies);
 
   if (!selectedValue) {
     const defaultOption = {

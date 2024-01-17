@@ -16,20 +16,18 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       APIM.getCurrencies = jest.fn(() => Promise.resolve(mockApimCurrenciesResponse));
     });
 
-    it('should return mapped countries when "allCurrencies" is "false"', async () => {
-      const response = await getApimCurrencies({}, { allCurrencies: false });
+    it('should return an object with mapped countries ', async () => {
+      const response = await getApimCurrencies();
 
-      const mapped = mapCurrencies(mockCurrencies, false);
+      const mappedSupported = mapCurrencies(mockCurrencies, false);
+      const mappedAll = mapCurrencies(mockCurrencies, true);
 
-      expect(response).toEqual(mapped);
-    });
+      const expected = {
+        supportedCurrencies: mappedSupported,
+        allCurrencies: mappedAll,
+      };
 
-    it('should return mapped countries when "allCurrencies" is "true"', async () => {
-      const response = await getApimCurrencies({}, { allCurrencies: true });
-
-      const mapped = mapCurrencies(mockCurrencies, true);
-
-      expect(response).toEqual(mapped);
+      expect(response).toEqual(expected);
     });
   });
 
@@ -39,7 +37,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     });
 
     it('should return object containing success as false', async () => {
-      const response = await getApimCurrencies({}, { allCurrencies: true });
+      const response = await getApimCurrencies();
 
       const expected = { success: false };
 
@@ -53,7 +51,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
     });
 
     it('should return object containing success as false', async () => {
-      const response = await getApimCurrencies({}, { allCurrencies: true });
+      const response = await getApimCurrencies();
 
       const expected = { success: false };
 
@@ -70,7 +68,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
 
     it('should throw an error', async () => {
       try {
-        await getApimCurrencies({}, { allCurrencies: true });
+        await getApimCurrencies();
       } catch (err) {
         const expected = new Error(`Getting and mapping currencies from APIM ${mockError}`);
 
