@@ -112,6 +112,10 @@ context('Insurance - Policy - Single contract policy page - form validation - co
     year.notANumber();
   });
 
+  it('when the day is greater than the last day of month', () => {
+    day.isGreaterThanLastDayOfMonth();
+  });
+
   it('when the year does not have enough digits', () => {
     year.notEnoughDigits();
   });
