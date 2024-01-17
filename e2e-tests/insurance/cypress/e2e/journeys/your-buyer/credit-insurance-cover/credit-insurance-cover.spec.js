@@ -1,0 +1,87 @@
+import {
+  headingCaption, saveAndBackButton, yesRadio, noRadio,
+} from '../../../../../../pages/shared';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_COVER;
+
+const {
+  ROOT,
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER },
+} = INSURANCE_ROUTES;
+
+const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID } = FIELD_IDS;
+
+const baseUrl = Cypress.config('baseUrl');
+
+context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, I want to provide information, So that UKEF can better understand the risk undertaken if I am given insurance cover', () => {
+  let referenceNumber;
+  let url;
+
+  before(() => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      referenceNumber = refNumber;
+
+      cy.startInsuranceYourBuyerSection({});
+
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+
+      // TODO: EMS-2659 - use buyer commands to get here
+      cy.navigateToUrl(url);
+
+      cy.assertUrl(url);
+    });
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`,
+      backLink: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}#`,
+    });
+  });
+
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('renders `yes` and `no` radio buttons in the correct order', () => {
+      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+    });
+
+    it('renders `no` radio button', () => {
+      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+      cy.checkRadioInputNoAriaLabel(FIELDS[FIELD_ID].LABEL);
+    });
+
+    it('renders `yes` radio button', () => {
+      yesRadio().input().should('exist');
+
+      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+      cy.checkRadioInputYesAriaLabel(FIELDS[FIELD_ID].LABEL);
+    });
+
+    it('renders a `save and back` button', () => {
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+    });
+  });
+});

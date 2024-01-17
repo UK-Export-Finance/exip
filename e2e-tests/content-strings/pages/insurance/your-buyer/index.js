@@ -40,6 +40,16 @@ export const TRADING_HISTORY = {
   INTRO: 'We will request a copy of your trading history once the application has been submitted.',
 };
 
+export const ALTERNATIVE_CURRENCY = {
+  ...SHARED,
+  PAGE_TITLE: 'What currency are the outstanding or overdue payments in?',
+};
+
+export const CREDIT_INSURANCE_COVER = {
+  ...SHARED,
+  PAGE_TITLE: 'Have you in the past held credit insurance cover on the buyer?',
+};
+
 export const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
