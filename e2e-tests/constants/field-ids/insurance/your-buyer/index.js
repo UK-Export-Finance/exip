@@ -17,4 +17,5 @@ export const YOUR_BUYER = {
   OUTSTANDING_PAYMENTS: 'outstandingPayments',
   FAILED_PAYMENTS: 'failedPayments',
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'exporterHasPreviousCreditInsuranceWithBuyer',
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'previousCreditInsuranceWithBuyerDescription',
 };

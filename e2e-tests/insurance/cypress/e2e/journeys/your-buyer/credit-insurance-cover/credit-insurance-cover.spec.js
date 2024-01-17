@@ -1,5 +1,5 @@
 import {
-  headingCaption, saveAndBackButton, yesRadio, noRadio,
+  headingCaption, saveAndBackButton, yesRadio, noRadio, field as fieldSelector,
 } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
@@ -14,7 +14,10 @@ const {
   YOUR_BUYER: { CREDIT_INSURANCE_COVER },
 } = INSURANCE_ROUTES;
 
-const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID } = FIELD_IDS;
+const {
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -62,26 +65,50 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders `yes` and `no` radio buttons in the correct order', () => {
-      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+    describe(`renders ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} label and inputs`, () => {
+      const fieldId = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+
+      it('renders `yes` and `no` radio buttons in the correct order', () => {
+        cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+      });
+
+      it('renders `no` radio button', () => {
+        cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+
+        cy.checkRadioInputNoAriaLabel(FIELDS[fieldId].LABEL);
+      });
+
+      it('renders `yes` radio button', () => {
+        yesRadio().input().should('exist');
+
+        cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+
+        cy.checkRadioInputYesAriaLabel(FIELDS[fieldId].LABEL);
+      });
+
+      it('renders a `save and back` button', () => {
+        cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      });
     });
 
-    it('renders `no` radio button', () => {
-      cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+    describe(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, () => {
+      const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+      const field = fieldSelector(fieldId);
 
-      cy.checkRadioInputNoAriaLabel(FIELDS[FIELD_ID].LABEL);
-    });
+      it('should NOT by visible by default', () => {
+        field.textarea().should('not.be.visible');
+      });
 
-    it('renders `yes` radio button', () => {
-      yesRadio().input().should('exist');
+      describe(`when clicking ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'yes' radio`, () => {
+        it(`should render ${fieldId} label, hint and input`, () => {
+          yesRadio().input().click();
 
-      cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
+          field.textarea().should('be.visible');
 
-      cy.checkRadioInputYesAriaLabel(FIELDS[FIELD_ID].LABEL);
-    });
-
-    it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+          cy.checkText(field.label(), FIELDS[fieldId].LABEL);
+          cy.checkText(field.hint(), FIELDS[fieldId].HINT);
+        });
+      });
     });
   });
 });
