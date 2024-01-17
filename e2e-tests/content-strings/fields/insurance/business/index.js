@@ -79,7 +79,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
       LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
-        TITLE: 'Number of employees',
+        TITLE: 'Number of UK employees',
         FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
