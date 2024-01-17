@@ -6,6 +6,7 @@ import { Currency } from '../../../../../types';
  * Map all currencies into the required structure for GOV select component.
  * @param {Array} currencies: Array of currency objects
  * @param {String} selectedValue: Selected currency
+ * @param {Boolean} allCurrencies: if all currencies are being mapped - default to false
  * @returns {Array} Array of mapped and sorted currencies
  */
 const mapCurrenciesAsSelectOptions = (currencies: Array<Currency>, selectedValue?: string, allCurrencies = false) => {
