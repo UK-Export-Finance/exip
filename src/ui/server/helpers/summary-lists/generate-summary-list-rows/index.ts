@@ -1,5 +1,5 @@
 import { LINKS } from '../../../content-strings';
-// import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
+import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
 import { SummaryListItemData, SummaryListItem } from '../../../../types';
 
 /**
@@ -40,8 +40,7 @@ const generateSummaryListRows = (fields: Array<SummaryListItemData>, whiteText?:
         classes: `${field.id}-key govuk-!-width-one-half`,
       },
       value: {
-        // text: replaceCharacterCodesWithCharacters(field.value),
-        text: '', // TODO MIGHT NOT NEED THE ABOVE IF DOING IN "MAP FIELDS"
+        text: replaceCharacterCodesWithCharacters(field.value),
         html: field.value,
         classes: `${field.id}-value`,
       },
