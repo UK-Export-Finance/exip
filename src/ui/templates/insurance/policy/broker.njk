@@ -1,11 +1,10 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/button/macro.njk" import govukButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/address-fields.njk' as addressInput %}
-{% import '../../components/submit-button.njk' as submitButton %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
@@ -138,22 +137,10 @@
         }) }}
       </div>
 
-      <div class="govuk-grid-column-three-quarters-from-desktop">
-        <div class="govuk-button-group">
-          {{ submitButton.render({
-            text: CONTENT_STRINGS.BUTTONS.CONTINUE
-          }) }}
-
-          {{ govukButton({
-            text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': 'save-and-back-button',
-              'formaction': SAVE_AND_BACK_URL
-            }
-          }) }}
-        </div>
-      </div>
+      {{ formButtons.render({
+        contentStrings: CONTENT_STRINGS.BUTTONS,
+        saveAndBackUrl: SAVE_AND_BACK_URL
+      }) }}
     </form>
   </div>
 
