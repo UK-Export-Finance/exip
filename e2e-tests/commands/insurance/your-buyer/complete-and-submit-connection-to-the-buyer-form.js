@@ -1,11 +1,11 @@
 /**
  * completeAndSubmitConnectionToTheBuyerForm
- * Completes and submits the "connection to the buyer" form.
- * @param {Object} Object with flags on how to complete the form.
- * - hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio. Defaults to "no".
+ * Complete and submit the "connection to the buyer" form.
+ * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio. Defaults to "no".
+ * @param {String} description: "Connection with buyer" description.
  */
-const completeAndSubmitConnectionToTheBuyerForm = ({ hasConnectionToBuyer = false }) => {
-  cy.completeConnectionToTheBuyerForm({ hasConnectionToBuyer });
+const completeAndSubmitConnectionToTheBuyerForm = ({ hasConnectionToBuyer = false, description }) => {
+  cy.completeConnectionToTheBuyerForm({ hasConnectionToBuyer, description });
 
   cy.clickSubmitButton();
 };

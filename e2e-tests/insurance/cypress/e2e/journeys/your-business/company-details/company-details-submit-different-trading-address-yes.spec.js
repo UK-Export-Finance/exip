@@ -31,7 +31,6 @@ describe(`Insurance - Your business - Company details page - submit ${TRADING_AD
       alternativeTradingAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
 
       cy.startYourBusinessSection({});
-
       cy.completeCompanyDetailsForm({});
 
       cy.assertUrl(url);

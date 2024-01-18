@@ -153,7 +153,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
     it(`should redirect to ${NATURE_OF_BUSINESS_ROOT}`, () => {
       cy.navigateToUrl(alternativeAddressUrl);
 
-      cy.completeAndSubmitAlternativeTradingAddressForm();
+      cy.completeAndSubmitAlternativeTradingAddressForm({});
 
       cy.assertUrl(natureOfBusinessUrl);
     });

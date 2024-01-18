@@ -7,6 +7,7 @@ import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
@@ -97,7 +98,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
-      application,
+      application: mapApplicationToFormFields(application),
       countries: mappedCountries,
     });
   } catch (err) {
