@@ -119,7 +119,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
         cy.startYourBusinessSection({});
 
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
         cy.completeAndSubmitNatureOfYourBusiness();
         cy.completeAndSubmitTurnoverForm();
         cy.completeAndSubmitCreditControlForm({});

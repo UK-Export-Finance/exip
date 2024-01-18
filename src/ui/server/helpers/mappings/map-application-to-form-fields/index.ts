@@ -1,11 +1,12 @@
-import { Application } from '../../../../types';
-import { FIELD_IDS } from '../../../constants';
+import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { objectHasKeysAndValues } from '../../object';
 import mapNameFields from '../map-name-fields';
+import mapTextareaFields from '../map-textarea-fields';
 import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
+import { Application } from '../../../../types';
 
 const {
   SUBMISSION_DEADLINE,
@@ -19,20 +20,40 @@ const {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * mapApplicationToFormFields
  * Generate an object with application data mappings for UI form fields and summary lists.
  * @param {Application}
- * @returns {Object} Mapped application for UI consumption
+ * @returns {Application | Object} Mapped application for UI consumption
  */
-const mapApplicationToFormFields = (application?: Application): object => {
+const mapApplicationToFormFields = (application?: Application): Application | object => {
   if (application && objectHasKeysAndValues(application)) {
-    const mapped = mapNameFields(application);
+    const mapped = {
+      ...mapNameFields(application),
+      ...mapTextareaFields(application),
+    };
 
     if (mapped[SUBMISSION_DEADLINE]) {
       mapped[SUBMISSION_DEADLINE] = formatDate(application[SUBMISSION_DEADLINE]);
+    }
+
+    if (application.business) {
+      mapped.business = {
+        ...mapped.business,
+        [YEARS_EXPORTING]: transformNumberToString(application.business[YEARS_EXPORTING]),
+        [EMPLOYEES_UK]: transformNumberToString(application.business[EMPLOYEES_UK]),
+        [PERCENTAGE_TURNOVER]: transformNumberToString(application.business[PERCENTAGE_TURNOVER]),
+        [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.business[ESTIMATED_ANNUAL_TURNOVER]),
+      };
+    }
+
+    if (application?.company?.[FINANCIAL_YEAR_END_DATE]) {
+      mapped.company = {
+        ...mapped.company,
+        [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.company[FINANCIAL_YEAR_END_DATE]),
+      };
     }
 
     if (application?.policy?.[REQUESTED_START_DATE]) {
@@ -50,23 +71,6 @@ const mapApplicationToFormFields = (application?: Application): object => {
       mapped.policy = {
         ...mapped.policy,
         ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
-      };
-    }
-
-    if (application?.company?.[FINANCIAL_YEAR_END_DATE]) {
-      mapped.company = {
-        ...mapped.company,
-        [FINANCIAL_YEAR_END_DATE]: mapFinancialYearEndDate(application.company[FINANCIAL_YEAR_END_DATE]),
-      };
-    }
-
-    if (application.business) {
-      mapped.business = {
-        ...mapped.business,
-        [YEARS_EXPORTING]: transformNumberToString(application.business[YEARS_EXPORTING]),
-        [EMPLOYEES_UK]: transformNumberToString(application.business[EMPLOYEES_UK]),
-        [PERCENTAGE_TURNOVER]: transformNumberToString(application.business[PERCENTAGE_TURNOVER]),
-        [ESTIMATED_ANNUAL_TURNOVER]: transformNumberToString(application.business[ESTIMATED_ANNUAL_TURNOVER]),
       };
     }
 

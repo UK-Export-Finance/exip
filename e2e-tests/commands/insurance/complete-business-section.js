@@ -11,7 +11,7 @@ const completeBusinessSection = ({ viaTaskList, differentTradingAddress = false,
   cy.completeAndSubmitCompanyDetails({ differentTradingAddress });
 
   if (differentTradingAddress) {
-    cy.completeAndSubmitAlternativeTradingAddressForm();
+    cy.completeAndSubmitAlternativeTradingAddressForm({});
   }
 
   cy.completeAndSubmitNatureOfYourBusiness();

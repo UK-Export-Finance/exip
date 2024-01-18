@@ -130,7 +130,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS} after submitting new ${TRADING_ADDRESS} and ${FULL_ADDRESS} answers`, () => {
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
 
