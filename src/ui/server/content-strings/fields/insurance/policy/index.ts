@@ -1,4 +1,6 @@
-import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_VALUES } from '../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { FORM_TITLES } from '../../../form-titles';
 
 const {
   ACCOUNT: { EMAIL },
@@ -12,18 +14,21 @@ const {
     DIFFERENT_NAME_ON_POLICY,
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
+    NEED_ANOTHER_COMPANY_TO_BE_INSURED,
     BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
 
+const { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
+
 export const POLICY_FIELDS = {
   [POLICY_TYPE]: {
-    ID: FIELD_IDS.POLICY_TYPE,
+    ID: POLICY_TYPE,
     OPTIONS: {
       SINGLE: {
         ID: SINGLE_POLICY_TYPE,
@@ -49,14 +54,16 @@ export const POLICY_FIELDS = {
     },
     SUMMARY: {
       TITLE: 'Policy type',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
       LABEL: 'When do you want your policy to start?',
-      HINT: 'For example, 06 11 2023 ',
+      HINT: 'For example, 06 11 2023',
       SUMMARY: {
         TITLE: 'Policy start date',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
     },
     [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
@@ -64,6 +71,7 @@ export const POLICY_FIELDS = {
       HINT: 'This is the currency your policy will be issued in',
       SUMMARY: {
         TITLE: 'Policy currency',
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
       [CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE]: {
         ID: CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE,
@@ -76,12 +84,14 @@ export const POLICY_FIELDS = {
         HINT: 'For example, 06 11 2024',
         SUMMARY: {
           TITLE: 'Date you expect it to complete',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -92,6 +102,7 @@ export const POLICY_FIELDS = {
         OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
           TITLE: 'How many months you want to be insured for',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -103,6 +114,7 @@ export const POLICY_FIELDS = {
         HINT: 'Enter a whole number - do not enter decimals.',
         SUMMARY: {
           TITLE: 'Estimated total sales to the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
       [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
@@ -113,6 +125,7 @@ export const POLICY_FIELDS = {
         },
         SUMMARY: {
           TITLE: 'Estimated maximum amount owed by the buyer',
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
         },
       },
     },
@@ -133,11 +146,13 @@ export const POLICY_FIELDS = {
       LABEL: "What's your position at the company?",
       SUMMARY: {
         TITLE: 'Position at company',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
     [NAME_ON_POLICY.NAME]: {
       SUMMARY: {
         TITLE: 'Contact name',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
   },
@@ -148,6 +163,7 @@ export const POLICY_FIELDS = {
     [EMAIL]: {
       SUMMARY: {
         TITLE: 'Contact email',
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY,
       },
     },
   },
@@ -155,14 +171,18 @@ export const POLICY_FIELDS = {
     HINT: 'This is known as the pre-credit period',
     SUMMARY: {
       TITLE: 'Pre-credit period',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    LABEL: 'What period of pre-credit cover do you require?',
     MAXIMUM: 1000,
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
+  },
+  [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
+    HINT: 'This could be a parent company, subsidiary or a subcontractor.',
   },
   BROKER: {
     [LEGEND]: {
@@ -171,18 +191,21 @@ export const POLICY_FIELDS = {
     [USING_BROKER]: {
       SUMMARY: {
         TITLE: 'Using a broker',
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [NAME]: {
       LABEL: 'Name of broker or company',
       SUMMARY: {
         TITLE: "Broker's name or company",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [ADDRESS_LINE_1]: {
       LABEL: 'Address line 1',
       SUMMARY: {
         TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
     [ADDRESS_LINE_2]: {
@@ -201,6 +224,7 @@ export const POLICY_FIELDS = {
       LABEL: 'Email address',
       SUMMARY: {
         TITLE: "Broker's email",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
   },

@@ -59,6 +59,11 @@ const PRE_CREDIT_PERIOD = {
   PAGE_TITLE: 'Do you need cover for a period before you supply the goods or services to the buyer?',
 };
 
+const ANOTHER_COMPANY = {
+  ...SHARED,
+  PAGE_TITLE: 'Is there another company that needs to be insured in your policy?',
+};
+
 const BROKER = {
   ...SHARED,
   PAGE_TITLE: 'Are you using a broker to get this insurance?',
@@ -86,5 +91,6 @@ export default {
   BROKER,
   DIFFERENT_NAME_ON_POLICY,
   PRE_CREDIT_PERIOD,
+  ANOTHER_COMPANY,
   CHECK_YOUR_ANSWERS,
 };
