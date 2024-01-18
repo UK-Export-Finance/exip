@@ -1,7 +1,7 @@
 import { multipleContractPolicyExportValuePage } from '../../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
-import { APPLICATION, FIELD_VALUES } from '../../../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 
@@ -136,23 +136,6 @@ context('Insurance - Policy - Multiple contract policy - export value page - for
     cy.checkText(
       field.errorMessage(),
       `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].BELOW_MINIMUM}`,
-    );
-  });
-
-  it('should render a validation error when maximum buyer will owe is above the maximum', () => {
-    const MAXIMUM = APPLICATION.POLICY.MAXIMUM_BUYER_CAN_OWE;
-
-    cy.keyboardInput(multipleContractPolicyExportValuePage[MAXIMUM_BUYER_WILL_OWE].input(), MAXIMUM + 1);
-    cy.clickSubmitButton();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(1),
-      EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${EXPORT_VALUE_ERROR_MESSAGES[MAXIMUM_BUYER_WILL_OWE].ABOVE_MAXIMUM}`,
     );
   });
 

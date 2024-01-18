@@ -185,9 +185,8 @@ export const ERROR_MESSAGES = {
             INVALID_DATE: 'Policy completion date must be a real date',
           },
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-            INCORRECT_FORMAT: 'Enter your contract value as a whole number - do not enter decimals',
-            BELOW_MINIMUM: 'Your contract value must be 1 or more',
-            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
+            INCORRECT_FORMAT: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'The total value of the contract you want to insure must be 1 or more',
           },
         },
         MULTIPLE: {
@@ -206,9 +205,9 @@ export const ERROR_MESSAGES = {
             BELOW_MINIMUM: 'Your total sales must be 1 or more',
           },
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
-            INCORRECT_FORMAT: 'Enter the maximum the buyer will owe as a whole number - do not enter decimals',
-            BELOW_MINIMUM: 'The maximum the buyer will owe must be 1 or more',
-            ABOVE_MAXIMUM: 'The maximum the buyer will owe cannot be more than £500,000',
+            INCORRECT_FORMAT:
+              'Enter your estimate for the maximum amount your buyer will owe you at any single point during this time as a whole number - do not enter decimals',
+            BELOW_MINIMUM: 'Your estimated maximum amount your buyer will owe you at any single point during this time must be 1 or more',
           },
         },
       },

@@ -7,7 +7,7 @@ import wholeNumberValidation from '../../../../../../../helpers/whole-number-val
 import { stripCommas } from '../../../../../../../helpers/string';
 import { RequestBody } from '../../../../../../../../types';
 
-const { MINIMUM, MAXIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
+const { MINIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
 
 const {
   POLICY: {
@@ -52,11 +52,6 @@ const totalContractValueRules = (formBody: RequestBody, errors: object) => {
   // check if the field is below the minimum
   if (Number(numberWithoutCommas) < MINIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
-  }
-
-  // check if the field is above the maximum
-  if (Number(numberWithoutCommas) > MAXIMUM) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 
   return updatedErrors;

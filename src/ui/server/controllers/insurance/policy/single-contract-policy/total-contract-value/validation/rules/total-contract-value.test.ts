@@ -1,5 +1,4 @@
 import totalContractValueRules from './total-contract-value';
-import { APPLICATION } from '../../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../../helpers/validation';
@@ -21,8 +20,6 @@ const {
     },
   },
 } = ERROR_MESSAGES;
-
-const { MAXIMUM } = APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT;
 
 describe('controllers/insurance/policy/single-contract-policy//total-contract-value/validation/rules/total-contract-value', () => {
   const mockErrors = {
@@ -93,20 +90,6 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
       const result = totalContractValueRules(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when total contract value is above the maximum', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [FIELD_ID]: String(MAXIMUM + 1),
-      };
-
-      const result = totalContractValueRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors);
 
       expect(result).toEqual(expected);
     });

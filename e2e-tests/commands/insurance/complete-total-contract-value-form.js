@@ -15,10 +15,10 @@ const {
  * completeTotalContractValueForm
  * Complete the "Total contract value" form
  * @param {Object} Object with flags completing and submitting the form
- * - policyMaximumValue: should submit an application with the maximum value of 500000
+ * - policyValueOverMvpMaximum: should submit an application with a value over the MVP maximum amount
  */
-const completeTotalContractValueForm = ({ policyMaximumValue = false }) => {
-  if (policyMaximumValue) {
+const completeTotalContractValueForm = ({ policyValueOverMvpMaximum = false }) => {
+  if (policyValueOverMvpMaximum) {
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM);
   } else {
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
