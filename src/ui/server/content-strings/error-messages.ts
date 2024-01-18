@@ -215,7 +215,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select whose name should appear on the insurance policy',
         },
         [FIELD_IDS.INSURANCE.POLICY.NAME_ON_POLICY.POSITION]: {
-          IS_EMPTY: 'Enter your position at the company',
+          IS_EMPTY: 'Enter the position you hold at the company',
         },
       },
       DIFFERENT_NAME_ON_POLICY: {
