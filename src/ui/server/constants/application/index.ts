@@ -21,9 +21,7 @@ export const APPLICATION = {
   POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
       MINIMUM: 1,
-      MAXIMUM: 500000,
     },
     TOTAL_MONTHS_OF_COVER: 12,
-    MAXIMUM_BUYER_CAN_OWE: 500000,
   },
 };

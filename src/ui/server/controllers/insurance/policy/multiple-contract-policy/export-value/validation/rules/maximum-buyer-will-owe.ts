@@ -1,4 +1,3 @@
-import { APPLICATION } from '../../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../../helpers/validation';
@@ -26,7 +25,6 @@ const {
 } = ERROR_MESSAGES;
 
 const MINIMUM = 1;
-const MAXIMUM = APPLICATION.POLICY.MAXIMUM_BUYER_CAN_OWE;
 
 /**
  * maximumBuyerWillOweRules
@@ -53,11 +51,6 @@ const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) => {
   // check if the field is below the minimum
   if (Number(numberWithoutCommas) < MINIMUM) {
     updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
-  }
-
-  // check if the field is above the maximum
-  if (Number(numberWithoutCommas) > MAXIMUM) {
-    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 
   return updatedErrors;

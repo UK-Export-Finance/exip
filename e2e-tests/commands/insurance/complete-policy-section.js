@@ -7,7 +7,7 @@ const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
  * Complete the "policy" section
  * @param {Boolean} viaTaskList: Start the "policy" section from the task list.
  * @param {String} policyType: If single or multiple policy - defaults to single
- * @param {Boolean} policyMaximumValue: If the value should be the maximum amount
+ * @param {Boolean} policyValueOverMvpMaximum: If the value should be over the MVP maximum amount
  * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
@@ -16,7 +16,7 @@ const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
 const completePolicySection = ({
   viaTaskList,
   policyType = SINGLE,
-  policyMaximumValue = false,
+  policyValueOverMvpMaximum = false,
   sameName = true,
   needPreCreditPeriod = false,
   usingBroker = false,
@@ -29,7 +29,7 @@ const completePolicySection = ({
   if (policyType === SINGLE) {
     cy.completeAndSubmitSingleContractPolicyForm();
 
-    cy.completeAndSubmitTotalContractValueForm({ policyMaximumValue });
+    cy.completeAndSubmitTotalContractValueForm({ policyValueOverMvpMaximum });
   } else {
     cy.completeAndSubmitMultipleContractPolicyForm();
 

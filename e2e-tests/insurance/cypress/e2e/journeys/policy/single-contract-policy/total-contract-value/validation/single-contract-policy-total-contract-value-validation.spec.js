@@ -152,21 +152,6 @@ context('Insurance - Policy - Single contract policy - total contract value page
     );
   });
 
-  it('should render a validation error when total contract value is above the maximum', () => {
-    cy.keyboardInput(field.input(), '500001');
-    cy.clickSubmitButton();
-
-    cy.checkText(
-      partials.errorSummaryListItems().eq(0),
-      CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM,
-    );
-
-    cy.checkText(
-      field.errorMessage(),
-      `Error: ${CONTRACT_POLICY_ERROR_MESSAGES.SINGLE[TOTAL_CONTRACT_VALUE].ABOVE_MAXIMUM}`,
-    );
-  });
-
   it('should redirect to the next page when total contract value is valid and contains a comma as all fields are valid', () => {
     cy.completeAndSubmitTotalContractValueForm({});
     cy.clickBackLink();
