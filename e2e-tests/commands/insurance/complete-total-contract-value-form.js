@@ -1,4 +1,3 @@
-import { APPLICATION } from '../../constants';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
@@ -19,7 +18,8 @@ const {
  */
 const completeTotalContractValueForm = ({ policyValueOverMvpMaximum = false }) => {
   if (policyValueOverMvpMaximum) {
-    cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM);
+    const mvpMaximumPlusOne = 50000 + 1;
+    cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), mvpMaximumPlusOne);
   } else {
     cy.keyboardInput(field(TOTAL_CONTRACT_VALUE).input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
   }

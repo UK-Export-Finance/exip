@@ -12,7 +12,6 @@ export const APPLICATION = {
       MINIMUM: 1,
     },
     TOTAL_MONTHS_OF_COVER: 12,
-    MAXIMUM_BUYER_CAN_OWE: 500000,
   },
   STATUS: {
     IN_PROGRESS: 'In progress',
