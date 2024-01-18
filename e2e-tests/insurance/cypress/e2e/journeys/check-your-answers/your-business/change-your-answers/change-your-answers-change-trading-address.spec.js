@@ -131,7 +131,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
 

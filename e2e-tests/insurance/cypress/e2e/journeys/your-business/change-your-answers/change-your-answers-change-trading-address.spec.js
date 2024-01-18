@@ -106,7 +106,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS} and render the new answers`, () => {
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
 
         const expected = FIELD_VALUES.YES;
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);

@@ -19,13 +19,22 @@ const {
 
 const { BUYER } = mockApplication;
 
+/**
+ * completeAndSubmitCompanyOrOrganisationForm
+ * Complete and submit the "company or organisation" form.
+ * @param {String} buyerName: Buyer name
+ * @param {String} buyerAddress: Buyer address
+ * @param {String} firstName: Buyer first name
+ * @param {String} lastName: Buyer last name
+ */
 const completeAndSubmitCompanyOrOrganisationForm = ({
   buyerName = BUYER[NAME],
+  buyerAddress = BUYER[ADDRESS],
   firstName = BUYER[FIRST_NAME],
   lastName = BUYER[LAST_NAME],
 }) => {
   cy.keyboardInput(field(NAME).input(), buyerName);
-  cy.keyboardInput(field(ADDRESS).input(), BUYER[ADDRESS]);
+  cy.keyboardInput(field(ADDRESS).input(), buyerAddress);
   cy.keyboardInput(field(REGISTRATION_NUMBER).input(), BUYER[REGISTRATION_NUMBER]);
   cy.keyboardInput(field(WEBSITE).input(), BUYER[WEBSITE]);
   cy.keyboardInput(field(FIRST_NAME).input(), firstName);
