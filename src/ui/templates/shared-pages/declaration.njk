@@ -2,9 +2,8 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../components/keystone/document/index.njk' as keystoneDocument %}
-{% import '../components/submit-button.njk' as submitButton %}
+{% import '../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -78,20 +77,11 @@
       }
     }) }}
 
-    <div class="govuk-button-group">
-      {{ submitButton.render({
-        text: SUBMIT_BUTTON_COPY or CONTENT_STRINGS.BUTTONS.CONTINUE
-      }) }}
-
-      {{ govukButton({
-        text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,
-        classes: "govuk-button--secondary",
-        attributes: {
-          formaction: SAVE_AND_BACK_URL,
-          'data-cy': 'save-and-back-button'
-        }
-      }) }}
-    </div>
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      submitText: SUBMIT_BUTTON_COPY or CONTENT_STRINGS.BUTTONS.CONTINUE,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
 
   </form>
 

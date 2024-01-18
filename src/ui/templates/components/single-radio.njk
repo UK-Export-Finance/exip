@@ -1,7 +1,6 @@
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% from "govuk/components/details/macro.njk" import govukDetails %}
 {% import './yes-no-radio-buttons.njk' as yesNoRadioButtons %}
-{% import '../components/submit-button.njk' as submitButton %}
+{% import '../components/form-buttons.njk' as formButtons %}
 
 {% macro render(params) %}
 
@@ -66,25 +65,9 @@
     {% include customContentHTML %}
   {% endif %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters-from-desktop">
-      <div class="govuk-button-group">
-        {{ submitButton.render({
-          text: continueButtonText
-        }) }}
-
-        {% if saveAndBackUrl %}
-          {{ govukButton({
-            text: saveAndBackButtonText,
-            classes: "govuk-button--secondary",
-            attributes: {
-              'data-cy': 'save-and-back-button',
-              'formaction': saveAndBackUrl
-            }
-          }) }}
-        {% endif %}
-      </div>
-    </div>
-  </div>
+  {{ formButtons.render({
+    contentStrings: CONTENT_STRINGS.BUTTONS,
+    saveAndBackUrl: saveAndBackUrl
+  }) }}
 
 {% endmacro %}
