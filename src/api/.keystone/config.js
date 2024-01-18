@@ -380,7 +380,8 @@ var CUSTOM_RESOLVERS = [
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries",
-  "getApimCurrencies"
+  "getApimCurrencies",
+  "getAllApimCurrencies"
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
@@ -1963,6 +1964,9 @@ var typeDefs = `
 
     """ get currencies from APIM """
     getApimCurrencies: [MappedCurrency]
+
+    """ get all currencies from APIM """
+    getAllApimCurrencies: [MappedCurrency]
   }
 `;
 var type_defs_default = typeDefs;
@@ -4160,7 +4164,7 @@ var FIELDS = {
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: "Number of employees"
+        TITLE: "Number of UK employees"
       }
     }
   },
@@ -5164,6 +5168,10 @@ var mapCurrencies = (currencies) => {
   const sorted = sort_array_alphabetically_default(supportedCurrencies, FIELD_IDS.NAME);
   return sorted;
 };
+var mapAndSortAllCurrencies = (currencies) => {
+  const sorted = sort_array_alphabetically_default(currencies, FIELD_IDS.NAME);
+  return sorted;
+};
 var map_currencies_default = mapCurrencies;
 
 // custom-resolvers/queries/get-APIM-currencies/index.ts
@@ -5182,6 +5190,23 @@ var getApimCurrencies = async () => {
   }
 };
 var get_APIM_currencies_default = getApimCurrencies;
+
+// custom-resolvers/queries/get-all-APIM-currencies/index.ts
+var getAllApimCurrencies = async () => {
+  try {
+    console.info("Getting all currencies from APIM");
+    const response = await APIM_default.getCurrencies();
+    if (response.data) {
+      const mapped = mapAndSortAllCurrencies(response.data);
+      return mapped;
+    }
+    return { success: false };
+  } catch (err) {
+    console.error("Error getting and mapping all currencies from APIM %O", err);
+    throw new Error(`Getting and mapping all currencies from APIM ${err}`);
+  }
+};
+var get_all_APIM_currencies_default = getAllApimCurrencies;
 
 // helpers/remove-white-space/index.ts
 var removeWhiteSpace = (string) => string.replace(" ", "");
@@ -5526,6 +5551,7 @@ var customResolvers = {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
+    getAllApimCurrencies: get_all_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default

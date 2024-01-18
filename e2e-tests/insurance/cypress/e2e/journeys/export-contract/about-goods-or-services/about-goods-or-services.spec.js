@@ -14,7 +14,7 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import COUNTRIES from '../../../../../../fixtures/countries';
+import COUNTRIES, { XAD, DZA } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
 
 const { taskList } = partials.insurancePartials;
@@ -42,6 +42,9 @@ const task = taskList.prepareApplication.tasks.exportContract;
 const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
+
+const { NAME: ABU_DHABI } = XAD;
+const { NAME: ALGERIA } = DZA;
 
 context('Insurance - Export contract - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
@@ -170,7 +173,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
         });
 
         it('allows user to remove a selected country and search again', () => {
-          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, COUNTRIES[0].NAME, COUNTRIES[1].NAME);
+          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, ABU_DHABI, ALGERIA, ALGERIA);
         });
       });
     });

@@ -59,9 +59,9 @@ export const get = async (req: Request, res: Response) => {
     const { policyType } = policy;
     const { isUsingBroker } = broker;
 
-    const currencies = await api.keystone.APIM.getCurrencies();
+    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(currencies)) {
+    if (!isPopulatedArray(supportedCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -72,7 +72,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, currencies, checkAndChange);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, supportedCurrencies, checkAndChange);
 
     const fields = requiredFields({ policyType, isUsingBroker });
 

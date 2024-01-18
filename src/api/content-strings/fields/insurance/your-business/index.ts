@@ -81,7 +81,7 @@ export const FIELDS = {
     },
     [EMPLOYEES_UK]: {
       SUMMARY: {
-        TITLE: 'Number of employees',
+        TITLE: 'Number of UK employees',
       },
     },
   },

@@ -3,7 +3,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
 import { summaryList } from '../../../../../../pages/shared';
 import { country } from '../../../../../../fixtures/application';
-import mockCountries from '../../../../../../fixtures/countries';
+import { XAD } from '../../../../../../fixtures/countries';
 
 const { BUYER_COUNTRY } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -13,7 +13,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const oldCountry = country.NAME;
-const newCountry = mockCountries[0].NAME;
+const newCountry = XAD.NAME;
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Eligibility - Change your answers - Buyer country - As an exporter, I want to change my answers to the eligibility buyer country section', () => {

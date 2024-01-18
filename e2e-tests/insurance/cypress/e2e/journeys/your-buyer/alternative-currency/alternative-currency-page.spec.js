@@ -60,7 +60,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   });
 
   describe('page tests', () => {
-    const { radios } = assertAlternativeCurrencyForm({
+    const { radios, alternativeCurrencyInput } = assertAlternativeCurrencyForm({
       FIELD_ID: CURRENCY_CODE,
       LEGEND: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       ALTERNATIVE_CURRENCY_FIELD_ID: ALTERNATIVE_CURRENCY_CODE,
@@ -77,6 +77,10 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
     it('renders alternative currency radios', () => {
       radios();
+    });
+
+    it('renders alternative currency input', () => {
+      alternativeCurrencyInput();
     });
   });
 

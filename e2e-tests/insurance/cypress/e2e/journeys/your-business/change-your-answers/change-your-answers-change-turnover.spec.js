@@ -1,6 +1,8 @@
 import { field, summaryList } from '../../../../../../pages/shared';
+import { GBP_CURRENCY_CODE } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import formatCurrency from '../../../../../../helpers/format-currency';
 
 const {
   TURNOVER: {
@@ -75,7 +77,9 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, `£${newAnswer}`);
+        const expectedValue = formatCurrency(newAnswer, GBP_CURRENCY_CODE);
+
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
       });
     });
   });

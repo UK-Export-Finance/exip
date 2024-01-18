@@ -13,9 +13,10 @@ const getApimCurrencies = async () => {
     const response = await APIM.getCurrencies();
 
     if (response.data) {
-      const mapped = mapCurrencies(response.data);
-
-      return mapped;
+      return {
+        supportedCurrencies: mapCurrencies(response.data, false),
+        allCurrencies: mapCurrencies(response.data, true),
+      };
     }
 
     return { success: false };

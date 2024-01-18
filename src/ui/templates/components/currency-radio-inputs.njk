@@ -10,6 +10,12 @@
   {% set supportedCurrencies = params.supportedCurrencies %}
   {% set error = params.error %}
   {% set submittedValue = params.submittedValue %}
+  {% set allCurrencies = params.allCurrencies %}
+  {% set alternativeCurrencyFieldId = params.alternativeCurrencyFieldId %}
+
+  {% set allCurrenciesHtml %}
+    {% include "partials/insurance/alternative-currency-input.njk" %}
+  {% endset %}
 
   {{ govukRadios({
     name: id,
@@ -96,6 +102,9 @@
         checked: submittedValue === supportedCurrencies.ALTERNATIVE.value,
         attributes: {
           "data-cy": id + '-' + supportedCurrencies.ALTERNATIVE.value + '-input'
+        },
+        conditional: {
+          html: allCurrenciesHtml
         }
       }
     ],

@@ -1,3 +1,33 @@
+export const XAD = {
+  NAME: 'Abu Dhabi',
+  ISO_CODE: 'XAD',
+};
+
+export const DZA = {
+  NAME: 'Algeria',
+  ISO_CODE: 'DZA',
+};
+
+export const AGO = {
+  NAME: 'Angola',
+  ISO_CODE: 'AGO',
+};
+
+export const FRA = {
+  NAME: 'France',
+  ISO_CODE: 'FRA',
+};
+
+export const BRA = {
+  NAME: 'Brazil',
+  ISO_CODE: 'BRA',
+};
+
+export const GBR = {
+  NAME: 'United Kingdom',
+  ISO_CODE: 'GBR',
+};
+
 const mockCountries = [
   {
     NAME: 'Abu Dhabi',

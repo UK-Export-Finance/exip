@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCurrencies } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
 const {
@@ -49,7 +49,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
   jest.mock('../map-and-save/policy');
 
   mapAndSave.policy = jest.fn(() => Promise.resolve(true));
-  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   const mockApplicationWithoutOptionsSubmission = {
     ...mockApplication,
@@ -94,6 +94,9 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           POLICY_CURRENCY_CODE: {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
+          },
+          ALTERNATIVE_POLICY_CURRENCY_CODE: {
+            ID: ALTERNATIVE_POLICY_CURRENCY_CODE,
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
@@ -239,7 +242,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -254,7 +257,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
   describe('post', () => {
     beforeEach(() => {
-      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrencies));
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
     });
 
@@ -405,7 +408,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve([]));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 
