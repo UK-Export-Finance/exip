@@ -1,21 +1,34 @@
-import {
-  APPLICATION,
-  ELIGIBILITY,
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_VALUES } from '../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 
-const { POLICY, ACCOUNT } = FIELD_IDS.INSURANCE;
-
 const {
-  BROKER, CONTRACT_POLICY, EXPORT_VALUE, NAME_ON_POLICY, DIFFERENT_NAME_ON_POLICY, NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
-} = POLICY;
-
-const { EMAIL } = ACCOUNT;
+  ACCOUNT: { EMAIL },
+  POLICY: {
+    POLICY_TYPE,
+    SINGLE_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE,
+    CONTRACT_POLICY,
+    EXPORT_VALUE,
+    NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
+    NEED_ANOTHER_COMPANY_TO_BE_INSURED,
+    BROKER: {
+      LEGEND,
+      USING_BROKER,
+      NAME,
+      ADDRESS_LINE_1,
+      ADDRESS_LINE_2,
+      COUNTY,
+      POSTCODE,
+      TOWN,
+    },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
-
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER },
 } = APPLICATION;
@@ -25,11 +38,11 @@ const {
 } = FORM_TITLES;
 
 export const POLICY_FIELDS = {
-  [POLICY.POLICY_TYPE]: {
-    ID: FIELD_IDS.POLICY_TYPE,
+  [POLICY_TYPE]: {
+    ID: POLICY_TYPE,
     OPTIONS: {
       SINGLE: {
-        ID: POLICY.SINGLE_POLICY_TYPE,
+        ID: SINGLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
         TEXT: 'Single contract policy',
         HINT_LIST: [
@@ -40,11 +53,11 @@ export const POLICY_FIELDS = {
         ],
       },
       MULTIPLE: {
-        ID: POLICY.MULTIPLE_POLICY_TYPE,
+        ID: MULTIPLE_POLICY_TYPE,
         VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         TEXT: 'Multiple contract policy',
         HINT_LIST: [
-          'Covers multiple contracts with the same buyer, usually for 12 months',
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
           "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
           'You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts',
         ],
@@ -58,7 +71,7 @@ export const POLICY_FIELDS = {
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
       LABEL: 'When do you want your policy to start?',
-      HINT: 'For example, 06 11 2023',
+      HINT: 'For example, 06 11 2023 ',
       SUMMARY: {
         TITLE: 'Policy start date',
         FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -173,63 +186,57 @@ export const POLICY_FIELDS = {
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    LABEL: 'What period of pre-credit cover do you require?',
     MAXIMUM: 1000,
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
+  [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
+    HINT: 'This could be a parent company, subsidiary or a subcontractor.',
+  },
   BROKER: {
-    [BROKER.LEGEND]: {
+    [LEGEND]: {
       LEGEND: 'Enter contact details for your broker',
     },
-    [BROKER.USING_BROKER]: {
+    [USING_BROKER]: {
       SUMMARY: {
         TITLE: 'Using a broker',
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    [BROKER.NAME]: {
+    [NAME]: {
       LABEL: 'Name of broker or company',
       SUMMARY: {
         TITLE: "Broker's name or company",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    [BROKER.ADDRESS_LINE_1]: {
+    [ADDRESS_LINE_1]: {
       LABEL: 'Address line 1',
       SUMMARY: {
         TITLE: "Broker's address",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    [BROKER.ADDRESS_LINE_2]: {
+    [ADDRESS_LINE_2]: {
       LABEL: 'Address line 2 (optional)',
     },
-    [BROKER.TOWN]: {
+    [TOWN]: {
       LABEL: 'Town or city',
     },
-    [BROKER.COUNTY]: {
+    [COUNTY]: {
       LABEL: 'County (optional)',
     },
-    [BROKER.POSTCODE]: {
+    [POSTCODE]: {
       LABEL: 'Postcode',
     },
-    [BROKER.EMAIL]: {
+    [EMAIL]: {
       LABEL: 'Email address',
       SUMMARY: {
         TITLE: "Broker's email",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
-    },
-    [BROKER.DETAILS]: {
-      SUMMARY: 'Why appoint a broker?',
-      LINE_1: 'A broker can advise you during the application process and lifetime of any UKEF insurance policy.',
-      LINE_2: "You can find your nearest one on UKEF's list of approved brokers.",
-      LINK_TEXT: "UKEF's list of approved brokers.",
-      LINE_3: 'Alternatively, you can use any broker you prefer. They do not have to be approved by UKEF.',
-      LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
     },
   },
 };

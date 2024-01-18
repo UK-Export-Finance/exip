@@ -162,9 +162,15 @@ var ACCOUNT = {
 var account_default = ACCOUNT;
 
 // constants/field-ids/insurance/policy/index.ts
+var REQUESTED_START_DATE = "requestedStartDate";
+var CONTRACT_COMPLETION_DATE = "contractCompletionDate";
 var SHARED_CONTRACT_POLICY = {
-  REQUESTED_START_DATE: "requestedStartDate",
-  POLICY_CURRENCY_CODE: "policyCurrencyCode"
+  REQUESTED_START_DATE,
+  REQUESTED_START_DATE_DAY: `${REQUESTED_START_DATE}-day`,
+  REQUESTED_START_DATE_MONTH: `${REQUESTED_START_DATE}-month`,
+  REQUESTED_START_DATE_YEAR: `${REQUESTED_START_DATE}-year`,
+  POLICY_CURRENCY_CODE: "policyCurrencyCode",
+  ALTERNATIVE_POLICY_CURRENCY_CODE: "alternativePolicyCurrencyCode"
 };
 var POLICY = {
   ...shared_default,
@@ -174,7 +180,10 @@ var POLICY = {
   CONTRACT_POLICY: {
     ...SHARED_CONTRACT_POLICY,
     SINGLE: {
-      CONTRACT_COMPLETION_DATE: "contractCompletionDate",
+      CONTRACT_COMPLETION_DATE,
+      CONTRACT_COMPLETION_DATE_DAY: `${CONTRACT_COMPLETION_DATE}-day`,
+      CONTRACT_COMPLETION_DATE_MONTH: `${CONTRACT_COMPLETION_DATE}-month`,
+      CONTRACT_COMPLETION_DATE_YEAR: `${CONTRACT_COMPLETION_DATE}-year`,
       TOTAL_CONTRACT_VALUE: "totalValueOfContract"
     },
     MULTIPLE: {
@@ -187,8 +196,23 @@ var POLICY = {
       MAXIMUM_BUYER_WILL_OWE: "maximumBuyerWillOwe"
     }
   },
+  NAME_ON_POLICY: {
+    NAME: "nameOnPolicy",
+    IS_SAME_AS_OWNER: "isSameAsOwner",
+    SAME_NAME: "sameName",
+    OTHER_NAME: "otherName",
+    POSITION: "position",
+    POLICY_CONTACT_EMAIL: "policyContact.email"
+  },
+  DIFFERENT_NAME_ON_POLICY: {
+    POLICY_CONTACT_DETAIL: "policyContactDetail",
+    POSITION: "position"
+  },
+  NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
+  CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
+  NEED_ANOTHER_COMPANY_TO_BE_INSURED: "needAnotherCompanyToBeInsured",
   BROKER: {
-    HEADING: "broker",
+    LEGEND: "broker",
     USING_BROKER: "isUsingBroker",
     NAME: "name",
     ADDRESS_LINE_1: "addressLine1",
@@ -380,8 +404,7 @@ var CUSTOM_RESOLVERS = [
   // feedback
   "createFeedbackAndSendEmail",
   "getApimCisCountries",
-  "getApimCurrencies",
-  "getAllApimCurrencies"
+  "getApimCurrencies"
 ];
 if (isDevEnvironment) {
   CUSTOM_RESOLVERS.push(
@@ -1806,24 +1829,9 @@ var typeDefs = `
     name: String!
   }
 
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
-  }
-
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
-  }
-
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
-  }
-
-  type MappedCurrency {
-    isoCode: String!
-    name: String!
+  type GetApimCurrencyResponse {
+    supportedCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
   }
 
   type Mutation {
@@ -1963,10 +1971,7 @@ var typeDefs = `
     getApimCisCountries: [MappedCisCountry]
 
     """ get currencies from APIM """
-    getApimCurrencies: [MappedCurrency]
-
-    """ get all currencies from APIM """
-    getAllApimCurrencies: [MappedCurrency]
+    getApimCurrencies: GetApimCurrencyResponse
   }
 `;
 var type_defs_default = typeDefs;
@@ -4274,7 +4279,7 @@ var DEFAULT = {
 var { FIRST_NAME, LAST_NAME } = account_default;
 var {
   CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE }
+    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
   },
   BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
 } = policy_default;
@@ -4305,7 +4310,7 @@ var XLSX = {
       [LAST_NAME]: "Exporter last name",
       EXPORTER_CONTACT_EMAIL: "Exporter email address"
     },
-    [CONTRACT_COMPLETION_DATE]: "Date expected for contract to complete",
+    [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
@@ -4423,8 +4428,8 @@ var {
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
     CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 },
+      REQUESTED_START_DATE: REQUESTED_START_DATE2,
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
       POLICY_CURRENCY_CODE,
       SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
@@ -4442,14 +4447,14 @@ var mapPolicyIntro = (application2) => {
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY, ""),
     xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5]),
-    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE], "dd-MMM-yy"))
+    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE2].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE2], "dd-MMM-yy"))
   ];
   return mapped;
 };
 var mapSinglePolicyFields = (application2) => {
   const { policy } = application2;
   return [
-    xlsx_row_default(String(CONTENT_STRINGS2[CONTRACT_COMPLETION_DATE2].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE2], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2[CONTRACT_COMPLETION_DATE3].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd-MMM-yy")),
     xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
 };
@@ -5163,13 +5168,12 @@ var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
 };
-var mapCurrencies = (currencies) => {
-  const supportedCurrencies = getSupportedCurrencies(currencies);
-  const sorted = sort_array_alphabetically_default(supportedCurrencies, FIELD_IDS.NAME);
-  return sorted;
-};
-var mapAndSortAllCurrencies = (currencies) => {
-  const sorted = sort_array_alphabetically_default(currencies, FIELD_IDS.NAME);
+var mapCurrencies = (currencies, allCurrencies) => {
+  let currenciesArray = currencies;
+  if (!allCurrencies) {
+    currenciesArray = getSupportedCurrencies(currencies);
+  }
+  const sorted = sort_array_alphabetically_default(currenciesArray, FIELD_IDS.NAME);
   return sorted;
 };
 var map_currencies_default = mapCurrencies;
@@ -5180,8 +5184,10 @@ var getApimCurrencies = async () => {
     console.info("Getting and mapping currencies from APIM");
     const response = await APIM_default.getCurrencies();
     if (response.data) {
-      const mapped = map_currencies_default(response.data);
-      return mapped;
+      return {
+        supportedCurrencies: map_currencies_default(response.data, false),
+        allCurrencies: map_currencies_default(response.data, true)
+      };
     }
     return { success: false };
   } catch (err) {
@@ -5190,23 +5196,6 @@ var getApimCurrencies = async () => {
   }
 };
 var get_APIM_currencies_default = getApimCurrencies;
-
-// custom-resolvers/queries/get-all-APIM-currencies/index.ts
-var getAllApimCurrencies = async () => {
-  try {
-    console.info("Getting all currencies from APIM");
-    const response = await APIM_default.getCurrencies();
-    if (response.data) {
-      const mapped = mapAndSortAllCurrencies(response.data);
-      return mapped;
-    }
-    return { success: false };
-  } catch (err) {
-    console.error("Error getting and mapping all currencies from APIM %O", err);
-    throw new Error(`Getting and mapping all currencies from APIM ${err}`);
-  }
-};
-var get_all_APIM_currencies_default = getAllApimCurrencies;
 
 // helpers/remove-white-space/index.ts
 var removeWhiteSpace = (string) => string.replace(" ", "");
@@ -5551,7 +5540,6 @@ var customResolvers = {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
-    getAllApimCurrencies: get_all_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
