@@ -1,14 +1,8 @@
 import { FIELD_VALUES } from '../../../../../../constants';
-import {
-  field,
-  summaryList,
-  noRadioInput,
-  yesRadioInput,
-} from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import checkSummaryList from '../../../../../../commands/insurance/check-your-business-summary-list';
 
 const {
   EXPORTER_BUSINESS: {
@@ -96,9 +90,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
 
         summaryList.field(fieldId).changeLink().click();
 
-        yesRadioInput().eq(1).click();
-
-        cy.clickSubmitButton();
+        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
       });
 
       it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, () => {
@@ -108,26 +100,23 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
       it(`should redirect to ${CHECK_YOUR_ANSWERS} and render the new answers`, () => {
         cy.completeAndSubmitAlternativeTradingAddressForm({});
 
-        const expected = FIELD_VALUES.YES;
-        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-
         const expectedAlternativeTradingAddress = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
-        cy.assertSummaryListRowValue(summaryList, FULL_ADDRESS, expectedAlternativeTradingAddress);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedAlternativeTradingAddress);
       });
     });
   });
 
   describe(`change ${FULL_ADDRESS}`, () => {
-    const fieldId = FULL_ADDRESS;
+    const fieldId = TRADING_ADDRESS;
     const newAnswer = 'Mock address 2';
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`, () => {
+      it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_TRADING_ADDRESS_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: COMPANY_DETAILS_CHANGE, fieldId });
       });
     });
 
@@ -137,9 +126,10 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(FULL_ADDRESS).textarea(), newAnswer);
-
+        // to get to alternative trading address page
         cy.clickSubmitButton();
+
+        cy.completeAndSubmitAlternativeTradingAddressForm({ address: newAnswer });
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -171,9 +161,7 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().eq(1).click();
-
-        cy.clickSubmitButton();
+        cy.completeAndSubmitCompanyDetails({});
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -183,8 +171,6 @@ context(`Insurance - Your business - Change your answers - ${TRADING_ADDRESS} an
       it('should render the new answer', () => {
         const expected = FIELD_VALUES.NO;
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-
-        checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
       });
     });
   });
