@@ -105,7 +105,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       // go through 5 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
-      // TODO:
+      // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
       cy.completeAndSubmitAnotherCompanyForm();
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
