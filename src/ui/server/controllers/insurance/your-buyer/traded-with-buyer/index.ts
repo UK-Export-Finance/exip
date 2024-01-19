@@ -9,6 +9,7 @@ import mapAndSave from '../map-and-save';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
 
 const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
@@ -19,7 +20,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS } = YOUR_BUYER_ROUTES;
+const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADING_HISTORY } = YOUR_BUYER_ROUTES;
 
 export const FIELD_ID = TRADED_WITH_BUYER;
 
@@ -119,11 +120,27 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
+     * If is a change route
+     * redirect to CHECK_YOUR_ANSWERS
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
      * If is a check-and-change route
      * redirect to CHECK_AND_CHANGE_ROUTE
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
+    /**
+     * if exporterHasTradedWithBuyer is true
+     * redirect to prior trading history page
+     */
+    if (payload[FIELD_ID] === 'true') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
