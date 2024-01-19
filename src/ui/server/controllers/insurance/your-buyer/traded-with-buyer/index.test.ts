@@ -1,6 +1,6 @@
 import { get, post, pageVariables, HTML_FLAGS, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
 import { PAGES } from '../../../../content-strings';
-import { FIELD_VALUES, ROUTES, TEMPLATES } from '../../../../constants';
+import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -13,12 +13,10 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: YOUR_BUYER_ROUTES,
+  YOUR_BUYER: { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADED_WITH_BUYER_CHECK_AND_CHANGE, TRADED_WITH_BUYER_CHANGE, TRADING_HISTORY },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
-
-const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADED_WITH_BUYER_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
 const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
@@ -111,7 +109,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
   describe('post', () => {
     const validBody = {
-      [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
+      [TRADED_WITH_BUYER]: 'true',
     };
 
     beforeEach(() => {
@@ -123,9 +121,9 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         req.body = validBody;
       });
 
-      it('should redirect to the next page', async () => {
+      it(`should redirect to the next page when ${TRADED_WITH_BUYER} is true`, async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_HISTORY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -153,10 +151,39 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
       });
 
+      describe(`when ${TRADED_WITH_BUYER} is false`, () => {
+        it(`should redirect to the ${CHECK_YOUR_ANSWERS} when ${TRADED_WITH_BUYER} is false`, async () => {
+          req.body = {
+            [TRADED_WITH_BUYER]: 'false',
+          };
+
+          await post(req, res);
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [TRADED_WITH_BUYER]: 'true',
+          };
+
+          req.originalUrl = TRADED_WITH_BUYER_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.body = {
-            [TRADED_WITH_BUYER]: FIELD_VALUES.YES,
+            [TRADED_WITH_BUYER]: 'true',
           };
 
           req.originalUrl = TRADED_WITH_BUYER_CHECK_AND_CHANGE;

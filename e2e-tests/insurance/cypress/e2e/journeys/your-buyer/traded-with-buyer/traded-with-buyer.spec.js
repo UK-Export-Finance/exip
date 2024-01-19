@@ -9,7 +9,9 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/i
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER;
 
 const {
-  YOUR_BUYER: { CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: {
+    CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, CHECK_YOUR_ANSWERS, TRADING_HISTORY,
+  },
 } = ROUTES.INSURANCE;
 
 const { TRADED_WITH_BUYER: FIELD_ID } = FIELD_IDS;
@@ -26,6 +28,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
+  let tradingHistoryUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -37,6 +40,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
+      tradingHistoryUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
@@ -112,10 +116,10 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
     });
 
     describe('when submitting the form as "yes"', () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+      it(`should redirect to ${TRADING_HISTORY} page`, () => {
         cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(tradingHistoryUrl);
       });
 
       describe('when going back to the page', () => {
