@@ -1,3 +1,4 @@
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field, radios, countryInput } from '../../pages/shared';
 import {
   EUR,
@@ -7,6 +8,8 @@ import {
 } from '../../fixtures/currencies';
 import checkAutocompleteInput from '../shared-commands/assertions/check-autocomplete-input';
 import { DZA } from '../../fixtures/countries';
+
+const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
 /**
  * assertAlternativeCurrencyForm
@@ -19,7 +22,11 @@ import { DZA } from '../../fixtures/countries';
  * - ALTERNATIVE_CURRENCY_CODE - fieldId for "another currency" input
  */
 const assertAlternativeCurrencyForm = ({
-  FIELD_ID, LEGEND, HINT, ALTERNATIVE_CURRENCY_TEXT, ALTERNATIVE_CURRENCY_FIELD_ID,
+  FIELD_ID = CURRENCY_CODE,
+  LEGEND,
+  HINT,
+  ALTERNATIVE_CURRENCY_TEXT,
+  ALTERNATIVE_CURRENCY_FIELD_ID = ALTERNATIVE_CURRENCY_CODE,
 }) => ({
   legend: () => cy.checkText(field(FIELD_ID).legend(), LEGEND),
   hint: () => cy.checkText(field(FIELD_ID).hint(), HINT),

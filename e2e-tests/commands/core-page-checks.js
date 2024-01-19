@@ -79,6 +79,7 @@ const corePageChecks = ({
   assertBackLink = true,
   assertAuthenticatedHeader = true,
   assertCookies = true,
+  assertSaveAndBackButtonDoesNotExist = false,
   isInsurancePage = true,
   assertServiceHeading = true,
   // lightHouseThresholds,
@@ -125,6 +126,10 @@ const corePageChecks = ({
     form().should('have.attr', 'novalidate');
 
     cy.checkText(submitButton(), submitButtonCopy);
+  }
+
+  if (assertSaveAndBackButtonDoesNotExist) {
+    cy.assertSaveAndBackButtonDoesNotExist();
   }
 };
 
