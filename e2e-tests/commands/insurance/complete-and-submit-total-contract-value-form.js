@@ -2,10 +2,10 @@
  * completeAndSubmitTotalContractValueForm
  * Complete and submit the "Total contract value" form
  * @param {Object} Object with flags completing and submitting the form
- * - policyMaximumValue: should submit an application with the maximum value of 500000
+ * - policyValueOverMvpMaximum: should submit an application with the value over the MVP maximum amount
  */
-const completeAndSubmitTotalContractValueForm = ({ policyMaximumValue = false }) => {
-  cy.completeTotalContractValueForm({ policyMaximumValue });
+const completeAndSubmitTotalContractValueForm = ({ policyValueOverMvpMaximum = false }) => {
+  cy.completeTotalContractValueForm({ policyValueOverMvpMaximum });
 
   cy.clickSubmitButton();
 };

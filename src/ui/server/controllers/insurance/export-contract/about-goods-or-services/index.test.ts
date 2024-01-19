@@ -6,6 +6,7 @@ import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
@@ -122,7 +123,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mockApplicationWithoutCountryCode,
+        application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
         countries: mapCountries(mockCountries, mockApplication.exportContract[FINAL_DESTINATION]),
       };
 
@@ -152,7 +153,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
           }),
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mockApplicationWithCountry,
+          application: mapApplicationToFormFields(mockApplicationWithCountry),
           countries: mapCountries(mockCountries, countryIsoCode),
         };
 

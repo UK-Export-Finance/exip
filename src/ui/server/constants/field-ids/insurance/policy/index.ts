@@ -12,7 +12,7 @@ export const SHARED_CONTRACT_POLICY = {
   ALTERNATIVE_POLICY_CURRENCY_CODE: 'alternativePolicyCurrencyCode',
 };
 
-const POLICY = {
+export const POLICY = {
   ...SHARED,
   TYPE_OF_POLICY: {
     POLICY_TYPE: SHARED.POLICY_TYPE,
@@ -50,6 +50,7 @@ const POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
   CREDIT_PERIOD_WITH_BUYER: 'creditPeriodWithBuyer',
+  NEED_ANOTHER_COMPANY_TO_BE_INSURED: 'needAnotherCompanyToBeInsured',
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

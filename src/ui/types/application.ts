@@ -187,6 +187,8 @@ interface ApplicationVersion {
   OVER_500K_SUPPORT: boolean;
   MAXIMUM_BUYER_CAN_OWE: number;
   TOTAL_VALUE_OF_CONTRACT: number;
+  DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
 }
 
 export {

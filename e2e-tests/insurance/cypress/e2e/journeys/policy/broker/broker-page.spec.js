@@ -167,7 +167,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
     });
 
     it('should display summary text with collapsed conditional `details` content', () => {
-      cy.checkText(brokerPage[DETAILS].summary(), FIELDS.BROKER[DETAILS].SUMMARY);
+      cy.checkText(brokerPage[DETAILS].summary(), CONTENT_STRINGS.SUMMARY);
 
       brokerPage[DETAILS].details().should('not.have.attr', 'open');
     });
@@ -178,12 +178,12 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
 
         brokerPage[DETAILS].details().should('have.attr', 'open');
 
-        cy.checkText(brokerPage[DETAILS].line_1(), FIELDS.BROKER[DETAILS].LINE_1);
-        cy.checkText(brokerPage[DETAILS].line_2(), FIELDS.BROKER[DETAILS].LINE_2);
-        cy.checkText(brokerPage[DETAILS].line_3(), FIELDS.BROKER[DETAILS].LINE_3);
-        cy.checkText(brokerPage[DETAILS].line_4(), FIELDS.BROKER[DETAILS].LINE_4);
+        cy.checkText(brokerPage[DETAILS].line1(), CONTENT_STRINGS.LINE_1);
+        cy.checkText(brokerPage[DETAILS].line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
+        cy.checkText(brokerPage[DETAILS].line3(), CONTENT_STRINGS.LINE_3);
+        cy.checkText(brokerPage[DETAILS].line4(), CONTENT_STRINGS.LINE_4);
 
-        cy.checkLink(brokerPage[DETAILS].link(), APPROVED_BROKER_LIST, FIELDS.BROKER[DETAILS].LINK_TEXT);
+        cy.checkLink(brokerPage[DETAILS].link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
       });
     });
 

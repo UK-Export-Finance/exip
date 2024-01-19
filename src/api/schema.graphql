@@ -2393,7 +2393,7 @@ type Query {
   getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse
 
   """ get currencies from APIM """
-  getApimCurrencies: [MappedCurrency]
+  getApimCurrencies: GetApimCurrencyResponse
 }
 
 union AuthenticatedItem = User
@@ -2700,4 +2700,9 @@ type MappedCisCountry {
 type MappedCurrency {
   isoCode: String!
   name: String!
+}
+
+type GetApimCurrencyResponse {
+  supportedCurrencies: [MappedCurrency]
+  allCurrencies: [MappedCurrency]
 }

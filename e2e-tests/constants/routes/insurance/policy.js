@@ -33,6 +33,8 @@ export const POLICY = {
   PRE_CREDIT_PERIOD_SAVE_AND_BACK: `${ROOT}/pre-credit-period/save-and-go-back`,
   PRE_CREDIT_PERIOD_CHANGE: `${ROOT}/pre-credit-period/change`,
   PRE_CREDIT_PERIOD_CHECK_AND_CHANGE: `${ROOT}/pre-credit-period/check-and-change`,
+  ANOTHER_COMPANY: `${ROOT}/another-company`,
+  ANOTHER_COMPANY_SAVE_AND_BACK: `${ROOT}/another-company/save-and-go-back`,
   BROKER_ROOT,
   BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
   BROKER_CHANGE: `${BROKER_ROOT}/change`,

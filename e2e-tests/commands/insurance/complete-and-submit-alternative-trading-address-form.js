@@ -10,10 +10,13 @@ const { DIFFERENT_TRADING_ADDRESS } = application;
 
 /**
  * completeAndSubmitAlternativeTradingAddressForm
- * Complet and submit the "alternative trading address" form in the "your business" section.
+ * Complete and submit the "alternative trading address" form in the "your business" section.
+ * @param {String} address: Custom address to enter
  */
-const completeAndSubmitAlternativeTradingAddressForm = () => {
-  cy.keyboardInput(fieldSelector(FULL_ADDRESS).textarea(), DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
+const completeAndSubmitAlternativeTradingAddressForm = ({
+  address = DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS],
+}) => {
+  cy.keyboardInput(fieldSelector(FULL_ADDRESS).textarea(), address);
   cy.clickSubmitButton();
 };
 

@@ -63,7 +63,7 @@ context('Insurance - Name fields - `Policy contact` name fields should render sp
         cy.assertUrl(differentNamOnPolicyUrl);
       });
 
-      it('should render special characters in the first and last name fields', () => {
+      it('should render special characters exactly as they were submitted', () => {
         cy.checkValue(field(FIRST_NAME), mockAccountSpecialCharacters[FIRST_NAME]);
         cy.checkValue(field(LAST_NAME), mockAccountSpecialCharacters[LAST_NAME]);
       });

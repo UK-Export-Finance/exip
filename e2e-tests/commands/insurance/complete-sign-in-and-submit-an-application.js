@@ -13,7 +13,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - hasAntiBriberyCodeOfConduct: Should submit "yes" in the "have a code of conduct" form. Defaults to "yes".
  * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
- * - policyMaximumValue: should submit an application with the maximum value of 500000.  Defaults to false.
+ * - policyValueOverMvpMaximum: should submit an application with a value over the MVP maximum amount. Defaults to false.
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to false.
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
  * @return {String} Application reference number
@@ -24,7 +24,7 @@ const completeSignInAndSubmitAnApplication = ({
   exporterHasTradedWithBuyer,
   hasAntiBriberyCodeOfConduct,
   exportingWithCodeOfConduct,
-  policyMaximumValue = false,
+  policyValueOverMvpMaximum = false,
   usingBroker,
   differentPolicyContact = false,
 }) => {
@@ -33,7 +33,7 @@ const completeSignInAndSubmitAnApplication = ({
       cy.completePrepareApplicationMultiplePolicyType({
         differentTradingAddress,
         exporterHasTradedWithBuyer,
-        policyMaximumValue,
+        policyValueOverMvpMaximum,
         referenceNumber,
         usingBroker,
         differentPolicyContact,
@@ -42,7 +42,7 @@ const completeSignInAndSubmitAnApplication = ({
       cy.completePrepareApplicationSinglePolicyType({
         differentTradingAddress,
         exporterHasTradedWithBuyer,
-        policyMaximumValue,
+        policyValueOverMvpMaximum,
         referenceNumber,
         usingBroker,
         differentPolicyContact,

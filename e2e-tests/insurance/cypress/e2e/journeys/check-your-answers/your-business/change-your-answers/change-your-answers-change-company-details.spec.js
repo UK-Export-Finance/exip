@@ -151,7 +151,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -194,7 +194,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         fieldVariables.newValueInput = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
         cy.changeAnswerField(fieldVariables, field(PHONE_NUMBER).input());
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -236,7 +236,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID;
         cy.changeAnswerField(fieldVariables, field(WEBSITE).input());
-        cy.completeAndSubmitAlternativeTradingAddressForm();
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

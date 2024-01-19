@@ -1,5 +1,4 @@
 import maximumBuyerWillOweRules from './maximum-buyer-will-owe';
-import { APPLICATION } from '../../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../../helpers/validation';
@@ -91,20 +90,6 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value/val
       const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
 
       const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when maximum buyer will owe is above the minimum', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [FIELD_ID]: `${APPLICATION.POLICY.MAXIMUM_BUYER_CAN_OWE + 1}`,
-      };
-
-      const result = maximumBuyerWillOweRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors);
 
       expect(result).toEqual(expected);
     });

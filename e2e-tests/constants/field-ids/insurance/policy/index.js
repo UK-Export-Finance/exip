@@ -38,9 +38,11 @@ export const POLICY = {
   },
   NAME_ON_POLICY: {
     NAME: 'nameOnPolicy',
+    IS_SAME_AS_OWNER: 'isSameAsOwner',
     SAME_NAME: 'sameName',
     OTHER_NAME: 'otherName',
     POSITION: 'position',
+    POLICY_CONTACT_EMAIL: 'policyContact.email',
   },
   DIFFERENT_NAME_ON_POLICY: {
     POLICY_CONTACT_DETAIL: 'policyContactDetail',
@@ -48,6 +50,7 @@ export const POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
   CREDIT_PERIOD_WITH_BUYER: 'creditPeriodWithBuyer',
+  NEED_ANOTHER_COMPANY_TO_BE_INSURED: 'needAnotherCompanyToBeInsured',
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',
