@@ -1,12 +1,15 @@
 import {
+  field as fieldSelector,
   headingCaption,
   yesRadio,
   yesNoRadioHint,
   noRadio,
+  noRadioInput,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import {
   BUTTONS,
+  ERROR_MESSAGES,
   PAGES,
 } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -21,7 +24,23 @@ const {
   POLICY: { ANOTHER_COMPANY, BROKER_ROOT },
 } = INSURANCE_ROUTES;
 
-const { NEED_ANOTHER_COMPANY_TO_BE_INSURED } = POLICY_FIELD_IDS;
+const { NEED_ANOTHER_COMPANY_TO_BE_INSURED: FIELD_ID } = POLICY_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    POLICY: {
+      [FIELD_ID]: {
+        IS_EMPTY: EXPECTED_ERROR_MESSAGE,
+      },
+    },
+  },
+} = ERROR_MESSAGES;
+
+const ERROR_ASSERTIONS = {
+  field: fieldSelector(FIELD_ID),
+  numberOfExpectedErrors: 1,
+  errorIndex: 0,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -82,9 +101,9 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
-    describe(`renders ${NEED_ANOTHER_COMPANY_TO_BE_INSURED} label and inputs`, () => {
+    describe(`renders ${FIELD_ID} label and inputs`, () => {
       it('renders a hint', () => {
-        cy.checkText(yesNoRadioHint(), FIELDS[NEED_ANOTHER_COMPANY_TO_BE_INSURED].HINT);
+        cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
       });
 
       it('renders `yes` and `no` radio buttons in the correct order', () => {
@@ -108,7 +127,24 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER_ROOT} page`, () => {
+    describe('when submitting an empty form', () => {
+      const errorMessage = EXPECTED_ERROR_MESSAGE;
+
+      it(`should render a validation error if ${FIELD_ID} radio is not selected`, () => {
+        cy.navigateToUrl(url);
+
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
+        const radioField = {
+          ...fieldSelector(FIELD_ID),
+          input: noRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAnotherCompanyForm();

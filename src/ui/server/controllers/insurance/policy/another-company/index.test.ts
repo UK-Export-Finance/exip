@@ -6,7 +6,9 @@ import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import mapAndSave from '../map-and-save/policy';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -26,8 +28,6 @@ describe('controllers/insurance/policy/another-company', () => {
   let refNumber: number;
 
   jest.mock('../map-and-save/policy');
-
-  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -124,7 +124,9 @@ describe('controllers/insurance/policy/another-company', () => {
   });
 
   describe('post', () => {
-    const validBody = {};
+    const validBody = {
+      [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'false',
+    };
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
@@ -137,6 +139,38 @@ describe('controllers/insurance/policy/another-company', () => {
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      const mockInvalidBody = {
+        [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: '',
+      };
+
+      beforeEach(() => {
+        req.body = mockInvalidBody;
+      });
+
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+        const sanitisedData = sanitiseData(payload);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
+          }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: res.locals.application,
+          submittedValues: sanitisedData,
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 

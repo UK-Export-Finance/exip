@@ -5,6 +5,9 @@ import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -90,6 +93,27 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+  const sanitisedData = sanitiseData(payload);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
+      }),
+      ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application,
+      submittedValues: sanitisedData,
+      validationErrors,
+    });
+  }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };
