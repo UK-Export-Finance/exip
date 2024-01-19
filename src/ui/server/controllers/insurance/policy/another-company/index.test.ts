@@ -1,18 +1,20 @@
-import { FIELD_ID, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, get } from '.';
+import { FIELD_ID, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { PAGES } from '../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import mapAndSave from '../map-and-save/policy';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { ANOTHER_COMPANY_SAVE_AND_BACK },
+  POLICY: { BROKER_ROOT, ANOTHER_COMPANY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -20,14 +22,20 @@ const { NEED_ANOTHER_COMPANY_TO_BE_INSURED } = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
 
+const {
+  INSURANCE: {
+    POLICY: {
+      [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+    },
+  },
+} = ERROR_MESSAGES;
+
 describe('controllers/insurance/policy/another-company', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
 
   jest.mock('../map-and-save/policy');
-
-  mapAndSave.policy = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -117,6 +125,70 @@ describe('controllers/insurance/policy/another-company', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = {
+      [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'false',
+    };
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      const mockInvalidBody = {
+        [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: '',
+      };
+
+      beforeEach(() => {
+        req.body = mockInvalidBody;
+      });
+
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+        const sanitisedData = sanitiseData(payload);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
+          }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: res.locals.application,
+          submittedValues: sanitisedData,
+          validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

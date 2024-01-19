@@ -240,6 +240,9 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the period of pre-credit cover your require',
         ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
       },
+      [FIELD_IDS.INSURANCE.POLICY.NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
+        IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
+      },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },

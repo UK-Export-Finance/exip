@@ -187,6 +187,7 @@ export const POLICY_FIELDS = {
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
     MAXIMUM: 1000,
+    LABEL: 'What period of pre-credit cover do you require?',
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,

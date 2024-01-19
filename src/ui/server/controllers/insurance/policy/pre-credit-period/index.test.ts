@@ -16,7 +16,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { PRE_CREDIT_PERIOD_SAVE_AND_BACK, PRE_CREDIT_PERIOD_CHANGE, PRE_CREDIT_PERIOD_CHECK_AND_CHANGE, BROKER_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { ANOTHER_COMPANY, PRE_CREDIT_PERIOD_SAVE_AND_BACK, PRE_CREDIT_PERIOD_CHANGE, PRE_CREDIT_PERIOD_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -169,10 +169,10 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
         expect(mapAndSave.policy).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, async () => {
+      it(`should redirect to ${ANOTHER_COMPANY}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANOTHER_COMPANY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

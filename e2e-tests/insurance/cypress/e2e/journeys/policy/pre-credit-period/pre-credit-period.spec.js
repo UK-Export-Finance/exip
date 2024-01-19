@@ -29,7 +29,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 const {
   ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_ROOT, NAME_ON_POLICY, PRE_CREDIT_PERIOD },
+  POLICY: { ANOTHER_COMPANY, NAME_ON_POLICY, PRE_CREDIT_PERIOD },
 } = INSURANCE_ROUTES;
 
 const {
@@ -45,7 +45,7 @@ const story = 'As an exporter, I want to state whether I require pre-credit cove
 context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
   let referenceNumber;
   let url;
-  let brokerUrl;
+  let anotherCompanyUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -60,7 +60,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       cy.completeAndSubmitNameOnPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
-      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+      anotherCompanyUrl = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
 
       cy.assertUrl(url);
     });
@@ -169,8 +169,8 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       cy.completeAndSubmitPreCreditPeriodForm({});
     });
 
-    it(`should redirect to ${BROKER_ROOT}`, () => {
-      cy.assertUrl(brokerUrl);
+    it(`should redirect to ${ANOTHER_COMPANY}`, () => {
+      cy.assertUrl(anotherCompanyUrl);
     });
 
     it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
@@ -195,8 +195,8 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
         cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, () => {
-        cy.assertUrl(brokerUrl);
+      it(`should redirect to ${ANOTHER_COMPANY}`, () => {
+        cy.assertUrl(anotherCompanyUrl);
       });
 
       describe('when going back to the page', () => {

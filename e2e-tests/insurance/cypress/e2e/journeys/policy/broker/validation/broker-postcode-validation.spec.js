@@ -50,6 +50,7 @@ context('Insurance - Policy - Broker Page - Validation - Postcode', () => {
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
       cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitAnotherCompanyForm();
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 

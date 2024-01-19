@@ -1,12 +1,15 @@
 import {
+  field as fieldSelector,
   headingCaption,
   yesRadio,
   yesNoRadioHint,
   noRadio,
+  noRadioInput,
   saveAndBackButton,
 } from '../../../../../../pages/shared';
 import {
   BUTTONS,
+  ERROR_MESSAGES,
   PAGES,
 } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -18,10 +21,26 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.ANOTHER_COMPANY;
 
 const {
   ROOT,
-  POLICY: { ANOTHER_COMPANY },
+  POLICY: { ANOTHER_COMPANY, BROKER_ROOT },
 } = INSURANCE_ROUTES;
 
-const { NEED_ANOTHER_COMPANY_TO_BE_INSURED } = POLICY_FIELD_IDS;
+const { NEED_ANOTHER_COMPANY_TO_BE_INSURED: FIELD_ID } = POLICY_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    POLICY: {
+      [FIELD_ID]: {
+        IS_EMPTY: EXPECTED_ERROR_MESSAGE,
+      },
+    },
+  },
+} = ERROR_MESSAGES;
+
+const ERROR_ASSERTIONS = {
+  field: fieldSelector(FIELD_ID),
+  numberOfExpectedErrors: 1,
+  errorIndex: 0,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -30,6 +49,7 @@ const story = 'As an exporter, I want to inform UKEF of any other company I woul
 context(`Insurance - Policy - Another company page - ${story}`, () => {
   let referenceNumber;
   let url;
+  let brokerUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,7 +58,15 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitAnotherCompanyForm();
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.navigateToUrl(url);
       cy.assertUrl(url);
@@ -74,9 +102,9 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
 
-    describe(`renders ${NEED_ANOTHER_COMPANY_TO_BE_INSURED} label and inputs`, () => {
+    describe(`renders ${FIELD_ID} label and inputs`, () => {
       it('renders a hint', () => {
-        cy.checkText(yesNoRadioHint(), FIELDS[NEED_ANOTHER_COMPANY_TO_BE_INSURED].HINT);
+        cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
       });
 
       it('renders `yes` and `no` radio buttons in the correct order', () => {
@@ -96,6 +124,33 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
 
         cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
+    });
+  });
+
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      const errorMessage = EXPECTED_ERROR_MESSAGE;
+
+      it(`should render a validation error if ${FIELD_ID} radio is not selected`, () => {
+        cy.navigateToUrl(url);
+
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
+        const radioField = {
+          ...fieldSelector(FIELD_ID),
+          input: noRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
+      });
+    });
+
+    it(`should redirect to ${BROKER_ROOT}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitAnotherCompanyForm();
+
+      cy.assertUrl(brokerUrl);
     });
   });
 });
