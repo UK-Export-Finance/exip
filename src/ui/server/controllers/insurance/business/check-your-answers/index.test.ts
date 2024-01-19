@@ -13,9 +13,7 @@ import { mockCompany, mockBusiness } from '../../../../test-mocks/mock-applicati
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.EXPORTER_BUSINESS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, YOUR_BUYER: YOUR_BUYER_ROUTES, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
-
-const { ROOT: YOUR_BUYER_ROOT } = YOUR_BUYER_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 describe('controllers/insurance/business/check-your-answers', () => {
   let req: Request;
@@ -69,10 +67,10 @@ describe('controllers/insurance/business/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${YOUR_BUYER_ROOT}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${YOUR_BUYER_ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

@@ -12,9 +12,7 @@ const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.
 
 export const TEMPLATE = CHECK_YOUR_ANSWERS_TEMPLATE;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, YOUR_BUYER: YOUR_BUYER_ROUTES, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
-
-const { ROOT: YOUR_BUYER_ROOT } = YOUR_BUYER_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 /**
  * Get the application and render Business - check your answers page
@@ -60,7 +58,7 @@ const get = (req: Request, res: Response) => {
 const post = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 };
 
 export { get, post };

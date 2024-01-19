@@ -1,14 +1,14 @@
 import {
-  field, status, summaryList, noRadioInput,
+  field, status, summaryList,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
-  FIELD_VALUES,
   VALID_PHONE_NUMBERS,
   WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
@@ -26,8 +26,12 @@ const {
     YOUR_COMPANY: {
       TRADING_ADDRESS,
       HAS_DIFFERENT_TRADING_NAME,
+      DIFFERENT_TRADING_NAME,
       WEBSITE,
       PHONE_NUMBER,
+    },
+    ALTERNATIVE_TRADING_ADDRESS: {
+      FULL_ADDRESS,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -104,9 +108,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().first().click();
-
-        cy.clickSubmitButton();
+        cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -114,7 +116,10 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
+        const { YOUR_COMPANY } = application;
+        const expected = YOUR_COMPANY[DIFFERENT_TRADING_NAME];
+
+        cy.checkText(summaryList.field(fieldId).value(), expected);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -145,9 +150,8 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().eq(1).click();
-
-        cy.clickSubmitButton();
+        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -155,7 +159,9 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
+        const expectedFullAddress = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
+
+        cy.checkText(summaryList.field(fieldId).value(), expectedFullAddress);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -188,6 +194,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         fieldVariables.newValueInput = VALID_PHONE_NUMBERS.LANDLINE.NORMAL;
         cy.changeAnswerField(fieldVariables, field(PHONE_NUMBER).input());
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {
@@ -229,6 +236,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID;
         cy.changeAnswerField(fieldVariables, field(WEBSITE).input());
+        cy.completeAndSubmitAlternativeTradingAddressForm({});
       });
 
       it(`should redirect to ${YOUR_BUSINESS}`, () => {

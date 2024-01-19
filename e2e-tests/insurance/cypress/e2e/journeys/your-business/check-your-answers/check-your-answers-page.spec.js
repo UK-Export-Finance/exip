@@ -1,4 +1,4 @@
-import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -11,9 +11,6 @@ const {
   EXPORTER_BUSINESS: {
     CREDIT_CONTROL,
     CHECK_YOUR_ANSWERS,
-  },
-  YOUR_BUYER: {
-    ROOT: YOUR_BUYER_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -38,7 +35,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -57,7 +54,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
-      submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
+      submitButtonCopy: BUTTONS.SAVE_AND_BACK,
     });
   });
 
@@ -69,37 +66,16 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
-
-    it('renders a `save and back` button/link', () => {
-      cy.checkLink(
-        saveAndBackButton(),
-        allSectionsUrl,
-        BUTTONS.SAVE_AND_BACK,
-      );
-    });
   });
 
   describe('form submission', () => {
     describe('continue', () => {
-      it(`should redirect to ${YOUR_BUYER_ROOT}`, () => {
+      it(`should redirect to ${ALL_SECTIONS}`, () => {
         cy.navigateToUrl(url);
 
         cy.clickSubmitButton();
 
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`;
-        cy.assertUrl(expectedUrl);
-      });
-    });
-
-    describe('save and back', () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
-        cy.navigateToUrl(url);
-
-        saveAndBackButton().click();
-
-        const expectedUrl = `${baseUrl}${allSectionsUrl}`;
-
-        cy.assertUrl(expectedUrl);
+        cy.assertUrl(allSectionsUrl);
       });
     });
   });

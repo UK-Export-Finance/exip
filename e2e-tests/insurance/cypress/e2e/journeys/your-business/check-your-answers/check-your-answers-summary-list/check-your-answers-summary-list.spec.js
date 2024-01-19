@@ -26,9 +26,6 @@ const {
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
       },
-      ALTERNATIVE_TRADING_ADDRESS: {
-        FULL_ADDRESS,
-      },
       HAS_CREDIT_CONTROL,
     },
   },
@@ -67,15 +64,11 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
 
     it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row`, () => {
-      checkSummaryList[HAS_DIFFERENT_TRADING_NAME]();
+      checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({});
     });
 
     it(`should render a ${TRADING_ADDRESS} summary list row`, () => {
-      checkSummaryList[TRADING_ADDRESS]();
-    });
-
-    it(`should not render a ${FULL_ADDRESS} summary list row`, () => {
-      checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
+      checkSummaryList[TRADING_ADDRESS]({});
     });
 
     it(`should render a ${WEBSITE} summary list row`, () => {
@@ -138,8 +131,39 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
       cy.deleteApplication(referenceNumber);
     });
 
-    it(`should render a ${FULL_ADDRESS} summary list row`, () => {
-      checkSummaryList[FULL_ADDRESS]({});
+    it(`should render a ${TRADING_ADDRESS} summary list row with the full address`, () => {
+      checkSummaryList[TRADING_ADDRESS]({ differentTradingAddress: true });
+    });
+  });
+
+  describe(`${HAS_DIFFERENT_TRADING_NAME} as yes`, () => {
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
+
+        cy.startYourBusinessSection({});
+
+        cy.completeAndSubmitCompanyDetails({ differentTradingName: true });
+        cy.completeAndSubmitNatureOfYourBusiness();
+        cy.completeAndSubmitTurnoverForm();
+        cy.completeAndSubmitCreditControlForm({});
+
+        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      });
+    });
+
+    beforeEach(() => {
+      cy.saveSession();
+
+      cy.navigateToUrl(url);
+    });
+
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
+
+    it(`should render a ${HAS_DIFFERENT_TRADING_NAME} summary list row with the different name`, () => {
+      checkSummaryList[HAS_DIFFERENT_TRADING_NAME]({ differentTradingName: true });
     });
   });
 });

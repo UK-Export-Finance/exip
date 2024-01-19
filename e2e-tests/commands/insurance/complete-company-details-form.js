@@ -37,7 +37,7 @@ const completeCompaniesDetailsForm = ({
   }
 
   if (differentTradingName && completeDifferentTradingName) {
-    field(DIFFERENT_TRADING_NAME).input().type(YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
+    cy.keyboardInput(field(DIFFERENT_TRADING_NAME).input(), YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
   }
 
   if (differentTradingAddress) {

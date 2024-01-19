@@ -160,7 +160,7 @@ const post = async (req: Request, res: Response) => {
      * - Change answers form POST.
      * - Check/change answers form POST.
      */
-    const tradingAddressIsRequired = sanitisedHasTradingAddress && !application.company.differentTradingAddress.fullAddress;
+    const tradingAddressIsRequired = sanitisedHasTradingAddress;
 
     /**
      * If "different trading address" has been submitted as "yes"/true,

@@ -10,6 +10,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
       HAS_DIFFERENT_TRADING_NAME,
+      DIFFERENT_TRADING_NAME,
       TRADING_ADDRESS,
       WEBSITE,
       PHONE_NUMBER,
@@ -31,35 +32,24 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const checkYourBusinessSummaryList = ({
-  [HAS_DIFFERENT_TRADING_NAME]: () => {
+  [HAS_DIFFERENT_TRADING_NAME]: ({ differentTradingName = false }) => {
     const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
+    const { YOUR_COMPANY } = application;
+
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.NO;
+    const expectedValue = differentTradingName ? YOUR_COMPANY[DIFFERENT_TRADING_NAME] : FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [TRADING_ADDRESS]: () => {
+  [TRADING_ADDRESS]: ({ differentTradingAddress = false }) => {
     const fieldId = TRADING_ADDRESS;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
 
-    const expectedValue = FIELD_VALUES.NO;
+    const expectedValue = differentTradingAddress ? application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS] : FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [FULL_ADDRESS]: ({ shouldRender = true }) => {
-    const fieldId = FULL_ADDRESS;
-
-    if (shouldRender) {
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-
-      const expectedValue = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
-
-      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-    } else {
-      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
-    }
   },
   [WEBSITE]: () => {
     const fieldId = WEBSITE;

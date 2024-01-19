@@ -16,7 +16,7 @@ const { DIFFERENT_TRADING_ADDRESS } = application;
 const completeAndSubmitAlternativeTradingAddressForm = ({
   address = DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS],
 }) => {
-  fieldSelector(FULL_ADDRESS).textarea().type(address);
+  cy.keyboardInput(fieldSelector(FULL_ADDRESS).textarea(), address);
   cy.clickSubmitButton();
 };
 

@@ -5,7 +5,7 @@
  * @param {Boolean} exporterHasTradedWithBuyer: Submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} submitCheckYourAnswers: Click buyer "check your answers" submit button
  */
-const completeBuyerSection = ({ viaTaskList, exporterHasTradedWithBuyer, submitCheckYourAnswers = false }) => {
+const completeBuyerSection = ({ viaTaskList = true, exporterHasTradedWithBuyer, submitCheckYourAnswers = false }) => {
   cy.startInsuranceYourBuyerSection({ viaTaskList });
 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
