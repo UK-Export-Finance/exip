@@ -9,7 +9,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { ANOTHER_COMPANY_SAVE_AND_BACK },
+  POLICY: { BROKER_ROOT, ANOTHER_COMPANY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -49,10 +49,10 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 /**
  * get
- * Get the application and render the Policy - another company page
+ * Get the application and render the Policy - Another company page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Policy - another company page
+ * @returns {Express.Response.render} Policy - Another company page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -73,4 +73,23 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
   });
+};
+
+/**
+ * post
+ * Check Policy - Another company validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };

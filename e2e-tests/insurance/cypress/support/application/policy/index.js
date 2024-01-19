@@ -17,6 +17,7 @@ Cypress.Commands.add('completeAndSubmitDifferentNameOnPolicyForm', require('../.
 Cypress.Commands.add('completeDifferentNameOnPolicyForm', require('../../../../../commands/insurance/complete-different-name-on-policy-form'));
 Cypress.Commands.add('completePreCreditPeriodForm', require('../../../../../commands/insurance/complete-pre-credit-period-form'));
 Cypress.Commands.add('completeAndSubmitPreCreditPeriodForm', require('../../../../../commands/insurance/complete-and-submit-pre-credit-period-form'));
+Cypress.Commands.add('completeAndSubmitAnotherCompanyForm', require('../../../../../commands/insurance/complete-and-submit-another-company-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('../../../../../commands/insurance/complete-and-submit-broker-form'));
 
 Cypress.Commands.add('completeBusinessSection', require('../../../../../commands/insurance/complete-business-section'));

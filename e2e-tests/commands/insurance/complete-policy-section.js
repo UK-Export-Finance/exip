@@ -44,6 +44,8 @@ const completePolicySection = ({
 
   cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod });
 
+  cy.completeAndSubmitAnotherCompanyForm();
+
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
   if (submitCheckYourAnswers) {

@@ -18,7 +18,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.ANOTHER_COMPANY;
 
 const {
   ROOT,
-  POLICY: { ANOTHER_COMPANY },
+  POLICY: { ANOTHER_COMPANY, BROKER_ROOT },
 } = INSURANCE_ROUTES;
 
 const { NEED_ANOTHER_COMPANY_TO_BE_INSURED } = POLICY_FIELD_IDS;
@@ -30,6 +30,7 @@ const story = 'As an exporter, I want to inform UKEF of any other company I woul
 context(`Insurance - Policy - Another company page - ${story}`, () => {
   let referenceNumber;
   let url;
+  let brokerUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,7 +39,14 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitPreCreditPeriodForm({});
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.navigateToUrl(url);
       cy.assertUrl(url);
@@ -96,6 +104,16 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
 
         cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
       });
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${BROKER_ROOT} page`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitAnotherCompanyForm();
+
+      cy.assertUrl(brokerUrl);
     });
   });
 });

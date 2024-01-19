@@ -1,4 +1,4 @@
-import { FIELD_ID, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, get } from '.';
+import { FIELD_ID, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
@@ -12,7 +12,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { ANOTHER_COMPANY_SAVE_AND_BACK },
+  POLICY: { BROKER_ROOT, ANOTHER_COMPANY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -117,6 +117,36 @@ describe('controllers/insurance/policy/another-company', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = {};
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

@@ -16,7 +16,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { PRE_CREDIT_PERIOD_SAVE_AND_BACK, BROKER_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { ANOTHER_COMPANY, PRE_CREDIT_PERIOD_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -156,7 +156,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ANOTHER_COMPANY}`);
   } catch (err) {
     console.error('Error updating application - policy - pre-credit period %O', err);
 
