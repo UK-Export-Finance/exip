@@ -26,7 +26,7 @@ const completePrepareApplicationSinglePolicyType = ({
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
 
   cy.completeBuyerSection({
-    viaTaskList: false,
+    viaTaskList: true,
     exporterHasTradedWithBuyer,
     submitCheckYourAnswers,
   });
