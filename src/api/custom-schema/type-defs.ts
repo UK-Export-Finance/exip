@@ -216,7 +216,7 @@ const typeDefs = `
 
   type GetApimCurrencyResponse {
     supportedCurrencies: [MappedCurrency]
-    allCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
   }
 
   type Mutation {

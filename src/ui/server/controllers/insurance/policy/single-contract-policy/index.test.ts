@@ -229,7 +229,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -412,7 +412,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

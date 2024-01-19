@@ -10,10 +10,10 @@ import { Currency } from '../../../../../../types';
  * if all currencies, then map all currencies into required structure
  * @param {Array} currencies: Array of currency objects
  * @param {String} selectedValue: Selected currency
- * @param {Boolean} allCurrencies: if all currencies need to be mapped
+ * @param {Boolean} alternativeCurrencies: if all currencies need to be mapped
  * @returns {Array} Mapped and sorted currencies
  */
-const mapAndSortCurrencies = (currencies: Array<Currency>, selectedValue?: string, allCurrencies?: boolean) => {
+const mapAndSortCurrencies = (currencies: Array<Currency>, selectedValue?: string, alternativeCurrencies?: boolean) => {
   const renderValueInText = true;
   let sortedCurrencies;
 
@@ -21,7 +21,7 @@ const mapAndSortCurrencies = (currencies: Array<Currency>, selectedValue?: strin
    * if not all currencies, then manually sorted to meet design
    * if all currencies, then map all currencies into the required structure for GOV select component
    */
-  if (!allCurrencies) {
+  if (!alternativeCurrencies) {
     /**
      * 1) Create an initial currencies object
      * 2) Loop over each currency
