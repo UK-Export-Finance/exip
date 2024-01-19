@@ -2,13 +2,13 @@ import { FIELD_ID, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, ge
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import { PAGES } from '../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import generateValidationErrors from './validation';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -21,6 +21,14 @@ const {
 const { NEED_ANOTHER_COMPANY_TO_BE_INSURED } = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
+
+const {
+  INSURANCE: {
+    POLICY: {
+      [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+    },
+  },
+} = ERROR_MESSAGES;
 
 describe('controllers/insurance/policy/another-company', () => {
   let req: Request;
@@ -167,7 +175,7 @@ describe('controllers/insurance/policy/another-company', () => {
           userName: getUserNameFromSession(req.session.user),
           application: res.locals.application,
           submittedValues: sanitisedData,
-          validationErrors: generateValidationErrors(payload),
+          validationErrors: generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
