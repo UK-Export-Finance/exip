@@ -134,7 +134,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'You must select the currency you use to calculate your annual turnover',
       },
       [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
-        IS_EMPTY: 'You must select the currency you use to calculate your annual turnover',
+        IS_EMPTY: 'Enter the currency you use to calculate your annual turnover',
       },
     },
     EXPORT_CONTRACT: {
