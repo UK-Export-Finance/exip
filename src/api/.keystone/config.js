@@ -1831,7 +1831,7 @@ var typeDefs = `
 
   type GetApimCurrencyResponse {
     supportedCurrencies: [MappedCurrency]
-    allCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
   }
 
   type Mutation {
@@ -5168,10 +5168,16 @@ var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
 };
-var mapCurrencies = (currencies, allCurrencies) => {
+var getAlternativeCurrencies = (currencies) => {
+  const alternate = currencies.filter((currency) => !SUPPORTED_CURRENCIES.includes(currency.isoCode));
+  return alternate;
+};
+var mapCurrencies = (currencies, alternativeCurrencies) => {
   let currenciesArray = currencies;
-  if (!allCurrencies) {
+  if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currencies);
+  } else {
+    currenciesArray = getAlternativeCurrencies(currencies);
   }
   const sorted = sort_array_alphabetically_default(currenciesArray, FIELD_IDS.NAME);
   return sorted;
@@ -5186,7 +5192,7 @@ var getApimCurrencies = async () => {
     if (response.data) {
       return {
         supportedCurrencies: map_currencies_default(response.data, false),
-        allCurrencies: map_currencies_default(response.data, true)
+        alternativeCurrencies: map_currencies_default(response.data, true)
       };
     }
     return { success: false };
