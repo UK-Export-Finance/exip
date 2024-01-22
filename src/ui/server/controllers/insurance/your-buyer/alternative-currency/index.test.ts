@@ -24,7 +24,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { supportedCurrencies, allCurrencies } = mockCurrenciesResponse;
+const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/your-buyer/alternative-currency', () => {
   let req: Request;
@@ -100,7 +100,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         application: mapApplicationToFormFields(mockApplication),
-        ...mapRadioAndSelectOptions(supportedCurrencies, allCurrencies, ''),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -134,7 +134,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -218,7 +218,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           ...PAGE_VARIABLES,
           submittedValues: payload,
           validationErrors,
-          ...mapRadioAndSelectOptions(supportedCurrencies, allCurrencies, ''),
+          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
@@ -253,7 +253,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

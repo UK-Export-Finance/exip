@@ -29,7 +29,7 @@ const mockCurrencies = [EUR, HKD, JPY, GBP, USD] as Array<Currency>;
 
 export const mockCurrenciesResponse = {
   supportedCurrencies: mockCurrencies,
-  allCurrencies: mockCurrencies,
+  alternativeCurrencies: mockCurrencies,
 };
 
 export default mockCurrencies;

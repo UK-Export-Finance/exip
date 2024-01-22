@@ -11,15 +11,15 @@ const {
  * mapRadioAndSelectOptions
  * Create an object of mapped currencies into the required structure for GOV radio and select components
  * This is used for forms that have both currency radio inputs, and an alternative currency select component
- * @param {Array} currencies: Array of all currencies
+ * @param {Array} alternativeCurrencies: Array of alternative currencies
  * @param {Array} currencies: Array of supported currencies
  * @param {String} selectedValue: Selected currency
  * @returns {Object} Mapped currencies
  */
-const mapRadioAndSelectOptions = (allCurrencies: Array<Currency>, supportedCurrencies: Array<Currency>, selectedValue?: string) => {
+const mapRadioAndSelectOptions = (alternativeCurrencies: Array<Currency>, supportedCurrencies: Array<Currency>, selectedValue?: string) => {
   const mapped = {
     currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_CURRENCY_CODE),
-    allCurrencies: mapCurrenciesAsSelectOptions(allCurrencies, selectedValue, true),
+    alternativeCurrencies: mapCurrenciesAsSelectOptions(alternativeCurrencies, selectedValue, true),
   };
 
   return mapped;

@@ -17,7 +17,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { supportedCurrencies, allCurrencies } = mockCurrenciesResponse;
+const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/business/turnover', () => {
   let req: Request;
@@ -91,7 +91,7 @@ describe('controllers/insurance/business/turnover', () => {
         }),
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
-        ...mapRadioAndSelectOptions(supportedCurrencies, allCurrencies, ''),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
       });
     });
 
@@ -123,7 +123,7 @@ describe('controllers/insurance/business/turnover', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], allCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ alternativeCurrencies: [], supportedCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

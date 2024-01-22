@@ -48,9 +48,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { allCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(allCurrencies)) {
+    if (!isPopulatedArray(alternativeCurrencies) || !isPopulatedArray(supportedCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -61,7 +61,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
-      ...mapRadioAndSelectOptions(allCurrencies, supportedCurrencies, ''),
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
     });
   } catch (err) {
     console.error('Error getting turnover currency %O', err);
