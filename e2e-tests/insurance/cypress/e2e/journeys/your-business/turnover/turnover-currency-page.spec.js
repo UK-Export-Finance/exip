@@ -1,4 +1,5 @@
 import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
+import partials from '../../../../../../partials';
 import { turnoverPage } from '../../../../../../pages/your-business';
 import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -107,7 +108,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
          */
         const field = {
           ...fieldSelectors.currencyCode,
-          input: fieldSelectors.gbp.input(),
+          input: fieldSelectors.gbp.input,
         };
 
         cy.submitAndAssertRadioErrors(
@@ -122,16 +123,20 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
     describe(`when selecting ${ALTERNATIVE_CURRENCY_CODE} and not choosing a currency`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+
+        fieldSelectors.alternativeCurrencyCode.input().click();
+        cy.clickSubmitButton();
       });
 
       it('should render validation errors', () => {
-        fieldSelectors.alternativeCurrencyCode.input().click();
-
-        cy.submitAndAssertRadioErrors(
-          fieldSelectors.alternativeCurrencyCode,
-          0,
-          1,
+        cy.checkText(
+          partials.errorSummaryListItems().first(),
           ERRORS[ALTERNATIVE_CURRENCY_CODE].IS_EMPTY,
+        );
+
+        cy.checkText(
+          fieldSelectors.alternativeCurrencyCode.errorMessage(),
+          `Error: ${ERRORS[ALTERNATIVE_CURRENCY_CODE].IS_EMPTY}`,
         );
       });
     });
