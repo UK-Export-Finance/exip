@@ -54,12 +54,24 @@ const assertAlternativeCurrencyForm = ({
 
     checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
     checkAutocompleteInput.rendersInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
+  },
+  alternativeCurrencyShouldRender: () => {
+    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+
+    option5.input().click();
+
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'test');
     // should not render radio values in alternate currency input
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), GBP.isoCode);
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), USD.isoCode);
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), JPY.isoCode);
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), EUR.isoCode);
+  },
+  alternativeCurrencyShouldNotRender: () => {
+    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+
+    option5.input().click();
+
     checkAutocompleteInput.rendersSingleResult(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Alg');
     checkAutocompleteInput.rendersMultipleResults(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Be');
 
