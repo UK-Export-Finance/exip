@@ -1,10 +1,11 @@
-import { headingCaption } from '../../../../../../pages/shared';
+import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
-import { PAGES, FIELDS } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
+import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
@@ -15,7 +16,19 @@ const {
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
+const {
+  INSURANCE: {
+    EXPORTER_BUSINESS: ERRORS,
+  },
+} = ERROR_MESSAGES;
+
 const baseUrl = Cypress.config('baseUrl');
+
+const fieldSelectors = {
+  currencyCode: fieldSelector(CURRENCY_CODE),
+  gbp: fieldSelector(`${CURRENCY_CODE}-${GBP_CURRENCY_CODE}`),
+  alternativeCurrencyCode: fieldSelector(ALTERNATIVE_CURRENCY_CODE),
+};
 
 context('Insurance - Your business - Turnover currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
@@ -75,6 +88,50 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
     it('renders alternative currency input', () => {
       alternativeCurrencyInput();
+    });
+  });
+
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render validation errors', () => {
+        /**
+         * Custom field object is required because:
+         * - The field is "currency code".
+         * - But the error assertion is on the 1st currency code option (GBP).
+         */
+        const field = {
+          ...fieldSelectors.currencyCode,
+          input: fieldSelectors.gbp.input(),
+        };
+
+        cy.submitAndAssertRadioErrors(
+          field,
+          0,
+          1,
+          ERRORS[CURRENCY_CODE].IS_EMPTY,
+        );
+      });
+    });
+
+    describe(`when selecting ${ALTERNATIVE_CURRENCY_CODE} and not choosing a currency`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render validation errors', () => {
+        fieldSelectors.alternativeCurrencyCode.input().click();
+
+        cy.submitAndAssertRadioErrors(
+          fieldSelectors.alternativeCurrencyCode,
+          0,
+          1,
+          ERRORS[ALTERNATIVE_CURRENCY_CODE].IS_EMPTY,
+        );
+      });
     });
   });
 });

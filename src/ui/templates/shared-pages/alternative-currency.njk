@@ -13,6 +13,7 @@
 
 {% block content %}
 
+
   {{ govukBackLink({
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
@@ -46,7 +47,7 @@
           isPageHeading: true,
           hint: FIELDS.CURRENCY_CODE.HINT,
           supportedCurrencies: currencies,
-          error: validationErrors.errorList[FIELDS.CURRENCY_CODE.ID],
+          error: validationErrors.errorList,
           submittedValue: submittedValues[FIELDS.CURRENCY_CODE.ID] or applicationAnswer,
           allCurrencies: allCurrencies,
           alternativeCurrencyFieldId: FIELDS.ALTERNATIVE_CURRENCY_CODE.ID

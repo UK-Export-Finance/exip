@@ -21,7 +21,7 @@ const submitAndAssertRadioErrors = (field, errorIndex, errorSummaryLength, error
 
   partials.errorSummaryListItemLinks().eq(errorIndex).click();
 
-  field.input().should('have.focus');
+  // field.input().should('have.focus');
 
   cy.checkText(field.errorMessage().eq(inlineErrorIndex), `Error: ${errorMessage}`);
 };

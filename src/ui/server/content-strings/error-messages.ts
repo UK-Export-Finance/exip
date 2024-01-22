@@ -129,6 +129,12 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.HAS_CREDIT_CONTROL]: {
         IS_EMPTY: 'Select if you have a process for dealing with late payments',
       },
+      [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
+        IS_EMPTY: 'You must select the currency you use to calculate your annual turnover',
+      },
+      [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+        IS_EMPTY: 'You must select the currency you use to calculate your annual turnover',
+      },
     },
     EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: {
