@@ -110,9 +110,6 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      // TODO: Add  if (currencyValue) once data saving completed and change ''
-      // const mappedCurrencies = mapCurrenciesAsSelectOptions(allCurrencies, '', true);
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
