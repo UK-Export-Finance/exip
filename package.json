@@ -42,20 +42,20 @@
     "apollo-client": "^2.6.10",
     "apollo-link-http": "^1.5.17",
     "cypress": "^13.6.3",
-    "date-fns": "^3.2.0",
-    "dotenv": "^16.3.1",
+    "date-fns": "^3.3.1",
+    "dotenv": "^16.3.2",
     "graphql-tag": "^2.12.6",
     "node-notifier": "^10.0.1",
     "typescript": "^5.3.3"
   },
   "devDependencies": {
-    "@commitlint/cli": "^18.4.4",
+    "@commitlint/cli": "^18.5.0",
     "@commitlint/config-conventional": "^18.4.4",
     "@types/jest": "^29.5.11",
     "@types/node": "^20.11.5",
     "@typescript-eslint/eslint-plugin": "^6.19.0",
     "@typescript-eslint/parser": "^6.19.0",
-    "commitlint": "^18.4.4",
+    "commitlint": "^18.5.0",
     "cspell": "^8.3.2",
     "eslint": "^8.56.0",
     "eslint-config-airbnb": "^19.0.4",
@@ -73,7 +73,7 @@
     "lint-staged": "^15.2.0",
     "prettier": "^3.2.4",
     "sort-package-json": "^2.6.0",
-    "ts-jest": "^29.1.1",
+    "ts-jest": "^29.1.2",
     "typescript": "^5.3.3"
   },
   "engines": {
