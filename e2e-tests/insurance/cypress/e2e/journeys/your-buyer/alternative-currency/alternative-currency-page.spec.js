@@ -61,7 +61,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
   describe('page tests', () => {
     const {
-      radios, alternativeCurrencyInput, alternativeCurrencyShouldNotRender, alternativeCurrencyShouldRender,
+      radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
     } = assertAlternativeCurrencyForm({
       FIELD_ID: CURRENCY_CODE,
       LEGEND: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
@@ -86,11 +86,11 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     });
 
     it('should not render invalid inputs or radio currencies in alternative currency input', () => {
-      alternativeCurrencyShouldNotRender();
+      doesNotRenderSupportedCurrencies();
     });
 
     it('should render valid alternate currencies in alternative currency input', () => {
-      alternativeCurrencyShouldRender();
+      rendersAlternativeCurrencies();
     });
   });
 
