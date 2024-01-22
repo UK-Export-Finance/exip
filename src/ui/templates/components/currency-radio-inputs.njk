@@ -9,8 +9,7 @@
   {% set hint = params.hint %}
   {% set supportedCurrencies = params.supportedCurrencies %}
   {% set alternativeCurrencies = params.alternativeCurrencies %}
-  {% set error = params.error %}
-  {# TODO - rename to errors. ^ #}
+  {% set errors = params.errors %}
   {% set submittedValue = params.submittedValue %}
   {% set allCurrencies = params.allCurrencies %}
   {% set alternativeCurrencyFieldId = params.alternativeCurrencyFieldId %}
@@ -110,8 +109,8 @@
         }
       }
     ],
-    errorMessage: error[id].text and {
-      text: error[id].text,
+    errorMessage: errors[id].text and {
+      text: errors[id].text,
       attributes: {
         "data-cy": id + "-error-message"
       }
