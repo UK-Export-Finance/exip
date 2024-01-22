@@ -37,7 +37,7 @@ const checkYourBusinessSummaryList = ({
 
     const { YOUR_COMPANY } = application;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.COMPANY_DETAILS);
     const expectedValue = differentTradingName ? YOUR_COMPANY[DIFFERENT_TRADING_NAME] : FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
@@ -45,7 +45,7 @@ const checkYourBusinessSummaryList = ({
   [TRADING_ADDRESS]: ({ differentTradingAddress = false }) => {
     const fieldId = TRADING_ADDRESS;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.COMPANY_DETAILS);
 
     const expectedValue = differentTradingAddress ? application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS] : FIELD_VALUES.NO;
 
@@ -54,7 +54,7 @@ const checkYourBusinessSummaryList = ({
   [WEBSITE]: () => {
     const fieldId = WEBSITE;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.COMPANY_DETAILS);
     const expectedValue = application.COMPANY[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
@@ -62,7 +62,7 @@ const checkYourBusinessSummaryList = ({
   [PHONE_NUMBER]: () => {
     const fieldId = PHONE_NUMBER;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.COMPANY_DETAILS);
     const expectedValue = application.COMPANY[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
