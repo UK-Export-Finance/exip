@@ -1,4 +1,4 @@
-import { get, post, PAGE_VARIABLES, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
+import { PAGE_VARIABLES, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
@@ -6,14 +6,13 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import tradingHistoryValidation from './validation';
-import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import api from '../../../../api';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
-import api from '../../../../api';
-import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
-import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
 
 const {
   INSURANCE_ROOT,
@@ -24,6 +23,8 @@ const {
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
+
+const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/your-buyer/alternative-currency', () => {
   let req: Request;
@@ -55,7 +56,6 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
-        PAGE_CONTENT_STRINGS,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
@@ -92,8 +92,6 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE);
-
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -102,8 +100,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         application: mapApplicationToFormFields(mockApplication),
-        currencies: expectedCurrencies,
-        allCurrencies: mapCurrenciesAsSelectOptions(mockCurrencies, '', true),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -210,8 +207,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const validationErrors = tradingHistoryValidation(payload);
-        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE);
+        const validationErrors = generateValidationErrors(payload);
 
         const expectedVariables = {
           ...insuranceCorePageVariables({
@@ -222,8 +218,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           ...PAGE_VARIABLES,
           submittedValues: payload,
           validationErrors,
-          currencies: expectedCurrencies,
-          allCurrencies: mapCurrenciesAsSelectOptions(mockCurrencies, '', true),
+          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });

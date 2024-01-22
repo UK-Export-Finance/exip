@@ -16,6 +16,7 @@ import {
 } from './actions';
 
 Cypress.Commands.add('assertUrl', require('./assert-url'));
+Cypress.Commands.add('assertSaveAndBackButtonDoesNotExist', require('./assert-save-and-back-button-does-not-exist'));
 Cypress.Commands.add('assertYesNoRadiosOrder', require('./assert-first-and-last-radios'));
 
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);

@@ -8,7 +8,6 @@ import {
   noRadioInput,
 } from '../../../../../../pages/shared';
 import { PAGES, BUTTONS } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertCompaniesHouseSummaryList from '../../../../../../commands/insurance/assert-companies-house-summary-list';
@@ -108,11 +107,11 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display the trading name radios', () => {
-      cy.checkText(companyDetails[HAS_DIFFERENT_TRADING_NAME].label(), EXPORTER_BUSINESS_FIELDS[HAS_DIFFERENT_TRADING_NAME].LABEL);
+      cy.checkText(companyDetails[HAS_DIFFERENT_TRADING_NAME].label(), CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
 
-      cy.checkRadioInputYesAriaLabel(EXPORTER_BUSINESS_FIELDS[HAS_DIFFERENT_TRADING_NAME].LABEL);
+      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
 
-      cy.checkRadioInputNoAriaLabel(EXPORTER_BUSINESS_FIELDS[HAS_DIFFERENT_TRADING_NAME].LABEL);
+      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.HAS_DIFFERENT_TRADING_NAME);
     });
 
     it(`should NOT display conditional ${DIFFERENT_TRADING_NAME} input without selecting the trading name "yes" radio`, () => {
@@ -124,32 +123,32 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
 
       field(DIFFERENT_TRADING_NAME).input().should('be.visible');
 
-      cy.checkText(field(DIFFERENT_TRADING_NAME).label(), EXPORTER_BUSINESS_FIELDS[DIFFERENT_TRADING_NAME].LABEL);
-      cy.checkText(field(DIFFERENT_TRADING_NAME).hint(), EXPORTER_BUSINESS_FIELDS[DIFFERENT_TRADING_NAME].HINT);
+      cy.checkText(field(DIFFERENT_TRADING_NAME).label(), CONTENT_STRINGS.DIFFERENT_TRADING_NAME);
+      cy.checkText(field(DIFFERENT_TRADING_NAME).hint(), CONTENT_STRINGS.DIFFERENT_TRADING_NAME_HINT);
     });
 
     it('should display the trading address radios', () => {
-      cy.checkText(companyDetails[TRADING_ADDRESS].label(), EXPORTER_BUSINESS_FIELDS[TRADING_ADDRESS].LABEL);
+      cy.checkText(companyDetails[TRADING_ADDRESS].label(), CONTENT_STRINGS.TRADING_ADDRESS);
 
-      cy.checkAriaLabel(yesRadioInput().eq(1), `${EXPORTER_BUSINESS_FIELDS[TRADING_ADDRESS].LABEL} Yes`);
+      cy.checkAriaLabel(yesRadioInput().eq(1), `${CONTENT_STRINGS.TRADING_ADDRESS} Yes`);
 
-      cy.checkAriaLabel(noRadioInput().eq(1), `${EXPORTER_BUSINESS_FIELDS[TRADING_ADDRESS].LABEL} No`);
+      cy.checkAriaLabel(noRadioInput().eq(1), `${CONTENT_STRINGS.TRADING_ADDRESS} No`);
     });
 
     it('should display the company website text area', () => {
-      cy.checkText(field(WEBSITE).label(), EXPORTER_BUSINESS_FIELDS[WEBSITE].LABEL);
+      cy.checkText(field(WEBSITE).label(), CONTENT_STRINGS.WEBSITE);
 
       field(WEBSITE).input().should('exist');
-      cy.checkAriaLabel(field(WEBSITE).input(), EXPORTER_BUSINESS_FIELDS[WEBSITE].LABEL);
+      cy.checkAriaLabel(field(WEBSITE).input(), CONTENT_STRINGS.WEBSITE);
     });
 
     it('should display the phone number text area', () => {
-      cy.checkText(field(PHONE_NUMBER).label(), EXPORTER_BUSINESS_FIELDS[PHONE_NUMBER].LABEL);
+      cy.checkText(field(PHONE_NUMBER).label(), CONTENT_STRINGS.PHONE_NUMBER);
 
-      cy.checkText(field(PHONE_NUMBER).hint(), EXPORTER_BUSINESS_FIELDS[PHONE_NUMBER].HINT);
+      cy.checkText(field(PHONE_NUMBER).hint(), CONTENT_STRINGS.PHONE_NUMBER_HINT);
 
       field(PHONE_NUMBER).input().should('exist');
-      cy.checkAriaLabel(field(PHONE_NUMBER).input(), EXPORTER_BUSINESS_FIELDS[PHONE_NUMBER].LABEL);
+      cy.checkAriaLabel(field(PHONE_NUMBER).input(), CONTENT_STRINGS.PHONE_NUMBER);
     });
 
     it('should display save and go back button', () => {

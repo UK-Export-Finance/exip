@@ -1,8 +1,9 @@
 import partials from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
@@ -10,9 +11,18 @@ const {
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES,
   },
-} = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
+} = FIELD_IDS;
 
-const { MAXIMUM } = FIELDS.NATURE_OF_YOUR_BUSINESS[GOODS_OR_SERVICES];
+const {
+  NATURE_OF_YOUR_BUSINESS: {
+    [GOODS_OR_SERVICES]: { MAXIMUM },
+  },
+} = FIELDS;
+
+const {
+  ROOT,
+  EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
+} = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,7 +38,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       cy.completeAndSubmitCompanyDetails({});
 
-      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });
