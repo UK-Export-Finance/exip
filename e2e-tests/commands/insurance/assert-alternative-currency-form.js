@@ -36,7 +36,6 @@ const assertAlternativeCurrencyForm = ({
     const { option: option2 } = radios(FIELD_ID, GBP.isoCode);
     const { option: option3 } = radios(FIELD_ID, USD.isoCode);
     const { option: option4 } = radios(FIELD_ID, JPY.isoCode);
-    // const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
     const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
 
     // EUR

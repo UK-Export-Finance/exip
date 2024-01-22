@@ -11,7 +11,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY, CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
@@ -33,6 +33,7 @@ const fieldSelectors = {
 context('Insurance - Your business - Turnover currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
+  let creditControlUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -46,6 +47,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       turnoverPage.provideAlternativeCurrencyLink().click();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`;
+      creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 
       cy.assertUrl(url);
     });
@@ -132,6 +134,14 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
           ERRORS[ALTERNATIVE_CURRENCY_CODE].IS_EMPTY,
         );
       });
+    });
+
+    it(`should redirect to ${CREDIT_CONTROL}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitTurnoverCurrencyForm();
+
+      cy.assertUrl(creditControlUrl);
     });
   });
 });
