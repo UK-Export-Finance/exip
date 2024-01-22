@@ -55,7 +55,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
     checkAutocompleteInput.rendersInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
   },
-  rendersAlternativeCurrencies: () => {
+  doesNotRenderSupportedCurrencies: () => {
     const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
 
     option5.input().click();
@@ -67,7 +67,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), JPY.isoCode);
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), EUR.isoCode);
   },
-  doesNotRenderSupportedCurrencies: () => {
+  rendersAlternativeCurrencies: () => {
     const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
 
     option5.input().click();
