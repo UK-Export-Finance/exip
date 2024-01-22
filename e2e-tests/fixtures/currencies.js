@@ -2,6 +2,7 @@ export const EUR_CURRENCY_CODE = 'EUR';
 export const GBP_CURRENCY_CODE = 'GBP';
 export const USD_CURRENCY_CODE = 'USD';
 export const JPY_CURRENCY_CODE = 'JPY';
+export const AED_CURRENCY_CODE = 'AED';
 
 export const EUR = {
   name: 'Euros',
@@ -21,6 +22,11 @@ export const JPY = {
 export const USD = {
   name: 'US Dollars',
   isoCode: USD_CURRENCY_CODE,
+};
+
+export const AED = {
+  name: 'U.A.E. Dirham',
+  isoCode: AED_CURRENCY_CODE,
 };
 
 const mockCurrencies = [

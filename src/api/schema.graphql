@@ -2704,5 +2704,5 @@ type MappedCurrency {
 
 type GetApimCurrencyResponse {
   supportedCurrencies: [MappedCurrency]
-  allCurrencies: [MappedCurrency]
+  alternativeCurrencies: [MappedCurrency]
 }

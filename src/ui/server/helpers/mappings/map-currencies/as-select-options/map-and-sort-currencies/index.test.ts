@@ -6,7 +6,7 @@ const renderValueInText = true;
 const mockSelectedValue = mockCurrencies[1].isoCode;
 
 describe('server/helpers/mappings/map-currencies/as-select-options/map-and-sort-currencies', () => {
-  describe('allCurrencies as "false"', () => {
+  describe('alternativeCurrencies as "false"', () => {
     it('should return an array of mapped objects from mapSelectOption', () => {
       const result = mapAndSortCurrencies(mockCurrencies, mockSelectedValue, false);
 
@@ -18,7 +18,7 @@ describe('server/helpers/mappings/map-currencies/as-select-options/map-and-sort-
     });
   });
 
-  describe('allCurrencies as "true"', () => {
+  describe('alternativeCurrencies as "true"', () => {
     it('should return an array of mapped objects from mapSelectOption', () => {
       const result = mapAndSortCurrencies(mockCurrencies, mockSelectedValue, true);
 

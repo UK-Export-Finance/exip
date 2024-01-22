@@ -61,14 +61,14 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { allCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(allCurrencies)) {
+    if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(alternativeCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     // TODO: Add  if (currencyValue) once data saving completed and change ''
-    const mappedCurrencies = mapCurrenciesAsSelectOptions(allCurrencies, '', true);
+    const mappedCurrencies = mapCurrenciesAsSelectOptions(alternativeCurrencies, '', true);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -109,14 +109,14 @@ export const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     if (validationErrors) {
-      const { allCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+      const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(allCurrencies)) {
+      if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(alternativeCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
       // TODO: Add  if (currencyValue) once data saving completed and change ''
-      const mappedCurrencies = mapCurrenciesAsSelectOptions(allCurrencies, '', true);
+      const mappedCurrencies = mapCurrenciesAsSelectOptions(alternativeCurrencies, '', true);
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({

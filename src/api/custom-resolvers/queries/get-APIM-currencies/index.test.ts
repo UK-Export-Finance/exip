@@ -20,11 +20,11 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       const response = await getApimCurrencies();
 
       const mappedSupported = mapCurrencies(mockCurrencies, false);
-      const mappedAll = mapCurrencies(mockCurrencies, true);
+      const mappedAlternative = mapCurrencies(mockCurrencies, true);
 
       const expected = {
         supportedCurrencies: mappedSupported,
-        allCurrencies: mappedAll,
+        alternativeCurrencies: mappedAlternative,
       };
 
       expect(response).toEqual(expected);

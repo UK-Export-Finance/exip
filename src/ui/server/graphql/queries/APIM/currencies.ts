@@ -7,7 +7,7 @@ const getApimCurrencies = gql`
         isoCode
         name
       }
-      allCurrencies {
+      alternativeCurrencies {
         isoCode
         name
       }
