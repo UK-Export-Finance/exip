@@ -5,6 +5,7 @@
 {% macro render(params) %}
 
   {% set application = params.application %}
+  {% set conditionalHtmlData = params.conditionalHtmlData %}
   {% set conditionalNo = params.conditionalNo %}
   {% set conditionalYes = params.conditionalYes %}
   {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
@@ -24,8 +25,6 @@
   {% set submittedAnswer = params.submittedAnswer %}
   {% set submittedValues = params.submittedValues %}
   {% set validationErrors = params.validationErrors %}
-
-  {% set conditionalHtmlData = params.conditionalHtmlData %}
 
   {% if conditionalYes %}
     {% set conditionalYesHtml %}

@@ -100,23 +100,22 @@
 
     {{ singleRadio.render({
       application: application,
-      conditionalYes: 'partials/insurance/___tony-test-temp.njk',
+      conditionalYes: CONDITIONAL_YES_HTML,
       CONTENT_STRINGS: CONTENT_STRINGS,
       continueButtonText: CONTENT_STRINGS.BUTTONS.CONTINUE,
+      conditionalHtmlData: countries,
       errorMessage: validationErrors.errorList[FINAL_DESTINATION_KNOWN_ID],
       fieldId: FINAL_DESTINATION_KNOWN_ID,
       FIELDS: FIELDS,
       noRadioAsFirstOption: true,
       legendClass: 'govuk-fieldset__legend--m',
       legendText: FIELDS.FINAL_DESTINATION_KNOWN.LABEL,
-      horizontalRadios: true,
-      noRadioAsFirstOption: true,
+      horizontalRadios: HORIZONTAL_RADIOS,
+      noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION,
       saveAndBackUrl: SAVE_AND_BACK_URL,
       submittedAnswer: submittedAnswer,
       submittedValues: submittedValues,
-      validationErrors: validationErrors,
-
-      conditionalHtmlData: countries
+      validationErrors: validationErrors
     }) }}
 
   </form>

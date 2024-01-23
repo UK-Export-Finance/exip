@@ -17,6 +17,7 @@ export const TEMPLATES = {
   ATTRIBUTES: {
     CLASSES: {
       LEGEND: {
+        M: 'govuk-fieldset__legend--m',
         XL: 'govuk-fieldset__legend--xl',
       },
     },

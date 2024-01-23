@@ -30,6 +30,11 @@ export const PARTIALS = {
     UK_GOODS_OR_SERVICES: {
       CUSTOM_CONTENT_HTML: 'partials/insurance/uk-goods-and-services-details.njk',
     },
+    EXPORT_CONTRACT: {
+      ABOUT_GOODS_OR_SERVICES: {
+        CONDITIONAL_YES_HTML: 'partials/insurance/about-goods-or-services-conditional-yes-html.njk',
+      },
+    },
   },
   QUOTE: {
     BUYER_BODY: {

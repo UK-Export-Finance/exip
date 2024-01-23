@@ -32,11 +32,7 @@ const {
   PARTIALS: {
     INSURANCE: { BROKER: BROKER_PARTIALS },
   },
-  ATTRIBUTES: {
-    CLASSES: {
-      LEGEND: { XL },
-    },
-  },
+  ATTRIBUTES: { CLASSES },
 } = TEMPLATES;
 
 describe('controllers/insurance/policy/broker', () => {
@@ -125,7 +121,7 @@ describe('controllers/insurance/policy/broker', () => {
       const expected = {
         CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
         CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
-        LEGEND_CLASS: XL,
+        LEGEND_CLASS: CLASSES.LEGEND.XL,
       };
 
       expect(HTML_FLAGS).toEqual(expected);
