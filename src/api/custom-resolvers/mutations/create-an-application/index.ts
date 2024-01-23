@@ -71,8 +71,8 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 4) Create a new policy with application relationship.
      * 5) Create a new sectionReview with application relationship
      */
-    const buyer = await createABuyer(context, country.id, applicationId);
-    console.log(buyer)
+    const { buyer } = await createABuyer(context, country.id, applicationId);
+
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);

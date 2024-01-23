@@ -3398,7 +3398,6 @@ var createABuyer = async (context, countryId, applicationId) => {
       }
     });
     const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id);
-    console.log('""""""""!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', buyerTradingHistory);
     return {
       buyer,
       buyerTradingHistory
@@ -3601,7 +3600,7 @@ var createAnApplication = async (root, variables, context) => {
       },
       data: {
         buyer: {
-          connect: { id: buyer.id }
+          connect: { id: buyer.buyer.id }
         },
         eligibility: {
           connect: { id: eligibility.id }
@@ -3617,7 +3616,6 @@ var createAnApplication = async (root, variables, context) => {
         }
       }
     });
-    console.log(updatedApplication);
     return {
       ...updatedApplication,
       success: true

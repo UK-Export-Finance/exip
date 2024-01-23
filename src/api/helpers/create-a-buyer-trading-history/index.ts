@@ -3,7 +3,7 @@ import { GBP } from '../../constants';
 
 /**
  * createABuyerTradingHistory
- * Create a buyer trading history with buyer renoplationships.
+ * Create a buyer trading history with buyer relationships.
  * @param {Object} KeystoneJS context API
  * @param {String} buyerId
  * @returns {Object} Created buyer trading history
