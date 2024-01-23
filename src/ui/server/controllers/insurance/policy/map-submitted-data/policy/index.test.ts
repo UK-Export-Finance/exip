@@ -1,13 +1,21 @@
 import mapSubmittedData from '.';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
-
-const { CONTRACT_POLICY, NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
+import { mockApplication, mockApplicationMultiplePolicy } from '../../../../../test-mocks';
 
 const {
-  REQUESTED_START_DATE,
-  SINGLE: { CONTRACT_COMPLETION_DATE },
-} = CONTRACT_POLICY;
+  POLICY_TYPE,
+  CONTRACT_POLICY: {
+    REQUESTED_START_DATE,
+    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+  },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+  },
+  NEED_PRE_CREDIT_PERIOD,
+  CREDIT_PERIOD_WITH_BUYER,
+} = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/policy', () => {
   let date = new Date();
@@ -122,6 +130,48 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
       const expected = {
         ...mockBody,
         [CREDIT_PERIOD_WITH_BUYER]: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${POLICY_TYPE} is single`, () => {
+    it('should return an object with wiped multiple policy specific fields', () => {
+      const mockBody = {
+        ...mockApplication.policy,
+        [MAXIMUM_BUYER_WILL_OWE]: mockApplicationMultiplePolicy.policy[MAXIMUM_BUYER_WILL_OWE],
+        [TOTAL_MONTHS_OF_COVER]: mockApplicationMultiplePolicy.policy[TOTAL_MONTHS_OF_COVER],
+        [TOTAL_SALES_TO_BUYER]: mockApplicationMultiplePolicy.policy[TOTAL_SALES_TO_BUYER],
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      const expected = {
+        ...mockBody,
+        [MAXIMUM_BUYER_WILL_OWE]: '',
+        [TOTAL_MONTHS_OF_COVER]: '',
+        [TOTAL_SALES_TO_BUYER]: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${POLICY_TYPE} is multiple`, () => {
+    it('should return an object with wiped single policy specific fields', () => {
+      const mockBody = {
+        ...mockApplicationMultiplePolicy.policy,
+        [CONTRACT_COMPLETION_DATE]: mockApplication.policy[CONTRACT_COMPLETION_DATE],
+        [TOTAL_CONTRACT_VALUE]: mockApplication.policy[TOTAL_CONTRACT_VALUE],
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      const expected = {
+        ...mockBody,
+        [CONTRACT_COMPLETION_DATE]: null,
+        [TOTAL_CONTRACT_VALUE]: '',
       };
 
       expect(result).toEqual(expected);

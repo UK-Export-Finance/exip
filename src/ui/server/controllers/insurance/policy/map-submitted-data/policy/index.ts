@@ -1,11 +1,17 @@
 import { RequestBody } from '../../../../../../types';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
+import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 
 const {
+  POLICY_TYPE,
   CONTRACT_POLICY: {
     REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE },
+    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+  },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
   NEED_PRE_CREDIT_PERIOD,
   CREDIT_PERIOD_WITH_BUYER,
@@ -13,12 +19,14 @@ const {
 
 /**
  * mapSubmittedData
- * Check form data and map any fields that need to be sent to the API/DB in a different format or structure.
+ * 1) Check form data and map any fields that need to be sent to the API in a different format or structure.
+ * 2) If a policy is a "single" policy, but has "multiple" policy fields, wipe "multiple" policy fields.
+ * 3) If a policy is a "multiple" policy, but has "single" policy fields, wipe "single" policy fields.
  * @param {Express.Request.body} Form data
  * @returns {Object} Page variables
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
-  const populatedData = formBody;
+  let populatedData = formBody;
 
   const dateFieldIds = {
     start: {
@@ -61,6 +69,33 @@ const mapSubmittedData = (formBody: RequestBody): object => {
    */
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'false') {
     populatedData[CREDIT_PERIOD_WITH_BUYER] = '';
+  }
+
+  const policyType = formBody[POLICY_TYPE];
+
+  /**
+   * If the policy type is "single",
+   * wipe "multiple" specific fields.
+   */
+  if (isSinglePolicyType(policyType)) {
+    populatedData = {
+      ...populatedData,
+      [MAXIMUM_BUYER_WILL_OWE]: '',
+      [TOTAL_MONTHS_OF_COVER]: '',
+      [TOTAL_SALES_TO_BUYER]: '',
+    };
+  }
+
+  /**
+   * If the policy type is "multiple",
+   * wipe "single" specific fields.
+   */
+  if (isMultiplePolicyType(policyType)) {
+    populatedData = {
+      ...populatedData,
+      [CONTRACT_COMPLETION_DATE]: null,
+      [TOTAL_CONTRACT_VALUE]: '',
+    };
   }
 
   return populatedData;

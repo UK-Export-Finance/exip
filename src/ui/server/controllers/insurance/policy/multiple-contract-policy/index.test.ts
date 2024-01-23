@@ -23,6 +23,8 @@ const {
     MULTIPLE_CONTRACT_POLICY_CHANGE,
     MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
     MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -39,7 +41,28 @@ const {
     POLICY_CURRENCY_CODE,
     ALTERNATIVE_POLICY_CURRENCY_CODE,
   },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+  },
 } = POLICY_FIELD_IDS;
+
+const applicationWithTotalSalesAndMaximumWillOwe = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    [TOTAL_SALES_TO_BUYER]: '1234',
+    [MAXIMUM_BUYER_WILL_OWE]: '5678',
+  },
+};
+
+const applicationWithoutTotalSalesAndMaximumWillOwe = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    [TOTAL_SALES_TO_BUYER]: null,
+    [MAXIMUM_BUYER_WILL_OWE]: null,
+  },
+};
 
 describe('controllers/insurance/policy/multiple-contract-policy', () => {
   let req: Request;
@@ -295,26 +318,62 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
       });
 
       describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHANGE;
+        describe(`when an application already has ${TOTAL_SALES_TO_BUYER} and ${MAXIMUM_BUYER_WILL_OWE}`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            res.locals.application = applicationWithTotalSalesAndMaximumWillOwe;
 
-          await post(req, res);
+            req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHANGE;
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when an application does NOT already have ${TOTAL_SALES_TO_BUYER} and ${MAXIMUM_BUYER_WILL_OWE}`, () => {
+          it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`, async () => {
+            res.locals.application = applicationWithoutTotalSalesAndMaximumWillOwe;
+
+            req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
+        describe(`when an application already has ${TOTAL_SALES_TO_BUYER} and ${MAXIMUM_BUYER_WILL_OWE}`, () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            res.locals.application = applicationWithTotalSalesAndMaximumWillOwe;
 
-          await post(req, res);
+            req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when an application does NOT already have ${TOTAL_SALES_TO_BUYER} and ${MAXIMUM_BUYER_WILL_OWE}`, () => {
+          it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`, async () => {
+            res.locals.application = applicationWithoutTotalSalesAndMaximumWillOwe;
+
+            req.originalUrl = MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });

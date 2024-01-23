@@ -38,8 +38,8 @@ describe('routes/insurance/policy', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(28);
-    expect(post).toHaveBeenCalledTimes(36);
+    expect(get).toHaveBeenCalledTimes(30);
+    expect(post).toHaveBeenCalledTimes(38);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -109,6 +109,22 @@ describe('routes/insurance/policy', () => {
     expect(post).toHaveBeenCalledWith(
       `/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
       multipleContractPolicyExportValueSaveAndBackPost,
+    );
+    expect(get).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`,
+      multipleContractPolicyExportValueGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`,
+      multipleContractPolicyExportValuePost,
+    );
+    expect(get).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`,
+      multipleContractPolicyExportValueGet,
+    );
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`,
+      multipleContractPolicyExportValuePost,
     );
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.NAME_ON_POLICY}`, nameOnPolicyGet);
