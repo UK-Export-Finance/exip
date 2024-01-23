@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../../pages/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../commands/insurance/check-policy-summary-list';
@@ -29,15 +28,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const changePolicyTypeAndSubmitContractPolicyForm = () => {
-  summaryList.field(POLICY_TYPE).changeLink().click();
-
-  typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
-  cy.clickSubmitButton();
-
-  cy.completeAndSubmitMultipleContractPolicyForm();
-};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -88,7 +78,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
   describe('after submitting a new policy type (multiple) and completing (now required) fields for a multiple policy', () => {
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
-      changePolicyTypeAndSubmitContractPolicyForm();
+      cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
     });
 
     it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE} with heading anchor`, () => {
@@ -100,7 +90,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
     describe(`after completing (now required) ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE} fields for a multiple policy`, () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
-        changePolicyTypeAndSubmitContractPolicyForm();
+        cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
 
         cy.completeAndSubmitExportValueForm();
       });
