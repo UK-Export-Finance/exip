@@ -115,8 +115,7 @@ context('Insurance - Export contract - About goods or services page - form valid
     it(`should render a ${FINAL_DESTINATION} validation error`, () => {
       cy.navigateToUrl(url);
 
-      // TODO : could just be "complete" form, as we submit below.
-      cy.completeAndSubmitAboutGoodsOrServicesForm({
+      cy.completeAboutGoodsOrServicesForm({
         includeFinalDestination: false,
       });
 
