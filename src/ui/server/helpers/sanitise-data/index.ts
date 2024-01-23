@@ -93,7 +93,7 @@ export const shouldIncludeAndSanitiseField = (key: string, value: string) => {
  * @param {String | Boolean | Object | Array} Form field value
  * @returns {String | Boolean | Object | Array}
  */
-export const sanitiseFormField = (key: string, value: string | boolean | ObjectType | Array<string>) => {
+export const sanitiseFormField = (key: string, value: string | boolean | null | ObjectType | Array<string>) => {
   if (Array.isArray(value)) {
     return sanitiseArrayOfStrings(key, value);
   }
@@ -104,6 +104,15 @@ export const sanitiseFormField = (key: string, value: string | boolean | ObjectT
 
   if (isAString(value)) {
     return sanitiseValue({ key, value: String(value) });
+  }
+
+  /**
+   * If a value is null, it should be remain null.
+   * Either, a null value has been submitted from a UI form,
+   * Or it is intentionally being set to null during data mapping.
+   */
+  if (value === null) {
+    return null;
   }
 
   const objectWithKeysAndValues = isAnObjectWithKeysAndValues(value);

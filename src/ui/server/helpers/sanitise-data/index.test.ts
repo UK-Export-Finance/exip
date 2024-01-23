@@ -135,6 +135,17 @@ describe('server/helpers/sanitise-data', () => {
       });
     });
 
+    describe('when the field value is null', () => {
+      it('should return null', () => {
+        const mockKey = 'a';
+        const mockValue = null;
+
+        const result = sanitiseFormField(mockKey, mockValue);
+
+        expect(result).toEqual(null);
+      });
+    });
+
     describe('when the field value is an object with values', () => {
       it('should return the result of sanitiseObject', () => {
         const mockKey = 'a';

@@ -1134,6 +1134,13 @@ var lists = {
       maximumBuyerWillOwe: (0, import_fields.integer)()
     },
     hooks: {
+      resolveInput: async ({ operation, resolvedData, context }) => {
+        const modifiedData = resolvedData;
+        if (resolvedData.policyType === "Multiple contract policy") {
+          modifiedData.contractCompletionDate = null;
+        }
+        return modifiedData;
+      },
       afterOperation: async ({ item, context }) => {
         if (item?.applicationId) {
           await update_application_default.timestamp(context, item.applicationId);
