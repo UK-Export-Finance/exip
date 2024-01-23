@@ -36,7 +36,7 @@ const assertAlternativeCurrencyForm = ({
     const { option: option2 } = radios(FIELD_ID, GBP.isoCode);
     const { option: option3 } = radios(FIELD_ID, USD.isoCode);
     const { option: option4 } = radios(FIELD_ID, JPY.isoCode);
-    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
 
     // EUR
     cy.checkCurrencyOption(option1, EUR);
@@ -55,7 +55,7 @@ const assertAlternativeCurrencyForm = ({
     cy.checkValue(option5, ALTERNATIVE_CURRENCY_FIELD_ID);
   },
   alternativeCurrencyInput: () => {
-    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
 
     option5.input().click();
 
@@ -63,7 +63,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
   },
   doesNotRenderSupportedCurrencies: () => {
-    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
 
     option5.input().click();
 
@@ -75,7 +75,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), EUR.isoCode);
   },
   rendersAlternativeCurrencies: () => {
-    const { option: option5 } = radios(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
 
     option5.input().click();
 

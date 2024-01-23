@@ -128,8 +128,8 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
           ...singlePolicyField,
           errorMessage,
         };
+
         cy.submitAndAssertRadioErrors(
-          // singlePolicyField,
           radioField,
           0,
           expectedErrorsCount,
