@@ -6,6 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/turnover';
 import isChangeRoute from '../../../../helpers/is-change-route';
@@ -115,7 +116,7 @@ const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber),
         validationErrors,
         application: mapApplicationToFormFields(application),
-        submittedValues: payload,
+        submittedValues: sanitiseData(payload),
       });
     }
 

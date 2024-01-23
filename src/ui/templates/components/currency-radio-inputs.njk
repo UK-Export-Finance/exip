@@ -9,9 +9,9 @@
   {% set hint = params.hint %}
   {% set supportedCurrencies = params.supportedCurrencies %}
   {% set alternativeCurrencies = params.alternativeCurrencies %}
-  {% set error = params.error %}
+  {% set errors = params.errors %}
   {% set submittedValue = params.submittedValue %}
-  {% set allCurrencies = params.allCurrencies %}
+  {% set alternativeCurrencies = params.alternativeCurrencies %}
   {% set alternativeCurrencyFieldId = params.alternativeCurrencyFieldId %}
 
   {% set allCurrenciesHtml %}
@@ -94,23 +94,23 @@
       {
         label: {
           attributes: {
-            id: id + '-' + supportedCurrencies.ALTERNATIVE.value + '-label',
-            'data-cy': id + '-' + supportedCurrencies.ALTERNATIVE.value + '-label'
+            id: alternativeCurrencyFieldId + '-label',
+            'data-cy': alternativeCurrencyFieldId + '-label'
           }
         },
         value: supportedCurrencies.ALTERNATIVE.value,
         text: supportedCurrencies.ALTERNATIVE.text,
         checked: submittedValue === supportedCurrencies.ALTERNATIVE.value,
         attributes: {
-          "data-cy": id + '-' + supportedCurrencies.ALTERNATIVE.value + '-input'
+          "data-cy": alternativeCurrencyFieldId + '-input'
         },
         conditional: {
           html: allCurrenciesHtml
         }
       }
     ],
-    errorMessage: error and {
-      text: error.text,
+    errorMessage: errors[id].text and {
+      text: errors[id].text,
       attributes: {
         "data-cy": id + "-error-message"
       }

@@ -2,7 +2,7 @@ import {
   headingCaption, field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { PAGES, ERROR_MESSAGES, FIELDS } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';

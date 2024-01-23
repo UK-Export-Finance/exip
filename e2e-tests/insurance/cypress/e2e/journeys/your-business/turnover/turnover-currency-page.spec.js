@@ -1,25 +1,40 @@
-import { headingCaption } from '../../../../../../pages/shared';
+import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
+import partials from '../../../../../../partials';
 import { turnoverPage } from '../../../../../../pages/your-business';
-import { PAGES, FIELDS } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
+import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY, CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
+const {
+  INSURANCE: {
+    EXPORTER_BUSINESS: ERRORS,
+  },
+} = ERROR_MESSAGES;
+
 const baseUrl = Cypress.config('baseUrl');
+
+const fieldSelectors = {
+  currencyCode: fieldSelector(CURRENCY_CODE),
+  gbp: fieldSelector(`${CURRENCY_CODE}-${GBP_CURRENCY_CODE}`),
+  alternativeCurrencyCode: fieldSelector(ALTERNATIVE_CURRENCY_CODE),
+};
 
 context('Insurance - Your business - Turnover currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
+  let creditControlUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -33,6 +48,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       turnoverPage.provideAlternativeCurrencyLink().click();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`;
+      creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
 
       cy.assertUrl(url);
     });
@@ -75,6 +91,62 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
     it('renders alternative currency input', () => {
       alternativeCurrencyInput();
+    });
+  });
+
+  describe('form submission', () => {
+    describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render validation errors', () => {
+        /**
+         * Custom field object is required because:
+         * - The field is "currency code".
+         * - But the error assertion is on the 1st currency code option (GBP).
+         */
+        const field = {
+          ...fieldSelectors.currencyCode,
+          input: fieldSelectors.gbp.input,
+        };
+
+        cy.submitAndAssertRadioErrors(
+          field,
+          0,
+          1,
+          ERRORS[CURRENCY_CODE].IS_EMPTY,
+        );
+      });
+    });
+
+    describe(`when selecting ${ALTERNATIVE_CURRENCY_CODE} and not choosing a currency`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        fieldSelectors.alternativeCurrencyCode.input().click();
+        cy.clickSubmitButton();
+      });
+
+      it('should render validation errors', () => {
+        cy.checkText(
+          partials.errorSummaryListItems().first(),
+          ERRORS[ALTERNATIVE_CURRENCY_CODE].IS_EMPTY,
+        );
+
+        cy.checkText(
+          fieldSelectors.alternativeCurrencyCode.errorMessage(),
+          `Error: ${ERRORS[ALTERNATIVE_CURRENCY_CODE].IS_EMPTY}`,
+        );
+      });
+    });
+
+    it(`should redirect to ${CREDIT_CONTROL}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitTurnoverCurrencyForm();
+
+      cy.assertUrl(creditControlUrl);
     });
   });
 });
