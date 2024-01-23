@@ -1,6 +1,7 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/export-contract';
-import { countryInput, yesRadioInput } from '../../../../../../../pages/shared';
+import { countryInput, yesRadioInput, noRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/export-contract';
@@ -24,6 +25,8 @@ const {
     },
   },
 } = ERROR_MESSAGES;
+
+const { YES, NO, } = FIELD_VALUES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: {
@@ -112,6 +115,7 @@ context('Insurance - Export contract - About goods or services page - form valid
     it(`should render a ${FINAL_DESTINATION} validation error`, () => {
       cy.navigateToUrl(url);
 
+      // TODO : could just be "complete" form, as we submit below.
       cy.completeAndSubmitAboutGoodsOrServicesForm({
         includeFinalDestination: false,
       });
@@ -129,7 +133,7 @@ context('Insurance - Export contract - About goods or services page - form valid
     });
   });
 
-  describe(`when ${FINAL_DESTINATION_KNOWN} is 'yes', ${FINAL_DESTINATION} is provided, but ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+  describe(`when ${FINAL_DESTINATION_KNOWN} is '${YES}', ${FINAL_DESTINATION} is provided, but ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
     it('should retain all submitted values', () => {
       cy.navigateToUrl(url);
 
@@ -143,6 +147,21 @@ context('Insurance - Export contract - About goods or services page - form valid
       yesRadioInput().should('be.checked');
 
       cy.checkText(countryInput.field(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
+    });
+  });
+
+  describe(`when ${FINAL_DESTINATION_KNOWN} is '${NO}', but ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
+    it('should retain all submitted values', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitAboutGoodsOrServicesForm({
+        finalDestinationKnown: false,
+        description: descriptionOverMaximum,
+      });
+
+      descriptionField.textarea().should('have.value', descriptionOverMaximum);
+
+      noRadioInput().should('be.checked');
     });
   });
 });

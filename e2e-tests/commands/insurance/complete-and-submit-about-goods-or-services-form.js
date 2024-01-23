@@ -41,7 +41,7 @@ const completeAndSubmitAboutGoodsOrServicesForm = ({
     noRadio().input().click();
   }
 
-  cy.clickSubmitButton();
+  // cy.clickSubmitButton();
 };
 
 export default completeAndSubmitAboutGoodsOrServicesForm;

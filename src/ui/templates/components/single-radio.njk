@@ -25,6 +25,8 @@
   {% set submittedValues = params.submittedValues %}
   {% set validationErrors = params.validationErrors %}
 
+  {% set conditionalHtmlData = params.conditionalHtmlData %}
+
   {% if conditionalYes %}
     {% set conditionalYesHtml %}
       {% include conditionalYes %}
