@@ -18,7 +18,13 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK, MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE, CHECK_YOUR_ANSWERS },
+  POLICY: {
+    MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -32,6 +38,9 @@ const {
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     POLICY_CURRENCY_CODE,
     ALTERNATIVE_POLICY_CURRENCY_CODE,
+  },
+  EXPORT_VALUE: {
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
 } = POLICY_FIELD_IDS;
 
@@ -123,6 +132,8 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const { policy } = application;
+
   const { referenceNumber } = req.params;
   const refNumber = Number(referenceNumber);
 
@@ -165,11 +176,33 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const hasTotalSalesAndMaximumWillOwe = policy[TOTAL_SALES_TO_BUYER] && policy[MAXIMUM_BUYER_WILL_OWE];
+
+    /**
+     * If the route is a "change" route,
+     * and the application has no TOTAL_SALES_TO_BUYER or MAXIMUM_BUYER_WILL_OWE saved (specifically required for a "multiple" policy type),
+     * redirect to the EXPORT_VALUE form.
+     * Otherwise, redirect to "check your answers".
+     */
     if (isChangeRoute(req.originalUrl)) {
+      if (!hasTotalSalesAndMaximumWillOwe) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "change" route,
+     * and the application has no TOTAL_SALES_TO_BUYER or MAXIMUM_BUYER_WILL_OWE saved (specifically required for a "multiple" policy type),
+     * redirect to the EXPORT_VALUE form.
+     * Otherwise, redirect to "check and change".
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (!hasTotalSalesAndMaximumWillOwe) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 

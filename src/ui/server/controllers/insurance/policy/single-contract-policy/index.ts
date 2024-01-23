@@ -14,7 +14,6 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { isSinglePolicyType } from '../../../../helpers/policy-type';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -40,7 +39,6 @@ const {
     POLICY_CURRENCY_CODE,
     ALTERNATIVE_POLICY_CURRENCY_CODE,
   },
-  POLICY_TYPE,
 } = POLICY_FIELD_IDS;
 
 /**
@@ -181,17 +179,16 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const isSinglePolicyWithoutTotalContractValue = isSinglePolicyType(policy[POLICY_TYPE]) && !policy[TOTAL_CONTRACT_VALUE];
+    const hasTotalContractValue = policy[TOTAL_CONTRACT_VALUE];
 
     /**
      * If the route is a "change" route,
-     * the application is a "single" policy type.
-     * and there is no TOTAL_CONTRACT_VALUE saved,
+     * and the application has no TOTAL_CONTRACT_VALUE saved (specifically required for a "single" policy type),
      * redirect to the TOTAL_CONTRACT_VALUE form.
      * Otherwise, redirect to "check your answers".
      */
     if (isChangeRoute(req.originalUrl)) {
-      if (isSinglePolicyWithoutTotalContractValue) {
+      if (!hasTotalContractValue) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`);
       }
 
@@ -200,13 +197,12 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If the route is a "check and change" route,
-     * the application is a "single" policy type.
-     * and there is no TOTAL_CONTRACT_VALUE saved,
+     * and there is no TOTAL_CONTRACT_VALUE saved (specifically required for a "single" policy type),
      * redirect to the TOTAL_CONTRACT_VALUE form.
      * Otherwise, redirect to "check and change" route.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      if (isSinglePolicyWithoutTotalContractValue) {
+      if (!hasTotalContractValue) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`);
       }
 

@@ -9,6 +9,7 @@ const {
   POLICY: {
     CHECK_YOUR_ANSWERS,
     TYPE_OF_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -20,15 +21,23 @@ const {
         TOTAL_MONTHS_OF_COVER,
       },
     },
-    // TODO: EMS-2541
-    // EXPORT_VALUE: {
-    //   MULTIPLE: {
-    //     TOTAL_SALES_TO_BUYER,
-    //     MAXIMUM_BUYER_WILL_OWE,
-    //   },
-    // },
+    EXPORT_VALUE: {
+      MULTIPLE: {
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
+      },
+    },
   },
 } = INSURANCE_FIELD_IDS;
+
+const changePolicyTypeAndSubmitContractPolicyForm = () => {
+  summaryList.field(POLICY_TYPE).changeLink().click();
+
+  typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
+  cy.clickSubmitButton();
+
+  cy.completeAndSubmitMultipleContractPolicyForm();
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -36,6 +45,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
   let referenceNumber;
   let checkYourAnswersUrl;
   let typeOfPolicyUrl;
+  let exportValueUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -47,6 +57,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
 
       checkYourAnswersUrl = `${baseUrl}${applicationRouteUrl}${CHECK_YOUR_ANSWERS}`;
       typeOfPolicyUrl = `${baseUrl}${applicationRouteUrl}${TYPE_OF_POLICY_CHANGE}`;
+      exportValueUrl = `${baseUrl}${applicationRouteUrl}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -77,22 +88,31 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
   describe('after submitting a new policy type (multiple) and completing (now required) fields for a multiple policy', () => {
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
-
-      summaryList.field(POLICY_TYPE).changeLink().click();
-
-      typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
-      cy.clickSubmitButton();
-
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      changePolicyTypeAndSubmitContractPolicyForm();
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      const expectedUrl = `${checkYourAnswersUrl}#heading`;
+    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE} with heading anchor`, () => {
+      const expectedUrl = `${exportValueUrl}#heading`;
 
       cy.assertUrl(expectedUrl);
     });
 
-    describe('should render new answers and change links for new multiple policy fields', () => {
+    describe(`after completing (now required) ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE} fields for a multiple policy`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(checkYourAnswersUrl);
+        changePolicyTypeAndSubmitContractPolicyForm();
+
+        cy.completeAndSubmitExportValueForm();
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        const expectedUrl = `${checkYourAnswersUrl}#heading`;
+
+        cy.assertUrl(expectedUrl);
+      });
+    });
+
+    describe('render new answers and change links for new multiple policy fields', () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
       });
@@ -105,15 +125,13 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
         checkSummaryList.multipleContractPolicy[TOTAL_MONTHS_OF_COVER]();
       });
 
-      // TODO: EMS-2541
+      it(TOTAL_SALES_TO_BUYER, () => {
+        checkSummaryList.multipleContractPolicy[TOTAL_SALES_TO_BUYER]();
+      });
 
-      // it(TOTAL_SALES_TO_BUYER, () => {
-      //   checkSummaryList.multipleContractPolicy[TOTAL_SALES_TO_BUYER]();
-      // });
-
-      // it(MAXIMUM_BUYER_WILL_OWE, () => {
-      //   checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
-      // });
+      it(MAXIMUM_BUYER_WILL_OWE, () => {
+        checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
+      });
     });
   });
 });
