@@ -193,7 +193,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     /**
-     * If the route is a "change" route,
+     * If the route is a "check and change" route,
      * and the application has no TOTAL_SALES_TO_BUYER or MAXIMUM_BUYER_WILL_OWE saved (specifically required for a "multiple" policy type),
      * redirect to the EXPORT_VALUE form.
      * Otherwise, redirect to "check and change".

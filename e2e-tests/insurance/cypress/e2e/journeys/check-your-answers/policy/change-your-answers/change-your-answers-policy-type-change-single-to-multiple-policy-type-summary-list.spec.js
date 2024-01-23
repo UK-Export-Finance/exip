@@ -116,22 +116,6 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
         cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      // it(POLICY_TYPE, () => {
-      //   checkSummaryList.multipleContractPolicy[POLICY_TYPE]();
-      // });
-
-      // it(TOTAL_MONTHS_OF_COVER, () => {
-      //   checkSummaryList.multipleContractPolicy[TOTAL_MONTHS_OF_COVER]();
-      // });
-
-      // it(TOTAL_SALES_TO_BUYER, () => {
-      //   checkSummaryList.multipleContractPolicy[TOTAL_SALES_TO_BUYER]();
-      // });
-
-      // it(MAXIMUM_BUYER_WILL_OWE, () => {
-      //   checkSummaryList.multipleContractPolicy[MAXIMUM_BUYER_WILL_OWE]();
-      // });
-
       it(POLICY_TYPE, () => {
         cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
       });
