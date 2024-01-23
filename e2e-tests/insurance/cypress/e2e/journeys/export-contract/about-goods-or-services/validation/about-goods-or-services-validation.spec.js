@@ -26,7 +26,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const { YES, NO, } = FIELD_VALUES;
+const { YES, NO } = FIELD_VALUES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: {
