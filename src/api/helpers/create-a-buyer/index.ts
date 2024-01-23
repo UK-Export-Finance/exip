@@ -1,4 +1,5 @@
 import { Context } from '../../types';
+import createABuyerTradingHistory from '../create-a-buyer-trading-history';
 
 /**
  * createABuyer
@@ -25,7 +26,15 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
       },
     });
 
-    return buyer;
+    /**
+     * Create a company address with company relationship
+     */
+    const buyerTradingHistory = await createABuyerTradingHistory(context, buyer.id);
+
+    return {
+      buyer,
+      buyerTradingHistory,
+    };
   } catch (err) {
     console.error('Error creating a buyer %O', err);
 

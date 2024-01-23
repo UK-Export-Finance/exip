@@ -47,9 +47,9 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     cy.saveSession();
   });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+  // after(() => {
+  //   cy.deleteApplication(referenceNumber);
+  // });
 
   it('renders core page elements', () => {
     cy.corePageChecks({

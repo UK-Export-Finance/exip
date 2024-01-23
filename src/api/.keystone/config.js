@@ -563,6 +563,7 @@ var FIELD_VALUES = {
 
 // constants/supported-currencies/index.ts
 var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
+var GBP = "GBP";
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
@@ -1365,10 +1366,29 @@ var lists = {
       contactEmail: (0, import_fields.text)(),
       canContactBuyer: nullable_checkbox_default(),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
-      exporterHasTradedWithBuyer: nullable_checkbox_default(),
       connectionWithBuyerDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
-      })
+      }),
+      buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
+  BuyerTradingHistory: (0, import_core2.list)({
+    fields: {
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerTradingHistory" }),
+      currencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(5)" }
+      }),
+      outstandingPayments: nullable_checkbox_default(),
+      failedPayments: nullable_checkbox_default(),
+      exporterHasTradedWithBuyer: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1831,7 +1851,7 @@ var typeDefs = `
 
   type GetApimCurrencyResponse {
     supportedCurrencies: [MappedCurrency]
-    allCurrencies: [MappedCurrency]
+    alternativeCurrencies: [MappedCurrency]
   }
 
   type Mutation {
@@ -3341,6 +3361,28 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
+// helpers/create-a-buyer-trading-history/index.ts
+var createABuyerTradingHistory = async (context, buyerId) => {
+  console.info("Creating a buyer trading history for ", buyerId);
+  try {
+    const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        currencyCode: GBP
+      }
+    });
+    return buyerTradingHistory;
+  } catch (err) {
+    console.error("Error creating a buyer trading history %O", err);
+    throw new Error(`Creating a buyer trading history ${err}`);
+  }
+};
+var create_a_buyer_trading_history_default = createABuyerTradingHistory;
+
 // helpers/create-a-buyer/index.ts
 var createABuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for ", applicationId);
@@ -3355,7 +3397,12 @@ var createABuyer = async (context, countryId, applicationId) => {
         }
       }
     });
-    return buyer;
+    const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id);
+    console.log('""""""""!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', buyerTradingHistory);
+    return {
+      buyer,
+      buyerTradingHistory
+    };
   } catch (err) {
     console.error("Error creating a buyer %O", err);
     throw new Error(`Creating a buyer ${err}`);
@@ -3541,7 +3588,7 @@ var createAnApplication = async (root, variables, context) => {
       }
     });
     const { id: applicationId } = application2;
-    const buyer = await create_a_buyer_default(context, country.id, applicationId);
+    const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
@@ -3570,6 +3617,7 @@ var createAnApplication = async (root, variables, context) => {
         }
       }
     });
+    console.log(updatedApplication);
     return {
       ...updatedApplication,
       success: true
@@ -5168,10 +5216,16 @@ var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
 };
-var mapCurrencies = (currencies, allCurrencies) => {
+var getAlternativeCurrencies = (currencies) => {
+  const alternate = currencies.filter((currency) => !SUPPORTED_CURRENCIES.includes(currency.isoCode));
+  return alternate;
+};
+var mapCurrencies = (currencies, alternativeCurrencies) => {
   let currenciesArray = currencies;
-  if (!allCurrencies) {
+  if (!alternativeCurrencies) {
     currenciesArray = getSupportedCurrencies(currencies);
+  } else {
+    currenciesArray = getAlternativeCurrencies(currencies);
   }
   const sorted = sort_array_alphabetically_default(currenciesArray, FIELD_IDS.NAME);
   return sorted;
@@ -5186,7 +5240,7 @@ var getApimCurrencies = async () => {
     if (response.data) {
       return {
         supportedCurrencies: map_currencies_default(response.data, false),
-        allCurrencies: map_currencies_default(response.data, true)
+        alternativeCurrencies: map_currencies_default(response.data, true)
       };
     }
     return { success: false };

@@ -213,13 +213,30 @@ CREATE TABLE `Buyer` (
   `contactEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` tinyint(1) DEFAULT NULL,
   `exporterIsConnectedWithBuyer` tinyint(1) DEFAULT NULL,
-  `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
   `connectionWithBuyerDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `buyerTradingHistory` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Buyer_application_idx` (`application`),
   KEY `Buyer_country_idx` (`country`),
+  KEY `Buyer_buyerTradingHistory_idx` (`buyerTradingHistory`),
   CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Buyer_buyerTradingHistory_fkey` FOREIGN KEY (`buyerTradingHistory`) REFERENCES `BuyerTradingHistory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+# Dump of table BuyerTradingHistory
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `BuyerTradingHistory`;
+
+CREATE TABLE `BuyerTradingHistory` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currencyCode` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `outstandingPayments` tinyint(1) DEFAULT NULL,
+  `failedPayments` tinyint(1) DEFAULT NULL,
+  `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

@@ -139,8 +139,14 @@ const applicationQuery = gql`
           contactEmail
           canContactBuyer
           exporterIsConnectedWithBuyer
-          exporterHasTradedWithBuyer
           connectionWithBuyerDescription
+        }
+        buyerTradingHistory {
+          id
+          exporterHasTradedWithBuyer
+          currencyCode
+          outstandingPayments
+          failedPayments
         }
         sectionReview {
           id

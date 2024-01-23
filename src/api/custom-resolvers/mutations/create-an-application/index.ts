@@ -72,7 +72,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 5) Create a new sectionReview with application relationship
      */
     const buyer = await createABuyer(context, country.id, applicationId);
-
+    console.log(buyer)
     const totalContractValue = await getTotalContractValueByField(context, 'valueId', totalContractValueId);
 
     const coverPeriod = await getCreditPeriodValueByField(context, 'valueId', coverPeriodId);
@@ -98,7 +98,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       },
       data: {
         buyer: {
-          connect: { id: buyer.id },
+          connect: { id: buyer.buyer.id },
         },
         eligibility: {
           connect: { id: eligibility.id },

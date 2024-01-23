@@ -533,10 +533,29 @@ export const lists = {
       contactEmail: text(),
       canContactBuyer: nullableCheckbox(),
       exporterIsConnectedWithBuyer: nullableCheckbox(),
-      exporterHasTradedWithBuyer: nullableCheckbox(),
       connectionWithBuyerDescription: text({
         db: { nativeType: 'VarChar(1000)' },
       }),
+      buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
+  BuyerTradingHistory: list({
+    fields: {
+      buyer: relationship({ ref: 'Buyer.buyerTradingHistory' }),
+      currencyCode: text({
+        db: { nativeType: 'VarChar(5)' },
+      }),
+      outstandingPayments: nullableCheckbox(),
+      failedPayments: nullableCheckbox(),
+      exporterHasTradedWithBuyer: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
