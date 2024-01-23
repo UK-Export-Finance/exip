@@ -7,6 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/turnover';
 import { Request, Response } from '../../../../../types';
@@ -132,7 +133,7 @@ describe('controllers/insurance/business/turnover', () => {
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
         });
       });
     });

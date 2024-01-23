@@ -6,16 +6,15 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
-import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import api from '../../../../api';
+import { isPopulatedArray } from '../../../../helpers/array';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
+import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import api from '../../../../api';
-import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
-import { isPopulatedArray } from '../../../../helpers/array';
-import mapCurrenciesAsSelectOptions from '../../../../helpers/mappings/map-currencies/as-select-options';
+import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -43,7 +42,6 @@ export const PAGE_VARIABLES = {
       ID: ALTERNATIVE_CURRENCY_CODE,
     },
   },
-  PAGE_CONTENT_STRINGS,
 };
 
 /**
@@ -67,9 +65,6 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    // TODO: Add  if (currencyValue) once data saving completed and change ''
-    const mappedCurrencies = mapCurrenciesAsSelectOptions(alternativeCurrencies, '', true);
-
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
@@ -78,8 +73,8 @@ export const get = async (req: Request, res: Response) => {
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_CURRENCY_CODE),
-      allCurrencies: mappedCurrencies,
+      // TODO: Add  if (currencyValue) once data saving completed and change ''
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
     });
   } catch (err) {
     console.error('Error getting alternative currency %O', err);
@@ -115,9 +110,6 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      // TODO: Add  if (currencyValue) once data saving completed and change ''
-      const mappedCurrencies = mapCurrenciesAsSelectOptions(alternativeCurrencies, '', true);
-
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -127,8 +119,8 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
-        currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_CURRENCY_CODE),
-        allCurrencies: mappedCurrencies,
+        // TODO: Add  if (currencyValue) once data saving completed and change ''
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
       });
     }
 

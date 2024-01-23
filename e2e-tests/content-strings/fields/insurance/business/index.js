@@ -1,55 +1,59 @@
-import { FIELD_IDS } from '../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 
 const {
+  EXPORTER_BUSINESS: {
+    YOUR_COMPANY: {
+      TRADING_ADDRESS, HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, WEBSITE,
+    },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+    TURNOVER: { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    HAS_CREDIT_CONTROL,
+  },
+  CURRENCY: { CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
+
+const {
   YOUR_BUSINESS: {
-    COMPANY_DETAILS,
-    NATURE_OF_BUSINESS,
-    TURNOVER,
-    CREDIT_CONTROL,
+    COMPANY_DETAILS, NATURE_OF_BUSINESS, TURNOVER, CREDIT_CONTROL,
   },
 } = FORM_TITLES;
 
 export const EXPORTER_BUSINESS_FIELDS = {
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME]: {
-    LABEL: 'Do you use a different trading name for this company?',
-    SUMMARY: {
-      TITLE: 'Different trading name',
-      FORM_TITLE: COMPANY_DETAILS,
+  COMPANY_DETAILS: {
+    [HAS_DIFFERENT_TRADING_NAME]: {
+      SUMMARY: {
+        TITLE: 'Different trading name',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [DIFFERENT_TRADING_NAME]: {
+      SUMMARY: {
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [TRADING_ADDRESS]: {
+      SUMMARY: {
+        TITLE: 'Different trading address',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [WEBSITE]: {
+      SUMMARY: {
+        TITLE: 'Company website (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
+    },
+    [PHONE_NUMBER]: {
+      SUMMARY: {
+        TITLE: 'UK telephone number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
+      },
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
-    LABEL: "What's your organisation's alternative trading name?",
-    HINT: 'Your official trading name will still be on the policy.',
-    SUMMARY: {
-      FORM_TITLE: COMPANY_DETAILS,
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
-    LABEL: 'Do you trade from a different address to your registered office address for this company?',
-    SUMMARY: {
-      TITLE: 'Different trading address',
-      FORM_TITLE: COMPANY_DETAILS,
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.WEBSITE]: {
-    LABEL: 'Enter your company website, if you have one (optional)',
-    SUMMARY: {
-      TITLE: 'Company website (optional)',
-      FORM_TITLE: COMPANY_DETAILS,
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.PHONE_NUMBER]: {
-    LABEL: 'Your UK telephone number (optional)',
-    HINT: 'We may need to contact you about your application',
-    SUMMARY: {
-      TITLE: 'UK telephone number (optional)',
-      FORM_TITLE: COMPANY_DETAILS,
-    },
-  },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]: {
+  [FULL_ADDRESS]: {
     LABEL: "What's your alternative trading address?",
-    MAXIMUM: 1000,
     REGISTERED_OFFICE_ADDRESS_HEADING: 'Your registered office address',
     REGISTERED_OFFICE_ADDRESS_HINT: 'This information comes from Companies House.',
     SUMMARY: {
@@ -58,7 +62,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     },
   },
   NATURE_OF_YOUR_BUSINESS: {
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
+    [GOODS_OR_SERVICES]: {
       LABEL: 'Tell us about your business',
       HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
       MAXIMUM: 1000,
@@ -67,7 +71,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
         FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
+    [YEARS_EXPORTING]: {
       LABEL: 'How many years have you been exporting for?',
       HINT: 'Round to the nearest year',
       SUFFIX: 'Years',
@@ -76,7 +80,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
         FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.EMPLOYEES_UK]: {
+    [EMPLOYEES_UK]: {
       LEGEND: 'How many employees do you have in the UK?',
       SUMMARY: {
         TITLE: 'Number of UK employees',
@@ -85,7 +89,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
     },
   },
   TURNOVER: {
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.FINANCIAL_YEAR_END_DATE]: {
+    [FINANCIAL_YEAR_END_DATE]: {
       LABEL: 'Your financial year end date',
       HINT: 'This information comes from Companies House',
       DATE_FORMAT: 'd MMMM',
@@ -93,7 +97,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
         FORM_TITLE: NATURE_OF_BUSINESS,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.ESTIMATED_ANNUAL_TURNOVER]: {
+    [ESTIMATED_ANNUAL_TURNOVER]: {
       LEGEND: 'Estimated annual turnover for this current financial year',
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: '£',
@@ -102,7 +106,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
         FORM_TITLE: TURNOVER,
       },
     },
-    [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.TURNOVER.PERCENTAGE_TURNOVER]: {
+    [PERCENTAGE_TURNOVER]: {
       LABEL: 'Percentage of turnover from exports',
       SUFFIX: '%',
       SUMMARY: {
@@ -111,7 +115,10 @@ export const EXPORTER_BUSINESS_FIELDS = {
       },
     },
   },
-  [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.HAS_CREDIT_CONTROL]: {
+  [CURRENCY_CODE]: {
+    LEGEND: 'What currency is your turnover in?',
+  },
+  [HAS_CREDIT_CONTROL]: {
     HINT: 'These are often called credit control processes. They may be managed by your legal or financial team.',
     SUMMARY: {
       TITLE: 'Process for managing late payments',

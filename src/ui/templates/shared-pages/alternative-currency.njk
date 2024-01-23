@@ -13,6 +13,7 @@
 
 {% block content %}
 
+
   {{ govukBackLink({
     text: CONTENT_STRINGS.LINKS.BACK,
     href: BACK_LINK,
@@ -31,37 +32,39 @@
     }) }}
   {% endif %}
 
-  <div class="govuk-grid-row">
-    <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
-      <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
+    <span class="govuk-caption-xl" data-cy="heading-caption">
+      {{ CONTENT_STRINGS.HEADING_CAPTION }}
+    </span>
+
+    <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        <span class="govuk-caption-xl" data-cy="heading-caption">
-          {{ CONTENT_STRINGS.HEADING_CAPTION }}
-        </span>
+        {{ currencyRadios.render({
+          id: FIELDS.CURRENCY_CODE.ID,
+          legend: FIELDS.CURRENCY_CODE.LEGEND,
+          isPageHeading: true,
+          hint: FIELDS.CURRENCY_CODE.HINT,
+          supportedCurrencies: currencies,
+          errors: validationErrors.errorList,
+          submittedValue: submittedValues[FIELDS.CURRENCY_CODE.ID] or applicationAnswer,
+          alternativeCurrencies: alternativeCurrencies,
+          alternativeCurrencyFieldId: FIELDS.ALTERNATIVE_CURRENCY_CODE.ID
+        }) }}
+      </div>
+    </div>
 
-        <div class="govuk-grid-column-three-quarters-from-desktop">
-          {{ currencyRadios.render({
-            id: FIELDS.CURRENCY_CODE.ID,
-            legend: FIELDS.CURRENCY_CODE.LEGEND,
-            isPageHeading: true,
-            hint: FIELDS.CURRENCY_CODE.HINT,
-            supportedCurrencies: currencies,
-            error: validationErrors.errorList[FIELDS.CURRENCY_CODE.ID],
-            submittedValue: submittedValues[FIELDS.CURRENCY_CODE.ID] or applicationAnswer,
-            allCurrencies: allCurrencies,
-            alternativeCurrencyFieldId: FIELDS.ALTERNATIVE_CURRENCY_CODE.ID
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <div class="govuk-button-group">
+          {{ submitButton.render({
+            text: CONTENT_STRINGS.BUTTONS.CONTINUE
           }) }}
         </div>
-
-        <div class="govuk-grid-column-three-quarters-from-desktop">
-          <div class="govuk-button-group">
-            {{ submitButton.render({
-              text: CONTENT_STRINGS.BUTTONS.CONTINUE
-            }) }}
-          </div>
       </div>
-    </form>
-  </div>
+    </div>
+
+  </form>
 
 {% endblock %}

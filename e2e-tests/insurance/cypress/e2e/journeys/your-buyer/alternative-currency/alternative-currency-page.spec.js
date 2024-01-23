@@ -2,18 +2,18 @@ import {
   headingCaption, field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { PAGES, ERROR_MESSAGES, FIELDS } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
-import { ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.ROOT;
 
 const {
+  ROOT,
   YOUR_BUYER: { ALTERNATIVE_CURRENCY },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
@@ -35,7 +35,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
       cy.startInsuranceYourBuyerSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
       cy.navigateToUrl(url);
 
@@ -54,8 +54,8 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
+      currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
+      backLink: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
     });
   });
 
@@ -65,7 +65,6 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     } = assertAlternativeCurrencyForm({
       FIELD_ID: CURRENCY_CODE,
       LEGEND: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
-      ALTERNATIVE_CURRENCY_FIELD_ID: ALTERNATIVE_CURRENCY_CODE,
       ALTERNATIVE_CURRENCY_TEXT: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
     });
 
