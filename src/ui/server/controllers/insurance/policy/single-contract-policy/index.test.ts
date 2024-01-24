@@ -1,7 +1,7 @@
 import { pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -31,16 +31,19 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    REQUESTED_START_DATE_DAY,
-    REQUESTED_START_DATE_MONTH,
-    REQUESTED_START_DATE_YEAR,
-    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
-    POLICY_CURRENCY_CODE,
-    ALTERNATIVE_POLICY_CURRENCY_CODE,
+  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      REQUESTED_START_DATE_DAY,
+      REQUESTED_START_DATE_MONTH,
+      REQUESTED_START_DATE_YEAR,
+      SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
+      POLICY_CURRENCY_CODE,
+      ALTERNATIVE_POLICY_CURRENCY_CODE,
+    },
   },
-} = POLICY_FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const applicationWithTotalContractValue = {
   ...mockApplication,
@@ -109,8 +112,8 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
             ID: POLICY_CURRENCY_CODE,
             ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
           },
-          ALTERNATIVE_POLICY_CURRENCY_CODE: {
-            ID: ALTERNATIVE_POLICY_CURRENCY_CODE,
+          ALTERNATIVE_CURRENCY_CODE: {
+            ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
