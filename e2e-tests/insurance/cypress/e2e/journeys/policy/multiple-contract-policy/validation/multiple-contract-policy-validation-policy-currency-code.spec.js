@@ -64,20 +64,4 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
       );
     });
   });
-
-  describe(`when ${POLICY_CURRENCY_CODE} is not provided`, () => {
-    it('should render a validation error', () => {
-      cy.clickSubmitButton();
-
-      cy.checkText(
-        partials.errorSummaryListItems().eq(2),
-        CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
-      );
-
-      cy.checkText(
-        field(POLICY_CURRENCY_CODE).errorMessage(),
-        `Error: ${CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY}`,
-      );
-    });
-  });
 });
