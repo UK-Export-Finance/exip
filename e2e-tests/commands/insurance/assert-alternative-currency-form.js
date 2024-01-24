@@ -27,7 +27,6 @@ const assertAlternativeCurrencyForm = ({
   LEGEND,
   HINT,
   ALTERNATIVE_CURRENCY_TEXT,
-  // TODO: do we need this anymore?
   ALTERNATIVE_CURRENCY_FIELD_ID = ALTERNATIVE_CURRENCY_CODE,
 }) => ({
   legend: () => cy.checkText(field(FIELD_ID).legend(), LEGEND),
