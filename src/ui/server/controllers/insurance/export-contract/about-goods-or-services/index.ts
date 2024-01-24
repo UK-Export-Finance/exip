@@ -29,6 +29,16 @@ const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
+const {
+  INSURANCE: {
+    EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  },
+  PARTIALS: {
+    INSURANCE: { EXPORT_CONTRACT },
+  },
+  ATTRIBUTES: { CLASSES },
+} = TEMPLATES;
+
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -55,7 +65,18 @@ export const pageVariables = (referenceNumber: number) => ({
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
-export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  CONDITIONAL_YES_HTML: EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.CONDITIONAL_YES_HTML,
+  HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
+  LEGEND_CLASS: CLASSES.LEGEND.M,
+};
+
+export const TEMPLATE = ABOUT_GOODS_OR_SERVICES;
 
 export const FIELD_IDS = [DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN];
 
@@ -95,6 +116,7 @@ export const get = async (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
@@ -154,6 +176,7 @@ export const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
