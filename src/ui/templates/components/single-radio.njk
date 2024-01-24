@@ -5,11 +5,13 @@
 {% macro render(params) %}
 
   {% set application = params.application %}
+  {% set conditionalHtmlData = params.conditionalHtmlData %}
   {% set conditionalNo = params.conditionalNo %}
   {% set conditionalYes = params.conditionalYes %}
   {% set CONTENT_STRINGS = params.CONTENT_STRINGS %}
   {% set continueButtonText = params.continueButtonText %}
   {% set customContentHTML = params.customContentHTML %}
+  {% set dataCyLegend = params.dataCyLegend %}
   {% set errorMessage = params.errorMessage %}
   {% set fieldId = params.fieldId %}
   {% set FIELDS = params.FIELDS %}
@@ -18,6 +20,7 @@
   {% set horizontalRadios = params.horizontalRadios %}
   {% set noRadioAsFirstOption = params.noRadioAsFirstOption %}
   {% set legendClass = params.legendClass %}
+  {% set legendSpan = params.legendSpan %}
   {% set legendText = params.legendText %}
   {% set saveAndBackButtonText = params.saveAndBackButtonText %}
   {% set saveAndBackUrl = params.saveAndBackUrl %}
@@ -47,8 +50,10 @@
     <div class="govuk-grid-column-three-quarters-from-desktop">
       {{ yesNoRadioButtons.render({
         fieldId: fieldId,
+        dataCyLegend: dataCyLegend,
         legendText: legendText,
         legendClass: legendClass,
+        legendSpan: legendSpan,
         hintText: hintText,
         hintHtml: hintHtml,
         submittedAnswer: submittedAnswer,

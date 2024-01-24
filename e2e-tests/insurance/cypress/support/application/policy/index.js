@@ -9,6 +9,7 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('../
 Cypress.Commands.add('completeAndSubmitExportValueForm', require('../../../../../commands/insurance/complete-and-submit-export-value-form'));
 Cypress.Commands.add('completeExportValueForm', require('../../../../../commands/insurance/complete-export-value-form'));
 
+Cypress.Commands.add('completeAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-about-goods-or-services-form'));
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-and-submit-about-goods-or-services-form'));
 
 Cypress.Commands.add('completeNameOnPolicyForm', require('../../../../../commands/insurance/complete-name-on-policy-form'));
