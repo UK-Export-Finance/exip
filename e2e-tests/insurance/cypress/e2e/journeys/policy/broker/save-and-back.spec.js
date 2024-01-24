@@ -53,7 +53,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({});
       cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm();
+      cy.completeAndSubmitAnotherCompanyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -106,7 +106,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
       // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-      cy.completeAndSubmitAnotherCompanyForm();
+      cy.completeAndSubmitAnotherCompanyForm({});
 
       brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -150,7 +150,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-        cy.completeAndSubmitAnotherCompanyForm();
+        cy.completeAndSubmitAnotherCompanyForm({});
 
         brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
@@ -185,7 +185,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
         // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-        cy.completeAndSubmitAnotherCompanyForm();
+        cy.completeAndSubmitAnotherCompanyForm({});
 
         brokerPage[USING_BROKER].noRadioInput().should('be.checked');
       });

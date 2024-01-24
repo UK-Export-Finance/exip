@@ -21,7 +21,12 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.ANOTHER_COMPANY;
 
 const {
   ROOT,
-  POLICY: { ANOTHER_COMPANY, BROKER_ROOT },
+  POLICY: {
+    ANOTHER_COMPANY,
+    PRE_CREDIT_PERIOD,
+    BROKER_ROOT,
+    OTHER_COMPANY_DETAILS,
+  },
 } = INSURANCE_ROUTES;
 
 const { NEED_ANOTHER_COMPANY_TO_BE_INSURED: FIELD_ID } = POLICY_FIELD_IDS;
@@ -50,6 +55,7 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
   let referenceNumber;
   let url;
   let brokerUrl;
+  let otherCompanyDetailsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -63,12 +69,11 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
       cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
       brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+      otherCompanyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
 
-      cy.navigateToUrl(url);
       cy.assertUrl(url);
     });
   });
@@ -85,7 +90,7 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`,
-      backLink: `${url}#`,
+      backLink: `${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`,
     });
   });
 
@@ -145,12 +150,24 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       });
     });
 
-    it(`should redirect to ${BROKER_ROOT}`, () => {
-      cy.navigateToUrl(url);
+    describe('when submitting the answer as `no`', () => {
+      it(`should redirect to ${BROKER_ROOT}`, () => {
+        cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAnotherCompanyForm();
+        cy.completeAndSubmitAnotherCompanyForm({});
 
-      cy.assertUrl(brokerUrl);
+        cy.assertUrl(brokerUrl);
+      });
+    });
+
+    describe('when submitting the answer as `yes`', () => {
+      it(`should redirect to ${OTHER_COMPANY_DETAILS}`, () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
+
+        cy.assertUrl(otherCompanyDetailsUrl);
+      });
     });
   });
 });

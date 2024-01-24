@@ -9,5 +9,6 @@ export const POLICY_TEMPLATES = {
   SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE: 'insurance/policy/single-contract-policy-total-contract-value.njk',
   NAME_ON_POLICY: 'insurance/policy/name-on-policy.njk',
   DIFFERENT_NAME_ON_POLICY: 'insurance/policy/different-name-on-policy.njk',
+  OTHER_COMPANY_DETAILS: 'insurance/policy/other-company-details.njk',
   CHECK_YOUR_ANSWERS: 'insurance/policy/check-your-answers.njk',
 };
