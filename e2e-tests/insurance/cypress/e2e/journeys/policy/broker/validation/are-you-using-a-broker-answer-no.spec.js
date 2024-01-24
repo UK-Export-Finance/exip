@@ -38,7 +38,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm tha
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
       cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm();
+      cy.completeAndSubmitAnotherCompanyForm({});
 
       const url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
