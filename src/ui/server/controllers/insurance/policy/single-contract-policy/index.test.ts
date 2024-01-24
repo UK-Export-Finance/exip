@@ -8,7 +8,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
-import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -40,7 +40,6 @@ const {
       REQUESTED_START_DATE_YEAR,
       SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
       POLICY_CURRENCY_CODE,
-      ALTERNATIVE_POLICY_CURRENCY_CODE,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -61,6 +60,10 @@ const applicationWithoutTotalContractValue = {
   },
 };
 
+const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
+
+const currencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
+
 describe('controllers/insurance/policy/single-contract-policy', () => {
   let req: Request;
   let res: Response;
@@ -71,19 +74,11 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
   mapAndSave.policy = jest.fn(() => Promise.resolve(true));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
-  const mockApplicationWithoutCurrencyCode = {
-    ...mockApplication,
-    policy: {
-      ...mockApplication.policy,
-      [POLICY_CURRENCY_CODE]: null,
-    },
-  };
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplicationWithoutCurrencyCode;
+    res.locals.application = mockApplication;
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
     refNumber = Number(mockApplication.referenceNumber);
@@ -155,8 +150,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
-
       const expectedVariables = {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
@@ -164,44 +157,11 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
-        currencies: expectedCurrencies,
+        application: mapApplicationToFormFields(mockApplication),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when a policy currency code has been previously submitted', () => {
-      const mockApplicationWithCurrencyCode = {
-        ...mockApplication,
-        policy: {
-          ...mockApplication.policy,
-          [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
-        },
-      };
-
-      beforeEach(() => {
-        res.locals.application = mockApplicationWithCurrencyCode;
-      });
-
-      it('should render template with currencies mapped to submitted currency', async () => {
-        await get(req, res);
-
-        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
-
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(refNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplicationWithCurrencyCode),
-          currencies: expectedCurrencies,
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when there is no application', () => {
@@ -367,8 +327,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedCurrencies = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
-
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
@@ -376,9 +334,9 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
           }),
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplicationWithoutCurrencyCode),
+          application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
-          currencies: expectedCurrencies,
+          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
           validationErrors: generateValidationErrors(payload),
         };
 
