@@ -127,7 +127,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
     });
 
     it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`, () => {
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
       cy.assertUrl(expectedUrl);

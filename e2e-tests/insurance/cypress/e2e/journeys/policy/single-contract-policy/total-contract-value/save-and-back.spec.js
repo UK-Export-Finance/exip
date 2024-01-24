@@ -30,7 +30,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.SINGLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Single contract policy - total contract value page - Save and go back', () => {
+context('Insurance - Policy - Single contract policy - Total contract value page - Save and go back', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -41,7 +41,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
       cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(policyType);
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;

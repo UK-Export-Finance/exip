@@ -27,6 +27,7 @@ const assertAlternativeCurrencyForm = ({
   LEGEND,
   HINT,
   ALTERNATIVE_CURRENCY_TEXT,
+  // TODO: do we need this anymore?
   ALTERNATIVE_CURRENCY_FIELD_ID = ALTERNATIVE_CURRENCY_CODE,
 }) => ({
   legend: () => cy.checkText(field(FIELD_ID).legend(), LEGEND),
@@ -55,17 +56,13 @@ const assertAlternativeCurrencyForm = ({
     cy.checkValue(option5, ALTERNATIVE_CURRENCY_FIELD_ID);
   },
   alternativeCurrencyInput: () => {
-    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
-
-    option5.input().click();
+    cy.clickAlternativeCurrencyRadioOption();
 
     checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
     checkAutocompleteInput.rendersInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
   },
   doesNotRenderSupportedCurrencies: () => {
-    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
-
-    option5.input().click();
+    cy.clickAlternativeCurrencyRadioOption();
 
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'test');
     // should not render radio values in alternate currency input
@@ -75,9 +72,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), EUR.isoCode);
   },
   rendersAlternativeCurrencies: () => {
-    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
-
-    option5.input().click();
+    cy.clickAlternativeCurrencyRadioOption();
 
     checkAutocompleteInput.rendersSingleResult(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Alg');
     checkAutocompleteInput.rendersMultipleResults(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Be');

@@ -1,7 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -39,46 +39,21 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.TOTAL_SALES_TO_BUYER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.TOTAL_SALES_TO_BUYER.ID + '-label',
-              'data-cy': FIELDS.TOTAL_SALES_TO_BUYER.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.TOTAL_SALES_TO_BUYER.HINT,
-            attributes: {
-              'data-cy': FIELDS.TOTAL_SALES_TO_BUYER.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
-          attributes: {
-            'data-cy': FIELDS.TOTAL_SALES_TO_BUYER.ID + '-input'
-          },
-          id: FIELDS.TOTAL_SALES_TO_BUYER.ID,
-          name: FIELDS.TOTAL_SALES_TO_BUYER.ID,
-          inputmode: "numeric",
-          pattern: "[0-9]*",
-          prefix: {
-            text: "£",
-            attributes: {
-              'data-cy': FIELDS.TOTAL_SALES_TO_BUYER.ID + '-prefix'
-            }
-          },
-          spellcheck: false,
-          value: submittedValues[FIELDS.TOTAL_SALES_TO_BUYER.ID] or application.policy[FIELDS.TOTAL_SALES_TO_BUYER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.TOTAL_SALES_TO_BUYER.ID] and {
-            text: validationErrors.errorList[FIELDS.TOTAL_SALES_TO_BUYER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.TOTAL_SALES_TO_BUYER.ID + "-error-message"
-            }
-          }
+        {% set totalSalesToBuyer = FIELDS.TOTAL_SALES_TO_BUYER %}
+        {% set totalSalesToBuyerId = totalSalesToBuyer.ID %}
+
+        {{ monetaryValueInput.render({
+          fieldId: totalSalesToBuyerId,
+          label: totalSalesToBuyer.LABEL,
+          hintText: totalSalesToBuyer.HINT,
+          currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+          submittedValue: submittedValues[totalSalesToBuyerId] or application.policy[totalSalesToBuyerId],
+          validationError: validationErrors.errorList[totalSalesToBuyerId]
         }) }}
 
-        {% set maximumBuyerWillOweId = FIELDS.MAXIMUM_BUYER_WILL_OWE.ID %}
+        {% set maximumBuyerWillOwe = FIELDS.MAXIMUM_BUYER_WILL_OWE %}
+        {% set maximumBuyerWillOweId = maximumBuyerWillOwe.ID %}
+
         {% set MAXIMUM_HINT = FIELDS.MAXIMUM_BUYER_WILL_OWE.HINT %}
 
         {% set maximumBuyerWillOweHintHtml %}
@@ -86,40 +61,13 @@
           <p data-cy="{{ maximumBuyerWillOweId }}-hint-no-decimals">{{ MAXIMUM_HINT.NO_DECIMALS }}</p>
         {% endset %}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.MAXIMUM_BUYER_WILL_OWE.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + '-label',
-              'data-cy': FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + '-label'
-            }
-          },
-          hint: {
-            html: maximumBuyerWillOweHintHtml
-          },
-          classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
-          attributes: {
-            'data-cy': FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + '-input'
-          },
-          id: FIELDS.MAXIMUM_BUYER_WILL_OWE.ID,
-          name: FIELDS.MAXIMUM_BUYER_WILL_OWE.ID,
-          inputmode: "numeric",
-          pattern: "[0-9]*",
-          prefix: {
-            text: "£",
-            attributes: {
-              'data-cy': FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + '-prefix'
-            }
-          },
-          spellcheck: false,
-          value: submittedValues[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID] or application.policy[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID],
-          errorMessage: validationErrors.errorList[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID] and {
-            text: validationErrors.errorList[FIELDS.MAXIMUM_BUYER_WILL_OWE.ID].text,
-            attributes: {
-              "data-cy": FIELDS.MAXIMUM_BUYER_WILL_OWE.ID + "-error-message"
-            }
-          }
+        {{ monetaryValueInput.render({
+          fieldId: maximumBuyerWillOweId,
+          label: maximumBuyerWillOwe.LABEL,
+          hintHtml: maximumBuyerWillOweHintHtml,
+          currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+          submittedValue: submittedValues[maximumBuyerWillOweId] or application.policy[maximumBuyerWillOweId],
+          validationError: validationErrors.errorList[maximumBuyerWillOweId]
         }) }}
 
       </div>

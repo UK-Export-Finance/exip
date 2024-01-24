@@ -2,8 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
-{% from "govuk/components/hint/macro.njk" import govukHint %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
 {% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
@@ -31,7 +30,6 @@
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
       <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-      {# <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }} {{ CURRENCY_NAME }}?</h1> #}
     </div>
   </div>
 
@@ -52,37 +50,15 @@
           }
         }) %}
 
-          {{ govukHint({
-            text: FIELD.HINT,
-            attributes: {
-              "data-cy": FIELD.ID + "-hint"
-            }
+          {{ monetaryValueInput.render({
+            fieldId: FIELD.ID,
+            label: FIELD.LABEL,
+            hintText: FIELD.HINT,
+            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+            submittedValue: submittedValues[FIELD.ID] or application.policy[FIELD.ID],
+            validationError: validationErrors.errorList[FIELD.ID]
           }) }}
 
-          {{ govukInput({
-            classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
-            attributes: {
-              'data-cy': FIELD.ID + '-input'
-            },
-            id: FIELD.ID,
-            name: FIELD.ID,
-            inputmode: "numeric",
-            pattern: "[0-9]*",
-            prefix: {
-              text: "£",
-              attributes: {
-                'data-cy': FIELD.ID + '-prefix'
-              }
-            },
-            spellcheck: false,
-            value: submittedValues[FIELD.ID] or application.policy[FIELD.ID],
-            errorMessage: validationErrors.errorList[FIELD.ID] and {
-              text: validationErrors.errorList[FIELD.ID].text,
-              attributes: {
-                "data-cy": FIELD.ID + "-error-message"
-              }
-            }
-          }) }}
         {% endcall %}
 
       </div>

@@ -14,7 +14,7 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../../fixtures/application';
-import { GBP } from '../../../../../../../fixtures/currencies';
+import { GBP, SYMBOLS } from '../../../../../../../fixtures/currencies';
 
 const { taskList } = partials.insurancePartials;
 
@@ -44,7 +44,7 @@ const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Single contract policy - total contract value page - As an exporter, I want to provide the details of the single contract policy that I need cover for', () => {
+context('Insurance - Policy - Single contract policy - Total contract value page - As an exporter, I want to provide the details of the single contract policy that I need cover for', () => {
   let referenceNumber;
   let url;
 
@@ -54,7 +54,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
 
       cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
 
@@ -96,7 +96,7 @@ context('Insurance - Policy - Single contract policy - total contract value page
         FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT,
       );
 
-      cy.checkText(field.prefix(), '£');
+      cy.checkText(field.prefix(), SYMBOLS.GBP);
 
       field.input().should('exist');
     });

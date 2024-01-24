@@ -12,10 +12,10 @@ import {
 } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import application from '../../../../../../../fixtures/application';
-import { GBP } from '../../../../../../../fixtures/currencies';
+import { GBP, SYMBOLS } from '../../../../../../../fixtures/currencies';
 
 const { taskList } = partials.insurancePartials;
 
@@ -34,15 +34,13 @@ const {
 const { EXPORT_VALUE } = FIELDS;
 
 const {
-  POLICY: {
-    EXPORT_VALUE: {
-      MULTIPLE: {
-        TOTAL_SALES_TO_BUYER,
-        MAXIMUM_BUYER_WILL_OWE,
-      },
+  EXPORT_VALUE: {
+    MULTIPLE: {
+      TOTAL_SALES_TO_BUYER,
+      MAXIMUM_BUYER_WILL_OWE,
     },
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const task = taskList.prepareApplication.tasks.policy;
 
@@ -50,7 +48,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy - export value page - As an exporter, I want to provide the details of the multiple contract policy that I need a cover for', () => {
+context('Insurance - Policy - Multiple contract policy - Export value page - As an exporter, I want to provide the details of the multiple contract policy that I need a cover for', () => {
   let referenceNumber;
   let url;
 
@@ -61,7 +59,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
       cy.startInsurancePolicySection({});
 
       cy.completeAndSubmitPolicyTypeForm(policyType);
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
 
@@ -102,7 +100,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
 
       cy.checkText(field.hint(), EXPORT_VALUE.MULTIPLE[fieldId].HINT);
 
-      cy.checkText(field.prefix(), '£');
+      cy.checkText(field.prefix(), SYMBOLS.GBP);
 
       field.input().should('exist');
     });
@@ -114,7 +112,7 @@ context('Insurance - Policy - Multiple contract policy - export value page - As 
 
       cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
 
-      cy.checkText(field.label(), EXPORT_VALUE.MULTIPLE[fieldId].LABEL);
+      cy.checkText(field.prefix(), SYMBOLS.GBP);
 
       cy.checkText(field.hint.forExample(), HINT.FOR_EXAMPLE);
 

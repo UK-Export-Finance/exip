@@ -33,7 +33,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy export value page - Save and go back', () => {
+context('Insurance - Policy - Multiple contract policy Export value page - Save and go back', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -44,7 +44,7 @@ context('Insurance - Policy - Multiple contract policy export value page - Save 
 
       cy.startInsurancePolicySection({});
       cy.completeAndSubmitPolicyTypeForm(policyType);
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
