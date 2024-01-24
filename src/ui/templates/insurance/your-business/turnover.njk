@@ -4,6 +4,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
+{% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 {% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 
@@ -64,34 +65,15 @@
           }
         }) %}
 
-          {{ govukInput({
-            id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
-            name: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID,
-            value: submittedValues[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] or application.business[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID],
-            label: {
-              text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.LABEL,
-              classes: "govuk-body",
-              attributes: {
-                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-label"
-              }
-            },
-            prefix: {
-              text: FIELDS.ESTIMATED_ANNUAL_TURNOVER.PREFIX,
-              attributes: {
-                id: FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + '-label',
-                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-prefix"
-              }
-            },
-            classes: "govuk-input--width-5",
-            attributes: {
-              "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID] and {
-              text: validationErrors.errorList[FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID].text,
-              attributes: {
-                "data-cy": FIELDS.ESTIMATED_ANNUAL_TURNOVER.ID + "-error-message"
-              }
-            }
+          {% set annualTurnover = FIELDS.ESTIMATED_ANNUAL_TURNOVER %}
+          {% set annualTurnoverId = annualTurnover.ID %}
+
+          {{ monetaryValueInput.render({
+            fieldId: annualTurnoverId,
+            label: annualTurnover.LABEL,
+            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+            submittedValue: submittedValues[annualTurnoverId] or application.business[annualTurnoverId],
+            validationError: validationErrors.errorList[annualTurnoverId]
           }) }}
 
           <p class-"govuk-body">
