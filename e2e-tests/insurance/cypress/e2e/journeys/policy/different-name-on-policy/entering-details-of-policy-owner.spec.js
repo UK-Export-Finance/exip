@@ -68,7 +68,7 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
       cy.completeAndSubmitDifferentNameOnPolicyForm({ firstName: account[FIRST_NAME], lastName: account[LAST_NAME], email: account[EMAIL] });
 
       cy.completeAndSubmitPreCreditPeriodForm({});
-      cy.completeAndSubmitAnotherCompanyForm();
+      cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({});
 
       summaryList.field(NAME).changeLink().click();

@@ -14,7 +14,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, ANOTHER_COMPANY_SAVE_AND_BACK },
+  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS, ANOTHER_COMPANY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -132,21 +132,37 @@ describe('controllers/insurance/policy/another-company', () => {
   });
 
   describe('post', () => {
-    const validBody = {
-      [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'false',
-    };
-
     describe('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
+      describe(`when ${FIELD_ID} is submitted as 'no'`, () => {
+        beforeEach(() => {
+          req.body = {
+            [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'false',
+          };
+        });
+
+        it(`should redirect to ${BROKER_ROOT}`, async () => {
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, async () => {
-        await post(req, res);
+      describe(`when ${FIELD_ID} is submitted as 'yes'`, () => {
+        beforeEach(() => {
+          req.body = {
+            [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'true',
+          };
+        });
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+        it(`should redirect to ${OTHER_COMPANY_DETAILS}`, async () => {
+          await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${OTHER_COMPANY_DETAILS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

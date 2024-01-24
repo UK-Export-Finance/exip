@@ -1,0 +1,67 @@
+import { headingCaption } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
+
+const {
+  ROOT,
+  POLICY: { ANOTHER_COMPANY, OTHER_COMPANY_DETAILS },
+} = INSURANCE_ROUTES;
+
+const baseUrl = Cypress.config('baseUrl');
+
+const story = 'As an exporter, I want to inform UKEF of any other company I would like to include on my policy, So that cover is available for all appropriate parties';
+
+context(`Insurance - Policy - Other company details page - ${story}`, () => {
+  let referenceNumber;
+  let url;
+
+  before(() => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+      referenceNumber = refNumber;
+
+      // go to the page we want to test.
+      cy.startInsurancePolicySection({});
+
+      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitTotalContractValueForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+      cy.completeAndSubmitPreCreditPeriodForm({});
+      cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
+
+      url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
+
+      cy.assertUrl(url);
+    });
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
+  });
+
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
+
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`,
+      backLink: `${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`,
+      hasAForm: false,
+    });
+  });
+
+  describe('page tests', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it('renders a heading caption', () => {
+      cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+  });
+});
