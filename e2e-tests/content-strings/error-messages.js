@@ -319,6 +319,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
         IS_EMPTY: 'You must select the currency the outstanding or overdue payments are in',
       },
+      [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+        IS_EMPTY: 'Enter the currency the outstanding or overdue payments are in',
+      },
     },
     ACCOUNT: {
       CREATE: {

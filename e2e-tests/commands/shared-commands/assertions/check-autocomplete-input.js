@@ -56,6 +56,19 @@ const checkAutocompleteInput = {
 
     cy.checkText(field.results(), expectedValue);
   },
+  search: (field, input) => {
+    field.input().clear();
+
+    cy.keyboardInput(field.input(), input);
+    const results = field.results();
+
+    // select the first result
+    results.first().click();
+  },
+  checkInput: (field, expectedValue) => {
+    // checks input displays the correct text
+    cy.checkText(field.results(), expectedValue);
+  },
 };
 
 export default checkAutocompleteInput;

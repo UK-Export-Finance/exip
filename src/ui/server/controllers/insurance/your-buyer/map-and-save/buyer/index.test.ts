@@ -1,16 +1,16 @@
 import mapAndSave from '.';
-import { FIELD_IDS } from '../../../../constants';
-import save from '../save-data';
-import { mockApplication } from '../../../../test-mocks';
-import generateValidationErrors from '../../../../helpers/validation';
-import mapSubmittedData from '../map-submitted-data';
+import { FIELD_IDS } from '../../../../../constants';
+import save from '../../save-data/buyer';
+import { mockApplication } from '../../../../../test-mocks';
+import generateValidationErrors from '../../../../../helpers/validation';
+import mapSubmittedData from '../../map-submitted-data/buyer';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
-describe('controllers/insurance/your-buyer/map-and-save', () => {
-  jest.mock('../save-data');
+describe('controllers/insurance/your-buyer/map-and-save/buyer', () => {
+  jest.mock('../../save-data/buyer');
 
   describe('buyer', () => {
     let mockFormBody = {

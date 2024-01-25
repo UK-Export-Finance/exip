@@ -1,7 +1,7 @@
 import mapSubmittedData from '.';
-import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
-import { RequestBody } from '../../../../../types';
-import { mockConnectionWithBuyer } from '../../../../test-mocks/mock-buyer';
+import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
+import { RequestBody } from '../../../../../../types';
+import { mockConnectionWithBuyer } from '../../../../../test-mocks/mock-buyer';
 
 const {
   COMPANY_OR_ORGANISATION: { CAN_CONTACT_BUYER },
@@ -9,7 +9,7 @@ const {
   CONNECTION_WITH_BUYER_DESCRIPTION,
 } = YOUR_BUYER_FIELD_IDS;
 
-describe('controllers/insurance/your-buyer/map-submitted-data', () => {
+describe('controllers/insurance/your-buyer/map-submitted-data/buyer', () => {
   let mockFormBody: RequestBody;
 
   beforeEach(() => {

@@ -1,4 +1,4 @@
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/buyer';
 import { FIELD_IDS } from '..';
 import { post } from '.';
 import { ROUTES } from '../../../../../constants';
@@ -31,7 +31,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
     jest.resetAllMocks();
   });
 
-  const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+  const { exporterIsConnectedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
   const validBody = companyOrOrganisationMock;
 
   describe('when there are no validation errors', () => {

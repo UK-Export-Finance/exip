@@ -2,7 +2,7 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/buyer';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;

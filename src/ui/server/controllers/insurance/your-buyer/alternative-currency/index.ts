@@ -15,6 +15,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
@@ -26,7 +27,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-export const FIELD_IDS = [CURRENCY_CODE];
+export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
@@ -73,8 +74,7 @@ export const get = async (req: Request, res: Response) => {
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      // TODO: Add  if (currencyValue) once data saving completed and change ''
-      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.buyer.buyerTradingHistory?.currencyCode),
     });
   } catch (err) {
     console.error('Error getting alternative currency %O', err);
@@ -119,9 +119,15 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
         submittedValues: sanitiseData(payload),
-        // TODO: Add  if (currencyValue) once data saving completed and change ''
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[ALTERNATIVE_CURRENCY_CODE]),
       });
+    }
+
+    // if no errors, then runs save api call
+    const saveResponse = await mapAndSave.buyerTradingHistory(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     /**

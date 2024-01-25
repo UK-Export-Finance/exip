@@ -3,6 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import mapCurrenciesAsRadioOptions from '../as-radio-options';
 import mapCurrenciesAsSelectOptions from '../as-select-options';
 import { mockCurrencies } from '../../../../test-mocks';
+import submittedAnswer from '../submitted-answer';
 
 const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
@@ -17,6 +18,7 @@ describe('server/helpers/mappings/map-currencies/radio-and-select-options', () =
     const expected = {
       currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE),
       alternativeCurrencies: mapCurrenciesAsSelectOptions(mockCurrencies, mockSelectedValue, true),
+      applicationAnswer: submittedAnswer(mockSelectedValue),
     };
 
     expect(result).toEqual(expected);

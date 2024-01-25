@@ -3,17 +3,17 @@
 {% macro render(params) %}
 
   {% set fieldId = params.fieldId %}
-  {% set countries = params.countries %}
+  {% set options = params.options %}
   {% set integrity = params.integrity %}
- 
+
   <select class="govuk-select" id="{{ fieldId }}" name="{{ fieldId }}">
     <option value="" disabled selected></option>
 
-    {% for country in countries %}
-      {% if country.selected %}
-        <option value="{{ country.text }}" selected>{{ country.text }}</option>
+    {% for option in options %}
+      {% if option.selected %}
+        <option value="{{ option.value }}" selected>{{ option.text }}</option>
       {% else %}
-        <option value="{{ country.text }}">{{ country.text }}</option>
+        <option value="{{ option.value }}">{{ option.text }}</option>
       {% endif %}
     {% endfor %}
   </select>

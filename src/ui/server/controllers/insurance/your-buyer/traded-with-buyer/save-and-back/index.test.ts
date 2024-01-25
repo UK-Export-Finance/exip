@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/buyer';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 

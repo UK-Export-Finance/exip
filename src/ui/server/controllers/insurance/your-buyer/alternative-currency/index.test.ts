@@ -12,7 +12,8 @@ import api from '../../../../api';
 import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../helpers/construct-payload';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockBuyerTradingHistory } from '../../../../test-mocks';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 
 const {
   INSURANCE_ROOT,
@@ -64,7 +65,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [CURRENCY_CODE];
+      const EXPECTED_FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
       expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
     });
@@ -100,7 +101,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         userName: getUserNameFromSession(req.session.user),
         ...PAGE_VARIABLES,
         application: mapApplicationToFormFields(mockApplication),
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, mockBuyerTradingHistory.currencyCode),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -155,7 +156,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     beforeEach(() => {
       getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
       api.keystone.APIM.getCurrencies = getCurrenciesSpy;
-      //   mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
+      mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are no validation errors', () => {
@@ -168,6 +169,16 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_HISTORY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `check`", () => {
@@ -218,7 +229,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           ...PAGE_VARIABLES,
           submittedValues: payload,
           validationErrors,
-          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[ALTERNATIVE_CURRENCY_CODE]),
         };
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
@@ -262,6 +273,36 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
             expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
           });
+        });
+      });
+
+      describe('when mapAndSave.buyerTradingHistory returns false', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(false));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when mapAndSave.buyerTradingHistory fails', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
         });
       });
     });

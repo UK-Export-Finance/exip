@@ -107,6 +107,14 @@ interface ApplicationBuyerCountry {
   name?: string;
 }
 
+interface BuyerTradingHistory {
+  id: string;
+  exporterHasTradedWithBuyer?: boolean;
+  currencyCode?: string;
+  outstandingPayments?: boolean;
+  failedPayments?: boolean;
+}
+
 interface ApplicationBuyerCore {
   companyOrOrganisationName?: string;
   address?: string;
@@ -118,13 +126,13 @@ interface ApplicationBuyerCore {
   contactEmail?: string;
   canContactBuyer?: boolean;
   exporterIsConnectedWithBuyer?: boolean;
-  exporterHasTradedWithBuyer?: boolean;
   connectionWithBuyerDescription?: string;
 }
 
 interface ApplicationBuyer extends ApplicationBuyerCore {
   id: string;
   country?: ApplicationBuyerCountry;
+  buyerTradingHistory: BuyerTradingHistory;
 }
 
 interface ApplicationBuyerUiInput extends ApplicationBuyerCore {

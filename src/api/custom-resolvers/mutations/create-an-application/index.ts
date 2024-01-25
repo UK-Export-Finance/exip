@@ -98,7 +98,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
       },
       data: {
         buyer: {
-          connect: { id: buyer.buyer.id },
+          connect: { id: buyer.id },
         },
         eligibility: {
           connect: { id: eligibility.id },
