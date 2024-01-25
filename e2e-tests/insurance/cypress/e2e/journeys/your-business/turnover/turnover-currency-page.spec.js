@@ -1,7 +1,9 @@
 import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { turnoverPage } from '../../../../../../pages/your-business';
-import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
+import {
+  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
+} from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
