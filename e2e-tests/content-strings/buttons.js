@@ -3,6 +3,7 @@ export const BUTTONS = {
   CHANGE_ANSWERS_START_NEW_APPLICATION: 'Change answers and start a new application',
   CONTINUE: 'Continue',
   CONTINUE_NEXT_SECTION: 'Continue to next section',
+  CONFIRM: 'Confirm',
   CONFIRM_AND_CONTINUE: 'Confirm and continue',
   CONTINUE_TO_SIGN_IN: 'Continue to sign in',
   GET_A_QUOTE_FOR_INSURANCE: 'Get a quote for credit insurance',
