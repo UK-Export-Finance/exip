@@ -99,9 +99,9 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersSingleResult(countryInput.field(alternativeCurrencyFieldId), 'Alg');
     checkAutocompleteInput.rendersMultipleResults(countryInput.field(alternativeCurrencyFieldId), 'Be');
 
-    const expectedValue = `${NON_STANDARD_CURRENCY_CODE.name} (${NON_STANDARD_CURRENCY_CODE.isoCode})`;
+    const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     checkAutocompleteInput
-      .allowsUserToRemoveCountryAndSearchAgain(countryInput.field(alternativeCurrencyFieldId), DZA.NAME, NON_STANDARD_CURRENCY_CODE.name, expectedValue);
+      .allowsUserToRemoveCountryAndSearchAgain(countryInput.field(alternativeCurrencyFieldId), DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
   rendersAlternativeCurrencyValidationError: () => {
     cy.clickAlternativeCurrencyRadioOption();
@@ -119,8 +119,9 @@ const assertAlternativeCurrencyForm = ({
     );
   },
   submitRadioAndAssertUrl: (currency, redirectUrl) => {
-    cy.clickAlternativeCurrencyRadioOption();
+    const option = currencyRadio({ fieldId, currency });
 
+    option.input().click();
     cy.clickSubmitButton();
 
     cy.assertUrl(redirectUrl);
@@ -128,8 +129,7 @@ const assertAlternativeCurrencyForm = ({
   submitAndAssertRadioIsChecked: (currency, url) => {
     const option = currencyRadio({ fieldId, currency });
 
-    cy.clickAlternativeCurrencyRadioOption();
-
+    option.input().click();
     cy.clickSubmitButton();
 
     cy.navigateToUrl(url);
@@ -163,7 +163,7 @@ const assertAlternativeCurrencyForm = ({
     // alternative currency radio should be checked
     option5.input().should('be.checked');
 
-    const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE.isoCode})`;
+    const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     // alternative currency input should render correct result
     checkAutocompleteInput.checkInput(countryInput.field(alternativeCurrencyFieldId), expectedValue);
   },
