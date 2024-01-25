@@ -4,6 +4,7 @@ import accounts from './test-helpers/accounts';
 import getKeystoneContext from './test-helpers/get-keystone-context';
 import applications from './test-helpers/applications';
 import buyers from './test-helpers/buyers';
+import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { mockAccount } from './test-mocks';
 import { Application, Account, Context } from './types';
@@ -23,6 +24,16 @@ describe('Create an Application', () => {
       data: {
         application: {
           connect: { id: application.id },
+        },
+      },
+    });
+
+    // create buyer and associate with the application.
+    await buyerTradingHistoryHelper.create({
+      context,
+      data: {
+        buyer: {
+          connect: { id: buyer.id },
         },
       },
     });

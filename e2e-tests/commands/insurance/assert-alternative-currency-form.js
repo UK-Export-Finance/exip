@@ -85,7 +85,7 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput.rendersInput(countryInput.field(alternativeCurrencyFieldId));
   },
   doesNotRenderSupportedCurrencies: () => {
-    const option5 = currencyRadio(fieldId, alternativeCurrencyFieldId);
+    const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     option5.input().click();
 

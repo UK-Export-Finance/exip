@@ -33,7 +33,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
     const result = await createABuyerTradingHistory(context, buyer.id);
 
-    expect(result.exporterHasTradedWithBuyer).toEqual('');
+    expect(result.exporterHasTradedWithBuyer).toEqual(null);
     expect(result.currencyCode).toEqual(GBP);
     expect(result.outstandingPayments).toEqual(null);
     expect(result.failedPayments).toEqual(null);

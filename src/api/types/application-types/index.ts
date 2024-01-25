@@ -165,6 +165,7 @@ export interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+  DEFAULT_CURRENCY?: string;
 }
 
 export interface SectionReview {
