@@ -64,6 +64,11 @@ const ANOTHER_COMPANY = {
   PAGE_TITLE: 'Is there another company that needs to be insured in your policy?',
 };
 
+const OTHER_COMPANY_DETAILS = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the other company you want to insure in your policy',
+};
+
 const BROKER = {
   ...SHARED,
   PAGE_TITLE: 'Are you using a broker to get this insurance?',
@@ -91,6 +96,7 @@ module.exports = {
   DIFFERENT_NAME_ON_POLICY,
   PRE_CREDIT_PERIOD,
   ANOTHER_COMPANY,
+  OTHER_COMPANY_DETAILS,
   BROKER,
   CHECK_YOUR_ANSWERS,
 };

@@ -9,6 +9,7 @@ Cypress.Commands.add('completeAndSubmitMultipleContractPolicyForm', require('../
 Cypress.Commands.add('completeAndSubmitExportValueForm', require('../../../../../commands/insurance/complete-and-submit-export-value-form'));
 Cypress.Commands.add('completeExportValueForm', require('../../../../../commands/insurance/complete-export-value-form'));
 
+Cypress.Commands.add('completeAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-about-goods-or-services-form'));
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-and-submit-about-goods-or-services-form'));
 
 Cypress.Commands.add('completeNameOnPolicyForm', require('../../../../../commands/insurance/complete-name-on-policy-form'));
@@ -24,6 +25,7 @@ Cypress.Commands.add('completeBusinessSection', require('../../../../../commands
 Cypress.Commands.add('completeBuyerSection', require('../../../../../commands/insurance/complete-buyer-section'));
 Cypress.Commands.add('completePolicySection', require('../../../../../commands/insurance/complete-policy-section'));
 Cypress.Commands.add('completeExportContractSection', require('../../../../../commands/insurance/complete-export-contract-section'));
+Cypress.Commands.add('changePolicyTypeToMultipleAndSubmitContractPolicyForm', require('../../../../../commands/insurance/change-policy-type-to-multiple-and-submit-contract-policy-form'));
 
 Cypress.Commands.add('completePrepareApplicationSinglePolicyType', require('../../../../../commands/insurance/complete-prepare-application-section-single-policy-type'));
 Cypress.Commands.add('completePrepareApplicationMultiplePolicyType', require('../../../../../commands/insurance/complete-prepare-application-section-multiple-policy-type'));

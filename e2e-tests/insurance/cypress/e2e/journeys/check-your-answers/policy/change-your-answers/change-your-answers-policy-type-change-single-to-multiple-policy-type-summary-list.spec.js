@@ -1,16 +1,17 @@
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
-import { DEFAULT } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { summaryList } from '../../../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../../../pages/insurance/policy';
+import formatCurrency from '../../../../../../../helpers/format-currency';
 import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
   POLICY: {
     TYPE_OF_POLICY_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS,
 } = INSURANCE_ROUTES;
@@ -39,8 +40,9 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Change your answers - Policy - Change single to multiple policy type - Summary List', () => {
-  let checkYourAnswersUrl;
   let referenceNumber;
+  let checkYourAnswersUrl;
+  let exportValueUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -49,7 +51,11 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
       task.link().click();
 
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
+      const applicationRouteUrl = `${ROOT}/${referenceNumber}`;
+
+      checkYourAnswersUrl = `${baseUrl}${applicationRouteUrl}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
+      exportValueUrl = `${baseUrl}${applicationRouteUrl}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`;
+
       cy.assertUrl(checkYourAnswersUrl);
     });
   });
@@ -79,22 +85,33 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
   });
 
   describe('after submitting a new policy type (multiple) and completing (now required) fields for a multiple policy', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
+      cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
+    });
 
-      summaryList.field(fieldId).changeLink().click();
-
-      typeOfPolicyPage[fieldId].multiple.input().click();
-      cy.clickSubmitButton();
-
-      cy.completeAndSubmitMultipleContractPolicyForm();
-
-      const expectedUrl = `${checkYourAnswersUrl}#heading`;
+    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE} with heading anchor`, () => {
+      const expectedUrl = `${exportValueUrl}#heading`;
 
       cy.assertUrl(expectedUrl);
     });
 
-    describe('should render new answers and change links for new multiple policy fields', () => {
+    describe(`after completing (now required) ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE} fields for a multiple policy`, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(checkYourAnswersUrl);
+        cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
+
+        cy.completeAndSubmitExportValueForm();
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
+        const expectedUrl = `${checkYourAnswersUrl}#heading`;
+
+        cy.assertUrl(expectedUrl);
+      });
+    });
+
+    describe('render new answers and change links for new multiple policy fields', () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
       });
@@ -114,23 +131,24 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
       it(TOTAL_SALES_TO_BUYER, () => {
         fieldId = TOTAL_SALES_TO_BUYER;
 
-        // const expectedValue = formatCurrency(application.POLICY[fieldId]);
+        const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, DEFAULT.EMPTY);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
       });
 
       it(MAXIMUM_BUYER_WILL_OWE, () => {
         fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-        // const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
+        const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, DEFAULT.EMPTY);
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedMaximumBuyerWillOwe);
 
         // check the change link
-        // summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
-        // cy.assertChangeAnswersPageUrl({
-        //   referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
-        // });
+        summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({
+          referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
+        });
       });
     });
   });

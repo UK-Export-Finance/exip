@@ -1,0 +1,40 @@
+{% from "govuk/components/label/macro.njk" import govukLabel %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
+{% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
+
+<div class="govuk-grid-row">
+  {% set class = "govuk-form-group" %}
+
+  {% if validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID] %}
+    {% set class = "govuk-form-group govuk-form-group--error" %}
+  {% endif %}
+
+  <div class="{{ class }}">
+    {{ govukLabel({
+      for: FIELDS.FINAL_DESTINATION.ID,
+      classes: "govuk-!-font-weight-bold",
+      text: FIELDS.FINAL_DESTINATION.LABEL,
+      attributes: {
+        id: FIELDS.FINAL_DESTINATION.ID + "-label",
+        "data-cy": FIELDS.FINAL_DESTINATION.ID + "-label"
+      }
+    }) }}
+
+    {{ govukErrorMessage({
+      text: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID].text,
+      attributes: {
+        "data-cy": FIELDS.FINAL_DESTINATION.ID + "-error-message"
+      }
+    }) }}
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ accessibleAutoCompleteSelect.render({
+          fieldId: FIELDS.FINAL_DESTINATION.ID,
+          options: conditionalHtmlData,
+          integrity: SRI.ACCESSIBILITY
+        }) }}
+      </div>
+    </div>
+  </div>
+</div>

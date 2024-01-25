@@ -44,7 +44,7 @@ const completePolicySection = ({
 
   cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod });
 
-  cy.completeAndSubmitAnotherCompanyForm();
+  cy.completeAndSubmitAnotherCompanyForm({});
 
   cy.completeAndSubmitBrokerForm({ usingBroker });
 

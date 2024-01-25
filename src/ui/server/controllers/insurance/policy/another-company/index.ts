@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, ANOTHER_COMPANY_SAVE_AND_BACK },
+  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS, ANOTHER_COMPANY_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -121,6 +121,12 @@ export const post = async (req: Request, res: Response) => {
       submittedValues: sanitisedData,
       validationErrors,
     });
+  }
+
+  const answer = payload[FIELD_ID];
+
+  if (answer === 'true') {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`);
   }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
