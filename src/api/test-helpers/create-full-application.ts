@@ -82,7 +82,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   );
 
   // create buyer and associate with the application.
-  const buyer = await createABuyer(context, country.id, application.id);
+  const { buyer } = await createABuyer(context, country.id, application.id);
 
   // create policy and associate with the application.
   const policy = await createAPolicy(context, application.id);
