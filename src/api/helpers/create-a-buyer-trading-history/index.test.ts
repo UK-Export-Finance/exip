@@ -39,7 +39,6 @@ describe('helpers/create-a-buyer-trading-history', () => {
     expect(result.failedPayments).toEqual(null);
   });
 
-
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
