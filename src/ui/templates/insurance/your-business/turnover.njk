@@ -71,7 +71,7 @@
           {{ monetaryValueInput.render({
             fieldId: annualTurnoverId,
             label: annualTurnover.LABEL,
-            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+            currencyPrefixSymbol: annualTurnover.PREFIX,
             submittedValue: submittedValues[annualTurnoverId] or application.business[annualTurnoverId],
             validationError: validationErrors.errorList[annualTurnoverId]
           }) }}
