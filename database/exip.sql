@@ -854,8 +854,8 @@ DROP TABLE IF EXISTS `PolicyContact`;
 
 CREATE TABLE `PolicyContact` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `firstName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `isSameAsOwner` tinyint(1) DEFAULT NULL,

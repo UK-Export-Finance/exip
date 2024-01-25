@@ -1,11 +1,10 @@
 import { objectHasProperty } from '../../helpers/object';
+import alphaCharactersOnlyValidation from '../alpha-characters-only';
 import maxLengthValidation from '../max-length';
 import emptyFieldValidation from '../empty-field';
 import { ACCOUNT_FIELDS } from '../../content-strings/fields/insurance/account';
 import { RequestBody, ErrorMessageObject } from '../../../types';
 
-// TODO: update DB schema.
-// export const MAXIMUM = 300;
 const {
   MAXIMUM: {
     NAME: { CHARACTERS: MAX_CHARACTERS },
@@ -23,12 +22,13 @@ const {
  * @returns {Object} Validation errors
  */
 const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) => {
-  // TODO: no symbol
-  // maybe can adapt this existing definition:
-  // const joiString = Joi.string();
-  // const schema = () => joiString.alphanum().trim().min(6).required();
-
   if (objectHasProperty(formBody, fieldId)) {
+    const alphaCharactersOnlyError = alphaCharactersOnlyValidation(formBody[fieldId], fieldId, errorMessages.INCORRECT_FORMAT, errors);
+
+    if (alphaCharactersOnlyError) {
+      return alphaCharactersOnlyError;
+    }
+
     return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAX_CHARACTERS);
   }
 
