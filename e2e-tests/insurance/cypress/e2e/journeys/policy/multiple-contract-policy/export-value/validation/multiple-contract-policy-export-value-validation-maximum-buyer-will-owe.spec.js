@@ -35,7 +35,7 @@ const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Multiple contract policy - export value page - form validation - maximum buyer will owe', () => {
+context('Insurance - Policy - Multiple contract policy - Export value page - form validation - maximum buyer will owe', () => {
   let referenceNumber;
   let url;
 

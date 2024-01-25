@@ -1,6 +1,6 @@
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
-import mapCurrenciesAsRadioOptions from '../../../../helpers/mappings/map-currencies/as-radio-options';
+import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
@@ -30,16 +30,18 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    REQUESTED_START_DATE_DAY,
-    REQUESTED_START_DATE_MONTH,
-    REQUESTED_START_DATE_YEAR,
-    SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
-    POLICY_CURRENCY_CODE,
-    ALTERNATIVE_POLICY_CURRENCY_CODE,
+  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+  POLICY: {
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      REQUESTED_START_DATE_DAY,
+      REQUESTED_START_DATE_MONTH,
+      REQUESTED_START_DATE_YEAR,
+      SINGLE: { CONTRACT_COMPLETION_DATE, CONTRACT_COMPLETION_DATE_DAY, CONTRACT_COMPLETION_DATE_MONTH, CONTRACT_COMPLETION_DATE_YEAR, TOTAL_CONTRACT_VALUE },
+      POLICY_CURRENCY_CODE,
+    },
   },
-} = POLICY_FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * pageVariables
@@ -61,8 +63,8 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: POLICY_CURRENCY_CODE,
       ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
     },
-    ALTERNATIVE_POLICY_CURRENCY_CODE: {
-      ID: ALTERNATIVE_POLICY_CURRENCY_CODE,
+    ALTERNATIVE_CURRENCY_CODE: {
+      ID: ALTERNATIVE_CURRENCY_CODE,
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
@@ -98,11 +100,13 @@ export const get = async (req: Request, res: Response) => {
   const refNumber = Number(referenceNumber);
 
   try {
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
     if (!isPopulatedArray(supportedCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
+
+    const currencyAnswer = application.policy[POLICY_CURRENCY_CODE];
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -112,7 +116,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
     });
   } catch (err) {
     console.error('Error getting currencies %O', err);
@@ -146,11 +150,13 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     try {
-      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+      const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
       if (!isPopulatedArray(supportedCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
+
+      const currencyAnswer = application.policy[POLICY_CURRENCY_CODE];
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -161,7 +167,7 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         submittedValues: payload,
-        currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
         validationErrors,
       });
     } catch (err) {
