@@ -303,7 +303,7 @@ model Buyer {
 model BuyerTradingHistory {
   id                         String   @id @default(cuid())
   buyer                      Buyer?   @relation("Buyer_buyerTradingHistory")
-  currencyCode               String   @default("") @mysql.VarChar(5)
+  currencyCode               String   @default("") @mysql.VarChar(3)
   outstandingPayments        Boolean?
   failedPayments             Boolean?
   exporterHasTradedWithBuyer Boolean?

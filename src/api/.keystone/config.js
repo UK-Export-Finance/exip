@@ -420,6 +420,10 @@ if (isDevEnvironment) {
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
+// constants/supported-currencies/index.ts
+var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
+var GBP = "GBP";
+
 // constants/application/versions/index.ts
 var VERSIONS = [
   {
@@ -434,7 +438,8 @@ var VERSIONS = [
     VERSION_NUMBER: "2",
     OVER_500K_SUPPORT: true,
     DEFAULT_FINAL_DESTINATION_KNOWN: null,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+    DEFAULT_CURRENCY: GBP
   }
 ];
 var versions_default = VERSIONS;
@@ -481,7 +486,8 @@ var APPLICATION = {
     SUBMITTED: "Submitted to UKEF"
   },
   DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
-  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  DEFAULT_CURRENCY: LATEST_VERSION.DEFAULT_CURRENCY
 };
 var application_default = APPLICATION;
 
@@ -561,10 +567,6 @@ var FIELD_VALUES = {
   YES: "Yes",
   NO: "No"
 };
-
-// constants/supported-currencies/index.ts
-var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
-var GBP = "GBP";
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
@@ -1385,7 +1387,7 @@ var lists = {
     fields: {
       buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerTradingHistory" }),
       currencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(5)" }
+        db: { nativeType: "VarChar(3)" }
       }),
       outstandingPayments: nullable_checkbox_default(),
       failedPayments: nullable_checkbox_default(),
@@ -3373,7 +3375,7 @@ var createABuyerTradingHistory = async (context, buyerId) => {
             id: buyerId
           }
         },
-        currencyCode: GBP
+        currencyCode: APPLICATION.DEFAULT_CURRENCY
       }
     });
     return buyerTradingHistory;
