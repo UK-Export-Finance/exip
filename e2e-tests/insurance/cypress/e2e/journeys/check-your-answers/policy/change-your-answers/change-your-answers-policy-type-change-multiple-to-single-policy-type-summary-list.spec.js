@@ -84,7 +84,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
       typeOfPolicyPage[fieldId].single.input().click();
       cy.clickSubmitButton();
 
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
 
       cy.assertUrl(`${checkAndChangeTotalContractValueUrl}#heading`);
     });

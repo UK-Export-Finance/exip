@@ -1,4 +1,5 @@
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { SYMBOLS } from '../../../../constants/supported-currencies';
 import { FORM_TITLES } from '../../../form-titles';
 
 const {
@@ -96,7 +97,7 @@ export const FIELDS = {
     [ESTIMATED_ANNUAL_TURNOVER]: {
       LEGEND: 'Estimated annual turnover for this current financial year',
       LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
-      PREFIX: '£',
+      PREFIX: SYMBOLS.GBP,
       SUMMARY: {
         TITLE: 'Estimated turnover this current financial year',
         FORM_TITLE: TURNOVER,

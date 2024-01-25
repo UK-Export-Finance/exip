@@ -43,14 +43,19 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
  * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => ({
-  FIELD: {
-    ID: FIELD_ID,
-    ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
-  },
-  DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(currencies, policyCurrencyCode).name}?`,
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
-});
+export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => {
+  const currency = getCurrencyByCode(currencies, policyCurrencyCode);
+
+  return {
+    FIELD: {
+      ID: FIELD_ID,
+      ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
+    },
+    DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}?`,
+    CURRENCY_PREFIX_SYMBOL: currency.symbol,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
+  };
+};
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 

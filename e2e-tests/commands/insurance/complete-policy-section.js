@@ -27,11 +27,11 @@ const completePolicySection = ({
   cy.completeAndSubmitPolicyTypeForm(policyType);
 
   if (policyType === SINGLE) {
-    cy.completeAndSubmitSingleContractPolicyForm();
+    cy.completeAndSubmitSingleContractPolicyForm({});
 
     cy.completeAndSubmitTotalContractValueForm({ policyValueOverMvpMaximum });
   } else {
-    cy.completeAndSubmitMultipleContractPolicyForm();
+    cy.completeAndSubmitMultipleContractPolicyForm({});
 
     cy.completeAndSubmitExportValueForm({ policyType });
   }

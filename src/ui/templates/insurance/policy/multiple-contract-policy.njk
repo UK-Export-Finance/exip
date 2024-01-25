@@ -90,9 +90,10 @@
           legend: FIELDS.POLICY_CURRENCY_CODE.LEGEND,
           hint: FIELDS.POLICY_CURRENCY_CODE.HINT,
           supportedCurrencies: currencies,
+          alternativeCurrencies: alternativeCurrencies,
           errors: validationErrors.errorList,
           submittedValue: submittedValues[FIELDS.POLICY_CURRENCY_CODE.ID] or application.policy[FIELDS.POLICY_CURRENCY_CODE.ID],
-          alternativeCurrencyFieldId: FIELDS.ALTERNATIVE_POLICY_CURRENCY_CODE.ID
+          alternativeCurrencyFieldId: FIELDS.ALTERNATIVE_CURRENCY_CODE.ID
         }) }}
       </div>
     </div>
