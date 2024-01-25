@@ -232,11 +232,14 @@ DROP TABLE IF EXISTS `BuyerTradingHistory`;
 
 CREATE TABLE `BuyerTradingHistory` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `buyer` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `currencyCode` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `outstandingPayments` tinyint(1) DEFAULT NULL,
   `failedPayments` tinyint(1) DEFAULT NULL,
   `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `BuyerTradingHistory_buyer_idx` (`buyer`),
+  CONSTRAINT `BuyerTradingHistory_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
