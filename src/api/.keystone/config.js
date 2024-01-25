@@ -363,6 +363,7 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateBuyerTradingHistory",
   "updateCompany",
   "updateDeclaration",
   "updatePolicy",
@@ -3600,7 +3601,7 @@ var createAnApplication = async (root, variables, context) => {
       },
       data: {
         buyer: {
-          connect: { id: buyer.buyer.id }
+          connect: { id: buyer.id }
         },
         eligibility: {
           connect: { id: eligibility.id }
