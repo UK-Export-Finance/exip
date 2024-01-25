@@ -78,7 +78,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
       typeOfPolicyPage[POLICY_TYPE].single.input().click();
       cy.clickSubmitButton();
 
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
     it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE} because the policy type has changed`, () => {

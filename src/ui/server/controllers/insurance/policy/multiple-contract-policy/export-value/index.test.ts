@@ -75,6 +75,8 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     it('should have correct properties', () => {
       const result = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
 
+      const currency = getCurrencyByCode(mockCurrencies, String(policyCurrencyCode));
+
       const expected = {
         FIELDS: {
           TOTAL_SALES_TO_BUYER: {
@@ -86,7 +88,8 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
             ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
           },
         },
-        DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name}`,
+        DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}`,
+        CURRENCY_PREFIX_SYMBOL: currency.symbol,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
       };
 

@@ -107,7 +107,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitPolicyTypeForm(policyType);
 
       // complete and submit the next 2 forms
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
     });
 
@@ -138,7 +138,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.completeAndSubmitPolicyTypeForm(policyType);
 
       // complete and submit the next 2 forms
-      cy.completeAndSubmitMultipleContractPolicyForm();
+      cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.completeAndSubmitExportValueForm({ policyType });
     });
 

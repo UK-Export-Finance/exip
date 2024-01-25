@@ -41,20 +41,25 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
  * @param {String} policyCurrencyCode: Policy currency code
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => ({
-  FIELDS: {
-    TOTAL_SALES_TO_BUYER: {
-      ID: TOTAL_SALES_TO_BUYER,
-      ...FIELDS.EXPORT_VALUE.MULTIPLE[TOTAL_SALES_TO_BUYER],
+export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, policyCurrencyCode: string) => {
+  const currency = getCurrencyByCode(currencies, policyCurrencyCode);
+
+  return {
+    FIELDS: {
+      TOTAL_SALES_TO_BUYER: {
+        ID: TOTAL_SALES_TO_BUYER,
+        ...FIELDS.EXPORT_VALUE.MULTIPLE[TOTAL_SALES_TO_BUYER],
+      },
+      MAXIMUM_BUYER_WILL_OWE: {
+        ID: MAXIMUM_BUYER_WILL_OWE,
+        ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
+      },
     },
-    MAXIMUM_BUYER_WILL_OWE: {
-      ID: MAXIMUM_BUYER_WILL_OWE,
-      ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
-    },
-  },
-  DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(currencies, policyCurrencyCode).name}`,
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
-});
+    DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}`,
+    CURRENCY_PREFIX_SYMBOL: currency.symbol,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
+  };
+};
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE;
 

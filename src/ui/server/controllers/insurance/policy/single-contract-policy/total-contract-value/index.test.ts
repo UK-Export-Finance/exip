@@ -76,12 +76,15 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
     it('should have correct properties', () => {
       const result = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
 
+      const currency = getCurrencyByCode(mockCurrencies, String(policyCurrencyCode));
+
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
         },
-        DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${getCurrencyByCode(mockCurrencies, String(policyCurrencyCode)).name}?`,
+        DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}?`,
+        CURRENCY_PREFIX_SYMBOL: currency.symbol,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
       };
 

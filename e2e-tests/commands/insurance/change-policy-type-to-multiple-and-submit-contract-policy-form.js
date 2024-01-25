@@ -16,7 +16,7 @@ const changePolicyTypeToMultipleAndSubmitContractPolicyForm = () => {
   typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
   cy.clickSubmitButton();
 
-  cy.completeAndSubmitMultipleContractPolicyForm();
+  cy.completeAndSubmitMultipleContractPolicyForm({});
 };
 
 export default changePolicyTypeToMultipleAndSubmitContractPolicyForm;

@@ -128,7 +128,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitSingleContractPolicyForm();
+      cy.completeAndSubmitSingleContractPolicyForm({});
     });
 
     it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`, () => {
@@ -147,7 +147,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitSingleContractPolicyForm();
+        cy.completeAndSubmitSingleContractPolicyForm({});
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`);
 
