@@ -237,8 +237,7 @@ CREATE TABLE `BuyerTradingHistory` (
   `failedPayments` tinyint(1) DEFAULT NULL,
   `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
-
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
 # Dump of table Country
