@@ -1,7 +1,7 @@
 import createABuyerTradingHistory from '.';
-import { Application, Context } from '../../types';
+import { Context, ApplicationBuyer } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import applications from '../../test-helpers/applications';
+import buyerHelpers from '../../test-helpers/buyers';
 import { GBP } from '../../constants';
 
 const invalidId = 'invalid-id';
@@ -14,24 +14,24 @@ const assertError = (err) => {
 
 describe('helpers/create-a-buyer-trading-history', () => {
   let context: Context;
-  let application: Application;
+  let buyer: object;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = (await applications.create({ context, data: {} })) as Application;
+    buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
   });
 
   test('it should return a buyer trading history with respective IDs', async () => {
-    const result = await createABuyerTradingHistory(context, application.buyer.id);
+    const result = await createABuyerTradingHistory(context, buyer.id);
 
     expect(result).toBeDefined();
     expect(typeof result.id).toEqual('string');
     expect(result.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty buyerTradingAddress fields', async () => {
-    const result = await createABuyerTradingHistory(context, application.buyer.id);
+  test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
+    const result = await createABuyerTradingHistory(context, buyer.id);
 
     expect(result.exporterHasTradedWithBuyer).toEqual('');
     expect(result.currencyCode).toEqual(GBP);
@@ -53,7 +53,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createABuyerTradingHistory({}, application.buyer.id);
+        await createABuyerTradingHistory({}, buyer.id);
       } catch (err) {
         assertError(err);
       }

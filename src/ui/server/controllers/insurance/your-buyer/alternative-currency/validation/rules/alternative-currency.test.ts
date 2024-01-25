@@ -2,7 +2,7 @@ import alternativeCurrencyRule from './alternative-currency';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
-import alternativeCurrencyValidation from '../../../../../../shared-validation/alternative-currency.ts';
+import alternativeCurrencyValidation from '../../../../../../shared-validation/alternative-currency';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },

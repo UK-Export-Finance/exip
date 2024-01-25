@@ -14,59 +14,57 @@ const {
 describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', () => {
   jest.mock('../../save-data/buyer-trading-history');
 
-  describe('buyer', () => {
-    let mockFormBody = {
-      _csrf: '1234',
-      [CURRENCY_CODE]: GBP,
-      [ALTERNATIVE_CURRENCY_CODE]: '',
-      [FAILED_PAYMENTS]: true,
-    };
+  let mockFormBody = {
+    _csrf: '1234',
+    [CURRENCY_CODE]: GBP,
+    [ALTERNATIVE_CURRENCY_CODE]: '',
+    [FAILED_PAYMENTS]: true,
+  };
 
-    const mockSaveBuyer = jest.fn(() => Promise.resolve({}));
-    save.buyerTradingHistory = mockSaveBuyer;
+  const mockSaveBuyer = jest.fn(() => Promise.resolve({}));
+  save.buyerTradingHistory = mockSaveBuyer;
 
-    const mockValidationErrors = generateValidationErrors(CURRENCY_CODE, 'error', {});
+  const mockValidationErrors = generateValidationErrors(CURRENCY_CODE, 'error', {});
 
-    describe('when the form has data', () => {
-      describe('when the form has validation errors', () => {
-        it('should call save.buyerTradingHistory with application, submitted data and validationErrors.errorList', async () => {
-          await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
+  describe('when the form has data', () => {
+    describe('when the form has validation errors', () => {
+      it('should call save.buyerTradingHistory with application, submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
 
-          expect(save.buyerTradingHistory).toHaveBeenCalledTimes(1);
-          expect(save.buyerTradingHistory).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
-        });
-
-        it('should return true', async () => {
-          const result = await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
-
-          expect(result).toEqual(true);
-        });
+        expect(save.buyerTradingHistory).toHaveBeenCalledTimes(1);
+        expect(save.buyerTradingHistory).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
-      describe('when the form does NOT have validation errors ', () => {
-        it('should call save.buyer with application and submitted data', async () => {
-          await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication);
-
-          expect(save.buyerTradingHistory).toHaveBeenCalledTimes(1);
-          expect(save.buyerTradingHistory).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
-        });
-
-        it('should return true', async () => {
-          const result = await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
-
-          expect(result).toEqual(true);
-        });
-      });
-    });
-
-    describe('when the form does not have any data', () => {
       it('should return true', async () => {
-        mockFormBody = { _csrf: '1234' };
-
         const result = await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
+    });
+
+    describe('when the form does NOT have validation errors ', () => {
+      it('should call save.buyer with application and submitted data', async () => {
+        await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication);
+
+        expect(save.buyerTradingHistory).toHaveBeenCalledTimes(1);
+        expect(save.buyerTradingHistory).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+      });
+
+      it('should return true', async () => {
+        const result = await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
+
+        expect(result).toEqual(true);
+      });
+    });
+  });
+
+  describe('when the form does not have any data', () => {
+    it('should return true', async () => {
+      mockFormBody = { _csrf: '1234' };
+
+      const result = await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication, mockValidationErrors);
+
+      expect(result).toEqual(true);
     });
   });
 });

@@ -55,17 +55,15 @@ describe('helpers/create-a-buyer', () => {
     expect(buyer.contactLastName).toEqual('');
     expect(buyer.contactPosition).toEqual('');
     expect(buyer.countryId).toEqual(country.id);
-    expect(buyer.exporterHasTradedWithBuyer).toEqual(null);
     expect(buyer.exporterIsConnectedWithBuyer).toEqual(null);
     expect(buyer.registrationNumber).toEqual('');
     expect(buyer.website).toEqual('');
   });
 
-  test('it should return empty buyerTradingAddress fields', async () => {
+  test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
     const result = await createABuyer(context, country.id, application.id);
     const { buyerTradingHistory } = result;
 
-    expect(buyerTradingHistory.exporterHasTradedWithBuyer).toEqual('');
     expect(buyerTradingHistory.currencyCode).toEqual(GBP);
     expect(buyerTradingHistory.outstandingPayments).toEqual(null);
     expect(buyerTradingHistory.failedPayments).toEqual(null);

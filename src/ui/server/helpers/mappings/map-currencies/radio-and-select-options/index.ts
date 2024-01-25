@@ -21,7 +21,7 @@ const mapRadioAndSelectOptions = (alternativeCurrencies: Array<Currency>, suppor
   const mapped = {
     currencies: mapCurrenciesAsRadioOptions(supportedCurrencies, ALTERNATIVE_CURRENCY_CODE),
     alternativeCurrencies: mapCurrenciesAsSelectOptions(alternativeCurrencies, selectedValue, true),
-    applicationAnswer: submittedAnswer(selectedValue),
+    submittedValue: submittedAnswer(selectedValue),
   };
 
   return mapped;

@@ -24,7 +24,7 @@ export const USD = {
   isoCode: USD_CURRENCY_CODE,
 };
 
-export const AED = {
+export const NON_STANDARD_CURRENCY_CODE = {
   name: 'U.A.E. Dirham',
   isoCode: AED_CURRENCY_CODE,
 };

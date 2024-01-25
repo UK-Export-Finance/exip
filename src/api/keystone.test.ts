@@ -398,6 +398,18 @@ describe('Application timestamp updates', () => {
     });
   });
 
+  describe('BuyerTradingHistory', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.BuyerTradingHistory.updateOne({
+        where: { id: application.buyer.buyerTradingHistory.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
   describe('Declaration', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Declaration.updateOne({

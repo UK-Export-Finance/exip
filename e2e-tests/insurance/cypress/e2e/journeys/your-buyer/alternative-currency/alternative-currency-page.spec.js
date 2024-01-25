@@ -27,13 +27,12 @@ const baseUrl = Cypress.config('baseUrl');
 
 const {
   radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
-  rendersAlternativeCurrencyValidationError, submitRadioRedirect, submitRadioCheckRadio,
-  submitAlternativeCurrencyRedirect, submitAlternativeCurrencyCheck,
+  rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl, submitAndAssertRadioIsChecked,
+  submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
 } = assertAlternativeCurrencyForm({
-  FIELD_ID: CURRENCY_CODE,
-  LEGEND: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
-  ALTERNATIVE_CURRENCY_TEXT: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
-  ERRORS,
+  legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
+  alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+  errors: ERRORS,
 });
 
 context('Insurance - Your Buyer - Alternative currency - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
@@ -99,7 +98,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   });
 
   describe('form submission', () => {
-    describe('when submitting a form when leaving alternative currency input blank', () => {
+    describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete ', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
@@ -109,7 +108,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
       });
     });
 
-    describe('when submitting a fully filmed form', () => {
+    describe('when submitting a supported currency', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
@@ -118,11 +117,11 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
         const { isoCode } = EUR;
 
         it('should redirect to the next page', () => {
-          submitRadioRedirect(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitRadioCheckRadio(isoCode, url);
+          submitAndAssertRadioIsChecked(isoCode, url);
         });
       });
 
@@ -130,11 +129,11 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
         const { isoCode } = GBP;
 
         it('should redirect to the next page', () => {
-          submitRadioRedirect(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitRadioCheckRadio(isoCode, url);
+          submitAndAssertRadioIsChecked(isoCode, url);
         });
       });
 
@@ -142,11 +141,11 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
         const { isoCode } = USD;
 
         it('should redirect to the next page', () => {
-          submitRadioRedirect(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitRadioCheckRadio(isoCode, url);
+          submitAndAssertRadioIsChecked(isoCode, url);
         });
       });
 
@@ -154,22 +153,26 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
         const { isoCode } = JPY;
 
         it('should redirect to the next page', () => {
-          submitRadioRedirect(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitRadioCheckRadio(isoCode, url);
+          submitAndAssertRadioIsChecked(isoCode, url);
         });
       });
+    });
 
-      describe('alternative currency', () => {
-        it('should redirect to the next page', () => {
-          submitAlternativeCurrencyRedirect(tradingHistoryUrl);
-        });
+    describe('when submitting an alternative currency', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-        it('should display the submitted answer', () => {
-          submitAlternativeCurrencyCheck(url);
-        });
+      it('should redirect to the next page', () => {
+        submitAlternativeCurrencyAndAssertUrl(tradingHistoryUrl);
+      });
+
+      it('should display the submitted answer', () => {
+        submitAlternativeCurrencyAndAssertInput(url);
       });
     });
   });

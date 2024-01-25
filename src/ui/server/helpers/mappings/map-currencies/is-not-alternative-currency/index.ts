@@ -7,6 +7,6 @@ import { SUPPORTED_CURRENCIES } from '../../../../constants';
  * @param {String} currency
  * @returns {String} currency or undefined
  */
-const isSupportedCurrency = (currency?: string) => SUPPORTED_CURRENCIES.find((currencyCode: string) => currencyCode === currency);
+const isNotAlternativeCurrency = (currency?: string) => SUPPORTED_CURRENCIES.find((currencyCode: string) => currencyCode === currency);
 
-export default isSupportedCurrency;
+export default isNotAlternativeCurrency;

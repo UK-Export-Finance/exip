@@ -1,5 +1,5 @@
 import { Context } from '../../types';
-import { GBP } from '../../constants';
+import { APPLICATION } from '../../constants';
 
 /**
  * createABuyerTradingHistory
@@ -19,7 +19,7 @@ const createABuyerTradingHistory = async (context: Context, buyerId: string) => 
             id: buyerId,
           },
         },
-        currencyCode: GBP,
+        currencyCode: APPLICATION.DEFAULT_CURRENCY,
       },
     });
 

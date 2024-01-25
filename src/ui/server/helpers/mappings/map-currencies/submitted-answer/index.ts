@@ -1,5 +1,5 @@
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import isSupportedCurrency from '../is-supported-currency';
+import isNotAlternativeCurrency from '../is-not-alternative-currency';
 
 const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
@@ -17,7 +17,7 @@ const submittedAnswer = (currency?: string) => {
     return '';
   }
 
-  if (isSupportedCurrency(currency)) {
+  if (isNotAlternativeCurrency(currency)) {
     return currency;
   }
 

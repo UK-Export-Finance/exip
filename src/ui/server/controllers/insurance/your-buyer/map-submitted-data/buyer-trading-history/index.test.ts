@@ -1,6 +1,6 @@
 import mapSubmittedData from '.';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { GBP, AED } from '../../../../../constants';
+import { GBP, NON_STANDARD_CURRENCY_CODE } from '../../../../../constants';
 import { RequestBody } from '../../../../../../types';
 
 const {
@@ -32,7 +32,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
   describe(`when ${CURRENCY_CODE} is equal to ${ALTERNATIVE_CURRENCY_CODE}`, () => {
     it(`should return mockFormBody without _csrf and ${ALTERNATIVE_CURRENCY_CODE} and ${CURRENCY_CODE} set to ${ALTERNATIVE_CURRENCY_CODE}'s value`, () => {
       mockFormBody[CURRENCY_CODE] = ALTERNATIVE_CURRENCY_CODE;
-      mockFormBody[ALTERNATIVE_CURRENCY_CODE] = AED;
+      mockFormBody[ALTERNATIVE_CURRENCY_CODE] = NON_STANDARD_CURRENCY_CODE;
 
       const response = mapSubmittedData(mockFormBody);
 
@@ -40,7 +40,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
 
       const expected = {
         ...expectedBody,
-        [CURRENCY_CODE]: AED,
+        [CURRENCY_CODE]: NON_STANDARD_CURRENCY_CODE,
       };
 
       expect(response).toEqual(expected);

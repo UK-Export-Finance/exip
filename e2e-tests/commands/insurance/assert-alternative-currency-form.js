@@ -5,7 +5,7 @@ import {
   GBP,
   JPY,
   USD,
-  AED,
+  NON_STANDARD_CURRENCY_CODE,
 } from '../../fixtures/currencies';
 import checkAutocompleteInput from '../shared-commands/assertions/check-autocomplete-input';
 import { DZA } from '../../fixtures/countries';
@@ -17,17 +17,18 @@ const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIE
  * returns field for currency/alternative currency
  * if currency provided, then returns radio for respective currency option
  * if no currency provided, then returns radio for alternative currency
- * @param {String} FIELD_ID - fieldId for currency radio
- * @param {String} ALTERNATIVE_CURRENCY_FIELD_ID - fieldId for alternative currency radio
+ * @param {String} fieldId - fieldId for currency radio
+ * @param {String} alternativeCurrencyFieldId - fieldId for alternative currency radio
  * @param {String} currency - Currency string
+ * @return {Function} radio
  */
-const whichRadio = (FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, currency) => {
+const currencyRadio = ({ fieldId, currency, alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE }) => {
   if (currency) {
-    const { option } = radios(FIELD_ID, currency);
+    const { option } = radios(fieldId, currency);
     return option;
   }
 
-  const { option } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
+  const { option } = radios(alternativeCurrencyFieldId);
   return option;
 };
 
@@ -35,29 +36,29 @@ const whichRadio = (FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, currency) => {
  * assertAlternativeCurrencyForm
  * validates various parts of alternative currency form
  * @param {Object} variables - variables for alternative currency form
- * - FIELD_ID - fieldId for currency radios
- * - LEGEND - text for legend component
- * - HINT - text for hint
- * - ALTERNATIVE_CURRENCY_TEXT - text for "another currency" input
+ * - fieldId - fieldId for currency radios
+ * - legend - text for legend component
+ * - hint - text for hint
+ * - alternativeCurrencyText - text for "another currency" input
  * - ALTERNATIVE_CURRENCY_CODE - fieldId for "another currency" input
- * - ERRORS - error message object
+ * - errors - error message object
  */
 const assertAlternativeCurrencyForm = ({
-  FIELD_ID = CURRENCY_CODE,
-  LEGEND,
-  HINT,
-  ALTERNATIVE_CURRENCY_TEXT,
-  ALTERNATIVE_CURRENCY_FIELD_ID = ALTERNATIVE_CURRENCY_CODE,
-  ERRORS,
+  fieldId = CURRENCY_CODE,
+  legend,
+  hint,
+  alternativeCurrencyText,
+  alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE,
+  errors,
 }) => ({
-  legend: () => cy.checkText(field(FIELD_ID).legend(), LEGEND),
-  hint: () => cy.checkText(field(FIELD_ID).hint(), HINT),
+  legend: () => cy.checkText(field(fieldId).legend(), legend),
+  hint: () => cy.checkText(field(fieldId).hint(), hint),
   radios: () => {
-    const option1 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, EUR.isoCode);
-    const option2 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, GBP.isoCode);
-    const option3 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, USD.isoCode);
-    const option4 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, JPY.isoCode);
-    const option5 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const option1 = currencyRadio({ fieldId, currency: EUR.isoCode });
+    const option2 = currencyRadio({ fieldId, currency: GBP.isoCode });
+    const option3 = currencyRadio({ fieldId, currency: USD.isoCode });
+    const option4 = currencyRadio({ fieldId, currency: JPY.isoCode });
+    const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     // EUR
     cy.checkCurrencyOption(option1, EUR);
@@ -72,66 +73,67 @@ const assertAlternativeCurrencyForm = ({
     cy.checkCurrencyOption(option4, JPY);
 
     // Alternative currency
-    cy.checkText(option5.label(), ALTERNATIVE_CURRENCY_TEXT);
-    cy.checkValue(option5, ALTERNATIVE_CURRENCY_FIELD_ID);
+    cy.checkText(option5.label(), alternativeCurrencyText);
+    cy.checkValue(option5, alternativeCurrencyFieldId);
   },
   alternativeCurrencyInput: () => {
-    const { option: option5 } = radios(ALTERNATIVE_CURRENCY_FIELD_ID);
+    const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     option5.input().click();
 
-    checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
-    checkAutocompleteInput.rendersInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID));
+    checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(alternativeCurrencyFieldId));
+    checkAutocompleteInput.rendersInput(countryInput.field(alternativeCurrencyFieldId));
   },
   doesNotRenderSupportedCurrencies: () => {
-    const option5 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const option5 = currencyRadio(fieldId, alternativeCurrencyFieldId);
 
     option5.input().click();
 
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'test');
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), 'test');
     // should not render radio values in alternate currency input
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), GBP.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), USD.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), JPY.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), EUR.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), GBP.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), USD.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), JPY.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), EUR.isoCode);
   },
   rendersAlternativeCurrencies: () => {
-    const option5 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     option5.input().click();
 
-    checkAutocompleteInput.rendersSingleResult(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Alg');
-    checkAutocompleteInput.rendersMultipleResults(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), 'Be');
+    checkAutocompleteInput.rendersSingleResult(countryInput.field(alternativeCurrencyFieldId), 'Alg');
+    checkAutocompleteInput.rendersMultipleResults(countryInput.field(alternativeCurrencyFieldId), 'Be');
 
-    const expectedValue = `${AED.name} (${AED.isoCode})`;
-    checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), DZA.NAME, AED.name, expectedValue);
+    const expectedValue = `${NON_STANDARD_CURRENCY_CODE.name} (${NON_STANDARD_CURRENCY_CODE.isoCode})`;
+    checkAutocompleteInput
+      .allowsUserToRemoveCountryAndSearchAgain(countryInput.field(alternativeCurrencyFieldId), DZA.NAME, NON_STANDARD_CURRENCY_CODE.name, expectedValue);
   },
   rendersAlternativeCurrencyValidationError: () => {
-    const option5 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+    const option5 = currencyRadio({ fieldId, alternativeCurrencyFieldId });
 
     option5.input().click();
     cy.clickSubmitButton();
 
     cy.checkText(
       partials.errorSummaryListItems().first(),
-      ERRORS[ALTERNATIVE_CURRENCY_FIELD_ID].IS_EMPTY,
+      errors[alternativeCurrencyFieldId].IS_EMPTY,
     );
 
     cy.checkText(
-      field(ALTERNATIVE_CURRENCY_FIELD_ID).errorMessage(),
-      `Error: ${ERRORS[ALTERNATIVE_CURRENCY_FIELD_ID].IS_EMPTY}`,
+      field(alternativeCurrencyFieldId).errorMessage(),
+      `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`,
     );
   },
-  submitRadioRedirect: (CURRENCY, REDIRECT_URL) => {
-    const option = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, CURRENCY);
+  submitRadioAndAssertUrl: (currency, redirectUrl) => {
+    const option = currencyRadio({ fieldId, currency });
 
     option.input().click();
     cy.clickSubmitButton();
 
-    cy.assertUrl(REDIRECT_URL);
+    cy.assertUrl(redirectUrl);
   },
-  submitRadioCheckRadio: (CURRENCY, url) => {
-    const option = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID, CURRENCY);
+  submitAndAssertRadioIsChecked: (currency, url) => {
+    const option = currencyRadio({ fieldId, currency });
 
     option.input().click();
     cy.clickSubmitButton();
@@ -141,26 +143,26 @@ const assertAlternativeCurrencyForm = ({
     // currency radio should be checked
     option.input().should('be.checked');
   },
-  submitAlternativeCurrencyRedirect: (REDIRECT_URL) => {
-    const option5 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+  submitAlternativeCurrencyAndAssertUrl: (redirectUrl) => {
+    const option5 = currencyRadio({ alternativeCurrencyFieldId });
     // clicks alternative currency radio
     option5.input().click();
 
     // search for country
-    checkAutocompleteInput.search(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), AED.name);
+    checkAutocompleteInput.search(countryInput.field(alternativeCurrencyFieldId), NON_STANDARD_CURRENCY_CODE.name);
 
     cy.clickSubmitButton();
     // asserts redirect URL is correct
-    cy.assertUrl(REDIRECT_URL);
+    cy.assertUrl(redirectUrl);
   },
-  submitAlternativeCurrencyCheck: (url) => {
-    const option5 = whichRadio(FIELD_ID, ALTERNATIVE_CURRENCY_FIELD_ID);
+  submitAlternativeCurrencyAndAssertInput: (url) => {
+    const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     // clicks alternative currency radio
     option5.input().click();
 
     // searches for currency
-    checkAutocompleteInput.search(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), AED.name);
+    checkAutocompleteInput.search(countryInput.field(alternativeCurrencyFieldId), NON_STANDARD_CURRENCY_CODE.name);
 
     cy.clickSubmitButton();
 
@@ -169,9 +171,9 @@ const assertAlternativeCurrencyForm = ({
     // alternative currency radio should be checked
     option5.input().should('be.checked');
 
-    const expectedValue = `${AED.name} (${AED.isoCode})`;
+    const expectedValue = `${NON_STANDARD_CURRENCY_CODE.name} (${NON_STANDARD_CURRENCY_CODE.isoCode})`;
     // alternative currency input should render correct result
-    checkAutocompleteInput.checkInput(countryInput.field(ALTERNATIVE_CURRENCY_FIELD_ID), expectedValue);
+    checkAutocompleteInput.checkInput(countryInput.field(alternativeCurrencyFieldId), expectedValue);
   },
 });
 

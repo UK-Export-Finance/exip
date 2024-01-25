@@ -551,7 +551,7 @@ export const lists = {
     fields: {
       buyer: relationship({ ref: 'Buyer.buyerTradingHistory' }),
       currencyCode: text({
-        db: { nativeType: 'VarChar(5)' },
+        db: { nativeType: 'VarChar(3)' },
       }),
       outstandingPayments: nullableCheckbox(),
       failedPayments: nullableCheckbox(),

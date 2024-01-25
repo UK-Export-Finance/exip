@@ -6,6 +6,7 @@ import createABuyerTradingHistory from '../create-a-buyer-trading-history';
  * Create a buyer with relationships for:
  * 1) A country
  * 2) An application
+ * Creates a buyer trading address with buyer relationship
  * @param {Object} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
@@ -26,9 +27,7 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
       },
     });
 
-    /**
-     * Create a buyer trading address with buyer relationship
-     */
+    // Create a buyer trading address with buyer relationship
     const buyerTradingHistory = await createABuyerTradingHistory(context, buyer.id);
 
     return {

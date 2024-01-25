@@ -1,6 +1,6 @@
 import submittedAnswer from '.';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { GBP, AED } from '../../../../constants';
+import { GBP, NON_STANDARD_CURRENCY_CODE } from '../../../../constants';
 
 const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
@@ -25,7 +25,7 @@ describe('helpers/mappings/map-currencies/submitted-answer', () => {
 
   describe('when provided currency is an unsupported currency', () => {
     it(`should return ${ALTERNATIVE_CURRENCY_CODE}`, () => {
-      const result = submittedAnswer(AED);
+      const result = submittedAnswer(NON_STANDARD_CURRENCY_CODE);
 
       expect(result).toEqual(ALTERNATIVE_CURRENCY_CODE);
     });
