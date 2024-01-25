@@ -120,7 +120,7 @@ ui.use(
 ui.use('/quote', requiredQuoteEligibilityDataProvided);
 ui.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 ui.use('/insurance/:referenceNumber/*', getApplication);
-// ui.use('/insurance/:referenceNumber/*', applicationAccess);
+ui.use('/insurance/:referenceNumber/*', applicationAccess);
 ui.use('/insurance/:referenceNumber/*', applicationStatus);
 ui.use('/', userSession);
 
