@@ -1,6 +1,14 @@
 import nameValidation from '.';
+import maxLengthValidation from '../max-length';
 import emptyFieldValidation from '../empty-field';
+import { ACCOUNT_FIELDS } from '../../content-strings/fields/insurance/account';
 import { RequestBody } from '../../../types';
+
+const {
+  MAXIMUM: {
+    NAME: { CHARACTERS: MAX_CHARACTERS },
+  },
+} = ACCOUNT_FIELDS;
 
 describe('shared-validation/name', () => {
   const FIELD_ID = 'field';
@@ -14,13 +22,32 @@ describe('shared-validation/name', () => {
     [FIELD_ID]: '',
   } as RequestBody;
 
-  const errorMessage = 'Is empty';
+  const mockErrorMessages = {
+    IS_EMPTY: 'Is empty',
+    INCORRECT_FORMAT: 'Incorrect format',
+    BELOW_MINIMUM: 'Below minimum',
+    ABOVE_MAXIMUM: 'Above minimum',
+  };
 
-  it('should return the result of emptyFieldValidation', () => {
-    const response = nameValidation(mockBody, FIELD_ID, errorMessage, mockErrors);
+  describe('when a name is empty', () => {
+    it('should return the result of emptyFieldValidation', () => {
+      const response = nameValidation(mockBody, FIELD_ID, mockErrorMessages, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, errorMessage, mockErrors);
+      const expected = emptyFieldValidation(mockBody, FIELD_ID, mockErrorMessages.IS_EMPTY, mockErrors);
 
-    expect(response).toEqual(expected);
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('when a name is over the maximum', () => {
+    it('should return the result of maxLengthValidation', () => {
+      mockBody[FIELD_ID] = 'a'.repeat(MAX_CHARACTERS + 1);
+
+      const response = nameValidation(mockBody, FIELD_ID, mockErrorMessages, mockErrors);
+
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, mockErrorMessages.ABOVE_MAXIMUM, mockErrors, MAX_CHARACTERS);
+
+      expect(response).toEqual(expected);
+    });
   });
 });

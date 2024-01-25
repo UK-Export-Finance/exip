@@ -1,6 +1,6 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { NumberErrorMessage, RequestBody } from '../../../../../../../types';
+import { ErrorMessageObject, RequestBody } from '../../../../../../../types';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 
 const {
@@ -16,7 +16,7 @@ const errorMessages = {
   INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
   BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
   ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
-} as NumberErrorMessage;
+} as ErrorMessageObject;
 
 /**
  * validates percentage turnover

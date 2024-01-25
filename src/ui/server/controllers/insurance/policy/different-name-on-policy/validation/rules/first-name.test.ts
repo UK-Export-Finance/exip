@@ -7,7 +7,7 @@ import nameValidation from '../../../../../../shared-validation/name';
 const { FIRST_NAME: FIELD_ID } = FIELD_IDS;
 
 const {
-  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/different-name-on-policy/validation/rules/first-name', () => {
@@ -21,10 +21,10 @@ describe('controllers/insurance/policy/different-name-on-policy/validation/rules
   } as RequestBody;
 
   it('should return the result of nameValidation', () => {
-    const response = firstName(mockBody, mockErrors);
+    const result = firstName(mockBody, mockErrors);
 
-    const expected = nameValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = nameValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
 
-    expect(response).toEqual(expected);
+    expect(result).toEqual(expected);
   });
 });

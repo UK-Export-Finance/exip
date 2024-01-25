@@ -1,5 +1,5 @@
 import percentageNumberValidation from '.';
-import { RequestBody, NumberErrorMessage } from '../../../types';
+import { RequestBody, ErrorMessageObject } from '../../../types';
 import generateValidationErrors from '../validation';
 
 describe('server/helpers/percentage-number-validation', () => {
@@ -19,7 +19,7 @@ describe('server/helpers/percentage-number-validation', () => {
     INCORRECT_FORMAT: 'Incorrect format',
     BELOW_MINIMUM: 'Below minimum',
     ABOVE_MAXIMUM: 'Above maximum',
-  } as NumberErrorMessage;
+  } as ErrorMessageObject;
 
   describe('percentage is an empty string', () => {
     it('should return a validation error', () => {

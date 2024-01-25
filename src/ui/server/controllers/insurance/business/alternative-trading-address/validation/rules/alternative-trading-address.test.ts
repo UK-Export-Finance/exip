@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
 const { FULL_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
@@ -40,7 +40,7 @@ describe('controllers/insurance/business/alternative-trading-address/validation/
       const response = alternativeTradingAddress(mockBody, mockErrors);
 
       const errorMessage = ERROR_MESSAGE.ABOVE_MAXIMUM;
-      const expected = inputValidation(mockBody[FIELD_ID], FIELD_ID, errorMessage, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, errorMessage, mockErrors, MAXIMUM);
 
       expect(response).toEqual(expected);
     });

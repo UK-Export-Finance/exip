@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
 const {
   INSURANCE: {
@@ -57,7 +57,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
 
-      const expected = inputValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
 
       expect(result).toEqual(expected);
     });
@@ -68,7 +68,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
 
-      const expected = inputValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
 
       expect(result).toEqual(expected);
     });
