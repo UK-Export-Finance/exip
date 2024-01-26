@@ -30,6 +30,16 @@ describe('shared-validation/name', () => {
     ABOVE_MAXIMUM: 'Above minimum',
   };
 
+  describe('when a name is empty', () => {
+    it('should return the result of emptyFieldValidation', () => {
+      const response = nameValidation(mockBody, FIELD_ID, mockErrorMessages, mockErrors);
+
+      const expected = emptyFieldValidation(mockBody, FIELD_ID, mockErrorMessages.IS_EMPTY, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
   describe('when a name contains a special character', () => {
     it('should return the result of alphaCharactersOnlyValidation', () => {
       mockBody[FIELD_ID] = 'a!';
@@ -66,13 +76,13 @@ describe('shared-validation/name', () => {
     });
   });
 
-  describe('when a name is empty', () => {
-    it('should return the result of emptyFieldValidation', () => {
+  describe('when a name is valid', () => {
+    it('should return the provided errors', () => {
+      mockBody[FIELD_ID] = 'Mock name';
+
       const response = nameValidation(mockBody, FIELD_ID, mockErrorMessages, mockErrors);
 
-      const expected = emptyFieldValidation(mockBody, FIELD_ID, mockErrorMessages.IS_EMPTY, mockErrors);
-
-      expect(response).toEqual(expected);
+      expect(response).toEqual(mockErrors);
     });
   });
 });

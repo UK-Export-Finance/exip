@@ -22,17 +22,29 @@ const {
  * @returns {Object} Validation errors
  */
 const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) => {
-  if (objectHasProperty(formBody, fieldId)) {
-    const alphaCharactersOnlyError = alphaCharactersOnlyValidation(formBody[fieldId], fieldId, errorMessages.INCORRECT_FORMAT, errors);
+  // if (objectHasProperty(formBody, fieldId)) {
+  //   const alphaCharactersOnlyError = alphaCharactersOnlyValidation(formBody[fieldId], fieldId, errorMessages.INCORRECT_FORMAT, errors);
 
-    if (alphaCharactersOnlyError) {
-      return alphaCharactersOnlyError;
-    }
+  //   if (alphaCharactersOnlyError) {
+  //     return alphaCharactersOnlyError;
+  //   }
 
-    return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAX_CHARACTERS);
+  //   return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAX_CHARACTERS);
+  // }
+
+  // return emptyFieldValidation(formBody, fieldId, errorMessages.IS_EMPTY, errors);
+
+  if (!objectHasProperty(formBody, fieldId)) {
+    return emptyFieldValidation(formBody, fieldId, errorMessages.IS_EMPTY, errors);
   }
 
-  return emptyFieldValidation(formBody, fieldId, errorMessages.IS_EMPTY, errors);
+  const alphaCharactersOnlyError = alphaCharactersOnlyValidation(formBody[fieldId], fieldId, errorMessages.INCORRECT_FORMAT, errors);
+
+  if (alphaCharactersOnlyError) {
+    return alphaCharactersOnlyError;
+  }
+
+  return maxLengthValidation(formBody[fieldId], fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAX_CHARACTERS);
 };
 
 export default nameValidation;
