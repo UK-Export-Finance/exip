@@ -1,5 +1,5 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -59,15 +59,16 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     cy.saveSession();
   });
 
-  // after(() => {
-  //   cy.deleteApplication(referenceNumber);
-  // });
+  after(() => {
+    cy.deleteApplication(referenceNumber);
+  });
 
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
+      submitButtonCopy: BUTTONS.CONFIRM,
     });
   });
 

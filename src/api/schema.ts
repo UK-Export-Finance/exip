@@ -306,8 +306,12 @@ export const lists = {
   PolicyContact: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      firstName: text(),
-      lastName: text(),
+      firstName: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
+      lastName: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
       email: text(),
       position: text(),
       isSameAsOwner: nullableCheckbox(),

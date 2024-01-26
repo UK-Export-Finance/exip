@@ -22,7 +22,7 @@ import { CompaniesHouseResponse } from './company-house-response';
 import { Connect } from './connect';
 import { Country } from './country';
 import { Currency, CurrencyRadios } from './currency';
-import { DateErrorMessage, NumberErrorMessage } from './errors';
+import { DateErrorMessage, ErrorMessageObject } from './errors';
 import { Business } from './business';
 import { Next, Request, RequestBody, RequestSession, RequestSessionUser, Response } from './express';
 import { RequiredDataStateInsuranceEligibility, RequiredDataStateQuoteEligibility } from './required-data-state';
@@ -96,7 +96,7 @@ export {
   DateValidationRulesParams,
   DateValidationFormatRulesParams,
   DateValidationFormatRules,
-  NumberErrorMessage,
+  ErrorMessageObject,
   Business,
   InsuranceEligibility,
   InsuranceEligibilityCore,

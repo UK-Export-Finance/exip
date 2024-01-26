@@ -6,13 +6,19 @@ import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -23,6 +29,8 @@ const {
 } = TEMPLATES;
 
 export const FIELD_ID = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+
+export const FIELD_IDS = [FIELD_ID, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_COVER;
 
@@ -85,4 +93,62 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
   });
+};
+
+/**
+ * post
+ * Check credit insurance cover validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  try {
+    const { application } = res.locals;
+
+    if (!application) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const { referenceNumber } = application;
+
+    const payload = constructPayload(req.body, FIELD_IDS);
+
+    const validationErrors = generateValidationErrors(payload);
+
+    if (validationErrors) {
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
+        }),
+        ...pageVariables(referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
+        submittedValues: sanitiseData(payload),
+        validationErrors,
+      });
+    }
+
+    /**
+     * If is a change route
+     * redirect to TRADING_HISTORY_CHANGE
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If is a check-and-change route
+     * redirect to TRADING_HISTORY_CHECK_AND_CHANGE
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error posting alternative currency %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

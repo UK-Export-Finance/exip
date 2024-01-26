@@ -2,7 +2,7 @@ import creditPeriodWithBuyerRule, { MAXIMUM } from './credit-period-with-buyer-d
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
 const {
   POLICY: { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER: FIELD_ID },
@@ -44,7 +44,7 @@ describe('controllers/insurance/policy/pre-credit-period/validation/rules/credit
 
       const result = creditPeriodWithBuyerRule(mockFormBody, mockErrors);
 
-      const expected = inputValidation(mockFormBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockFormBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
 
       expect(result).toEqual(expected);
     });

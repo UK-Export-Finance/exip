@@ -5,3 +5,5 @@ Cypress.Commands.add('completeAndSubmitTradedWithBuyerForm', require('../../../.
 Cypress.Commands.add('completeTradedWithBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-traded-with-buyer-form'));
 Cypress.Commands.add('completeTradingHistoryWithBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-trading-history-with-buyer-form'));
 Cypress.Commands.add('completeAndSubmitTradingHistoryWithBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-trading-history-with-buyer-form'));
+Cypress.Commands.add('completeCreditInsuranceCoverForm', require('../../../../../commands/insurance/your-buyer/complete-credit-insurance-cover-form'));
+Cypress.Commands.add('completeAndSubmitCreditInsuranceCoverForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-credit-insurance-cover-form'));
