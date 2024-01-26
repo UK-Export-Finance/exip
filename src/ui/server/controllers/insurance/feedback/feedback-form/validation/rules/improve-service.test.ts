@@ -1,7 +1,7 @@
 import improveService, { MAXIMUM } from './improve-service';
 import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 
 const {
@@ -27,7 +27,7 @@ describe('controllers/insurance/feedback/feedback-form/validation/rules/improve-
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
       const response = improveService(mockBody, mockErrors);
 
-      const expected = inputValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM);
 
       expect(response).toEqual(expected);
     });

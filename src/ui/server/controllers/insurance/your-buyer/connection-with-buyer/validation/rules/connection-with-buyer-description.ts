@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
 const {
   INSURANCE: {
@@ -35,7 +35,7 @@ const connectionWithBuyerDescriptionRule = (formBody: RequestBody, errors: objec
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
     }
 
-    return inputValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
+    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
   }
 
   return errors;

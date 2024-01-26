@@ -227,16 +227,20 @@ export const ERROR_MESSAGES = {
       },
       DIFFERENT_NAME_ON_POLICY: {
         [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
-          IS_EMPTY: 'Enter the first name of the person to be named on the policy',
+          IS_EMPTY: "Enter the policy holder's first name",
+          ABOVE_MAXIMUM: "The policy holder's first name cannot be more than 300  characters",
+          INCORRECT_FORMAT: "The policy holder's first name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
-          IS_EMPTY: 'Enter the last name of the person to be named on the policy',
+          IS_EMPTY: "Enter the policy holder's last name",
+          ABOVE_MAXIMUM: "The policy holder's lst name cannot be more than 300  characters",
+          INCORRECT_FORMAT: "The policy holder's first name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter the email address of the person to be named on the policy',
+          INCORRECT_FORMAT: 'Enter the email address of the person you want named on the policy',
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
-          IS_EMPTY: 'Enter the position at the company of the person to be named on the policy',
+          IS_EMPTY: "Enter the policy holder's position at the company",
         },
       },
       [FIELD_IDS.INSURANCE.POLICY.NEED_PRE_CREDIT_PERIOD]: {

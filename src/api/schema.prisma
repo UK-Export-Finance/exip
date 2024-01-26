@@ -118,8 +118,8 @@ model PolicyContact {
   id                             String        @id @default(cuid())
   application                    Application?  @relation("PolicyContact_application", fields: [applicationId], references: [id])
   applicationId                  String?       @map("application")
-  firstName                      String        @default("")
-  lastName                       String        @default("")
+  firstName                      String        @default("") @mysql.VarChar(300)
+  lastName                       String        @default("") @mysql.VarChar(300)
   email                          String        @default("")
   position                       String        @default("")
   isSameAsOwner                  Boolean?
