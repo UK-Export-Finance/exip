@@ -102,5 +102,6 @@ export const YOUR_BUYER_FIELDS = {
   [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Tell us about the credit insurance cover you had on the buyer',
     HINT: 'Include the name of the insurer(s) and the credit limit.',
+    MAXIMUM: 1000,
   },
 };
