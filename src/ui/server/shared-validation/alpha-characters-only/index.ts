@@ -18,7 +18,6 @@ const alphaCharactersOnlyValidation = (fieldValue: string, fieldId: string, erro
    * - a-z or A-Z characters.
    * - an empty space.
    */
-  // const regex = new RegExp(/^[a-zA-Z ]*$/);
   const regex = /^[a-zA-Z ]*$/;
 
   const schema = () => joiString.regex(regex).required();
