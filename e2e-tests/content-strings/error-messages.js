@@ -323,6 +323,13 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
         IS_EMPTY: 'You must select the currency the outstanding or overdue payments are in',
       },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+        IS_EMPTY: 'Select if you have previously held credit insurance cover on the buyer',
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+        IS_EMPTY: 'Enter a description about the credit insurance cover you had on the buyer',
+        ABOVE_MAXIMUM: 'The description of your previous credit insurance cover on the buyer cannot be more than a 1000 characters',
+      },
     },
     ACCOUNT: {
       CREATE: {
