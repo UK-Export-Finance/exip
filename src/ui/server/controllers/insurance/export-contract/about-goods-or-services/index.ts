@@ -11,7 +11,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
-import getCountryByName from '../../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save';
@@ -163,9 +163,9 @@ export const post = async (req: Request, res: Response) => {
       let mappedCountries;
 
       if (objectHasProperty(payload, FINAL_DESTINATION)) {
-        const submittedCountryName = payload[FINAL_DESTINATION];
+        const submittedCountry = payload[FINAL_DESTINATION];
 
-        const country = getCountryByName(countries, submittedCountryName);
+        const country = getCountryByIsoCode(countries, submittedCountry);
 
         mappedCountries = mapCountries(countries, country?.isoCode);
       } else {

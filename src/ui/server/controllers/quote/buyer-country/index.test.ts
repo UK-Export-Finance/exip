@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
-import getCountryByName from '../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import api from '../../../api';
 import mapCountries from '../../../helpers/mappings/map-countries';
@@ -241,20 +241,20 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when the submitted country can only get a quote via email', () => {
-      const selectedCountryName = countryQuoteByEmail.name;
+      const selectedCountryisoCode = countryQuoteByEmail.isoCode;
 
       mockCountriesResponse = [countryQuoteByEmail];
 
       getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
       beforeEach(() => {
-        req.body[FIELD_ID] = countryQuoteByEmail.name;
+        req.body[FIELD_ID] = countryQuoteByEmail.isoCode;
       });
 
       it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryisoCode) as Country;
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -298,9 +298,10 @@ describe('controllers/quote/buyer-country', () => {
 
     describe('when the submitted country is not supported', () => {
       const selectedCountryName = countryUnsupported.name;
+      const selectedCountryIsoCode = countryUnsupported.isoCode;
 
       beforeEach(() => {
-        req.body[FIELD_ID] = selectedCountryName;
+        req.body[FIELD_ID] = selectedCountryIsoCode;
 
         mockCountriesResponse = [countryUnsupported];
 
@@ -312,7 +313,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -344,10 +345,10 @@ describe('controllers/quote/buyer-country', () => {
     });
 
     describe('when the country is supported for an online quote and there are no validation errors', () => {
-      const selectedCountryName = countryQuoteOnline.name;
+      const selectedCountryIsoCode = countryQuoteOnline.isoCode;
 
       const validBody = {
-        [FIELD_ID]: selectedCountryName,
+        [FIELD_ID]: selectedCountryIsoCode,
       };
 
       beforeEach(() => {
@@ -363,7 +364,7 @@ describe('controllers/quote/buyer-country', () => {
       it('should update the session with submitted data, populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
