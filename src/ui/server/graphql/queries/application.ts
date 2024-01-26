@@ -110,6 +110,7 @@ const applicationQuery = gql`
           totalEmployeesUK
           estimatedAnnualTurnover
           exportsTurnoverPercentage
+          turnoverCurrencyCode
           hasCreditControlProcess
         }
         broker {

@@ -970,6 +970,7 @@ type Business {
   totalEmployeesUK: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  turnoverCurrencyCode: String
   hasCreditControlProcess: Boolean
 }
 
@@ -988,6 +989,7 @@ input BusinessWhereInput {
   totalEmployeesUK: IntNullableFilter
   estimatedAnnualTurnover: IntNullableFilter
   exportsTurnoverPercentage: IntNullableFilter
+  turnoverCurrencyCode: StringFilter
 }
 
 input BusinessOrderByInput {
@@ -997,6 +999,7 @@ input BusinessOrderByInput {
   totalEmployeesUK: OrderDirection
   estimatedAnnualTurnover: OrderDirection
   exportsTurnoverPercentage: OrderDirection
+  turnoverCurrencyCode: OrderDirection
 }
 
 input BusinessUpdateInput {
@@ -1006,6 +1009,7 @@ input BusinessUpdateInput {
   totalEmployeesUK: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  turnoverCurrencyCode: String
   hasCreditControlProcess: Boolean
 }
 
@@ -1021,6 +1025,7 @@ input BusinessCreateInput {
   totalEmployeesUK: Int
   estimatedAnnualTurnover: Int
   exportsTurnoverPercentage: Int
+  turnoverCurrencyCode: String
   hasCreditControlProcess: Boolean
 }
 

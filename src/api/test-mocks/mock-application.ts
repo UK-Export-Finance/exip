@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
-import { APPLICATION, COVER_PERIOD, TOTAL_CONTRACT_VALUE } from '../constants';
+import { APPLICATION, COVER_PERIOD, TOTAL_CONTRACT_VALUE, EUR, GBP } from '../constants';
 import mockCountries from './mock-countries';
-import mockCurrencies from './mock-currencies';
 import { Application, ApplicationPolicyContact } from '../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
@@ -32,7 +31,7 @@ export const mockApplicationEligibility = {
 
 const mockGenericPolicy = {
   requestedStartDate: new Date(date.setMonth(month + 1)),
-  policyCurrencyCode: mockCurrencies[0].isoCode,
+  policyCurrencyCode: GBP,
 };
 
 export const mockSinglePolicy = {
@@ -103,6 +102,7 @@ export const mockBusiness = {
   totalEmployeesUK: 400,
   estimatedAnnualTurnover: 155220,
   exportsTurnoverPercentage: 20,
+  turnoverCurrencyCode: EUR,
   hasCreditControlProcess: true,
 };
 

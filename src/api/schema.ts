@@ -426,6 +426,9 @@ export const lists = {
       totalEmployeesUK: integer(),
       estimatedAnnualTurnover: integer(),
       exportsTurnoverPercentage: integer(),
+      turnoverCurrencyCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
       hasCreditControlProcess: nullableCheckbox(),
     },
     hooks: {
