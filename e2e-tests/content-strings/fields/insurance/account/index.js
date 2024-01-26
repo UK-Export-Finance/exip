@@ -16,6 +16,11 @@ const PASSWORD_HINT = {
 };
 
 export const ACCOUNT_FIELDS = {
+  MAXIMUM: {
+    NAME: {
+      CHARACTERS: 300,
+    },
+  },
   [FIRST_NAME]: {
     LABEL: 'First name',
   },

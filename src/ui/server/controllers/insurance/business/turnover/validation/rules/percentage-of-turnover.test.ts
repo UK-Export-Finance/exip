@@ -1,7 +1,7 @@
 import percentageTurnover from './percentage-of-turnover';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { RequestBody, NumberErrorMessage } from '../../../../../../../types';
+import { RequestBody, ErrorMessageObject } from '../../../../../../../types';
 import percentageNumberValidation from '../../../../../../helpers/percentage-number-validation';
 
 const {
@@ -26,7 +26,7 @@ describe('controllers/insurance/business/turnover/validation/rules/percentage-of
     INCORRECT_FORMAT: ERROR_MESSAGE.INCORRECT_FORMAT,
     BELOW_MINIMUM: ERROR_MESSAGE.BELOW_MINIMUM,
     ABOVE_MAXIMUM: ERROR_MESSAGE.ABOVE_MAXIMUM,
-  } as NumberErrorMessage;
+  } as ErrorMessageObject;
 
   describe(`when the ${PERCENTAGE_TURNOVER} input is empty`, () => {
     it('should return result of `percentageNumberValidation`', () => {

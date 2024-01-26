@@ -1,7 +1,9 @@
 import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { turnoverPage } from '../../../../../../pages/your-business';
-import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
+import {
+  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
+} from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -67,6 +69,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
+      submitButtonCopy: BUTTONS.CONFIRM,
       assertSaveAndBackButtonDoesNotExist: true,
     });
   });

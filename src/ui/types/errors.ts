@@ -14,11 +14,11 @@ interface DateErrorMessage {
   AFTER_LATEST: string;
 }
 
-interface NumberErrorMessage {
+interface ErrorMessageObject {
   IS_EMPTY: string;
   INCORRECT_FORMAT: string;
   BELOW_MINIMUM: string;
   ABOVE_MAXIMUM: string;
 }
 
-export { DateErrorMessage, NumberErrorMessage };
+export { DateErrorMessage, ErrorMessageObject };
