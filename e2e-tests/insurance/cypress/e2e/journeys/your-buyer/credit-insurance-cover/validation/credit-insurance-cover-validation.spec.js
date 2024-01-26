@@ -80,7 +80,7 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
       yesRadioInput().click();
     });
 
-    it(`should render a validation error and retain the submitted value when ${fieldId} is empty`, () => {
+    it(`should render a validation error when ${fieldId} is empty`, () => {
       cy.submitAndAssertFieldErrors(
         textareaField,
         null,
@@ -90,7 +90,7 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
       );
     });
 
-    it(`should render a validation error and retain the submitted value when ${fieldId} is above the maximum`, () => {
+    it(`should render a validation error when ${fieldId} is above the maximum`, () => {
       cy.submitAndAssertFieldErrors(
         textareaField,
         submittedValue,

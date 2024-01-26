@@ -1,15 +1,11 @@
-import { FIELD_IDS } from '../../../../../../constants';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
-const {
-  INSURANCE: {
-    YOUR_BUYER: { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
-  },
-} = FIELD_IDS;
+const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -35,7 +31,7 @@ const creditInsuranceCoverDescriptionRule = (formBody: RequestBody, errors: obje
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
     }
 
-    return inputValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
+    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
   }
 
   return errors;
