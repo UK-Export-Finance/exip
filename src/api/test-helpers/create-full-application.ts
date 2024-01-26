@@ -36,7 +36,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {String} Policy type flag - different data is created if multiple is passed. Defaults to single.
  * @returns {Object} Application
  */
-export const createFullApplication = async (context: Context, policyType?: string) => {
+export const createFullApplication = async (context: Context, policyType?: string): Promise<Application> => {
   const { buyerCountry, totalContractValue, totalContractValueId, coverPeriod, coverPeriodId, ...otherEligibilityAnswers } = mockApplicationEligibility;
 
   const countries = await context.query.Country.createMany({

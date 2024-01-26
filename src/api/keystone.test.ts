@@ -7,7 +7,7 @@ import buyers from './test-helpers/buyers';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { mockAccount } from './test-mocks';
-import { Application, Account, Context } from './types';
+import { Application, ApplicationBuyer, Account, Context } from './types';
 
 describe('Create an Application', () => {
   let context: Context;
@@ -18,18 +18,24 @@ describe('Create an Application', () => {
 
     application = (await applications.create({ context, data: {} })) as Application;
 
-    // create buyer and associate with the application.
-    const buyer = await buyers.create({
+    /**
+     * Create buyer trading history,
+     * Associate with the application.
+     */
+    const buyer = (await buyers.create({
       context,
       data: {
         application: {
           connect: { id: application.id },
         },
       },
-    });
+    })) as ApplicationBuyer;
 
-    // create buyer and associate with the application.
-    await buyerTradingHistoryHelper.create({
+    /**
+     * Create buyer trading history,
+     * Associate with the buyer.
+     */
+    const buyerTradingHistory = await buyerTradingHistoryHelper.create({
       context,
       data: {
         buyer: {
@@ -55,6 +61,9 @@ describe('Create an Application', () => {
       data: {
         buyer: {
           connect: { id: buyer.id },
+          buyerTradingHistory: {
+            connect: { id: buyerTradingHistory.id },
+          },
         },
         policy: {
           connect: { id: policy.id },
@@ -303,6 +312,22 @@ describe('Application timestamp updates', () => {
       },
     });
 
+    /**
+     * Create buyer trading history,
+     * Associate with the buyer and application
+     */
+    const buyerTradingHistory = await buyerTradingHistoryHelper.create({
+      context,
+      data: {
+        buyer: {
+          connect: { id: buyer.id },
+        },
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
     // create policy and associate with the application.
     const policy = await policies.create({
       context,
@@ -325,7 +350,8 @@ describe('Application timestamp updates', () => {
     application = {
       ...application,
       buyer: {
-        id: buyer.id,
+        ...buyer,
+        buyerTradingHistory,
       },
       company: {
         id: company.id,
@@ -409,17 +435,17 @@ describe('Application timestamp updates', () => {
     });
   });
 
-  // describe('BuyerTradingHistory', () => {
-  //   test('it should call updateApplication.timestamp', async () => {
-  //     await context.query.BuyerTradingHistory.updateOne({
-  //       where: { id: application.buyer.buyerTradingHistory.id },
-  //       data: {},
-  //       query: 'id',
-  //     });
+  describe('BuyerTradingHistory', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.BuyerTradingHistory.updateOne({
+        where: { id: application.buyer.buyerTradingHistory.id },
+        data: {},
+        query: 'id',
+      });
 
-  //     assertSpyWasCalled();
-  //   });
-  // });
+      assertSpyWasCalled();
+    });
+  });
 
   describe('Declaration', () => {
     test('it should call updateApplication.timestamp', async () => {

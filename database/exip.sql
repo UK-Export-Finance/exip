@@ -236,8 +236,13 @@ CREATE TABLE `BuyerTradingHistory` (
   `outstandingPayments` tinyint(1) DEFAULT NULL,
   `failedPayments` tinyint(1) DEFAULT NULL,
   `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `BuyerTradingHistory_application_idx` (`application`),
+  CONSTRAINT `BuyerTradingHistory_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 # Dump of table Country

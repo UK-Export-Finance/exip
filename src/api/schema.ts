@@ -549,6 +549,7 @@ export const lists = {
   }),
   BuyerTradingHistory: list({
     fields: {
+      application: relationship({ ref: 'Application' }),
       buyer: relationship({ ref: 'Buyer.buyerTradingHistory' }),
       currencyCode: text({
         db: { nativeType: 'VarChar(3)' },

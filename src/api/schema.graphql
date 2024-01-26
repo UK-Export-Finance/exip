@@ -1498,6 +1498,7 @@ input BuyerTradingHistoryRelateToOneForCreateInput {
 
 type BuyerTradingHistory {
   id: ID!
+  application: Application
   buyer: Buyer
   currencyCode: String
   outstandingPayments: Boolean
@@ -1514,6 +1515,7 @@ input BuyerTradingHistoryWhereInput {
   OR: [BuyerTradingHistoryWhereInput!]
   NOT: [BuyerTradingHistoryWhereInput!]
   id: IDFilter
+  application: ApplicationWhereInput
   buyer: BuyerWhereInput
   currencyCode: StringFilter
 }
@@ -1524,6 +1526,7 @@ input BuyerTradingHistoryOrderByInput {
 }
 
 input BuyerTradingHistoryUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
   buyer: BuyerRelateToOneForUpdateInput
   currencyCode: String
   outstandingPayments: Boolean
@@ -1537,6 +1540,7 @@ input BuyerTradingHistoryUpdateArgs {
 }
 
 input BuyerTradingHistoryCreateInput {
+  application: ApplicationRelateToOneForCreateInput
   buyer: BuyerRelateToOneForCreateInput
   currencyCode: String
   outstandingPayments: Boolean

@@ -28,7 +28,7 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
     });
 
     // Create a buyer trading address with buyer relationship
-    const buyerTradingHistory = await createABuyerTradingHistory(context, buyer.id);
+    const buyerTradingHistory = await createABuyerTradingHistory(context, buyer.id, applicationId);
 
     return {
       buyer,

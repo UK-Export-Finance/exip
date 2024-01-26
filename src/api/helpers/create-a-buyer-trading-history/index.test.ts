@@ -1,6 +1,7 @@
 import createABuyerTradingHistory from '.';
-import { Context, ApplicationBuyer } from '../../types';
+import { Context, Application, ApplicationBuyer } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
+import applicationHelpers from '../../test-helpers/applications';
 import buyerHelpers from '../../test-helpers/buyers';
 import { GBP } from '../../constants';
 
@@ -14,16 +15,21 @@ const assertError = (err) => {
 
 describe('helpers/create-a-buyer-trading-history', () => {
   let context: Context;
-  let buyer: object;
+  let buyer: ApplicationBuyer;
+  let applicationId: string;
 
   beforeAll(async () => {
     context = getKeystoneContext();
+
+    const application = (await applicationHelpers.create({ context, data: {} })) as Application;
+
+    applicationId = application.id;
 
     buyer = (await buyerHelpers.create({ context, data: {} })) as ApplicationBuyer;
   });
 
   test('it should return a buyer trading history with respective IDs', async () => {
-    const result = await createABuyerTradingHistory(context, buyer.id);
+    const result = await createABuyerTradingHistory(context, buyer.id, applicationId);
 
     expect(result).toBeDefined();
     expect(typeof result.id).toEqual('string');
@@ -31,7 +37,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
   });
 
   test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
-    const result = await createABuyerTradingHistory(context, buyer.id);
+    const result = await createABuyerTradingHistory(context, buyer.id, applicationId);
 
     expect(result.exporterHasTradedWithBuyer).toEqual(null);
     expect(result.currencyCode).toEqual(GBP);
@@ -39,10 +45,20 @@ describe('helpers/create-a-buyer-trading-history', () => {
     expect(result.failedPayments).toEqual(null);
   });
 
+  describe('when an invalid buyer ID is passed', () => {
+    test('it should throw an error', async () => {
+      try {
+        await createABuyerTradingHistory(context, invalidId, applicationId);
+      } catch (err) {
+        assertError(err);
+      }
+    });
+  });
+
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
       try {
-        await createABuyerTradingHistory(context, invalidId);
+        await createABuyerTradingHistory(context, buyer.id, invalidId);
       } catch (err) {
         assertError(err);
       }
@@ -53,7 +69,7 @@ describe('helpers/create-a-buyer-trading-history', () => {
     test('it should throw an error', async () => {
       try {
         // pass empty context object to force an error
-        await createABuyerTradingHistory({}, buyer.id);
+        await createABuyerTradingHistory({}, buyer.id, applicationId);
       } catch (err) {
         assertError(err);
       }

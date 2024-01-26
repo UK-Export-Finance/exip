@@ -1385,6 +1385,7 @@ var lists = {
   }),
   BuyerTradingHistory: (0, import_core2.list)({
     fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerTradingHistory" }),
       currencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
@@ -3365,7 +3366,7 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 var create_an_eligibility_default = createAnEligibility;
 
 // helpers/create-a-buyer-trading-history/index.ts
-var createABuyerTradingHistory = async (context, buyerId) => {
+var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
   console.info("Creating a buyer trading history for ", buyerId);
   try {
     const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
@@ -3373,6 +3374,11 @@ var createABuyerTradingHistory = async (context, buyerId) => {
         buyer: {
           connect: {
             id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
           }
         },
         currencyCode: APPLICATION.DEFAULT_CURRENCY
@@ -3400,7 +3406,7 @@ var createABuyer = async (context, countryId, applicationId) => {
         }
       }
     });
-    const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id);
+    const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id, applicationId);
     return {
       buyer,
       buyerTradingHistory

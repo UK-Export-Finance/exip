@@ -5,10 +5,11 @@ import { APPLICATION } from '../../constants';
  * createABuyerTradingHistory
  * Create a buyer trading history with buyer relationships.
  * @param {Object} KeystoneJS context API
- * @param {String} buyerId
+ * @param {String} buyerId: Buyer ID
+ * @param {String} applicationId: Application ID
  * @returns {Object} Created buyer trading history
  */
-const createABuyerTradingHistory = async (context: Context, buyerId: string) => {
+const createABuyerTradingHistory = async (context: Context, buyerId: string, applicationId: string) => {
   console.info('Creating a buyer trading history for ', buyerId);
 
   try {
@@ -17,6 +18,11 @@ const createABuyerTradingHistory = async (context: Context, buyerId: string) => 
         buyer: {
           connect: {
             id: buyerId,
+          },
+        },
+        application: {
+          connect: {
+            id: applicationId,
           },
         },
         currencyCode: APPLICATION.DEFAULT_CURRENCY,
