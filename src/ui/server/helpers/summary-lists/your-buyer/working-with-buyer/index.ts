@@ -86,7 +86,7 @@ const workingWithBuyerFields = (answers: ApplicationBuyer, referenceNumber: numb
         href: generateChangeLink(TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE, `#${TRADED_WITH_BUYER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      mapYesNoField(answers[TRADED_WITH_BUYER]),
+      mapYesNoField(answers.buyerTradingHistory[TRADED_WITH_BUYER]),
     ),
   ] as Array<SummaryListItemData>;
 
