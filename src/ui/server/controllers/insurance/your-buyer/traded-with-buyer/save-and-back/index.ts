@@ -2,7 +2,7 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
@@ -29,7 +29,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     // runs save and go back command
-    const saveResponse = await mapAndSave.yourBuyer(payload, application, validationErrors);
+    const saveResponse = await mapAndSave.buyerTradingHistory(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

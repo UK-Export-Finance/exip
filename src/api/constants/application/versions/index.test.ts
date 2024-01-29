@@ -1,4 +1,5 @@
 import VERSIONS from '.';
+import { GBP } from '../../supported-currencies';
 
 describe('api/constants/application/versions', () => {
   it('should return an array of application versions', () => {
@@ -16,6 +17,7 @@ describe('api/constants/application/versions', () => {
         OVER_500K_SUPPORT: true,
         DEFAULT_FINAL_DESTINATION_KNOWN: null,
         DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+        DEFAULT_CURRENCY: GBP,
       },
     ];
 

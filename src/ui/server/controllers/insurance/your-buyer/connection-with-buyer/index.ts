@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 

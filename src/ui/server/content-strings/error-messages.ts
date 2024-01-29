@@ -322,6 +322,9 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
         IS_EMPTY: 'You must select the currency the outstanding or overdue payments are in',
       },
+      [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+        IS_EMPTY: 'Enter the currency the outstanding or overdue payments are in',
+      },
       [FIELD_IDS.INSURANCE.YOUR_BUYER.HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
         IS_EMPTY: 'Select if you have previously held credit insurance cover on the buyer',
       },

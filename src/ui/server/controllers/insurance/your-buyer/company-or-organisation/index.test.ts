@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import yourBuyerDetailsValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 
@@ -31,7 +31,7 @@ const {
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
-const { exporterIsConnectedWithBuyer, exporterHasTradedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+const { exporterIsConnectedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;

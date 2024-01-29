@@ -1,4 +1,4 @@
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/buyer';
 import { FIELD_IDS } from '..';
 import { post } from '.';
 import { ROUTES } from '../../../../../constants';

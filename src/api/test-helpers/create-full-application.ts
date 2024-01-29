@@ -36,7 +36,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {String} Policy type flag - different data is created if multiple is passed. Defaults to single.
  * @returns {Object} Application
  */
-export const createFullApplication = async (context: Context, policyType?: string) => {
+export const createFullApplication = async (context: Context, policyType?: string): Promise<Application> => {
   const { buyerCountry, totalContractValue, totalContractValueId, coverPeriod, coverPeriodId, ...otherEligibilityAnswers } = mockApplicationEligibility;
 
   const countries = await context.query.Country.createMany({
@@ -55,7 +55,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id }',
+      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id } buyer { id buyerTradingHistory { id } }',
     data: {
       owner: {
         connect: {
@@ -82,7 +82,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   );
 
   // create buyer and associate with the application.
-  const buyer = await createABuyer(context, country.id, application.id);
+  const { buyer } = await createABuyer(context, country.id, application.id);
 
   // create policy and associate with the application.
   const policy = await createAPolicy(context, application.id);

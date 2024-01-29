@@ -173,7 +173,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
         });
 
         it('allows user to remove a selected country and search again', () => {
-          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(field, ABU_DHABI, ALGERIA, ALGERIA);
+          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(fieldId, ABU_DHABI, ALGERIA, ALGERIA);
         });
       });
     });

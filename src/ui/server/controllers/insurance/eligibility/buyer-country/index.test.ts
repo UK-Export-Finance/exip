@@ -8,7 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
 import api from '../../../../api';
 import mapCountries from '../../../../helpers/mappings/map-countries';
-import getCountryByName from '../../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Country, Request, Response } from '../../../../../types';
@@ -177,10 +177,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the country can apply for an application online', () => {
-      const selectedCountryName = countryApplyOnline.name;
+      const selectedCountryIsoCode = countryApplyOnline.isoCode;
 
       const validBody = {
-        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryName,
+        [FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY]: selectedCountryIsoCode,
       };
 
       beforeEach(() => {
@@ -196,7 +196,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -227,7 +227,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     });
 
     describe('when the submitted country can only apply for an application offline', () => {
-      const selectedCountryName = countryApplyOffline.name;
+      const selectedCountryName = countryApplyOffline.isoCode;
 
       beforeEach(() => {
         req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
@@ -242,7 +242,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should update the session with populated country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, countryApplyOffline.name) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, countryApplyOffline.isoCode) as Country;
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 
@@ -263,9 +263,10 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
 
     describe('when the submitted country cannot apply for an application', () => {
       const selectedCountryName = countryCannotApply.name;
+      const selectedCountryIsoCode = countryCannotApply.isoCode;
 
       beforeEach(() => {
-        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryName;
+        req.body[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY] = selectedCountryIsoCode;
 
         mockCountriesResponse = [countryCannotApply];
 
@@ -277,7 +278,7 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
       it('should update the session with populated with country object', async () => {
         await post(req, res);
 
-        const selectedCountry = getCountryByName(mockCountriesResponse, selectedCountryName) as Country;
+        const selectedCountry = getCountryByIsoCode(mockCountriesResponse, selectedCountryIsoCode) as Country;
 
         const expectedPopulatedData = mapSubmittedEligibilityCountry(selectedCountry);
 

@@ -12,7 +12,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer';
 
 const {
   INSURANCE_ROOT,
