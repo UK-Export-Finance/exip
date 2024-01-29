@@ -96,7 +96,6 @@ export const FIELDS = {
     },
     [ESTIMATED_ANNUAL_TURNOVER]: {
       LEGEND: 'Estimated annual turnover for this current financial year',
-      LABEL: 'Estimate this to the nearest pound. Do not use decimal points.',
       PREFIX: SYMBOLS.GBP,
       SUMMARY: {
         TITLE: 'Estimated turnover this current financial year',
