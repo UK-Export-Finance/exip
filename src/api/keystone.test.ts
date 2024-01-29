@@ -7,7 +7,7 @@ import buyers from './test-helpers/buyers';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { mockAccount } from './test-mocks';
-import { Application, ApplicationBuyer, Account, Context } from './types';
+import { Application, ApplicationBuyer, ApplicationBusiness, Account, Context } from './types';
 
 describe('Create an Application', () => {
   let context: Context;
@@ -195,15 +195,25 @@ describe('Create an Application', () => {
     expect(referenceNumber.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the business entry', async () => {
-    const business = await context.query.Business.findOne({
-      where: {
-        id: application.business.id,
-      },
-      query: 'id application { id }',
+  describe('business entry', () => {
+    let business: ApplicationBusiness;
+
+    beforeAll(async () => {
+      business = await context.query.Business.findOne({
+        where: {
+          id: application.business.id,
+        },
+        query: 'id application { id } turnoverCurrencyCode',
+      });
+
+    });
+    test('it should add the application ID to the business entry', async () => {
+      expect(business.application.id).toEqual(application.id);
     });
 
-    expect(business.application.id).toEqual(application.id);
+    test('it should have a default business.turnoverCurrencyCode', async () => {
+      expect(business.turnoverCurrencyCode).toEqual(APPLICATION.DEFAULT_CURRENCY);
+    });
   });
 
   test('it should add an application ID and default finalDestinationKnown field to the exportContract entry', async () => {

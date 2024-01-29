@@ -2,11 +2,13 @@ import { Country } from '../country';
 import { Relationship } from '../relationship';
 
 export interface ApplicationBusiness extends Relationship {
+  application: Relationship;
   goodsOrServicesSupplied: string;
   totalYearsExporting: string;
   totalEmployeesUK: string;
   estimatedAnnualTurnover: string;
   exportsTurnoverPercentage: string;
+  turnoverCurrencyCode: string;
 }
 
 export interface BuyerTradingHistory extends Relationship {
@@ -165,7 +167,7 @@ export interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
-  DEFAULT_CURRENCY: string;
+  DEFAULT_CURRENCY?: string;
 }
 
 export interface SectionReview {
