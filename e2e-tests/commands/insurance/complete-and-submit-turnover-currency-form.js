@@ -1,6 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field } from '../../pages/shared';
-import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
+import { EUR_CURRENCY_CODE } from '../../fixtures/currencies';
 
 const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
@@ -9,7 +9,7 @@ const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
  * complete and submit the "turnover currency" form.
  */
 const completeAndSubmitTurnoverCurrencyForm = () => {
-  field(`${CURRENCY_CODE}-${GBP_CURRENCY_CODE}`).input().click();
+  field(`${CURRENCY_CODE}-${EUR_CURRENCY_CODE}`).input().click();
 
   cy.clickSubmitButton();
 };

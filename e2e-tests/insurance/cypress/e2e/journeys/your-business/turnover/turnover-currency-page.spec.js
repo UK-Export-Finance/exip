@@ -141,12 +141,28 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       });
     });
 
-    it(`should redirect to ${CREDIT_CONTROL}`, () => {
-      cy.navigateToUrl(url);
+    describe('when submitting a supported currency', () => {
+      it(`should redirect to ${CREDIT_CONTROL}`, () => {
+        cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTurnoverCurrencyForm();
+        cy.completeAndSubmitTurnoverCurrencyForm();
 
-      cy.assertUrl(creditControlUrl);
+        cy.assertUrl(creditControlUrl);
+      });
+    });
+
+    // TODO: when submitting an alternative currency
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        // cy.checkText(turnoverPage[FINANCIAL_YEAR_END_DATE](), financialYearEnd.expectedValue);
+
+        // fieldSelector(ESTIMATED_ANNUAL_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[ESTIMATED_ANNUAL_TURNOVER]);
+
+        // fieldSelector(PERCENTAGE_TURNOVER).input().should('have.value', application.EXPORTER_BUSINESS[PERCENTAGE_TURNOVER]);
+      });
     });
   });
 });

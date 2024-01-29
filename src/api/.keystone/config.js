@@ -263,7 +263,8 @@ var EXPORTER_BUSINESS = {
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
     ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
-    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage"
+    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage",
+    TURNOVER_CURRENCY_CODE: "turnoverCurrencyCode"
   },
   HAS_CREDIT_CONTROL: "hasCreditControlProcess"
 };

@@ -120,7 +120,10 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call to db
+    /**
+     * Map and save turnover data.
+     * Call the API.
+     */
     const saveResponse = await mapAndSave.turnover(payload, application);
 
     if (!saveResponse) {

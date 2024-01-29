@@ -11,6 +11,7 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import mapAndSave from '../../map-and-save/turnover';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -21,6 +22,9 @@ const {
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  EXPORTER_BUSINESS: {
+    TURNOVER: { TURNOVER_CURRENCY_CODE },
+  },
 } = INSURANCE_FIELD_IDS;
 
 export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
@@ -42,10 +46,10 @@ export const PAGE_VARIABLES = {
 };
 
 /**
- * gets the template for turnover currency page
+ * gets the template for Business - Turnover currency page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders turnover currency page with/without previously submitted details
+ * @returns {Express.Response.render} renders Business - Turnover currency page with/without previously submitted details
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -68,7 +72,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
-      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.business[TURNOVER_CURRENCY_CODE]),
     });
   } catch (err) {
     console.error('Error getting turnover currency %O', err);
@@ -78,7 +82,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Check turnover currency page validation errors and if successful, redirect to the next part of the flow.
+ * Check Business - Turnover currency page validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -112,10 +116,20 @@ export const post = async (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
         // TODO: Add  if (currencyValue) once data saving completed and change ''
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
         validationErrors,
         submittedValues: sanitiseData(payload),
       });
+    }
+
+    /**
+     * Map and save turnover data.
+     * Call the API.
+     */
+    const saveResponse = await mapAndSave.turnover(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`);

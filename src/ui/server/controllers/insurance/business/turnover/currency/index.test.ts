@@ -11,6 +11,7 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import mapAndSave from '../../map-and-save/turnover';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockCurrenciesResponse, mockApplication, GBP } from '../../../../../test-mocks';
 
@@ -22,9 +23,14 @@ const {
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  EXPORTER_BUSINESS: {
+    TURNOVER: { TURNOVER_CURRENCY_CODE },
+  },
 } = INSURANCE_FIELD_IDS;
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
+
+jest.mock('../../map-and-save/turnover');
 
 describe('controllers/insurance/business/turnover/currency', () => {
   let req: Request;
@@ -98,7 +104,7 @@ describe('controllers/insurance/business/turnover/currency', () => {
         }),
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, mockApplication.business[TURNOVER_CURRENCY_CODE]),
       });
     });
 
@@ -144,6 +150,8 @@ describe('controllers/insurance/business/turnover/currency', () => {
   });
 
   describe('post', () => {
+    mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
+
     const validBody = {
       [CURRENCY_CODE]: GBP,
     };
@@ -184,7 +192,21 @@ describe('controllers/insurance/business/turnover/currency', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should redirect to next page', async () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should call mapAndSave.business once with the data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.turnover).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.turnover).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      it(`should redirect to ${CREDIT_CONTROL}`, async () => {
         req.body = validBody;
 
         await post(req, res);
