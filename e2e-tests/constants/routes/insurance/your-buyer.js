@@ -4,7 +4,7 @@ const CONNECTION_WITH_BUYER_ROOT = `${YOUR_BUYER_ROOT}/connection-with-the-buyer
 const TRADED_WITH_BUYER_ROOT = `${YOUR_BUYER_ROOT}/prior-trade-history`;
 const TRADING_HISTORY_ROOT = `${YOUR_BUYER_ROOT}/trading-history`;
 const ALTERNATIVE_CURRENCY_ROOT = `${YOUR_BUYER_ROOT}/alternative-currency`;
-const CREDIT_INSURANCE_COVER_ROOT = `${YOUR_BUYER_ROOT}credit-insurance-cover`;
+const CREDIT_INSURANCE_COVER_ROOT = `${YOUR_BUYER_ROOT}/credit-insurance-cover`;
 const CHECK_YOUR_ANSWERS = `${YOUR_BUYER_ROOT}/check-your-answers`;
 
 export const YOUR_BUYER = {

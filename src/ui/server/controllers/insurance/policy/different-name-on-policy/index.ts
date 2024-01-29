@@ -131,6 +131,7 @@ export const post = async (req: Request, res: Response) => {
   try {
     // save the application
     const saveResponse = await mapAndSave.policyContact(payload, application);
+
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }

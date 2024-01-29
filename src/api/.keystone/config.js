@@ -1146,8 +1146,12 @@ var lists = {
   PolicyContact: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      firstName: (0, import_fields.text)(),
-      lastName: (0, import_fields.text)(),
+      firstName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
+      lastName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
       email: (0, import_fields.text)(),
       position: (0, import_fields.text)(),
       isSameAsOwner: nullable_checkbox_default()

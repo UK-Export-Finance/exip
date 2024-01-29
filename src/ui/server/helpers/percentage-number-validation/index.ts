@@ -1,4 +1,4 @@
-import { RequestBody, NumberErrorMessage } from '../../../types';
+import { RequestBody, ErrorMessageObject } from '../../../types';
 import generateValidationErrors from '../validation';
 import { objectHasProperty } from '../object';
 import { isNumber, numberHasDecimal, isNumberBelowMinimum, isNumberAboveMaximum } from '../number';
@@ -14,10 +14,10 @@ const MAXIMUM = 100;
  * @param {RequestBody} responseBody
  * @param {String} field fieldId of the field being checked
  * @param {object} errors
- * @param {NumberErrorMessage} errorMessages object with different error messages
+ * @param {ErrorMessageObject} errorMessages object with different error messages
  * @returns {object} errors
  */
-const percentageNumberValidation = (responseBody: RequestBody, field: string, errors: object, errorMessages: NumberErrorMessage) => {
+const percentageNumberValidation = (responseBody: RequestBody, field: string, errors: object, errorMessages: ErrorMessageObject) => {
   const { IS_EMPTY, INCORRECT_FORMAT, BELOW_MINIMUM, ABOVE_MAXIMUM } = errorMessages;
 
   // if empty then return validation error

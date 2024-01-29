@@ -6,7 +6,7 @@ import nameValidation from '../../../../../../shared-validation/name';
 const { FIRST_NAME: FIELD_ID } = FIELD_IDS;
 
 const {
-  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 /**
@@ -16,6 +16,6 @@ const {
  * @param {object} errors
  * @returns {object} errors
  */
-const firstName = (responseBody: RequestBody, errors: object) => nameValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const firstName = (responseBody: RequestBody, errors: object) => nameValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default firstName;

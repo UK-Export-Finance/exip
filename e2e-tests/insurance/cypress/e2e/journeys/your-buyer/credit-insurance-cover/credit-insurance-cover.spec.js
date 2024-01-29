@@ -11,7 +11,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_COVER;
 
 const {
   ROOT,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -24,6 +24,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, I want to provide information, So that UKEF can better understand the risk undertaken if I am given insurance cover', () => {
   let referenceNumber;
   let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -32,6 +33,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
       cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       // TODO: EMS-2659 - use buyer commands to get here
       cy.navigateToUrl(url);
@@ -108,6 +110,28 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
           cy.checkText(field.label(), FIELDS[fieldId].LABEL);
           cy.checkText(field.hint(), FIELDS[fieldId].HINT);
         });
+      });
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    describe(`when submitting the form with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} as "no"`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.completeAndSubmitCreditInsuranceCoverForm({});
+
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+    });
+
+    describe(`when submitting the form with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} as "yes"`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCover: true });
+
+        cy.assertUrl(checkYourAnswersUrl);
       });
     });
   });

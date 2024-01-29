@@ -1,4 +1,4 @@
-import { FIELD_ID, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, get } from '.';
+import { FIELD_ID, FIELD_IDS, PAGE_CONTENT_STRINGS, pageVariables, HTML_FLAGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -8,13 +8,17 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK, CREDIT_INSURANCE_COVER_CHANGE, CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -24,7 +28,7 @@ const {
   },
 } = TEMPLATES;
 
-describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
+describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
   let req: Request;
   let res: Response;
 
@@ -44,6 +48,14 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       const expected = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
       expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct IDs', () => {
+      const expected = [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
+
+      expect(FIELD_IDS).toEqual(expected);
     });
   });
 
@@ -118,6 +130,86 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = {
+      [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: 'false',
+    };
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should redirect to the next page', async () => {
+        await post(req, res);
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = CREDIT_INSURANCE_COVER_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = validBody;
+          req.originalUrl = CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
+          }),
+          ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: sanitiseData(payload),
+          validationErrors,
+        };
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

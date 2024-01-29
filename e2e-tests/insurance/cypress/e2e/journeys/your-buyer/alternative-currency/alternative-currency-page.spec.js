@@ -2,7 +2,9 @@ import {
   headingCaption, field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { ERROR_MESSAGES, FIELDS, PAGES } from '../../../../../../content-strings';
+import {
+  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
+} from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -56,6 +58,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
       pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
+      submitButtonCopy: BUTTONS.CONFIRM,
     });
   });
 

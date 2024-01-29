@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
-import inputValidation from '../../../../../../shared-validation/max-length';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { objectHasProperty } from '../../../../../../helpers/object';
 
 const {
@@ -23,7 +23,7 @@ const improveService = (responseBody: RequestBody, errors: object) => {
   // if field has a value
   if (objectHasProperty(responseBody, FIELD_ID)) {
     // checks field is not over maximum characters
-    return inputValidation(responseBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
+    return maxLengthValidation(responseBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
   }
 
   return errors;
