@@ -16,7 +16,7 @@ describe('server/helpers/mappings/map-currencies/radio-and-select-options', () =
     const result = mapRadioAndSelectOptions(mockCurrencies, mockCurrencies, mockSelectedValue);
 
     const expected = {
-      currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE, mockSelectedValue),
+      currencies: mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE),
       alternativeCurrencies: mapCurrenciesAsSelectOptions(mockCurrencies, mockSelectedValue, true),
       submittedValue: submittedAnswer(mockSelectedValue),
     };

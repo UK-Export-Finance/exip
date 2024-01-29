@@ -115,7 +115,6 @@ export const post = async (req: Request, res: Response) => {
         }),
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
-        // TODO: Add  if (currencyValue) once data saving completed and change ''
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
         validationErrors,
         submittedValues: sanitiseData(payload),

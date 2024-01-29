@@ -90,14 +90,14 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
     });
   });
 
-  describe(`when ${ALTERNATIVE_CURRENCY_CODE} is provided`, () => {
+  describe(`when ${CURRENCY_CODE} equals ${ALTERNATIVE_CURRENCY_CODE}`, () => {
     it(`should return ${TURNOVER_CURRENCY_CODE} as ${ALTERNATIVE_CURRENCY_CODE}`, () => {
       const mockBody = {
         _csrf: '1234',
         [ESTIMATED_ANNUAL_TURNOVER]: '1000',
         [PERCENTAGE_TURNOVER]: '',
+        [CURRENCY_CODE]: ALTERNATIVE_CURRENCY_CODE,
         [ALTERNATIVE_CURRENCY_CODE]: HKD,
-        [CURRENCY_CODE]: '',
       } as RequestBody;
 
       const response = mapSubmittedData(mockBody);

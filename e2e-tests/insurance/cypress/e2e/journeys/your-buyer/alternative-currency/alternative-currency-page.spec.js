@@ -29,8 +29,8 @@ const baseUrl = Cypress.config('baseUrl');
 
 const {
   radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
-  rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl, submitAndAssertRadioIsChecked,
-  submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
+  rendersNoSelectionValidationError, rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
+  submitAndAssertRadioIsChecked, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
 } = assertAlternativeCurrencyForm({
   legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
   alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
@@ -101,7 +101,17 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   });
 
   describe('form submission', () => {
-    describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete ', () => {
+    describe('when submitting an empty form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should render validation errors', () => {
+        rendersNoSelectionValidationError();
+      });
+    });
+
+    describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete input', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
@@ -121,7 +131,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
           submitRadioAndAssertUrl(EUR_CURRENCY_CODE, tradingHistoryUrl);
         });
 
-        it('should display the submitted answer', () => {
+        it('should render the submitted answer when going back to the page', () => {
           submitAndAssertRadioIsChecked(EUR_CURRENCY_CODE, url);
         });
       });
@@ -131,7 +141,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
           submitRadioAndAssertUrl(GBP_CURRENCY_CODE, tradingHistoryUrl);
         });
 
-        it('should display the submitted answer', () => {
+        it('should render the submitted answer when going back to the page', () => {
           submitAndAssertRadioIsChecked(GBP_CURRENCY_CODE, url);
         });
       });
@@ -141,7 +151,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
           submitRadioAndAssertUrl(USD_CURRENCY_CODE, tradingHistoryUrl);
         });
 
-        it('should display the submitted answer', () => {
+        it('should render the submitted answer when going back to the page', () => {
           submitAndAssertRadioIsChecked(USD_CURRENCY_CODE, url);
         });
       });
@@ -151,7 +161,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
           submitRadioAndAssertUrl(JPY_CURRENCY_CODE, tradingHistoryUrl);
         });
 
-        it('should display the submitted answer', () => {
+        it('should render the submitted answer when going back to the page', () => {
           submitAndAssertRadioIsChecked(JPY_CURRENCY_CODE, url);
         });
       });
@@ -166,7 +176,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
         submitAlternativeCurrencyAndAssertUrl(tradingHistoryUrl);
       });
 
-      it('should display the submitted answer', () => {
+      it('should render the submitted answer when going back to the page', () => {
         submitAlternativeCurrencyAndAssertInput(url);
       });
     });

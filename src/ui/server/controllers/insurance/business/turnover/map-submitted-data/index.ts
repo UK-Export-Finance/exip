@@ -30,14 +30,11 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   }
 
   if (objectHasProperty(populatedData, CURRENCY_CODE)) {
-    populatedData[TURNOVER_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
-
-    delete populatedData[CURRENCY_CODE];
-    delete populatedData[ALTERNATIVE_CURRENCY_CODE];
-  }
-
-  if (objectHasProperty(populatedData, ALTERNATIVE_CURRENCY_CODE)) {
-    populatedData[TURNOVER_CURRENCY_CODE] = populatedData[ALTERNATIVE_CURRENCY_CODE];
+    if (populatedData[CURRENCY_CODE] === ALTERNATIVE_CURRENCY_CODE) {
+      populatedData[TURNOVER_CURRENCY_CODE] = populatedData[ALTERNATIVE_CURRENCY_CODE];
+    } else {
+      populatedData[TURNOVER_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
+    }
 
     delete populatedData[CURRENCY_CODE];
     delete populatedData[ALTERNATIVE_CURRENCY_CODE];
