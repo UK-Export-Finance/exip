@@ -46,17 +46,10 @@ export const PAGE_VARIABLES = {
 };
 
 /**
-<<<<<<< HEAD:src/ui/server/controllers/insurance/business/turnover/currency/index.ts
- * gets the template for Business - Turnover currency page
+ * gets the template for Business - Turnover - Alternative currency page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Business - Turnover currency page with/without previously submitted details
-=======
- * gets the template for Turnover - alternative currency page
- * @param {Express.Request} Express request
- * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Turnover - alternative currency page with/without previously submitted details
->>>>>>> main-application-no-pdf:src/ui/server/controllers/insurance/business/turnover/alternative-currency/index.ts
+ * @returns {Express.Response.render} renders Business - Turnover - Alternative currency page with/without previously submitted details
  */
 export const get = async (req: Request, res: Response) => {
   try {
