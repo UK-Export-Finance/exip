@@ -16,7 +16,7 @@ import { Request, Response } from '../../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { CREDIT_CONTROL },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -31,7 +31,7 @@ export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.ALTERNATIVE_CURRENCY;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
 
 export const PAGE_VARIABLES = {
   FIELDS: {
@@ -46,10 +46,17 @@ export const PAGE_VARIABLES = {
 };
 
 /**
+<<<<<<< HEAD:src/ui/server/controllers/insurance/business/turnover/currency/index.ts
  * gets the template for Business - Turnover currency page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} renders Business - Turnover currency page with/without previously submitted details
+=======
+ * gets the template for Turnover - alternative currency page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} renders Turnover - alternative currency page with/without previously submitted details
+>>>>>>> main-application-no-pdf:src/ui/server/controllers/insurance/business/turnover/alternative-currency/index.ts
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -75,14 +82,14 @@ export const get = async (req: Request, res: Response) => {
       ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, application.business[TURNOVER_CURRENCY_CODE]),
     });
   } catch (err) {
-    console.error('Error getting turnover currency %O', err);
+    console.error('Error getting Business - Turnover - Alternative currency %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
 
 /**
  * post
- * Check Business - Turnover currency page validation errors and if successful, redirect to the next part of the flow.
+ * Check Business - Turnover - Alternative currency page validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -131,9 +138,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);
   } catch (err) {
-    console.error('Error posting business - turnover currency %O', err);
+    console.error('Error posting Business - Turnover - Alternative currency %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

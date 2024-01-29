@@ -12,11 +12,11 @@ import {
   EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE,
 } from '../../../../../../fixtures/currencies';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY, CREDIT_CONTROL },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY },
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
@@ -45,10 +45,10 @@ const fieldSelectors = {
   alternativeCurrencyCode: fieldSelector(ALTERNATIVE_CURRENCY_CODE),
 };
 
-context('Insurance - Your business - Turnover currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
+context('Insurance - Your business - Turnover - Alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
-  let creditControlUrl;
+  let turnoverUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -61,8 +61,8 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
       turnoverPage.provideAlternativeCurrencyLink().click();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`;
-      creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
+      turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -79,7 +79,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
+      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
       submitButtonCopy: BUTTONS.CONFIRM,
       assertSaveAndBackButtonDoesNotExist: true,
@@ -161,7 +161,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
       describe(EUR_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, creditControlUrl);
+          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, turnoverUrl);
         });
 
         it('should render the submitted answer when going back to the page', () => {
@@ -171,7 +171,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
       describe(GBP_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, creditControlUrl);
+          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, turnoverUrl);
         });
 
         it('should render the submitted answer when going back to the page', () => {
@@ -181,7 +181,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
       describe(USD_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(USD_CURRENCY_CODE, creditControlUrl);
+          submitRadioAndAssertUrl(USD_CURRENCY_CODE, turnoverUrl);
         });
 
         it('should render the submitted answer when going back to the page', () => {
@@ -191,7 +191,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
       describe(JPY_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, creditControlUrl);
+          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, turnoverUrl);
         });
 
         it('should render the submitted answer when going back to the page', () => {
@@ -206,7 +206,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       });
 
       it('should redirect to the next page', () => {
-        submitAlternativeCurrencyAndAssertUrl(creditControlUrl);
+        submitAlternativeCurrencyAndAssertUrl(turnoverUrl);
       });
 
       it('should render the submitted answer when going back to the page', () => {
