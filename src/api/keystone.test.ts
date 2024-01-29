@@ -205,7 +205,6 @@ describe('Create an Application', () => {
         },
         query: 'id application { id } turnoverCurrencyCode',
       });
-
     });
     test('it should add the application ID to the business entry', async () => {
       expect(business.application.id).toEqual(application.id);
