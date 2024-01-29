@@ -8,7 +8,6 @@ const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-
 /**
  * mapRadioAndSelectOptions
  * Create an object of mapped currencies into the required structure for GOV radio and select components
