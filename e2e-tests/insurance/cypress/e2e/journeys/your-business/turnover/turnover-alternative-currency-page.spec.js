@@ -10,11 +10,11 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insur
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CURRENCY, CREDIT_CONTROL },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY },
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
@@ -33,10 +33,10 @@ const fieldSelectors = {
   alternativeCurrencyCode: fieldSelector(ALTERNATIVE_CURRENCY_CODE),
 };
 
-context('Insurance - Your business - Turnover currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
+context('Insurance - Your business - Turnover - alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
-  let creditControlUrl;
+  let turnoverUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -49,8 +49,8 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
 
       turnoverPage.provideAlternativeCurrencyLink().click();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`;
-      creditControlUrl = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
+      turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -67,7 +67,7 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_CURRENCY}`,
+      currentHref: `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${TURNOVER_ROOT}`,
       submitButtonCopy: BUTTONS.CONFIRM,
       assertSaveAndBackButtonDoesNotExist: true,
@@ -144,12 +144,12 @@ context('Insurance - Your business - Turnover currency page - As an Exporter I w
       });
     });
 
-    it(`should redirect to ${CREDIT_CONTROL}`, () => {
+    it(`should redirect to ${TURNOVER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitTurnoverCurrencyForm();
 
-      cy.assertUrl(creditControlUrl);
+      cy.assertUrl(turnoverUrl);
     });
   });
 });

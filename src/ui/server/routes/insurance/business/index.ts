@@ -19,7 +19,10 @@ import { post as postNatureOfBusinessSaveAndBack } from '../../../controllers/in
 import { get as getTurnover, post as postTurnover } from '../../../controllers/insurance/business/turnover';
 import { post as postTurnoverSaveAndBack } from '../../../controllers/insurance/business/turnover/save-and-back';
 
-import { get as getTurnoverCurrency, post as postTurnoverCurrency } from '../../../controllers/insurance/business/turnover/currency';
+import {
+  get as getTurnoverAlternativeCurrency,
+  post as postTurnoverAlternativeCurrency,
+} from '../../../controllers/insurance/business/turnover/alternative-currency';
 
 import { get as getCreditControl, post as postCreditControl } from '../../../controllers/insurance/business/credit-control';
 import { post as postCreditControlSaveAndBack } from '../../../controllers/insurance/business/credit-control/save-and-back';
@@ -72,8 +75,8 @@ insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSIN
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CHECK_AND_CHANGE}`, getTurnover);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CHECK_AND_CHANGE}`, postTurnover);
 
-insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY}`, getTurnoverCurrency);
-insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY}`, postTurnoverCurrency);
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY}`, getTurnoverAlternativeCurrency);
+insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY}`, postTurnoverAlternativeCurrency);
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL}`, getCreditControl);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL}`, postCreditControl);

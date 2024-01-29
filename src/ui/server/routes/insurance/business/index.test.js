@@ -18,7 +18,10 @@ import { post as postNatureOfBusinessSaveAndBack } from '../../../controllers/in
 import { get as getTurnover, post as postTurnover } from '../../../controllers/insurance/business/turnover';
 import { post as postTurnoverSaveAndBack } from '../../../controllers/insurance/business/turnover/save-and-back';
 
-import { get as getTurnoverCurrency, post as postTurnoverCurrency } from '../../../controllers/insurance/business/turnover/currency';
+import {
+  get as getAlternativeTurnoverCurrency,
+  post as postAlternativeTurnoverCurrency,
+} from '../../../controllers/insurance/business/turnover/alternative-currency';
 
 import { get as getCreditControl, post as postCreditControl } from '../../../controllers/insurance/business/credit-control';
 import { post as postCreditControlSaveAndBack } from '../../../controllers/insurance/business/credit-control/save-and-back';
@@ -73,8 +76,8 @@ describe('routes/insurance/your-business', () => {
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CHECK_AND_CHANGE, getTurnover);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CHECK_AND_CHANGE, postTurnover);
 
-    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY, getTurnoverCurrency);
-    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY, postTurnoverCurrency);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY, getAlternativeTurnoverCurrency);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY, postAlternativeTurnoverCurrency);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL, getCreditControl);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL, postCreditControl);

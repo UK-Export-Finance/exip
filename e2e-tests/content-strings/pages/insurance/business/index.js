@@ -60,7 +60,7 @@ export const TURNOVER = {
   PROVIDE_ALTERNATIVE_CURRENCY: 'Provide turnover in an alternative currency',
 };
 
-export const TURNOVER_CURRENCY = {
+export const TURNOVER_ALTERNATIVE_CURRENCY = {
   ...SHARED,
   PAGE_TITLE: 'What currency is your turnover in?',
 };
