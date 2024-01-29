@@ -227,13 +227,13 @@ export const ERROR_MESSAGES = {
       DIFFERENT_NAME_ON_POLICY: {
         [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
           IS_EMPTY: "Enter the policy holder's first name",
-          ABOVE_MAXIMUM: "The policy holder's first name cannot be more than 300  characters",
+          ABOVE_MAXIMUM: "The policy holder's first name cannot be more than 300 characters",
           INCORRECT_FORMAT: "The policy holder's first name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
           IS_EMPTY: "Enter the policy holder's last name",
-          ABOVE_MAXIMUM: "The policy holder's lst name cannot be more than 300  characters",
-          INCORRECT_FORMAT: "The policy holder's first name must not include any numbers or symbols",
+          ABOVE_MAXIMUM: "The policy holder's last name cannot be more than 300 characters",
+          INCORRECT_FORMAT: "The policy holder's last name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           INCORRECT_FORMAT: 'Enter the email address of the person you want named on the policy',
