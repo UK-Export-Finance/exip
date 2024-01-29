@@ -1,26 +1,13 @@
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { SUPPORTED_CURRENCIES } from '../../../../constants';
 import mapCurrenciesAsRadioOptions from '../as-radio-options';
 import mapCurrenciesAsSelectOptions from '../as-select-options';
 import { Currency } from '../../../../../types';
+import submittedAnswer from '../submitted-answer';
 
 const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const isNotAlternativeCurrency = (currency?: string) => SUPPORTED_CURRENCIES.find((currencyCode: string) => currencyCode === currency);
-
-const submittedAnswer = (currency?: string) => {
-  if (!currency) {
-    return '';
-  }
-
-  if (isNotAlternativeCurrency(currency)) {
-    return currency;
-  }
-
-  return ALTERNATIVE_CURRENCY_CODE;
-};
 
 /**
  * mapRadioAndSelectOptions
@@ -29,7 +16,7 @@ const submittedAnswer = (currency?: string) => {
  * @param {Array} alternativeCurrencies: Array of alternative currencies
  * @param {Array} currencies: Array of supported currencies
  * @param {String} selectedValue: Selected currency
- * @returns {Object} Mapped currencies
+ * @returns {Object} Mapped currencies and submittedValue
  */
 const mapRadioAndSelectOptions = (alternativeCurrencies: Array<Currency>, supportedCurrencies: Array<Currency>, selectedValue?: string) => {
   const mapped = {

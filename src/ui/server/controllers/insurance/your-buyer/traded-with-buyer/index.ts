@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
@@ -66,7 +66,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
-      submittedValues: application.buyer,
+      submittedValues: application.buyer.buyerTradingHistory,
     });
   } catch (err) {
     console.error('Error getting insurance - your buyer - traded with buyer %O', err);
@@ -113,7 +113,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call
-    const saveResponse = await mapAndSave.yourBuyer(payload, application);
+    const saveResponse = await mapAndSave.buyerTradingHistory(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

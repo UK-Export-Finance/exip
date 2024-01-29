@@ -1,5 +1,5 @@
 import {
-  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field,
+  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field, noRadioInput,
 } from '../../../../../../pages/shared';
 import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
@@ -144,12 +144,23 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       });
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-      cy.navigateToUrl(url);
+    describe('when submitting a fully filled form', () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+        cy.completeAndSubmitTradingHistoryWithBuyerForm({});
 
-      cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          noRadioInput().first().should('be.checked');
+          noRadioInput().last().should('be.checked');
+        });
+      });
     });
   });
 });

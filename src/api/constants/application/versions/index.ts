@@ -1,4 +1,5 @@
 import { ApplicationVersion } from '../../../types';
+import { GBP } from '../../supported-currencies';
 
 /**
  * VERSIONS
@@ -23,6 +24,7 @@ const VERSIONS = [
     OVER_500K_SUPPORT: true,
     DEFAULT_FINAL_DESTINATION_KNOWN: null,
     DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+    DEFAULT_CURRENCY: GBP,
   },
 ] as Array<ApplicationVersion>;
 

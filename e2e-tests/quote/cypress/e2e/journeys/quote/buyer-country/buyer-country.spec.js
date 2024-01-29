@@ -66,7 +66,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       const algeria = DZA.NAME;
       const brazil = BRA.NAME;
 
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(FIELD_ID), algeria, brazil, brazil);
+      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(FIELD_ID, algeria, brazil, brazil);
     });
   });
 

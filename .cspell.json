@@ -20,6 +20,7 @@
         "**logs",
         "**/src/api/test-mocks/mock-application.ts",
         "**/src/ui/server/test-mocks/mock-application.ts",
+        "**/src/ui/server/test-mocks/mock-buyer.ts",
         "**/server/test-mocks/mock-sic-codes.ts",
         "**/src/api/test-mocks/mock-declarations.ts",
         "**/src/ui/server/test-mocks/mock-declarations.ts",

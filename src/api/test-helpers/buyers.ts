@@ -1,4 +1,4 @@
-import { Application, TestHelperBuyerCreate } from '../types';
+import { ApplicationBuyer, TestHelperBuyerCreate } from '../types';
 
 /**
  * create buyer test helper
@@ -10,11 +10,11 @@ const create = async ({ context, data }: TestHelperBuyerCreate) => {
   try {
     console.info('Creating a buyer (test helpers)');
 
-    const application = (await context.query.Buyer.createOne({
+    const buyer = (await context.query.Buyer.createOne({
       data,
-    })) as Application;
+    })) as ApplicationBuyer;
 
-    return application;
+    return buyer;
   } catch (err) {
     console.error(err);
     return err;

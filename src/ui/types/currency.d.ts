@@ -11,6 +11,7 @@ interface CurrencyRadios {
   JPY: RadioOption;
   USD: RadioOption;
   ALTERNATIVE: RadioOption;
+  applicationAnswer?: string;
 }
 
 export { Currency, CurrencyRadios };

@@ -1,10 +1,19 @@
 import dotenv from 'dotenv';
+import { GBP } from './mock-currencies';
 
 dotenv.config();
 
 export const mockConnectionWithBuyer = {
   exporterIsConnectedWithBuyer: true,
   connectionWithBuyerDescription: 'test description',
+};
+
+export const mockBuyerTradingHistory = {
+  id: 'clacdgc630000kdoqn7wcgre81',
+  exporterHasTradedWithBuyer: true,
+  outstandingPayments: true,
+  failedPayments: true,
+  currencyCode: GBP.isoCode,
 };
 
 const mockBuyer = {
@@ -23,7 +32,7 @@ const mockBuyer = {
   canContactBuyer: true,
   ...mockConnectionWithBuyer,
   exporterIsConnectedWithBuyer: true,
-  exporterHasTradedWithBuyer: true,
+  buyerTradingHistory: mockBuyerTradingHistory,
 };
 
 export default mockBuyer;

@@ -1,10 +1,12 @@
 import { Context } from '../../types';
+import createABuyerTradingHistory from '../create-a-buyer-trading-history';
 
 /**
  * createABuyer
  * Create a buyer with relationships for:
  * 1) A country
  * 2) An application
+ * Creates a buyer trading address with buyer relationship
  * @param {Object} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
@@ -25,7 +27,13 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
       },
     });
 
-    return buyer;
+    // Create a buyer trading address with buyer relationship
+    const buyerTradingHistory = await createABuyerTradingHistory(context, buyer.id, applicationId);
+
+    return {
+      buyer,
+      buyerTradingHistory,
+    };
   } catch (err) {
     console.error('Error creating a buyer %O', err);
 

@@ -17,10 +17,10 @@ const checkPolicyCurrencyCodeInput = () => {
   const {
     legend, hint, radios,
   } = assertAlternativeCurrencyForm({
-    FIELD_ID: fieldId,
-    LEGEND: CONTENT_STRINGS.LEGEND,
-    HINT: CONTENT_STRINGS.HINT,
-    ALTERNATIVE_CURRENCY_TEXT: FIELDS[ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
+    fieldId,
+    legend: CONTENT_STRINGS.LEGEND,
+    hint: CONTENT_STRINGS.HINT,
+    alternativeCurrencyText: FIELDS[ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
   });
 
   legend();

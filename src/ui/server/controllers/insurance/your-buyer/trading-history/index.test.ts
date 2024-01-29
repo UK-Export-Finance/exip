@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import tradingHistoryValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-// import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -114,9 +114,9 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
       [FAILED_PAYMENTS]: FIELD_VALUES.NO,
     };
 
-    // beforeEach(() => {
-    //   mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
-    // });
+    beforeEach(() => {
+      mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));
+    });
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
@@ -130,28 +130,15 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      // it('should call mapAndSave.yourBuyer once with buyer and application', async () => {
-      //   await post(req, res);
+      it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function and application', async () => {
+        await post(req, res);
 
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
 
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
-      // });
+        const payload = constructPayload(req.body, FIELD_IDS);
 
-      // it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
-      //   req.body = {
-      //     ...validBody,
-      //     injection: 1,
-      //   };
-
-      //   await post(req, res);
-
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
-
-      //   const payload = constructPayload(req.body, FIELD_IDS);
-
-      //   expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
-      // });
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
+      });
 
       describe("when the url's last substring is `check`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
@@ -212,34 +199,34 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
       });
     });
 
-    // describe('api error handling', () => {
-    //   describe('when mapAndSave.yourBuyer returns false', () => {
-    //     beforeEach(() => {
-    //       req.body = validBody;
-    //       res.locals = mockRes().locals;
-    //       mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
-    //     });
+    describe('api error handling', () => {
+      describe('when mapAndSave.buyerTradingHistory returns false', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(false));
+        });
 
-    //     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-    //       await post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
-    //       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    //     });
-    //   });
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
 
-    //   describe('when mapAndSave.yourBuyer fails', () => {
-    //     beforeEach(() => {
-    //       req.body = validBody;
-    //       res.locals = mockRes().locals;
-    //       mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
-    //     });
+      describe('when mapAndSave.buyerTradingHistory fails', () => {
+        beforeEach(() => {
+          req.body = validBody;
+          res.locals = mockRes().locals;
+          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
+        });
 
-    //     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-    //       await post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
-    //       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    //     });
-    //   });
-    // });
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+    });
   });
 });

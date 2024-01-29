@@ -9,7 +9,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../../shared-validation/buyer-country';
-import getCountryByName from '../../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Request, Response } from '../../../../../types';
@@ -95,9 +95,9 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    const submittedCountryName = payload[FIELD_ID];
+    const submittedCountryIsoCode = payload[FIELD_ID];
 
-    const country = getCountryByName(countries, submittedCountryName);
+    const country = getCountryByIsoCode(countries, submittedCountryIsoCode);
 
     if (!country) {
       return res.redirect(CANNOT_APPLY_ROUTE);

@@ -1,6 +1,7 @@
 import broker from './broker';
 import business from './business';
 import buyer from './buyer';
+import buyerTradingHistory from './buyerTradingHistory';
 import company from './company';
 import declarations from '../declarations';
 import companyDifferentTradingAddress from './companyDifferentTradingAddress';
@@ -18,6 +19,7 @@ const update = {
   broker,
   business,
   buyer,
+  buyerTradingHistory,
   company,
   declarations: declarations.update,
   companyDifferentTradingAddress,

@@ -4,6 +4,7 @@ import { Application, Context } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import getCountryByField from '../get-country-by-field';
 import applications from '../../test-helpers/applications';
+import { GBP } from '../../constants';
 
 const invalidId = 'invalid-id';
 
@@ -28,30 +29,44 @@ describe('helpers/create-a-buyer', () => {
     country = await getCountryByField(context, 'isoCode', countryIsoCode);
   });
 
-  test('it should return a buyer with ID', async () => {
+  test('it should return a buyer and buyer trading history with respective IDs', async () => {
     const result = await createABuyer(context, country.id, application.id);
 
-    expect(result.id).toBeDefined();
-    expect(typeof result.id).toEqual('string');
-    expect(result.id.length).toBeGreaterThan(0);
+    const { buyer, buyerTradingHistory } = result;
+
+    expect(buyer).toBeDefined();
+    expect(buyerTradingHistory).toBeDefined();
+    expect(typeof buyer.id).toEqual('string');
+    expect(typeof buyerTradingHistory.id).toEqual('string');
+    expect(buyer.id.length).toBeGreaterThan(0);
+    expect(buyerTradingHistory.id.length).toBeGreaterThan(0);
   });
 
   test('it should return empty buyer fields', async () => {
     const result = await createABuyer(context, country.id, application.id);
+    const { buyer } = result;
 
-    expect(result.address).toEqual('');
-    expect(result.applicationId).toEqual(application.id);
-    expect(result.canContactBuyer).toEqual(null);
-    expect(result.companyOrOrganisationName).toEqual('');
-    expect(result.contactEmail).toEqual('');
-    expect(result.contactFirstName).toEqual('');
-    expect(result.contactLastName).toEqual('');
-    expect(result.contactPosition).toEqual('');
-    expect(result.countryId).toEqual(country.id);
-    expect(result.exporterHasTradedWithBuyer).toEqual(null);
-    expect(result.exporterIsConnectedWithBuyer).toEqual(null);
-    expect(result.registrationNumber).toEqual('');
-    expect(result.website).toEqual('');
+    expect(buyer.address).toEqual('');
+    expect(buyer.applicationId).toEqual(application.id);
+    expect(buyer.canContactBuyer).toEqual(null);
+    expect(buyer.companyOrOrganisationName).toEqual('');
+    expect(buyer.contactEmail).toEqual('');
+    expect(buyer.contactFirstName).toEqual('');
+    expect(buyer.contactLastName).toEqual('');
+    expect(buyer.contactPosition).toEqual('');
+    expect(buyer.countryId).toEqual(country.id);
+    expect(buyer.exporterIsConnectedWithBuyer).toEqual(null);
+    expect(buyer.registrationNumber).toEqual('');
+    expect(buyer.website).toEqual('');
+  });
+
+  test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
+    const result = await createABuyer(context, country.id, application.id);
+    const { buyerTradingHistory } = result;
+
+    expect(buyerTradingHistory.currencyCode).toEqual(GBP);
+    expect(buyerTradingHistory.outstandingPayments).toEqual(null);
+    expect(buyerTradingHistory.failedPayments).toEqual(null);
   });
 
   describe('when an invalid country ID is passed', () => {

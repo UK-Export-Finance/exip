@@ -1,6 +1,6 @@
-import { RequestBody } from '../../../../../types';
-import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
-import { objectHasProperty } from '../../../../helpers/object';
+import { RequestBody } from '../../../../../../types';
+import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
+import { objectHasProperty } from '../../../../../helpers/object';
 
 const {
   COMPANY_OR_ORGANISATION: { CAN_CONTACT_BUYER },
