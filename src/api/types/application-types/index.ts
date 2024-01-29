@@ -9,6 +9,13 @@ export interface ApplicationBusiness extends Relationship {
   exportsTurnoverPercentage: string;
 }
 
+export interface BuyerTradingHistory extends Relationship {
+  exporterHasTradedWithBuyer?: boolean;
+  currencyCode?: string;
+  outstandingPayment?: boolean;
+  failedPayments?: boolean;
+}
+
 export interface ApplicationBuyer extends Relationship {
   companyOrOrganisationName?: string;
   address?: string;
@@ -21,7 +28,7 @@ export interface ApplicationBuyer extends Relationship {
   contactEmail?: string;
   canContactBuyer?: boolean;
   exporterIsConnectedWithBuyer?: boolean;
-  exporterHasTradedWithBuyer?: boolean;
+  buyerTradingHistory: BuyerTradingHistory;
 }
 
 export interface ApplicationCompanyAddressCore {
@@ -158,6 +165,7 @@ export interface ApplicationVersion {
   TOTAL_VALUE_OF_CONTRACT: number;
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
+  DEFAULT_CURRENCY: string;
 }
 
 export interface SectionReview {

@@ -5,7 +5,7 @@ import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buye
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import isChangeRoute from '../../../../helpers/is-change-route';

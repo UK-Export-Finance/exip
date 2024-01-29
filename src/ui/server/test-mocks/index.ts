@@ -16,7 +16,7 @@ import mockSicCodes from './mock-sic-codes';
 import mockBusinessNatureOfBusiness from './mock-business-nature-of-business';
 import mockBusinessTurnover from './mock-business-turnover';
 import mockBroker from './mock-broker';
-import mockBuyer from './mock-buyer';
+import mockBuyer, { mockBuyerTradingHistory } from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockContact from './mock-contact';
@@ -107,6 +107,7 @@ export {
   mockBusinessNatureOfBusiness,
   mockBusinessTurnover,
   mockBuyer,
+  mockBuyerTradingHistory,
   mockCountries,
   mockCompaniesHouseResponse,
   mockCompany,

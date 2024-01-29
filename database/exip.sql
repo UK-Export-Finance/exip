@@ -200,28 +200,49 @@ CREATE TABLE `AuthenticationRetry` (
 DROP TABLE IF EXISTS `Buyer`;
 
 CREATE TABLE `Buyer` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `companyOrOrganisationName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `address` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `registrationNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `website` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `contactFirstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `contactLastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `contactPosition` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `contactEmail` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `companyOrOrganisationName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `address` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `registrationNumber` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `website` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactFirstName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactLastName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactPosition` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactEmail` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` tinyint(1) DEFAULT NULL,
   `exporterIsConnectedWithBuyer` tinyint(1) DEFAULT NULL,
-  `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
   `connectionWithBuyerDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `buyerTradingHistory` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `Buyer_buyerTradingHistory_key` (`buyerTradingHistory`),
   KEY `Buyer_application_idx` (`application`),
   KEY `Buyer_country_idx` (`country`),
   CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Buyer_buyerTradingHistory_fkey` FOREIGN KEY (`buyerTradingHistory`) REFERENCES `BuyerTradingHistory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+# Dump of table BuyerTradingHistory
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `BuyerTradingHistory`;
+
+CREATE TABLE `BuyerTradingHistory` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currencyCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `outstandingPayments` tinyint(1) DEFAULT NULL,
+  `failedPayments` tinyint(1) DEFAULT NULL,
+  `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `BuyerTradingHistory_application_idx` (`application`),
+  CONSTRAINT `BuyerTradingHistory_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 # Dump of table Country

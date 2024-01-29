@@ -7,6 +7,7 @@ describe('server/helpers/flatten-application-data', () => {
     const result = flattenApplicationData(mockApplication);
 
     const { policy, exportContract, company, broker, business, buyer, sectionReview, declaration, policyContact } = mockApplication;
+    const { buyerTradingHistory } = mockApplication.buyer;
 
     const expected = {
       ...mockApplication.eligibility,
@@ -27,6 +28,7 @@ describe('server/helpers/flatten-application-data', () => {
       ...business,
       ...broker,
       ...buyer,
+      ...buyerTradingHistory,
       ...policyContactMapped(policyContact),
       ...getTrueAndFalseAnswers(sectionReview),
       ...getTrueAndFalseAnswers(declaration),

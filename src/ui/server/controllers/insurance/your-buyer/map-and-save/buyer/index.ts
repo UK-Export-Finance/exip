@@ -1,7 +1,7 @@
-import hasFormData from '../../../../helpers/has-form-data';
-import save from '../save-data';
-import { Application, RequestBody, ValidationErrors } from '../../../../../types';
-import mapSubmittedData from '../map-submitted-data';
+import hasFormData from '../../../../../helpers/has-form-data';
+import save from '../../save-data/buyer';
+import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
+import mapSubmittedData from '../../map-submitted-data/buyer';
 
 /**
  * maps buyer request and calls save function

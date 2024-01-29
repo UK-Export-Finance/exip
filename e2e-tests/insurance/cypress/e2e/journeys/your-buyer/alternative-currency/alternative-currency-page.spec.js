@@ -1,7 +1,4 @@
-import {
-  headingCaption, field,
-} from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
+import { headingCaption } from '../../../../../../pages/shared';
 import {
   BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
 } from '../../../../../../content-strings';
@@ -9,12 +6,15 @@ import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insu
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
+import {
+  EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE,
+} from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.ROOT;
 
 const {
   ROOT,
-  YOUR_BUYER: { ALTERNATIVE_CURRENCY },
+  YOUR_BUYER: { ALTERNATIVE_CURRENCY, TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
@@ -27,9 +27,20 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
+const {
+  radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
+  rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl, submitAndAssertRadioIsChecked,
+  submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
+} = assertAlternativeCurrencyForm({
+  legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
+  alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+  errors: ERRORS,
+});
+
 context('Insurance - Your Buyer - Alternative currency - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
+  let tradingHistoryUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,6 +49,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
       cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
+      tradingHistoryUrl = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
       cy.navigateToUrl(url);
 
@@ -63,14 +75,6 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   });
 
   describe('page tests', () => {
-    const {
-      radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
-    } = assertAlternativeCurrencyForm({
-      FIELD_ID: CURRENCY_CODE,
-      LEGEND: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
-      ALTERNATIVE_CURRENCY_TEXT: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
-    });
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -97,23 +101,73 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   });
 
   describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete ', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
       it('should render validation errors', () => {
-        cy.clickSubmitButton();
+        rendersAlternativeCurrencyValidationError();
+      });
+    });
 
-        cy.checkText(
-          partials.errorSummaryListItems().first(),
-          ERRORS[CURRENCY_CODE].IS_EMPTY,
-        );
+    describe('when submitting a supported currency', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-        cy.checkText(
-          field(CURRENCY_CODE).errorMessage(),
-          `Error: ${ERRORS[CURRENCY_CODE].IS_EMPTY}`,
-        );
+      describe(EUR_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, tradingHistoryUrl);
+        });
+
+        it('should display the submitted answer', () => {
+          submitAndAssertRadioIsChecked(EUR_CURRENCY_CODE, url);
+        });
+      });
+
+      describe(GBP_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, tradingHistoryUrl);
+        });
+
+        it('should display the submitted answer', () => {
+          submitAndAssertRadioIsChecked(GBP_CURRENCY_CODE, url);
+        });
+      });
+
+      describe(USD_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(USD_CURRENCY_CODE, tradingHistoryUrl);
+        });
+
+        it('should display the submitted answer', () => {
+          submitAndAssertRadioIsChecked(USD_CURRENCY_CODE, url);
+        });
+      });
+
+      describe(JPY_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, tradingHistoryUrl);
+        });
+
+        it('should display the submitted answer', () => {
+          submitAndAssertRadioIsChecked(JPY_CURRENCY_CODE, url);
+        });
+      });
+    });
+
+    describe('when submitting an alternative currency', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should redirect to the next page', () => {
+        submitAlternativeCurrencyAndAssertUrl(tradingHistoryUrl);
+      });
+
+      it('should display the submitted answer', () => {
+        submitAlternativeCurrencyAndAssertInput(url);
       });
     });
   });

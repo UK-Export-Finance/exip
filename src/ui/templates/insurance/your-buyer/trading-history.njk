@@ -57,7 +57,7 @@
             legendText: FIELDS.OUTSTANDING_PAYMENTS.LABEL,
             legendClass: 'govuk-fieldset__legend--m',
             legendSpan: true,
-            submittedAnswer: submittedValues[FIELDS.OUTSTANDING_PAYMENTS.ID] or application.buyer[FIELDS.OUTSTANDING_PAYMENTS.ID],
+            submittedAnswer: submittedValues[FIELDS.OUTSTANDING_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.OUTSTANDING_PAYMENTS.ID],
             errorMessage: validationErrors.errorList[FIELDS.OUTSTANDING_PAYMENTS.ID],
             dataCyLegend: FIELDS.OUTSTANDING_PAYMENTS.ID + '-legend',
             horizontalRadios: true
@@ -68,7 +68,7 @@
             legendText: FIELDS.FAILED_PAYMENTS.LABEL,
             legendClass: 'govuk-fieldset__legend--m',
             legendSpan: true,
-            submittedAnswer: submittedValues[FIELDS.FAILED_PAYMENTS.ID] or application.buyer[FIELDS.OUTSTANDING_PAYMENTS.ID],
+            submittedAnswer: submittedValues[FIELDS.FAILED_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.OUTSTANDING_PAYMENTS.ID],
             errorMessage: validationErrors.errorList[FIELDS.FAILED_PAYMENTS.ID],
             dataCyLegend: FIELDS.FAILED_PAYMENTS.ID + '-legend',
             horizontalRadios: true

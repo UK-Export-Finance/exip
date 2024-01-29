@@ -363,6 +363,7 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateBuyerTradingHistory",
   "updateCompany",
   "updateDeclaration",
   "updatePolicy",
@@ -419,6 +420,10 @@ if (isDevEnvironment) {
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
 
+// constants/supported-currencies/index.ts
+var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
+var GBP = "GBP";
+
 // constants/application/versions/index.ts
 var VERSIONS = [
   {
@@ -433,7 +438,8 @@ var VERSIONS = [
     VERSION_NUMBER: "2",
     OVER_500K_SUPPORT: true,
     DEFAULT_FINAL_DESTINATION_KNOWN: null,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
+    DEFAULT_CURRENCY: GBP
   }
 ];
 var versions_default = VERSIONS;
@@ -480,7 +486,8 @@ var APPLICATION = {
     SUBMITTED: "Submitted to UKEF"
   },
   DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
-  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  DEFAULT_CURRENCY: LATEST_VERSION.DEFAULT_CURRENCY
 };
 var application_default = APPLICATION;
 
@@ -560,9 +567,6 @@ var FIELD_VALUES = {
   YES: "Yes",
   NO: "No"
 };
-
-// constants/supported-currencies/index.ts
-var SUPPORTED_CURRENCIES = ["EUR", "GBP", "JPY", "USD"];
 
 // constants/total-contract-value/index.ts
 var TOTAL_CONTRACT_VALUE = {
@@ -1369,10 +1373,30 @@ var lists = {
       contactEmail: (0, import_fields.text)(),
       canContactBuyer: nullable_checkbox_default(),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
-      exporterHasTradedWithBuyer: nullable_checkbox_default(),
       connectionWithBuyerDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
-      })
+      }),
+      buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
+  BuyerTradingHistory: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerTradingHistory" }),
+      currencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      outstandingPayments: nullable_checkbox_default(),
+      failedPayments: nullable_checkbox_default(),
+      exporterHasTradedWithBuyer: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -3345,6 +3369,33 @@ var createAnEligibility = async (context, countryId, applicationId, coverPeriodI
 };
 var create_an_eligibility_default = createAnEligibility;
 
+// helpers/create-a-buyer-trading-history/index.ts
+var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
+  console.info("Creating a buyer trading history for ", buyerId);
+  try {
+    const buyerTradingHistory = await context.db.BuyerTradingHistory.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
+          }
+        },
+        currencyCode: APPLICATION.DEFAULT_CURRENCY
+      }
+    });
+    return buyerTradingHistory;
+  } catch (err) {
+    console.error("Error creating a buyer trading history %O", err);
+    throw new Error(`Creating a buyer trading history ${err}`);
+  }
+};
+var create_a_buyer_trading_history_default = createABuyerTradingHistory;
+
 // helpers/create-a-buyer/index.ts
 var createABuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for ", applicationId);
@@ -3359,7 +3410,11 @@ var createABuyer = async (context, countryId, applicationId) => {
         }
       }
     });
-    return buyer;
+    const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id, applicationId);
+    return {
+      buyer,
+      buyerTradingHistory
+    };
   } catch (err) {
     console.error("Error creating a buyer %O", err);
     throw new Error(`Creating a buyer ${err}`);
@@ -3545,7 +3600,7 @@ var createAnApplication = async (root, variables, context) => {
       }
     });
     const { id: applicationId } = application2;
-    const buyer = await create_a_buyer_default(context, country.id, applicationId);
+    const { buyer } = await create_a_buyer_default(context, country.id, applicationId);
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);

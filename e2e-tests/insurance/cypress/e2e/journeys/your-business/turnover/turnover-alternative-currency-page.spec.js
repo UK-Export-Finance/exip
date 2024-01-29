@@ -76,8 +76,8 @@ context('Insurance - Your business - Turnover - alternative currency page - As a
 
   describe('page tests', () => {
     const { radios, alternativeCurrencyInput } = assertAlternativeCurrencyForm({
-      LEGEND: EXPORTER_BUSINESS_FIELDS[CURRENCY_CODE].LEGEND,
-      ALTERNATIVE_CURRENCY_TEXT: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+      legend: EXPORTER_BUSINESS_FIELDS[CURRENCY_CODE].LEGEND,
+      alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
     });
 
     beforeEach(() => {

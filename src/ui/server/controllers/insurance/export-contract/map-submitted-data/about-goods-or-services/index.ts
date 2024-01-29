@@ -1,5 +1,5 @@
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
-import getCountryByName from '../../../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { Country, RequestBody } from '../../../../../../types';
 
@@ -24,7 +24,7 @@ const mapSubmittedData = (formBody: RequestBody, countries?: Array<Country>): ob
   if (countries && hasFinalDestination) {
     const submittedCountryName = formBody[FINAL_DESTINATION];
 
-    const country = getCountryByName(countries, submittedCountryName);
+    const country = getCountryByIsoCode(countries, submittedCountryName);
 
     populatedData[FINAL_DESTINATION] = country?.isoCode;
   }

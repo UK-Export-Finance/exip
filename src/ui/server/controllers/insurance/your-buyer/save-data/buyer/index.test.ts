@@ -1,16 +1,16 @@
 import save from '.';
-import api from '../../../../api';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
-import getDataToSave from '../../../../helpers/get-data-to-save';
-import { FIELD_IDS } from '../../../../constants';
-import { mockApplication, mockBuyer } from '../../../../test-mocks';
-import generateValidationErrors from '../../../../helpers/validation';
+import api from '../../../../../api';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import getDataToSave from '../../../../../helpers/get-data-to-save';
+import { FIELD_IDS } from '../../../../../constants';
+import { mockApplication, mockBuyer } from '../../../../../test-mocks';
+import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
   COMPANY_OR_ORGANISATION: { ADDRESS },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
-describe('controllers/insurance/your-buyer/save-data', () => {
+describe('controllers/insurance/your-buyer/save-data/buyer', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 

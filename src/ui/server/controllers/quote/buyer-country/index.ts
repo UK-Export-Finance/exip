@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../helpers/get-user-name-from-session'
 import constructPayload from '../../../helpers/construct-payload';
 import { validation as generateValidationErrors } from '../../../shared-validation/buyer-country';
 import isChangeRoute from '../../../helpers/is-change-route';
-import getCountryByName from '../../../helpers/get-country-by-name';
+import getCountryByIsoCode from '../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { Request, Response } from '../../../../types';
@@ -126,7 +126,7 @@ export const post = async (req: Request, res: Response) => {
 
     const submittedCountryName = payload[FIELD_ID];
 
-    const country = getCountryByName(countries, submittedCountryName);
+    const country = getCountryByIsoCode(countries, submittedCountryName);
 
     if (!country) {
       return res.redirect(ROUTES.QUOTE.CANNOT_APPLY);

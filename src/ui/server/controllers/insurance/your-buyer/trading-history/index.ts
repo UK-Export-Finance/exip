@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-// import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
@@ -111,11 +111,11 @@ export const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call
-    // const saveResponse = await mapAndSave.yourBuyer(payload, application);
+    const saveResponse = await mapAndSave.buyerTradingHistory(payload, application);
 
-    // if (!saveResponse) {
-    //   return res.redirect(PROBLEM_WITH_SERVICE);
-    // }
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
 
     /**
      * If is a change route

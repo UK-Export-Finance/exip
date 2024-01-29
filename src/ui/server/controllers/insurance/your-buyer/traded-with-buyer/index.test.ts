@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import tradedWithBuyerValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -88,7 +88,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(mockApplication.referenceNumber),
-        submittedValues: mockApplication.buyer,
+        submittedValues: mockApplication.buyer.buyerTradingHistory,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -113,7 +113,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
     };
 
     beforeEach(() => {
-      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
+      mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are no validation errors', () => {
@@ -128,15 +128,15 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.yourBuyer once with buyer and application', async () => {
+      it('should call mapAndSave.buyerTradingHistory once with buyer and application', async () => {
         await post(req, res);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(req.body, mockApplication);
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(req.body, mockApplication);
       });
 
-      it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function and application', async () => {
         req.body = {
           ...validBody,
           injection: 1,
@@ -144,11 +144,11 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
         await post(req, res);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledTimes(1);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
+        expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe(`when ${TRADED_WITH_BUYER} is false`, () => {
@@ -234,11 +234,11 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
     });
 
     describe('api error handling', () => {
-      describe('when mapAndSave.yourBuyer returns false', () => {
+      describe('when mapAndSave.buyerTradingHistory returns false', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
+          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(false));
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -248,11 +248,11 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         });
       });
 
-      describe('when mapAndSave.yourBuyer fails', () => {
+      describe('when mapAndSave.buyerTradingHistory fails', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerTradingHistory = jest.fn(() => Promise.reject(new Error('mock')));
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
