@@ -107,7 +107,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
       field.input().should('exist');
 
-      cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
+      cy.checkText(field.legend(), FIELDS.TURNOVER[fieldId].LEGEND);
 
       cy.checkText(field.prefix(), FIELDS.TURNOVER[fieldId].PREFIX);
     });
