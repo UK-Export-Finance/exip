@@ -743,6 +743,7 @@ CREATE TABLE `Business` (
   `estimatedAnnualTurnover` int DEFAULT NULL,
   `exportsTurnoverPercentage` int DEFAULT NULL,
   `hasCreditControlProcess` tinyint(1) DEFAULT NULL,
+  `turnoverCurrencyCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `Business_application_idx` (`application`),
   CONSTRAINT `Business_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
