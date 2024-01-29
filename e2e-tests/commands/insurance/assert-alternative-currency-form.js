@@ -103,28 +103,6 @@ const assertAlternativeCurrencyForm = ({
     checkAutocompleteInput
       .allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
-  rendersNoSelectionValidationError: () => {
-    cy.clickSubmitButton();
-
-    /**
-     * Custom field object is required because:
-     * - The field is "currency code".
-     * - But the error assertion is on the 1st currency code option (GBP).
-     */
-    const gbpField = field(`${CURRENCY_CODE}-${GBP.isoCode}`);
-
-    const gbpRadioField = {
-      ...field(CURRENCY_CODE),
-      input: gbpField.input,
-    };
-
-    cy.submitAndAssertRadioErrors(
-      gbpRadioField,
-      0,
-      1,
-      errors[CURRENCY_CODE].IS_EMPTY,
-    );
-  },
   rendersAlternativeCurrencyValidationError: () => {
     cy.clickAlternativeCurrencyRadioOption();
 

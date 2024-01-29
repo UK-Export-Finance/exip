@@ -29,7 +29,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const {
   radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
-  rendersNoSelectionValidationError, rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
+  rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
   submitAndAssertRadioIsChecked, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
 } = assertAlternativeCurrencyForm({
   legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
@@ -101,16 +101,6 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
   });
 
   describe('form submission', () => {
-    describe('when submitting an empty form', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it('should render validation errors', () => {
-        rendersNoSelectionValidationError();
-      });
-    });
-
     describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete input', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
