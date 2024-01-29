@@ -106,7 +106,7 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
           ),
           renderChangeLink: true,
         },
-        mapYesNoField(mockAnswers[TRADED_WITH_BUYER]),
+        mapYesNoField(mockAnswers.buyerTradingHistory[TRADED_WITH_BUYER]),
       ),
     ];
 
