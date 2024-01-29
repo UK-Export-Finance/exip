@@ -3,10 +3,10 @@ import createABuyerTradingHistory from '../create-a-buyer-trading-history';
 
 /**
  * createABuyer
- * Create a buyer with relationships for:
- * 1) A country
- * 2) An application
- * Creates a buyer trading address with buyer relationship
+ * Create a buyer with:
+ * 1) A country relationship
+ * 2) An application relationship
+ * 3) A Buyer trading history and relationship
  * @param {Object} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
