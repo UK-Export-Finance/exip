@@ -11,7 +11,6 @@ const {
   POLICY: {
     TYPE_OF_POLICY_CHECK_AND_CHANGE,
     MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
-    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS,
 } = INSURANCE_ROUTES;
@@ -147,7 +146,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
         summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
 
         cy.assertChangeAnswersPageUrl({
-          referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
+          referenceNumber, route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
         });
       });
     });
