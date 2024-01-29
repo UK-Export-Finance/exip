@@ -20,7 +20,12 @@ const {
 } = FIELD_IDS;
 
 const {
-  POLICY: { MULTIPLE_CONTRACT_POLICY_CHANGE, MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+  POLICY: {
+    MULTIPLE_CONTRACT_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 describe('server/helpers/summary-lists/policy/policy-and-date-fields/multiple-contract-policy-fields', () => {
@@ -44,8 +49,8 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/multiple-co
       field: getFieldById(FIELDS.EXPORT_VALUE.MULTIPLE, TOTAL_SALES_TO_BUYER),
       renderChangeLink: true,
       href: generateChangeLink(
-        MULTIPLE_CONTRACT_POLICY_CHANGE,
-        MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
         `#${TOTAL_SALES_TO_BUYER}-label`,
         referenceNumber,
         checkAndChange,
@@ -55,8 +60,8 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/multiple-co
       field: getFieldById(FIELDS.EXPORT_VALUE.MULTIPLE, MAXIMUM_BUYER_WILL_OWE),
       renderChangeLink: true,
       href: generateChangeLink(
-        MULTIPLE_CONTRACT_POLICY_CHANGE,
-        MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
+        MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE,
         `#${MAXIMUM_BUYER_WILL_OWE}-label`,
         referenceNumber,
         checkAndChange,
