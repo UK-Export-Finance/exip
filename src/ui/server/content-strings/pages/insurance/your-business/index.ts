@@ -40,7 +40,7 @@ const EXPORTER_BUSINESS = {
     PAGE_TITLE: 'Turnover',
     PROVIDE_ALTERNATIVE_CURRENCY: 'Provide turnover in an alternative currency',
   },
-  TURNOVER_CURRENCY: {
+  TURNOVER_ALTERNATIVE_CURRENCY: {
     ...SHARED,
     PAGE_TITLE: 'What currency is your turnover in?',
   },

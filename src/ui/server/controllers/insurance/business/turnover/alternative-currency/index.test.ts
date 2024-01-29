@@ -16,7 +16,7 @@ import { mockReq, mockRes, mockCurrenciesResponse, mockApplication, GBP } from '
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { CREDIT_CONTROL },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -26,7 +26,7 @@ const {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-describe('controllers/insurance/business/turnover/currency', () => {
+describe('controllers/insurance/business/turnover/alternative-currency', () => {
   let req: Request;
   let res: Response;
 
@@ -77,7 +77,7 @@ describe('controllers/insurance/business/turnover/currency', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct template defined', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_CURRENCY);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY);
     });
   });
 
@@ -189,7 +189,7 @@ describe('controllers/insurance/business/turnover/currency', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_CONTROL}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });

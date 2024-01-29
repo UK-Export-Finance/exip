@@ -14,7 +14,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/business/turnover/currency/validation/rules/alternative-currency', () => {
+describe('controllers/insurance/business/turnover/alternative-currency/validation/rules/alternative-currency', () => {
   const mockErrors = {
     summary: [],
     errorList: {},
