@@ -7,7 +7,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
 import {
-  EUR, GBP, USD, JPY,
+  EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE,
 } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.ROOT;
@@ -116,51 +116,43 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
         cy.navigateToUrl(url);
       });
 
-      describe(EUR.name, () => {
-        const { isoCode } = EUR;
-
+      describe(EUR_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitAndAssertRadioIsChecked(isoCode, url);
+          submitAndAssertRadioIsChecked(EUR_CURRENCY_CODE, url);
         });
       });
 
-      describe(GBP.name, () => {
-        const { isoCode } = GBP;
-
+      describe(GBP_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitAndAssertRadioIsChecked(isoCode, url);
+          submitAndAssertRadioIsChecked(GBP_CURRENCY_CODE, url);
         });
       });
 
-      describe(USD.name, () => {
-        const { isoCode } = USD;
-
+      describe(USD_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(USD_CURRENCY_CODE, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitAndAssertRadioIsChecked(isoCode, url);
+          submitAndAssertRadioIsChecked(USD_CURRENCY_CODE, url);
         });
       });
 
-      describe(JPY.name, () => {
-        const { isoCode } = JPY;
-
+      describe(JPY_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(isoCode, tradingHistoryUrl);
+          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, tradingHistoryUrl);
         });
 
         it('should display the submitted answer', () => {
-          submitAndAssertRadioIsChecked(isoCode, url);
+          submitAndAssertRadioIsChecked(JPY_CURRENCY_CODE, url);
         });
       });
     });

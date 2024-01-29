@@ -15,7 +15,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
       _csrf: 'abc',
       [CURRENCY_CODE]: GBP,
       [ALTERNATIVE_CURRENCY_CODE]: '',
-      other: 'test',
+      other: 'other field input',
     };
   });
 

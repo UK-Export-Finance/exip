@@ -1,3 +1,5 @@
+import { countryInput } from '../../../pages/shared';
+
 const checkAutocompleteInput = {
   isVisible: (field) => {
     field.input().should('be.visible');
@@ -41,29 +43,12 @@ const checkAutocompleteInput = {
 
     results.should('have.length.greaterThan', 1);
   },
-  allowsUserToRemoveCountryAndSearchAgain: (field, country1, country2, expectedValue) => {
-    cy.keyboardInput(field.input(), country1);
-    const results = field.results();
+  allowsUserToRemoveCountryAndSearchAgain: (fieldId, country1, country2, expectedValue) => {
+    cy.autocompleteKeyboardInput(fieldId, country1);
+    // enter the second country
+    cy.autocompleteKeyboardInput(fieldId, country2);
 
-    // select the first result
-    results.first().click();
-
-    // clear the input
-    field.input().clear();
-
-    // search for a different country, submit with enter key
-    cy.keyboardInput(field.input(), `${country2}{enter}`);
-
-    cy.checkText(field.results(), expectedValue);
-  },
-  search: (field, input) => {
-    field.input().clear();
-
-    cy.keyboardInput(field.input(), input);
-    const results = field.results();
-
-    // select the first result
-    results.first().click();
+    cy.checkText(countryInput.field(fieldId).results(), expectedValue);
   },
   checkInput: (field, expectedValue) => {
     // checks input displays the correct text

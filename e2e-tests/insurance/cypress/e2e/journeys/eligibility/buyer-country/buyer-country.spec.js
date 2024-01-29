@@ -75,7 +75,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     });
 
     it('allows user to remove a selected country and search again', () => {
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(countryInput.field(FIELD_ID), ALGERIA, BRAZIL, BRAZIL);
+      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(FIELD_ID, ALGERIA, BRAZIL, BRAZIL);
     });
   });
 

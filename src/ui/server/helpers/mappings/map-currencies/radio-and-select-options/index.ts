@@ -15,7 +15,7 @@ const {
  * @param {Array} alternativeCurrencies: Array of alternative currencies
  * @param {Array} currencies: Array of supported currencies
  * @param {String} selectedValue: Selected currency
- * @returns {Object} Mapped currencies and applicationAnswer
+ * @returns {Object} Mapped currencies and submittedValue
  */
 const mapRadioAndSelectOptions = (alternativeCurrencies: Array<Currency>, supportedCurrencies: Array<Currency>, selectedValue?: string) => {
   const mapped = {

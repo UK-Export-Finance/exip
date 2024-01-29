@@ -86,7 +86,7 @@ const assertAlternativeCurrencyForm = ({
   doesNotRenderSupportedCurrencies: () => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), 'test');
+    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), 'not a currency');
     // should not render radio values in alternate currency input
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), GBP.isoCode);
     checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), USD.isoCode);
@@ -101,7 +101,7 @@ const assertAlternativeCurrencyForm = ({
 
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     checkAutocompleteInput
-      .allowsUserToRemoveCountryAndSearchAgain(countryInput.field(alternativeCurrencyFieldId), DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
+      .allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
   rendersAlternativeCurrencyValidationError: () => {
     cy.clickAlternativeCurrencyRadioOption();
@@ -140,8 +140,8 @@ const assertAlternativeCurrencyForm = ({
   submitAlternativeCurrencyAndAssertUrl: (redirectUrl) => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    // search for country
-    checkAutocompleteInput.search(countryInput.field(alternativeCurrencyFieldId), NON_STANDARD_CURRENCY_NAME);
+    // search for currency
+    cy.autocompleteKeyboardInput(alternativeCurrencyFieldId, NON_STANDARD_CURRENCY_NAME);
 
     cy.clickSubmitButton();
     // asserts redirect URL is correct
@@ -153,8 +153,8 @@ const assertAlternativeCurrencyForm = ({
     // clicks alternative currency radio
     option5.input().click();
 
-    // searches for currency
-    checkAutocompleteInput.search(countryInput.field(alternativeCurrencyFieldId), NON_STANDARD_CURRENCY_NAME);
+    // search for currency
+    cy.autocompleteKeyboardInput(alternativeCurrencyFieldId, NON_STANDARD_CURRENCY_NAME);
 
     cy.clickSubmitButton();
 

@@ -1,9 +1,9 @@
 import { SUPPORTED_CURRENCIES } from '../../../../constants';
 
 /**
- * isSupportedCurrency
- * checks if provided currency is provided or not
- * returns the currency if supportedCurrency or undefined if not supported
+ * isNotAlternativeCurrency
+ * checks if provided currency is not an alternative currency
+ * returns the currency if not alternative currency or undefined if not supported
  * @param {String} currency
  * @returns {String} currency or undefined
  */

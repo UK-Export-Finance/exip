@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save/buyer';
+import mapAndSave from '../../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockBuyer } from '../../../../../test-mocks';
 
@@ -22,7 +22,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.yourBuyer = updateMapAndSave;
+    mapAndSave.buyerTradingHistory = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -100,7 +100,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
     beforeEach(() => {
       res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.resolve(false));
-      mapAndSave.yourBuyer = updateMapAndSave;
+      mapAndSave.buyerTradingHistory = updateMapAndSave;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -114,7 +114,7 @@ describe('controllers/insurance/your-buyer/working-with-buyer/save-and-back', ()
     beforeEach(() => {
       res.locals = mockRes().locals;
       updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
-      mapAndSave.yourBuyer = updateMapAndSave;
+      mapAndSave.buyerTradingHistory = updateMapAndSave;
     });
 
     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

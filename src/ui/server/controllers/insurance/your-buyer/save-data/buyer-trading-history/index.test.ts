@@ -2,6 +2,7 @@ import save from '.';
 import api from '../../../../../api';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { mockApplication, mockBuyerTradingHistory } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -30,7 +31,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
-        const expectedSanitisedData = sanitiseData(dataToSave);
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave));
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerTradingHistory.id, expectedSanitisedData);
       });
 
@@ -48,7 +49,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
-        const expectedSanitisedData = sanitiseData(dataToSave);
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave));
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerTradingHistory.id, expectedSanitisedData);
       });
 
