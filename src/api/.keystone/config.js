@@ -1268,7 +1268,8 @@ var lists = {
       estimatedAnnualTurnover: (0, import_fields.integer)(),
       exportsTurnoverPercentage: (0, import_fields.integer)(),
       turnoverCurrencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
+        db: { nativeType: "VarChar(3)" },
+        defaultValue: APPLICATION.DEFAULT_CURRENCY
       }),
       hasCreditControlProcess: nullable_checkbox_default()
     },
