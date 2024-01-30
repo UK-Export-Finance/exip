@@ -88,7 +88,7 @@ export const POLICY_FIELDS = {
         },
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        HINT: 'Enter a whole number - do not enter decimals.',
+        HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
           TITLE: 'Contract value',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -111,7 +111,7 @@ export const POLICY_FIELDS = {
     MULTIPLE: {
       [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: 'Estimate total sales to your buyer during this time',
-        HINT: 'Enter a whole number - do not enter decimals.',
+        HINT: 'Enter a whole number. Do not enter decimals.',
         SUMMARY: {
           TITLE: 'Estimated total sales to the buyer',
           FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
@@ -121,7 +121,7 @@ export const POLICY_FIELDS = {
         LABEL: 'Estimate the maximum amount your buyer will owe you at any single point during this time',
         HINT: {
           FOR_EXAMPLE: 'For example, your total sales might be £250,000 but the maximum the buyer will owe you at any single point is £100,000.',
-          NO_DECIMALS: 'Enter a whole number - do not enter decimals.',
+          NO_DECIMALS: 'Enter a whole number. Do not enter decimals.',
         },
         SUMMARY: {
           TITLE: 'Estimated maximum amount owed by the buyer',
