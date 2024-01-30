@@ -201,7 +201,7 @@ model Business {
   totalEmployeesUK          Int?
   estimatedAnnualTurnover   Int?
   exportsTurnoverPercentage Int?
-  turnoverCurrencyCode      String        @default("GBP") @mysql.VarChar(3)
+  turnoverCurrencyCode      String        @default("") @mysql.VarChar(3)
   hasCreditControlProcess   Boolean?
   from_Application_business Application[] @relation("Application_business")
 
