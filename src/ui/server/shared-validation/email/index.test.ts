@@ -1,12 +1,8 @@
 import emailValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
+import { mockErrors } from '../../test-mocks';
 
 describe('shared-validation/email', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockFieldId = 'email';
   const mockErrorMessage = 'Incorrect format';
 

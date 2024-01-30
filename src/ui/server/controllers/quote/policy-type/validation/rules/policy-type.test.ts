@@ -2,6 +2,7 @@ import rule from './policy-type';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import emptyFieldValidation from '../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../test-mocks';
 
 const { POLICY_TYPE: FIELD_ID, SINGLE_POLICY_TYPE } = FIELD_IDS;
 const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
@@ -9,11 +10,6 @@ const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 describe('controllers/quote/policy-type/validation/rules/policy-type', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   describe('when a value is not a valid policy type', () => {

@@ -1,9 +1,10 @@
 import connectionWithBuyerDescriptionRule from './connection-with-buyer-description';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -20,11 +21,6 @@ const {
 const MAXIMUM = 1000;
 
 describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rules/connection-with-buyer-description', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
     [CONNECTION_WITH_BUYER]: true,

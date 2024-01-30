@@ -141,7 +141,7 @@ describe('Create an Application', () => {
     const expectedMonth = new Date(expectedDate).getMonth();
     const expectedYear = new Date(expectedDate).getFullYear();
 
-    expect(submissionDeadlineDay).toEqual(expectedDay); // this is the failing test
+    expect(submissionDeadlineDay).toEqual(expectedDay);
     expect(submissionDeadlineMonth).toEqual(expectedMonth);
     expect(submissionDeadlineYear).toEqual(expectedYear);
   });

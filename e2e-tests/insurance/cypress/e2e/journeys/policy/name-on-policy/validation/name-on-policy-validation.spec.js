@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -10,7 +10,6 @@ import account from '../../../../../../../fixtures/account';
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    PRE_CREDIT_PERIOD,
     DIFFERENT_NAME_ON_POLICY,
     NAME_ON_POLICY,
   },
@@ -28,6 +27,13 @@ const {
     EMAIL,
   },
 } = INSURANCE_FIELD_IDS;
+
+const {
+  NAME_ON_POLICY: {
+    OPTIONS,
+    [POSITION]: { MAXIMUM },
+  },
+} = FIELDS;
 
 const NAME_ON_POLICY_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY.NAME_ON_POLICY;
 
@@ -61,7 +67,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('No radios selected', () => {
+  describe('when no radios are selected', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -71,7 +77,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
       const expectedErrorMessage = NAME_ON_POLICY_ERRORS[NAME].IS_EMPTY;
 
       cy.submitAndAssertRadioErrors(
-        field(SAME_NAME),
+        fieldSelector(SAME_NAME),
         0,
         expectedErrorsCount,
         expectedErrorMessage,
@@ -79,58 +85,69 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     });
   });
 
-  describe(`${POSITION} not entered`, () => {
+  describe(POSITION, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field(SAME_NAME).input().click();
+      fieldSelector(SAME_NAME).input().click();
     });
 
-    it('should display validation error', () => {
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = NAME_ON_POLICY_ERRORS[POSITION].IS_EMPTY;
+    const { field, numberOfExpectedErrors, errorIndex } = {
+      field: fieldSelector(POSITION),
+      numberOfExpectedErrors: 1,
+      errorIndex: 0,
+    };
 
-      cy.submitAndAssertFieldErrors(
-        field(POSITION),
-        null,
-        0,
-        expectedErrorsCount,
-        expectedErrorMessage,
-        false,
-      );
+    const ERROR = NAME_ON_POLICY_ERRORS[POSITION];
+
+    describe(`when ${POSITION} is left empty`, () => {
+      it('should render validation errors', () => {
+        const value = '';
+
+        cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+      });
+
+      it(`should render the ${SAME_NAME} radio text`, () => {
+        const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
+        cy.checkText(fieldSelector(SAME_NAME).label(), nameAndEmail);
+      });
+
+      it(`should render the ${OTHER_NAME} radio text`, () => {
+        cy.checkText(fieldSelector(OTHER_NAME).label(), OPTIONS.OTHER_NAME.TEXT);
+      });
     });
 
-    it(`should render the ${SAME_NAME} radio text`, () => {
-      const nameAndEmail = `${account[FIRST_NAME]} ${account[LAST_NAME]} (${account[EMAIL]})`;
-      cy.checkText(field(SAME_NAME).label(), nameAndEmail);
+    it(`should render validation errors when ${POSITION} is over ${MAXIMUM} characters`, () => {
+      const value = 'a'.repeat(FIELDS.NAME_ON_POLICY[POSITION].MAXIMUM + 1);
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
     });
 
-    it(`should render the ${OTHER_NAME} radio text`, () => {
-      cy.checkText(field(OTHER_NAME).label(), FIELDS.NAME_ON_POLICY.OPTIONS.OTHER_NAME.TEXT);
+    it(`should render validation errors when ${POSITION} contains a special character`, () => {
+      const value = 'a!';
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+    });
+
+    it(`should render validation errors when ${POSITION} contains a number`, () => {
+      const value = 'a1';
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+    });
+
+    it(`should render validation errors when ${POSITION} contains a number and special character`, () => {
+      const value = 'a1!';
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
     });
   });
 
-  describe(`${POSITION} entered`, () => {
+  describe(`when ${OTHER_NAME} is selected`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
 
-    it('should not display validation error and redirect to the next page', () => {
-      cy.completeAndSubmitNameOnPolicyForm({});
-
-      partials.errorSummaryListItems().should('not.exist');
-
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
-      cy.assertUrl(expectedUrl);
-    });
-  });
-
-  describe(`${OTHER_NAME} selected`, () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
-
-    it('should not display validation error and redirect to the next page', () => {
+    it('should NOT display validation error, but redirect to the next page', () => {
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       partials.errorSummaryListItems().should('not.exist');

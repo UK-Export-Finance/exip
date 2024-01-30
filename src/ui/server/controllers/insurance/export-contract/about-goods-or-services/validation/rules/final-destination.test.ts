@@ -2,6 +2,7 @@ import finalDestinationRules from './final-destination';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -16,11 +17,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/export-contract/about-goods-or-services/validation/rules/final-destination', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe(`when ${FINAL_DESTINATION_KNOWN} is 'true'`, () => {
     it('should return the result of emptyFieldValidation with FINAL_DESTINATION field ID/error mesage', () => {
       const mockBody = {

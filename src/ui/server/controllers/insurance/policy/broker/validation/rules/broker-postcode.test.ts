@@ -1,8 +1,9 @@
 import brokerPostcode from './broker-postcode';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../../types';
 import postCodeValidation from '../../../../../../shared-validation/postcode';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   BROKER: { POSTCODE, USING_BROKER },
@@ -12,11 +13,6 @@ const { POLICY } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = POLICY[POSTCODE];
 
 describe('controllers/insurance/policy/broker/validation/rules/broker-postcode', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [POSTCODE]: '',
   } as RequestBody;

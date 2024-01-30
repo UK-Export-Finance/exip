@@ -1,8 +1,9 @@
 import employeesUK from './employees-uk';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   NATURE_OF_YOUR_BUSINESS: { EMPLOYEES_UK: FIELD_ID },
@@ -13,11 +14,6 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/nature-of-business/validation/rules/employees-uk', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

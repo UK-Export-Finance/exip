@@ -4,6 +4,7 @@ import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import dateRules from '../../../../../../shared-validation/date';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   POLICY: {
@@ -25,11 +26,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/policy/single-contract-policy/validation/rules/contract-completion-date', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe('when fields are invalid', () => {
     it('should return validation the result of dateRules', () => {
       const mockSubmittedData = {

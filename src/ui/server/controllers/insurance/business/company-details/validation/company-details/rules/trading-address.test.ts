@@ -3,6 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../../constants';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../../types';
+import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { TRADING_ADDRESS: FIELD_ID },
@@ -13,11 +14,6 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/tradingAddress', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;
