@@ -1,3 +1,4 @@
+import { addMonths } from 'date-fns';
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
@@ -132,16 +133,15 @@ describe('Create an Application', () => {
     const submissionDeadlineMonth = new Date(application.submissionDeadline).getMonth();
     const submissionDeadlineYear = new Date(application.submissionDeadline).getFullYear();
 
-    const date = new Date();
-    const month = date.getMonth();
+    const now = new Date();
 
-    const expectedDate = new Date(date.setMonth(month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS));
+    const expectedDate = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
     const expectedDay = new Date(expectedDate).getDate();
     const expectedMonth = new Date(expectedDate).getMonth();
     const expectedYear = new Date(expectedDate).getFullYear();
 
-    expect(submissionDeadlineDay).toEqual(expectedDay);
+    expect(submissionDeadlineDay).toEqual(expectedDay); // this is the failing test
     expect(submissionDeadlineMonth).toEqual(expectedMonth);
     expect(submissionDeadlineYear).toEqual(expectedYear);
   });
