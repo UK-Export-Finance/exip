@@ -4093,7 +4093,7 @@ var POLICY_FIELDS = {
         }
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
-        HINT: "Enter a whole number - do not enter decimals.",
+        HINT: "Enter a whole number. Do not enter decimals.",
         SUMMARY: {
           TITLE: "Contract value"
         }
@@ -4111,7 +4111,7 @@ var POLICY_FIELDS = {
     MULTIPLE: {
       [EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
         LABEL: "Estimate total sales to your buyer during this time",
-        HINT: "Enter a whole number - do not enter decimals.",
+        HINT: "Enter a whole number. Do not enter decimals.",
         SUMMARY: {
           TITLE: "Estimated total sales to the buyer"
         }
