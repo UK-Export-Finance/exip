@@ -88,6 +88,10 @@ interface ApplicationBusiness {
   goodsOrServices?: string;
   totalYearsExporting?: string;
   totalEmployeesUK?: string;
+  estimatedAnnualTurnover?: string;
+  exportsTurnoverPercentage?: string;
+  turnoverCurrencyCode?: string;
+  hasCreditControlProcess?: boolean;
 }
 
 interface ApplicationBroker {

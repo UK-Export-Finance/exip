@@ -1,3 +1,4 @@
+import { addMonths } from 'date-fns';
 import { APPLICATION } from './constants';
 import updateApplication from './helpers/update-application';
 import accounts from './test-helpers/accounts';
@@ -7,7 +8,7 @@ import buyers from './test-helpers/buyers';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
 import { mockAccount } from './test-mocks';
-import { Application, ApplicationBuyer, Account, Context } from './types';
+import { Application, ApplicationBuyer, ApplicationBusiness, Account, Context } from './types';
 
 describe('Create an Application', () => {
   let context: Context;
@@ -132,16 +133,15 @@ describe('Create an Application', () => {
     const submissionDeadlineMonth = new Date(application.submissionDeadline).getMonth();
     const submissionDeadlineYear = new Date(application.submissionDeadline).getFullYear();
 
-    const date = new Date();
-    const month = date.getMonth();
+    const now = new Date();
 
-    const expectedDate = new Date(date.setMonth(month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS));
+    const expectedDate = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
     const expectedDay = new Date(expectedDate).getDate();
     const expectedMonth = new Date(expectedDate).getMonth();
     const expectedYear = new Date(expectedDate).getFullYear();
 
-    expect(submissionDeadlineDay).toEqual(expectedDay);
+    expect(submissionDeadlineDay).toEqual(expectedDay); // this is the failing test
     expect(submissionDeadlineMonth).toEqual(expectedMonth);
     expect(submissionDeadlineYear).toEqual(expectedYear);
   });
@@ -195,15 +195,24 @@ describe('Create an Application', () => {
     expect(referenceNumber.application.id).toEqual(application.id);
   });
 
-  test('it should add the application ID to the business entry', async () => {
-    const business = await context.query.Business.findOne({
-      where: {
-        id: application.business.id,
-      },
-      query: 'id application { id }',
+  describe('business entry', () => {
+    let business: ApplicationBusiness;
+
+    beforeAll(async () => {
+      business = await context.query.Business.findOne({
+        where: {
+          id: application.business.id,
+        },
+        query: 'id application { id } turnoverCurrencyCode',
+      });
+    });
+    test('it should add the application ID to the business entry', async () => {
+      expect(business.application.id).toEqual(application.id);
     });
 
-    expect(business.application.id).toEqual(application.id);
+    test('it should have a default business.turnoverCurrencyCode', async () => {
+      expect(business.turnoverCurrencyCode).toEqual(APPLICATION.DEFAULT_CURRENCY);
+    });
   });
 
   test('it should add an application ID and default finalDestinationKnown field to the exportContract entry', async () => {

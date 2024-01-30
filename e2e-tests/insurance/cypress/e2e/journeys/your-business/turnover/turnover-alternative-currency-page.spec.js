@@ -8,7 +8,9 @@ import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fiel
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
-import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
+import {
+  EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE,
+} from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
 
@@ -25,6 +27,16 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const {
+  radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
+  rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
+  submitAndAssertRadioIsChecked, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
+} = assertAlternativeCurrencyForm({
+  legend: EXPORTER_BUSINESS_FIELDS[CURRENCY_CODE].LEGEND,
+  alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+  errors: ERRORS,
+});
+
 const baseUrl = Cypress.config('baseUrl');
 
 const fieldSelectors = {
@@ -33,7 +45,7 @@ const fieldSelectors = {
   alternativeCurrencyCode: fieldSelector(ALTERNATIVE_CURRENCY_CODE),
 };
 
-context('Insurance - Your business - Turnover - alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
+context('Insurance - Your business - Turnover - Alternative currency page - As an Exporter I want to enter the turnover of my business so that UKEF can have clarity on my business financial position when processing my Export Insurance Application', () => {
   let referenceNumber;
   let url;
   let turnoverUrl;
@@ -75,11 +87,6 @@ context('Insurance - Your business - Turnover - alternative currency page - As a
   });
 
   describe('page tests', () => {
-    const { radios, alternativeCurrencyInput } = assertAlternativeCurrencyForm({
-      legend: EXPORTER_BUSINESS_FIELDS[CURRENCY_CODE].LEGEND,
-      alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
-    });
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -95,31 +102,24 @@ context('Insurance - Your business - Turnover - alternative currency page - As a
     it('renders alternative currency input', () => {
       alternativeCurrencyInput();
     });
+
+    it('should not render invalid inputs or radio currencies in alternative currency input', () => {
+      doesNotRenderSupportedCurrencies();
+    });
+
+    it('should render valid alternate currencies in alternative currency input', () => {
+      rendersAlternativeCurrencies();
+    });
   });
 
   describe('form submission', () => {
-    describe('when submitting an empty form', () => {
+    describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete input', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
       it('should render validation errors', () => {
-        /**
-         * Custom field object is required because:
-         * - The field is "currency code".
-         * - But the error assertion is on the 1st currency code option (GBP).
-         */
-        const field = {
-          ...fieldSelectors.currencyCode,
-          input: fieldSelectors.gbp.input,
-        };
-
-        cy.submitAndAssertRadioErrors(
-          field,
-          0,
-          1,
-          ERRORS[CURRENCY_CODE].IS_EMPTY,
-        );
+        rendersAlternativeCurrencyValidationError();
       });
     });
 
@@ -144,12 +144,64 @@ context('Insurance - Your business - Turnover - alternative currency page - As a
       });
     });
 
-    it(`should redirect to ${TURNOVER_ROOT}`, () => {
-      cy.navigateToUrl(url);
+    describe('when submitting a supported currency', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
 
-      cy.completeAndSubmitTurnoverCurrencyForm();
+      describe(EUR_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, turnoverUrl);
+        });
 
-      cy.assertUrl(turnoverUrl);
+        it('should render the submitted answer when going back to the page', () => {
+          submitAndAssertRadioIsChecked(EUR_CURRENCY_CODE, url);
+        });
+      });
+
+      describe(GBP_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, turnoverUrl);
+        });
+
+        it('should render the submitted answer when going back to the page', () => {
+          submitAndAssertRadioIsChecked(GBP_CURRENCY_CODE, url);
+        });
+      });
+
+      describe(USD_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(USD_CURRENCY_CODE, turnoverUrl);
+        });
+
+        it('should render the submitted answer when going back to the page', () => {
+          submitAndAssertRadioIsChecked(USD_CURRENCY_CODE, url);
+        });
+      });
+
+      describe(JPY_CURRENCY_CODE, () => {
+        it('should redirect to the next page', () => {
+          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, turnoverUrl);
+        });
+
+        it('should render the submitted answer when going back to the page', () => {
+          submitAndAssertRadioIsChecked(JPY_CURRENCY_CODE, url);
+        });
+      });
+    });
+
+    describe('when submitting an alternative currency', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+      });
+
+      it('should redirect to the next page', () => {
+        submitAlternativeCurrencyAndAssertUrl(turnoverUrl);
+      });
+
+      it('should render the submitted answer when going back to the page', () => {
+        submitAlternativeCurrencyAndAssertInput(url);
+      });
     });
   });
 });

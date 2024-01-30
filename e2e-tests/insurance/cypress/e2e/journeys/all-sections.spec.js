@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { addMonths, format } from 'date-fns';
 import insurance from '../../../../pages/insurance';
 import partials from '../../../../partials';
 import { PAGES, TASKS } from '../../../../content-strings';
@@ -214,9 +214,9 @@ context('Insurance - All sections - new application', () => {
     it('should render correct submission deadline', () => {
       insurance.allSectionsPage.submissionDeadline().should('exist');
 
-      const date = new Date();
-      const month = date.getMonth();
-      const timestamp = new Date(date.setMonth((month + APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS)));
+      const now = new Date();
+
+      const timestamp = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
 
       const expected = format(new Date(timestamp), DATE_FORMAT.DEFAULT);
       cy.checkText(insurance.allSectionsPage.submissionDeadline(), expected);

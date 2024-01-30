@@ -7,7 +7,7 @@ const {
 } = FIELD_IDS;
 
 const { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, TRADING_ADDRESS } = YOUR_COMPANY;
-const { FINANCIAL_YEAR_END_DATE, ...TURNOVER_FIELDS } = TURNOVER;
+const { FINANCIAL_YEAR_END_DATE, TURNOVER_CURRENCY_CODE, ...TURNOVER_FIELDS } = TURNOVER;
 
 describe('server/helpers/required-fields/business', () => {
   describe('getYourCompanyTasks', () => {

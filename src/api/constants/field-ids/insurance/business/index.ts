@@ -35,6 +35,7 @@ const EXPORTER_BUSINESS = {
     FINANCIAL_YEAR_END_DATE: 'financialYearEndDate',
     ESTIMATED_ANNUAL_TURNOVER: 'estimatedAnnualTurnover',
     PERCENTAGE_TURNOVER: 'exportsTurnoverPercentage',
+    TURNOVER_CURRENCY_CODE: 'turnoverCurrencyCode',
   },
   HAS_CREDIT_CONTROL: 'hasCreditControlProcess',
 };

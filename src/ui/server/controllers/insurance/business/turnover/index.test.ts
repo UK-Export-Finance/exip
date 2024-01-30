@@ -116,6 +116,11 @@ describe('controllers/insurance/business/turnover', () => {
   describe('post', () => {
     mapAndSave.turnover = jest.fn(() => Promise.resolve(true));
 
+    const validBody = {
+      [ESTIMATED_ANNUAL_TURNOVER]: '5',
+      [PERCENTAGE_TURNOVER]: '3',
+    };
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
@@ -141,14 +146,11 @@ describe('controllers/insurance/business/turnover', () => {
     });
 
     describe('when there are no validation errors', () => {
-      const body = {
-        [ESTIMATED_ANNUAL_TURNOVER]: '5',
-        [PERCENTAGE_TURNOVER]: '3',
-      };
+      beforeEach(() => {
+        req.body = validBody;
+      });
 
       it('should redirect to next page', async () => {
-        req.body = body;
-
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_CONTROL}`;
@@ -156,11 +158,6 @@ describe('controllers/insurance/business/turnover', () => {
       });
 
       it('should call mapAndSave.turnover once with data from constructPayload and application', async () => {
-        req.body = {
-          ...body,
-          injection: 1,
-        };
-
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
@@ -172,8 +169,6 @@ describe('controllers/insurance/business/turnover', () => {
 
       describe("when the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = body;
-
           req.originalUrl = TURNOVER_CHANGE;
 
           await post(req, res);
@@ -185,8 +180,6 @@ describe('controllers/insurance/business/turnover', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = body;
-
           req.originalUrl = TURNOVER_CHECK_AND_CHANGE;
 
           await post(req, res);

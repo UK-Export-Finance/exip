@@ -4,19 +4,19 @@ import { APPLICATION } from '../constants';
 import mockEligibility from './mock-eligibility';
 import mockAccount from './mock-account';
 import mockCountries from './mock-countries';
-import mockCurrencies from './mock-currencies';
 import mockContact from './mock-contact';
 import companyMock from './mock-company';
 import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
+import { GBP, EUR } from '../constants/supported-currencies';
 
 dotenv.config();
 
 const mockGenericPolicy = {
   id: 'clav8by1i0007kgoqies0dbfc',
   requestedStartDate: add(new Date(), { months: 1 }),
-  policyCurrencyCode: mockCurrencies[0].isoCode,
+  policyCurrencyCode: GBP,
   needPreCreditPeriodCover: false,
   creditPeriodWithBuyer: 'Mock credit period description',
 };
@@ -88,6 +88,7 @@ export const mockBusiness = {
   totalEmployeesUK: '400',
   estimatedAnnualTurnover: '155220',
   exportsTurnoverPercentage: '20',
+  turnoverCurrencyCode: EUR,
   hasCreditControlProcess: true,
 };
 

@@ -263,7 +263,8 @@ var EXPORTER_BUSINESS = {
   TURNOVER: {
     FINANCIAL_YEAR_END_DATE: "financialYearEndDate",
     ESTIMATED_ANNUAL_TURNOVER: "estimatedAnnualTurnover",
-    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage"
+    PERCENTAGE_TURNOVER: "exportsTurnoverPercentage",
+    TURNOVER_CURRENCY_CODE: "turnoverCurrencyCode"
   },
   HAS_CREDIT_CONTROL: "hasCreditControlProcess"
 };
@@ -1266,6 +1267,10 @@ var lists = {
       totalEmployeesUK: (0, import_fields.integer)(),
       estimatedAnnualTurnover: (0, import_fields.integer)(),
       exportsTurnoverPercentage: (0, import_fields.integer)(),
+      turnoverCurrencyCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" },
+        defaultValue: APPLICATION.DEFAULT_CURRENCY
+      }),
       hasCreditControlProcess: nullable_checkbox_default()
     },
     hooks: {
