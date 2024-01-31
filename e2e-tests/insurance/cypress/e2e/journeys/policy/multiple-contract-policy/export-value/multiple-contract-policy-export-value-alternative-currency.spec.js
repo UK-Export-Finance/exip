@@ -1,4 +1,4 @@
-import { field, heading } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { PAGES } from '../../../../../../../content-strings';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -63,9 +63,14 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Alt
     });
 
     it('should render a heading with the alternative currency', () => {
-      const expected = `${CONTENT_STRINGS.PAGE_TITLE} ${NON_STANDARD_CURRENCY_NAME}`;
+      // const expected = `${CONTENT_STRINGS.PAGE_TITLE} ${NON_STANDARD_CURRENCY_NAME}`;
 
-      cy.checkText(heading(), expected);
+      // cy.checkText(heading(), expected);
+
+      cy.assertHeadingWithCurrencyName({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currencyName: NON_STANDARD_CURRENCY_NAME,
+      });
     });
 
     it(`should NOT render a ${TOTAL_SALES_TO_BUYER} prefix`, () => {

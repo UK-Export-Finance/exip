@@ -19,6 +19,8 @@ Cypress.Commands.add('assertUrl', require('./assert-url'));
 Cypress.Commands.add('assertSaveAndBackButtonDoesNotExist', require('./assert-save-and-back-button-does-not-exist'));
 Cypress.Commands.add('assertYesNoRadiosOrder', require('./assert-first-and-last-radios'));
 
+Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
+
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
 Cypress.Commands.add('checkAnalyticsCookieDoesNotExist', analytics.checkAnalyticsCookieDoesNotExist);
 Cypress.Commands.add('checkAnalyticsCookieIsFalse', analytics.checkAnalyticsCookieIsFalse);

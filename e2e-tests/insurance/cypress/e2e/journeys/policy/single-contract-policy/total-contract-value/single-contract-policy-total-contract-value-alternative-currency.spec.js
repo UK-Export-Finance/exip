@@ -1,4 +1,4 @@
-import { field, heading } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -55,9 +55,11 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
 
     it('should render a heading with the alternative currency', () => {
-      const expected = `${CONTENT_STRINGS.PAGE_TITLE} ${NON_STANDARD_CURRENCY_NAME}?`;
-
-      cy.checkText(heading(), expected);
+      cy.assertHeadingWithCurrencyName({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currencyName: NON_STANDARD_CURRENCY_NAME,
+        withQuestionMark: true,
+      });
     });
 
     it(`should NOT render a ${TOTAL_CONTRACT_VALUE} prefix`, () => {
