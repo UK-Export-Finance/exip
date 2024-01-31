@@ -84,16 +84,16 @@ export const get = async (req: Request, res: Response) => {
   } = application;
 
   try {
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(supportedCurrencies)) {
+    if (!isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     const { referenceNumber } = req.params;
     const refNumber = Number(referenceNumber);
 
-    const generatedPageVariables = pageVariables(refNumber, supportedCurrencies, String(policyCurrencyCode));
+    const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
 
     const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -143,13 +143,13 @@ export const post = async (req: Request, res: Response) => {
 
   if (validationErrors) {
     try {
-      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+      const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      if (!isPopulatedArray(supportedCurrencies)) {
+      if (!isPopulatedArray(allCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const generatedPageVariables = pageVariables(refNumber, supportedCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 

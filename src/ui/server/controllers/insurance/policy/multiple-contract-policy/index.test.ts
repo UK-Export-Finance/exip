@@ -139,7 +139,14 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [REQUESTED_START_DATE_DAY, REQUESTED_START_DATE_MONTH, REQUESTED_START_DATE_YEAR, TOTAL_MONTHS_OF_COVER, POLICY_CURRENCY_CODE];
+      const expected = [
+        REQUESTED_START_DATE_DAY,
+        REQUESTED_START_DATE_MONTH,
+        REQUESTED_START_DATE_YEAR,
+        TOTAL_MONTHS_OF_COVER,
+        POLICY_CURRENCY_CODE,
+        ALTERNATIVE_CURRENCY_CODE,
+      ];
 
       expect(FIELD_IDS).toEqual(expected);
     });

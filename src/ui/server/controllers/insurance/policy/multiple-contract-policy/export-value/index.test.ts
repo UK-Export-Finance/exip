@@ -41,6 +41,8 @@ const {
   policy: { policyCurrencyCode },
 } = mockApplication;
 
+const { allCurrencies } = mockCurrenciesResponse;
+
 describe('controllers/insurance/policy/multiple-contract-policy/export-value', () => {
   let req: Request;
   let res: Response;
@@ -73,7 +75,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
+      const result = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
 
       const currency = getCurrencyByCode(mockCurrencies, String(policyCurrencyCode));
 
@@ -121,7 +123,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     it('should render template', async () => {
       await get(req, res);
 
-      const generatedPageVariables = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -253,7 +255,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const generatedPageVariables = pageVariables(refNumber, mockCurrencies, String(policyCurrencyCode));
+        const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
 
         const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
