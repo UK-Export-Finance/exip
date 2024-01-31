@@ -2,6 +2,7 @@ import preCreditPeriodRule from './pre-credit-period';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   POLICY: { NEED_PRE_CREDIT_PERIOD: FIELD_ID },
@@ -16,11 +17,6 @@ const {
 describe('controllers/insurance/policy/pre-credit-period/validation/rules/pre-credit-period', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   it('should return the result of emptyFieldValidation', () => {

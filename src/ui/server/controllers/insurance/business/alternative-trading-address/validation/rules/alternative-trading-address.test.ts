@@ -4,6 +4,7 @@ import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const { FULL_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
@@ -12,11 +13,6 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/alternative-trading-address/validation/rules/alternative-trading-address', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

@@ -1,7 +1,7 @@
 import emailAndPasswordValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
-import { mockAccount } from '../../test-mocks';
+import { mockAccount, mockErrors } from '../../test-mocks';
 
 const {
   ACCOUNT: { EMAIL, PASSWORD },
@@ -11,11 +11,6 @@ describe('shared-validation/email-and-password', () => {
   let mockFormBody = {};
 
   const mockErrorMessage = 'Mock error';
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   describe(`when ${EMAIL} is not provided`, () => {
     it('should return validation error', () => {

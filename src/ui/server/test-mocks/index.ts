@@ -10,6 +10,8 @@ import mockCompany from './mock-company';
 import mockApplication, { mockApplicationMultiplePolicy, mockBusiness, mockCompanyDifferentTradingAddress } from './mock-application';
 import mockApplications from './mock-applications';
 import mockEligibility from './mock-eligibility';
+import mockErrorMessagesObject from './mock-error-messages-object';
+import mockErrors from './mock-errors';
 import mockUrlOrigin from './mock-url-origin';
 import mockPhoneNumbers from './mock-phone-numbers';
 import mockSicCodes from './mock-sic-codes';
@@ -116,6 +118,8 @@ export {
   mockDeclarations,
   mockCompanyDifferentTradingAddress,
   mockEligibility,
+  mockErrorMessagesObject,
+  mockErrors,
   mockInsuranceFeedback,
   mockNext,
   mockUrlOrigin,

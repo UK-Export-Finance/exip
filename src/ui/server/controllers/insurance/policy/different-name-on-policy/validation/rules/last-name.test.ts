@@ -1,8 +1,9 @@
 import lastName from './last-name';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
-import { RequestBody } from '../../../../../../../types';
 import nameValidation from '../../../../../../shared-validation/name';
+import { mockErrors } from '../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../types';
 
 const { LAST_NAME: FIELD_ID } = FIELD_IDS;
 
@@ -11,11 +12,6 @@ const {
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/different-name-on-policy/validation/rules/last-name', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

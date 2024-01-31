@@ -2,8 +2,9 @@ import dotenv from 'dotenv';
 import brokerEmail from './broker-email';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../../types';
 import emailValidation from '../../../../../../shared-validation/email';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 dotenv.config();
 
@@ -15,11 +16,6 @@ const { POLICY } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = POLICY[EMAIL];
 
 describe('controllers/insurance/policy/broker/validation/rules/broker-email', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [EMAIL]: '',
   } as RequestBody;

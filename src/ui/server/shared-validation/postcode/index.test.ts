@@ -1,12 +1,8 @@
 import postCodeValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
+import { mockErrors } from '../../test-mocks';
 
 describe('shared-validation/postcode', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockFieldId = 'postcode';
   const mockErrorMessageEmpty = 'Is empty';
   const mockErrorMessageFormat = 'Incorrect format';

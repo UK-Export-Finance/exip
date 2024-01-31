@@ -1,29 +1,30 @@
 import positionRule from './position';
-import { FIELD_IDS } from '../../../../../../constants';
+import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import alphaCharactersAndMaxLengthValidation from '../../../../../../shared-validation/alpha-characters-and-max-length';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   POLICY: {
-    NAME_ON_POLICY: { POSITION: FIELD_ID, NAME, SAME_NAME, OTHER_NAME },
+    NAME_ON_POLICY: { POSITION: FIELD_ID, NAME, SAME_NAME },
   },
-} = FIELD_IDS.INSURANCE;
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+      NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES;
 
-describe('controllers/insurance/policy/name-on-policy/validation/rules/position', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
+const { NAME_ON_POLICY } = POLICY_FIELDS;
 
-  describe(`when the field is not provided and ${NAME} and ${SAME_NAME} are not selected`, () => {
+const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
+
+describe('controllers/insurance/policy/name-on-policy/validation/rules/position', () => {
+  describe(`when ${NAME} does NOT equal ${SAME_NAME}`, () => {
     it('should return provided error object', () => {
       const mockSubmittedData = {};
 
@@ -33,41 +34,17 @@ describe('controllers/insurance/policy/name-on-policy/validation/rules/position'
     });
   });
 
-  describe(`when the field is not provided and ${OTHER_NAME} is selected`, () => {
-    it('should return provided error object', () => {
-      const mockSubmittedData = {
-        [NAME]: OTHER_NAME,
-      };
-
-      const result = positionRule(mockSubmittedData, mockErrors);
-
-      expect(result).toEqual(mockErrors);
-    });
-  });
-
-  describe(`when the field is not provided and ${SAME_NAME} is selected`, () => {
-    it('should return result of emptyFieldValidation', () => {
-      const mockSubmittedData = {
+  describe(`when ${NAME} equals ${SAME_NAME}`, () => {
+    it('should return the result of alphaCharactersOnlyValidation', () => {
+      const mockBody = {
         [NAME]: SAME_NAME,
       };
 
-      const result = positionRule(mockSubmittedData, mockErrors);
+      const result = positionRule(mockBody, mockErrors);
 
-      const expected = emptyFieldValidation(mockSubmittedData, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+      const expected = alphaCharactersAndMaxLengthValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM);
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when there are no validation errors', () => {
-    it('should return the provided errors object', () => {
-      const mockSubmittedData = {
-        [FIELD_ID]: 'Mock text',
-      };
-
-      const result = positionRule(mockSubmittedData, mockErrors);
-
-      expect(result).toEqual(mockErrors);
     });
   });
 });

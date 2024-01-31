@@ -2,6 +2,7 @@ import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
 import dateRules from '../date';
 import requestedStartDateRules from '.';
+import { mockErrors } from '../../test-mocks';
 
 const {
   POLICY: {
@@ -19,10 +20,6 @@ const {
 
 describe('shared-validation/requested-start-date', () => {
   const mockFormBody = {};
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   it('should return the result of dateRules', () => {
     const result = requestedStartDateRules(mockFormBody, mockErrors);

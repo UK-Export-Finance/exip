@@ -1,8 +1,9 @@
 import companiesHouseNumber from './companiesHouseNumber';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { RequestBody } from '../../../../../types';
 import generateValidationErrors from '../../../validation';
 import { ERROR_MESSAGES } from '../../../../content-strings';
+import { RequestBody } from '../../../../../types';
+import { mockErrors } from '../../../../test-mocks';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER: FIELD_ID },
@@ -11,11 +12,6 @@ const {
 const { ELIGIBILITY } = ERROR_MESSAGES.INSURANCE;
 
 describe('helpers/companies-house-search/validation/rules/companiesHouseNumber', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

@@ -2,6 +2,7 @@ import currencyRule from './currency';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../../test-mocks';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
@@ -15,11 +16,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/business/turnover/alternative-currency/validation/rules/currency', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

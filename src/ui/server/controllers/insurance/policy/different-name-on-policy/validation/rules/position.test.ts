@@ -1,8 +1,9 @@
 import position from './position';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   DIFFERENT_NAME_ON_POLICY: { POSITION: FIELD_ID },
@@ -13,11 +14,6 @@ const {
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 describe('controllers/insurance/policy/different-name-on-policy/validation/rules/position', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

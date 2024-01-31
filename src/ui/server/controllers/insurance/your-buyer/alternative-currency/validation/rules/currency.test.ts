@@ -3,6 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   CURRENCY: { CURRENCY_CODE: FIELD_ID },
@@ -15,11 +16,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/alternative-currency/validation/rules/currency', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

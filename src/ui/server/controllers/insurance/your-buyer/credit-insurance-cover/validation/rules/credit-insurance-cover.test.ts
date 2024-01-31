@@ -3,6 +3,7 @@ import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buye
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID } = FIELD_IDS;
 
@@ -13,11 +14,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rules/credit-insurance-cover', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

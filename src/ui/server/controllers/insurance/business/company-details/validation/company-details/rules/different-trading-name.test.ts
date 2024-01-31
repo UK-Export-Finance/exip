@@ -1,8 +1,9 @@
 import brokerName from './different-trading-name';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/business';
-import { RequestBody } from '../../../../../../../../types';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../../types';
+import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { DIFFERENT_TRADING_NAME: FIELD_ID, HAS_DIFFERENT_TRADING_NAME },
@@ -13,11 +14,6 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/company-details/validation/rules/different-trading-name', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

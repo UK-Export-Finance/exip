@@ -2,6 +2,7 @@ import addressRules, { MAXIMUM } from './address';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   YOUR_BUYER: {
@@ -18,11 +19,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/address', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe('when the field is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {};

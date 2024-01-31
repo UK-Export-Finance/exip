@@ -2,6 +2,7 @@ import validDateFormatRules from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../content-strings';
 import generateValidationErrors from '../../../helpers/validation';
+import { mockErrors } from '../../../test-mocks';
 
 const {
   POLICY: {
@@ -23,11 +24,6 @@ describe('shared-validation/date/valid-format', () => {
   const dayString = String(date.getDate());
   const monthString = String(date.getMonth());
   const yearString = String(date.getFullYear());
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   const baseParams = {
     formBody: {},

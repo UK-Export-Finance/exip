@@ -1,8 +1,9 @@
 import emailAddress from './email-address';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
-import { RequestBody } from '../../../../../../../types';
 import emailValidation from '../../../../../../shared-validation/email';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const { EMAIL: FIELD_ID } = FIELD_IDS;
 
@@ -13,11 +14,6 @@ const {
 const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
 describe('controllers/insurance/policy/different-name-on-policy/validation/rules/email-address', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   FEEDBACK: { OTHER_COMMENTS: FIELD_ID },
@@ -11,11 +12,6 @@ const {
 const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
 
 describe('controllers/insurance/feedback/feedback-form/validation/rules/other-comments', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;
