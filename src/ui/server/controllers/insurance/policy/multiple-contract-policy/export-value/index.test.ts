@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../../helpers/mappings/map-appl
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/policy';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../../test-mocks/mock-application';
 
 const {
@@ -169,7 +169,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -305,7 +305,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

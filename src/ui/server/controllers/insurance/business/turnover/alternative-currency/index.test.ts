@@ -13,7 +13,7 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/turnover';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrenciesResponse, mockApplication, GBP } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockApplication, GBP } from '../../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -136,7 +136,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ alternativeCurrencies: [], supportedCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -244,7 +244,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ alternativeCurrencies: [], supportedCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
