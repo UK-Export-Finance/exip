@@ -2,17 +2,13 @@ import rule from './policy-length';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
+import { mockErrors } from '../../../../../test-mocks';
 
 const { POLICY_TYPE, POLICY_LENGTH: FIELD_ID } = FIELD_IDS;
 
 const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-length', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
   };

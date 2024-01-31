@@ -1,8 +1,9 @@
 import yearsExporting from './estimated-annual-turnover';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/business';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
@@ -11,11 +12,6 @@ const {
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/turnover/validation/rules/estimated-annual-turnover', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [ESTIMATED_ANNUAL_TURNOVER]: '',
   } as RequestBody;

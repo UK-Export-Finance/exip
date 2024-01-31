@@ -1,13 +1,9 @@
 import passwordValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
 import { ValidationErrors } from '../../../types';
+import { mockErrors } from '../../test-mocks';
 
 describe('shared-validation/password', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockFieldId = 'password';
   const mockErrorMessage = 'Incorrect format';
 

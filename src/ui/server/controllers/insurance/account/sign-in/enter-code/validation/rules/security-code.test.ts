@@ -2,6 +2,7 @@ import securityCodeRules from './security-code';
 import { FIELD_IDS } from '../../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   INSURANCE: {
@@ -16,11 +17,6 @@ const {
 describe('controllers/insurance/account/sign-in/enter-code/validation/rules/security-code', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   it('should return the result of emptyFieldValidation', () => {

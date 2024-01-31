@@ -4,6 +4,7 @@ import { ERROR_MESSAGES } from '../../content-strings';
 import validDateFormatRules from './valid-format';
 import generateValidationErrors from '../../helpers/validation';
 import getDaysInAMonth from '../../helpers/date/get-days-in-a-month';
+import { mockErrors } from '../../test-mocks';
 
 const {
   POLICY: {
@@ -27,11 +28,6 @@ describe('shared-validation/date', () => {
   const year = date.getFullYear();
 
   const futureDate = new Date(date.setMonth(month + 6));
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   const baseParams = {
     errors: mockErrors,

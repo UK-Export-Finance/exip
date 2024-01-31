@@ -2,6 +2,7 @@ import rule from './credit-period';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../content-strings';
 import generateValidationErrors from '../../../../../helpers/validation';
+import { mockErrors } from '../../../../../test-mocks';
 
 const {
   ELIGIBILITY: { CREDIT_PERIOD },
@@ -9,11 +10,6 @@ const {
 } = FIELD_IDS;
 
 describe('controllers/quote/tell-us-about-your-policy/validation/rules/credit-period', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe('when policy type is multiple', () => {
     describe(`when ${CREDIT_PERIOD} is not provided`, () => {
       it('should return validation error', () => {

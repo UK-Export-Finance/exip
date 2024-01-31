@@ -1,8 +1,9 @@
 import brokerTown from './broker-town';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   BROKER: { TOWN, USING_BROKER },
@@ -12,11 +13,6 @@ const { POLICY } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = POLICY[TOWN];
 
 describe('controllers/insurance/policy/broker/validation/rules/brokerTown', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [TOWN]: '',
   } as RequestBody;

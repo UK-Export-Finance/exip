@@ -3,6 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   POLICY: {
@@ -25,11 +26,6 @@ const {
 describe('controllers/insurance/policy/multiple-contract-policy/validation/rules/total-months-of-cover', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   describe('when a value is not provided', () => {

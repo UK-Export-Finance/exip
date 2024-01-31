@@ -1,9 +1,10 @@
 import creditInsuranceCoverDescriptionRule from './credit-insurance-cover-description';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
@@ -16,11 +17,6 @@ const {
 const MAXIMUM = 1000;
 
 describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rules/credit-insurance-cover-description', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
     [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: 'true',

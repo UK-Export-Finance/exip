@@ -2,6 +2,7 @@ import websiteRule from './website';
 import validateWebsiteAddress from '../../../../../../shared-validation/website-address';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { mockErrors } from '../../../../../../test-mocks';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -17,11 +18,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/website', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

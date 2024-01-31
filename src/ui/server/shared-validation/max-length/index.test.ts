@@ -1,13 +1,9 @@
 import validateFeedbackInput from '.';
 import generateValidationErrors from '../../helpers/validation';
+import { mockErrors } from '../../test-mocks';
 
 describe('shared-validation/feedback', () => {
   let mockFormBody = {};
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   const mockFieldId = 'Mock field';
   const mockErrorMessage = 'Enter mock field';

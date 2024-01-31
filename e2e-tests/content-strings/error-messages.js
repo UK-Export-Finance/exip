@@ -223,6 +223,8 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.POLICY.NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: 'Enter the position you hold at the company',
+          ABOVE_MAXIMUM: 'The description of your role at the company cannot be more than 50 characters',
+          INCORRECT_FORMAT: 'The position you hold at the company must not include any numbers or symbols',
         },
       },
       DIFFERENT_NAME_ON_POLICY: {

@@ -2,6 +2,7 @@ import totalContractValueRules from './total-contract-value';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   POLICY: {
@@ -22,11 +23,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/policy/single-contract-policy//total-contract-value/validation/rules/total-contract-value', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe('when the field is not provided', () => {
     it('should return validation error', () => {
       const mockSubmittedData = {};

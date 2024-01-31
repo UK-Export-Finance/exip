@@ -3,6 +3,7 @@ import { FIELD_IDS } from '../../../../../../../constants';
 import { RequestBody } from '../../../../../../../../types';
 import companyWebsite from './company-website';
 import generateValidationErrors from '../../../../../../../helpers/validation';
+import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { WEBSITE },
@@ -12,11 +13,6 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 const errorMessage = EXPORTER_BUSINESS[WEBSITE].INCORRECT_FORMAT;
 
 describe('controllers/insurance/business/company-details/validation/company-details/rules/company-website', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [WEBSITE]: '',
   } as RequestBody;

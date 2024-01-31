@@ -2,6 +2,7 @@ import policyCurrencyCodeRules from '.';
 import { FIELD_IDS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
 import emptyFieldValidation from '../empty-field';
+import { mockErrors } from '../../test-mocks';
 
 const {
   INSURANCE: {
@@ -22,11 +23,6 @@ const {
 describe('shared-validation/policy-currency-code', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   it('should return the result of emptyFieldValidation', () => {

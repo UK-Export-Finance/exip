@@ -1,8 +1,9 @@
 import yearsExporting from './years-exporting';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING },
@@ -11,11 +12,6 @@ const {
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/nature-of-business/validation/rules/years-exporting', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [YEARS_EXPORTING]: '',
   } as RequestBody;

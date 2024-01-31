@@ -3,6 +3,7 @@ import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
 import emptyFieldValidation from '../empty-field';
 import { RequestBody } from '../../../types';
+import { mockErrors } from '../../test-mocks';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -15,11 +16,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('shared-validation/alternative-currency', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [CURRENCY_CODE]: ALTERNATIVE_CURRENCY_CODE,
     [ALTERNATIVE_CURRENCY_CODE]: '',
