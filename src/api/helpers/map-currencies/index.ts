@@ -1,6 +1,9 @@
-import { FIELD_IDS, SUPPORTED_CURRENCIES } from '../../constants';
+import { EXTERNAL_API_DEFINITIONS, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../constants';
+import filterCisEntries from '../filter-cis-entries';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
 import { Currency } from '../../types';
+
+const { CIS } = EXTERNAL_API_DEFINITIONS;
 
 /**
  * getSupportedCurrencies
@@ -29,21 +32,21 @@ export const getAlternativeCurrencies = (currencies: Array<Currency>) => {
 /**
  * mapCurrencies
  * Map and sort currencies.
- * 1) if alternativeCurrencies flag set, then will return all currencies
- * 2) if alternativeCurrencies flag not set, then will filter supported currencies.
- * 3) Sort the currencies alphabetically.
+ * 1) Filter out invalid CIS currencies.
+ * 2) if alternativeCurrencies flag set, then will return all currencies.
+ * 3) if alternativeCurrencies flag not set, then will filter supported currencies.
+ * 4) Sort the currencies alphabetically.
  * @param {Array} Array of currency objects
  * @param {Boolean} alternativeCurrencies if alternate currencies should be returned
  * @returns {Array} Array supported currencies
  */
 const mapCurrencies = (currencies: Array<Currency>, alternativeCurrencies: boolean) => {
-  let currenciesArray = currencies;
+  let currenciesArray = filterCisEntries(currencies, CIS.INVALID_CURRENCIES, 'name') as Array<Currency>;
 
-  // if not all currencies, then get the supported currencies only
   if (!alternativeCurrencies) {
-    currenciesArray = getSupportedCurrencies(currencies);
+    currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {
-    currenciesArray = getAlternativeCurrencies(currencies);
+    currenciesArray = getAlternativeCurrencies(currenciesArray);
   }
 
   const sorted = sortArrayAlphabetically(currenciesArray, FIELD_IDS.NAME);

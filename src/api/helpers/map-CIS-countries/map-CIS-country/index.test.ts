@@ -9,8 +9,8 @@ import applyForInsuranceOnline from './can-apply-for-insurance-online';
 import applyForInsuranceOffline from './can-apply-for-insurance-offline';
 import canApplyOffline from './can-apply-offline';
 import { EXTERNAL_API_DEFINITIONS, EXTERNAL_API_MAPPINGS } from '../../../constants';
-import mockCisCountries from '../../../test-mocks/mock-CIS-countries';
 import { MappedCisCountry } from '../../../types';
+import { mockCisCountries } from '../../../test-mocks';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 

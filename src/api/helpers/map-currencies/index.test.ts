@@ -1,7 +1,11 @@
 import mapCurrencies, { getSupportedCurrencies, getAlternativeCurrencies } from '.';
-import { FIELD_IDS, SUPPORTED_CURRENCIES } from '../../constants';
+import { EXTERNAL_API_DEFINITIONS, FIELD_IDS, SUPPORTED_CURRENCIES } from '../../constants';
+import filterCisEntries from '../filter-cis-entries';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
+import { Currency } from '../../types';
 import mockCurrencies, { HKD } from '../../test-mocks/mock-currencies';
+
+const { CIS } = EXTERNAL_API_DEFINITIONS;
 
 describe('helpers/map-currencies', () => {
   describe('getSupportedCurrencies', () => {
@@ -25,11 +29,13 @@ describe('helpers/map-currencies', () => {
   });
 
   describe('mapCurrencies', () => {
+    const filteredCurrencies = filterCisEntries(mockCurrencies, CIS.INVALID_CURRENCIES, 'name') as Array<Currency>;
+
     describe('alternativeCurrencies as "false"', () => {
-      it('should return an array of supported currencies sorted alphabetically', () => {
+      it('should return an array of filtered, supported currencies, sorted alphabetically', () => {
         const result = mapCurrencies(mockCurrencies, false);
 
-        const supportedCurrencies = getSupportedCurrencies(mockCurrencies);
+        const supportedCurrencies = getSupportedCurrencies(filteredCurrencies);
 
         const expected = sortArrayAlphabetically(supportedCurrencies, FIELD_IDS.NAME);
 
@@ -38,10 +44,11 @@ describe('helpers/map-currencies', () => {
     });
 
     describe('alternativeCurrencies as "true"', () => {
-      it('should return an array of alternative currencies sorted alphabetically', () => {
+      it('should return an array of filtered, alternative currencies, sorted alphabetically', () => {
         const result = mapCurrencies(mockCurrencies, true);
 
-        const currencies = getAlternativeCurrencies(mockCurrencies);
+        const currencies = getAlternativeCurrencies(filteredCurrencies);
+
         const expected = sortArrayAlphabetically(currencies, FIELD_IDS.NAME);
 
         expect(result).toEqual(expected);
