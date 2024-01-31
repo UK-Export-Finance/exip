@@ -5,7 +5,7 @@ import generateValidationErrors from '../../../../../../helpers/validation';
 import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
 import { mockErrors } from '../../../../../../test-mocks';
 
-const { OUTSTANDING_PAYMENTS, AMOUNT_OVERDUE: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
 
 const {
   INSURANCE: {

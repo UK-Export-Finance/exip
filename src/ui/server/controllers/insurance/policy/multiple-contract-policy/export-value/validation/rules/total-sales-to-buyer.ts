@@ -4,7 +4,7 @@ import generateValidationErrors from '../../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../../helpers/object';
 import wholeNumberValidation from '../../../../../../../helpers/whole-number-validation';
 import { RequestBody } from '../../../../../../../../types';
-import wholeNumberBelowMinimumValidation from '../../../../../../../shared-validation/whole-number-below-minimum';
+import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
 
 const {
   POLICY: {
@@ -46,7 +46,7 @@ const totalSalesToBuyerRules = (formBody: RequestBody, errors: object) => {
   updatedErrors = wholeNumberValidation(formBody, updatedErrors, ERROR_MESSAGE.INCORRECT_FORMAT, FIELD_ID);
 
   // checks if value is below minimum
-  const belowMinimum = wholeNumberBelowMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors, MINIMUM);
+  const belowMinimum = wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors, MINIMUM);
 
   if (belowMinimum) {
     return belowMinimum;

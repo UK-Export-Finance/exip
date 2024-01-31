@@ -17,13 +17,12 @@ export const TEMPLATES = {
   ATTRIBUTES: {
     CLASSES: {
       LEGEND: {
+        S: 'govuk-fieldset__legend--s',
         M: 'govuk-fieldset__legend--m',
         XL: 'govuk-fieldset__legend--xl',
       },
-      LABEL: {
-        NOT_BOLD: {
-          S: 'govuk-fieldset__legend--s govuk-!-font-weight-regular',
-        },
+      FONT_WEIGHT: {
+        REGULAR: 'govuk-!-font-weight-regular',
       },
     },
   },

@@ -10,11 +10,9 @@ const {
   YOUR_BUYER: { TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
-const { AMOUNT_OVERDUE, TOTAL_OUTSTANDING } = FIELD_IDS;
+const { TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, PROVIDE_ALTERNATE_CURRENCY } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const linkFieldId = 'provide-alternative-currency';
 
 context('Insurance - Your Buyer - Trading history page - Currency symbol when changing currency', () => {
   let referenceNumber;
@@ -48,38 +46,38 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
 
   describe('when not selecting a currency', () => {
     it(`should display ${SYMBOLS.GBP} as the prefix`, () => {
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING, value: SYMBOLS.GBP });
-      cy.assertPrefix({ fieldId: AMOUNT_OVERDUE, value: SYMBOLS.GBP });
+      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.GBP });
+      cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.GBP });
     });
   });
 
   describe(`when selecting ${USD_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.USD} as the prefix`, () => {
-      cy.completeAlternativeCurrencyForm({ isoCode: USD_CURRENCY_CODE, linkFieldId });
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING, value: SYMBOLS.USD });
-      cy.assertPrefix({ fieldId: AMOUNT_OVERDUE, value: SYMBOLS.USD });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: USD_CURRENCY_CODE, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.USD });
+      cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.USD });
     });
   });
 
   describe(`when selecting ${JPY_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.JPY} as the prefix`, () => {
-      cy.completeAlternativeCurrencyForm({ isoCode: JPY_CURRENCY_CODE, linkFieldId });
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING, value: SYMBOLS.JPY });
-      cy.assertPrefix({ fieldId: AMOUNT_OVERDUE, value: SYMBOLS.JPY });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: JPY_CURRENCY_CODE, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.JPY });
+      cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.JPY });
     });
   });
 
   describe(`when selecting ${EUR_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.EUR} as the prefix`, () => {
-      cy.completeAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE, linkFieldId });
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING, value: SYMBOLS.EUR });
-      cy.assertPrefix({ fieldId: AMOUNT_OVERDUE, value: SYMBOLS.EUR });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.EUR });
+      cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.EUR });
     });
   });
 
   describe('when selecting an alternate currency as the currency code', () => {
     it('should not display a prefix', () => {
-      cy.completeAlternativeCurrencyForm({ alternativeCurrency: true, linkFieldId });
+      cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
     });
   });
 });

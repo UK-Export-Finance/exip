@@ -29,7 +29,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING, AMOUNT_OVERDUE } = BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = BUYER_FIELD_IDS;
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -40,7 +40,7 @@ const {
     INSURANCE: { BUYER },
   },
   ATTRIBUTES: {
-    CLASSES: { LABEL },
+    CLASSES: { LEGEND, FONT_WEIGHT },
   },
 } = TEMPLATES;
 
@@ -80,13 +80,13 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
             ID: FAILED_PAYMENTS,
             ...FIELDS[FAILED_PAYMENTS],
           },
-          TOTAL_OUTSTANDING: {
-            ID: TOTAL_OUTSTANDING,
-            ...FIELDS[TOTAL_OUTSTANDING],
+          TOTAL_OUTSTANDING_PAYMENTS: {
+            ID: TOTAL_OUTSTANDING_PAYMENTS,
+            ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
           },
-          AMOUNT_OVERDUE: {
-            ID: AMOUNT_OVERDUE,
-            ...FIELDS[AMOUNT_OVERDUE],
+          TOTAL_OVERDUE_PAYMENTS: {
+            ID: TOTAL_OVERDUE_PAYMENTS,
+            ...FIELDS[TOTAL_OVERDUE_PAYMENTS],
           },
         },
         PAGE_CONTENT_STRINGS,
@@ -101,7 +101,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING, AMOUNT_OVERDUE];
+      const EXPECTED_FIELD_IDS = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS];
 
       expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
     });
@@ -123,7 +123,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
     it('should have the correct flags defined', () => {
       const expected = {
         CONDITIONAL_YES_HTML: BUYER.OUTSTANDING_PAYMENTS.CONDITIONAL_YES_HTML,
-        LEGEND_CLASS: LABEL.NOT_BOLD.S,
+        LEGEND_CLASS: `${LEGEND.S} ${FONT_WEIGHT.REGULAR}`,
       };
 
       expect(HTML_FLAGS).toEqual(expected);

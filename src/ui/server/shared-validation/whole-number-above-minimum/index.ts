@@ -3,7 +3,7 @@ import { stripCommas } from '../../helpers/string';
 import generateValidationErrors from '../../helpers/validation';
 
 /**
- * wholeNumberBelowMinimumValidation
+ * wholeNumberAboveMinimumValidation
  * Check if a number is below minimum
  * Returns validationErrors or null.
  * @param {RequestBody} formBody
@@ -13,7 +13,7 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {Number} minimum minimum value to check against
  * @returns {Object} Validation errors or null
  */
-const wholeNumberBelowMinimumValidation = (formBody: RequestBody, fieldId: string, errorMessage: string, errors: object, minimum: number) => {
+const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: string, errorMessage: string, errors: object, minimum: number) => {
   // strip commas - commas are valid.
   const numberWithoutCommas = stripCommas(formBody[fieldId]);
 
@@ -25,4 +25,4 @@ const wholeNumberBelowMinimumValidation = (formBody: RequestBody, fieldId: strin
   return null;
 };
 
-export default wholeNumberBelowMinimumValidation;
+export default wholeNumberAboveMinimumValidation;

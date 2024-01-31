@@ -16,7 +16,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, AMOUNT_OVERDUE, TOTAL_OUTSTANDING,
+  OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS,
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -93,26 +93,26 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       });
     });
 
-    describe(`${AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING}`, () => {
+    describe(`${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
       describe(`when not selecting a ${OUTSTANDING_PAYMENTS} radio`, () => {
         it('should not render a heading', () => {
-          field(TOTAL_OUTSTANDING).heading().should('not.be.visible');
+          field(TOTAL_OUTSTANDING_PAYMENTS).heading().should('not.be.visible');
         });
 
-        it(`should not render a label for ${TOTAL_OUTSTANDING}`, () => {
-          field(TOTAL_OUTSTANDING).label().should('not.be.visible');
+        it(`should not render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).label().should('not.be.visible');
         });
 
-        it(`should not render an input for ${TOTAL_OUTSTANDING}`, () => {
-          field(TOTAL_OUTSTANDING).input().should('not.be.visible');
+        it(`should not render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).input().should('not.be.visible');
         });
 
-        it(`should not render a label for ${AMOUNT_OVERDUE}`, () => {
-          field(AMOUNT_OVERDUE).label().should('not.be.visible');
+        it(`should not render a label for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          field(TOTAL_OVERDUE_PAYMENTS).label().should('not.be.visible');
         });
 
-        it(`should not render an input for ${AMOUNT_OVERDUE}`, () => {
-          field(AMOUNT_OVERDUE).input().should('not.be.visible');
+        it(`should not render an input for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          field(TOTAL_OVERDUE_PAYMENTS).input().should('not.be.visible');
         });
       });
 
@@ -122,23 +122,23 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
         });
 
         it('should render a heading', () => {
-          cy.checkText(field(TOTAL_OUTSTANDING).heading(), FIELDS[TOTAL_OUTSTANDING].HEADING);
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).heading(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].HEADING);
         });
 
-        it(`should render a label for ${TOTAL_OUTSTANDING}`, () => {
-          cy.checkText(field(TOTAL_OUTSTANDING).label(), FIELDS[TOTAL_OUTSTANDING].LABEL);
+        it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).label(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL);
         });
 
-        it(`should render an input for ${TOTAL_OUTSTANDING}`, () => {
-          field(TOTAL_OUTSTANDING).input().should('be.visible');
+        it(`should render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
         });
 
-        it(`should render a label for ${AMOUNT_OVERDUE}`, () => {
-          cy.checkText(field(AMOUNT_OVERDUE).label(), FIELDS[AMOUNT_OVERDUE].LABEL);
+        it(`should render a label for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          cy.checkText(field(TOTAL_OVERDUE_PAYMENTS).label(), FIELDS[TOTAL_OVERDUE_PAYMENTS].LABEL);
         });
 
-        it(`should render an input for ${AMOUNT_OVERDUE}`, () => {
-          field(AMOUNT_OVERDUE).input().should('be.visible');
+        it(`should render an input for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          field(TOTAL_OVERDUE_PAYMENTS).input().should('be.visible');
         });
 
         it('should render a hyperlink for changing the currency', () => {

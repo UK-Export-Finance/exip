@@ -1,23 +1,23 @@
 {% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
 
 <div class="govuk-grid-row">
-  <span data-cy="{{FIELDS.TOTAL_OUTSTANDING.ID}}-heading" class="govuk-heading-m govuk-!-margin-bottom-4">{{ FIELDS.TOTAL_OUTSTANDING.HEADING }}</span>
+  <span data-cy="{{FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID}}-heading" class="govuk-heading-m govuk-!-margin-bottom-4">{{ FIELDS.TOTAL_OUTSTANDING_PAYMENTS.HEADING }}</span>
 
   {{ monetaryValueInput.render({
-    fieldId: FIELDS.TOTAL_OUTSTANDING.ID,
-    label: FIELDS.TOTAL_OUTSTANDING.LABEL,
+    fieldId: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID,
+    label: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.LABEL,
     currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
-    submittedValue: submittedValues[FIELDS.TOTAL_OUTSTANDING.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OUTSTANDING.ID],
-    validationError: validationErrors.errorList[FIELDS.TOTAL_OUTSTANDING.ID],
+    submittedValue: submittedValues[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
+    validationError: validationErrors.errorList[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
     legendClass: LEGEND_CLASS
   }) }}
 
   {{ monetaryValueInput.render({
-    fieldId: FIELDS.AMOUNT_OVERDUE.ID,
-    label: FIELDS.AMOUNT_OVERDUE.LABEL,
+    fieldId: FIELDS.TOTAL_OVERDUE_PAYMENTS.ID,
+    label: FIELDS.TOTAL_OVERDUE_PAYMENTS.LABEL,
     currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
-    submittedValue: submittedValues[FIELDS.AMOUNT_OVERDUE.ID] or application.buyer.buyerTradingHistory[FIELDS.AMOUNT_OVERDUE.ID],
-    validationError: validationErrors.errorList[FIELDS.AMOUNT_OVERDUE.ID],
+    submittedValue: submittedValues[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID],
+    validationError: validationErrors.errorList[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID],
     legendClass: LEGEND_CLASS
   }) }}
 

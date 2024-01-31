@@ -2,7 +2,7 @@ import { yesRadioInput, noRadioInput, field } from '../../../pages/shared';
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../fixtures/application';
 
-const { TOTAL_OUTSTANDING, AMOUNT_OVERDUE } = FIELD_IDS;
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = FIELD_IDS;
 
 const { BUYER } = application;
 
@@ -15,12 +15,12 @@ const { BUYER } = application;
  * @param {String} totalOutstanding: enter the total outstanding - default to application value
  */
 const completeTradingHistoryWithBuyerForm = ({
-  outstandingPayments = false, failedToPay = false, amountOverDue = BUYER[AMOUNT_OVERDUE], totalOutstanding = BUYER[TOTAL_OUTSTANDING],
+  outstandingPayments = false, failedToPay = false, amountOverDue = BUYER[TOTAL_OVERDUE_PAYMENTS], totalOutstanding = BUYER[TOTAL_OUTSTANDING_PAYMENTS],
 }) => {
   if (outstandingPayments) {
     yesRadioInput().first().click();
-    cy.keyboardInput(field(AMOUNT_OVERDUE).input(), amountOverDue);
-    cy.keyboardInput(field(TOTAL_OUTSTANDING).input(), totalOutstanding);
+    cy.keyboardInput(field(TOTAL_OVERDUE_PAYMENTS).input(), amountOverDue);
+    cy.keyboardInput(field(TOTAL_OUTSTANDING_PAYMENTS).input(), totalOutstanding);
   } else {
     noRadioInput().first().click();
   }

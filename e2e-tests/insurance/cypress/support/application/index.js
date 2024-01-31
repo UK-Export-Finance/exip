@@ -16,4 +16,4 @@ Cypress.Commands.add('startInsuranceYourBuyerSection', require('../../../../comm
 Cypress.Commands.add('startInsurancePolicySection', require('../../../../commands/insurance/start-insurance-policy-section'));
 Cypress.Commands.add('startInsuranceExportContractSection', require('../../../../commands/insurance/start-insurance-export-contract-section'));
 
-Cypress.Commands.add('completeAlternativeCurrencyForm', require('../../../../commands/insurance/complete-alternative-currency-form'));
+Cypress.Commands.add('completeAndSubmitAlternativeCurrencyForm', require('../../../../commands/insurance/complete-and-submit-alternative-currency-form'));
