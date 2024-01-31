@@ -29,7 +29,7 @@ const {
     INSURANCE: { BUYER },
   },
   ATTRIBUTES: {
-    CLASSES: { LEGEND },
+    CLASSES: { LABEL },
   },
 } = TEMPLATES;
 
@@ -51,7 +51,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
  */
 export const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: BUYER.OUTSTANDING_PAYMENTS.CONDITIONAL_YES_HTML,
-  LEGEND_CLASS: LEGEND.S_NOT_BOLD,
+  LEGEND_CLASS: LABEL.NOT_BOLD.S,
 };
 
 export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {

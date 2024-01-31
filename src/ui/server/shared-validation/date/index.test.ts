@@ -28,6 +28,9 @@ describe('shared-validation/date', () => {
   const year = date.getFullYear();
 
   const futureDate = new Date(date.setMonth(month + 6));
+  const futureDateMonth = futureDate.getMonth();
+  const futureDateYear = futureDate.getFullYear();
+  const futureDateDay = getDaysInAMonth(futureDateMonth, futureDateYear);
 
   const baseParams = {
     errors: mockErrors,
@@ -36,9 +39,9 @@ describe('shared-validation/date', () => {
   };
 
   const mockValidBody = {
-    [`${FIELD_ID}-day`]: futureDate.getDate(),
-    [`${FIELD_ID}-month`]: futureDate.getMonth(),
-    [`${FIELD_ID}-year`]: futureDate.getFullYear(),
+    [`${FIELD_ID}-day`]: futureDateDay,
+    [`${FIELD_ID}-month`]: futureDateMonth,
+    [`${FIELD_ID}-year`]: futureDateYear,
   };
 
   describe('when a data has an invalid format', () => {

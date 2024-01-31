@@ -40,7 +40,7 @@ const {
     INSURANCE: { BUYER },
   },
   ATTRIBUTES: {
-    CLASSES: { LEGEND },
+    CLASSES: { LABEL },
   },
 } = TEMPLATES;
 
@@ -123,7 +123,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
     it('should have the correct flags defined', () => {
       const expected = {
         CONDITIONAL_YES_HTML: BUYER.OUTSTANDING_PAYMENTS.CONDITIONAL_YES_HTML,
-        LEGEND_CLASS: LEGEND.S_NOT_BOLD,
+        LEGEND_CLASS: LABEL.NOT_BOLD.S,
       };
 
       expect(HTML_FLAGS).toEqual(expected);

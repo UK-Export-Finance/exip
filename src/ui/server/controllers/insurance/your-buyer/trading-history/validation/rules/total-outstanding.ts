@@ -3,8 +3,8 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
-import { stripCommas } from '../../../../../../helpers/string';
 import { RequestBody } from '../../../../../../../types';
+import wholeNumberBelowMinimumValidation from '../../../../../../shared-validation/whole-number-below-minimum';
 
 const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
 
@@ -36,12 +36,11 @@ const totalOutstandingRules = (formBody: RequestBody, errors: object) => {
     // check if the field is a whole number.
     updatedErrors = wholeNumberValidation(formBody, updatedErrors, ERROR_MESSAGE.INCORRECT_FORMAT, FIELD_ID);
 
-    // strip commas - commas are valid.
-    const numberWithoutCommas = stripCommas(formBody[FIELD_ID]);
+    // checks if value is below minimum
+    const belowMinimum = wholeNumberBelowMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors, MINIMUM);
 
-    // check if the field is below the minimum
-    if (Number(numberWithoutCommas) < MINIMUM) {
-      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
+    if (belowMinimum) {
+      return belowMinimum;
     }
   }
 

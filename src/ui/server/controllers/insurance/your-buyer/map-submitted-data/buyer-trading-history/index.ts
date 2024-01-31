@@ -31,7 +31,7 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     delete populatedData[ALTERNATIVE_CURRENCY_CODE];
   }
 
-  // TODO: Remove when data saving added for trading history
+  // TODO: EMS:2372 Remove when data saving added for trading history
   delete populatedData[TOTAL_OUTSTANDING];
   delete populatedData[AMOUNT_OVERDUE];
 

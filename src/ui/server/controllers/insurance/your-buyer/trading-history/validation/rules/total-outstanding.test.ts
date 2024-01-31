@@ -3,6 +3,7 @@ import YOUR_BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insuranc
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
 
@@ -13,11 +14,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/trading-history/validation/rules/total-outstanding', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe(`when ${OUTSTANDING_PAYMENTS} is not "true"`, () => {
     it('should return the provided errors object', () => {
       const mockSubmittedData = {
