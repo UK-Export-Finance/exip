@@ -17,6 +17,7 @@ export const TEMPLATES = {
   ATTRIBUTES: {
     CLASSES: {
       LEGEND: {
+        S_NOT_BOLD: 'govuk-fieldset__legend--s govuk-!-font-weight-regular',
         M: 'govuk-fieldset__legend--m',
         XL: 'govuk-fieldset__legend--xl',
       },
