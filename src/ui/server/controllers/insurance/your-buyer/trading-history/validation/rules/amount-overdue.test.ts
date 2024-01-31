@@ -44,7 +44,7 @@ describe('controllers/insurance/your-buyer/trading-history/validation/rules/amou
     });
   });
 
-  describe('when total sales to buyer is not a number', () => {
+  describe(`when ${FIELD_ID} is not a number`, () => {
     it('should return `wholeNumberValidation`', () => {
       const mockSubmittedData = {
         [OUTSTANDING_PAYMENTS]: 'true',
@@ -59,7 +59,7 @@ describe('controllers/insurance/your-buyer/trading-history/validation/rules/amou
     });
   });
 
-  describe('when total sales to buyer contains a decimal', () => {
+  describe(`when ${FIELD_ID} contains a decimal`, () => {
     it('should return `wholeNumberValidation`', () => {
       const mockSubmittedData = {
         [OUTSTANDING_PAYMENTS]: 'true',
@@ -74,7 +74,7 @@ describe('controllers/insurance/your-buyer/trading-history/validation/rules/amou
     });
   });
 
-  describe('when total sales to buyer contains a comma and decimal', () => {
+  describe(`when ${FIELD_ID} contains a comma and decimal`, () => {
     it('should return `wholeNumberValidation`', () => {
       const mockSubmittedData = {
         [OUTSTANDING_PAYMENTS]: 'true',
@@ -89,7 +89,7 @@ describe('controllers/insurance/your-buyer/trading-history/validation/rules/amou
     });
   });
 
-  describe('when total sales to buyer is below the minimum', () => {
+  describe(`when ${FIELD_ID} is below the minimum`, () => {
     it('should return validation error', () => {
       const mockSubmittedData = {
         [OUTSTANDING_PAYMENTS]: 'true',
