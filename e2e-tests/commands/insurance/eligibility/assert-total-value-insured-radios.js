@@ -22,7 +22,7 @@ const assertTotalValueInsuredRadios = ({ underThreshold = true, checked = true }
   }
 
   if (checked) {
-    field(fieldId).input().should('be.checked');
+    cy.assertRadioOptionIsChecked(field(fieldId).input());
   } else {
     field(fieldId).input().should('not.be.checked');
   }

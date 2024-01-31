@@ -93,7 +93,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
       cy.startInsuranceYourBuyerSection({});
       cy.clickSubmitButton();
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
       cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), '');
     });
   });
@@ -121,7 +121,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
       cy.startInsuranceYourBuyerSection({});
       cy.clickSubmitButton();
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
       cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
     });
   });

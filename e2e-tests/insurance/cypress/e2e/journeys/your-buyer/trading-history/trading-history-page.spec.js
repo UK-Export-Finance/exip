@@ -157,8 +157,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          noRadioInput().first().should('be.checked');
-          noRadioInput().last().should('be.checked');
+          cy.assertRadioOptionIsChecked(noRadioInput().first());
+          cy.assertRadioOptionIsChecked(noRadioInput().last());
         });
       });
     });

@@ -160,7 +160,10 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
         fieldSelector(CONTRACT_COMPLETION_DATE).yearInput().should('have.value', application.POLICY[CONTRACT_COMPLETION_DATE].year);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
-        radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
+
+        const field = radios(POLICY_CURRENCY_CODE, isoCode).option;
+
+        cy.assertRadioOptionIsChecked(field.input());
       });
     });
   });

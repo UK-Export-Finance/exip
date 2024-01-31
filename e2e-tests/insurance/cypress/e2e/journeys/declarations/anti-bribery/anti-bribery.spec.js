@@ -199,7 +199,7 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
 
           cy.navigateToUrl(url);
 
-          singleInputField(FIELD_ID).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
         });
       });
     });

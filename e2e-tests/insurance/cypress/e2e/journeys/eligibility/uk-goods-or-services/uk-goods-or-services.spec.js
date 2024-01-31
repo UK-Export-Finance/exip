@@ -1,6 +1,4 @@
-import {
-  yesNoRadioHint, yesRadio, yesRadioInput, noRadio,
-} from '../../../../../../pages/shared';
+import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
   FIELDS,
@@ -155,7 +153,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
       it('should have the originally submitted answer selected', () => {
         cy.clickBackLink();
 
-        yesRadioInput().should('be.checked');
+        cy.assertYesRadioOptionIsChecked();
       });
     });
   });

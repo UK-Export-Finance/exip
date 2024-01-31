@@ -28,7 +28,7 @@ const {
 } = ERROR_MESSAGES;
 
 const {
-  radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
+  radios, assertGbpCurrencyCheckedByDefault, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
   rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
   submitAndAssertRadioIsChecked, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
 } = assertAlternativeCurrencyForm({
@@ -93,6 +93,10 @@ context('Insurance - Your business - Turnover - Alternative currency page - As a
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it(`should render ${GBP_CURRENCY_CODE} checked by default`, () => {
+      assertGbpCurrencyCheckedByDefault();
     });
 
     it('renders alternative currency radios', () => {

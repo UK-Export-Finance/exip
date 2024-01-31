@@ -83,7 +83,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
       it('should have the originally submitted answer selected', () => {
         cy.startInsurancePolicySection({});
 
-        multiplePolicyField.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(multiplePolicyField.input());
       });
     });
   });

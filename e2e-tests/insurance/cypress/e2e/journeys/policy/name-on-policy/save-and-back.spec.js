@@ -95,7 +95,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      field(OTHER_NAME).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(field(OTHER_NAME).input());
     });
   });
 
@@ -118,7 +118,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      field(SAME_NAME).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
 
       cy.checkValue(field(POSITION), '');
     });
@@ -143,7 +143,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      field(SAME_NAME).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
 
       cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
     });

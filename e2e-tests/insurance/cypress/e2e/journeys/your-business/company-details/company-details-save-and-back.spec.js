@@ -76,8 +76,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().should('be.checked');
-      yesRadioInput().eq(1).should('be.checked');
+      cy.assertRadioOptionIsChecked(yesRadioInput().first());
+      cy.assertRadioOptionIsChecked(yesRadioInput().eq(1));
     });
   });
 
@@ -98,8 +98,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().first().should('be.checked');
-      noRadioInput().eq(1).should('be.checked');
+      cy.assertRadioOptionIsChecked(noRadioInput().first());
+      cy.assertRadioOptionIsChecked(noRadioInput().eq(1));
       field(PHONE_NUMBER).input().should('be.empty');
     });
   });
@@ -122,8 +122,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().first().should('be.checked');
-      noRadioInput().eq(1).should('be.checked');
+      cy.assertRadioOptionIsChecked(noRadioInput().first());
+      cy.assertRadioOptionIsChecked(noRadioInput().eq(1));
 
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
 
@@ -149,8 +149,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().first().should('be.checked');
-      noRadioInput().eq(1).should('be.checked');
+      cy.assertRadioOptionIsChecked(noRadioInput().first());
+      cy.assertRadioOptionIsChecked(noRadioInput().eq(1));
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       cy.checkValue(field(WEBSITE), WEBSITE_EXAMPLES.VALID);
     });

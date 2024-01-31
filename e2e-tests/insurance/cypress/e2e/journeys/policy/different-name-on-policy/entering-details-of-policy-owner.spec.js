@@ -75,7 +75,8 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
     });
 
     it(`should have ${SAME_NAME} radio selected and ${POSITION} populated when going back to the page`, () => {
-      fieldSelector(SAME_NAME).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(fieldSelector(SAME_NAME).input());
+
       cy.checkValue(fieldSelector(POSITION), POLICY_CONTACT[POSITION]);
     });
   });

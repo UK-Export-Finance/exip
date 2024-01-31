@@ -1,4 +1,3 @@
-import { noRadioInput } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -51,7 +50,7 @@ context('Insurance - Your business - Credit control page - answer `no` - As an E
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().should('be.checked');
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });
