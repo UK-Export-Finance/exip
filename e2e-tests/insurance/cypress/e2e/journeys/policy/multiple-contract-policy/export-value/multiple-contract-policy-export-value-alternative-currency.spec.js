@@ -63,10 +63,6 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Alt
     });
 
     it('should render a heading with the alternative currency', () => {
-      // const expected = `${CONTENT_STRINGS.PAGE_TITLE} ${NON_STANDARD_CURRENCY_NAME}`;
-
-      // cy.checkText(heading(), expected);
-
       cy.assertHeadingWithCurrencyName({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currencyName: NON_STANDARD_CURRENCY_NAME,
