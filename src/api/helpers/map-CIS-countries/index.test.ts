@@ -3,8 +3,8 @@ import mapCisCountry from './map-CIS-country';
 import { EXTERNAL_API_DEFINITIONS } from '../../constants';
 import filterCisEntries from '../filter-cis-entries';
 import sortArrayAlphabetically from '../sort-array-alphabetically';
-import mockCisCountries from '../../test-mocks/mock-CIS-countries';
 import { CisCountry } from '../../types';
+import { mockCisCountries } from '../../test-mocks';
 
 const { CIS } = EXTERNAL_API_DEFINITIONS;
 
