@@ -1,8 +1,9 @@
 import goodsOrServices, { MAXIMUM } from './goods-or-services';
 import { FIELD_IDS } from '../../../../../../constants';
-import { RequestBody } from '../../../../../../../types';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: FIELD_ID },
@@ -13,11 +14,6 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/nature-of-business/validation/rules/goods-or-services', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

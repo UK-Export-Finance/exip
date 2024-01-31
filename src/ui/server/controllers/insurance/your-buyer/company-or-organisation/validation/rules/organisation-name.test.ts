@@ -2,6 +2,7 @@ import companyOrOrganisationNameRules from './organisation-name';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME: FIELD_ID },
@@ -18,11 +19,6 @@ const {
 describe('controllers/insurance/your-buyer/validation/organisation', () => {
   const mockBody = {
     [FIELD_ID]: '',
-  };
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
   };
 
   it('should return the result of emptyFieldValidation', () => {

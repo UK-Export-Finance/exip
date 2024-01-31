@@ -1,8 +1,9 @@
 import usingBroker from './using-broker';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   BROKER: { USING_BROKER: FIELD_ID },
@@ -12,11 +13,6 @@ const { POLICY } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = POLICY[FIELD_ID];
 
 describe('controllers/insurance/policy/broker/validation/rules/using-broker', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

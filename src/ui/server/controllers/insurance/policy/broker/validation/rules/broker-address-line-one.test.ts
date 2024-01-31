@@ -1,8 +1,9 @@
 import brokerAddressLineOne from './broker-address-line-one';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   BROKER: { ADDRESS_LINE_1, USING_BROKER },
@@ -12,11 +13,6 @@ const { POLICY } = ERROR_MESSAGES.INSURANCE;
 const ERROR_MESSAGE = POLICY[ADDRESS_LINE_1];
 
 describe('controllers/insurance/policy/broker/validation/rules/broker-address-line-one', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [ADDRESS_LINE_1]: '',
   } as RequestBody;

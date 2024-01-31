@@ -1,13 +1,9 @@
 import wholeNumberValidation from '.';
-import { RequestBody } from '../../../types';
 import generateValidationErrors from '../validation';
+import { RequestBody } from '../../../types';
+import { mockErrors } from '../../test-mocks';
 
 describe('server/helpers/whole-number-validation', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     testField: '',
   } as RequestBody;

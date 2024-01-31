@@ -1,13 +1,9 @@
 import percentageNumberValidation from '.';
-import { RequestBody, ErrorMessageObject } from '../../../types';
 import generateValidationErrors from '../validation';
+import { RequestBody, ErrorMessageObject } from '../../../types';
+import { mockErrors } from '../../test-mocks';
 
 describe('server/helpers/percentage-number-validation', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     testField: '',
   } as RequestBody;

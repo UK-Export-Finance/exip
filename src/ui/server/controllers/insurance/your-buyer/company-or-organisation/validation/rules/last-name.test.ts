@@ -2,6 +2,7 @@ import lastNameRule from './last-name';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { mockErrors } from '../../../../../../test-mocks';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -17,11 +18,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/last-name', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;

@@ -3,6 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import { mockErrors } from '../../../../../../test-mocks';
 
 const {
   POLICY: { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER: FIELD_ID },
@@ -15,11 +16,6 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/policy/pre-credit-period/validation/rules/credit-period-with-buyer-description', () => {
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
-
   describe(`when ${NEED_PRE_CREDIT_PERIOD} is true and ${FIELD_ID} is not provided`, () => {
     it('should return validation errors', () => {
       const mockFormBody = {

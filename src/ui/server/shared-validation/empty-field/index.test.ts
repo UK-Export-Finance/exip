@@ -1,13 +1,9 @@
 import emptyFieldValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
+import { mockErrors } from '../../test-mocks';
 
 describe('shared-validation/empty-field', () => {
   let mockFormBody = {};
-
-  const mockErrors = {
-    summary: [],
-    errorList: {},
-  };
 
   const mockFieldId = 'Mock field';
   const mockErrorMessage = 'Enter mock field';
