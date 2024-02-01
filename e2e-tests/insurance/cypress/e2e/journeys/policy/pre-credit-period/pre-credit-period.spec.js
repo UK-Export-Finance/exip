@@ -5,12 +5,10 @@ import {
   noRadio,
   noRadioInput,
   field as fieldSelector,
-  saveAndBackButton,
   yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
-  BUTTONS,
   PAGES,
   CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS,
   TASKS,
@@ -92,7 +90,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
 
     describe(`renders ${NEED_PRE_CREDIT_PERIOD} label and inputs`, () => {

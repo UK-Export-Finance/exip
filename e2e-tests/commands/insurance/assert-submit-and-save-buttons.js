@@ -1,4 +1,4 @@
-import { submitButton, saveAndBackButton } from '../../pages/shared';
+import { submitButton } from '../../pages/shared';
 
 import { BUTTONS } from '../../content-strings';
 
@@ -8,7 +8,7 @@ import { BUTTONS } from '../../content-strings';
  */
 const assertSubmitAndSaveButtons = (submitButtonCopy = BUTTONS.CONTINUE) => {
   cy.checkText(submitButton(), submitButtonCopy);
-  cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+  cy.assertSaveAndBackButton();
 };
 
 export default assertSubmitAndSaveButtons;

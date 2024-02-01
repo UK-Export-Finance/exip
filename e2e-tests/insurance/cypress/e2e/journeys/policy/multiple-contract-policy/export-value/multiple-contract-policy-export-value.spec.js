@@ -1,15 +1,7 @@
-import {
-  field as fieldSelector,
-  headingCaption,
-  saveAndBackButton,
-} from '../../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../../pages/shared';
 import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
 import partials from '../../../../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-  TASKS,
-} from '../../../../../../../content-strings';
+import { PAGES, TASKS } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -122,7 +114,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - As 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

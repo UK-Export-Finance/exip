@@ -1,14 +1,6 @@
-import {
-  field as fieldSelector,
-  headingCaption,
-  saveAndBackButton,
-} from '../../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-  TASKS,
-} from '../../../../../../../content-strings';
+import { PAGES, TASKS } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -102,7 +94,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

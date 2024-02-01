@@ -1,8 +1,5 @@
-import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { headingCaption } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -68,7 +65,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

@@ -1,7 +1,7 @@
 import {
-  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field, noRadioInput,
+  headingCaption, intro, yesRadio, noRadio, field, noRadioInput,
 } from '../../../../../../pages/shared';
-import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -115,7 +115,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

@@ -1,12 +1,7 @@
-import {
-  field,
-  headingCaption,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { field, headingCaption } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import partials from '../../../../../../partials';
 import {
-  BUTTONS,
   ERROR_MESSAGES,
   PAGES,
   TASKS,
@@ -109,7 +104,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

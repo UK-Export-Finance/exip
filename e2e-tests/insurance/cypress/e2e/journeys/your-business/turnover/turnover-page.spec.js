@@ -1,7 +1,7 @@
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { turnoverPage } from '../../../../../../pages/your-business';
-import { PAGES, BUTTONS } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
@@ -132,7 +132,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
     });
 
     it('should render save and go back button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

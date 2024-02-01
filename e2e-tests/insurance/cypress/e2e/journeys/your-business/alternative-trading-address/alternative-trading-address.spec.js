@@ -1,6 +1,6 @@
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
-import { PAGES, BUTTONS, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { field as fieldSelector } from '../../../../../../pages/shared';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -111,7 +111,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
 
     it('should display save and go back button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

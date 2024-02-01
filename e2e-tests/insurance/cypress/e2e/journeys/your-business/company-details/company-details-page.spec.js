@@ -3,11 +3,10 @@ import partials from '../../../../../../partials';
 import {
   body,
   field,
-  saveAndBackButton,
   yesRadioInput,
   noRadioInput,
 } from '../../../../../../pages/shared';
-import { PAGES, BUTTONS } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import assertCompaniesHouseSummaryList from '../../../../../../commands/insurance/assert-companies-house-summary-list';
@@ -152,7 +151,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it('should display save and go back button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 });

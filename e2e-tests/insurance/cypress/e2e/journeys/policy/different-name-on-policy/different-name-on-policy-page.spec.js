@@ -1,12 +1,5 @@
-import {
-  headingCaption,
-  saveAndBackButton,
-  field as fieldSelector,
-} from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -127,7 +120,7 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
