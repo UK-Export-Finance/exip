@@ -524,7 +524,8 @@ var EXTERNAL_API_DEFINITIONS = {
       YES: "Y",
       NO: "N"
     },
-    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"]
+    INVALID_COUNTRIES: ["EC Market n/k", "Non EC Market n/k", "Non UK", "Third Country", "Eastern and Southern African Trade and Development Bank"],
+    INVALID_CURRENCIES: ["Gold"]
   },
   COMPANIES_HOUSE: {
     COMPANY_STATUS: {
@@ -5057,6 +5058,13 @@ var APIM = {
 };
 var APIM_default = APIM;
 
+// helpers/filter-cis-entries/index.ts
+var filterCisEntries = (arr, invalidEntries, entityPropertyName) => {
+  const filtered = arr.filter((obj) => !invalidEntries.includes(obj[entityPropertyName]));
+  return filtered;
+};
+var filter_cis_entries_default = filterCisEntries;
+
 // helpers/map-CIS-countries/map-CIS-country/map-risk-category/index.ts
 var { CIS } = EXTERNAL_API_DEFINITIONS;
 var mapRiskCategory = (str) => {
@@ -5201,9 +5209,8 @@ var sort_array_alphabetically_default = sortArrayAlphabetically;
 
 // helpers/map-CIS-countries/index.ts
 var { CIS: CIS5 } = EXTERNAL_API_DEFINITIONS;
-var filterCisCountries = (countries) => countries.filter((country) => !CIS5.INVALID_COUNTRIES.includes(country.marketName));
 var mapCisCountries = (countries) => {
-  const filteredCountries = filterCisCountries(countries);
+  const filteredCountries = filter_cis_entries_default(countries, CIS5.INVALID_COUNTRIES, "marketName");
   const mapped = filteredCountries.map((country) => map_CIS_country_default(country));
   const sorted = sort_array_alphabetically_default(mapped, "name");
   return sorted;
@@ -5228,6 +5235,7 @@ var getApimCisCountries = async () => {
 var get_APIM_CIS_countries_default = getApimCisCountries;
 
 // helpers/map-currencies/index.ts
+var { CIS: CIS6 } = EXTERNAL_API_DEFINITIONS;
 var getSupportedCurrencies = (currencies) => {
   const supported = currencies.filter((currency) => SUPPORTED_CURRENCIES.find((currencyCode) => currency.isoCode === currencyCode));
   return supported;
@@ -5237,11 +5245,11 @@ var getAlternativeCurrencies = (currencies) => {
   return alternate;
 };
 var mapCurrencies = (currencies, alternativeCurrencies) => {
-  let currenciesArray = currencies;
+  let currenciesArray = filter_cis_entries_default(currencies, CIS6.INVALID_CURRENCIES, "name");
   if (!alternativeCurrencies) {
-    currenciesArray = getSupportedCurrencies(currencies);
+    currenciesArray = getSupportedCurrencies(currenciesArray);
   } else {
-    currenciesArray = getAlternativeCurrencies(currencies);
+    currenciesArray = getAlternativeCurrencies(currenciesArray);
   }
   const sorted = sort_array_alphabetically_default(currenciesArray, FIELD_IDS.NAME);
   return sorted;
