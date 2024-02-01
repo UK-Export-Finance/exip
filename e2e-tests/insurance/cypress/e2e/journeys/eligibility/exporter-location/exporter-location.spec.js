@@ -1,9 +1,4 @@
-import {
-  yesRadio,
-  yesRadioInput,
-  yesNoRadioHint,
-  noRadio,
-} from '../../../../../../pages/shared';
+import { yesRadio, yesNoRadioHint, noRadio } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS } from '../../../../../../content-strings/fields';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -98,7 +93,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });

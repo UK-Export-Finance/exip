@@ -136,7 +136,8 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
 
           cy.navigateToUrl(url);
 
-          field(SAME_NAME).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
+
           cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
         });
       });
@@ -156,7 +157,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          field(OTHER_NAME).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field(OTHER_NAME).input());
         });
       });
     });

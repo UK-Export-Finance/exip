@@ -2,7 +2,6 @@ import {
   field,
   status,
   summaryList,
-  noRadioInput,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -150,7 +149,7 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
         it(`should have the submitted 'yes' value and an empty ${CREDIT_PERIOD_WITH_BUYER} value`, () => {
           cy.navigateToUrl(needPreCreditPeriodUrl);
 
-          noRadioInput().should('be.checked');
+          cy.assertNoRadioOptionIsChecked();
 
           field(CREDIT_PERIOD_WITH_BUYER).textarea().should('have.value', '');
         });

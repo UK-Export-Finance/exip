@@ -159,7 +159,7 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
 
           cy.navigateToUrl(url);
 
-          field.input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field.input());
         });
       });
     });

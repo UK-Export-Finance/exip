@@ -151,7 +151,10 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
         fieldSelector(TOTAL_MONTHS_OF_COVER).input().should('have.value', application.POLICY[TOTAL_MONTHS_OF_COVER]);
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
-        radios(POLICY_CURRENCY_CODE, isoCode).option.input().should('be.checked');
+
+        const field = radios(POLICY_CURRENCY_CODE, isoCode).option;
+
+        cy.assertRadioOptionIsChecked(field.input());
       });
     });
   });

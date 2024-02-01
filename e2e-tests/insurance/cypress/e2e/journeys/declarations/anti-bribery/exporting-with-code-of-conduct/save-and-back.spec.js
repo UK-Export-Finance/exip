@@ -100,7 +100,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       navigateBackToPage();
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 
@@ -124,7 +124,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       navigateBackToPage();
 
-      noRadioInput().should('be.checked');
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });

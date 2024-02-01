@@ -135,7 +135,10 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationPolicy;
 
-  // update the export contract so we have a full data set.
+  /**
+   * Update all other relationships
+   * So that we have a full data set.
+   */
   (await context.query.ExportContract.updateOne({
     where: {
       id: application.exportContract.id,
@@ -160,7 +163,6 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationBusiness;
 
-  // update the declaration so we have a full data set.
   const declaration = (await context.query.Declaration.updateOne({
     where: {
       id: application.declaration.id,

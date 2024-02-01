@@ -1,6 +1,4 @@
-import {
-  yesRadio, yesRadioInput, noRadio,
-} from '../../../../../../pages/shared';
+import { yesRadio, noRadio } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -99,7 +97,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
         it('should have the originally submitted answer selected', () => {
           cy.clickBackLink();
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });

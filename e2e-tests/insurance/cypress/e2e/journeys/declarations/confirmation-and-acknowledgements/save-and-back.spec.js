@@ -97,7 +97,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
-      singleInputField(FIELD_ID).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
     });
   });
 });

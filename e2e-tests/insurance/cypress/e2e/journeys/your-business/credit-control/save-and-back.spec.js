@@ -81,7 +81,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 
@@ -104,7 +104,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().should('be.checked');
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });
