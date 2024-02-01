@@ -187,8 +187,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertRadioOptionIsChecked(noRadioInput().first());
-            cy.assertRadioOptionIsChecked(noRadioInput().last());
+            cy.assertRadioOptionIsChecked(noRadioInput(), 0);
+            cy.assertRadioOptionIsChecked(noRadioInput(), 1);
           });
         });
       });
@@ -206,8 +206,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertRadioOptionIsChecked(yesRadioInput().first());
-            cy.assertRadioOptionIsChecked(noRadioInput().last());
+            cy.assertRadioOptionIsChecked(yesRadioInput(), 0);
+            cy.assertRadioOptionIsChecked(noRadioInput(), 1);
           });
         });
       });

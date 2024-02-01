@@ -61,7 +61,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertRadioOptionIsChecked(yesRadioInput().first());
+      cy.assertRadioOptionIsChecked(yesRadioInput(), 0);
 
       cy.checkValue(field(DIFFERENT_TRADING_NAME), YOUR_COMPANY[DIFFERENT_TRADING_NAME]);
     });
@@ -77,7 +77,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
     it(`should not have ${DIFFERENT_TRADING_NAME} input populated`, () => {
       cy.navigateToUrl(url);
 
-      cy.assertRadioOptionIsChecked(noRadioInput().first());
+      cy.assertRadioOptionIsChecked(noRadioInput(), 0);
 
       // check input is not populated
       yesRadioInput().first().click();
