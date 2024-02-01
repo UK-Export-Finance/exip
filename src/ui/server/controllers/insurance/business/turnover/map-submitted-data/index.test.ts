@@ -96,15 +96,19 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
     });
   });
 
-  describe(`when ${TURNOVER_CURRENCY_CODE} is provided`, () => {
-    it('should return an object with mapCurrencyCodeFormData', () => {
+  describe(`when ${CURRENCY_CODE} is provided`, () => {
+    it('should return an object via  mapCurrencyCodeFormData', () => {
       const mockBody = {
-        [TURNOVER_CURRENCY_CODE]: mockApplication.business.turnoverCurrencyCode,
+        [CURRENCY_CODE]: mockApplication.business.turnoverCurrencyCode,
       };
 
       const result = mapSubmittedData(mockBody);
 
-      const expected = mapCurrencyCodeFormData(mockBody, TURNOVER_CURRENCY_CODE);
+      const mappedCurrency = mapCurrencyCodeFormData(mockBody);
+
+      const expected = {
+        [TURNOVER_CURRENCY_CODE]: mappedCurrency[CURRENCY_CODE],
+      };
 
       expect(result).toEqual(expected);
     });
