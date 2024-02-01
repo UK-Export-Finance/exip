@@ -24,11 +24,11 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
 
   describe(`when ${CURRENCY_CODE} is not equal to ${ALTERNATIVE_CURRENCY_CODE}`, () => {
     it(`should return mockFormBody without _csrf and ${ALTERNATIVE_CURRENCY_CODE}`, () => {
-      const response = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody);
 
       const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
 
-      expect(response).toEqual(expectedBody);
+      expect(result).toEqual(expectedBody);
     });
   });
 
@@ -37,7 +37,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
       mockFormBody[CURRENCY_CODE] = ALTERNATIVE_CURRENCY_CODE;
       mockFormBody[ALTERNATIVE_CURRENCY_CODE] = NON_STANDARD_CURRENCY_CODE;
 
-      const response = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody);
 
       const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
 
@@ -46,7 +46,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
         [CURRENCY_CODE]: NON_STANDARD_CURRENCY_CODE,
       };
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -54,7 +54,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
     it(`should return mockFormBody without _csrf and ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_OVERDUE_PAYMENTS} set to "null"`, () => {
       mockFormBody[OUTSTANDING_PAYMENTS] = 'false';
 
-      const response = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody);
 
       const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
 
@@ -64,7 +64,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
         [TOTAL_OVERDUE_PAYMENTS]: null,
       };
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -72,7 +72,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
     it(`should return mockFormBody without _csrf and ${TOTAL_OUTSTANDING_PAYMENTS} set to "null"`, () => {
       mockFormBody[TOTAL_OUTSTANDING_PAYMENTS] = '';
 
-      const response = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody);
 
       const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
 
@@ -81,7 +81,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
         [TOTAL_OUTSTANDING_PAYMENTS]: null,
       };
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
@@ -89,7 +89,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
     it(`should return mockFormBody without _csrf and ${TOTAL_OVERDUE_PAYMENTS} set to "null"`, () => {
       mockFormBody[TOTAL_OVERDUE_PAYMENTS] = '';
 
-      const response = mapSubmittedData(mockFormBody);
+      const result = mapSubmittedData(mockFormBody);
 
       const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
 
@@ -98,7 +98,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
         [TOTAL_OVERDUE_PAYMENTS]: null,
       };
 
-      expect(response).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 });

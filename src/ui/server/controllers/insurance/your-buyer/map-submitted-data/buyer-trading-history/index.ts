@@ -12,6 +12,8 @@ const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS
 /**
  * maps buyer trading history fields in correct format
  * if body contains CURRENCY_CODE, deletes ALTERNATIVE_CURRENCY_CODE and sets CURRENCY_CODE
+ * if body has OUTSTANDING_PAYMENTS as false, then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_OVERDUE_PAYMENTS set to null
+ * if TOTAL_OUTSTANDING_PAYMENTS or TOTAL_OVERDUE_PAYMENTS are an empty string, then should be set to null
  * @param {RequestBody} formBody
  * @returns {Object} populatedData
  */
@@ -31,6 +33,11 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     delete populatedData[ALTERNATIVE_CURRENCY_CODE];
   }
 
+  /**
+   * if populatedData contains OUTSTANDING_PAYMENTS
+   * if it is set to false
+   * then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_OVERDUE_PAYMENTS should be set to null
+   */
   if (objectHasProperty(populatedData, OUTSTANDING_PAYMENTS)) {
     if (populatedData[OUTSTANDING_PAYMENTS] === 'false') {
       populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
