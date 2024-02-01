@@ -1,4 +1,4 @@
-import { noRadioInput, countryInput } from '../../../../../../pages/shared';
+import { countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import partials from '../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -77,7 +77,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
-        noRadioInput().should('be.checked');
+        cy.assertNoRadioOptionIsChecked();
       });
 
       it(`should NOT have a visible ${FINAL_DESTINATION}`, () => {

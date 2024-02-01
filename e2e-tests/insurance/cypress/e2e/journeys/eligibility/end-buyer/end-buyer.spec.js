@@ -1,6 +1,4 @@
-import {
-  yesNoRadioHint, yesRadio, noRadio, noRadioInput,
-} from '../../../../../../pages/shared';
+import { yesNoRadioHint, yesRadio, noRadio } from '../../../../../../pages/shared';
 import { endBuyerPage } from '../../../../../../pages/insurance/eligibility';
 import { PAGES, END_BUYERS_DESCRIPTION, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELDS_ELIGIBILITY } from '../../../../../../content-strings/fields/insurance/eligibility';
@@ -140,7 +138,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
       it('should have the originally submitted answer selected', () => {
         cy.clickBackLink();
 
-        noRadioInput().should('be.checked');
+        cy.assertNoRadioOptionIsChecked();
       });
     });
   });

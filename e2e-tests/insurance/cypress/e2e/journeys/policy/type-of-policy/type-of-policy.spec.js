@@ -156,7 +156,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       it('should have the originally submitted answer selected when going back to the page', () => {
         goToPageDirectly(referenceNumber);
 
-        singlePolicyField.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(singlePolicyField.input());
       });
     });
 
@@ -176,7 +176,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       it('should have the originally submitted answer selected when going back to the page', () => {
         goToPageDirectly(referenceNumber);
 
-        multiplePolicyField.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(multiplePolicyField.input());
       });
     });
 

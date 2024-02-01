@@ -1,7 +1,6 @@
 import {
   headingCaption,
   yesRadio,
-  yesRadioInput,
   noRadio,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
@@ -130,7 +129,7 @@ context("Insurance - Declarations - Anti-bribery - Exporting with code of conduc
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });

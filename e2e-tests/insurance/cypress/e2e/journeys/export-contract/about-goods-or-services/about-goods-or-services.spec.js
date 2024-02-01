@@ -2,7 +2,6 @@ import {
   headingCaption,
   saveAndBackButton,
   yesRadio,
-  yesRadioInput,
   noRadio,
   countryInput,
 } from '../../../../../../pages/shared';
@@ -215,7 +214,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
-        yesRadioInput().should('be.checked');
+        cy.assertYesRadioOptionIsChecked();
 
         const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
         cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.NAME);

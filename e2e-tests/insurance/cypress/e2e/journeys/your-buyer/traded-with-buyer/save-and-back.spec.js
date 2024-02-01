@@ -1,4 +1,4 @@
-import { saveAndBackButton, yesRadioInput } from '../../../../../../pages/shared';
+import { saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -85,7 +85,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       // submit connectionToBuyer form to get to working with buyer page
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 });

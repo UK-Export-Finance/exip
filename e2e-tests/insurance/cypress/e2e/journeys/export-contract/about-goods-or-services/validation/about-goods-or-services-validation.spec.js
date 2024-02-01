@@ -1,5 +1,5 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/export-contract';
-import { countryInput, yesRadioInput, noRadioInput } from '../../../../../../../pages/shared';
+import { countryInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -143,7 +143,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       descriptionField.textarea().should('have.value', descriptionOverMaximum);
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
 
       cy.checkText(countryInput.field(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
     });
@@ -160,7 +160,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       descriptionField.textarea().should('have.value', descriptionOverMaximum);
 
-      noRadioInput().should('be.checked');
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });
