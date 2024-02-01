@@ -1,4 +1,4 @@
-import { headingCaption } from '../../../../../../pages/shared';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -74,7 +74,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         cy.navigateToUrl(url);
 
-        cy.clickSubmitButton();
+        saveAndBackButton().click();
 
         cy.assertUrl(allSectionsUrl);
       });
