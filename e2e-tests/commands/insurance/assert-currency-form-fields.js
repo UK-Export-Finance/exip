@@ -35,14 +35,14 @@ const currencyRadio = ({ fieldId, currency, alternativeCurrencyFieldId = ALTERNA
 
 /**
  * assertCurrencyFormFields
- * validates various parts of alternative currency form
- * @param {Object} variables - variables for alternative currency form
- * - fieldId - fieldId for currency radios
- * - legend - text for legend component
- * - hint - text for hint
- * - alternativeCurrencyText - text for "another currency" input
- * - ALTERNATIVE_CURRENCY_CODE - fieldId for "another currency" input
- * - errors - error message object
+ * validates various parts of a form with currency fields.
+ * @param {Object} variables: Variables for a form with currency fields.
+ * - fieldId: Field ID for currency radios
+ * - legend: Text for legend component
+ * - hint: Text for hint
+ * - alternativeCurrencyText: Text for "another currency" input
+ * - alternativeCurrencyFieldId: Field ID for "another currency" input
+ * - errors: Error messages object
  */
 const assertCurrencyFormFields = ({
   fieldId = CURRENCY_CODE,
