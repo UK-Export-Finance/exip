@@ -12,10 +12,10 @@ export interface ApplicationBusiness extends Relationship {
 }
 
 export interface BuyerTradingHistory extends Relationship {
-  exporterHasTradedWithBuyer?: boolean;
   currencyCode?: string;
-  outstandingPayment?: boolean;
+  exporterHasTradedWithBuyer?: boolean;
   failedPayments?: boolean;
+  outstandingPayment?: boolean;
 }
 
 export interface ApplicationBuyer extends Relationship {
@@ -150,6 +150,7 @@ export interface Application {
   buyer: ApplicationBuyer;
   sectionReview: Relationship;
   declaration: ApplicationDeclaration;
+  version: number;
 }
 
 export interface ApplicationSubmissionEmailVariables {

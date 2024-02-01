@@ -77,9 +77,12 @@ const nullableCheckboxConfig = (defaultValue?: boolean) =>
 /**
  * nullableCheckbox
  * KeystoneJS custom field.
+ * NOTE: "any" type is required here because:
+ * - No keystone field type is available to easily use.
+ * - Without an appropriate type, or any, the keystone schema displays type errors, purely because of this custom component.
  * @param {Boolean} Default value to set the checkbox to.
  * @returns {Function} Keystone custom field
  */
-export const nullableCheckbox = (defaultValue?: boolean) => () => nullableCheckboxConfig(defaultValue);
+export const nullableCheckbox = (defaultValue?: boolean) => () => nullableCheckboxConfig(defaultValue) as any;
 
 export default nullableCheckbox;
