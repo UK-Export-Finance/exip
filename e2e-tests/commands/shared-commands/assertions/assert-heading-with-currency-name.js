@@ -15,7 +15,7 @@ const assertHeadingWithCurrencyName = ({
   let expected = `${pageTitle} ${currencyName}`;
 
   if (withQuestionMark) {
-    expected += ' ?';
+    expected += '?';
   }
 
   cy.checkText(heading(), expected);
