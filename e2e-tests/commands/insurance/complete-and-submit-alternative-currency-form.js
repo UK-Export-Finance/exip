@@ -16,7 +16,7 @@ const { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENC
 const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency }) => {
   if (isoCode) {
     // clicks alternative currency link
-    partials.provideAlternativeCurrencyLink.click();
+    partials.provideAlternativeCurrencyLink().click();
 
     // selects currency radio and submits form
     radios(CURRENCY_CODE, isoCode).option.input().click();
@@ -25,7 +25,7 @@ const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency
 
   if (alternativeCurrency) {
     // clicks alternative currency link
-    partials.provideAlternativeCurrencyLink.click();
+    partials.provideAlternativeCurrencyLink().click();
 
     /**
      * clicks alternativeCurrency radio option
