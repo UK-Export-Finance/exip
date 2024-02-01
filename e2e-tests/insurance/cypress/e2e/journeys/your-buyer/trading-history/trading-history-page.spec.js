@@ -233,7 +233,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
         });
 
         describe('when going back to the page', () => {
-          it('should have the submitted values', () => {
+          it(`should have the submitted values and have removed data from ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_OVERDUE_PAYMENTS}`, () => {
             cy.navigateToUrl(url);
 
             cy.assertNoRadioOptionIsChecked(0);
