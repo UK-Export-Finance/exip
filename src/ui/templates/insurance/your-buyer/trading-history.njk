@@ -50,6 +50,12 @@
           }
         }) }}
 
+        {% if CONDITIONAL_YES_HTML %}
+          {% set conditionalYesHtml %}
+            {% include CONDITIONAL_YES_HTML %}
+          {% endset %}
+        {% endif %}
+
 
         <div class="govuk-grid-column-three-quarters-from-desktop">
           {{ yesNoRadioButtons.render({
@@ -60,7 +66,9 @@
             submittedAnswer: submittedValues[FIELDS.OUTSTANDING_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.OUTSTANDING_PAYMENTS.ID],
             errorMessage: validationErrors.errorList[FIELDS.OUTSTANDING_PAYMENTS.ID],
             dataCyLegend: FIELDS.OUTSTANDING_PAYMENTS.ID + '-legend',
-            horizontalRadios: true
+            horizontalRadios: true,
+            noRadioAsFirstOption: true,
+            conditionalYesHtml: conditionalYesHtml
           }) }}
 
           {{ yesNoRadioButtons.render({
@@ -68,7 +76,7 @@
             legendText: FIELDS.FAILED_PAYMENTS.LABEL,
             legendClass: 'govuk-fieldset__legend--m',
             legendSpan: true,
-            submittedAnswer: submittedValues[FIELDS.FAILED_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.OUTSTANDING_PAYMENTS.ID],
+            submittedAnswer: submittedValues[FIELDS.FAILED_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.FAILED_PAYMENTS.ID],
             errorMessage: validationErrors.errorList[FIELDS.FAILED_PAYMENTS.ID],
             dataCyLegend: FIELDS.FAILED_PAYMENTS.ID + '-legend',
             horizontalRadios: true

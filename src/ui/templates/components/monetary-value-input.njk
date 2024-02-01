@@ -9,8 +9,9 @@
   {% set currencyPrefixSymbol = params.currencyPrefixSymbol %}
   {% set submittedValue = params.submittedValue %}
   {% set validationError = params.validationError %}
+  {% set legendClass = params.legendClass %}
 
- {# 
+ {#
   Default the prefix to be empty.
   If there is no currencyPrefixSymbol provided,
   The currency is a non-standard supported currency.
@@ -28,10 +29,16 @@
     } %}
   {% endif %}
 
+  {% if legendClass %}
+    {% set labelClass = legendClass %}
+  {% else %}
+    {% set labelClass = "govuk-!-font-weight-bold govuk-!-font-size-24" %}
+  {% endif %}
+
   {{ govukInput({
     label: {
       text: label,
-      classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+      classes: labelClass,
       attributes: {
         id: fieldId + '-label',
         'data-cy': fieldId + '-label'
@@ -62,6 +69,6 @@
       }
     }
   }) }}
-  
+
 
 {% endmacro %}

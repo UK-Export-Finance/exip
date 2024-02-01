@@ -38,6 +38,7 @@ const TRADING_HISTORY = {
   ...SHARED,
   PAGE_TITLE: 'Tell us about your trading history with the buyer',
   INTRO: 'We will request a copy of your trading history once the application has been submitted.',
+  PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for any outstanding or overdue payments from the buyer',
 };
 
 const ALTERNATIVE_CURRENCY = {
