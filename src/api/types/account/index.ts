@@ -104,6 +104,8 @@ export interface AccountCreationCore {
   isVerified: boolean;
   reactivationHash?: string;
   reactivationExpiry?: Date;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 export interface Account extends AccountCreationCore {

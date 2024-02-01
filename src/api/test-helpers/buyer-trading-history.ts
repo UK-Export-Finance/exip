@@ -1,4 +1,4 @@
-import { ApplicationBuyer, TestHelperBuyerCreate } from '../types';
+import { ApplicationBuyer, BuyerTradingHistory, TestHelperBuyerCreate } from '../types';
 
 /**
  * create buyer test helper
@@ -6,7 +6,7 @@ import { ApplicationBuyer, TestHelperBuyerCreate } from '../types';
  * @param {Object} KeystoneJS context API, buyer data
  * @returns {Object} Created buyer
  */
-const create = async ({ context, data }: TestHelperBuyerCreate) => {
+const create = async ({ context, data }: TestHelperBuyerCreate): Promise<BuyerTradingHistory | unknown> => {
   try {
     console.info('Creating a buyerTradingHistory (test helpers)');
 
@@ -15,7 +15,7 @@ const create = async ({ context, data }: TestHelperBuyerCreate) => {
     })) as ApplicationBuyer;
 
     return buyer;
-  } catch (err) {
+  } catch (err: unknown) {
     console.error(err);
     return err;
   }
