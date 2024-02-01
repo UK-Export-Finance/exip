@@ -23,11 +23,13 @@ const {
 describe('shared-validation/date', () => {
   const date = new Date();
 
-  const day = date.getDate();
   const month = date.getMonth();
   const year = date.getFullYear();
 
   const futureDate = new Date(date.setMonth(month + 6));
+  const futureDateMonth = futureDate.getMonth();
+  const futureDateYear = futureDate.getFullYear();
+  const futureDateDay = getDaysInAMonth(futureDateMonth, futureDateYear);
 
   const baseParams = {
     errors: mockErrors,
@@ -36,9 +38,9 @@ describe('shared-validation/date', () => {
   };
 
   const mockValidBody = {
-    [`${FIELD_ID}-day`]: futureDate.getDate(),
-    [`${FIELD_ID}-month`]: futureDate.getMonth(),
-    [`${FIELD_ID}-year`]: futureDate.getFullYear(),
+    [`${FIELD_ID}-day`]: futureDateDay,
+    [`${FIELD_ID}-month`]: futureDateMonth,
+    [`${FIELD_ID}-year`]: futureDateYear,
   };
 
   describe('when a data has an invalid format', () => {
@@ -103,12 +105,14 @@ describe('shared-validation/date', () => {
 
   describe('when the date is in the past', () => {
     it('should a return validation error', () => {
-      const yesterday = new Date(date.setDate(day - 1));
+      const today = new Date();
+      const todayDay = today.getDate();
+      const yesterday = new Date(today.setDate(todayDay - 1));
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: yesterday.getDate(),
-        [`${FIELD_ID}-month`]: month + 1,
-        [`${FIELD_ID}-year`]: year,
+        [`${FIELD_ID}-month`]: yesterday.getMonth() + 1,
+        [`${FIELD_ID}-year`]: yesterday.getFullYear(),
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });

@@ -10,6 +10,8 @@ const {
     FAILED_PAYMENTS,
     HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
     PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    TOTAL_OUTSTANDING_PAYMENTS,
+    TOTAL_OVERDUE_PAYMENTS,
   },
   CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
@@ -106,5 +108,12 @@ export const YOUR_BUYER_FIELDS = {
     LABEL: 'Tell us about the credit insurance cover you had on the buyer',
     HINT: 'Include the name of the insurer(s) and the credit limit.',
     MAXIMUM: 1000,
+  },
+  [TOTAL_OUTSTANDING_PAYMENTS]: {
+    HEADING: 'Tell us about the outstanding or overdue payments',
+    LABEL: 'Total outstanding, including overdue',
+  },
+  [TOTAL_OVERDUE_PAYMENTS]: {
+    LABEL: 'Amount overdue',
   },
 };

@@ -2,9 +2,8 @@ import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insura
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../../helpers/validation';
 import { objectHasProperty } from '../../../../../../../helpers/object';
-import wholeNumberValidation from '../../../../../../../helpers/whole-number-validation';
-import { stripCommas } from '../../../../../../../helpers/string';
 import { RequestBody } from '../../../../../../../../types';
+import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
 
 const {
   POLICY: {
@@ -35,25 +34,13 @@ const MINIMUM = 1;
  * @returns {Object} Validation errors
  */
 const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) => {
-  let updatedErrors = errors;
-
   // check if the field is empty.
   if (!objectHasProperty(formBody, FIELD_ID)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
-  // check if the field is a whole number.
-  updatedErrors = wholeNumberValidation(formBody, updatedErrors, ERROR_MESSAGE.INCORRECT_FORMAT, FIELD_ID);
-
-  // strip commas - commas are valid.
-  const numberWithoutCommas = stripCommas(formBody[FIELD_ID]);
-
-  // check if the field is below the minimum
-  if (Number(numberWithoutCommas) < MINIMUM) {
-    updatedErrors = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.BELOW_MINIMUM, errors);
-  }
-
-  return updatedErrors;
+  // checks if value is a whole number or below minimum
+  return wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors, MINIMUM);
 };
 
 export default maximumBuyerWillOweRules;

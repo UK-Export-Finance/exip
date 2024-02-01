@@ -1,0 +1,27 @@
+{% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
+
+<div class="govuk-grid-row">
+  <span data-cy="{{FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID}}-heading" class="govuk-heading-m govuk-!-margin-bottom-4">{{ FIELDS.TOTAL_OUTSTANDING_PAYMENTS.HEADING }}</span>
+
+  {{ monetaryValueInput.render({
+    fieldId: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID,
+    label: FIELDS.TOTAL_OUTSTANDING_PAYMENTS.LABEL,
+    currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+    submittedValue: submittedValues[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
+    validationError: validationErrors.errorList[FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID],
+    legendClass: LEGEND_CLASS
+  }) }}
+
+  {{ monetaryValueInput.render({
+    fieldId: FIELDS.TOTAL_OVERDUE_PAYMENTS.ID,
+    label: FIELDS.TOTAL_OVERDUE_PAYMENTS.LABEL,
+    currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
+    submittedValue: submittedValues[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID],
+    validationError: validationErrors.errorList[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID],
+    legendClass: LEGEND_CLASS
+  }) }}
+
+  <p class-"govuk-body">
+    <a class="govuk-link" data-cy="provide-alternative-currency-link" href="{{ PROVIDE_ALTERNATIVE_CURRENCY_URL }}">{{ CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY }}</a>
+  </p>
+<div>
