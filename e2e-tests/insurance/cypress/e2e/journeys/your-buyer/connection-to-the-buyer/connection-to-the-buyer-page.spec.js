@@ -1,7 +1,7 @@
 import {
-  headingCaption, saveAndBackButton, field, yesRadio, noRadio, yesNoRadioHint, yesRadioInput,
+  headingCaption, field, yesRadio, noRadio, yesNoRadioHint, yesRadioInput,
 } from '../../../../../../pages/shared';
-import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -119,7 +119,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
 
     describe('form submission', () => {
