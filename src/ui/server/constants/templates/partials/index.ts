@@ -11,6 +11,9 @@ export const PARTIALS = {
       CONNECTION_WITH_BUYER: {
         CONDITIONAL_YES_HTML: 'partials/insurance/connection-to-the-buyer-conditional-yes-html.njk',
       },
+      OUTSTANDING_PAYMENTS: {
+        CONDITIONAL_YES_HTML: 'partials/insurance/buyer-outstanding-payment-conditional-yes-html.njk',
+      },
     },
     CODE_OF_CONDUCT: {
       HINT_HTML: 'partials/insurance/code-of-conduct-hint.njk',

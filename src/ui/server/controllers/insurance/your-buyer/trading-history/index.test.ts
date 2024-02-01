@@ -1,9 +1,10 @@
-import { get, post, pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS } from '.';
+import { get, post, pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, HTML_FLAGS } from '.';
 import { PAGES } from '../../../../content-strings';
 import { FIELD_VALUES, TEMPLATES } from '../../../../constants';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import tradingHistoryValidation from './validation';
@@ -11,26 +12,52 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
+import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
+import api from '../../../../api';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: {
+    TRADING_HISTORY_CHANGE,
+    TRADING_HISTORY_CHECK_AND_CHANGE,
+    TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+    ALTERNATIVE_CURRENCY,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = BUYER_FIELD_IDS;
+
+const {
+  CURRENCY: { CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
+
+const {
+  PARTIALS: {
+    INSURANCE: { BUYER },
+  },
+  ATTRIBUTES: {
+    CLASSES: { LEGEND, FONT_WEIGHT },
+  },
+} = TEMPLATES;
+
+const currencyValue = mockApplication.buyer.buyerTradingHistory[CURRENCY_CODE];
 
 describe('controllers/insurance/your-buyer/trading-history', () => {
   let req: Request;
   let res: Response;
+
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -39,6 +66,10 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
+      const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue);
+
+      const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
+
       const expected = {
         FIELDS: {
           OUTSTANDING_PAYMENTS: {
@@ -49,18 +80,28 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
             ID: FAILED_PAYMENTS,
             ...FIELDS[FAILED_PAYMENTS],
           },
+          TOTAL_OUTSTANDING_PAYMENTS: {
+            ID: TOTAL_OUTSTANDING_PAYMENTS,
+            ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
+          },
+          TOTAL_OVERDUE_PAYMENTS: {
+            ID: TOTAL_OVERDUE_PAYMENTS,
+            ...FIELDS[TOTAL_OVERDUE_PAYMENTS],
+          },
         },
         PAGE_CONTENT_STRINGS,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
+        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_CURRENCY}`,
+        CURRENCY_PREFIX_SYMBOL: currency.symbol,
       };
 
-      expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
+      expect(result).toEqual(expected);
     });
   });
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS];
+      const EXPECTED_FIELD_IDS = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS];
 
       expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
     });
@@ -78,7 +119,24 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have the correct flags defined', () => {
+      const expected = {
+        CONDITIONAL_YES_HTML: BUYER.OUTSTANDING_PAYMENTS.CONDITIONAL_YES_HTML,
+        LEGEND_CLASS: `${LEGEND.S} ${FONT_WEIGHT.REGULAR}`,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
+    it('should call api.keystone.APIM.getCurrencies', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should render template', async () => {
       await get(req, res);
 
@@ -86,9 +144,10 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
         application: mapApplicationToFormFields(mockApplication),
       };
 
@@ -116,6 +175,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
     beforeEach(() => {
       mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
     });
 
     describe('when there are no validation errors', () => {
@@ -177,9 +238,10 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
           submittedValues: payload,
           validationErrors,
         };

@@ -1,10 +1,13 @@
 import { RequestBody } from '../../../../../../types';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 import { objectHasProperty } from '../../../../../helpers/object';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
+
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 /**
  * maps buyer trading history fields in correct format
@@ -27,6 +30,10 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
     delete populatedData[ALTERNATIVE_CURRENCY_CODE];
   }
+
+  // TODO: EMS-2372 Remove when data saving added for trading history
+  delete populatedData[TOTAL_OUTSTANDING_PAYMENTS];
+  delete populatedData[TOTAL_OVERDUE_PAYMENTS];
 
   return populatedData;
 };
