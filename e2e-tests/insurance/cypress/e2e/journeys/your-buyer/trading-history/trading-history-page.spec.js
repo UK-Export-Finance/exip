@@ -1,7 +1,8 @@
 import {
-  headingCaption, intro, yesRadio, noRadio, field, noRadioInput,
+  headingCaption, intro, yesRadio, noRadio, field, noRadioInput, yesRadioInput,
 } from '../../../../../../pages/shared';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import partials from '../../../../../../partials';
+import { PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -11,16 +12,12 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
 
 const {
   ROOT,
-  YOUR_BUYER: { TRADING_HISTORY, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { TRADING_HISTORY, CHECK_YOUR_ANSWERS, ALTERNATIVE_CURRENCY },
 } = INSURANCE_ROUTES;
 
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = FIELD_IDS;
-
 const {
-  INSURANCE: {
-    YOUR_BUYER: ERRORS,
-  },
-} = ERROR_MESSAGES;
+  OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS,
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -28,6 +25,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
+  let alternativeCurrencyUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -37,6 +35,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      alternativeCurrencyUrl = `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
       // TODO: EMS-2659 - use buyer commands to get here
       cy.navigateToUrl(url);
@@ -94,6 +93,60 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       });
     });
 
+    describe(`${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+      describe(`when not selecting a ${OUTSTANDING_PAYMENTS} radio`, () => {
+        it('should not render a heading', () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).heading().should('not.be.visible');
+        });
+
+        it(`should not render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).label().should('not.be.visible');
+        });
+
+        it(`should not render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).input().should('not.be.visible');
+        });
+
+        it(`should not render a label for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          field(TOTAL_OVERDUE_PAYMENTS).label().should('not.be.visible');
+        });
+
+        it(`should not render an input for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          field(TOTAL_OVERDUE_PAYMENTS).input().should('not.be.visible');
+        });
+      });
+
+      describe(`when clicking the 'yes' ${OUTSTANDING_PAYMENTS} radio`, () => {
+        beforeEach(() => {
+          yesRadioInput().first().click();
+        });
+
+        it('should render a heading', () => {
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).heading(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].HEADING);
+        });
+
+        it(`should render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          cy.checkText(field(TOTAL_OUTSTANDING_PAYMENTS).label(), FIELDS[TOTAL_OUTSTANDING_PAYMENTS].LABEL);
+        });
+
+        it(`should render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+          field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
+        });
+
+        it(`should render a label for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          cy.checkText(field(TOTAL_OVERDUE_PAYMENTS).label(), FIELDS[TOTAL_OVERDUE_PAYMENTS].LABEL);
+        });
+
+        it(`should render an input for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
+          field(TOTAL_OVERDUE_PAYMENTS).input().should('be.visible');
+        });
+
+        it('should render a hyperlink for changing the currency', () => {
+          cy.checkLink(partials.provideAlternativeCurrencyLink(), alternativeCurrencyUrl, CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY);
+        });
+      });
+    });
+
     describe(FAILED_PAYMENTS, () => {
       const FIELD_ID = FAILED_PAYMENTS;
 
@@ -120,45 +173,42 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
   });
 
   describe('form submission', () => {
-    describe('when submitting an empty form', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it('should render validation errors', () => {
-        const expectedErrorsCount = 2;
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(OUTSTANDING_PAYMENTS),
-          0,
-          expectedErrorsCount,
-          ERRORS[OUTSTANDING_PAYMENTS].IS_EMPTY,
-        );
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FAILED_PAYMENTS),
-          1,
-          expectedErrorsCount,
-          ERRORS[FAILED_PAYMENTS].IS_EMPTY,
-        );
-      });
-    });
-
     describe('when submitting a fully filled form', () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.navigateToUrl(url);
-
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({});
-
-        cy.assertUrl(checkYourAnswersUrl);
-      });
-
-      describe('when going back to the page', () => {
-        it('should have the submitted values', () => {
+      describe(`${OUTSTANDING_PAYMENTS} as "no"`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
           cy.navigateToUrl(url);
 
-          noRadioInput().first().should('be.checked');
-          noRadioInput().last().should('be.checked');
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+
+          cy.assertUrl(checkYourAnswersUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            noRadioInput().first().should('be.checked');
+            noRadioInput().last().should('be.checked');
+          });
+        });
+      });
+
+      describe(`${OUTSTANDING_PAYMENTS} as "yes"`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+          cy.navigateToUrl(url);
+
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+
+          cy.assertUrl(checkYourAnswersUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            yesRadioInput().first().should('be.checked');
+            noRadioInput().last().should('be.checked');
+          });
         });
       });
     });

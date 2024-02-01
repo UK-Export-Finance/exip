@@ -125,7 +125,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
     it('should render a `provide alternative currency` link', () => {
       cy.checkLink(
-        turnoverPage.provideAlternativeCurrencyLink(),
+        partials.provideAlternativeCurrencyLink(),
         `${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
         CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
       );

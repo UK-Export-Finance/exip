@@ -20,6 +20,8 @@ Cypress.Commands.add('assertSaveAndBackButton', require('./assert-save-and-back-
 Cypress.Commands.add('assertSaveAndBackButtonDoesNotExist', require('./assert-save-and-back-button-does-not-exist'));
 Cypress.Commands.add('assertYesNoRadiosOrder', require('./assert-first-and-last-radios'));
 
+Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
+
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
 Cypress.Commands.add('checkAnalyticsCookieDoesNotExist', analytics.checkAnalyticsCookieDoesNotExist);
 Cypress.Commands.add('checkAnalyticsCookieIsFalse', analytics.checkAnalyticsCookieIsFalse);

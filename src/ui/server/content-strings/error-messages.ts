@@ -334,6 +334,16 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter a description about the credit insurance cover you had on the buyer',
         ABOVE_MAXIMUM: 'The description of your previous credit insurance cover on the buyer cannot be more than a 1000 characters',
       },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.TOTAL_OUTSTANDING_PAYMENTS]: {
+        IS_EMPTY: 'Enter the total outstanding payments from the buyer',
+        BELOW_MINIMUM: 'The total outstanding payments from the buyer must be 1 or more',
+        INCORRECT_FORMAT: 'Enter the total outstanding payments as a whole number. Do not include any letters or special characters',
+      },
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.TOTAL_OVERDUE_PAYMENTS]: {
+        IS_EMPTY: 'Enter the total amount overdue from the buyer',
+        BELOW_MINIMUM: 'The amount overdue from the buyer must be 1 or more',
+        INCORRECT_FORMAT: 'Enter the amount overdue as whole number. Do not include any letters or special characters',
+      },
     },
     ACCOUNT: {
       CREATE: {
