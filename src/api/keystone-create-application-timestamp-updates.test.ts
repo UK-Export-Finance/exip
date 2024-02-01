@@ -124,8 +124,8 @@ describe('Keystone - Application timestamp updates', () => {
       assertSpyWasCalled();
     });
   });
-  
-describe('Buyer', () => {
+
+  describe('Buyer', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Buyer.updateOne({
         where: { id: application.buyer.id },
