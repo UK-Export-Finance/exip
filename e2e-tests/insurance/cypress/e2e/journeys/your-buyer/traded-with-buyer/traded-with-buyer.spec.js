@@ -1,5 +1,5 @@
 import {
-  headingCaption, yesRadio, noRadio, yesRadioInput, noRadioInput,
+  headingCaption, yesRadio, noRadio,
 } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
@@ -126,7 +126,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });
@@ -142,7 +142,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          noRadioInput().should('be.checked');
+          cy.assertNoRadioOptionIsChecked();
         });
       });
     });

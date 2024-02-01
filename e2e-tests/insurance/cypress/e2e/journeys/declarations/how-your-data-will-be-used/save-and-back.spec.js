@@ -98,7 +98,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
-      singleInputField(FIELD_ID).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
     });
   });
 });

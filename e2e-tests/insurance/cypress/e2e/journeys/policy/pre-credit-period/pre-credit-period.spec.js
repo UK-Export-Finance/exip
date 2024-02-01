@@ -3,9 +3,7 @@ import {
   yesRadio,
   yesNoRadioHint,
   noRadio,
-  noRadioInput,
   field as fieldSelector,
-  yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -182,7 +180,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        noRadioInput().should('be.checked');
+        cy.assertNoRadioOptionIsChecked();
       });
     });
 
@@ -201,7 +199,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
 
           const expectedValue = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER];
 

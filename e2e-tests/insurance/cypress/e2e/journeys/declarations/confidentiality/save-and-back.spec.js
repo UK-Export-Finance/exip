@@ -86,7 +86,8 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       task.link().click();
-      singleInputField(FIELD_ID).input().should('be.checked');
+
+      cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
     });
   });
 });

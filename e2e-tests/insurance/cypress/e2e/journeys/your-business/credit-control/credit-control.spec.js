@@ -1,7 +1,6 @@
 import partials from '../../../../../../partials';
 import {
   yesNoRadioHint,
-  yesRadioInput,
   yesRadio,
   noRadio,
 } from '../../../../../../pages/shared';
@@ -127,7 +126,7 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 });

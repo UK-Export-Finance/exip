@@ -200,7 +200,10 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+        const field = companyOrOrganisationPage[CAN_CONTACT_BUYER];
+
+        cy.assertRadioOptionIsChecked(field.yesRadioInput());
+
         cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
         cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
         cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);

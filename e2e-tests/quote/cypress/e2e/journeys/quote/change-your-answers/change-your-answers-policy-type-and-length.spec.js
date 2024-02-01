@@ -109,7 +109,7 @@ context('Change your answers - as an exporter, I want to change the details befo
     });
 
     it('has originally submitted `policy type` (single)', () => {
-      policyTypePage[POLICY_TYPE].single.input().should('be.checked');
+      cy.assertRadioOptionIsChecked(policyTypePage[POLICY_TYPE].single.input());
     });
 
     it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
@@ -206,7 +206,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('has previously submitted `policy type` (single)', () => {
-        policyTypePage[POLICY_TYPE].single.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(policyTypePage[POLICY_TYPE].single.input());
       });
 
       it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
@@ -298,7 +298,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it('has previously submitted `policy type` (single)', () => {
-        policyTypePage[POLICY_TYPE].multiple.input().should('be.checked');
+        cy.assertRadioOptionIsChecked(policyTypePage[POLICY_TYPE].multiple.input());
       });
 
       it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {

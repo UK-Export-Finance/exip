@@ -221,7 +221,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+              cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
               cy.checkValue(fieldSelector(NAME), application.EXPORTER_BROKER[NAME]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -245,7 +245,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].noRadioInput().should('be.checked');
+              cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].noRadioInput());
             });
           });
         });

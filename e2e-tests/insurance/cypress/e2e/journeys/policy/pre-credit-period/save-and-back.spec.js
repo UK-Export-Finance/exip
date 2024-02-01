@@ -1,9 +1,4 @@
-import {
-  field as fieldSelector,
-  yesRadioInput,
-  noRadioInput,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -103,7 +98,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.startInsurancePolicySection({});
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
-      noRadioInput().should('be.checked');
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 
@@ -133,7 +128,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.startInsurancePolicySection({});
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
       descriptionField.textarea().should('have.value', '');
     });
   });
@@ -161,7 +156,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.startInsurancePolicySection({});
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
       descriptionField.textarea().should('have.value', mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER]);
     });
   });

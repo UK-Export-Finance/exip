@@ -1,4 +1,4 @@
-import { field } from '../../../pages/shared';
+import { field as fieldSelector } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
 
@@ -21,10 +21,11 @@ const assertCoverPeriodRadios = ({ underThreshold = true, checked = true }) => {
     fieldId = `${COVER_PERIOD}-${BELOW.ID}`;
   }
 
+  const field = fieldSelector(fieldId);
   if (checked) {
-    field(fieldId).input().should('be.checked');
+    cy.assertRadioOptionIsChecked(field.input());
   } else {
-    field(fieldId).input().should('not.be.checked');
+    field.input().should('not.be.checked');
   }
 };
 

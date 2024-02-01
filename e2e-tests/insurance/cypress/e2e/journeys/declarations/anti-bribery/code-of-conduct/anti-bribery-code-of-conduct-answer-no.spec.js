@@ -60,6 +60,6 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   it('should have the originally submitted answer selected when going back to the page after submission', () => {
     backLink().click();
 
-    noRadioInput().should('be.checked');
+    cy.assertNoRadioOptionIsChecked();
   });
 });

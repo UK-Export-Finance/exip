@@ -28,7 +28,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 const {
-  radios, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
+  radios, assertGbpCurrencyCheckedByDefault, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
   rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
   submitAndAssertRadioIsChecked, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
 } = assertAlternativeCurrencyForm({
@@ -81,6 +81,10 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it(`should render ${GBP_CURRENCY_CODE} checked by default`, () => {
+      assertGbpCurrencyCheckedByDefault();
     });
 
     it('renders alternative currency radios', () => {

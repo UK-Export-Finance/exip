@@ -77,6 +77,11 @@ const assertAlternativeCurrencyForm = ({
     cy.checkText(option5.label(), alternativeCurrencyText);
     cy.checkValue(option5, alternativeCurrencyFieldId);
   },
+  assertGbpCurrencyCheckedByDefault: () => {
+    const option = currencyRadio({ fieldId, currency: GBP.isoCode });
+
+    cy.assertRadioOptionIsChecked(option.input());
+  },
   alternativeCurrencyInput: () => {
     cy.clickAlternativeCurrencyRadioOption();
 
@@ -135,7 +140,7 @@ const assertAlternativeCurrencyForm = ({
     cy.navigateToUrl(url);
 
     // currency radio should be checked
-    option.input().should('be.checked');
+    cy.assertRadioOptionIsChecked(option.input());
   },
   submitAlternativeCurrencyAndAssertUrl: (redirectUrl) => {
     cy.clickAlternativeCurrencyRadioOption();
@@ -161,7 +166,7 @@ const assertAlternativeCurrencyForm = ({
     cy.navigateToUrl(url);
 
     // alternative currency radio should be checked
-    option5.input().should('be.checked');
+    cy.assertRadioOptionIsChecked(option5.input());
 
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     // alternative currency input should render correct result

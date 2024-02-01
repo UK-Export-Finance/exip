@@ -91,7 +91,9 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
       radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
       cy.clickSubmitButton();
 
-      radios(fieldId, isoCode).option.input().should('be.checked');
+      const field = radios(fieldId, isoCode).option;
+
+      cy.assertRadioOptionIsChecked(field.input());
     });
   });
 });
