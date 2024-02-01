@@ -62,6 +62,14 @@ describe('Keystone - Application timestamp updates', () => {
       },
     });
 
+    const sectionReview = await context.query.SectionReview.createOne({
+      data: {
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
     application = {
       ...application,
       buyer: {
@@ -73,6 +81,9 @@ describe('Keystone - Application timestamp updates', () => {
       },
       policy: {
         id: policy.id,
+      },
+      sectionReview: {
+        id: sectionReview.id,
       },
     };
   });
@@ -89,18 +100,6 @@ describe('Keystone - Application timestamp updates', () => {
     expect(updateApplicationTimestampSpy).toHaveBeenCalledTimes(1);
     expect(updateApplicationTimestampSpy).toHaveBeenCalledWith(context, application.id);
   };
-
-  describe('Policy', () => {
-    test('it should call updateApplication.timestamp', async () => {
-      await context.query.Policy.updateOne({
-        where: { id: application.policy.id },
-        data: {},
-        query: 'id',
-      });
-
-      assertSpyWasCalled();
-    });
-  });
 
   describe('Business', () => {
     test('it should call updateApplication.timestamp', async () => {
@@ -125,20 +124,8 @@ describe('Keystone - Application timestamp updates', () => {
       assertSpyWasCalled();
     });
   });
-
-  describe('Company', () => {
-    test('it should call updateApplication.timestamp', async () => {
-      await context.query.Company.updateOne({
-        where: { id: application.company.id },
-        data: {},
-        query: 'id',
-      });
-
-      assertSpyWasCalled();
-    });
-  });
-
-  describe('Buyer', () => {
+  
+describe('Buyer', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Buyer.updateOne({
         where: { id: application.buyer.id },
@@ -162,10 +149,58 @@ describe('Keystone - Application timestamp updates', () => {
     });
   });
 
+  describe('Company', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.Company.updateOne({
+        where: { id: application.company.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
   describe('Declaration', () => {
     test('it should call updateApplication.timestamp', async () => {
       await context.query.Declaration.updateOne({
         where: { id: application.declaration.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('ExportContract', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.ExportContract.updateOne({
+        where: { id: application.exportContract.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('Policy', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.Policy.updateOne({
+        where: { id: application.policy.id },
+        data: {},
+        query: 'id',
+      });
+
+      assertSpyWasCalled();
+    });
+  });
+
+  describe('SectionReview', () => {
+    test('it should call updateApplication.timestamp', async () => {
+      await context.query.SectionReview.updateOne({
+        where: { id: application.sectionReview.id },
         data: {},
         query: 'id',
       });
