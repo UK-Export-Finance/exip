@@ -26,7 +26,7 @@ const partials = {
   skipLink: () => cy.get('[data-cy="skip-link"]'),
   ukGoodsOrServicesDescription,
   html: (id) => cy.get(`[data-cy="${id}-html"]`),
-  link: (id) => cy.get(`[data-cy="${id}-link"]`),
+  provideAlternativeCurrencyLink: () => cy.get('[data-cy="provide-alternative-currency-link"]'),
 };
 
 export default partials;

@@ -23,7 +23,6 @@ const {
 describe('shared-validation/date', () => {
   const date = new Date();
 
-  const day = date.getDate();
   const month = date.getMonth();
   const year = date.getFullYear();
 
@@ -106,12 +105,14 @@ describe('shared-validation/date', () => {
 
   describe('when the date is in the past', () => {
     it('should a return validation error', () => {
-      const yesterday = new Date(date.setDate(day - 1));
+      const today = new Date();
+      const todayDay = today.getDate();
+      const yesterday = new Date(today.setDate(todayDay - 1));
 
       const mockSubmittedData = {
         [`${FIELD_ID}-day`]: yesterday.getDate(),
-        [`${FIELD_ID}-month`]: month + 1,
-        [`${FIELD_ID}-year`]: year,
+        [`${FIELD_ID}-month`]: yesterday.getMonth() + 1,
+        [`${FIELD_ID}-year`]: yesterday.getFullYear(),
       };
 
       const result = dateRules({ ...baseParams, formBody: mockSubmittedData });

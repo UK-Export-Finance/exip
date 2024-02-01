@@ -1,6 +1,7 @@
-import { RequestBody } from '../../../types';
+import { RequestBody, ErrorMessageObject } from '../../../types';
 import { stripCommas } from '../../helpers/string';
 import generateValidationErrors from '../../helpers/validation';
+import wholeNumberValidation from '../../helpers/whole-number-validation';
 
 /**
  * wholeNumberAboveMinimumValidation
@@ -13,16 +14,21 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {Number} minimum minimum value to check against
  * @returns {Object} Validation errors or null
  */
-const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: string, errorMessage: string, errors: object, minimum: number) => {
+const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: string, errorMessage: ErrorMessageObject, errors: object, minimum: number) => {
+  let updatedErrors = errors;
+
   // strip commas - commas are valid.
   const numberWithoutCommas = stripCommas(formBody[fieldId]);
 
+  // check if the field is a whole number.
+  updatedErrors = wholeNumberValidation(formBody, updatedErrors, errorMessage.INCORRECT_FORMAT, fieldId);
+
   // check if the field is below the minimum
   if (Number(numberWithoutCommas) < minimum) {
-    return generateValidationErrors(fieldId, errorMessage, errors);
+    return generateValidationErrors(fieldId, errorMessage.BELOW_MINIMUM, errors);
   }
 
-  return null;
+  return updatedErrors;
 };
 
 export default wholeNumberAboveMinimumValidation;

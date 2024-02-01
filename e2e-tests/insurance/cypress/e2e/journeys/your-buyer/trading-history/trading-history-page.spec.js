@@ -142,7 +142,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
         });
 
         it('should render a hyperlink for changing the currency', () => {
-          cy.checkLink(partials.link('provide-alternative-currency'), alternativeCurrencyUrl, CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY);
+          cy.checkLink(partials.provideAlternativeCurrencyLink(), alternativeCurrencyUrl, CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY);
         });
       });
     });

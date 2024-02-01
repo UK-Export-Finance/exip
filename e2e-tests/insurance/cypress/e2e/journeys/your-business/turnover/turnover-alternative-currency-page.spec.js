@@ -1,6 +1,5 @@
 import { headingCaption, field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { turnoverPage } from '../../../../../../pages/your-business';
 import {
   BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
 } from '../../../../../../content-strings';
@@ -59,7 +58,7 @@ context('Insurance - Your business - Turnover - Alternative currency page - As a
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      turnoverPage.provideAlternativeCurrencyLink().click();
+      partials.provideAlternativeCurrencyLink().click();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
       turnoverUrl = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
