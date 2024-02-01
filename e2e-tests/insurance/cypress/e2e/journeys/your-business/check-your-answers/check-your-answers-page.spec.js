@@ -1,4 +1,4 @@
-import { headingCaption } from '../../../../../../pages/shared';
+import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -54,7 +54,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
-      submitButtonCopy: BUTTONS.SAVE_AND_BACK,
+      hasAForm: false,
     });
   });
 
@@ -65,6 +65,10 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('renders a `save and back` button', () => {
+      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
     });
   });
 
