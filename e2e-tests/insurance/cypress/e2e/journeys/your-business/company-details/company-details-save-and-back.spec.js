@@ -1,5 +1,5 @@
 import {
-  field, saveAndBackButton, yesRadioInput, noRadioInput,
+  field, saveAndBackButton, yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
@@ -76,8 +76,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertRadioOptionIsChecked(yesRadioInput(), 0);
-      cy.assertRadioOptionIsChecked(yesRadioInput(), 1);
+      cy.assertYesRadioOptionIsChecked(0);
+      cy.assertYesRadioOptionIsChecked(1);
     });
   });
 
@@ -98,8 +98,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertRadioOptionIsChecked(noRadioInput(), 0);
-      cy.assertRadioOptionIsChecked(noRadioInput(), 1);
+      cy.assertNoRadioOptionIsChecked(0);
+      cy.assertNoRadioOptionIsChecked(1);
       field(PHONE_NUMBER).input().should('be.empty');
     });
   });
@@ -122,8 +122,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertRadioOptionIsChecked(noRadioInput(), 0);
-      cy.assertRadioOptionIsChecked(noRadioInput(), 1);
+      cy.assertNoRadioOptionIsChecked(0);
+      cy.assertNoRadioOptionIsChecked(1);
 
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
 
@@ -149,8 +149,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should render valid submitted values when going back to the page', () => {
       cy.navigateToUrl(url);
 
-      cy.assertRadioOptionIsChecked(noRadioInput(), 0);
-      cy.assertRadioOptionIsChecked(noRadioInput(), 1);
+      cy.assertNoRadioOptionIsChecked(0);
+      cy.assertNoRadioOptionIsChecked(1);
       cy.checkValue(field(PHONE_NUMBER), VALID_PHONE_NUMBERS.LANDLINE.NORMAL);
       cy.checkValue(field(WEBSITE), WEBSITE_EXAMPLES.VALID);
     });

@@ -1,5 +1,5 @@
 import {
-  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field, noRadioInput, yesRadioInput,
+  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field, yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -187,8 +187,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertRadioOptionIsChecked(noRadioInput(), 0);
-            cy.assertRadioOptionIsChecked(noRadioInput(), 1);
+            cy.assertNoRadioOptionIsChecked(0);
+            cy.assertNoRadioOptionIsChecked(1);
           });
         });
       });
@@ -206,8 +206,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertRadioOptionIsChecked(yesRadioInput(), 0);
-            cy.assertRadioOptionIsChecked(noRadioInput(), 1);
+            cy.assertYesRadioOptionIsChecked(0);
+            cy.assertNoRadioOptionIsChecked(1);
           });
         });
       });
