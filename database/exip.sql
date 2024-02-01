@@ -236,6 +236,8 @@ CREATE TABLE `BuyerTradingHistory` (
   `outstandingPayments` tinyint(1) DEFAULT NULL,
   `failedPayments` tinyint(1) DEFAULT NULL,
   `exporterHasTradedWithBuyer` tinyint(1) DEFAULT NULL,
+  `totalOverduePayments` int DEFAULT NULL,
+  `totalOutstandingPayments` int DEFAULT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `BuyerTradingHistory_application_idx` (`application`),

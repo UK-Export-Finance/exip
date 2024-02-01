@@ -565,6 +565,8 @@ export const lists = {
       outstandingPayments: nullableCheckbox(),
       failedPayments: nullableCheckbox(),
       exporterHasTradedWithBuyer: nullableCheckbox(),
+      totalOutstandingPayments: integer(),
+      totalOverduePayments: integer(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

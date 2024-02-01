@@ -1509,6 +1509,8 @@ type BuyerTradingHistory {
   outstandingPayments: Boolean
   failedPayments: Boolean
   exporterHasTradedWithBuyer: Boolean
+  totalOutstandingPayments: Int
+  totalOverduePayments: Int
 }
 
 input BuyerTradingHistoryWhereUniqueInput {
@@ -1523,11 +1525,15 @@ input BuyerTradingHistoryWhereInput {
   application: ApplicationWhereInput
   buyer: BuyerWhereInput
   currencyCode: StringFilter
+  totalOutstandingPayments: IntNullableFilter
+  totalOverduePayments: IntNullableFilter
 }
 
 input BuyerTradingHistoryOrderByInput {
   id: OrderDirection
   currencyCode: OrderDirection
+  totalOutstandingPayments: OrderDirection
+  totalOverduePayments: OrderDirection
 }
 
 input BuyerTradingHistoryUpdateInput {
@@ -1537,6 +1543,8 @@ input BuyerTradingHistoryUpdateInput {
   outstandingPayments: Boolean
   failedPayments: Boolean
   exporterHasTradedWithBuyer: Boolean
+  totalOutstandingPayments: Int
+  totalOverduePayments: Int
 }
 
 input BuyerTradingHistoryUpdateArgs {
@@ -1551,6 +1559,8 @@ input BuyerTradingHistoryCreateInput {
   outstandingPayments: Boolean
   failedPayments: Boolean
   exporterHasTradedWithBuyer: Boolean
+  totalOutstandingPayments: Int
+  totalOverduePayments: Int
 }
 
 type Country {

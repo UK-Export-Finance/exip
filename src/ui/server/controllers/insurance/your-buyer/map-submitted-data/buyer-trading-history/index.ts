@@ -7,7 +7,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 /**
  * maps buyer trading history fields in correct format
@@ -31,9 +31,20 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     delete populatedData[ALTERNATIVE_CURRENCY_CODE];
   }
 
-  // TODO: EMS-2372 Remove when data saving added for trading history
-  delete populatedData[TOTAL_OUTSTANDING_PAYMENTS];
-  delete populatedData[TOTAL_OVERDUE_PAYMENTS];
+  if (objectHasProperty(populatedData, OUTSTANDING_PAYMENTS)) {
+    if (populatedData[OUTSTANDING_PAYMENTS] === 'false') {
+      populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
+      populatedData[TOTAL_OVERDUE_PAYMENTS] = null;
+    }
+  }
+
+  if (populatedData[TOTAL_OUTSTANDING_PAYMENTS] === '') {
+    populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
+  }
+
+  if (populatedData[TOTAL_OVERDUE_PAYMENTS] === '') {
+    populatedData[TOTAL_OVERDUE_PAYMENTS] = null;
+  }
 
   return populatedData;
 };

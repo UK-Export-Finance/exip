@@ -1402,7 +1402,9 @@ var lists = {
       }),
       outstandingPayments: nullable_checkbox_default(),
       failedPayments: nullable_checkbox_default(),
-      exporterHasTradedWithBuyer: nullable_checkbox_default()
+      exporterHasTradedWithBuyer: nullable_checkbox_default(),
+      totalOutstandingPayments: (0, import_fields.integer)(),
+      totalOverduePayments: (0, import_fields.integer)()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

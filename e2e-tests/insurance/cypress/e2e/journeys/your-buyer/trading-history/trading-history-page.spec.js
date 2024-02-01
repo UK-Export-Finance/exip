@@ -7,6 +7,7 @@ import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/f
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
 
@@ -20,6 +21,8 @@ const {
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const { BUYER } = application;
 
 context('Insurance - Your Buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
@@ -207,7 +210,39 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
             cy.navigateToUrl(url);
 
             cy.assertYesRadioOptionIsChecked(0);
+
+            cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
+            cy.checkValue(field(TOTAL_OVERDUE_PAYMENTS), BUYER[TOTAL_OVERDUE_PAYMENTS]);
+
             cy.assertNoRadioOptionIsChecked(1);
+          });
+        });
+      });
+
+      describe(`changing ${OUTSTANDING_PAYMENTS} from "yes" to "no"`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          // submit OUTSTANDING_PAYMENTS as yes
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+
+          cy.navigateToUrl(url);
+
+          // change OUTSTANDING_PAYMENTS to no
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted values', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertNoRadioOptionIsChecked(0);
+
+            // click first radio input to display optional fields
+            yesRadioInput().first().click();
+
+            cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
+            cy.checkValue(field(TOTAL_OVERDUE_PAYMENTS), '');
           });
         });
       });

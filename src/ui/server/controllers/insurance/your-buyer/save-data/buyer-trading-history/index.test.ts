@@ -1,4 +1,4 @@
-import save from '.';
+import save, { nullOrEmptyStringFields } from '.';
 import api from '../../../../../api';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
@@ -6,12 +6,21 @@ import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { mockApplication, mockBuyerTradingHistory } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
+import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
+
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 const {
   CURRENCY: { CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () => {
+  describe('nullOrEmptyStringFields', () => {
+    it('should have the relevant fieldIds', () => {
+      expect(nullOrEmptyStringFields).toEqual([TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS]);
+    });
+  });
+
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 
@@ -31,7 +40,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
-        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave));
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerTradingHistory.id, expectedSanitisedData);
       });
 
@@ -49,7 +58,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
-        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave));
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerTradingHistory.id, expectedSanitisedData);
       });
 

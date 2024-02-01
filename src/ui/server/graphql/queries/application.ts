@@ -147,6 +147,8 @@ const applicationQuery = gql`
             currencyCode
             outstandingPayments
             failedPayments
+            totalOverduePayments
+            totalOutstandingPayments
           }
         }
         sectionReview {
