@@ -17,7 +17,6 @@ export const YOUR_BUYER = {
   OUTSTANDING_PAYMENTS: 'outstandingPayments',
   TOTAL_OUTSTANDING_PAYMENTS: 'totalOutstandingPayments',
   TOTAL_OVERDUE_PAYMENTS: 'totalOverduePayments',
-  PROVIDE_ALTERNATE_CURRENCY: 'provide-alternative-currency',
   FAILED_PAYMENTS: 'failedPayments',
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'exporterHasPreviousCreditInsuranceWithBuyer',
   PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'previousCreditInsuranceWithBuyerDescription',

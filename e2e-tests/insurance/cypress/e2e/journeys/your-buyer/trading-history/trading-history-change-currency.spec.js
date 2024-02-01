@@ -10,7 +10,7 @@ const {
   YOUR_BUYER: { TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
-const { TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, PROVIDE_ALTERNATE_CURRENCY } = FIELD_IDS;
+const { TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -53,7 +53,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
 
   describe(`when selecting ${USD_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.USD} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: USD_CURRENCY_CODE, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: USD_CURRENCY_CODE });
       cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.USD });
       cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.USD });
     });
@@ -61,7 +61,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
 
   describe(`when selecting ${JPY_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.JPY} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: JPY_CURRENCY_CODE, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: JPY_CURRENCY_CODE });
       cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.JPY });
       cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.JPY });
     });
@@ -69,7 +69,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
 
   describe(`when selecting ${EUR_CURRENCY_CODE} as the currency code`, () => {
     it(`should display ${SYMBOLS.EUR} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
       cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.EUR });
       cy.assertPrefix({ fieldId: TOTAL_OVERDUE_PAYMENTS, value: SYMBOLS.EUR });
     });
@@ -77,7 +77,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
 
   describe('when selecting an alternate currency as the currency code', () => {
     it('should not display a prefix', () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true, linkFieldId: PROVIDE_ALTERNATE_CURRENCY });
+      cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
     });
   });
 });
