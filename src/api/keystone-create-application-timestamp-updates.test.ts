@@ -4,7 +4,7 @@ import applications from './test-helpers/applications';
 import buyers from './test-helpers/buyers';
 import buyerTradingHistoryHelper from './test-helpers/buyer-trading-history';
 import policies from './test-helpers/policies';
-import { Application, BuyerTradingHistory, Context } from './types';
+import { Application, Context } from './types';
 
 describe('Keystone - Application timestamp updates', () => {
   let context: Context;
@@ -31,7 +31,7 @@ describe('Keystone - Application timestamp updates', () => {
      * Create buyer trading history,
      * Associate with the buyer and application
      */
-    const buyerTradingHistory = (await buyerTradingHistoryHelper.create({
+    const buyerTradingHistory = await buyerTradingHistoryHelper.create({
       context,
       data: {
         buyer: {
@@ -41,7 +41,7 @@ describe('Keystone - Application timestamp updates', () => {
           connect: { id: application.id },
         },
       },
-    })) as BuyerTradingHistory;
+    });
 
     // create policy and associate with the application.
     const policy = await policies.create({
