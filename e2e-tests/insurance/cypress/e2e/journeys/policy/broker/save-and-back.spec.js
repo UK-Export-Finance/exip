@@ -1,6 +1,6 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { field, saveAndBackButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -74,7 +74,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} retain the "insurance policy" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
 
@@ -90,7 +90,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
 
@@ -134,7 +134,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
         cy.keyboardInput(field(POSTCODE).input(), application.EXPORTER_BROKER[POSTCODE]);
 
-        saveAndBackButton().click();
+        cy.clickSaveAndBackButton();
 
         cy.assertUrl(allSectionsUrl);
 
@@ -169,7 +169,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         brokerPage[USING_BROKER].noRadioInput().click();
 
-        saveAndBackButton().click();
+        cy.clickSaveAndBackButton();
 
         cy.assertUrl(allSectionsUrl);
 

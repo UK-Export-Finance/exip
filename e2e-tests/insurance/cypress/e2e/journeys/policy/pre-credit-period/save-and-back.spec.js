@@ -1,4 +1,4 @@
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -61,7 +61,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -81,7 +81,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
 
       cy.completePreCreditPeriodForm({ needPreCreditPeriod: false });
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -111,7 +111,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
         description: 'a'.repeat(MAXIMUM + 1),
       });
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -139,7 +139,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
 
       cy.completePreCreditPeriodForm({ needPreCreditPeriod: true });
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

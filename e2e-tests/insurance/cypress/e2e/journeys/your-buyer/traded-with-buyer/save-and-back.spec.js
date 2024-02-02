@@ -1,4 +1,3 @@
-import { saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -47,7 +46,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -65,7 +64,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.navigateToUrl(url);
 
       cy.completeTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

@@ -1,4 +1,4 @@
-import { singleInputField, saveAndBackButton } from '../../../../../../pages/shared';
+import { singleInputField } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -56,7 +56,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -76,7 +76,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
 
       singleInputField(FIELD_ID).input().click();
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

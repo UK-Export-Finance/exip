@@ -1,4 +1,4 @@
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -65,7 +65,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -86,7 +86,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
 
       cy.keyboardInput(field.input(), invalidValue);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -103,7 +103,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
 
         cy.keyboardInput(field.input(), invalidValue);
 
-        saveAndBackButton().click();
+        cy.clickSaveAndBackButton();
 
         cy.startInsurancePolicySection({});
 
@@ -125,7 +125,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
 
       cy.keyboardInput(field.input(), application.POLICY[TOTAL_SALES_TO_BUYER]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -152,7 +152,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       cy.navigateToUrl(url);
 
       cy.completeExportValueForm();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     describe('when going back to the page', () => {
