@@ -1,7 +1,7 @@
 import {
-  headingCaption, saveAndBackButton, yesRadio, noRadio, yesRadioInput, noRadioInput,
+  headingCaption, yesRadio, noRadio,
 } from '../../../../../../pages/shared';
-import { BUTTONS, PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -89,7 +89,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
@@ -126,7 +126,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          yesRadioInput().should('be.checked');
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });
@@ -142,7 +142,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          noRadioInput().should('be.checked');
+          cy.assertNoRadioOptionIsChecked();
         });
       });
     });

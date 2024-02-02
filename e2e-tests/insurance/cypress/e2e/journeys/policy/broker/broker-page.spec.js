@@ -1,9 +1,7 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
-import {
-  PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
-} from '../../../../../../content-strings';
+import { field as fieldSelector } from '../../../../../../pages/shared';
+import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -189,7 +187,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
     });
 
     it('should display save and go back button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
 
     describe('form submission', () => {
@@ -223,7 +221,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+              cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
               cy.checkValue(fieldSelector(NAME), application.EXPORTER_BROKER[NAME]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -247,7 +245,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].noRadioInput().should('be.checked');
+              cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].noRadioInput());
             });
           });
         });

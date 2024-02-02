@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  status,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { headingCaption, status } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -76,7 +72,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

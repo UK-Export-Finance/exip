@@ -100,7 +100,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     it(`should retain the ${NAME} and ${CAN_CONTACT_BUYER} input on the page and the other fields should be empty`, () => {
       cy.startInsuranceYourBuyerSection({});
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+      cy.assertRadioOptionIsChecked(companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput());
       cy.checkValue(field(NAME), BUYER[NAME]);
       cy.checkValue(field(ADDRESS), '');
       cy.checkValue(field(REGISTRATION_NUMBER), '');
@@ -141,7 +141,8 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     it('should retain all inputs on the page', () => {
       cy.startInsuranceYourBuyerSection({});
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+      cy.assertRadioOptionIsChecked(companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput());
+
       cy.checkValue(field(ADDRESS), BUYER[ADDRESS]);
       cy.checkValue(field(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
       cy.checkValue(field(WEBSITE), BUYER[WEBSITE]);

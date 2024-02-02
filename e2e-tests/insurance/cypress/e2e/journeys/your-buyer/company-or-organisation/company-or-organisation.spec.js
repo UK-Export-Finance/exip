@@ -2,10 +2,9 @@ import {
   countryInput,
   field as fieldSelector,
   headingCaption,
-  saveAndBackButton,
 } from '../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
-import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
@@ -180,7 +179,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
@@ -201,7 +200,10 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+        const field = companyOrOrganisationPage[CAN_CONTACT_BUYER];
+
+        cy.assertRadioOptionIsChecked(field.yesRadioInput());
+
         cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
         cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
         cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);

@@ -108,7 +108,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
       cy.completeAndSubmitAnotherCompanyForm({});
 
-      brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+      cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
       cy.checkValue(field(ADDRESS_LINE_1), '');
       cy.checkValue(field(ADDRESS_LINE_2), '');
@@ -152,7 +152,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
         cy.completeAndSubmitAnotherCompanyForm({});
 
-        brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+        cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
         cy.checkValue(field(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
         cy.checkValue(field(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -187,7 +187,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
         cy.completeAndSubmitAnotherCompanyForm({});
 
-        brokerPage[USING_BROKER].noRadioInput().should('be.checked');
+        cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].noRadioInput());
       });
     });
   });

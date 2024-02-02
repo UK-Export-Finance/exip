@@ -154,7 +154,7 @@ context("Insurance - Declarations - Confirmation and acknowledgements page - As 
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          field.input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field.input());
         });
       });
     });

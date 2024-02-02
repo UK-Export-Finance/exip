@@ -1,6 +1,4 @@
-import {
-  backLink, countryInput, yesRadioInput, summaryList,
-} from '../../../../../../pages/shared';
+import { backLink, countryInput, summaryList } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { BRA } from '../../../../../../fixtures/countries';
@@ -129,7 +127,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer selected', () => {
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when resubmitting`, () => {
@@ -166,7 +164,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('has originally submitted answer', () => {
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when resubmitting`, () => {

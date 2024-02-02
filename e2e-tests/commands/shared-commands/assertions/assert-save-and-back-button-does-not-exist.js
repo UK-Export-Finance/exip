@@ -7,4 +7,5 @@ import { saveAndBackButton } from '../../../pages/shared';
 const assertSaveAndBackButtonDoesNotExist = () => {
   saveAndBackButton().should('not.exist');
 };
+
 export default assertSaveAndBackButtonDoesNotExist;

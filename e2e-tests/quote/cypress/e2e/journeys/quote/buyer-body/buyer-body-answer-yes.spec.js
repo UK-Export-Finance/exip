@@ -1,6 +1,4 @@
-import {
-  backLink, yesRadio, yesRadioInput,
-} from '../../../../../../pages/shared';
+import { backLink, yesRadio } from '../../../../../../pages/shared';
 import { getAQuoteByEmailPage } from '../../../../../../pages/quote';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -57,7 +55,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
     it('auto checks the previously submitted answer', () => {
       cy.clickBackLink();
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 });

@@ -1,12 +1,10 @@
 import partials from '../../../../../../partials';
 import {
-  saveAndBackButton,
   yesNoRadioHint,
-  yesRadioInput,
   yesRadio,
   noRadio,
 } from '../../../../../../pages/shared';
-import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -89,7 +87,7 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
@@ -128,7 +126,7 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
     it('should have the submitted values', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().should('be.checked');
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 });

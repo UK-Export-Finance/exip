@@ -96,7 +96,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
       // go to the page
       cy.clickSubmitButton();
 
-      singleInputField(FIELD_ID).input().should('be.checked');
+      cy.assertRadioOptionIsChecked(singleInputField(FIELD_ID).input());
     });
   });
 });

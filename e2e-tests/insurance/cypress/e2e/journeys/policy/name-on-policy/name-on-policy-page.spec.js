@@ -1,12 +1,5 @@
-import {
-  headingCaption,
-  saveAndBackButton,
-  field,
-} from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { headingCaption, field } from '../../../../../../pages/shared';
+import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -115,7 +108,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
@@ -136,7 +129,8 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
 
           cy.navigateToUrl(url);
 
-          field(SAME_NAME).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field(SAME_NAME).input());
+
           cy.checkValue(field(POSITION), POLICY_CONTACT[POSITION]);
         });
       });
@@ -156,7 +150,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
         it('should have the submitted values', () => {
           cy.navigateToUrl(url);
 
-          field(OTHER_NAME).input().should('be.checked');
+          cy.assertRadioOptionIsChecked(field(OTHER_NAME).input());
         });
       });
     });

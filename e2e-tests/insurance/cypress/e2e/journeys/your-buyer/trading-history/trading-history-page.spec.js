@@ -1,8 +1,8 @@
 import {
-  headingCaption, intro, saveAndBackButton, yesRadio, noRadio, field, noRadioInput, yesRadioInput,
+  headingCaption, intro, yesRadio, noRadio, field, yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -168,7 +168,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 
@@ -187,8 +187,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            noRadioInput().first().should('be.checked');
-            noRadioInput().last().should('be.checked');
+            cy.assertNoRadioOptionIsChecked(0);
+            cy.assertNoRadioOptionIsChecked(1);
           });
         });
       });
@@ -206,8 +206,8 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            yesRadioInput().first().should('be.checked');
-            noRadioInput().last().should('be.checked');
+            cy.assertYesRadioOptionIsChecked(0);
+            cy.assertNoRadioOptionIsChecked(1);
           });
         });
       });
