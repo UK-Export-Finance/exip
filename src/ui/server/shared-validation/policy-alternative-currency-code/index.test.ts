@@ -1,7 +1,7 @@
 import policyAlternativeCurrencyCodeRule from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
-import alternativeCurrencyValidation from './../../shared-validation/alternative-currency';
+import alternativeCurrencyValidation from '../alternative-currency';
 import { mockErrors } from '../../test-mocks';
 
 const {
