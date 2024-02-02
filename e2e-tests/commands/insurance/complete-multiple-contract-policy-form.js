@@ -3,7 +3,7 @@ import { radios, field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
@@ -37,7 +37,7 @@ const completeMultipleContractPolicyForm = ({
 
       cy.autocompleteKeyboardInput(ALTERNATIVE_CURRENCY_CODE, isoCode);
     } else {
-      radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
+      radios(CURRENCY_CODE, isoCode).option.input().click();
     }
   }
 };

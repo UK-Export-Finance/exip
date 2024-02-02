@@ -10,7 +10,6 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-// import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
 import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
 const { taskList } = partials.insurancePartials;
@@ -117,10 +116,6 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
       field.input().should('exist');
     });
 
-    // it('renders `currency` label, hint and radio inputs', () => {
-    //   checkPolicyCurrencyCodeInput();
-    // });
-
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
@@ -133,6 +128,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
     const { rendering, formSubmission } = assertCurrencyFormFields({
       legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
+      hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
       errors: CONTRACT_ERROR_MESSAGES,
     });
 
@@ -140,7 +136,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
     formSubmission().submitASupportedCurrency({
       url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-      completeNonCurrencyFields: cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
+      completeNonCurrencyFields: () => cy.completeMultipleContractPolicyForm({ chooseCurrency: false }),
     });
 
     formSubmission().submitAlternativeCurrency({ url: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE });
@@ -177,7 +173,7 @@ context('Insurance - Policy - Multiple contract policy page - As an exporter, I 
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 
-        const field = radios(POLICY_CURRENCY_CODE, isoCode).option;
+        const field = radios(CURRENCY_CODE, isoCode).option;
 
         cy.assertRadioOptionIsChecked(field.input());
       });

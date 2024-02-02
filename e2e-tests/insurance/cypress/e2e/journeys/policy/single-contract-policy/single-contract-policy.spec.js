@@ -10,7 +10,6 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../fixtures/application';
-import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
 
 const { taskList } = partials.insurancePartials;
 
@@ -108,10 +107,6 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       field.dayInput().should('exist');
       field.monthInput().should('exist');
       field.yearInput().should('exist');
-    });
-
-    it('renders `currency` label and radio inputs', () => {
-      checkPolicyCurrencyCodeInput();
     });
 
     it('renders a `save and back` button', () => {

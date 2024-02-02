@@ -2,18 +2,26 @@
  * renderingAssertions
  * Rendering assertions for currency form fields.
  * @param {Function} radios: Assert currency radios
+ * @param {Function} hint: Assert currency hint
  * @param {Function} alternativeCurrencyInput: Assert the alternative currency input
  * @param {Function} doesNotRenderSupportedCurrencies: Assert that the alternative currency input does NOT render supported currencies.
  * @returns {Function} Mocha describe block with assertions.
  */
 const renderingAssertions = ({
   radios,
+  hint,
   alternativeCurrencyInput,
   doesNotRenderSupportedCurrencies,
   rendersAlternativeCurrencies,
 }) => {
   describe('currency form fields - rendering', () => {
-    it('renders alternative currency radios', () => {
+    if (hint) {
+      it('renders a hint', () => {
+        hint();
+      });
+    }
+
+    it('renders currency radios', () => {
       radios();
     });
 
