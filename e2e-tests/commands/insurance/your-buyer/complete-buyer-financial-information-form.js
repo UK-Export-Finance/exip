@@ -4,7 +4,7 @@ import { yesRadioInput, noRadioInput } from '../../../pages/shared';
  * completeBuyerFinancialInformationForm
  * Completes the "buyer financial information" form.
  * @param {Object} Object with flags on how to complete the form.
- * - exporterHasTradedWithBuyer: Should submit "yes" to "buyer financial information" radio. Defaults to "no".
+ * - holdBuyerFinancialAccounts: Should submit "yes" to "buyer financial information" radio. Defaults to "no".
  */
 const completeBuyerFinancialInformationForm = ({ holdBuyerFinancialAccounts = false }) => {
   if (holdBuyerFinancialAccounts) {
