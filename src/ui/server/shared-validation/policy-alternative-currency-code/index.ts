@@ -1,10 +1,11 @@
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
+import { objectHasProperty } from '../../helpers/object';
 import emptyFieldValidation from '../empty-field';
 import { RequestBody } from '../../../types';
 
 const {
-  CURRENCY: { CURRENCY_CODE: FIELD_ID },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -15,13 +16,20 @@ const {
   },
 } = ERROR_MESSAGES;
 
+// TODO: DRY with other "alternative currency" validation for non-policy sections?
 /**
- * policyCurrencyCodeRules
+ * policyAlternativeCurrencyCodeRules
  * Returns the result of emptyFieldValidation
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const policyCurrencyCodeRules = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const policyAlternativeCurrencyCodeRules = (formBody: RequestBody, errors: object) => {
+  if (objectHasProperty(formBody, CURRENCY_CODE) && formBody[CURRENCY_CODE] === FIELD_ID) {
+    return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+  }
 
-export default policyCurrencyCodeRules;
+  return errors;
+};
+
+export default policyAlternativeCurrencyCodeRules;

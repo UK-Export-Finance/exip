@@ -19,59 +19,87 @@ const formSubmissionAssertions = ({
   submitAlternativeCurrencyAndAssertUrl,
   submitAlternativeCurrencyAndAssertInput,
 }) => {
-  const selectAltRadioButNoAltCurrency = () => {
+  const selectAltRadioButNoAltCurrency = (errorIndex) => {
     describe('when selecting the alternative currency radio and NOT entering an alternative currency via the autocomplete input', () => {
       it('should render validation errors', () => {
-        rendersAlternativeCurrencyValidationError();
+        rendersAlternativeCurrencyValidationError({ errorIndex });
       });
     });
   };
 
-  const submitASupportedCurrency = (url) => {
+  const submitASupportedCurrency = ({ url, completeNonCurrencyFields }) => {
     describe('when submitting a supported currency', () => {
       describe(EUR_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, url);
+          submitRadioAndAssertUrl({
+            currency: EUR_CURRENCY_CODE,
+            url,
+            completeNonCurrencyFields,
+          });
         });
 
         it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(EUR_CURRENCY_CODE, url);
+          submitAndAssertRadioIsChecked({
+            currency: EUR_CURRENCY_CODE,
+            completeNonCurrencyFields,
+          });
         });
       });
 
       describe(GBP_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, url);
+          submitRadioAndAssertUrl({
+            currency: GBP_CURRENCY_CODE,
+            url,
+            completeNonCurrencyFields,
+          });
         });
 
         it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(GBP_CURRENCY_CODE, url);
+          submitAndAssertRadioIsChecked({
+            currency: GBP_CURRENCY_CODE,
+            completeNonCurrencyFields,
+          });
         });
       });
 
       describe(USD_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(USD_CURRENCY_CODE, url);
+          submitRadioAndAssertUrl({
+            currency: USD_CURRENCY_CODE,
+            url,
+            completeNonCurrencyFields,
+          });
         });
 
         it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(USD_CURRENCY_CODE, url);
+          submitAndAssertRadioIsChecked({
+            currency: USD_CURRENCY_CODE,
+            completeNonCurrencyFields,
+          });
         });
       });
 
       describe(JPY_CURRENCY_CODE, () => {
         it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, url);
+          submitRadioAndAssertUrl({
+            currency: JPY_CURRENCY_CODE,
+            url,
+            completeNonCurrencyFields,
+          });
         });
 
         it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(JPY_CURRENCY_CODE, url);
+          submitAndAssertRadioIsChecked({
+            currency: JPY_CURRENCY_CODE,
+            completeNonCurrencyFields,
+          });
         });
       });
     });
   };
 
-  const submitAlternativeCurrency = (url) => {
+  const submitAlternativeCurrency = ({ url }) => {
     describe('when submitting an alternative currency', () => {
       it('should redirect to the next page', () => {
         submitAlternativeCurrencyAndAssertUrl(url);
