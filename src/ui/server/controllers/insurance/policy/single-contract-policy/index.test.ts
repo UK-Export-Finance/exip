@@ -31,7 +31,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
@@ -103,9 +103,9 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
             ID: CONTRACT_COMPLETION_DATE,
             ...FIELDS.CONTRACT_POLICY.SINGLE[CONTRACT_COMPLETION_DATE],
           },
-          POLICY_CURRENCY_CODE: {
-            ID: POLICY_CURRENCY_CODE,
-            ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
+          CURRENCY_CODE: {
+            ID: CURRENCY_CODE,
+            ...FIELDS.CONTRACT_POLICY[CURRENCY_CODE],
           },
           ALTERNATIVE_CURRENCY_CODE: {
             ID: ALTERNATIVE_CURRENCY_CODE,
@@ -134,6 +134,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         CONTRACT_COMPLETION_DATE_MONTH,
         CONTRACT_COMPLETION_DATE_YEAR,
         POLICY_CURRENCY_CODE,
+        CURRENCY_CODE,
         ALTERNATIVE_CURRENCY_CODE,
       ];
 
@@ -229,7 +230,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
       [`${CONTRACT_COMPLETION_DATE}-day`]: day,
       [`${CONTRACT_COMPLETION_DATE}-month`]: month,
       [`${CONTRACT_COMPLETION_DATE}-year`]: twoYearsFromNow,
-      [POLICY_CURRENCY_CODE]: mockCurrencies[0].isoCode,
+      [CURRENCY_CODE]: mockCurrencies[0].isoCode,
     };
 
     describe('when there are no validation errors', () => {
