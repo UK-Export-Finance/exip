@@ -35,6 +35,12 @@ export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.BUYER_FINANCIAL_INFORMATION;
 
+/**
+ * pageVariables
+ * returns pageVariables for buyer-financial information
+ * @param {Number} referenceNumber
+ * @returns {Object} pageVariables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID: HAS_BUYER_FINANCIAL_ACCOUNTS,
   FIELDS: {
