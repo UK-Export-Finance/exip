@@ -61,7 +61,7 @@ describe('helpers/mappings/map-currency-code-form-data', () => {
     });
   });
 
-  it(`should not return ALTERNATIVE_CURRENCY_CODE regardless of the body`, () => {
+  it(`should not return ${ALTERNATIVE_CURRENCY_CODE} regardless of the body`, () => {
     const mockBody = {
       mockField: '',
       [ALTERNATIVE_CURRENCY_CODE]: '',
