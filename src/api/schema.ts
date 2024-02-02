@@ -288,7 +288,7 @@ export const lists = {
       }),
       creditPeriodWithBuyer: text(),
       policyCurrencyCode: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(3)' },
       }),
       totalMonthsOfCover: integer(),
       totalSalesToBuyer: integer(),

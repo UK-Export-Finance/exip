@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockContact, mockCurrenciesResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockContact, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
@@ -117,7 +117,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

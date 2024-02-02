@@ -25,6 +25,7 @@ describe('custom-resolvers/get-APIM-currencies', () => {
       const expected = {
         supportedCurrencies: mappedSupported,
         alternativeCurrencies: mappedAlternative,
+        allCurrencies: [...mappedSupported, ...mappedAlternative],
       };
 
       expect(response).toEqual(expected);

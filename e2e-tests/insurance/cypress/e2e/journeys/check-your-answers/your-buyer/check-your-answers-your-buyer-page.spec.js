@@ -1,8 +1,4 @@
-import {
-  headingCaption,
-  status,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { headingCaption, status } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -80,7 +76,7 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
 
     describe('form submission', () => {

@@ -1,8 +1,11 @@
 import { field } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
+import { PAGES } from '../../../../../../../content-strings';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { NON_STANDARD_CURRENCY_CODE } from '../../../../../../../fixtures/currencies';
+import { NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../../../../../../fixtures/currencies';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -57,6 +60,13 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Alt
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+    });
+
+    it('should render a heading with the alternative currency', () => {
+      cy.assertHeadingWithCurrencyName({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currencyName: NON_STANDARD_CURRENCY_NAME,
+      });
     });
 
     it(`should NOT render a ${TOTAL_SALES_TO_BUYER} prefix`, () => {

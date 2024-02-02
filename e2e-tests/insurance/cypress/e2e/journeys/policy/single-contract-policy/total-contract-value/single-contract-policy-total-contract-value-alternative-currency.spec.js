@@ -1,8 +1,11 @@
 import { field } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
+import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { NON_STANDARD_CURRENCY_CODE } from '../../../../../../../fixtures/currencies';
+import { NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../../../../../../fixtures/currencies';
+
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 
 const {
   ROOT,
@@ -49,6 +52,14 @@ context('Insurance - Policy - Single contract policy - Total contract value page
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+    });
+
+    it('should render a heading with the alternative currency', () => {
+      cy.assertHeadingWithCurrencyName({
+        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        currencyName: NON_STANDARD_CURRENCY_NAME,
+        withQuestionMark: true,
+      });
     });
 
     it(`should NOT render a ${TOTAL_CONTRACT_VALUE} prefix`, () => {

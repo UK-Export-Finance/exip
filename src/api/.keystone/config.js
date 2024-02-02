@@ -1132,7 +1132,7 @@ var lists = {
       }),
       creditPeriodWithBuyer: (0, import_fields.text)(),
       policyCurrencyCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(3)" }
       }),
       totalMonthsOfCover: (0, import_fields.integer)(),
       totalSalesToBuyer: (0, import_fields.integer)(),
@@ -1865,6 +1865,7 @@ var typeDefs = `
   type GetApimCurrencyResponse {
     supportedCurrencies: [MappedCurrency]
     alternativeCurrencies: [MappedCurrency]
+    allCurrencies: [MappedCurrency]
   }
 
   type Mutation {
@@ -5261,9 +5262,13 @@ var getApimCurrencies = async () => {
     console.info("Getting and mapping currencies from APIM");
     const response = await APIM_default.getCurrencies();
     if (response.data) {
+      const supportedCurrencies = map_currencies_default(response.data, false);
+      const alternativeCurrencies = map_currencies_default(response.data, true);
+      const allCurrencies = [...supportedCurrencies, ...alternativeCurrencies];
       return {
-        supportedCurrencies: map_currencies_default(response.data, false),
-        alternativeCurrencies: map_currencies_default(response.data, true)
+        supportedCurrencies,
+        alternativeCurrencies,
+        allCurrencies
       };
     }
     return { success: false };
