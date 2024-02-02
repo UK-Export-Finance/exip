@@ -1,14 +1,9 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import {
-  BUTTONS, ERROR_MESSAGES, FIELDS, PAGES,
-} from '../../../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import assertAlternativeCurrencyForm from '../../../../../../commands/insurance/assert-alternative-currency-form';
-import {
-  EUR_CURRENCY_CODE, GBP_CURRENCY_CODE, USD_CURRENCY_CODE, JPY_CURRENCY_CODE,
-} from '../../../../../../fixtures/currencies';
+import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.ROOT;
 
@@ -17,7 +12,7 @@ const {
   YOUR_BUYER: { ALTERNATIVE_CURRENCY, TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
-const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -27,20 +22,9 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const {
-  radios, assertGbpCurrencyCheckedByDefault, alternativeCurrencyInput, rendersAlternativeCurrencies, doesNotRenderSupportedCurrencies,
-  rendersAlternativeCurrencyValidationError, submitRadioAndAssertUrl,
-  submitAndAssertRadioIsChecked, submitAlternativeCurrencyAndAssertUrl, submitAlternativeCurrencyAndAssertInput,
-} = assertAlternativeCurrencyForm({
-  legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
-  alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
-  errors: ERRORS,
-});
-
 context('Insurance - Your Buyer - Alternative currency - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
-  let tradingHistoryUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -49,7 +33,6 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
       cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
-      tradingHistoryUrl = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
       cy.navigateToUrl(url);
 
@@ -82,97 +65,23 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
-
-    it(`should render ${GBP_CURRENCY_CODE} checked by default`, () => {
-      assertGbpCurrencyCheckedByDefault();
-    });
-
-    it('renders alternative currency radios', () => {
-      radios();
-    });
-
-    it('renders alternative currency input', () => {
-      alternativeCurrencyInput();
-    });
-
-    it('should not render invalid inputs or radio currencies in alternative currency input', () => {
-      doesNotRenderSupportedCurrencies();
-    });
-
-    it('should render valid alternate currencies in alternative currency input', () => {
-      rendersAlternativeCurrencies();
-    });
   });
 
-  describe('form submission', () => {
-    describe('when selecting the alternative currency radio but not entering an alternative currency via the autocomplete input', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it('should render validation errors', () => {
-        rendersAlternativeCurrencyValidationError();
-      });
+  describe('currency form fields', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
     });
 
-    describe('when submitting a supported currency', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      describe(EUR_CURRENCY_CODE, () => {
-        it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(EUR_CURRENCY_CODE, tradingHistoryUrl);
-        });
-
-        it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(EUR_CURRENCY_CODE, url);
-        });
-      });
-
-      describe(GBP_CURRENCY_CODE, () => {
-        it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(GBP_CURRENCY_CODE, tradingHistoryUrl);
-        });
-
-        it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(GBP_CURRENCY_CODE, url);
-        });
-      });
-
-      describe(USD_CURRENCY_CODE, () => {
-        it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(USD_CURRENCY_CODE, tradingHistoryUrl);
-        });
-
-        it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(USD_CURRENCY_CODE, url);
-        });
-      });
-
-      describe(JPY_CURRENCY_CODE, () => {
-        it('should redirect to the next page', () => {
-          submitRadioAndAssertUrl(JPY_CURRENCY_CODE, tradingHistoryUrl);
-        });
-
-        it('should render the submitted answer when going back to the page', () => {
-          submitAndAssertRadioIsChecked(JPY_CURRENCY_CODE, url);
-        });
-      });
+    const { rendering, formSubmission } = assertCurrencyFormFields({
+      legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
+      errors: ERRORS,
     });
 
-    describe('when submitting an alternative currency', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
+    rendering();
 
-      it('should redirect to the next page', () => {
-        submitAlternativeCurrencyAndAssertUrl(tradingHistoryUrl);
-      });
+    formSubmission().selectAltRadioButNoAltCurrency();
 
-      it('should render the submitted answer when going back to the page', () => {
-        submitAlternativeCurrencyAndAssertInput(url);
-      });
-    });
+    formSubmission().submitASupportedCurrency(TRADING_HISTORY);
+    formSubmission().submitAlternativeCurrency(TRADING_HISTORY);
   });
 });

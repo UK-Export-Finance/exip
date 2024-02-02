@@ -1,7 +1,7 @@
 import { POLICY_FIELDS } from '../../content-strings/fields/insurance/policy';
 import { FIELDS } from '../../content-strings';
 import { SHARED_CONTRACT_POLICY } from '../../constants/field-ids/insurance/policy';
-import assertAlternativeCurrencyForm from './assert-alternative-currency-form';
+import assertCurrencyFormFields from './assert-currency-form-fields';
 
 const { POLICY_CURRENCY_CODE, ALTERNATIVE_POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
@@ -16,7 +16,7 @@ const checkPolicyCurrencyCodeInput = () => {
 
   const {
     legend, hint, radios,
-  } = assertAlternativeCurrencyForm({
+  } = assertCurrencyFormFields({
     fieldId,
     legend: CONTENT_STRINGS.LEGEND,
     hint: CONTENT_STRINGS.HINT,
