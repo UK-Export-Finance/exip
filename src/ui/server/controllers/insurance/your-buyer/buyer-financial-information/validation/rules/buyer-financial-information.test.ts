@@ -5,7 +5,7 @@ import emptyFieldValidation from '../../../../../../shared-validation/empty-fiel
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
-const { BUYER_FINANCIAL_ACCOUNTS: FIELD_ID } = FIELD_IDS;
+const { HAS_BUYER_FINANCIAL_ACCOUNTS: FIELD_ID } = FIELD_IDS;
 
 const {
   INSURANCE: {

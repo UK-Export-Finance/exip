@@ -1,13 +1,13 @@
 /**
- * completeAndBuyerFinancialInformationForm
+ * completeAndSubmitBuyerFinancialInformationForm
  * Completes and submits the "buyer financial information" form.
  * @param {Object} Object with flags on how to complete the form.
- * - holdBuyerFinancialAccounts: Should submit "yes" to "buyer financial information" radio. Defaults to "no".
+ * - holdexporterHasBuyerFinancialAccounts: Should submit "yes" to "buyer financial information" radio. Defaults to "no".
  */
-const completeAndBuyerFinancialInformationForm = ({ holdBuyerFinancialAccounts = false }) => {
-  cy.completeTradedWithBuyerForm({ holdBuyerFinancialAccounts });
+const completeAndSubmitBuyerFinancialInformationForm = ({ holdexporterHasBuyerFinancialAccounts = false }) => {
+  cy.completeTradedWithBuyerForm({ holdexporterHasBuyerFinancialAccounts });
 
   cy.clickSubmitButton();
 };
 
-export default completeAndBuyerFinancialInformationForm;
+export default completeAndSubmitBuyerFinancialInformationForm;

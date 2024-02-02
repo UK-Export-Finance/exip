@@ -20,5 +20,5 @@ export const YOUR_BUYER = {
   FAILED_PAYMENTS: 'failedPayments',
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'exporterHasPreviousCreditInsuranceWithBuyer',
   PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: 'previousCreditInsuranceWithBuyerDescription',
-  BUYER_FINANCIAL_ACCOUNTS: 'buyerFinancialAccounts',
+  HAS_BUYER_FINANCIAL_ACCOUNTS: 'exporterHasBuyerFinancialAccounts',
 };

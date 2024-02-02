@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
 
-const { BUYER_FINANCIAL_ACCOUNTS: FIELD_ID } = FIELD_IDS;
+const { HAS_BUYER_FINANCIAL_ACCOUNTS: FIELD_ID } = FIELD_IDS;
 
 const {
   INSURANCE: {

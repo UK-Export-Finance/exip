@@ -15,7 +15,7 @@ const {
   },
 } = ROUTES.INSURANCE;
 
-const { BUYER_FINANCIAL_ACCOUNTS: FIELD_ID } = FIELD_IDS;
+const { HAS_BUYER_FINANCIAL_ACCOUNTS: FIELD_ID } = FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -131,7 +131,7 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
 
     describe('when submitting the form as "yes"', () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.completeAndSubmitBuyerFinancialInformationForm({ holdBuyerFinancialAccounts: true });
+        cy.completeAndSubmitBuyerFinancialInformationForm({ holdexporterHasBuyerFinancialAccounts: true });
 
         cy.assertUrl(checkYourAnswersUrl);
       });

@@ -32,7 +32,7 @@ const {
   },
 } = TEMPLATES;
 
-const { BUYER_FINANCIAL_ACCOUNTS } = BUYER_FIELD_IDS;
+const { HAS_BUYER_FINANCIAL_ACCOUNTS } = BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
   let req: Request;
@@ -52,10 +52,10 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: BUYER_FINANCIAL_ACCOUNTS,
+        FIELD_ID: HAS_BUYER_FINANCIAL_ACCOUNTS,
         FIELDS: {
-          BUYER_FINANCIAL_ACCOUNTS: {
-            ID: BUYER_FINANCIAL_ACCOUNTS,
+          HAS_BUYER_FINANCIAL_ACCOUNTS: {
+            ID: HAS_BUYER_FINANCIAL_ACCOUNTS,
             HINT: PAGE_CONTENT_STRINGS.HINT,
           },
         },
@@ -81,7 +81,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const EXPECTED_FIELD_IDS = [BUYER_FINANCIAL_ACCOUNTS];
+      const EXPECTED_FIELD_IDS = [HAS_BUYER_FINANCIAL_ACCOUNTS];
 
       expect(FIELD_IDS).toEqual(EXPECTED_FIELD_IDS);
     });
@@ -133,7 +133,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
 
   describe('post', () => {
     const validBody = {
-      [BUYER_FINANCIAL_ACCOUNTS]: 'true',
+      [HAS_BUYER_FINANCIAL_ACCOUNTS]: 'true',
     };
 
     beforeEach(() => {
@@ -145,7 +145,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to the next page when ${BUYER_FINANCIAL_ACCOUNTS} is true`, async () => {
+      it(`should redirect to the next page when ${HAS_BUYER_FINANCIAL_ACCOUNTS} is true`, async () => {
         await post(req, res);
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 

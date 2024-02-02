@@ -345,7 +345,7 @@ export const ERROR_MESSAGES = {
         BELOW_MINIMUM: 'The amount overdue from the buyer must be 1 or more',
         INCORRECT_FORMAT: 'Enter the amount overdue as whole number. Do not include any letters or special characters',
       },
-      [FIELD_IDS.INSURANCE.YOUR_BUYER.BUYER_FINANCIAL_ACCOUNTS]: {
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.HAS_BUYER_FINANCIAL_ACCOUNTS]: {
         IS_EMPTY: 'Select whether you hold any financial accounts in relation to the buyer',
       },
     },
