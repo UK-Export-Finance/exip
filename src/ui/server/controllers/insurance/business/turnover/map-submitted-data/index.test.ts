@@ -89,7 +89,6 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
         [ESTIMATED_ANNUAL_TURNOVER]: mockBody[ESTIMATED_ANNUAL_TURNOVER],
         [PERCENTAGE_TURNOVER]: mockBody[PERCENTAGE_TURNOVER],
         [CURRENCY_CODE]: mockBody[CURRENCY_CODE],
-        [ALTERNATIVE_CURRENCY_CODE]: mockBody[ALTERNATIVE_CURRENCY_CODE],
       };
 
       expect(response).toEqual(expected);

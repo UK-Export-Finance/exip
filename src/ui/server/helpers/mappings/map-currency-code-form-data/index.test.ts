@@ -61,6 +61,21 @@ describe('helpers/mappings/map-currency-code-form-data', () => {
     });
   });
 
+  it(`should not return ALTERNATIVE_CURRENCY_CODE regardless of the body`, () => {
+    const mockBody = {
+      mockField: '',
+      [ALTERNATIVE_CURRENCY_CODE]: '',
+    };
+
+    const result = mapCurrencyCodeFormData(mockBody, mockCurrencyFieldId);
+
+    const expected = {
+      mockField: '',
+    };
+
+    expect(result).toEqual(expected);
+  });
+
   describe('when no currency fields exist', () => {
     it('should return the provided body', () => {
       const mockBody = {};

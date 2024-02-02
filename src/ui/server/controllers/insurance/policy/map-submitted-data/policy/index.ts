@@ -24,7 +24,7 @@ const {
  * 1) Check form data and map any fields that need to be sent to the API in a different format or structure.
  * 2) If a policy is a "single" policy, but has "multiple" policy fields, wipe "multiple" policy fields.
  * 3) If a policy is a "multiple" policy, but has "single" policy fields, wipe "single" policy fields.
- * 3) Map submitted currency fields.
+ * 4) Map submitted currency fields.
  * @param {Express.Request.body} Form data
  * @returns {Object} Page variables
  */

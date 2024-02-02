@@ -12,7 +12,7 @@ const {
  * - Currency code is submitted, no alternative currency code.
  * - Currency code is submitted as "alternative". Assign the alternative code to the currency code field.
  * - Currency code is submitted as CURRENCY_CODE, but the populated data should have a bespoke field ID.
- * - In either instance, delete the "alternative currency code" field.
+ * - In any instance, delete the "alternative currency code" field.
  * @param {Express.Request.body} formBody: Form data
  * @param {String} fieldId: Currency code field ID
  * @returns {Object} Mapped object with currency field.
@@ -26,9 +26,13 @@ const mapCurrencyCodeFormData = (formBody: RequestBody, fieldId = CURRENCY_CODE)
     } else if (populatedData[CURRENCY_CODE]) {
       populatedData[fieldId] = populatedData[CURRENCY_CODE];
     }
-
-    delete populatedData[ALTERNATIVE_CURRENCY_CODE];
   }
+
+  /**
+   * ALTERNATIVE_CURRENCY_CODE should never exist.
+   * This is purely a UI field and so should not be included in the data.
+   */
+  delete populatedData[ALTERNATIVE_CURRENCY_CODE];
 
   return populatedData;
 };
