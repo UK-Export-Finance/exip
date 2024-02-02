@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -134,6 +134,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         CONTRACT_COMPLETION_DATE_MONTH,
         CONTRACT_COMPLETION_DATE_YEAR,
         POLICY_CURRENCY_CODE,
+        ALTERNATIVE_CURRENCY_CODE,
       ];
 
       expect(FIELD_IDS).toEqual(expected);
@@ -192,7 +193,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -373,7 +374,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

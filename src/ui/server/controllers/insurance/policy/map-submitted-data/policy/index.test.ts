@@ -1,6 +1,7 @@
 import mapSubmittedData from '.';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
+import mapCurrencyCodeFormData from '../../../../../helpers/mappings/map-currency-code-form-data';
 import { mockApplication, mockApplicationMultiplePolicy } from '../../../../../test-mocks';
 
 const {
@@ -9,6 +10,7 @@ const {
     REQUESTED_START_DATE,
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+    POLICY_CURRENCY_CODE,
   },
   EXPORT_VALUE: {
     MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
@@ -139,7 +141,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
   describe(`when ${POLICY_TYPE} is single`, () => {
     it('should return an object with wiped multiple policy specific fields', () => {
       const mockBody = {
-        ...mockApplication.policy,
+        [POLICY_TYPE]: mockApplication.policy.policyType,
         [MAXIMUM_BUYER_WILL_OWE]: mockApplicationMultiplePolicy.policy[MAXIMUM_BUYER_WILL_OWE],
         [TOTAL_MONTHS_OF_COVER]: mockApplicationMultiplePolicy.policy[TOTAL_MONTHS_OF_COVER],
         [TOTAL_SALES_TO_BUYER]: mockApplicationMultiplePolicy.policy[TOTAL_SALES_TO_BUYER],
@@ -161,7 +163,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
   describe(`when ${POLICY_TYPE} is multiple`, () => {
     it('should return an object with wiped single policy specific fields', () => {
       const mockBody = {
-        ...mockApplicationMultiplePolicy.policy,
+        [POLICY_TYPE]: mockApplicationMultiplePolicy.policy.policyType,
         [CONTRACT_COMPLETION_DATE]: mockApplication.policy[CONTRACT_COMPLETION_DATE],
         [TOTAL_CONTRACT_VALUE]: mockApplication.policy[TOTAL_CONTRACT_VALUE],
       };
@@ -173,6 +175,20 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
         [CONTRACT_COMPLETION_DATE]: null,
         [TOTAL_CONTRACT_VALUE]: '',
       };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${POLICY_CURRENCY_CODE} is provided`, () => {
+    it('should return an object with mapCurrencyCodeFormData', () => {
+      const mockBody = {
+        [POLICY_CURRENCY_CODE]: mockApplication.policy.policyCurrencyCode,
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      const expected = mapCurrencyCodeFormData(mockBody, POLICY_CURRENCY_CODE);
 
       expect(result).toEqual(expected);
     });

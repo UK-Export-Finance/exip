@@ -11,6 +11,10 @@ const getApimCurrencies = gql`
         isoCode
         name
       }
+      allCurrencies {
+        isoCode
+        name
+      }
     }
   }
 `;

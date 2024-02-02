@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockCurrenciesResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
 
 const {
@@ -139,7 +139,14 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [REQUESTED_START_DATE_DAY, REQUESTED_START_DATE_MONTH, REQUESTED_START_DATE_YEAR, TOTAL_MONTHS_OF_COVER, POLICY_CURRENCY_CODE];
+      const expected = [
+        REQUESTED_START_DATE_DAY,
+        REQUESTED_START_DATE_MONTH,
+        REQUESTED_START_DATE_YEAR,
+        TOTAL_MONTHS_OF_COVER,
+        POLICY_CURRENCY_CODE,
+        ALTERNATIVE_CURRENCY_CODE,
+      ];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -197,7 +204,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -368,7 +375,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

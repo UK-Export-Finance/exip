@@ -57,7 +57,7 @@ export const NATURE_OF_YOUR_BUSINESS = {
 export const TURNOVER = {
   ...SHARED,
   PAGE_TITLE: 'Turnover',
-  PROVIDE_ALTERNATIVE_CURRENCY: 'Provide turnover in an alternative currency',
+  PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for your turnover',
 };
 
 export const TURNOVER_ALTERNATIVE_CURRENCY = {

@@ -32,8 +32,6 @@ const {
 
 const task = taskList.prepareApplication.tasks.policy;
 
-const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Single contract policy - Total contract value page - As an exporter, I want to provide the details of the single contract policy that I need cover for', () => {
@@ -64,7 +62,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: expectedPageTitle,
+      pageTitle: `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`,
       currentHref: `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
       backLink: `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
     });
