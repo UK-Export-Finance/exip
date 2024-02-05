@@ -4,13 +4,13 @@ import {
   headingCaption,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { PAGES, TASKS } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES, TASKS } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../fixtures/application';
-import checkPolicyCurrencyCodeInput from '../../../../../../commands/insurance/check-policy-currency-code-input';
+import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
 const { taskList } = partials.insurancePartials;
 
@@ -26,7 +26,10 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const { CONTRACT_POLICY } = FIELDS;
+
 const {
+  CURRENCY: { CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
@@ -37,6 +40,14 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    POLICY: {
+      CONTRACT_POLICY: CONTRACT_ERROR_MESSAGES,
+    },
+  },
+} = ERROR_MESSAGES;
 
 const task = taskList.prepareApplication.tasks.policy;
 
@@ -88,9 +99,9 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       const fieldId = REQUESTED_START_DATE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY[fieldId].LABEL);
+      cy.checkText(field.label(), CONTRACT_POLICY[fieldId].LABEL);
 
-      cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY[fieldId].HINT);
+      cy.checkText(field.hint(), CONTRACT_POLICY[fieldId].HINT);
 
       field.dayInput().should('exist');
       field.monthInput().should('exist');
@@ -101,22 +112,39 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
       const fieldId = CONTRACT_COMPLETION_DATE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].LABEL);
+      cy.checkText(field.label(), CONTRACT_POLICY.SINGLE[fieldId].LABEL);
 
-      cy.checkText(field.hint(), FIELDS.CONTRACT_POLICY.SINGLE[fieldId].HINT);
+      cy.checkText(field.hint(), CONTRACT_POLICY.SINGLE[fieldId].HINT);
 
       field.dayInput().should('exist');
       field.monthInput().should('exist');
       field.yearInput().should('exist');
     });
 
-    it('renders `currency` label and radio inputs', () => {
-      checkPolicyCurrencyCodeInput();
-    });
-
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
+  });
+
+  describe('currency form fields', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    const { rendering, formSubmission } = assertCurrencyFormFields({
+      legend: CONTRACT_POLICY[CURRENCY_CODE].LEGEND,
+      hint: CONTRACT_POLICY[CURRENCY_CODE].HINT,
+      errors: CONTRACT_ERROR_MESSAGES,
+    });
+
+    rendering();
+
+    formSubmission().submitASupportedCurrency({
+      url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
+      completeNonCurrencyFields: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),
+    });
+
+    formSubmission().submitAlternativeCurrency({ url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE });
   });
 
   describe('form submission', () => {
@@ -156,7 +184,7 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
 
         const isoCode = application.POLICY[POLICY_CURRENCY_CODE];
 
-        const field = radios(POLICY_CURRENCY_CODE, isoCode).option;
+        const field = radios(CURRENCY_CODE, isoCode).option;
 
         cy.assertRadioOptionIsChecked(field.input());
       });

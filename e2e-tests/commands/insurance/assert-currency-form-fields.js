@@ -52,8 +52,8 @@ const assertCurrencyFormFields = ({
   alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE,
   errors,
 }) => ({
-  legend: () => cy.checkText(field(fieldId).legend(), legend),
-  hint: () => cy.checkText(field(fieldId).hint(), hint),
+  legend: legend ? () => cy.checkText(field(fieldId).legend(), legend) : null,
+  hint: hint ? () => cy.checkText(field(fieldId).hint(), hint) : null,
   radios: () => {
     const option1 = currencyRadio({ fieldId, currency: EUR.isoCode });
     const option2 = currencyRadio({ fieldId, currency: GBP.isoCode });
@@ -108,13 +108,13 @@ const assertCurrencyFormFields = ({
     checkAutocompleteInput
       .allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
-  rendersAlternativeCurrencyValidationError: () => {
+  rendersAlternativeCurrencyValidationError: ({ errorIndex = 0 }) => {
     cy.clickAlternativeCurrencyRadioOption();
 
     cy.clickSubmitButton();
 
     cy.checkText(
-      partials.errorSummaryListItems().first(),
+      partials.errorSummaryListItems().eq(errorIndex),
       errors[alternativeCurrencyFieldId].IS_EMPTY,
     );
 
@@ -123,7 +123,11 @@ const assertCurrencyFormFields = ({
       `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`,
     );
   },
-  submitRadioAndAssertUrl: (currency, url) => {
+  submitRadioAndAssertUrl: ({ currency, url, completeNonCurrencyFields }) => {
+    if (completeNonCurrencyFields) {
+      completeNonCurrencyFields();
+    }
+
     const option = currencyRadio({ fieldId, currency });
 
     option.input().click();
@@ -131,7 +135,11 @@ const assertCurrencyFormFields = ({
 
     cy.url().should('include', url);
   },
-  submitAndAssertRadioIsChecked: (currency) => {
+  submitAndAssertRadioIsChecked: ({ currency, completeNonCurrencyFields }) => {
+    if (completeNonCurrencyFields) {
+      completeNonCurrencyFields();
+    }
+
     const option = currencyRadio({ fieldId, currency });
 
     option.input().click();

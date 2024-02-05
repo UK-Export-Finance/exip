@@ -1,9 +1,7 @@
 import { headingCaption } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY;
@@ -12,8 +10,6 @@ const {
   ROOT,
   EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY },
 } = INSURANCE_ROUTES;
-
-const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -78,7 +74,6 @@ context('Insurance - Your business - Turnover - Alternative currency page - As a
     });
 
     const { rendering, formSubmission } = assertCurrencyFormFields({
-      legend: EXPORTER_BUSINESS_FIELDS[CURRENCY_CODE].LEGEND,
       errors: ERRORS,
     });
 
@@ -86,7 +81,7 @@ context('Insurance - Your business - Turnover - Alternative currency page - As a
 
     formSubmission().selectAltRadioButNoAltCurrency();
 
-    formSubmission().submitASupportedCurrency(TURNOVER_ROOT);
-    formSubmission().submitAlternativeCurrency(TURNOVER_ROOT);
+    formSubmission().submitASupportedCurrency({ url: TURNOVER_ROOT });
+    formSubmission().submitAlternativeCurrency({ url: TURNOVER_ROOT });
   });
 });

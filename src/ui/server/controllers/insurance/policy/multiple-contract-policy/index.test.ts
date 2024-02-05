@@ -32,7 +32,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
@@ -108,9 +108,9 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
             ID: TOTAL_MONTHS_OF_COVER,
             ...FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_MONTHS_OF_COVER],
           },
-          POLICY_CURRENCY_CODE: {
-            ID: POLICY_CURRENCY_CODE,
-            ...FIELDS.CONTRACT_POLICY[POLICY_CURRENCY_CODE],
+          CURRENCY_CODE: {
+            ID: CURRENCY_CODE,
+            ...FIELDS.CONTRACT_POLICY[CURRENCY_CODE],
           },
           ALTERNATIVE_CURRENCY_CODE: {
             ID: ALTERNATIVE_CURRENCY_CODE,
@@ -145,6 +145,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         REQUESTED_START_DATE_YEAR,
         TOTAL_MONTHS_OF_COVER,
         POLICY_CURRENCY_CODE,
+        CURRENCY_CODE,
         ALTERNATIVE_CURRENCY_CODE,
       ];
 
@@ -230,7 +231,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
       [`${REQUESTED_START_DATE}-month`]: date.getMonth() + 1,
       [`${REQUESTED_START_DATE}-year`]: date.getFullYear() + 1,
       [TOTAL_MONTHS_OF_COVER]: '1',
-      [POLICY_CURRENCY_CODE]: GBP_CURRENCY_CODE,
+      [CURRENCY_CODE]: GBP_CURRENCY_CODE,
     };
 
     describe('when there are no validation errors', () => {

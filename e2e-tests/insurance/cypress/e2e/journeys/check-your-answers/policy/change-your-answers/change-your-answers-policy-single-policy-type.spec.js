@@ -19,10 +19,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     },
   },
@@ -207,8 +207,8 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
       });
     });
 
-    describe(POLICY_CURRENCY_CODE, () => {
-      const fieldId = POLICY_CURRENCY_CODE;
+    describe(CURRENCY_CODE, () => {
+      const fieldId = CURRENCY_CODE;
       const fieldVariables = {
         ...getFieldVariables(fieldId, referenceNumber),
         newValueInput: USD.isoCode,

@@ -9,11 +9,13 @@ import transformNumberToString from '../../transform-number-to-string';
 import { Application } from '../../../../types';
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   SUBMISSION_DEADLINE,
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
+      POLICY_CURRENCY_CODE,
     },
   },
   EXPORTER_BUSINESS: {
@@ -71,6 +73,13 @@ const mapApplicationToFormFields = (application?: Application): Application | ob
       mapped.policy = {
         ...mapped.policy,
         ...getDateFieldsFromTimestamp(timestamp, CONTRACT_COMPLETION_DATE),
+      };
+    }
+
+    if (application?.policy?.[POLICY_CURRENCY_CODE]) {
+      mapped.policy = {
+        ...mapped.policy,
+        [CURRENCY_CODE]: application.policy[POLICY_CURRENCY_CODE],
       };
     }
 

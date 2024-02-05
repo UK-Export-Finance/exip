@@ -1,17 +1,15 @@
-import { radios } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import application from '../../../../../../../fixtures/application';
 
 const { INSURANCE } = ROUTES;
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      POLICY_CURRENCY_CODE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
     },
   },
@@ -74,23 +72,7 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
 
     cy.checkText(
       partials.errorSummaryListItems().eq(2),
-      CONTRACT_ERROR_MESSAGES[POLICY_CURRENCY_CODE].IS_EMPTY,
+      CONTRACT_ERROR_MESSAGES[CURRENCY_CODE].IS_EMPTY,
     );
-  });
-
-  describe(`when ${POLICY_CURRENCY_CODE} is submitted but there are other validation errors`, () => {
-    it(`should retain the submitted ${POLICY_CURRENCY_CODE}`, () => {
-      cy.navigateToUrl(url);
-
-      const fieldId = POLICY_CURRENCY_CODE;
-      const isoCode = application.POLICY[fieldId];
-
-      radios(POLICY_CURRENCY_CODE, isoCode).option.input().click();
-      cy.clickSubmitButton();
-
-      const field = radios(fieldId, isoCode).option;
-
-      cy.assertRadioOptionIsChecked(field.input());
-    });
   });
 });

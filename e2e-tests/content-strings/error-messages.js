@@ -170,8 +170,11 @@ export const ERROR_MESSAGES = {
           INVALID_YEAR_DIGITS: 'Year must include 4 numbers',
           INVALID_DATE: 'Policy start date must be a real date',
         },
-        [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+        [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
           IS_EMPTY: 'Select the currency you would like your policy to be issued in',
+        },
+        [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+          IS_EMPTY: 'Enter the currency you would like your policy to be issued in',
         },
         SINGLE: {
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {

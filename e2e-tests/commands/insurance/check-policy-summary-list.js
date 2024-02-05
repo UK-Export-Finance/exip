@@ -10,6 +10,7 @@ import formatCurrency from '../../helpers/format-currency';
 import { createTimestampFromNumbers, formatDate } from '../../helpers/date';
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
     NEED_PRE_CREDIT_PERIOD,
@@ -55,12 +56,12 @@ const checkPolicySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [POLICY_CURRENCY_CODE]: () => {
-    const fieldId = POLICY_CURRENCY_CODE;
+  [CURRENCY_CODE]: () => {
+    const fieldId = CURRENCY_CODE;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY);
 
-    const currency = CURRENCIES.find((c) => c.isoCode === application.POLICY[fieldId]);
+    const currency = CURRENCIES.find((c) => c.isoCode === application.POLICY[POLICY_CURRENCY_CODE]);
     const expectedValue = currency.name;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);

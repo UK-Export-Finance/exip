@@ -73,7 +73,6 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     });
 
     const { rendering, formSubmission } = assertCurrencyFormFields({
-      legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       errors: ERRORS,
     });
 
@@ -81,7 +80,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
     formSubmission().selectAltRadioButNoAltCurrency();
 
-    formSubmission().submitASupportedCurrency(TRADING_HISTORY);
-    formSubmission().submitAlternativeCurrency(TRADING_HISTORY);
+    formSubmission().submitASupportedCurrency({ url: TRADING_HISTORY });
+    formSubmission().submitAlternativeCurrency({ url: TRADING_HISTORY });
   });
 });

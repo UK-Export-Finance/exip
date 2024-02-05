@@ -9,7 +9,6 @@ export const SHARED_CONTRACT_POLICY = {
   REQUESTED_START_DATE_MONTH: `${REQUESTED_START_DATE}-month`,
   REQUESTED_START_DATE_YEAR: `${REQUESTED_START_DATE}-year`,
   POLICY_CURRENCY_CODE: 'policyCurrencyCode',
-  ALTERNATIVE_POLICY_CURRENCY_CODE: 'alternativePolicyCurrencyCode',
 };
 
 export const POLICY = {
