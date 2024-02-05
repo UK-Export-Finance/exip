@@ -8,7 +8,7 @@ import mapAndSave from '../../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes } from '../../../../../test-mocks';
 
-const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = INSURANCE_FIELD_IDS.YOUR_BUYER;
+const { OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -69,7 +69,7 @@ describe('controllers/insurance/your-buyer/trading-history/save-and-back', () =>
     it('should call mapAndSave.yourBuyer once with data from constructPayload function', async () => {
       req.body = {
         ...validBody,
-        [TOTAL_OVERDUE_PAYMENTS]: '2.5',
+        [TOTAL_AMOUNT_OVERDUE]: '2.5',
       };
 
       await post(req, res);

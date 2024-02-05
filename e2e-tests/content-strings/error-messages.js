@@ -343,7 +343,7 @@ export const ERROR_MESSAGES = {
         BELOW_MINIMUM: 'The total outstanding payments from the buyer must be 1 or more',
         INCORRECT_FORMAT: 'Enter the total outstanding payments as a whole number. Do not include any letters or special characters',
       },
-      [FIELD_IDS.INSURANCE.YOUR_BUYER.TOTAL_OVERDUE_PAYMENTS]: {
+      [FIELD_IDS.INSURANCE.YOUR_BUYER.TOTAL_AMOUNT_OVERDUE]: {
         IS_EMPTY: 'Enter the total amount overdue from the buyer',
         BELOW_MINIMUM: 'The amount overdue from the buyer must be 1 or more',
         INCORRECT_FORMAT: 'Enter the amount overdue as whole number. Do not include any letters or special characters',

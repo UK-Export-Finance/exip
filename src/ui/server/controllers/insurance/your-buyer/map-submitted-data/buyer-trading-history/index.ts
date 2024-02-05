@@ -2,18 +2,19 @@ import { RequestBody } from '../../../../../../types';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 import { objectHasProperty } from '../../../../../helpers/object';
+import { isEmptyString } from '../../../../../helpers/string';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
 
 /**
  * maps buyer trading history fields in correct format
  * if body contains CURRENCY_CODE, deletes ALTERNATIVE_CURRENCY_CODE and sets CURRENCY_CODE
- * if body has OUTSTANDING_PAYMENTS as false, then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_OVERDUE_PAYMENTS set to null
- * if TOTAL_OUTSTANDING_PAYMENTS or TOTAL_OVERDUE_PAYMENTS are an empty string, then should be set to null
+ * if body has OUTSTANDING_PAYMENTS as false, then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE set to null
+ * if TOTAL_OUTSTANDING_PAYMENTS or TOTAL_AMOUNT_OVERDUE are an empty string, then should be set to null
  * @param {RequestBody} formBody
  * @returns {Object} populatedData
  */
@@ -36,21 +37,21 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   /**
    * if populatedData contains OUTSTANDING_PAYMENTS
    * if it is set to false
-   * then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_OVERDUE_PAYMENTS should be set to null
+   * then TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE should be set to null
    */
   if (objectHasProperty(populatedData, OUTSTANDING_PAYMENTS)) {
     if (populatedData[OUTSTANDING_PAYMENTS] === 'false') {
       populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
-      populatedData[TOTAL_OVERDUE_PAYMENTS] = null;
+      populatedData[TOTAL_AMOUNT_OVERDUE] = null;
     }
   }
 
-  if (populatedData[TOTAL_OUTSTANDING_PAYMENTS] === '') {
+  if (isEmptyString(populatedData[TOTAL_OUTSTANDING_PAYMENTS])) {
     populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
   }
 
-  if (populatedData[TOTAL_OVERDUE_PAYMENTS] === '') {
-    populatedData[TOTAL_OVERDUE_PAYMENTS] = null;
+  if (isEmptyString(populatedData[TOTAL_AMOUNT_OVERDUE])) {
+    populatedData[TOTAL_AMOUNT_OVERDUE] = null;
   }
 
   return populatedData;

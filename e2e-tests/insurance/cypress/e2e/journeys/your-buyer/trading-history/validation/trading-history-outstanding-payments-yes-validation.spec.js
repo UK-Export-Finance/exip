@@ -8,7 +8,7 @@ const {
   YOUR_BUYER: { TRADING_HISTORY, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = FIELD_IDS;
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = FIELD_IDS;
 
 const {
   INSURANCE: {
@@ -30,7 +30,7 @@ const submitAndAssertBothFields = (value, errorTotalOutstanding, errorAmountOver
   );
 
   cy.submitAndAssertFieldErrors(
-    field(TOTAL_OVERDUE_PAYMENTS),
+    field(TOTAL_AMOUNT_OVERDUE),
     value,
     1,
     expectedErrorsCount,
@@ -67,7 +67,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when leaving ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS} empty`, () => {
+  describe(`when leaving ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS} empty`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       yesRadioInput().first().click();
@@ -75,11 +75,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      submitAndAssertBothFields(null, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].IS_EMPTY, ERRORS[TOTAL_OVERDUE_PAYMENTS].IS_EMPTY);
+      submitAndAssertBothFields(null, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].IS_EMPTY, ERRORS[TOTAL_AMOUNT_OVERDUE].IS_EMPTY);
     });
   });
 
-  describe(`when entering a value which is not a number for ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering a value which is not a number for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       yesRadioInput().first().click();
@@ -89,11 +89,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       const value = 'ten';
 
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_OVERDUE_PAYMENTS].INCORRECT_FORMAT);
+      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
     });
   });
 
-  describe(`when entering a value with a decimal place for ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering a value with a decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       yesRadioInput().first().click();
@@ -103,11 +103,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       const value = 5.5;
 
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_OVERDUE_PAYMENTS].INCORRECT_FORMAT);
+      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
     });
   });
 
-  describe(`when entering a value with a comma and decimal place for ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering a value with a comma and decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       yesRadioInput().first().click();
@@ -117,11 +117,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       const value = '1,250.5';
 
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_OVERDUE_PAYMENTS].INCORRECT_FORMAT);
+      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
     });
   });
 
-  describe(`when entering a value below the minimum for ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering a value below the minimum for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       yesRadioInput().first().click();
@@ -131,11 +131,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       const value = '0';
 
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].BELOW_MINIMUM, ERRORS[TOTAL_OVERDUE_PAYMENTS].BELOW_MINIMUM);
+      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].BELOW_MINIMUM, ERRORS[TOTAL_AMOUNT_OVERDUE].BELOW_MINIMUM);
     });
   });
 
-  describe(`when entering a value with a special character for ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering a value with a special character for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       yesRadioInput().first().click();
@@ -145,11 +145,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       const value = '5*';
 
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_OVERDUE_PAYMENTS].INCORRECT_FORMAT);
+      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
     });
   });
 
-  describe(`when entering valid values  for ${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering valid values  for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });

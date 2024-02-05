@@ -9,7 +9,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
 
-const { TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
+const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 const {
   YOUR_BUYER: { TRADING_HISTORY },
@@ -122,7 +122,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
 
       cy.assertNoRadioOptionIsChecked(0);
       cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
-      cy.checkValue(field(TOTAL_OVERDUE_PAYMENTS), BUYER[TOTAL_OVERDUE_PAYMENTS]);
+      cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), BUYER[TOTAL_AMOUNT_OVERDUE]);
       cy.assertNoRadioOptionIsChecked(1);
     });
   });

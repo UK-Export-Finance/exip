@@ -8,7 +8,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-history', () => {
   let mockFormBody: RequestBody;
@@ -51,7 +51,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
   });
 
   describe(`when ${OUTSTANDING_PAYMENTS} is set to "false"`, () => {
-    it(`should return mockFormBody without _csrf and ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_OVERDUE_PAYMENTS} set to "null"`, () => {
+    it(`should return mockFormBody without _csrf and ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE} set to "null"`, () => {
       mockFormBody[OUTSTANDING_PAYMENTS] = 'false';
 
       const result = mapSubmittedData(mockFormBody);
@@ -61,7 +61,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
       const expected = {
         ...expectedBody,
         [TOTAL_OUTSTANDING_PAYMENTS]: null,
-        [TOTAL_OVERDUE_PAYMENTS]: null,
+        [TOTAL_AMOUNT_OVERDUE]: null,
       };
 
       expect(result).toEqual(expected);
@@ -85,9 +85,9 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
     });
   });
 
-  describe(`when ${TOTAL_OVERDUE_PAYMENTS} is set to an empty string`, () => {
-    it(`should return mockFormBody without _csrf and ${TOTAL_OVERDUE_PAYMENTS} set to "null"`, () => {
-      mockFormBody[TOTAL_OVERDUE_PAYMENTS] = '';
+  describe(`when ${TOTAL_AMOUNT_OVERDUE} is set to an empty string`, () => {
+    it(`should return mockFormBody without _csrf and ${TOTAL_AMOUNT_OVERDUE} set to "null"`, () => {
+      mockFormBody[TOTAL_AMOUNT_OVERDUE] = '';
 
       const result = mapSubmittedData(mockFormBody);
 
@@ -95,7 +95,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
 
       const expected = {
         ...expectedBody,
-        [TOTAL_OVERDUE_PAYMENTS]: null,
+        [TOTAL_AMOUNT_OVERDUE]: null,
       };
 
       expect(result).toEqual(expected);

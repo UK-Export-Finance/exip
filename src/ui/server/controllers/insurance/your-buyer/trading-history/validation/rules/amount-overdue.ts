@@ -5,7 +5,7 @@ import { objectHasProperty } from '../../../../../../helpers/object';
 import { RequestBody } from '../../../../../../../types';
 import wholeNumberAboveMinimumValidation from '../../../../../../shared-validation/whole-number-above-minimum';
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
 
 const {
   INSURANCE: {

@@ -5,9 +5,9 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 
-const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
 
-export const nullOrEmptyStringFields = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS];
+export const nullOrEmptyStringFields = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
 
 /**
  * gets fields to add to the database and sanitises them
