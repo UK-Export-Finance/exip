@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   POLICY: { BROKER_ROOT },
-  PROBLEM_WITH_SERVICE
+  PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
@@ -82,6 +82,6 @@ export const post = async (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
-  
+
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };
