@@ -35,7 +35,7 @@ describe('routes/insurance/your-buyer', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(15);
-    expect(post).toHaveBeenCalledTimes(17);
+    expect(post).toHaveBeenCalledTimes(18);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
