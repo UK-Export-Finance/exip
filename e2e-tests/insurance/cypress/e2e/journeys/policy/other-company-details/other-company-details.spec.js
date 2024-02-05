@@ -1,6 +1,8 @@
-import { headingCaption } from '../../../../../../pages/shared';
-import { PAGES } from '../../../../../../content-strings';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+import { PAGES } from '../../../../../../content-strings';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
@@ -9,6 +11,12 @@ const {
   ROOT,
   POLICY: { ANOTHER_COMPANY, OTHER_COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
+
+const {
+  OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+} = POLICY_FIELD_IDS;
+
+const { OTHER_COMPANY_TO_INSURE_NAME_TBC: FIELD_STRINGS } = FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -62,6 +70,30 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it(`renders ${COMPANY_NAME} label and input`, () => {
+      const fieldId = COMPANY_NAME;
+      const field = fieldSelector(fieldId);
+
+      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+      field.input().should('exist');
+    });
+
+    it(`renders ${COUNTRY} label and input`, () => {
+      const fieldId = COUNTRY;
+      const field = fieldSelector(fieldId);
+
+      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+      field.input().should('exist');
+    });
+
+    it(`renders ${COMPANY_NUMBER} label and input`, () => {
+      const fieldId = COMPANY_NUMBER;
+      const field = fieldSelector(fieldId);
+
+      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
+      field.input().should('exist');
     });
   });
 });

@@ -1,5 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -17,13 +20,115 @@
 
   <div class="govuk-grid-row">
     <div class="govuk-grid-column-three-quarters-from-desktop">
-      <span class="govuk-caption-xl" data-cy="heading-caption">
-        {{ CONTENT_STRINGS.HEADING_CAPTION }}
-      </span>
+      <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
 
       <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
     </div>
   </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.COMPANY_NAME.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.COMPANY_NAME.ID + '-label',
+              'data-cy': FIELDS.COMPANY_NAME.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.COMPANY_NAME.HINT,
+            attributes: {
+              'data-cy': FIELDS.COMPANY_NAME.ID + '-hint'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.COMPANY_NAME.ID + '-input'
+          },
+          id: FIELDS.COMPANY_NAME.ID,
+          name: FIELDS.COMPANY_NAME.ID,
+          value: submittedValues[FIELDS.COMPANY_NAME.ID] or application.policy[FIELDS.COMPANY_NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.COMPANY_NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.COMPANY_NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.COMPANY_NAME.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.COUNTRY.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.COUNTRY.ID + '-label',
+              'data-cy': FIELDS.COUNTRY.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.COUNTRY.HINT,
+            attributes: {
+              'data-cy': FIELDS.COUNTRY.ID + '-hint'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.COUNTRY.ID + '-input'
+          },
+          id: FIELDS.COUNTRY.ID,
+          name: FIELDS.COUNTRY.ID,
+          value: submittedValues[FIELDS.COUNTRY.ID] or application.policy[FIELDS.COUNTRY.ID],
+          errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID] and {
+            text: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
+            attributes: {
+              "data-cy": FIELDS.COUNTRY.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.COMPANY_NUMBER.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.COMPANY_NUMBER.ID + '-label',
+              'data-cy': FIELDS.COMPANY_NUMBER.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.COMPANY_NUMBER.HINT,
+            attributes: {
+              'data-cy': FIELDS.COMPANY_NUMBER.ID + '-hint'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.COMPANY_NUMBER.ID + '-input'
+          },
+          id: FIELDS.COMPANY_NUMBER.ID,
+          name: FIELDS.COMPANY_NUMBER.ID,
+          value: submittedValues[FIELDS.COMPANY_NUMBER.ID] or application.policy[FIELDS.COMPANY_NUMBER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID] and {
+            text: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.COMPANY_NUMBER.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+
+  </form>
 
 {% endblock %}

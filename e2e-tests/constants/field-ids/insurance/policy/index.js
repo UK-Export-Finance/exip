@@ -51,6 +51,11 @@ export const POLICY = {
   NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
   CREDIT_PERIOD_WITH_BUYER: 'creditPeriodWithBuyer',
   NEED_ANOTHER_COMPANY_TO_BE_INSURED: 'needAnotherCompanyToBeInsured',
+  OTHER_COMPANY_TO_INSURE_NAME_TBC: {
+    COMPANY_NAME: 'companyName',
+    COMPANY_NUMBER: 'companyNumber',
+    COUNTRY: 'country',
+  },
   BROKER: {
     LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',

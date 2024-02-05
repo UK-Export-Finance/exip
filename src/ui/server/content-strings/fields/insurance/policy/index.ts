@@ -15,6 +15,7 @@ const {
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
     NEED_ANOTHER_COMPANY_TO_BE_INSURED,
+    OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
     BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
   },
 } = INSURANCE_FIELD_IDS;
@@ -185,6 +186,17 @@ export const POLICY_FIELDS = {
   },
   [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
     HINT: 'This could be a parent company, subsidiary or a subcontractor.',
+  },
+  OTHER_COMPANY_TO_INSURE_NAME_TBC: {
+    [COMPANY_NAME]: {
+      LABEL: 'Name of the other company',
+    },
+    [COMPANY_NUMBER]: {
+      LABEL: 'What country is the other company based in?',
+    },
+    [COUNTRY]: {
+      LABEL: 'Registration number of the other company (optional)',
+    },
   },
   BROKER: {
     [LEGEND]: {

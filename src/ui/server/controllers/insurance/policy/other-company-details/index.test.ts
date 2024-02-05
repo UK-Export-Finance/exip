@@ -1,13 +1,20 @@
-import { PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
+import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, get } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
+import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
+const {
+  OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+} = POLICY_FIELD_IDS;
+
 describe('controllers/insurance/policy/other-company-details', () => {
   let req: Request;
   let res: Response;
@@ -35,6 +42,31 @@ describe('controllers/insurance/policy/other-company-details', () => {
     });
   });
 
+  describe('pageVariables', () => {
+    it('should have correct properties', () => {
+      const result = pageVariables;
+
+      const expected = {
+        FIELDS: {
+          COMPANY_NAME: {
+            ID: COMPANY_NAME,
+            ...FIELDS.CONTRACT_POLICY[COMPANY_NAME],
+          },
+          COMPANY_NUMBER: {
+            ID: COMPANY_NUMBER,
+            ...FIELDS.CONTRACT_POLICY.MULTIPLE[COMPANY_NUMBER],
+          },
+          COUNTRY: {
+            ID: COUNTRY,
+            ...FIELDS.CONTRACT_POLICY[COUNTRY],
+          },
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
       expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS);
@@ -50,6 +82,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
+        ...pageVariables,
         userName: getUserNameFromSession(req.session.user),
       };
 
