@@ -313,7 +313,9 @@ export const lists = {
         db: { nativeType: 'VarChar(300)' },
       }),
       email: text(),
-      position: text(),
+      position: text({
+        db: { nativeType: 'VarChar(50)' },
+      }),
       isSameAsOwner: nullableCheckbox(),
     },
     access: allowAll,
