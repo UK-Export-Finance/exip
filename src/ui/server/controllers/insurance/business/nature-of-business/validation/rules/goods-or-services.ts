@@ -17,18 +17,18 @@ export const MAXIMUM = 1000;
 /**
  * validates goods or services input
  * errors if empty or more than 1000 characters
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const goodsOrServices = (responseBody: RequestBody, errors: object) => {
+const goodsOrServices = (formBody: RequestBody, errors: object) => {
   // if body is empty
-  if (!objectHasProperty(responseBody, FIELD_ID)) {
+  if (!objectHasProperty(formBody, FIELD_ID)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
   // check if the field is above the maximum
-  if (responseBody[FIELD_ID].length > MAXIMUM) {
+  if (formBody[FIELD_ID].length > MAXIMUM) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
   }
 

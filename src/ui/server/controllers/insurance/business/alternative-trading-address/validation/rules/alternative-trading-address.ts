@@ -16,17 +16,17 @@ export const MAXIMUM = 1000;
 /**
  * validates alternative trading address input
  * errors if empty or more than 1000 characters
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const alternativeTradingAddress = (responseBody: RequestBody, errors: object) => {
+const alternativeTradingAddress = (formBody: RequestBody, errors: object) => {
   // if body is empty
-  if (!objectHasProperty(responseBody, FIELD_ID)) {
+  if (!objectHasProperty(formBody, FIELD_ID)) {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
-  return maxLengthValidation(responseBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
+  return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
 };
 
 export default alternativeTradingAddress;
