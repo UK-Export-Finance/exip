@@ -51,6 +51,19 @@ const CREDIT_INSURANCE_COVER = {
   PAGE_TITLE: 'Have you in the past held credit insurance cover on the buyer?',
 };
 
+const BUYER_FINANCIAL_INFORMATION = {
+  ...SHARED,
+  PAGE_TITLE: 'Do you hold any financial accounts in relation to the buyer?',
+  HINT: "Providing additional information will help us process your application. You don't have to share this information, but we may ask for it later.",
+  INTRO: 'Why do we ask for financial accounts?',
+  LOOK_INTO_BUYER:
+    "We look into your buyer as part of our due diligence process. This includes reviewing their accounts and checking that they're a legitimate company.",
+  SHARING:
+    "Sharing your buyer's financial accounts will help us to understand the risks associated with an export. It will also mean we can make a decision more quickly.",
+  DO_NOT_HAVE_TO_SHARE:
+    "You don't have to share their financial accounts if you don't have them or would prefer not to. Sharing this information helps us, but it won't impact the outcome of your application. ",
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -64,5 +77,6 @@ export default {
   TRADING_HISTORY,
   ALTERNATIVE_CURRENCY,
   CREDIT_INSURANCE_COVER,
+  BUYER_FINANCIAL_INFORMATION,
   CHECK_YOUR_ANSWERS,
 };

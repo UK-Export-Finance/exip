@@ -1,0 +1,19 @@
+{% set descriptionHtml %}
+  <p class="govuk-body" data-cy="{{ fieldId }}-details-look-into-buyer">{{ CONTENT_STRINGS.LOOK_INTO_BUYER }}</p>
+  <p class="govuk-body" data-cy="{{ fieldId }}-details-sharing">{{ CONTENT_STRINGS.SHARING }}</p>
+  <p class="govuk-body" data-cy="{{ fieldId }}-details-do-not-have-to-share">{{ CONTENT_STRINGS.DO_NOT_HAVE_TO_SHARE }}</p>
+{% endset %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+
+    {{ govukDetails({
+      summaryText: CONTENT_STRINGS.INTRO,
+      html: descriptionHtml,
+      attributes: {
+        "data-cy": fieldId + "-details"
+      }
+    }) }}
+
+  </div>
+</div>
