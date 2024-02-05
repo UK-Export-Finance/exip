@@ -258,6 +258,18 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
         IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
       },
+      OTHER_COMPANY_TO_INSURE_NAME_TBC: {
+        [FIELD_IDS.INSURANCE.POLICY.OTHER_COMPANY_TO_INSURE_NAME_TBC.COMPANY_NAME]: {
+          IS_EMPTY: 'Enter the name of the other company',
+          ABOVE_MAXIMUM: 'The name of the other company cannot be more than 200 characters',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.OTHER_COMPANY_TO_INSURE_NAME_TBC.COMPANY_NUMBER]: {
+          ABOVE_MAXIMUM: 'The registration number of the other company cannot be more than 100 characters',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.OTHER_COMPANY_TO_INSURE_NAME_TBC.COUNTRY]: {
+          IS_EMPTY: 'Enter the country the other company is based in',
+        },
+      },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },

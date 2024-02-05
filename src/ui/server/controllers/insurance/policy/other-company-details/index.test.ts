@@ -1,4 +1,4 @@
-import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, get, post } from '.';
+import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, FIELD_IDS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
@@ -6,8 +6,10 @@ import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -77,6 +79,14 @@ describe('controllers/insurance/policy/other-company-details', () => {
     });
   });
 
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [COMPANY_NAME, COMPANY_NUMBER, COUNTRY];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
@@ -107,9 +117,38 @@ describe('controllers/insurance/policy/other-company-details', () => {
   });
 
   describe('post', () => {
+    const validBody = {
+      [COMPANY_NAME]: 'Mock company name',
+      [COMPANY_NUMBER]: 'Mock company number',
+      [COUNTRY]: mockCountries[0].name,
+    };
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors and submitted values from constructPayload function', () => {
+        post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables,
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
+        });
+      });
+    });
+
     describe('when there are no validation errors', () => {
-      it(`should redirect to ${BROKER_ROOT}`, async () => {
-        await post(req, res);
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, () => {
+        post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
@@ -122,8 +161,8 @@ describe('controllers/insurance/policy/other-company-details', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        await post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

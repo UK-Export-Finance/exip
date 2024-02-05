@@ -191,12 +191,14 @@ export const POLICY_FIELDS = {
   OTHER_COMPANY_TO_INSURE_NAME_TBC: {
     [COMPANY_NAME]: {
       LABEL: 'Name of the other company',
+      MAXIMUM: 200,
     },
     [COMPANY_NUMBER]: {
-      LABEL: 'What country is the other company based in?',
+      LABEL: 'Registration number of the other company (optional)',
+      MAXIMUM: 100,
     },
     [COUNTRY]: {
-      LABEL: 'Registration number of the other company (optional)',
+      LABEL: 'What country is the other company based in?',
     },
   },
   BROKER: {
