@@ -1,6 +1,6 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
-import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
+import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
@@ -19,9 +19,12 @@ const {
 } = FORM_TITLES;
 
 const {
-  TYPE_OF_POLICY: { POLICY_TYPE },
-  CONTRACT_POLICY: { REQUESTED_START_DATE, POLICY_CURRENCY_CODE },
-} = POLICY_FIELD_IDS;
+  CURRENCY: { CURRENCY_CODE },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+    CONTRACT_POLICY: { REQUESTED_START_DATE, POLICY_CURRENCY_CODE },
+  },
+} = INSURANCE_FIELD_IDS;
 
 const {
   POLICY: { TYPE_OF_POLICY_CHANGE, TYPE_OF_POLICY_CHECK_AND_CHANGE },
@@ -66,9 +69,9 @@ const generatePolicyAndDateFields = (answers: ApplicationPolicy, referenceNumber
     ...fields,
     fieldGroupItem(
       {
-        field: getFieldById(FIELDS.CONTRACT_POLICY, POLICY_CURRENCY_CODE),
+        field: getFieldById(FIELDS.CONTRACT_POLICY, CURRENCY_CODE),
         data: answers,
-        ...changeLink(answers[POLICY_TYPE], referenceNumber, POLICY_CURRENCY_CODE, checkAndChange),
+        ...changeLink(answers[POLICY_TYPE], referenceNumber, CURRENCY_CODE, checkAndChange),
       },
       answers[POLICY_CURRENCY_CODE] && getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name,
     ),

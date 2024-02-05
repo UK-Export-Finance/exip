@@ -1,4 +1,4 @@
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -62,7 +62,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -83,7 +83,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
       cy.keyboardInput(field.input(), invalidValue);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -100,7 +100,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
         cy.keyboardInput(field.input(), invalidValue);
 
-        saveAndBackButton().click();
+        cy.clickSaveAndBackButton();
 
         cy.startInsurancePolicySection({});
 
@@ -122,7 +122,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
       cy.keyboardInput(field.input(), application.POLICY[TOTAL_CONTRACT_VALUE]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

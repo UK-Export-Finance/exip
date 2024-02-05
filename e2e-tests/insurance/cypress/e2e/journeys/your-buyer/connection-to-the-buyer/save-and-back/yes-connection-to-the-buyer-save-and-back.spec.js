@@ -1,8 +1,4 @@
-import {
-  saveAndBackButton,
-  yesRadioInput,
-  field,
-} from '../../../../../../../pages/shared';
+import { yesRadioInput, field } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -55,7 +51,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -76,7 +72,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
 
       yesRadioInput().click();
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -104,7 +100,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
 
       cy.completeConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

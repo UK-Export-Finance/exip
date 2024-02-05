@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials/insurance';
-import { saveAndBackButton, field } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
@@ -63,7 +63,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     before(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -83,7 +83,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
 
       field(FULL_ADDRESS).textarea().type('a'.repeat(MAXIMUM + 1));
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
     });
@@ -107,7 +107,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
 
       field(FULL_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
     });

@@ -858,7 +858,7 @@ CREATE TABLE IF NOT EXISTS `Policy` (
   `policyType` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `requestedStartDate` datetime(3) DEFAULT NULL,
 	`contractCompletionDate` datetime(3) DEFAULT NULL,
-  `policyCurrencyCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `policyCurrencyCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `totalValueOfContract` int DEFAULT NULL,
   `creditPeriodWithBuyer` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`totalMonthsOfCover` int DEFAULT NULL,

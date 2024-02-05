@@ -1,8 +1,5 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -54,7 +51,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${ROOT}/${referenceNumber}${CREDIT_CONTROL}`,
-      submitButtonCopy: BUTTONS.SAVE_AND_BACK,
+      hasAForm: false,
     });
   });
 
@@ -66,6 +63,10 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
+
+    it('renders a `save and back` button', () => {
+      cy.assertSaveAndBackButton();
+    });
   });
 
   describe('form submission', () => {
@@ -73,7 +74,7 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         cy.navigateToUrl(url);
 
-        cy.clickSubmitButton();
+        cy.clickSaveAndBackButton();
 
         cy.assertUrl(allSectionsUrl);
       });

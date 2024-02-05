@@ -10,11 +10,13 @@ import transformNumberToString from '../../transform-number-to-string';
 import { Application } from '../../../../types';
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   SUBMISSION_DEADLINE,
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
       SINGLE: { CONTRACT_COMPLETION_DATE },
+      POLICY_CURRENCY_CODE,
     },
   },
   EXPORTER_BUSINESS: {
@@ -32,21 +34,6 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     const expected = formatDate(mockApplication[SUBMISSION_DEADLINE]);
 
     expect(result[SUBMISSION_DEADLINE]).toEqual(expected);
-  });
-
-  it('should return mapped policy data with date fields from timestamps', () => {
-    const result = mapApplicationToFormFields(mockApplication) as Application;
-
-    const timestampStart = mockApplication.policy[REQUESTED_START_DATE];
-    const timestampEnd = mockApplication.policy[CONTRACT_COMPLETION_DATE];
-
-    const expected = {
-      ...mockApplication.policy,
-      ...getDateFieldsFromTimestamp(timestampStart, REQUESTED_START_DATE),
-      ...getDateFieldsFromTimestamp(timestampEnd, CONTRACT_COMPLETION_DATE),
-    };
-
-    expect(result.policy).toEqual(expected);
   });
 
   it('should return mapped business data', () => {
@@ -100,6 +87,22 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     };
 
     expect(result).toEqual(expected);
+  });
+
+  it('should return mapped policy data with date fields from timestamps', () => {
+    const result = mapApplicationToFormFields(mockApplication) as Application;
+
+    const timestampStart = mockApplication.policy[REQUESTED_START_DATE];
+    const timestampEnd = mockApplication.policy[CONTRACT_COMPLETION_DATE];
+
+    const expected = {
+      ...mockApplication.policy,
+      ...getDateFieldsFromTimestamp(timestampStart, REQUESTED_START_DATE),
+      ...getDateFieldsFromTimestamp(timestampEnd, CONTRACT_COMPLETION_DATE),
+      [CURRENCY_CODE]: mockApplication.policy[POLICY_CURRENCY_CODE],
+    };
+
+    expect(result.policy).toEqual(expected);
   });
 
   describe('when an empty application is passed', () => {

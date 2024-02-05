@@ -1,4 +1,3 @@
-import { saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
@@ -43,7 +42,7 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
   });
 
   it(`should redirect to ${ALL_SECTIONS}`, () => {
-    saveAndBackButton().click();
+    cy.clickSaveAndBackButton();
 
     cy.assertUrl(allSectionsUrl);
   });

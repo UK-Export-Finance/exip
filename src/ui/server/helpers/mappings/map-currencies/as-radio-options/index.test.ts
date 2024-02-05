@@ -5,9 +5,6 @@ import nameAndIsoCodeText from '../../../name-and-iso-code-text';
 import { mockCurrencies } from '../../../../test-mocks';
 
 const {
-  POLICY: {
-    CONTRACT_POLICY: { ALTERNATIVE_POLICY_CURRENCY_CODE },
-  },
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
 } = FIELD_IDS;
 
@@ -37,35 +34,17 @@ const expectedCurrencies = {
 };
 
 describe('server/helpers/mappings/map-currencies/as-radio-options', () => {
-  describe(`policy ${ALTERNATIVE_POLICY_CURRENCY_CODE}`, () => {
-    it('should return an object of supported countries options and an ALTERNATIVE option', () => {
-      const result = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_POLICY_CURRENCY_CODE);
+  it('should return an object of supported countries options and an ALTERNATIVE option', () => {
+    const result = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE);
 
-      const expected = {
-        ...expectedCurrencies,
-        ALTERNATIVE: {
-          text: FIELDS[ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
-          value: ALTERNATIVE_POLICY_CURRENCY_CODE,
-        },
-      };
+    const expected = {
+      ...expectedCurrencies,
+      ALTERNATIVE: {
+        text: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
+        value: ALTERNATIVE_CURRENCY_CODE,
+      },
+    };
 
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(ALTERNATIVE_CURRENCY_CODE, () => {
-    it('should return an object of supported countries options and an ALTERNATIVE option', () => {
-      const result = mapCurrenciesAsRadioOptions(mockCurrencies, ALTERNATIVE_CURRENCY_CODE);
-
-      const expected = {
-        ...expectedCurrencies,
-        ALTERNATIVE: {
-          text: FIELDS[ALTERNATIVE_POLICY_CURRENCY_CODE].TEXT,
-          value: ALTERNATIVE_CURRENCY_CODE,
-        },
-      };
-
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });

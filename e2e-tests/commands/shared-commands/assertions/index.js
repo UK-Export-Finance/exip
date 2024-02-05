@@ -16,12 +16,14 @@ import {
 } from './actions';
 
 Cypress.Commands.add('assertUrl', require('./assert-url'));
+Cypress.Commands.add('assertSaveAndBackButton', require('./assert-save-and-back-button'));
 Cypress.Commands.add('assertSaveAndBackButtonDoesNotExist', require('./assert-save-and-back-button-does-not-exist'));
 Cypress.Commands.add('assertYesNoRadiosOrder', require('./assert-first-and-last-radios'));
 Cypress.Commands.add('assertRadioOptionIsChecked', require('./assert-radio-option-is-checked'));
 Cypress.Commands.add('assertYesRadioOptionIsChecked', require('./assert-yes-radio-option-is-checked'));
 Cypress.Commands.add('assertNoRadioOptionIsChecked', require('./assert-no-radio-option-is-checked'));
 
+Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
 
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);

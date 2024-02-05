@@ -20,10 +20,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
+  CURRENCY: { CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      POLICY_CURRENCY_CODE,
       MULTIPLE: { TOTAL_MONTHS_OF_COVER },
     },
     EXPORT_VALUE: {
@@ -232,8 +232,8 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
       });
     });
 
-    describe(POLICY_CURRENCY_CODE, () => {
-      const fieldId = POLICY_CURRENCY_CODE;
+    describe(CURRENCY_CODE, () => {
+      const fieldId = CURRENCY_CODE;
 
       const fieldVariables = {
         ...getFieldVariables(fieldId, referenceNumber),

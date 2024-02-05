@@ -1,14 +1,6 @@
-import {
-  field as fieldSelector,
-  headingCaption,
-  saveAndBackButton,
-} from '../../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import {
-  BUTTONS,
-  PAGES,
-  TASKS,
-} from '../../../../../../../content-strings';
+import { PAGES, TASKS } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -40,8 +32,6 @@ const {
 
 const task = taskList.prepareApplication.tasks.policy;
 
-const expectedPageTitle = `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Single contract policy - Total contract value page - As an exporter, I want to provide the details of the single contract policy that I need cover for', () => {
@@ -72,7 +62,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: expectedPageTitle,
+      pageTitle: `${CONTENT_STRINGS.PAGE_TITLE} ${GBP.name}?`,
       currentHref: `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`,
       backLink: `${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`,
     });
@@ -102,7 +92,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
   });
 

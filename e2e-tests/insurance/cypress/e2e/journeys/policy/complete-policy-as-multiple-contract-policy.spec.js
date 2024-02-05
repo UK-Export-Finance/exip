@@ -1,5 +1,4 @@
 import partials from '../../../../../partials';
-import { saveAndBackButton } from '../../../../../pages/shared';
 import { TASKS } from '../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../constants';
 
@@ -36,7 +35,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
       cy.completeAndSubmitBrokerForm({});
 
       // go back to the all sections page
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
   });
 

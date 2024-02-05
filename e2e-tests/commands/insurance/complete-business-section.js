@@ -19,7 +19,7 @@ const completeBusinessSection = ({ viaTaskList, differentTradingAddress = false,
   cy.completeAndSubmitCreditControlForm({});
 
   if (submitCheckYourAnswers) {
-    cy.clickSubmitButton();
+    cy.clickSaveAndBackButton();
   }
 };
 

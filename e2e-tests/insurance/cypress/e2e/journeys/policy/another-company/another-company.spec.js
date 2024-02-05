@@ -5,13 +5,8 @@ import {
   yesNoRadioHint,
   noRadio,
   noRadioInput,
-  saveAndBackButton,
 } from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  ERROR_MESSAGES,
-  PAGES,
-} from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -104,7 +99,7 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
     });
 
     it('renders a `save and back` button', () => {
-      cy.checkText(saveAndBackButton(), BUTTONS.SAVE_AND_BACK);
+      cy.assertSaveAndBackButton();
     });
 
     describe(`renders ${FIELD_ID} label and inputs`, () => {

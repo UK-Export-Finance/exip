@@ -1,6 +1,4 @@
-import {
-  field, saveAndBackButton, yesRadioInput,
-} from '../../../../../../pages/shared';
+import { field, yesRadioInput } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
@@ -67,7 +65,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       yesRadioInput().first().click();
       yesRadioInput().eq(1).click();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
@@ -89,7 +87,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
@@ -113,7 +111,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);
@@ -140,7 +138,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
 
       cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
       cy.checkTaskStatus(task, IN_PROGRESS);

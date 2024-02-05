@@ -1,16 +1,12 @@
 import policyCurrencyCodeRules from '.';
-import { FIELD_IDS } from '../../constants';
+import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
 import emptyFieldValidation from '../empty-field';
 import { mockErrors } from '../../test-mocks';
 
 const {
-  INSURANCE: {
-    POLICY: {
-      CONTRACT_POLICY: { POLICY_CURRENCY_CODE: FIELD_ID },
-    },
-  },
-} = FIELD_IDS;
+  CURRENCY: { CURRENCY_CODE: FIELD_ID },
+} = INSURANCE_FIELD_IDS;
 
 const {
   INSURANCE: {

@@ -13,7 +13,7 @@ import mapApplicationToFormFields from '../../../../../helpers/mappings/map-appl
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/policy';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../../test-mocks';
 import { mockApplicationMultiplePolicy as mockApplication } from '../../../../../test-mocks/mock-application';
 
 const {
@@ -42,7 +42,9 @@ const {
   policy: { policyCurrencyCode },
 } = mockApplication;
 
-describe('controllers/insurance/policy/single-contract-policy//total-contract-value', () => {
+const { allCurrencies } = mockCurrenciesResponse;
+
+describe('controllers/insurance/policy/single-contract-policy/total-contract-value', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
@@ -74,9 +76,9 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
+      const result = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
 
-      const currency = getCurrencyByCode(mockCurrencies, String(policyCurrencyCode));
+      const currency = getCurrencyByCode(allCurrencies, String(policyCurrencyCode));
 
       const expected = {
         FIELD: {
@@ -114,7 +116,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
     it('should render template', async () => {
       await get(req, res);
 
-      const generatedPageVariables = pageVariables(referenceNumber, mockCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -162,7 +164,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -297,7 +299,7 @@ describe('controllers/insurance/policy/single-contract-policy//total-contract-va
 
         describe('when the get currencies response does not return a populated array', () => {
           beforeEach(() => {
-            getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+            getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
             api.keystone.APIM.getCurrencies = getCurrenciesSpy;
           });
 

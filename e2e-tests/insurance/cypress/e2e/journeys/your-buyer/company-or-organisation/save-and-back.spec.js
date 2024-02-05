@@ -1,4 +1,4 @@
-import { field, saveAndBackButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { TASKS } from '../../../../../../content-strings';
@@ -64,7 +64,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -85,7 +85,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
 
       cy.keyboardInput(field(NAME).input(), BUYER[NAME]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -126,7 +126,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
       companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

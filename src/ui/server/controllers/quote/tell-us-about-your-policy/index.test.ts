@@ -12,7 +12,7 @@ import mapPercentageOfCover from '../../../helpers/mappings/map-percentage-of-co
 import mapCreditPeriod from '../../../helpers/mappings/map-credit-period';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
-import { mockReq, mockRes, mockAnswers, mockCurrencies, mockCurrenciesResponse, mockSession } from '../../../test-mocks';
+import { mockReq, mockRes, mockAnswers, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockSession } from '../../../test-mocks';
 import { Request, Response, SelectOption } from '../../../../types';
 
 const {
@@ -343,7 +343,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
@@ -599,7 +599,7 @@ describe('controllers/quote/tell-us-about-your-policy', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ supportedCurrencies: [], alternativeCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 

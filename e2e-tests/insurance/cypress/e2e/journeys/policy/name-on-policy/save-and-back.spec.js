@@ -1,4 +1,4 @@
-import { field, saveAndBackButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -64,7 +64,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -81,7 +81,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false, submit: false });
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -104,7 +104,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.navigateToUrl(url);
 
       field(SAME_NAME).input().click();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -129,7 +129,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
       cy.navigateToUrl(url);
 
       cy.completeNameOnPolicyForm({ sameName: true });
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
