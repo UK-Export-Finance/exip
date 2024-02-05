@@ -52,8 +52,8 @@ const assertCurrencyFormFields = ({
   alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE,
   errors,
 }) => ({
-  legend: () => cy.checkText(field(fieldId).legend(), legend),
-  hint: () => cy.checkText(field(fieldId).hint(), hint),
+  legend: legend ? () => cy.checkText(field(fieldId).legend(), legend) : null,
+  hint: hint ? () => cy.checkText(field(fieldId).hint(), hint) : null,
   radios: () => {
     const option1 = currencyRadio({ fieldId, currency: EUR.isoCode });
     const option2 = currencyRadio({ fieldId, currency: GBP.isoCode });

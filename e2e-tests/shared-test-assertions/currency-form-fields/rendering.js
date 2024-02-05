@@ -9,12 +9,19 @@
  */
 const renderingAssertions = ({
   radios,
+  legend,
   hint,
   alternativeCurrencyInput,
   doesNotRenderSupportedCurrencies,
   rendersAlternativeCurrencies,
 }) => {
   describe('currency form fields - rendering', () => {
+    if (legend) {
+      it('renders a legend', () => {
+        legend();
+      });
+    }
+
     if (hint) {
       it('renders a hint', () => {
         hint();

@@ -112,8 +112,9 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   // map the resulting "currency code" into a "Policy currency code" field
   if (objectHasProperty(populatedData, CURRENCY_CODE)) {
     populatedData[POLICY_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
-    delete populatedData[CURRENCY_CODE];
   }
+
+  delete populatedData[CURRENCY_CODE];
 
   return populatedData;
 };

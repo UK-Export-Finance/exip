@@ -73,7 +73,6 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     });
 
     const { rendering, formSubmission } = assertCurrencyFormFields({
-      legend: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       errors: ERRORS,
     });
 
