@@ -50,15 +50,15 @@ describe('controllers/insurance/policy/other-company-details', () => {
         FIELDS: {
           COMPANY_NAME: {
             ID: COMPANY_NAME,
-            ...FIELDS.CONTRACT_POLICY[COMPANY_NAME],
+            ...FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[COMPANY_NAME],
           },
           COMPANY_NUMBER: {
             ID: COMPANY_NUMBER,
-            ...FIELDS.CONTRACT_POLICY.MULTIPLE[COMPANY_NUMBER],
+            ...FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[COMPANY_NUMBER],
           },
           COUNTRY: {
             ID: COUNTRY,
-            ...FIELDS.CONTRACT_POLICY[COUNTRY],
+            ...FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[COUNTRY],
           },
         },
       };
