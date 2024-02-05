@@ -1,13 +1,13 @@
-import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
+import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import checkSummaryList from '../../insurance/check-policy-summary-list';
 
 const {
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    POLICY_CURRENCY_CODE,
+  CURRENCY: { CURRENCY_CODE },
+  POLICY: {
+    CONTRACT_POLICY: { REQUESTED_START_DATE },
+    NAME_ON_POLICY: { POSITION },
   },
-  NAME_ON_POLICY: { POSITION },
-} = POLICY_FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * assertGenericPolicySummaryListRows
@@ -16,7 +16,7 @@ const {
  */
 const assertGenericPolicySummaryListRows = () => {
   checkSummaryList[REQUESTED_START_DATE]();
-  checkSummaryList[POLICY_CURRENCY_CODE]();
+  checkSummaryList[CURRENCY_CODE]();
 
   checkSummaryList[POSITION]();
 };

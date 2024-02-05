@@ -4,6 +4,7 @@ import { FORM_TITLES } from '../../../form-titles';
 
 const {
   ACCOUNT: { EMAIL },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   POLICY: {
     POLICY_TYPE,
     SINGLE_POLICY_TYPE,
@@ -78,16 +79,16 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
     },
-    [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+    [CURRENCY_CODE]: {
       LEGEND: "Select currency you'd like your policy to be issued in",
       HINT: 'This is the currency your policy will be issued in',
       SUMMARY: {
         TITLE: 'Policy currency',
         FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
       },
-      [CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE]: {
-        ID: CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE,
-        VALUE: CONTRACT_POLICY.ALTERNATIVE_POLICY_CURRENCY_CODE,
+      [ALTERNATIVE_CURRENCY_CODE]: {
+        ID: ALTERNATIVE_CURRENCY_CODE,
+        VALUE: ALTERNATIVE_CURRENCY_CODE,
       },
     },
     SINGLE: {

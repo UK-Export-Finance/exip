@@ -1,23 +1,27 @@
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import mapCurrencyCodeFormData from '../../../../../helpers/mappings/map-currency-code-form-data';
+import { objectHasProperty } from '../../../../../helpers/object';
 import { RequestBody } from '../../../../../../types';
 
 const {
-  POLICY_TYPE,
-  CONTRACT_POLICY: {
-    REQUESTED_START_DATE,
-    SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-    POLICY_CURRENCY_CODE,
+  CURRENCY: { CURRENCY_CODE },
+  POLICY: {
+    POLICY_TYPE,
+    CONTRACT_POLICY: {
+      REQUESTED_START_DATE,
+      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+      POLICY_CURRENCY_CODE,
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
+    },
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
   },
-  EXPORT_VALUE: {
-    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-  },
-  NEED_PRE_CREDIT_PERIOD,
-  CREDIT_PERIOD_WITH_BUYER,
-} = POLICY_FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 /**
  * mapSubmittedData
@@ -103,7 +107,14 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     };
   }
 
-  populatedData = mapCurrencyCodeFormData(populatedData, POLICY_CURRENCY_CODE);
+  populatedData = mapCurrencyCodeFormData(populatedData);
+
+  // map the resulting "currency code" into a "Policy currency code" field
+  if (objectHasProperty(populatedData, CURRENCY_CODE)) {
+    populatedData[POLICY_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
+  }
+
+  delete populatedData[CURRENCY_CODE];
 
   return populatedData;
 };

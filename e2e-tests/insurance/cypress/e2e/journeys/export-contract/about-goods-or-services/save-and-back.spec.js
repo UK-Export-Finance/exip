@@ -1,4 +1,3 @@
-import { saveAndBackButton } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
@@ -55,7 +54,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -75,7 +74,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       // submit the form via 'save and go back' button
       cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -93,7 +92,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       // submit the form via 'save and go back' button
       cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       // go back to the page via the task list
       cy.startInsuranceExportContractSection({});
@@ -110,13 +109,13 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       // submit a value
       cy.keyboardInput(field.textarea(), 'Test');
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       // go back to the page
       cy.clickBackLink();
 
       field.textarea().clear();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

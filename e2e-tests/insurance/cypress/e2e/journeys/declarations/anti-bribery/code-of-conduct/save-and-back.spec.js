@@ -1,8 +1,4 @@
-import {
-  saveAndBackButton,
-  yesRadioInput,
-  noRadioInput,
-} from '../../../../../../../pages/shared';
+import { yesRadioInput, noRadioInput } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
@@ -65,7 +61,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -85,7 +81,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
 
       yesRadioInput().click();
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -109,7 +105,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
 
       noRadioInput().click();
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

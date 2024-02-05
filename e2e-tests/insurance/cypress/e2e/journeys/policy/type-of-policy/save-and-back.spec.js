@@ -1,4 +1,3 @@
-import { saveAndBackButton } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
@@ -39,7 +38,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {
@@ -59,12 +58,12 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.startInsurancePolicySection({});
 
       multiplePolicyField.input().click();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, () => {

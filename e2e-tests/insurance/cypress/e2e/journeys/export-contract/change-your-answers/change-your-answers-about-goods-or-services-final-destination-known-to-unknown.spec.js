@@ -1,4 +1,4 @@
-import { saveAndBackButton, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -65,7 +65,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
     describe(`when going back to ${ALL_SECTIONS}`, () => {
       it('should retain a `completed` status tag', () => {
-        saveAndBackButton().click();
+        cy.clickSaveAndBackButton();
 
         cy.checkTaskStatusCompleted(task.status());
       });

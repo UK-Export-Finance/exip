@@ -1,4 +1,4 @@
-import { field as fieldSelector, saveAndBackButton } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -60,7 +60,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -91,7 +91,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), yesterday.getFullYear());
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -125,7 +125,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.keyboardInput(field.monthInput(), month);
       cy.keyboardInput(field.yearInput(), new Date(futureDate).getFullYear());
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

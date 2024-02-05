@@ -1,10 +1,10 @@
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../content-strings';
-import emptyFieldValidation from '../empty-field';
+import alternativeCurrencyValidation from '../alternative-currency';
 import { RequestBody } from '../../../types';
 
 const {
-  CURRENCY: { CURRENCY_CODE: FIELD_ID },
+  CURRENCY: { ALTERNATIVE_CURRENCY_CODE: FIELD_ID },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -16,12 +16,12 @@ const {
 } = ERROR_MESSAGES;
 
 /**
- * policyCurrencyCodeRules
+ * policyAlternativeCurrencyCodeRule
  * Returns the result of emptyFieldValidation
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const policyCurrencyCodeRules = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const policyAlternativeCurrencyCodeRule = (formBody: RequestBody, errors: object) => alternativeCurrencyValidation(formBody, errors, ERROR_MESSAGE.IS_EMPTY);
 
-export default policyCurrencyCodeRules;
+export default policyAlternativeCurrencyCodeRule;

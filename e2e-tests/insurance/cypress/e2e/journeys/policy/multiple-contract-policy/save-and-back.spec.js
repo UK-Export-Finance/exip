@@ -1,4 +1,3 @@
-import { saveAndBackButton } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -49,7 +48,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
