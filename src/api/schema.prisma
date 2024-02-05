@@ -311,6 +311,8 @@ model BuyerTradingHistory {
   outstandingPayments        Boolean?
   failedPayments             Boolean?
   exporterHasTradedWithBuyer Boolean?
+  totalOutstandingPayments   Int?
+  totalOverduePayments       Int?
 
   @@index([applicationId])
 }

@@ -7,6 +7,7 @@ import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/f
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
 
@@ -16,10 +17,12 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_OVERDUE_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS,
+  OUTSTANDING_PAYMENTS, FAILED_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS,
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
+
+const { BUYER } = application;
 
 context('Insurance - Your Buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
@@ -93,7 +96,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       });
     });
 
-    describe(`${TOTAL_OVERDUE_PAYMENTS} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+    describe(`${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
       describe(`when not selecting a ${OUTSTANDING_PAYMENTS} radio`, () => {
         it('should not render a heading', () => {
           field(TOTAL_OUTSTANDING_PAYMENTS).heading().should('not.be.visible');
@@ -107,12 +110,12 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           field(TOTAL_OUTSTANDING_PAYMENTS).input().should('not.be.visible');
         });
 
-        it(`should not render a label for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
-          field(TOTAL_OVERDUE_PAYMENTS).label().should('not.be.visible');
+        it(`should not render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          field(TOTAL_AMOUNT_OVERDUE).label().should('not.be.visible');
         });
 
-        it(`should not render an input for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
-          field(TOTAL_OVERDUE_PAYMENTS).input().should('not.be.visible');
+        it(`should not render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          field(TOTAL_AMOUNT_OVERDUE).input().should('not.be.visible');
         });
       });
 
@@ -133,12 +136,12 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           field(TOTAL_OUTSTANDING_PAYMENTS).input().should('be.visible');
         });
 
-        it(`should render a label for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
-          cy.checkText(field(TOTAL_OVERDUE_PAYMENTS).label(), FIELDS[TOTAL_OVERDUE_PAYMENTS].LABEL);
+        it(`should render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          cy.checkText(field(TOTAL_AMOUNT_OVERDUE).label(), FIELDS[TOTAL_AMOUNT_OVERDUE].LABEL);
         });
 
-        it(`should render an input for ${TOTAL_OVERDUE_PAYMENTS}`, () => {
-          field(TOTAL_OVERDUE_PAYMENTS).input().should('be.visible');
+        it(`should render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+          field(TOTAL_AMOUNT_OVERDUE).input().should('be.visible');
         });
 
         it('should render a hyperlink for changing the currency', () => {
@@ -207,7 +210,39 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
             cy.navigateToUrl(url);
 
             cy.assertYesRadioOptionIsChecked(0);
+
+            cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
+            cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), BUYER[TOTAL_AMOUNT_OVERDUE]);
+
             cy.assertNoRadioOptionIsChecked(1);
+          });
+        });
+      });
+
+      describe(`changing ${OUTSTANDING_PAYMENTS} from "yes" to "no"`, () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          // submit OUTSTANDING_PAYMENTS as yes
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+
+          cy.navigateToUrl(url);
+
+          // change OUTSTANDING_PAYMENTS to no
+          cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+        });
+
+        describe('when going back to the page', () => {
+          it(`should have the submitted values and have removed data from ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE}`, () => {
+            cy.navigateToUrl(url);
+
+            cy.assertNoRadioOptionIsChecked(0);
+
+            // click first radio input to display optional fields
+            yesRadioInput().first().click();
+
+            cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
+            cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');
           });
         });
       });
