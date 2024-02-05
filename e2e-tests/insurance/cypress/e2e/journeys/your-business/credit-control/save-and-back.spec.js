@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials/insurance';
-import { saveAndBackButton, noRadioInput, yesRadioInput } from '../../../../../../pages/shared';
+import { noRadioInput, yesRadioInput } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -48,7 +48,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     before(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -67,7 +67,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.navigateToUrl(url);
 
       yesRadioInput().click();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
     });
@@ -90,7 +90,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.navigateToUrl(url);
 
       noRadioInput().click();
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
     });

@@ -1,4 +1,4 @@
-import { field, saveAndBackButton } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -68,7 +68,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -96,7 +96,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       cy.keyboardInput(field(FIRST_NAME).input(), POLICY_CONTACT[FIRST_NAME]);
       cy.keyboardInput(field(LAST_NAME).input(), POLICY_CONTACT[LAST_NAME]);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -122,7 +122,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       cy.navigateToUrl(url);
 
       cy.completeDifferentNameOnPolicyForm({});
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {

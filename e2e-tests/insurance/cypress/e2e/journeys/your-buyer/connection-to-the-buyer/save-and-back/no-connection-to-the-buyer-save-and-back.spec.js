@@ -1,4 +1,3 @@
-import { saveAndBackButton } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -43,7 +42,7 @@ context('Insurance - Your buyer - Connection to buyer - No connection to buyer -
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
@@ -62,7 +61,7 @@ context('Insurance - Your buyer - Connection to buyer - No connection to buyer -
 
       cy.completeConnectionToTheBuyerForm({});
 
-      saveAndBackButton().click();
+      cy.clickSaveAndBackButton();
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
