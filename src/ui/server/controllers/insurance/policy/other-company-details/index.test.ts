@@ -1,4 +1,4 @@
-import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, get } from '.';
+import { PAGE_CONTENT_STRINGS, pageVariables, TEMPLATE, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
@@ -9,7 +9,11 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  POLICY: { BROKER_ROOT },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
@@ -96,6 +100,30 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    describe('when there are no validation errors', () => {
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

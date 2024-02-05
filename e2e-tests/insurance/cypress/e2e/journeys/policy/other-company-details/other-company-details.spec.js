@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
 const {
   ROOT,
-  POLICY: { ANOTHER_COMPANY, OTHER_COMPANY_DETAILS },
+  POLICY: { ANOTHER_COMPANY, OTHER_COMPANY_DETAILS, BROKER_ROOT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -25,6 +25,7 @@ const story = 'As an exporter, I want to inform UKEF of any other company I woul
 context(`Insurance - Policy - Other company details page - ${story}`, () => {
   let referenceNumber;
   let url;
+  let brokerUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -41,6 +42,7 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
+      brokerUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -94,6 +96,16 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
 
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
       field.input().should('exist');
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${BROKER_ROOT}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.clickSubmitButton();
+
+      cy.assertUrl(brokerUrl);
     });
   });
 });

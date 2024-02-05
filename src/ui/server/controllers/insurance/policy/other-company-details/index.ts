@@ -7,7 +7,11 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  POLICY: { BROKER_ROOT },
+  PROBLEM_WITH_SERVICE
+} = INSURANCE_ROUTES;
 
 const {
   OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
@@ -61,4 +65,23 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables,
     userName: getUserNameFromSession(req.session.user),
   });
+};
+
+/**
+ * post
+ * Check Policy - Other company details validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+  
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };
