@@ -57,10 +57,6 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  // COMPANY_NAME
-  // COMPANY_NUMBER
-  // COUNTRY
-
   describe(COMPANY_NAME, () => {
     const FIELD_ID = COMPANY_NAME;
     const ERROR = ERRORS[FIELD_ID];
