@@ -19,7 +19,7 @@ describe('shared-validation/whole-number-above-minimum', () => {
       const result = wholeNumberAboveMinimumValidation(mockEmptyBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM);
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.IS_EMPTY, mockErrors);
-;
+
       expect(result).toEqual(expected);
     });
   });
