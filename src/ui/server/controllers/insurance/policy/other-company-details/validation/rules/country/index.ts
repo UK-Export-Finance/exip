@@ -4,11 +4,11 @@ import emptyFieldValidation from '../../../../../../../shared-validation/empty-f
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: { COUNTRY: FIELD_ID },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COUNTRY: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: {
+  REQUESTED_JOINTLY_INSURED_PARTY: {
     [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES.INSURANCE.POLICY;

@@ -6,14 +6,14 @@ import providedAndMaxLength from '../../../../../../../shared-validation/provide
 import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME: FIELD_ID },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
+  REQUESTED_JOINTLY_INSURED_PARTY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const MAXIMUM = Number(POLICY_FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[FIELD_ID].MAXIMUM);
+const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
 
 describe('controllers/insurance/policy/other-company-details/validation/rules/company-name', () => {
   const mockBody = {

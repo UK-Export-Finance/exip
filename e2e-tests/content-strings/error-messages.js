@@ -255,18 +255,18 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the period of pre-credit cover your require',
         ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
       },
-      [FIELD_IDS.INSURANCE.POLICY.NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
+      [FIELD_IDS.INSURANCE.POLICY.REQUEST_JOINTLY_INSURED_PARTY]: {
         IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
       },
-      OTHER_COMPANY_TO_INSURE_NAME_TBC: {
-        [FIELD_IDS.INSURANCE.POLICY.OTHER_COMPANY_TO_INSURE_NAME_TBC.COMPANY_NAME]: {
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: {
           IS_EMPTY: 'Enter the name of the other company',
           ABOVE_MAXIMUM: 'The name of the other company cannot be more than 200 characters',
         },
-        [FIELD_IDS.INSURANCE.POLICY.OTHER_COMPANY_TO_INSURE_NAME_TBC.COMPANY_NUMBER]: {
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: {
           ABOVE_MAXIMUM: 'The registration number of the other company cannot be more than 100 characters',
         },
-        [FIELD_IDS.INSURANCE.POLICY.OTHER_COMPANY_TO_INSURE_NAME_TBC.COUNTRY]: {
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY]: {
           IS_EMPTY: 'Enter the country the other company is based in',
         },
       },

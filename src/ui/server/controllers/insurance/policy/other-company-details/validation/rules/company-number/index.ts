@@ -6,16 +6,16 @@ import maxLengthValidation from '../../../../../../../shared-validation/max-leng
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NUMBER: FIELD_ID },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NUMBER: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: {
+  REQUESTED_JOINTLY_INSURED_PARTY: {
     [FIELD_ID]: { ABOVE_MAXIMUM: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const MAXIMUM = Number(POLICY_FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[FIELD_ID].MAXIMUM);
+const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
 
 /**
  * validate the "company number" in other company details response body

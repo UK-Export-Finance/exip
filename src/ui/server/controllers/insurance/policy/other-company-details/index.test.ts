@@ -18,7 +18,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  OTHER_COMPANY_TO_INSURE_NAME_TBC: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/other-company-details', () => {
@@ -56,15 +56,15 @@ describe('controllers/insurance/policy/other-company-details', () => {
         FIELDS: {
           COMPANY_NAME: {
             ID: COMPANY_NAME,
-            ...FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[COMPANY_NAME],
+            ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME],
           },
           COMPANY_NUMBER: {
             ID: COMPANY_NUMBER,
-            ...FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[COMPANY_NUMBER],
+            ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER],
           },
           COUNTRY: {
             ID: COUNTRY,
-            ...FIELDS.OTHER_COMPANY_TO_INSURE_NAME_TBC[COUNTRY],
+            ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY],
           },
         },
       };
