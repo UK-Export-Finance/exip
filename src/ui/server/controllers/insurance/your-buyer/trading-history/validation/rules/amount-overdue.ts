@@ -1,19 +1,17 @@
 import YOUR_BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import { RequestBody } from '../../../../../../../types';
 import wholeNumberAboveMinimumValidation from '../../../../../../shared-validation/whole-number-above-minimum';
+import { RequestBody } from '../../../../../../../types';
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OVERDUE_PAYMENTS: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
+    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
   },
 } = ERROR_MESSAGES;
 
-const MINIMUM = 1;
+export const MINIMUM = 1;
 
 /**
  * amountOverdueRules
@@ -25,13 +23,7 @@ const MINIMUM = 1;
  */
 const amountOverdueRules = (formBody: RequestBody, errors: object) => {
   if (formBody[OUTSTANDING_PAYMENTS] === 'true') {
-    // check if the field is empty.
-    if (!objectHasProperty(formBody, FIELD_ID)) {
-      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
-    }
-
-    // checks if value is a whole number or below minimum
-    return wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors, MINIMUM);
+    return wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM);
   }
 
   return errors;

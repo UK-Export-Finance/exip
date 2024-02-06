@@ -80,4 +80,29 @@ describe('helpers/strip-empty-form-fields', () => {
       expect(result).toEqual(expected);
     });
   });
+
+  describe('when "nullOrEmptyStringFields" is populated', () => {
+    it('should return form fields without the empty fields unless they are in "nullOrEmptyStringFields"', () => {
+      const mockFormData = {
+        a: '',
+        b: null,
+        c: undefined,
+        d: true,
+        e: 'Mock value',
+      };
+
+      const nullOrEmptyStringFields = ['a', 'c'];
+
+      const result = stripEmptyFormFields(mockFormData, nullOrEmptyStringFields);
+
+      const expected = {
+        a: '',
+        c: undefined,
+        d: true,
+        e: 'Mock value',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
 });

@@ -3,6 +3,11 @@ import getDataToSave from '../../../../../helpers/get-data-to-save';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
+import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
+
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+
+export const nullOrEmptyStringFields = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
 
 /**
  * gets fields to add to the database and sanitises them
@@ -14,7 +19,7 @@ import { Application, RequestBody } from '../../../../../../types';
  */
 const buyerTradingHistory = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), nullOrEmptyStringFields);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);

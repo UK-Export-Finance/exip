@@ -313,7 +313,9 @@ export const lists = {
         db: { nativeType: 'VarChar(300)' },
       }),
       email: text(),
-      position: text(),
+      position: text({
+        db: { nativeType: 'VarChar(50)' },
+      }),
       isSameAsOwner: nullableCheckbox(),
     },
     access: allowAll,
@@ -565,6 +567,8 @@ export const lists = {
       outstandingPayments: nullableCheckbox(),
       failedPayments: nullableCheckbox(),
       exporterHasTradedWithBuyer: nullableCheckbox(),
+      totalOutstandingPayments: integer(),
+      totalOverduePayments: integer(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

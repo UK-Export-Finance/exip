@@ -14,14 +14,14 @@ const {
 /**
  * validates postcode field
  * checks if response has been provided
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const brokerPostcode = (responseBody: RequestBody, errors: object) => {
-  if (responseBody[USING_BROKER] === true) {
+const brokerPostcode = (formBody: RequestBody, errors: object) => {
+  if (formBody[USING_BROKER] === true) {
     // validates if postcode is empty or the wrong format
-    return postCodeValidation(FIELD_ID, responseBody[FIELD_ID], ERROR_MESSAGE.IS_EMPTY, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
+    return postCodeValidation(FIELD_ID, formBody[FIELD_ID], ERROR_MESSAGE.IS_EMPTY, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
   }
 
   return errors;

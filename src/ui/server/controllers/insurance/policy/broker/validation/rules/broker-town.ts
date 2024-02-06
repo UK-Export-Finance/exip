@@ -14,14 +14,14 @@ const {
 /**
  * validates broker town field
  * checks if response has been provided
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const brokerTown = (responseBody: RequestBody, errors: object) => {
+const brokerTown = (formBody: RequestBody, errors: object) => {
   // if USING_BROKER radio is yes then check validation
-  if (responseBody[USING_BROKER] === true) {
-    return emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+  if (formBody[USING_BROKER] === true) {
+    return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
   return errors;
