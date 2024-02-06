@@ -103,7 +103,8 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
     it(`should redirect to ${BROKER_ROOT}`, () => {
       cy.navigateToUrl(url);
 
-      cy.clickSubmitButton();
+      // cy.clickSubmitButton();
+      cy.completeAndSubmitOtherCompanyDetailsForm();
 
       cy.assertUrl(brokerUrl);
     });
