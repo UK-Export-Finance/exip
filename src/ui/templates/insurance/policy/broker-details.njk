@@ -27,13 +27,6 @@
     }) }}
   {% endif %}
 
-  {# <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
-      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
-      <h1 class="govuk-heading-l" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
-    </div>
-  </div> #}
-
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
     <input type="hidden" name="_csrf" value="{{ csrfToken }}">
@@ -119,6 +112,8 @@
               }
             }
           }) }}
+
+        {% endcall %}
           
       </div>
     </div>

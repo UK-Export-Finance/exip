@@ -4,7 +4,7 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
-import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
+// import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
@@ -15,7 +15,8 @@ const {
 
 const {
   POLICY: {
-    BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
+    BROKER: { USING_BROKER},
+    BROKER_DETAILS: { NAME, EMAIL },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -40,13 +41,13 @@ const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
    */
   if (answers[USING_BROKER]) {
     // address for HTML mapping
-    const address = {
-      [ADDRESS_LINE_1]: answers[ADDRESS_LINE_1],
-      [ADDRESS_LINE_2]: answers[ADDRESS_LINE_2],
-      [TOWN]: answers[TOWN],
-      [COUNTY]: answers[COUNTY],
-      [POSTCODE]: answers[POSTCODE],
-    };
+    // const address = {
+    //   [ADDRESS_LINE_1]: answers[ADDRESS_LINE_1],
+    //   [ADDRESS_LINE_2]: answers[ADDRESS_LINE_2],
+    //   [TOWN]: answers[TOWN],
+    //   [COUNTY]: answers[COUNTY],
+    //   [POSTCODE]: answers[POSTCODE],
+    // };
 
     fields = [
       fieldGroupItem({
@@ -55,15 +56,15 @@ const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: numbe
         href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       }),
-      fieldGroupItem(
-        {
-          field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
-          data: answers,
-          href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
-          renderChangeLink: true,
-        },
-        generateMultipleFieldHtml(address),
-      ),
+      // fieldGroupItem(
+      //   {
+      //     field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
+      //     data: answers,
+      //     href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
+      //     renderChangeLink: true,
+      //   },
+      //   generateMultipleFieldHtml(address),
+      // ),
       fieldGroupItem({
         field: getFieldById(POLICY_FIELDS.BROKER, EMAIL),
         data: answers,

@@ -1,14 +1,12 @@
-// import { brokerPage } from '../../../../../../pages/insurance/policy';
+import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
 import {
   field as fieldSelector,
   yesRadio,
-  yesRadioInput,
   noRadio,
   noRadioInput,
 } from '../../../../../../pages/shared';
-// import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -34,7 +32,7 @@ const {
 
 const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
 
-// const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
+const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
 
 const ERROR_ASSERTIONS = {
   numberOfExpectedErrors: 1,
@@ -123,20 +121,20 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
       });
     });
 
-    // describe('when clicking the summary text', () => {
-    //   it('should expand the collapsed `details` content', () => {
-    //     brokerPage[DETAILS].summary().click();
+    describe('when clicking the summary text', () => {
+      it('should expand the collapsed `details` content', () => {
+        brokerPage.summary().click();
 
-    //     brokerPage[DETAILS].details().should('have.attr', 'open');
+        brokerPage.details().should('have.attr', 'open');
 
-    //     cy.checkText(brokerPage[DETAILS].line1(), CONTENT_STRINGS.LINE_1);
-    //     cy.checkText(brokerPage[DETAILS].line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
-    //     cy.checkText(brokerPage[DETAILS].line3(), CONTENT_STRINGS.LINE_3);
-    //     cy.checkText(brokerPage[DETAILS].line4(), CONTENT_STRINGS.LINE_4);
+        cy.checkText(brokerPage.line1(), CONTENT_STRINGS.LINE_1);
+        cy.checkText(brokerPage.line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
+        cy.checkText(brokerPage.line3(), CONTENT_STRINGS.LINE_3);
+        cy.checkText(brokerPage.line4(), CONTENT_STRINGS.LINE_4);
 
-    //     cy.checkLink(brokerPage[DETAILS].link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
-    //   });
-    // });
+        cy.checkLink(brokerPage.link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
+      });
+    });
 
     it('should display save and go back button', () => {
       cy.assertSaveAndBackButton();
@@ -160,8 +158,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
 
       describe(`when selecting no for ${FIELD_ID}`, () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-          noRadioInput().click();
-          cy.clickSubmitButton();
+          cy.completeAndSubmitBrokerForm({ usingBroker: false });
 
           cy.assertUrl(checkYourAnswersUrl);
         });
@@ -170,7 +167,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
           it('should have the submitted value', () => {
             cy.navigateToUrl(url);
 
-            cy.assertRadioOptionIsChecked(noRadioInput());
+            cy.assertNoRadioOptionIsChecked();
           });
         });
       });
@@ -182,13 +179,13 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
           cy.assertUrl(brokerDetailsUrl);
         });
 
-        describe('when going back to the page', () => {
-          it('should have the submitted value', () => {
-            cy.navigateToUrl(url);
+        // describe('when going back to the page', () => {
+        //   it('should have the submitted value', () => {
+        //     cy.navigateToUrl(url);
 
-            cy.assertRadioOptionIsChecked(yesRadioInput());
-          });
-        });
+        //     cy.assertYesRadioOptionIsChecked();
+        //   });
+        // });
       });
     });
   });

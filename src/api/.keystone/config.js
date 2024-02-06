@@ -216,17 +216,12 @@ var POLICY = {
     COUNTRY: "country"
   },
   BROKER: {
-    LEGEND: "broker",
-    USING_BROKER: "isUsingBroker",
+    USING_BROKER: "isUsingBroker"
+  },
+  BROKER_DETAILS: {
     NAME: "name",
-    ADDRESS_LINE_1: "addressLine1",
-    ADDRESS_LINE_2: "addressLine2",
-    TOWN: "town",
-    COUNTY: "county",
-    POSTCODE: "postcode",
     EMAIL: "email",
-    FULL_ADDRESS: "fullAddress",
-    DETAILS: "whyAppointBroker"
+    FULL_ADDRESS: "fullAddress"
   }
 };
 var policy_default = POLICY;
@@ -4075,8 +4070,9 @@ var {
   POLICY: {
     CONTRACT_POLICY,
     EXPORT_VALUE,
-    BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 },
-    POLICY_TYPE: POLICY_TYPE3
+    POLICY_TYPE: POLICY_TYPE3,
+    BROKER: { USING_BROKER: USING_BROKER2 },
+    BROKER_DETAILS: { NAME, EMAIL: EMAIL4, FULL_ADDRESS }
   }
 } = insurance_default;
 var POLICY_FIELDS = {
@@ -4145,20 +4141,25 @@ var POLICY_FIELDS = {
       SUMMARY: {
         TITLE: "Using a broker"
       }
-    },
+    }
+  },
+  BROKER_DETAILS: {
     [NAME]: {
+      LABEL: "Name of broker or company",
       SUMMARY: {
         TITLE: "Broker's name or company"
       }
     },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address"
-      }
-    },
     [EMAIL4]: {
+      LABEL: "Email address",
       SUMMARY: {
         TITLE: "Broker's email"
+      }
+    },
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address"
       }
     }
   }
@@ -4609,7 +4610,7 @@ var {
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
   },
   POLICY: {
-    BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
+    BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
   }
 } = insurance_default;
 var mapSicCodes2 = (sicCodes) => {
@@ -4625,13 +4626,13 @@ var mapBroker = (application2) => {
   let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
   if (broker[USING_BROKER4]) {
     const addressAnswer = {
-      lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
+      lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
       other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
     };
     mapped = [
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
+      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_1], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
       xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
     ];
   }

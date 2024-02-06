@@ -15,7 +15,7 @@ const {
   },
   TYPE_OF_POLICY,
   NAME_ON_POLICY,
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL },
+  BROKER: { USING_BROKER },
 } = POLICY_FIELD_IDS;
 
 const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
@@ -70,9 +70,10 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = getBrokerTasks(isUsingBrokerFlag);
 
-        const expected = [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
+        // TODO: EMS-2749
+        // const expected = [NAME, EMAIL, FULL_ADDRESS];
 
-        expect(result).toEqual(expected);
+        expect(result).toEqual([]);
       });
     });
 

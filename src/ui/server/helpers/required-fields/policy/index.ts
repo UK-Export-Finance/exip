@@ -11,7 +11,7 @@ const {
   },
   TYPE_OF_POLICY,
   NAME_ON_POLICY,
-  BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL },
+  BROKER: { USING_BROKER },
 } = POLICY_FIELD_IDS;
 
 const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
@@ -47,7 +47,10 @@ export const getContractPolicyTasks = (policyType?: string): object => {
  */
 export const getBrokerTasks = (isUsingBroker?: boolean) => {
   if (isUsingBroker) {
-    return [NAME, ADDRESS_LINE_1, TOWN, POSTCODE, EMAIL];
+    return [];
+
+    // TODO: EMS-2749
+    // return [NAME, EMAIL, FULL_ADDRESS];
   }
 
   return [];

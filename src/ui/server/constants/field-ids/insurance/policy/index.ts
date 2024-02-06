@@ -56,17 +56,12 @@ export const POLICY = {
     COUNTRY: 'country',
   },
   BROKER: {
-    LEGEND: 'broker',
     USING_BROKER: 'isUsingBroker',
+  },
+  BROKER_DETAILS: {
     NAME: 'name',
-    ADDRESS_LINE_1: 'addressLine1',
-    ADDRESS_LINE_2: 'addressLine2',
-    TOWN: 'town',
-    COUNTY: 'county',
-    POSTCODE: 'postcode',
-    FULL_ADDRESS: 'fullAddress',
     EMAIL: 'email',
-    DETAILS: 'whyAppointBroker',
+    FULL_ADDRESS: 'fullAddress',
   },
 };
 

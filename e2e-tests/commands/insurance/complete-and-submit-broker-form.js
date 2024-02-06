@@ -1,11 +1,4 @@
-import { brokerPage } from '../../pages/insurance/policy';
-import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
-
-const {
-  BROKER: {
-    USING_BROKER,
-  },
-} = POLICY_FIELD_IDS;
+import { yesRadioInput, noRadioInput } from '../../pages/shared';
 
 /**
  * completeAndSubmitBrokerForm
@@ -16,9 +9,9 @@ const completeAndSubmitBrokerForm = ({
   usingBroker = false,
 }) => {
   if (usingBroker) {
-    brokerPage[USING_BROKER].yesRadioInput().click();
+    yesRadioInput().click();
   } else {
-    brokerPage[USING_BROKER].noRadioInput().click();
+    noRadioInput().click();
   }
 
   cy.clickSubmitButton();
