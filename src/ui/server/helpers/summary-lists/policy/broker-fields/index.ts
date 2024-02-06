@@ -15,7 +15,7 @@ const {
 
 const {
   POLICY: {
-    BROKER: { USING_BROKER},
+    BROKER: { USING_BROKER },
     BROKER_DETAILS: { NAME, EMAIL },
   },
 } = INSURANCE_FIELD_IDS;
