@@ -209,7 +209,12 @@ var POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
   CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
-  NEED_ANOTHER_COMPANY_TO_BE_INSURED: "needAnotherCompanyToBeInsured",
+  REQUEST_JOINTLY_INSURED_PARTY: "requestJointlyInsuredParty",
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    COMPANY_NAME: "companyName",
+    COMPANY_NUMBER: "companyNumber",
+    COUNTRY: "country"
+  },
   BROKER: {
     LEGEND: "broker",
     USING_BROKER: "isUsingBroker",
@@ -1158,7 +1163,9 @@ var lists = {
         db: { nativeType: "VarChar(300)" }
       }),
       email: (0, import_fields.text)(),
-      position: (0, import_fields.text)(),
+      position: (0, import_fields.text)({
+        db: { nativeType: "VarChar(50)" }
+      }),
       isSameAsOwner: nullable_checkbox_default()
     },
     access: import_access.allowAll

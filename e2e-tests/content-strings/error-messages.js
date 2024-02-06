@@ -194,6 +194,7 @@ export const ERROR_MESSAGES = {
             INVALID_DATE: 'Policy completion date must be a real date',
           },
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+            IS_EMPTY: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
             INCORRECT_FORMAT: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'The total value of the contract you want to insure must be 1 or more',
           },
@@ -210,10 +211,13 @@ export const ERROR_MESSAGES = {
       EXPORT_VALUE: {
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+            IS_EMPTY: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
             INCORRECT_FORMAT: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your total sales must be 1 or more',
           },
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+            IS_EMPTY:
+              'Enter your estimate for the maximum amount your buyer will owe you at any single point during this time as a whole number - do not enter decimals',
             INCORRECT_FORMAT:
               'Enter your estimate for the maximum amount your buyer will owe you at any single point during this time as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your estimated maximum amount your buyer will owe you at any single point during this time must be 1 or more',
@@ -242,7 +246,7 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: "The policy holder's last name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter the email address of the person you want named on the policy',
+          INCORRECT_FORMAT: "Enter the policy holder's email address in the correct format, like name@example.com",
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: "Enter the policy holder's position at the company",
@@ -255,7 +259,7 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the period of pre-credit cover your require',
         ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
       },
-      [FIELD_IDS.INSURANCE.POLICY.NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
+      [FIELD_IDS.INSURANCE.POLICY.REQUEST_JOINTLY_INSURED_PARTY]: {
         IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
       },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {

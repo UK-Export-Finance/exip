@@ -22,10 +22,10 @@ const errorMessages = {
  * validates percentage turnover
  * only numbers without decimals, special characters or commas
  * only allows numbers between 0 and 100
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const percentageTurnover = (responseBody: RequestBody, errors: object) => percentageNumberValidation(responseBody, FIELD_ID, errors, errorMessages);
+const percentageTurnover = (formBody: RequestBody, errors: object) => percentageNumberValidation(formBody, FIELD_ID, errors, errorMessages);
 
 export default percentageTurnover;

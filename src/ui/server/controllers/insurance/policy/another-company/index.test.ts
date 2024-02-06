@@ -18,7 +18,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { NEED_ANOTHER_COMPANY_TO_BE_INSURED } = POLICY_FIELD_IDS;
+const { REQUEST_JOINTLY_INSURED_PARTY } = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
 
@@ -53,7 +53,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = NEED_ANOTHER_COMPANY_TO_BE_INSURED;
+      const expected = REQUEST_JOINTLY_INSURED_PARTY;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -63,7 +63,7 @@ describe('controllers/insurance/policy/another-company', () => {
     it('should have the correct properties', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
-        HINT: FIELDS[NEED_ANOTHER_COMPANY_TO_BE_INSURED].HINT,
+        HINT: FIELDS[REQUEST_JOINTLY_INSURED_PARTY].HINT,
       };
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
@@ -136,7 +136,7 @@ describe('controllers/insurance/policy/another-company', () => {
       describe(`when ${FIELD_ID} is submitted as 'no'`, () => {
         beforeEach(() => {
           req.body = {
-            [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'false',
+            [REQUEST_JOINTLY_INSURED_PARTY]: 'false',
           };
         });
 
@@ -152,7 +152,7 @@ describe('controllers/insurance/policy/another-company', () => {
       describe(`when ${FIELD_ID} is submitted as 'yes'`, () => {
         beforeEach(() => {
           req.body = {
-            [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: 'true',
+            [REQUEST_JOINTLY_INSURED_PARTY]: 'true',
           };
         });
 
@@ -168,7 +168,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
     describe('when there are validation errors', () => {
       const mockInvalidBody = {
-        [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: '',
+        [REQUEST_JOINTLY_INSURED_PARTY]: '',
       };
 
       beforeEach(() => {

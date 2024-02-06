@@ -1,9 +1,7 @@
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../../helpers/object';
-import { RequestBody } from '../../../../../../../../types';
 import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
+import { RequestBody } from '../../../../../../../../types';
 
 const {
   POLICY: {
@@ -17,13 +15,13 @@ const {
   INSURANCE: {
     POLICY: {
       EXPORT_VALUE: {
-        MULTIPLE: { [FIELD_ID]: ERROR_MESSAGE },
+        MULTIPLE: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
       },
     },
   },
 } = ERROR_MESSAGES;
 
-const MINIMUM = 1;
+export const MINIMUM = 1;
 
 /**
  * totalSalesToBuyerRules
@@ -33,14 +31,7 @@ const MINIMUM = 1;
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const totalSalesToBuyerRules = (formBody: RequestBody, errors: object) => {
-  // check if the field is empty.
-  if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
-  }
-
-  // checks if value is whole number or below minimum
-  return wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors, MINIMUM);
-};
+const totalSalesToBuyerRules = (formBody: RequestBody, errors: object) =>
+  wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM);
 
 export default totalSalesToBuyerRules;

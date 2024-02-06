@@ -18,7 +18,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NAME} to ${OTHER_NAME} should not populate fields on different name on policy page`, () => {
+context(`Insurance - Policy - Different name on Policy page - Changing ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME} should not populate fields on different name on policy page`, () => {
   let referenceNumber;
   let url;
 
@@ -31,7 +31,8 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
       cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
+      cy.completeAndSubmitDifferentNameOnPolicyForm({});
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({});
@@ -50,9 +51,13 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${SAME_NA
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`when changing from ${SAME_NAME} to ${OTHER_NAME}`, () => {
+  describe(`when changing from ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
+
+      summaryList.field(NAME).changeLink().click();
+
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
 
       summaryList.field(NAME).changeLink().click();
 
