@@ -194,6 +194,7 @@ export const ERROR_MESSAGES = {
             INVALID_DATE: 'Policy completion date must be a real date',
           },
           [FIELD_IDS.INSURANCE.POLICY.CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
+            IS_EMPTY: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
             INCORRECT_FORMAT: 'Enter the total value of the contract you want to insure as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'The total value of the contract you want to insure must be 1 or more',
           },
@@ -210,10 +211,13 @@ export const ERROR_MESSAGES = {
       EXPORT_VALUE: {
         MULTIPLE: {
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.TOTAL_SALES_TO_BUYER]: {
+            IS_EMPTY: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
             INCORRECT_FORMAT: 'Enter your estimated total sales to your buyer during this time as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your total sales must be 1 or more',
           },
           [FIELD_IDS.INSURANCE.POLICY.EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
+            IS_EMPTY:
+              'Enter your estimate for the maximum amount your buyer will owe you at any single point during this time as a whole number - do not enter decimals',
             INCORRECT_FORMAT:
               'Enter your estimate for the maximum amount your buyer will owe you at any single point during this time as a whole number - do not enter decimals',
             BELOW_MINIMUM: 'Your estimated maximum amount your buyer will owe you at any single point during this time must be 1 or more',

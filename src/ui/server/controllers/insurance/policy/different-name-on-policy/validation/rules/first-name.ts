@@ -12,10 +12,10 @@ const {
 /**
  * validates last name field
  * checks if response has been provided
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const firstName = (responseBody: RequestBody, errors: object) => nameValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
+const firstName = (formBody: RequestBody, errors: object) => nameValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default firstName;

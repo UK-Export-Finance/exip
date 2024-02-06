@@ -7,16 +7,16 @@ import { stripCommas } from '../string';
  * validates if field is whole number and above 0 and handles commas in the input.
  * if allowNegativeNumbers is set to true, then will return validation error if number below 0.
  * returns validation error if is not a number, has a decimal place or special characters.
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @param {string} errorMessage
  * @param {string} field fieldId of the field being checked
  * @param {Boolean} allowNegativeValue false as default, if true then allows for negative numbers below 0.
  * @returns {object} errors
  */
-const wholeNumberValidation = (responseBody: RequestBody, errors: object, errorMessage: string, field: string, allowNegativeValue = false) => {
+const wholeNumberValidation = (formBody: RequestBody, errors: object, errorMessage: string, field: string, allowNegativeValue = false) => {
   // strip commas - commas are valid.
-  const numberWithoutCommas = stripCommas(responseBody[field]);
+  const numberWithoutCommas = stripCommas(formBody[field]);
 
   const isFieldANumber = isNumber(numberWithoutCommas);
   const hasDecimal = numberHasDecimal(Number(numberWithoutCommas));

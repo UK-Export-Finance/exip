@@ -12,17 +12,17 @@ const {
 const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 /**
  * validates website input is the correct format
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const companyWebsite = (responseBody: RequestBody, errors: object) => {
+const companyWebsite = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;
 
   // as field is optional, only validate if it is not an empty string
-  if (objectHasProperty(responseBody, WEBSITE)) {
+  if (objectHasProperty(formBody, WEBSITE)) {
     // adds 'http://' to url for validation
-    const url = isStringWithHttp(responseBody[WEBSITE]);
+    const url = isStringWithHttp(formBody[WEBSITE]);
     const errorMessage = EXPORTER_BUSINESS[WEBSITE].INCORRECT_FORMAT;
     // validates input
     updatedErrors = validateWebsiteAddress(url, WEBSITE, errorMessage, updatedErrors);

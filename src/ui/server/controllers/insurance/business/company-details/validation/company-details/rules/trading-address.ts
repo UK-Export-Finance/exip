@@ -18,6 +18,6 @@ const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
  * @param {Object} errors errorList
  * @returns {object} object containing errors or blank object
  */
-const tradingAddress = (responseBody: RequestBody, errors: object) => emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const tradingAddress = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 
 export default tradingAddress;

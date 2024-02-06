@@ -14,16 +14,16 @@ const {
 /**
  * validates email field
  * checks if response has been provided
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const brokerEmail = (responseBody: RequestBody, errors: object) => {
-  if (responseBody[USING_BROKER] === true) {
+const brokerEmail = (formBody: RequestBody, errors: object) => {
+  if (formBody[USING_BROKER] === true) {
     const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
     // checks email is valid
-    return emailValidation(FIELD_ID, responseBody[FIELD_ID], errorMessage, errors);
+    return emailValidation(FIELD_ID, formBody[FIELD_ID], errorMessage, errors);
   }
 
   return errors;

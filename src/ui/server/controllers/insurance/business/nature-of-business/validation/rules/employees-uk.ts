@@ -20,18 +20,18 @@ const MINIMUM = 1;
 /**
  * validates number of uk employees input
  * only allows number without decimal
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const employeesUK = (responseBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(responseBody, FIELD_ID)) {
+const employeesUK = (formBody: RequestBody, errors: object) => {
+  if (!objectHasProperty(formBody, FIELD_ID)) {
     const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
     return generateValidationErrors(FIELD_ID, errorMessage, errors);
   }
 
-  const value = responseBody[FIELD_ID];
+  const value = formBody[FIELD_ID];
   const valueWithoutCommas = stripCommas(value);
 
   // checks if value is below set minimum
@@ -42,7 +42,7 @@ const employeesUK = (responseBody: RequestBody, errors: object) => {
   }
 
   const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-  return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID);
+  return wholeNumberValidation(formBody, errors, errorMessage, FIELD_ID);
 };
 
 export default employeesUK;

@@ -14,13 +14,13 @@ const {
 /**
  * validates address line 1 field
  * checks if response has been provided
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const brokerAddressLineOne = (responseBody: RequestBody, errors: object) => {
-  if (responseBody[USING_BROKER] === true) {
-    return emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+const brokerAddressLineOne = (formBody: RequestBody, errors: object) => {
+  if (formBody[USING_BROKER] === true) {
+    return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }
 
   return errors;

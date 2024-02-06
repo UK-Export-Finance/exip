@@ -14,10 +14,10 @@ const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 /**
  * validates email field
  * checks if response has been provided
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const emailAddress = (responseBody: RequestBody, errors: object) => emailValidation(FIELD_ID, responseBody[FIELD_ID], errorMessage, errors);
+const emailAddress = (formBody: RequestBody, errors: object) => emailValidation(FIELD_ID, formBody[FIELD_ID], errorMessage, errors);
 
 export default emailAddress;
