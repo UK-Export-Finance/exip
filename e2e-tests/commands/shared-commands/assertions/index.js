@@ -84,6 +84,8 @@ Cypress.Commands.add('assertGenericPolicySummaryListRows', require('./assert-gen
 Cypress.Commands.add('assertGenericSinglePolicySummaryListRows', require('./assert-generic-single-policy-summary-list-rows'));
 Cypress.Commands.add('assertGenericMultiplePolicySummaryListRows', require('./assert-generic-multiple-policy-summary-list-rows'));
 
+Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
+
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));
 
 Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
