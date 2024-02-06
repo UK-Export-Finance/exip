@@ -35,7 +35,7 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
       expect(nextSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should totalContractValueOverThreshold to false', () => {
+    it('should set totalContractValueOverThreshold to false', () => {
       totalContractValueOverThreshold(req, res, next);
 
       expect(res.locals.application?.totalContractValueOverThreshold).toEqual(false);
@@ -64,7 +64,7 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
       expect(nextSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should totalContractValueOverThreshold to false', () => {
+    it('should set totalContractValueOverThreshold to false', () => {
       totalContractValueOverThreshold(req, res, next);
 
       expect(res.locals.application?.totalContractValueOverThreshold).toEqual(false);
@@ -93,7 +93,7 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
       expect(nextSpy).toHaveBeenCalledTimes(1);
     });
 
-    it('should totalContractValueOverThreshold to true', () => {
+    it('should set totalContractValueOverThreshold to true', () => {
       totalContractValueOverThreshold(req, res, next);
 
       expect(res.locals.application?.totalContractValueOverThreshold).toEqual(true);
