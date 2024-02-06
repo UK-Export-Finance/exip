@@ -11,6 +11,7 @@ const completeBuyerSection = ({ viaTaskList = true, exporterHasTradedWithBuyer, 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
   cy.completeAndSubmitConnectionToTheBuyerForm({});
   cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer });
+  cy.completeAndSubmitBuyerFinancialInformationForm({});
 
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();
