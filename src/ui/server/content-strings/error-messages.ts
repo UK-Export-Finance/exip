@@ -261,6 +261,18 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.REQUEST_JOINTLY_INSURED_PARTY]: {
         IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
       },
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: {
+          IS_EMPTY: 'Enter the name of the other company',
+          ABOVE_MAXIMUM: 'The name of the other company cannot be more than 200 characters',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: {
+          ABOVE_MAXIMUM: 'The registration number of the other company cannot be more than 100 characters',
+        },
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY]: {
+          IS_EMPTY: 'Enter the country the other company is based in',
+        },
+      },
       [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },
