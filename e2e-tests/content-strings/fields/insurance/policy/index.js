@@ -15,7 +15,8 @@ const {
     DIFFERENT_NAME_ON_POLICY,
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
-    NEED_ANOTHER_COMPANY_TO_BE_INSURED,
+    REQUEST_JOINTLY_INSURED_PARTY,
+    REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
     BROKER: {
       LEGEND,
       USING_BROKER,
@@ -195,8 +196,19 @@ export const POLICY_FIELDS = {
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
-  [NEED_ANOTHER_COMPANY_TO_BE_INSURED]: {
+  [REQUEST_JOINTLY_INSURED_PARTY]: {
     HINT: 'This could be a parent company, subsidiary or a subcontractor.',
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [COMPANY_NAME]: {
+      LABEL: 'Name of the other company',
+    },
+    [COMPANY_NUMBER]: {
+      LABEL: 'What country is the other company based in?',
+    },
+    [COUNTRY]: {
+      LABEL: 'Registration number of the other company (optional)',
+    },
   },
   BROKER: {
     [LEGEND]: {
