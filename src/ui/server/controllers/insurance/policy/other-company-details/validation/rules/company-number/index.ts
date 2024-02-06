@@ -19,9 +19,9 @@ const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].M
 
 /**
  * validate the "company number" in other company details response body
- * @param {Express.Request.body} responseBody containing an object with the company details response
- * @param {Object} errors errorList
- * @returns {object} object containing errors or blank object
+ * @param {Express.Request.body} responseBody: containing an object with the company details response
+ * @param {Object} errors: errorList
+ * @returns {Object} Object containing errors or blank object
  */
 const companyNumber = (responseBody: RequestBody, errors: object) => {
   if (objectHasProperty(responseBody, FIELD_ID)) {

@@ -15,9 +15,9 @@ const {
 
 /**
  * validate the "country" in other company details response body
- * @param {Express.Request.body} responseBody containing an object with the company details response
- * @param {Object} errors errorList
- * @returns {object} object containing errors or blank object
+ * @param {Express.Request.body} responseBody: containing an object with the company details response
+ * @param {Object} errors: errorList
+ * @returns {Object} Object containing errors or blank object
  */
 const country = (responseBody: RequestBody, errors: object) => emptyFieldValidation(responseBody, FIELD_ID, ERROR_MESSAGE, errors);
 
