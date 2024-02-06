@@ -1,19 +1,12 @@
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { yesRadioInput, noRadioInput } from '../../shared';
 
 const {
   POLICY: {
-    BROKER: { USING_BROKER, DETAILS },
+    BROKER: { DETAILS },
   },
 } = INSURANCE_FIELD_IDS;
 
 const brokerPage = {
-  [USING_BROKER]: {
-    value: () => cy.get(`[data-cy="${USING_BROKER}`),
-    yesRadioInput: () => yesRadioInput().eq(0),
-    noRadioInput: () => noRadioInput().eq(0),
-    errorMessage: () => cy.get(`[data-cy="${USING_BROKER}-error-message`),
-  },
   [DETAILS]: {
     details: () => cy.get(`[data-cy="${DETAILS}`),
     summary: () => cy.get(`[data-cy="${DETAILS}"] summary`),

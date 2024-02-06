@@ -203,6 +203,7 @@ export const POLICY_FIELDS = {
       LEGEND: 'Enter contact details for your broker',
     },
     [USING_BROKER]: {
+      LABEL: 'Are you using a broker to get this insurance?',
       SUMMARY: {
         TITLE: 'Using a broker',
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,

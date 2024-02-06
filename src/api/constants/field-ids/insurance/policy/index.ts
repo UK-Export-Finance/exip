@@ -60,6 +60,7 @@ export const POLICY = {
     COUNTY: 'county',
     POSTCODE: 'postcode',
     EMAIL: 'email',
+    FULL_ADDRESS: 'fullAddress',
     DETAILS: 'whyAppointBroker',
   },
 };

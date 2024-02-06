@@ -1,28 +1,23 @@
-import { PAGES } from '../../../../content-strings';
-import { pageVariables, HTML_FLAGS, get, post, TEMPLATE, FIELD_IDS } from '.';
+import { pageVariables, ERROR_MESSAGE, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get, post } from '.';
+import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import generateValidationErrors from './validation';
-import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 
-const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
-
-const { USING_BROKER, LEGEND, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, TOWN, POSTCODE, EMAIL, DETAILS } = POLICY_FIELD_IDS.BROKER;
-
-const { BROKER } = PAGES.INSURANCE.POLICY;
+const { USING_BROKER } = POLICY_FIELD_IDS.BROKER;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BROKER_DETAILS_ROOT },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -48,17 +43,31 @@ describe('controllers/insurance/policy/broker', () => {
     jest.resetAllMocks();
   });
 
-  describe('TEMPLATE', () => {
-    it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = USING_BROKER;
+
+      expect(FIELD_ID).toEqual(expected);
     });
   });
 
-  describe('FIELD_IDS', () => {
-    it('should have the correct FIELD_IDS', () => {
-      const expected = [USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL];
+  describe('ERROR_MESSAGE', () => {
+    it('should have the correct error message', () => {
+      const expected = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
 
-      expect(FIELD_IDS).toEqual(expected);
+      expect(ERROR_MESSAGE).toEqual(expected);
+    });
+  });
+
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.POLICY.BROKER);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -68,47 +77,6 @@ describe('controllers/insurance/policy/broker', () => {
 
       const expected = {
         FIELD_ID: USING_BROKER,
-        FIELDS: {
-          USING_BROKER: {
-            ID: USING_BROKER,
-          },
-          LEGEND: {
-            ID: LEGEND,
-            ...BROKER_FIELDS[LEGEND],
-          },
-          NAME: {
-            ID: NAME,
-            ...BROKER_FIELDS[NAME],
-          },
-          ADDRESS_LINE_1: {
-            ID: ADDRESS_LINE_1,
-            ...BROKER_FIELDS[ADDRESS_LINE_1],
-          },
-          ADDRESS_LINE_2: {
-            ID: ADDRESS_LINE_2,
-            ...BROKER_FIELDS[ADDRESS_LINE_2],
-          },
-          TOWN: {
-            ID: TOWN,
-            ...BROKER_FIELDS[TOWN],
-          },
-          COUNTY: {
-            ID: COUNTY,
-            ...BROKER_FIELDS[COUNTY],
-          },
-          POSTCODE: {
-            ID: POSTCODE,
-            ...BROKER_FIELDS[POSTCODE],
-          },
-          EMAIL: {
-            ID: EMAIL,
-            ...BROKER_FIELDS[EMAIL],
-          },
-          DETAILS: {
-            ID: DETAILS,
-            ...BROKER_FIELDS[DETAILS],
-          },
-        },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_SAVE_AND_BACK}`,
       };
 
@@ -119,7 +87,8 @@ describe('controllers/insurance/policy/broker', () => {
   describe('HTML_FLAGS', () => {
     it('should have correct properties', () => {
       const expected = {
-        CONDITIONAL_YES_HTML: BROKER_PARTIALS.CONDITIONAL_YES_HTML,
+        HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
         CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
         LEGEND_CLASS: CLASSES.LEGEND.XL,
       };
@@ -133,11 +102,7 @@ describe('controllers/insurance/policy/broker', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: BROKER,
-          BACK_LINK: req.headers.referer,
-          HTML_FLAGS,
-        }),
+        ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.broker[USING_BROKER],
@@ -167,18 +132,14 @@ describe('controllers/insurance/policy/broker', () => {
 
         const sanitisedData = sanitiseData(req.body);
 
-        const payload = constructPayload(sanitisedData, FIELD_IDS);
+        const payload = constructPayload(sanitisedData, [FIELD_ID]);
 
         await post(req, res);
 
-        const validationErrors = generateValidationErrors(payload);
+        const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: BROKER,
-            BACK_LINK: req.headers.referer,
-            HTML_FLAGS,
-          }),
+          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
           validationErrors,
@@ -189,13 +150,32 @@ describe('controllers/insurance/policy/broker', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it('should redirect to next page', async () => {
-        req.body = mockBroker;
+      describe('when the answer is false', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
 
-        await post(req, res);
+          await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the answer is true', () => {
+        it(`should redirect to ${BROKER_DETAILS_ROOT}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_DETAILS_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       it('should call mapAndSave.broker once with data from constructPayload function', async () => {
@@ -206,9 +186,7 @@ describe('controllers/insurance/policy/broker', () => {
 
         await post(req, res);
 
-        const sanitisedData = sanitiseData(req.body);
-
-        const payload = constructPayload(sanitisedData, FIELD_IDS);
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
         expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
 

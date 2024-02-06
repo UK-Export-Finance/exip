@@ -220,6 +220,7 @@ var POLICY = {
     COUNTY: "county",
     POSTCODE: "postcode",
     EMAIL: "email",
+    FULL_ADDRESS: "fullAddress",
     DETAILS: "whyAppointBroker"
   }
 };
@@ -4133,6 +4134,7 @@ var POLICY_FIELDS = {
   },
   BROKER: {
     [USING_BROKER2]: {
+      LABEL: "Are you using a broker to get this insurance?",
       SUMMARY: {
         TITLE: "Using a broker"
       }

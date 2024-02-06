@@ -59,6 +59,7 @@ export const POLICY = {
     TOWN: 'town',
     COUNTY: 'county',
     POSTCODE: 'postcode',
+    FULL_ADDRESS: 'fullAddress',
     EMAIL: 'email',
     DETAILS: 'whyAppointBroker',
   },

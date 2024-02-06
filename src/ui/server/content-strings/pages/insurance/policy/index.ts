@@ -80,6 +80,11 @@ const BROKER = {
   LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
 };
 
+const BROKER_DETAILS = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about your broker',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -98,5 +103,6 @@ export default {
   ANOTHER_COMPANY,
   OTHER_COMPANY_DETAILS,
   BROKER,
+  BROKER_DETAILS,
   CHECK_YOUR_ANSWERS,
 };

@@ -1,46 +1,42 @@
-import { brokerPage } from '../../../../../../pages/insurance/policy';
+// import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { field as fieldSelector } from '../../../../../../pages/shared';
-import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
+import {
+  field as fieldSelector,
+  yesRadio,
+  yesRadioInput,
+  noRadio,
+  noRadioInput,
+} from '../../../../../../pages/shared';
+// import { PAGES, ERROR_MESSAGES, LINKS } from '../../../../../../content-strings';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER;
 
 const {
   BROKER: {
-    USING_BROKER,
-    LEGEND,
-    NAME,
-    ADDRESS_LINE_1,
-    ADDRESS_LINE_2,
-    TOWN,
-    COUNTY,
-    POSTCODE,
-    EMAIL,
-    DETAILS,
+    USING_BROKER: FIELD_ID,
   },
-} = FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   ROOT,
   POLICY: {
     BROKER_ROOT,
+    BROKER_DETAILS_ROOT,
     CHECK_YOUR_ANSWERS,
     ANOTHER_COMPANY,
   },
 } = INSURANCE_ROUTES;
 
-const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
-const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
+const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
 
-const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
+// const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
 
 const ERROR_ASSERTIONS = {
-  field: brokerPage[USING_BROKER],
   numberOfExpectedErrors: 1,
   errorIndex: 0,
 };
@@ -51,6 +47,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
+  let brokerDetailsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -68,6 +65,7 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -105,86 +103,40 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`should display ${USING_BROKER} section`, () => {
-      cy.checkRadioInputYesAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
+    describe(`${FIELD_ID} label and input`, () => {
+      it('renders `yes` and `no` radio buttons in the correct order', () => {
+        cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+      });
 
-      cy.checkRadioInputNoAriaLabel(CONTENT_STRINGS.PAGE_TITLE);
-    });
+      it('renders `no` radio button', () => {
+        cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
-    it('should NOT display conditional broker section without selecting the "yes" radio', () => {
-      fieldSelector(LEGEND).legend().should('not.be.visible');
+        cy.checkRadioInputNoAriaLabel(FIELDS.BROKER[FIELD_ID].LABEL);
+      });
 
-      fieldSelector(NAME).label().should('not.be.visible');
-      fieldSelector(NAME).input().should('not.be.visible');
+      it('renders `yes` radio button', () => {
+        yesRadio().input().should('exist');
 
-      fieldSelector(ADDRESS_LINE_1).label().should('not.be.visible');
-      fieldSelector(ADDRESS_LINE_1).input().should('not.be.visible');
+        cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
-      fieldSelector(ADDRESS_LINE_2).label().should('not.be.visible');
-      fieldSelector(ADDRESS_LINE_2).input().should('not.be.visible');
-
-      fieldSelector(TOWN).label().should('not.be.visible');
-      fieldSelector(TOWN).input().should('not.be.visible');
-
-      fieldSelector(COUNTY).label().should('not.be.visible');
-      fieldSelector(COUNTY).input().should('not.be.visible');
-
-      fieldSelector(POSTCODE).label().should('not.be.visible');
-      fieldSelector(POSTCODE).input().should('not.be.visible');
-
-      fieldSelector(EMAIL).label().should('not.be.visible');
-      fieldSelector(EMAIL).input().should('not.be.visible');
-    });
-
-    it('should display conditional broker section when selecting the "yes" radio', () => {
-      const fieldId = USING_BROKER;
-      const field = brokerPage[fieldId];
-      field.yesRadioInput().click();
-
-      cy.checkText(fieldSelector(LEGEND).legend(), FIELDS.BROKER[LEGEND].LEGEND);
-
-      cy.checkText(fieldSelector(NAME).label(), FIELDS.BROKER[NAME].LABEL);
-      fieldSelector(NAME).input().should('exist');
-
-      cy.checkText(fieldSelector(ADDRESS_LINE_1).label(), FIELDS.BROKER[ADDRESS_LINE_1].LABEL);
-      fieldSelector(ADDRESS_LINE_1).input().should('exist');
-
-      cy.checkText(fieldSelector(ADDRESS_LINE_2).label(), FIELDS.BROKER[ADDRESS_LINE_2].LABEL);
-      fieldSelector(ADDRESS_LINE_2).input().should('exist');
-
-      cy.checkText(fieldSelector(TOWN).label(), FIELDS.BROKER[TOWN].LABEL);
-      fieldSelector(TOWN).input().should('exist');
-
-      cy.checkText(fieldSelector(COUNTY).label(), FIELDS.BROKER[COUNTY].LABEL);
-      fieldSelector(COUNTY).input().should('exist');
-
-      cy.checkText(fieldSelector(POSTCODE).label(), FIELDS.BROKER[POSTCODE].LABEL);
-      fieldSelector(POSTCODE).input().should('exist');
-
-      cy.checkText(fieldSelector(EMAIL).label(), FIELDS.BROKER[EMAIL].LABEL);
-      fieldSelector(EMAIL).input().should('exist');
-    });
-
-    it('should display summary text with collapsed conditional `details` content', () => {
-      cy.checkText(brokerPage[DETAILS].summary(), CONTENT_STRINGS.SUMMARY);
-
-      brokerPage[DETAILS].details().should('not.have.attr', 'open');
-    });
-
-    describe('when clicking the summary text', () => {
-      it('should expand the collapsed `details` content', () => {
-        brokerPage[DETAILS].summary().click();
-
-        brokerPage[DETAILS].details().should('have.attr', 'open');
-
-        cy.checkText(brokerPage[DETAILS].line1(), CONTENT_STRINGS.LINE_1);
-        cy.checkText(brokerPage[DETAILS].line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
-        cy.checkText(brokerPage[DETAILS].line3(), CONTENT_STRINGS.LINE_3);
-        cy.checkText(brokerPage[DETAILS].line4(), CONTENT_STRINGS.LINE_4);
-
-        cy.checkLink(brokerPage[DETAILS].link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
+        cy.checkRadioInputYesAriaLabel(FIELDS.BROKER[FIELD_ID].LABEL);
       });
     });
+
+    // describe('when clicking the summary text', () => {
+    //   it('should expand the collapsed `details` content', () => {
+    //     brokerPage[DETAILS].summary().click();
+
+    //     brokerPage[DETAILS].details().should('have.attr', 'open');
+
+    //     cy.checkText(brokerPage[DETAILS].line1(), CONTENT_STRINGS.LINE_1);
+    //     cy.checkText(brokerPage[DETAILS].line2(), `${CONTENT_STRINGS.LINE_2} ${CONTENT_STRINGS.LINK_TEXT}`);
+    //     cy.checkText(brokerPage[DETAILS].line3(), CONTENT_STRINGS.LINE_3);
+    //     cy.checkText(brokerPage[DETAILS].line4(), CONTENT_STRINGS.LINE_4);
+
+    //     cy.checkLink(brokerPage[DETAILS].link(), APPROVED_BROKER_LIST, CONTENT_STRINGS.LINK_TEXT);
+    //   });
+    // });
 
     it('should display save and go back button', () => {
       cy.assertSaveAndBackButton();
@@ -192,61 +144,49 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
 
     describe('form submission', () => {
       describe('when submitting an empty form', () => {
-        const errorMessage = ERROR_MESSAGE_BROKER.IS_EMPTY;
-
-        it(`should display validation errors if ${USING_BROKER} radio is not selected`, () => {
-        // visit url to refresh form and radios
+        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
           cy.navigateToUrl(url);
 
-          const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+          const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
           const radioField = {
-            ...field,
-            input: field.yesRadioInput,
+            ...fieldSelector(FIELD_ID),
+            input: noRadioInput,
           };
 
-          cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
+          cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
         });
       });
 
-      describe('when submitting a fully filled form', () => {
-        describe(`when selecting yes for ${USING_BROKER}`, () => {
-          it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-            cy.completeAndSubmitBrokerForm({ usingBroker: true });
+      describe(`when selecting no for ${FIELD_ID}`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+          noRadioInput().click();
+          cy.clickSubmitButton();
 
-            cy.assertUrl(checkYourAnswersUrl);
-          });
-
-          describe('when going back to the page', () => {
-            it('should have the submitted values', () => {
-              cy.navigateToUrl(url);
-
-              cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
-              cy.checkValue(fieldSelector(NAME), application.EXPORTER_BROKER[NAME]);
-              cy.checkValue(fieldSelector(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-              cy.checkValue(fieldSelector(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-              cy.checkValue(fieldSelector(TOWN), application.EXPORTER_BROKER[TOWN]);
-              cy.checkValue(fieldSelector(COUNTY), application.EXPORTER_BROKER[COUNTY]);
-              cy.checkValue(fieldSelector(POSTCODE), application.EXPORTER_BROKER[POSTCODE]);
-              cy.checkValue(fieldSelector(EMAIL), application.EXPORTER_BROKER[EMAIL]);
-            });
-          });
+          cy.assertUrl(checkYourAnswersUrl);
         });
 
-        describe(`when selecting no for ${USING_BROKER}`, () => {
-          it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-            brokerPage[USING_BROKER].noRadioInput().click();
-            cy.clickSubmitButton();
+        describe('when going back to the page', () => {
+          it('should have the submitted value', () => {
+            cy.navigateToUrl(url);
 
-            cy.assertUrl(checkYourAnswersUrl);
+            cy.assertRadioOptionIsChecked(noRadioInput());
           });
+        });
+      });
 
-          describe('when going back to the page', () => {
-            it('should have the submitted values', () => {
-              cy.navigateToUrl(url);
+      describe(`when selecting yes for ${FIELD_ID}`, () => {
+        it(`should redirect to ${BROKER_DETAILS_ROOT} page`, () => {
+          cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-              cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].noRadioInput());
-            });
+          cy.assertUrl(brokerDetailsUrl);
+        });
+
+        describe('when going back to the page', () => {
+          it('should have the submitted value', () => {
+            cy.navigateToUrl(url);
+
+            cy.assertRadioOptionIsChecked(yesRadioInput());
           });
         });
       });

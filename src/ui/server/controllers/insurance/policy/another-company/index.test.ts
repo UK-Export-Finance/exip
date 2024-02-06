@@ -75,7 +75,7 @@ describe('controllers/insurance/policy/another-company', () => {
       const result = pageVariables(refNumber);
 
       const expected = {
-        FIELD_ID: NEED_ANOTHER_COMPANY_TO_BE_INSURED,
+        FIELD_ID,
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANOTHER_COMPANY_SAVE_AND_BACK}`,
       };

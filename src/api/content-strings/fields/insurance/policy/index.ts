@@ -71,6 +71,7 @@ export const POLICY_FIELDS = {
   },
   BROKER: {
     [USING_BROKER]: {
+      LABEL: 'Are you using a broker to get this insurance?',
       SUMMARY: {
         TITLE: 'Using a broker',
       },
