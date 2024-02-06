@@ -241,7 +241,7 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: "The policy holder's last name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          INCORRECT_FORMAT: 'Enter the email address of the person you want named on the policy',
+          INCORRECT_FORMAT: "Enter the policy holder's email address in the correct format, like name@example.com",
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: "Enter the policy holder's position at the company",
