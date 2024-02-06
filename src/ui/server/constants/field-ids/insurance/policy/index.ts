@@ -49,7 +49,7 @@ export const POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: 'needPreCreditPeriodCover',
   CREDIT_PERIOD_WITH_BUYER: 'creditPeriodWithBuyer',
-  REQUEST_JOINTLY_INSURED_PARTY: 'needAnotherCompanyToBeInsured',
+  REQUEST_JOINTLY_INSURED_PARTY: 'requestJointlyInsuredParty',
   REQUESTED_JOINTLY_INSURED_PARTY: {
     COMPANY_NAME: 'companyName',
     COMPANY_NUMBER: 'companyNumber',

@@ -209,8 +209,13 @@ var POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
   CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
+<<<<<<< HEAD
   NEED_ANOTHER_COMPANY_TO_BE_INSURED: "needAnotherCompanyToBeInsured",
   OTHER_COMPANY_TO_INSURE_NAME_TBC: {
+=======
+  REQUEST_JOINTLY_INSURED_PARTY: "requestJointlyInsuredParty",
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+>>>>>>> main-application-no-pdf
     COMPANY_NAME: "companyName",
     COMPANY_NUMBER: "companyNumber",
     COUNTRY: "country"
