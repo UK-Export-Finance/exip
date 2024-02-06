@@ -11,21 +11,21 @@ const MAXIMUM = 100;
  * validates if field is empty or not
  * validates if field is whole number and between 0 and 100.
  * returns validation error if is not a number, has a decimal place, special characters, a comma, is empty or is below 0 or above 100.
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {String} field fieldId of the field being checked
  * @param {object} errors
  * @param {ErrorMessageObject} errorMessages object with different error messages
  * @returns {object} errors
  */
-const percentageNumberValidation = (responseBody: RequestBody, field: string, errors: object, errorMessages: ErrorMessageObject) => {
+const percentageNumberValidation = (formBody: RequestBody, field: string, errors: object, errorMessages: ErrorMessageObject) => {
   const { IS_EMPTY, INCORRECT_FORMAT, BELOW_MINIMUM, ABOVE_MAXIMUM } = errorMessages;
 
   // if empty then return validation error
-  if (!objectHasProperty(responseBody, field)) {
+  if (!objectHasProperty(formBody, field)) {
     return generateValidationErrors(field, IS_EMPTY, errors);
   }
 
-  const value = responseBody[field];
+  const value = formBody[field];
 
   const isFieldANumber = isNumber(value);
   const hasDecimal = numberHasDecimal(Number(value));

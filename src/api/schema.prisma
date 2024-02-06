@@ -122,7 +122,7 @@ model PolicyContact {
   firstName                      String        @default("") @mysql.VarChar(300)
   lastName                       String        @default("") @mysql.VarChar(300)
   email                          String        @default("")
-  position                       String        @default("")
+  position                       String        @default("") @mysql.VarChar(50)
   isSameAsOwner                  Boolean?
   from_Application_policyContact Application[] @relation("Application_policyContact")
 
@@ -311,6 +311,8 @@ model BuyerTradingHistory {
   outstandingPayments        Boolean?
   failedPayments             Boolean?
   exporterHasTradedWithBuyer Boolean?
+  totalOutstandingPayments   Int?
+  totalOverduePayments       Int?
 
   @@index([applicationId])
 }

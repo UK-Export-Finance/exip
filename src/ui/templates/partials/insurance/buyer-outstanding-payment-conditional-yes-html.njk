@@ -13,11 +13,11 @@
   }) }}
 
   {{ monetaryValueInput.render({
-    fieldId: FIELDS.TOTAL_OVERDUE_PAYMENTS.ID,
-    label: FIELDS.TOTAL_OVERDUE_PAYMENTS.LABEL,
+    fieldId: FIELDS.TOTAL_AMOUNT_OVERDUE.ID,
+    label: FIELDS.TOTAL_AMOUNT_OVERDUE.LABEL,
     currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
-    submittedValue: submittedValues[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID],
-    validationError: validationErrors.errorList[FIELDS.TOTAL_OVERDUE_PAYMENTS.ID],
+    submittedValue: submittedValues[FIELDS.TOTAL_AMOUNT_OVERDUE.ID] or application.buyer.buyerTradingHistory[FIELDS.TOTAL_AMOUNT_OVERDUE.ID],
+    validationError: validationErrors.errorList[FIELDS.TOTAL_AMOUNT_OVERDUE.ID],
     legendClass: LEGEND_CLASS
   }) }}
 

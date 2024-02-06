@@ -16,19 +16,19 @@ const {
 /**
  * validates years exporting input
  * only allows number without decimal
- * @param {RequestBody} responseBody
+ * @param {RequestBody} formBody
  * @param {object} errors
  * @returns {object} errors
  */
-const yearsExporting = (responseBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(responseBody, FIELD_ID)) {
+const yearsExporting = (formBody: RequestBody, errors: object) => {
+  if (!objectHasProperty(formBody, FIELD_ID)) {
     const errorMessage = ERROR_MESSAGE.IS_EMPTY;
 
     return generateValidationErrors(FIELD_ID, errorMessage, errors);
   }
 
   const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-  return wholeNumberValidation(responseBody, errors, errorMessage, FIELD_ID);
+  return wholeNumberValidation(formBody, errors, errorMessage, FIELD_ID);
 };
 
 export default yearsExporting;
