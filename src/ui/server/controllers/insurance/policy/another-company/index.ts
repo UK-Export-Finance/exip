@@ -8,6 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -123,11 +124,24 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  const answer = payload[FIELD_ID];
+  try {
+    // save the application
+    const saveResponse = await mapAndSave.jointlyInsuredParty(payload, application);
 
-  if (answer === 'true') {
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`);
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const answer = payload[FIELD_ID];
+
+    if (answer === 'true') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - policy - Different name on policy %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
-
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };

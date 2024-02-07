@@ -1,4 +1,5 @@
 import mapAndSave from '.';
+import mapSubmittedData from '../../map-submitted-data/jointly-insured-party';
 import save from '../../save-data/jointly-insured-party';
 import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -22,13 +23,15 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
 
   const mockValidationErrors = generateValidationErrors(REQUEST_JOINTLY_INSURED_PARTY, 'error', {});
 
+  const populatedData = mapSubmittedData(mockFormBody, mockApplication);
+
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
       it('should call save.jointlyInsuredParty with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.jointlyInsuredParty(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.jointlyInsuredParty).toHaveBeenCalledTimes(1);
-        expect(save.jointlyInsuredParty).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+        expect(save.jointlyInsuredParty).toHaveBeenCalledWith(mockApplication, populatedData, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -43,7 +46,7 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
         await mapAndSave.jointlyInsuredParty(mockFormBody, mockApplication);
 
         expect(save.jointlyInsuredParty).toHaveBeenCalledTimes(1);
-        expect(save.jointlyInsuredParty).toHaveBeenCalledWith(mockApplication, mockFormBody);
+        expect(save.jointlyInsuredParty).toHaveBeenCalledWith(mockApplication, populatedData);
       });
 
       it('should return true', async () => {

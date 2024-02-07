@@ -159,6 +159,8 @@ describe('controllers/insurance/policy/broker', () => {
   });
 
   describe('post', () => {
+    const validBody = mockBroker;
+
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
@@ -190,7 +192,7 @@ describe('controllers/insurance/policy/broker', () => {
 
     describe('when there are no validation errors', () => {
       it('should redirect to next page', async () => {
-        req.body = mockBroker;
+        req.body = validBody;
 
         await post(req, res);
 
@@ -199,10 +201,7 @@ describe('controllers/insurance/policy/broker', () => {
       });
 
       it('should call mapAndSave.broker once with data from constructPayload function', async () => {
-        req.body = {
-          ...mockBroker,
-          injection: 1,
-        };
+        req.body = validBody;
 
         await post(req, res);
 
@@ -217,7 +216,7 @@ describe('controllers/insurance/policy/broker', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = mockBroker;
+          req.body = validBody;
 
           req.originalUrl = INSURANCE_ROUTES.POLICY.BROKER_CHECK_AND_CHANGE;
 
@@ -239,6 +238,42 @@ describe('controllers/insurance/policy/broker', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.broker call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

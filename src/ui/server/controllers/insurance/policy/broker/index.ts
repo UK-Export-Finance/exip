@@ -132,40 +132,40 @@ const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Broker page
  */
 const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  const { body } = req;
+
+  const sanitisedData = sanitiseData(body);
+
+  const payload = constructPayload(sanitisedData, FIELD_IDS);
+
+  // run validation on inputs
+  const validationErrors = generateValidationErrors(payload);
+
+  // if any errors then render template with errors
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS: BROKER,
+        BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
+      }),
+      userName: getUserNameFromSession(req.session.user),
+      ...pageVariables(application.referenceNumber),
+      validationErrors,
+      application: mapApplicationToFormFields(application),
+      submittedValues: payload,
+    });
+  }
+
   try {
-    const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
-
-    const { referenceNumber } = req.params;
-
-    const { body } = req;
-
-    const sanitisedData = sanitiseData(body);
-
-    const payload = constructPayload(sanitisedData, FIELD_IDS);
-
-    // run validation on inputs
-    const validationErrors = generateValidationErrors(payload);
-
-    // if any errors then render template with errors
-    if (validationErrors) {
-      return res.render(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS: BROKER,
-          BACK_LINK: req.headers.referer,
-          HTML_FLAGS,
-        }),
-        userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(application.referenceNumber),
-        validationErrors,
-        application: mapApplicationToFormFields(application),
-        submittedValues: payload,
-      });
-    }
-
     // if no errors, then runs save api call to db
     const saveResponse = await mapAndSave.broker(payload, application);
 
