@@ -23,11 +23,16 @@ interface SectionReview {
   eligibility?: boolean;
 }
 
+interface TotalContractValue {
+  value?: string;
+  valueId?: number;
+}
+
 interface InsuranceEligibilityCore extends SharedEligibility {
   hasCompaniesHouseNumber?: boolean;
   companyNumber?: string;
   company?: Company;
-  totalContractValue?: number;
+  totalContractValue?: TotalContractValue;
   coverPeriod?: number;
   hasEndBuyer?: boolean;
   hasReviewedEligibility?: boolean;

@@ -13,7 +13,15 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADED_WITH_BUYER_CHECK_AND_CHANGE, TRADED_WITH_BUYER_CHANGE, TRADING_HISTORY },
+  YOUR_BUYER: {
+    TRADED_WITH_BUYER_SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+    TRADED_WITH_BUYER_CHECK_AND_CHANGE,
+    TRADED_WITH_BUYER_CHANGE,
+    TRADING_HISTORY,
+    CREDIT_INSURANCE_COVER,
+    BUYER_FINANCIAL_INFORMATION,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
@@ -152,13 +160,13 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
       });
 
       describe(`when ${TRADED_WITH_BUYER} is false`, () => {
-        it(`should redirect to the ${CHECK_YOUR_ANSWERS} when ${TRADED_WITH_BUYER} is false`, async () => {
+        it(`should redirect to the ${BUYER_FINANCIAL_INFORMATION} when ${TRADED_WITH_BUYER} is false`, async () => {
           req.body = {
             [TRADED_WITH_BUYER]: 'false',
           };
 
           await post(req, res);
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -191,6 +199,25 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the totalContractValueOverThreshold is true and ${TRADED_WITH_BUYER} is false`, () => {
+        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
+          req.body = {
+            [TRADED_WITH_BUYER]: 'false',
+          };
+
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: true,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

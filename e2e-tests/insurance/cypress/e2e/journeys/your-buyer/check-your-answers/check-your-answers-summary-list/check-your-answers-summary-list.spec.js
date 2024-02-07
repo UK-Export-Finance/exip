@@ -44,6 +44,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
         cy.completeAndSubmitCompanyOrOrganisationForm({});
         cy.completeAndSubmitConnectionToTheBuyerForm({});
         cy.completeAndSubmitTradedWithBuyerForm({});
+        cy.completeAndSubmitBuyerFinancialInformationForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });

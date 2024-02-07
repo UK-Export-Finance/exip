@@ -13,12 +13,14 @@ const {
  * @param {String} Account email address
  * @param {Boolean} Flag whether to create the application via API instead of going through the eligibility journey. Defaults to true.
  * @param {String} Company number/companies house number to use for application creation
+ * @param {Boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
  * @return {Object} Account ID, application reference number
  */
 const completeSignInAndGoToApplication = ({
   email = mockAccount[EMAIL],
   createApplicationViaApi = true,
   companyNumber,
+  totalContractValueOverThreshold = false,
 }) => {
   if (createApplicationViaApi) {
     /**
@@ -28,7 +30,7 @@ const completeSignInAndGoToApplication = ({
      * 4) Sign into the account, submitting a valid OTP.
      * 5) Assert that the user is taken to the "all sections" application page.
      */
-    return createAnAccountAndApplicationAndSignIn(email, companyNumber).then(({ accountId, referenceNumber }) => ({
+    return createAnAccountAndApplicationAndSignIn(email, companyNumber, totalContractValueOverThreshold).then(({ accountId, referenceNumber }) => ({
       accountId,
       referenceNumber,
     }));
