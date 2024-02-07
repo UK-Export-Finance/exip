@@ -39,15 +39,11 @@ const {
       NEED_PRE_CREDIT_PERIOD,
       CREDIT_PERIOD_WITH_BUYER,
       REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
-      BROKER: {
-        USING_BROKER,
+      BROKER: { USING_BROKER },
+      BROKER_DETAILS: {
         NAME,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        TOWN,
-        COUNTY,
-        POSTCODE,
         EMAIL,
+        FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
     },
     EXPORT_CONTRACT: {
@@ -55,7 +51,7 @@ const {
     },
     EXPORTER_BUSINESS: {
       ALTERNATIVE_TRADING_ADDRESS: {
-        FULL_ADDRESS,
+        FULL_ADDRESS: EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS,
       },
       NATURE_OF_YOUR_BUSINESS: {
         GOODS_OR_SERVICES,
@@ -159,13 +155,9 @@ const application = {
   },
   EXPORTER_BROKER: {
     [USING_BROKER]: true,
-    [NAME]: 'name',
-    [ADDRESS_LINE_1]: 'Address line 1',
-    [ADDRESS_LINE_2]: 'Address line 2',
-    [TOWN]: 'town',
-    [COUNTY]: 'county',
-    [POSTCODE]: 'SW1A 2HQ',
+    [NAME]: 'Mock broker name',
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+    [BROKER_FULL_ADDRESS]: 'Mock Address',
   },
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',
@@ -192,7 +184,7 @@ const application = {
     [CONTACT_POSITION]: 'CEO',
   },
   DIFFERENT_TRADING_ADDRESS: {
-    [FULL_ADDRESS]: 'Mock full address',
+    [EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS]: 'Mock full address',
   },
 };
 

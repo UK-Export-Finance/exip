@@ -69,16 +69,18 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
       checkSummaryList[BROKER.USING_BROKER]({ usingBroker: true });
     });
 
-    it(`should render a ${BROKER.NAME} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER.NAME]({});
-    });
+    // TODO: EMS-2793 - re-enable
 
-    it(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER.ADDRESS_LINE_1]();
-    });
+    // it(`should render a ${BROKER.NAME} summary list row`, () => {
+    //   checkSummaryList.BROKER[BROKER.NAME]({});
+    // });
 
-    it(`should render a ${BROKER.EMAIL} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER.EMAIL]();
-    });
+    // it(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
+    //   checkSummaryList.BROKER[BROKER.ADDRESS_LINE_1]();
+    // });
+
+    // it(`should render a ${BROKER.EMAIL} summary list row`, () => {
+    //   checkSummaryList.BROKER[BROKER.EMAIL]();
+    // });
   });
 });

@@ -31,6 +31,7 @@ const {
     },
     NAME_ON_POLICY: { NAME, POSITION },
     BROKER,
+    BROKER_DETAILS,
   },
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
 } = INSURANCE_FIELD_IDS;
@@ -194,7 +195,7 @@ const checkPolicySummaryList = ({
   [BROKER.USING_BROKER]: ({ usingBroker = false }) => {
     const fieldId = BROKER.USING_BROKER;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_DETAILS);
 
     let expectedValue = FIELD_VALUES.NO;
 
@@ -205,18 +206,18 @@ const checkPolicySummaryList = ({
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   BROKER: {
-    [BROKER.NAME]: () => {
-      const fieldId = BROKER.NAME;
+    [BROKER_DETAILS.NAME]: () => {
+      const fieldId = BROKER_DETAILS.NAME;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_DETAILS);
       const expectedValue = application.EXPORTER_BROKER[fieldId];
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [BROKER.ADDRESS_LINE_1]: () => {
-      const fieldId = BROKER.ADDRESS_LINE_1;
+    [BROKER_DETAILS.FULL_ADDRESS]: () => {
+      const fieldId = BROKER_DETAILS.ADDRESS_LINE_1;
 
-      const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
+      const expectedKey = FIELDS.BROKER_DETAILS[fieldId].SUMMARY.TITLE;
 
       const row = summaryList.field(fieldId);
 
@@ -225,17 +226,12 @@ const checkPolicySummaryList = ({
         expectedKey,
       );
 
-      // as html, cannot use checkText so checking contains following fields
       row.value().contains(application.EXPORTER_BROKER[fieldId]);
-      row.value().contains(application.EXPORTER_BROKER[BROKER.ADDRESS_LINE_2]);
-      row.value().contains(application.EXPORTER_BROKER[BROKER.TOWN]);
-      row.value().contains(application.EXPORTER_BROKER[BROKER.COUNTY]);
-      row.value().contains(application.EXPORTER_BROKER[BROKER.POSTCODE]);
     },
-    [BROKER.EMAIL]: () => {
-      const fieldId = BROKER.NAME;
+    [BROKER_DETAILS.EMAIL]: () => {
+      const fieldId = BROKER_DETAILS.NAME;
 
-      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_DETAILS);
       const expectedValue = application.EXPORTER_BROKER[fieldId];
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);

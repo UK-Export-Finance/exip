@@ -4,21 +4,17 @@ import { field } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import application from '../../../../../../fixtures/application';
 
 const {
-  BROKER: {
-    USING_BROKER,
+  BROKER: { USING_BROKER },
+  BROKER_DETAILS: {
     NAME,
-    ADDRESS_LINE_1,
-    ADDRESS_LINE_2,
-    TOWN,
-    COUNTY,
-    POSTCODE,
     EMAIL,
+    FULL_ADDRESS,
   },
-} = FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   ROOT,
@@ -110,12 +106,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
-      cy.checkValue(field(ADDRESS_LINE_1), '');
-      cy.checkValue(field(ADDRESS_LINE_2), '');
-      cy.checkValue(field(TOWN), '');
-      cy.checkValue(field(COUNTY), '');
-      cy.checkValue(field(POSTCODE), '');
       cy.checkValue(field(EMAIL), '');
+      cy.checkValue(field(FULL_ADDRESS), '');
     });
   });
 
@@ -127,12 +119,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
         brokerPage[USING_BROKER].yesRadioInput().click();
 
         cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
-        cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.keyboardInput(field(ADDRESS_LINE_2).input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.keyboardInput(field(TOWN).input(), application.EXPORTER_BROKER[TOWN]);
-        cy.keyboardInput(field(COUNTY).input(), application.EXPORTER_BROKER[COUNTY]);
         cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
-        cy.keyboardInput(field(POSTCODE).input(), application.EXPORTER_BROKER[POSTCODE]);
+        cy.keyboardInput(field(FULL_ADDRESS).input(), application.EXPORTER_BROKER[FULL_ADDRESS]);
 
         cy.clickSaveAndBackButton();
 
@@ -154,12 +142,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
         cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
-        cy.checkValue(field(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
-        cy.checkValue(field(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
-        cy.checkValue(field(TOWN), application.EXPORTER_BROKER[TOWN]);
-        cy.checkValue(field(COUNTY), application.EXPORTER_BROKER[COUNTY]);
-        cy.checkValue(field(POSTCODE), application.EXPORTER_BROKER[POSTCODE]);
         cy.checkValue(field(EMAIL), application.EXPORTER_BROKER[EMAIL]);
+        cy.checkValue(field(FULL_ADDRESS), application.EXPORTER_BROKER[FULL_ADDRESS]);
       });
     });
 
