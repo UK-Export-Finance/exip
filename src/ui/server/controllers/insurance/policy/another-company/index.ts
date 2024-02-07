@@ -90,7 +90,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
-    applicationAnswer: application.policy.jointlyInsuredParty[FIELD_ID],
+    submittedValues: application.policy.jointlyInsuredParty,
   });
 };
 

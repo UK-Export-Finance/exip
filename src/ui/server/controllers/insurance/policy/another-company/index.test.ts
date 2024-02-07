@@ -118,6 +118,7 @@ describe('controllers/insurance/policy/another-company', () => {
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
+        submittedValues: mockApplication.policy.jointlyInsuredParty,
         applicationAnswer: mockApplication.policy.jointlyInsuredParty[FIELD_ID],
       };
 
