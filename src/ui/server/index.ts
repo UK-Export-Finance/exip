@@ -28,7 +28,6 @@ import applicationAccess from './middleware/insurance/application-access';
 import applicationStatus from './middleware/insurance/application-status';
 import getApplication from './middleware/insurance/get-application';
 import userSession from './middleware/insurance/user-session';
-import totalContractValueOverThreshold from './middleware/insurance/total-contract-value-over-threshold';
 
 import { http } from './helpers/http';
 import { https } from './helpers/https';
@@ -123,7 +122,6 @@ ui.use('/insurance/eligibility', requiredInsuranceEligibilityDataProvided);
 ui.use('/insurance/:referenceNumber/*', getApplication);
 ui.use('/insurance/:referenceNumber/*', applicationAccess);
 ui.use('/insurance/:referenceNumber/*', applicationStatus);
-ui.use('/insurance/:referenceNumber/*', totalContractValueOverThreshold);
 ui.use('/', userSession);
 
 ui.use('/', rootRoute);

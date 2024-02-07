@@ -7,6 +7,8 @@ const {
   },
 } = ROUTES.INSURANCE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your Buyer - Traded with buyer page - Submission with total contract value over threshold', () => {
   let referenceNumber;
   let url;
@@ -22,9 +24,9 @@ context('Insurance - Your Buyer - Traded with buyer page - Submission with total
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
-      tradingHistoryUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      creditInsuranceCoverUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
+      tradingHistoryUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
+      creditInsuranceCoverUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
       cy.assertUrl(url);
     });

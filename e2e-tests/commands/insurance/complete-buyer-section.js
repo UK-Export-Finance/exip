@@ -16,8 +16,8 @@ const completeBuyerSection = ({
   cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer });
 
   /**
-   * if not exporterHasTradedWithBuyer
-   * and totalContractValueOverThreshold is true
+   * if totalContractValueOverThreshold is true
+   * and exporterHasTradedWithBuyer is false or undefined
    * then complete credit insurance cover form
    */
   if (totalContractValueOverThreshold && !exporterHasTradedWithBuyer) {

@@ -210,8 +210,10 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
             [TRADED_WITH_BUYER]: 'false',
           };
 
-          // @ts-ignore
-          res.locals.application.totalContractValueOverThreshold = true;
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: true,
+          };
 
           await post(req, res);
 

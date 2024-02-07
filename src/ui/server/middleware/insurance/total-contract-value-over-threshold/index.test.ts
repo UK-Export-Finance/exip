@@ -1,50 +1,32 @@
 import totalContractValueOverThreshold from '.';
 import { TOTAL_CONTRACT_VALUE } from '../../../constants';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
-import { Next, Request, Response } from '../../../../types';
+import { mockApplication } from '../../../test-mocks';
+import { Application } from '../../../../types';
 
 describe('middleware/insurance/total-contract-value-over-threshold', () => {
-  let req: Request;
-  let res: Response;
-  let next: Next;
-
-  const nextSpy = jest.fn();
-
-  beforeEach(() => {
-    req = mockReq();
-    res = mockRes();
-    next = nextSpy;
-  });
+  let application: Application;
 
   describe('when totalContractValue?.value is undefined', () => {
     beforeEach(() => {
-      res.locals.application = {
+      application = {
         ...mockApplication,
         eligibility: {
           ...mockApplication.eligibility,
           totalContractValue: undefined,
         },
       };
-
-      next = nextSpy;
-    });
-
-    it('should call next()', () => {
-      totalContractValueOverThreshold(req, res, next);
-
-      expect(nextSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should set totalContractValueOverThreshold to false', () => {
-      totalContractValueOverThreshold(req, res, next);
+      const result = totalContractValueOverThreshold(application);
 
-      expect(res.locals.application?.totalContractValueOverThreshold).toEqual(false);
+      expect(result.totalContractValueOverThreshold).toEqual(false);
     });
   });
 
   describe(`when totalContractValue?.value is ${TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE}`, () => {
     beforeEach(() => {
-      res.locals.application = {
+      application = {
         ...mockApplication,
         eligibility: {
           ...mockApplication.eligibility,
@@ -54,26 +36,18 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
           },
         },
       };
-
-      next = nextSpy;
-    });
-
-    it('should call next()', () => {
-      totalContractValueOverThreshold(req, res, next);
-
-      expect(nextSpy).toHaveBeenCalledTimes(1);
     });
 
     it('should set totalContractValueOverThreshold to false', () => {
-      totalContractValueOverThreshold(req, res, next);
+      const result = totalContractValueOverThreshold(application);
 
-      expect(res.locals.application?.totalContractValueOverThreshold).toEqual(false);
+      expect(result.totalContractValueOverThreshold).toEqual(false);
     });
   });
 
   describe(`when totalContractValue?.value is ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
     beforeEach(() => {
-      res.locals.application = {
+      application = {
         ...mockApplication,
         eligibility: {
           ...mockApplication.eligibility,
@@ -83,20 +57,16 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
           },
         },
       };
-
-      next = nextSpy;
     });
 
     it('should call next()', () => {
-      totalContractValueOverThreshold(req, res, next);
-
-      expect(nextSpy).toHaveBeenCalledTimes(1);
+      totalContractValueOverThreshold(application);
     });
 
     it('should set totalContractValueOverThreshold to true', () => {
-      totalContractValueOverThreshold(req, res, next);
+      const result = totalContractValueOverThreshold(application);
 
-      expect(res.locals.application?.totalContractValueOverThreshold).toEqual(true);
+      expect(result.totalContractValueOverThreshold).toEqual(true);
     });
   });
 });
