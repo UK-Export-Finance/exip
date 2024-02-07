@@ -36,11 +36,14 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER;
 
 export const TEMPLATE = SHARED_PAGES.SINGLE_RADIO;
 
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
+ * @returns {Object} Page variables
+ */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID: USING_BROKER,
-  // DETAILS: {
-  //   ID: DETAILS,
-  // },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_SAVE_AND_BACK}`,
 });
 
