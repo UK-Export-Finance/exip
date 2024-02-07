@@ -8,9 +8,9 @@ const validation = (formBody: RequestBody, fieldId: string, errorMessage: string
   const hasErrors = !objectHasKeysAndValues(formBody) || !objectHasProperty(formBody, fieldId);
 
   if (hasErrors) {
-    errors = generateValidationErrors(fieldId, errorMessage);
+    const generatedErrors = generateValidationErrors(fieldId, errorMessage);
 
-    return errors;
+    return generatedErrors;
   }
 
   return errors;
