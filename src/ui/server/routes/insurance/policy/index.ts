@@ -22,6 +22,7 @@ import { post as nameOnPolicySaveAndBackPost } from '../../../controllers/insura
 import { get as differentNameOnPolicyGet, post as differentNameOnPolicyPost } from '../../../controllers/insurance/policy/different-name-on-policy';
 import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../../controllers/insurance/policy/pre-credit-period';
 import { get as anotherCompanyGet, post as anotherCompanyPost } from '../../../controllers/insurance/policy/another-company';
+import { post as anotherCompanySaveAndBackPost } from '../../../controllers/insurance/policy/another-company/save-and-back';
 import { get as otherCompanyDetailsGet, post as otherCompanyDetailsPost } from '../../../controllers/insurance/policy/other-company-details';
 import { post as preCreditPeriodSaveAndBackPost } from '../../../controllers/insurance/policy/pre-credit-period/save-and-back';
 import { post as differentNameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/different-name-on-policy/save-and-back';
@@ -130,6 +131,7 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.PRE_CREDI
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ANOTHER_COMPANY}`, anotherCompanyGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ANOTHER_COMPANY}`, anotherCompanyPost);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ANOTHER_COMPANY_SAVE_AND_BACK}`, anotherCompanySaveAndBackPost);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.OTHER_COMPANY_DETAILS}`, otherCompanyDetailsGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.OTHER_COMPANY_DETAILS}`, otherCompanyDetailsPost);

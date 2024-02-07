@@ -31,10 +31,12 @@ export const PAGE_CONTENT_STRINGS = {
 const {
   INSURANCE: {
     POLICY: {
-      [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+      [FIELD_ID]: { IS_EMPTY },
     },
   },
 } = ERROR_MESSAGES;
+
+export const ERROR_MESSAGE = IS_EMPTY;
 
 /**
  * pageVariables
@@ -140,7 +142,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
   } catch (err) {
-    console.error('Error updating application - policy - Different name on policy %O', err);
+    console.error('Error updating application - policy - another company %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
