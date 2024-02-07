@@ -1,5 +1,6 @@
 const ROOT = '/insurance-policy';
 const BROKER_ROOT = `${ROOT}/broker`;
+const BROKER_DETAILS_ROOT = `${ROOT}/broker-details`;
 
 export const POLICY = {
   ROOT,
@@ -42,5 +43,6 @@ export const POLICY = {
   BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
   BROKER_CHANGE: `${BROKER_ROOT}/change`,
   BROKER_CHECK_AND_CHANGE: `${BROKER_ROOT}/check-and-change`,
+  BROKER_DETAILS_ROOT,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };

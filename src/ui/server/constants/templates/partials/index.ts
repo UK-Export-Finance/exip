@@ -1,7 +1,6 @@
 export const PARTIALS = {
   INSURANCE: {
     BROKER: {
-      CONDITIONAL_YES_HTML: 'partials/insurance/broker-conditional-yes-html.njk',
       CUSTOM_CONTENT_HTML: 'partials/insurance/broker-details.njk',
     },
     BUYER: {

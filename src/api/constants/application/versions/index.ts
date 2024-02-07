@@ -4,6 +4,8 @@ import { GBP } from '../../supported-currencies';
 /**
  * VERSIONS
  * All possible application versions.
+ * These versions highlight changes to certain features involving data changes,
+ * That differ as the service is iterated.
  * This should be manually updated each time a phase of EXIP is started. For example:
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
@@ -18,6 +20,7 @@ const VERSIONS = [
     TOTAL_VALUE_OF_CONTRACT: 500000,
     DEFAULT_FINAL_DESTINATION_KNOWN: true,
     DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
+    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true,
   },
   {
     VERSION_NUMBER: '2',
@@ -25,6 +28,7 @@ const VERSIONS = [
     DEFAULT_FINAL_DESTINATION_KNOWN: null,
     DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
     DEFAULT_CURRENCY: GBP,
+    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false,
   },
 ] as Array<ApplicationVersion>;
 

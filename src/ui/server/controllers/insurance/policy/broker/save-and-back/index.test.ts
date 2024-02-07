@@ -1,15 +1,14 @@
 import { post } from '.';
-import { FIELD_IDS } from '..';
+import { FIELD_ID, ERROR_MESSAGE } from '..';
 import { ROUTES } from '../../../../../constants';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import constructPayload from '../../../../../helpers/construct-payload';
+import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../../map-and-save/broker';
-import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
-const {
-  BROKER: { NAME, POSTCODE },
-} = POLICY_FIELD_IDS;
+const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
@@ -30,7 +29,9 @@ describe('controllers/insurance/policy/broker/save-and-back', () => {
     jest.resetAllMocks();
   });
 
-  const validBody = mockBroker;
+  const validBody = {
+    [USING_BROKER]: 'true',
+  };
 
   describe('when there are no validation errors', () => {
     it('should redirect to all sections page', async () => {
@@ -42,26 +43,21 @@ describe('controllers/insurance/policy/broker/save-and-back', () => {
     });
 
     it('should call mapAndSave.broker once with data from constructPayload function', async () => {
-      req.body = {
-        ...validBody,
-        injection: 1,
-      };
+      req.body = validBody;
 
       await post(req, res);
 
-      const payload = constructPayload(req.body, FIELD_IDS);
+      const payload = constructPayload(req.body, [FIELD_ID]);
+      const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, false);
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
     });
   });
 
   describe('when there are validation errors', () => {
-    const mockInvalidBody = {
-      [NAME]: 'Test',
-      [POSTCODE]: 'SW1',
-    };
+    const mockInvalidBody = {};
 
     it('should redirect to all sections page', async () => {
       req.body = mockInvalidBody;
@@ -76,7 +72,12 @@ describe('controllers/insurance/policy/broker/save-and-back', () => {
 
       await post(req, res);
 
+      const payload = constructPayload(req.body, [FIELD_ID]);
+      const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
     });
   });
 

@@ -80,6 +80,13 @@ const BROKER = {
   LINE_4: 'Appointing a broker does not change the cost to you of any UKEF credit insurance policy.',
 };
 
+const BROKER_DETAILS = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about your broker',
+  INTRO:
+    "Your broker's contact details will be stored securely and in line with GDPR. They will also be our main point of contact when processing your application.",
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -98,5 +105,6 @@ module.exports = {
   ANOTHER_COMPANY,
   OTHER_COMPANY_DETAILS,
   BROKER,
+  BROKER_DETAILS,
   CHECK_YOUR_ANSWERS,
 };

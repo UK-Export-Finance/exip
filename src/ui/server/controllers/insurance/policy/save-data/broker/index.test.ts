@@ -8,7 +8,7 @@ import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
-  BROKER: { ADDRESS_LINE_1 },
+  BROKER_DETAILS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/save-data/broker', () => {
@@ -21,9 +21,9 @@ describe('controllers/insurance/policy/save-data/broker', () => {
   });
 
   describe('when errorList is provided', () => {
-    const mockValidationErrors = generateValidationErrors(ADDRESS_LINE_1, 'error', {});
+    const mockValidationErrors = generateValidationErrors(FULL_ADDRESS, 'error', {});
 
-    it(`should call api.keystone.application.update.broker with all fields but not ${ADDRESS_LINE_1}`, async () => {
+    it(`should call api.keystone.application.update.broker with all fields but not ${FULL_ADDRESS}`, async () => {
       await save.broker(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);

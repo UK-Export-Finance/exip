@@ -273,24 +273,8 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the country the other company is based in',
         },
       },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
+      [FIELD_IDS.INSURANCE.POLICY.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
-      },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.NAME]: {
-        IS_EMPTY: 'Enter the name of your broker',
-      },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.ADDRESS_LINE_1]: {
-        IS_EMPTY: 'Enter address line 1 for your broker',
-      },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.TOWN]: {
-        IS_EMPTY: 'Enter the town or city for your broker',
-      },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.EMAIL]: {
-        INCORRECT_FORMAT: 'Enter the email address for the broker in the correct format, like name@example.com',
-      },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.POSTCODE]: {
-        IS_EMPTY: 'Enter the postcode for your broker',
-        INCORRECT_FORMAT: 'Enter the postcode for your broker in the correct format - for example KT3 3QQ',
       },
     },
     YOUR_BUYER: {

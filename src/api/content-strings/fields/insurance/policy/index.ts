@@ -4,8 +4,9 @@ const {
   POLICY: {
     CONTRACT_POLICY,
     EXPORT_VALUE,
-    BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, EMAIL },
     POLICY_TYPE,
+    USING_BROKER,
+    BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -71,23 +72,29 @@ export const POLICY_FIELDS = {
   },
   BROKER: {
     [USING_BROKER]: {
+      LABEL: 'Are you using a broker to get this insurance?',
       SUMMARY: {
         TITLE: 'Using a broker',
       },
     },
+  },
+  BROKER_DETAILS: {
     [NAME]: {
+      LABEL: 'Name of broker or company',
       SUMMARY: {
         TITLE: "Broker's name or company",
       },
     },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address",
-      },
-    },
     [EMAIL]: {
+      LABEL: 'Email address',
       SUMMARY: {
         TITLE: "Broker's email",
+      },
+    },
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address",
       },
     },
   },

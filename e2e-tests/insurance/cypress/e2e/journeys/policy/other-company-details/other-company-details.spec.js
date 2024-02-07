@@ -2,7 +2,7 @@ import { field as fieldSelector, headingCaption } from '../../../../../../pages/
 import { FIELD_VALUES } from '../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;

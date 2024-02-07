@@ -25,7 +25,8 @@ const {
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
   POLICY: {
-    BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
+    USING_BROKER,
+    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -59,15 +60,10 @@ export const mapBroker = (application: Application) => {
   let mapped = [xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
 
   if (broker[USING_BROKER]) {
-    const addressAnswer = {
-      lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]}`,
-      other: `${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,
-    };
-
     mapped = [
       ...mapped,
       xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-      xlsxRow(XLSX.FIELDS[ADDRESS_LINE_1], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
+      xlsxRow(XLSX.FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
       xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
     ];
   }
