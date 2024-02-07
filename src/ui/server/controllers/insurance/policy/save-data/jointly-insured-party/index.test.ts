@@ -30,7 +30,8 @@ describe('controllers/insurance/policy/save-data/jointly-insured-party', () => {
 
       const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList));
       const expectedSanitisedData = sanitiseData(dataToSave);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.jointlyInsuredParty.id, expectedSanitisedData);
+
+      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.jointlyInsuredParty.id, expectedSanitisedData);
     });
 
     it('should return the API response', async () => {
@@ -48,7 +49,8 @@ describe('controllers/insurance/policy/save-data/jointly-insured-party', () => {
 
       const dataToSave = getDataToSave(mockFormBody);
       const expectedSanitisedData = sanitiseData(dataToSave);
-      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.jointlyInsuredParty.id, expectedSanitisedData);
+
+      expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.jointlyInsuredParty.id, expectedSanitisedData);
     });
 
     it('should return the API response', async () => {

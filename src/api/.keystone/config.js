@@ -209,8 +209,8 @@ var POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
   CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
-  REQUEST_JOINTLY_INSURED_PARTY: "requestJointlyInsuredParty",
   REQUESTED_JOINTLY_INSURED_PARTY: {
+    REQUESTED: "requested",
     COMPANY_NAME: "companyName",
     COMPANY_NUMBER: "companyNumber",
     COUNTRY: "country"
@@ -371,6 +371,7 @@ var DEFAULT_RESOLVERS = [
   "updateBuyerTradingHistory",
   "updateCompany",
   "updateDeclaration",
+  "updateJointlyInsuredParty",
   "updatePolicy",
   "updatePolicyContact",
   "updateExportContract",

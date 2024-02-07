@@ -24,13 +24,19 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { REQUEST_JOINTLY_INSURED_PARTY: FIELD_ID } = POLICY_FIELD_IDS;
+const {
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    REQUESTED: FIELD_ID,
+  },
+} = POLICY_FIELD_IDS;
 
 const {
   INSURANCE: {
     POLICY: {
-      [FIELD_ID]: {
-        IS_EMPTY: EXPECTED_ERROR_MESSAGE,
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_ID]: {
+          IS_EMPTY: EXPECTED_ERROR_MESSAGE,
+        },
       },
     },
   },
@@ -102,9 +108,9 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       cy.assertSaveAndBackButton();
     });
 
-    describe(`renders ${FIELD_ID} label and inputs`, () => {
+    describe(`renders ${FIELD_ID}`, () => {
       it('renders a hint', () => {
-        cy.checkText(yesNoRadioHint(), FIELDS[FIELD_ID].HINT);
+        cy.checkText(yesNoRadioHint(), FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].HINT);
       });
 
       it('renders `yes` and `no` radio buttons in the correct order', () => {
@@ -153,6 +159,14 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
 
         cy.assertUrl(brokerUrl);
       });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
+      });
     });
 
     describe('when submitting the answer as `yes`', () => {
@@ -162,6 +176,14 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
         cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
 
         cy.assertUrl(otherCompanyDetailsUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+        });
       });
     });
   });

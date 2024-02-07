@@ -17,21 +17,25 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { REQUEST_JOINTLY_INSURED_PARTY } = POLICY_FIELD_IDS;
+const {
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
+} = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
 
-export const FIELD_ID = REQUEST_JOINTLY_INSURED_PARTY;
+export const FIELD_ID = REQUESTED;
 
 export const PAGE_CONTENT_STRINGS = {
   ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
-  HINT: FIELDS[REQUEST_JOINTLY_INSURED_PARTY].HINT,
+  HINT: FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED].HINT,
 };
 
 const {
   INSURANCE: {
     POLICY: {
-      [FIELD_ID]: { IS_EMPTY },
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_ID]: { IS_EMPTY },
+      },
     },
   },
 } = ERROR_MESSAGES;
@@ -45,7 +49,7 @@ export const ERROR_MESSAGE = IS_EMPTY;
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  FIELD_ID: REQUEST_JOINTLY_INSURED_PARTY,
+  FIELD_ID,
   FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ANOTHER_COMPANY_SAVE_AND_BACK}`,
 });
@@ -86,6 +90,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
+    applicationAnswer: application.policy.jointlyInsuredParty[FIELD_ID],
   });
 };
 

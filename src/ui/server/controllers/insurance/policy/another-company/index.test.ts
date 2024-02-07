@@ -19,14 +19,18 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { REQUEST_JOINTLY_INSURED_PARTY } = POLICY_FIELD_IDS;
+const {
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
+} = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
 
 const {
   INSURANCE: {
     POLICY: {
-      [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+      },
     },
   },
 } = ERROR_MESSAGES;
@@ -54,7 +58,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = REQUEST_JOINTLY_INSURED_PARTY;
+      const expected = REQUESTED;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -64,7 +68,7 @@ describe('controllers/insurance/policy/another-company', () => {
     it('should have the correct properties', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
-        HINT: FIELDS[REQUEST_JOINTLY_INSURED_PARTY].HINT,
+        HINT: FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED].HINT,
       };
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
@@ -76,7 +80,7 @@ describe('controllers/insurance/policy/another-company', () => {
       const result = pageVariables(refNumber);
 
       const expected = {
-        FIELD_ID: REQUEST_JOINTLY_INSURED_PARTY,
+        FIELD_ID: REQUESTED,
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANOTHER_COMPANY_SAVE_AND_BACK}`,
       };
@@ -114,6 +118,7 @@ describe('controllers/insurance/policy/another-company', () => {
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
+        applicationAnswer: mockApplication.policy.jointlyInsuredParty[FIELD_ID],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -134,7 +139,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
   describe('post', () => {
     const validBody = {
-      [REQUEST_JOINTLY_INSURED_PARTY]: 'false',
+      [REQUESTED]: 'false',
     };
 
     mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(true));
@@ -155,7 +160,7 @@ describe('controllers/insurance/policy/another-company', () => {
       describe(`when ${FIELD_ID} is submitted as 'no'`, () => {
         beforeEach(() => {
           req.body = {
-            [REQUEST_JOINTLY_INSURED_PARTY]: 'false',
+            [REQUESTED]: 'false',
           };
         });
 
@@ -171,7 +176,7 @@ describe('controllers/insurance/policy/another-company', () => {
       describe(`when ${FIELD_ID} is submitted as 'yes'`, () => {
         beforeEach(() => {
           req.body = {
-            [REQUEST_JOINTLY_INSURED_PARTY]: 'true',
+            [REQUESTED]: 'true',
           };
         });
 
@@ -187,7 +192,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
     describe('when there are validation errors', () => {
       const mockInvalidBody = {
-        [REQUEST_JOINTLY_INSURED_PARTY]: '',
+        [REQUESTED]: '',
       };
 
       beforeEach(() => {

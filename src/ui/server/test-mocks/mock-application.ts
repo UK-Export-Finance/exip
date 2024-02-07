@@ -20,6 +20,7 @@ const mockGenericPolicy = {
   policyCurrencyCode: GBP,
   needPreCreditPeriodCover: false,
   creditPeriodWithBuyer: 'Mock credit period description',
+  jointlyInsuredParty: mockJointlyInsuredParty,
 };
 
 export const mockSinglePolicy = {
@@ -140,7 +141,6 @@ const mockApplication = {
   owner: mockOwner,
   policy: mockSinglePolicy,
   policyContact: mockContact,
-  jointlyInsuredParty: mockJointlyInsuredParty,
   exportContract: mockExportContract,
   company: mockCompany,
   business: mockBusiness,

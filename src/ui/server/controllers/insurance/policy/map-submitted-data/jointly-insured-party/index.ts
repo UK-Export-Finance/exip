@@ -1,15 +1,10 @@
-import { Application, RequestBody } from '../../../../../../types';
-
-// TODO
+import { RequestBody } from '../../../../../../types';
 
 /**
  * mapSubmittedData
  * @param {Express.Request.body} Form data
  * @returns {Object} Page variables
  */
-const mapSubmittedData = (formBody: RequestBody, application: Application): object => ({
-  ...application,
-  ...formBody,
-});
+const mapSubmittedData = (formBody: RequestBody): object => formBody;
 
 export default mapSubmittedData;

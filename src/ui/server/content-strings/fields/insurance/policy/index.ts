@@ -15,8 +15,7 @@ const {
     DIFFERENT_NAME_ON_POLICY,
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
-    REQUEST_JOINTLY_INSURED_PARTY,
-    REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
     BROKER: { LEGEND, USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, COUNTY, POSTCODE, TOWN },
   },
 } = INSURANCE_FIELD_IDS;
@@ -185,10 +184,10 @@ export const POLICY_FIELDS = {
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
   },
-  [REQUEST_JOINTLY_INSURED_PARTY]: {
-    HINT: 'This could be a parent company, subsidiary or a subcontractor.',
-  },
   REQUESTED_JOINTLY_INSURED_PARTY: {
+    [REQUESTED]: {
+      HINT: 'This could be a parent company, subsidiary or a subcontractor.',
+    },
     [COMPANY_NAME]: {
       LABEL: 'Name of the other company',
       MAXIMUM: 200,

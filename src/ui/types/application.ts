@@ -29,19 +29,6 @@ interface ApplicationEligibility extends InsuranceEligibilityCore {
   buyerCountry: Country;
 }
 
-interface ApplicationPolicy {
-  id: string;
-  policyType?: string;
-  requestedStartDate?: Date;
-  contractCompletionDate?: Date;
-  totalValueOfContract?: number;
-  creditPeriodWithBuyer?: string;
-  policyCurrencyCode?: string;
-  totalMonthsOfCover?: number;
-  totalSalesToBuyer?: number;
-  maximumBuyerWillOwe?: number;
-}
-
 interface ApplicationExportContract {
   id: string;
   goodsOrServicesDescription?: string;
@@ -182,12 +169,25 @@ interface ApplicationJointlyInsuredParty {
   country?: Country;
 }
 
+interface ApplicationPolicy {
+  id: string;
+  policyType?: string;
+  requestedStartDate?: Date;
+  contractCompletionDate?: Date;
+  totalValueOfContract?: number;
+  creditPeriodWithBuyer?: string;
+  policyCurrencyCode?: string;
+  totalMonthsOfCover?: number;
+  totalSalesToBuyer?: number;
+  maximumBuyerWillOwe?: number;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
   policyContact: ApplicationPolicyContact;
-  jointlyInsuredParty: ApplicationJointlyInsuredParty;
   exportContract: ApplicationExportContract;
   company: ApplicationCompany;
   business: ApplicationBusiness;

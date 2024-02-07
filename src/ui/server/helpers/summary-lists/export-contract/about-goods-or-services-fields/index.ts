@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
-import { ApplicationPolicy, Country, SummaryListItemData } from '../../../../../types';
+import { ApplicationExportContract, Country, SummaryListItemData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
@@ -20,11 +20,18 @@ const {
 /**
  * generateAboutGoodsOrServicesFields
  * Create all policy fields and values for the Insurance - Type of policy govukSummaryList
- * @param {Object} All submitted policy data
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {Object} answers: All submitted policy data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array} countries: Countries
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
  * @returns {Object} All policy fields and values in an object structure for GOVUK summary list structure
  */
-const generateAboutGoodsOrServicesFields = (answers: ApplicationPolicy, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
+const generateAboutGoodsOrServicesFields = (
+  answers: ApplicationExportContract,
+  referenceNumber: number,
+  countries: Array<Country>,
+  checkAndChange: boolean,
+) => {
   const fields = [
     fieldGroupItem({
       field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, DESCRIPTION),

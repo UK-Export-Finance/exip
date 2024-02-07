@@ -50,6 +50,16 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+          jointlyInsuredParty {
+            id
+            requested
+            companyName
+            companyNumber
+            country {
+              isoCode
+              name
+            }
+          }
         }
         policyContact {
           id
@@ -58,15 +68,6 @@ const applicationQuery = gql`
           email
           position
           isSameAsOwner
-        }
-        jointlyInsuredParty {
-          requested
-          companyName
-          companyNumber
-          country {
-            isoCode
-            name
-          }
         }
         exportContract {
           id

@@ -19,7 +19,7 @@ const jointlyInsuredParty = async (application: Application, formBody: RequestBo
   const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.
-  const jointlyInsuredPartyId = application.jointlyInsuredParty?.id;
+  const jointlyInsuredPartyId = application.policy.jointlyInsuredParty?.id;
 
   try {
     const saveResponse = await api.keystone.application.update.jointlyInsuredParty(jointlyInsuredPartyId, sanitisedData);
