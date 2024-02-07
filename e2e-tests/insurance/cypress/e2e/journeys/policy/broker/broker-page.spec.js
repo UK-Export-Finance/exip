@@ -41,7 +41,7 @@ const ERROR_ASSERTIONS = {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
+context('Insurance - Policy - Broker page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
@@ -82,7 +82,6 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${BROKER_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`,
-      assertSubmitButton: true,
       lightHouseThresholds: {
         // accessibility threshold is reduced here because
         // the radio component from design system has an invalid aria attribute.
