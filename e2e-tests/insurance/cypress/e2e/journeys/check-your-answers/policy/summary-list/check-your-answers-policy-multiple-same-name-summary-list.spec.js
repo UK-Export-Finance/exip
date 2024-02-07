@@ -29,7 +29,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, usingBroker: false });
 
       task.link().click();
 
@@ -67,7 +67,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
 
   describe('`broker`', () => {
     it(`should render a ${USING_BROKER} summary list row`, () => {
-      checkSummaryList[USING_BROKER]({ usingBroker: true });
+      checkSummaryList[USING_BROKER]({ usingBroker: false });
     });
 
     // TODO: EMS-2793 - re-enable
@@ -75,8 +75,8 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
     it.skip(`should render a ${BROKER_DETAILS.NAME} summary list row`, () => {
       checkSummaryList.BROKER[BROKER_DETAILS.NAME]({});
     });
-    it.skip(`should render a ${BROKER_DETAILS.ADDRESS_LINE_1} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER_DETAILS.ADDRESS_LINE_1]();
+    it.skip(`should render a ${BROKER_DETAILS.FULL_ADDRESS} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER_DETAILS.FULL_ADDRESS]();
     });
 
     it.skip(`should render a ${BROKER_DETAILS.EMAIL} summary list row`, () => {

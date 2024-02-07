@@ -15,9 +15,7 @@ import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/field
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER;
 
 const {
-  BROKER: {
-    USING_BROKER: FIELD_ID,
-  },
+  USING_BROKER: FIELD_ID,
 } = POLICY_FIELD_IDS;
 
 const {

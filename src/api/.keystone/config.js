@@ -215,9 +215,7 @@ var POLICY = {
     COMPANY_NUMBER: "companyNumber",
     COUNTRY: "country"
   },
-  BROKER: {
-    USING_BROKER: "isUsingBroker"
-  },
+  USING_BROKER: "isUsingBroker",
   BROKER_DETAILS: {
     NAME: "name",
     EMAIL: "email",
@@ -599,13 +597,9 @@ var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TY
 
 // constants/XLSX-CONFIG/index.ts
 var {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
-  },
-  POLICY: {
-    BROKER: { USING_BROKER }
-  }
-} = insurance_default;
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
+  USING_BROKER
+} = POLICY;
 var XLSX_ROW_INDEXES = (application2) => {
   const { policy, broker } = application2;
   const TITLES = {
@@ -4073,7 +4067,7 @@ var {
     CONTRACT_POLICY,
     EXPORT_VALUE,
     POLICY_TYPE: POLICY_TYPE3,
-    BROKER: { USING_BROKER: USING_BROKER2 },
+    USING_BROKER: USING_BROKER2,
     BROKER_DETAILS: { NAME, EMAIL: EMAIL4, FULL_ADDRESS }
   }
 } = insurance_default;
@@ -4360,7 +4354,7 @@ var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
   },
-  BROKER: { USING_BROKER: USING_BROKER3 },
+  USING_BROKER: USING_BROKER3,
   BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
 } = policy_default;
 var {
@@ -4613,7 +4607,7 @@ var {
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
   },
   POLICY: {
-    BROKER: { USING_BROKER: USING_BROKER4 },
+    USING_BROKER: USING_BROKER4,
     BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
   }
 } = insurance_default;

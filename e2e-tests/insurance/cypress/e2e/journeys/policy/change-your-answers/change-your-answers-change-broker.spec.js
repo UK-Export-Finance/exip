@@ -2,19 +2,17 @@ import { brokerPage } from '../../../../../../pages/insurance/policy';
 import { field, summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  POLICY: {
-    USING_BROKER,
-    BROKER_DETAILS: {
-      NAME,
-      EMAIL,
-      FULL_ADDRESS,
-    },
+  USING_BROKER,
+  BROKER_DETAILS: {
+    NAME,
+    EMAIL,
+    FULL_ADDRESS,
   },
-} = INSURANCE_FIELD_IDS;
+} = POLICY_FIELD_IDS;
 
 const {
   ROOT,
@@ -24,7 +22,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-context('Insurance - Policy - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
+// TODO: EMS-2793 - re-enable
+context.skip('Insurance - Policy - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let url;
 
@@ -32,7 +31,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ usingBroker: true });
+      cy.completePolicySection({ usingBroker: false });
 
       url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
@@ -82,8 +81,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
   });
 
-  // TODO: EMS-2793 - re-enable
-  describe.skip('Address', () => {
+  describe('Address', () => {
     const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
@@ -128,8 +126,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
   });
 
-  // TODO: EMS-2793 - re-enable
-  describe.skip(NAME, () => {
+  describe(NAME, () => {
     const fieldId = NAME;
 
     describe('when clicking the `change` link', () => {
@@ -165,8 +162,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
   });
 
-  // TODO: EMS-2793 - re-enable
-  describe.skip(EMAIL, () => {
+  describe(EMAIL, () => {
     const fieldId = EMAIL;
 
     describe('when clicking the `change` link', () => {

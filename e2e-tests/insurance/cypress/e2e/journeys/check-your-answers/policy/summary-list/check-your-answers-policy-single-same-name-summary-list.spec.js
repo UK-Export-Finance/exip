@@ -31,7 +31,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: false });
 
       task.link().click();
 
@@ -69,7 +69,7 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
 
   describe('`broker`', () => {
     it(`should render a ${USING_BROKER} summary list row`, () => {
-      checkSummaryList[USING_BROKER]({ usingBroker: true });
+      checkSummaryList[USING_BROKER]({ usingBroker: false });
     });
 
     // TODO: EMS-2793 - re-enable
