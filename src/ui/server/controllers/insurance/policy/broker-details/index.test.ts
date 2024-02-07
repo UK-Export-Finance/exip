@@ -10,11 +10,13 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER;
+const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
+const { BROKER_DETAILS } = POLICY_FIELDS;
+
+const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/broker-details', () => {
   let req: Request;
@@ -43,23 +45,24 @@ describe('controllers/insurance/policy/broker-details', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables;
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
           NAME: {
             ID: NAME,
-            ...BROKER_FIELDS[NAME],
+            ...BROKER_DETAILS[NAME],
           },
           EMAIL: {
             ID: EMAIL,
-            ...BROKER_FIELDS[EMAIL],
+            ...BROKER_DETAILS[EMAIL],
           },
           FULL_ADDRESS: {
             ID: FULL_ADDRESS,
-            ...BROKER_FIELDS[FULL_ADDRESS],
+            ...BROKER_DETAILS[FULL_ADDRESS],
           },
         },
+        SAVE_AND_BACK_URL: `#${referenceNumber}`,
       };
 
       expect(result).toEqual(expected);
@@ -77,7 +80,7 @@ describe('controllers/insurance/policy/broker-details', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...pageVariables,
+        ...pageVariables(referenceNumber),
       });
     });
 

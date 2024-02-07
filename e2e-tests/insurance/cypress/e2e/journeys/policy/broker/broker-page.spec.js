@@ -179,13 +179,13 @@ context('Insurance - Policy - Broker Page - As an Exporter I want to confirm if 
           cy.assertUrl(brokerDetailsUrl);
         });
 
-        // describe('when going back to the page', () => {
-        //   it('should have the submitted value', () => {
-        //     cy.navigateToUrl(url);
+        describe('when going back to the page', () => {
+          it('should have the submitted value', () => {
+            cy.navigateToUrl(url);
 
-        //     cy.assertYesRadioOptionIsChecked();
-        //   });
-        // });
+            cy.assertYesRadioOptionIsChecked();
+          });
+        });
       });
     });
   });

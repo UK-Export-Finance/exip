@@ -5,7 +5,6 @@ import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
-import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
@@ -16,7 +15,8 @@ const {
 
 const {
   POLICY: {
-    BROKER: { USING_BROKER, NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
+    BROKER: { USING_BROKER },
+    BROKER_DETAILS: { NAME, EMAIL },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -29,13 +29,7 @@ describe('server/helpers/summary-lists/policy/broker-fields', () => {
     const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
-    const mockAddress = {
-      [ADDRESS_LINE_1]: mockBroker[ADDRESS_LINE_1],
-      [ADDRESS_LINE_2]: mockBroker[ADDRESS_LINE_2],
-      [TOWN]: mockBroker[TOWN],
-      [COUNTY]: mockBroker[COUNTY],
-      [POSTCODE]: mockBroker[POSTCODE],
-    };
+    // const mockAddress = mockBroker[FULL_ADDRESS];
 
     describe(`${USING_BROKER} is Yes`, () => {
       it('should return fields from the submitted data/answers', () => {
@@ -50,15 +44,15 @@ describe('server/helpers/summary-lists/policy/broker-fields', () => {
             href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           }),
-          fieldGroupItem(
-            {
-              field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
-              data: mockBroker,
-              href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
-              renderChangeLink: true,
-            },
-            generateMultipleFieldHtml(mockAddress),
-          ),
+          // fieldGroupItem(
+          //   {
+          //     field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
+          //     data: mockBroker,
+          //     href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
+          //     renderChangeLink: true,
+          //   },
+          //   generateMultipleFieldHtml(mockAddress),
+          // ),
           fieldGroupItem({
             field: getFieldById(POLICY_FIELDS.BROKER, EMAIL),
             data: mockBroker,

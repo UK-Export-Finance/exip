@@ -232,6 +232,7 @@ export const POLICY_FIELDS = {
         TITLE: "Broker's address",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
+      MAXIMUM: 1000,
     },
   },
 };

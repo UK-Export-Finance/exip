@@ -83,6 +83,8 @@ const BROKER = {
 const BROKER_DETAILS = {
   ...SHARED,
   PAGE_TITLE: 'Tell us about your broker',
+  INTRO:
+    "Your broker's contact details will be stored securely and in line with GDPR. They will also be our main point of contact when processing your application.",
 };
 
 const CHECK_YOUR_ANSWERS = {

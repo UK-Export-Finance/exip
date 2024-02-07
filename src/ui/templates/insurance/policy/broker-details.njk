@@ -1,9 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
-{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -34,87 +33,89 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        {% call govukFieldset({
-          legend: {
-            html: fieldsetLegend.render({ id: FIELDS.LEGEND.ID, legendText: FIELDS.LEGEND.LEGEND }),
-            isPageHeading: true
+        <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+        <p class="govuk-body" data-cy="{{ DATA_CY.INTRO }}">{{ CONTENT_STRINGS.INTRO }}</p>
+
+        {{ govukInput({
+          id: FIELDS.NAME.ID,
+          name: FIELDS.NAME.ID,
+          value: submittedValues[FIELDS.NAME.ID] or application.broker[FIELDS.NAME.ID],
+          label: {
+            text: FIELDS.NAME.LABEL,
+            classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.NAME.ID + '-label',
+              "data-cy": FIELDS.NAME.ID + "-label"
+            }
+          },
+          classes: "govuk-input--width-20",
+          attributes: {
+            "data-cy": FIELDS.NAME.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.NAME.ID + "-error-message"
+            }
           }
-        }) %}
+        }) }}
 
-          {{ govukInput({
-            id: FIELDS.NAME.ID,
-            name: FIELDS.NAME.ID,
-            value: submittedValues[FIELDS.NAME.ID] or application.broker[FIELDS.NAME.ID],
-            label: {
-              text: FIELDS.NAME.LABEL,
-              classes: "govuk-body govuk-!-font-weight-bold",
-              attributes: {
-                id: FIELDS.NAME.ID + '-label',
-                "data-cy": FIELDS.NAME.ID + "-label"
-              }
-            },
-            classes: "govuk-input--width-20",
+        {{ govukInput({
+          id: FIELDS.EMAIL.ID,
+          name: FIELDS.EMAIL.ID,
+          value: submittedValues[FIELDS.EMAIL.ID] or application.broker[FIELDS.EMAIL.ID],
+          label: {
+            text: FIELDS.EMAIL.LABEL,
+            classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
             attributes: {
-              "data-cy": FIELDS.NAME.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
-              text: validationErrors.errorList[FIELDS.NAME.ID].text,
-              attributes: {
-                "data-cy": FIELDS.NAME.ID + "-error-message"
-              }
+              id: FIELDS.EMAIL.ID + '-label',
+              "data-cy": FIELDS.EMAIL.ID + "-label"
             }
-          }) }}
-
-          {{ govukInput({
-            id: FIELDS.FULL_ADDRESS.ID,
-            name: FIELDS.FULL_ADDRESS.ID,
-            value: submittedValues[FIELDS.FULL_ADDRESS.ID] or application.broker[FIELDS.FULL_ADDRESS.ID],
-            label: {
-              text: FIELDS.FULL_ADDRESS.LABEL,
-              classes: "govuk-body govuk-!-font-weight-bold",
-              attributes: {
-                id: FIELDS.FULL_ADDRESS.ID + '-label',
-                "data-cy": FIELDS.FULL_ADDRESS.ID + "-label"
-              }
-            },
-            classes: "govuk-input--width-20",
+          },
+          classes: "govuk-input--width-20",
+          attributes: {
+            "data-cy": FIELDS.EMAIL.ID + "-input"
+          },
+          errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
+            text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
             attributes: {
-              "data-cy": FIELDS.FULL_ADDRESS.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID] and {
-              text: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID].text,
-              attributes: {
-                "data-cy": FIELDS.FULL_ADDRESS.ID + "-error-message"
-              }
+              "data-cy": FIELDS.EMAIL.ID + "-error-message"
             }
-          }) }}
+          }
+        }) }}
 
-          {{ govukInput({
-            id: FIELDS.EMAIL.ID,
-            name: FIELDS.EMAIL.ID,
-            value: submittedValues[FIELDS.EMAIL.ID] or application.broker[FIELDS.EMAIL.ID],
-            label: {
-              text: FIELDS.EMAIL.LABEL,
-              classes: "govuk-body govuk-!-font-weight-bold",
-              attributes: {
-                id: FIELDS.EMAIL.ID + '-label',
-                "data-cy": FIELDS.EMAIL.ID + "-label"
-              }
-            },
-            classes: "govuk-input--width-20",
+        {{ govukCharacterCount({
+          name: FIELDS.FULL_ADDRESS.ID,
+          id: FIELDS.FULL_ADDRESS.ID,
+          maxlength: FIELDS.FULL_ADDRESS.MAXIMUM,
+          value: submittedValues[FIELDS.FULL_ADDRESS.ID],
+          label: {
+            text: FIELDS.FULL_ADDRESS.LABEL,
+            classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
             attributes: {
-              "data-cy": FIELDS.EMAIL.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID] and {
-              text: validationErrors.errorList[FIELDS.EMAIL.ID].text,
-              attributes: {
-                "data-cy": FIELDS.EMAIL.ID + "-error-message"
-              }
+              'data-cy': FIELDS.FULL_ADDRESS.ID + '-label'
             }
-          }) }}
-
-        {% endcall %}
-          
+          },
+          hint: {
+            text: FIELDS.FULL_ADDRESS.HINT,
+            attributes: {
+              'data-cy': FIELDS.FULL_ADDRESS.ID + '-hint'
+            }
+          },
+          errorMessage: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID] and {
+            text: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.FULL_ADDRESS.ID + "-error-message"
+            }
+          },
+          classes: "govuk-input--width-20",
+          attributes: {
+            'data-cy': FIELDS.FULL_ADDRESS.ID
+          }
+        }) }}
       </div>
     </div>
 

@@ -12,28 +12,35 @@ const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-const { BROKER: BROKER_FIELDS } = POLICY_FIELDS;
+const { BROKER_DETAILS } = POLICY_FIELDS;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_DETAILS;
 
-export const pageVariables = {
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
+ * @returns {Object} Page variables
+ */
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     NAME: {
       ID: NAME,
-      ...BROKER_FIELDS[NAME],
+      ...BROKER_DETAILS[NAME],
     },
     EMAIL: {
       ID: EMAIL,
-      ...BROKER_FIELDS[EMAIL],
+      ...BROKER_DETAILS[EMAIL],
     },
     FULL_ADDRESS: {
       ID: FULL_ADDRESS,
-      ...BROKER_FIELDS[FULL_ADDRESS],
+      ...BROKER_DETAILS[FULL_ADDRESS],
     },
   },
-};
+  SAVE_AND_BACK_URL: `#${referenceNumber}`,
+});
 
 /**
  * Render the Broker details page
@@ -56,7 +63,7 @@ export const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      ...pageVariables,
+      ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
     console.error('Error getting broker details %O', err);
