@@ -4,6 +4,8 @@ import { GBP } from '../../supported-currencies';
 /**
  * VERSIONS
  * All possible application versions.
+ * These versions highlight changes to certain features involving data changes,
+ * That differ as the service is iterated.
  * This should be manually updated each time a phase of EXIP is started. For example:
  * - Version number 1: MVP, no support for applications over 500k.
  * - Version number 2: Support for applications over 500k.
