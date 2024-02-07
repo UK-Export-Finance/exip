@@ -1,15 +1,11 @@
-import FIELD_IDS from '../field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { isMultiplePolicyType } from '../../helpers/policy-type';
 import { Application, XLSXTitleRowIndexes, XLSXRowIndexes } from '../../types';
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-  },
-  POLICY: {
-    BROKER: { USING_BROKER },
-  },
-} = FIELD_IDS;
+  TYPE_OF_POLICY: { POLICY_TYPE },
+  USING_BROKER,
+} = POLICY_FIELD_IDS;
 
 /**
  * XLSX_ROW_INDEXES

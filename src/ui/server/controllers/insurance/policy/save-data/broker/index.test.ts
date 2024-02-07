@@ -3,15 +3,13 @@ import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
-import { FIELD_IDS } from '../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
-  POLICY: {
-    BROKER: { ADDRESS_LINE_1 },
-  },
-} = FIELD_IDS.INSURANCE;
+  BROKER_DETAILS: { FULL_ADDRESS },
+} = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/save-data/broker', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -23,9 +21,9 @@ describe('controllers/insurance/policy/save-data/broker', () => {
   });
 
   describe('when errorList is provided', () => {
-    const mockValidationErrors = generateValidationErrors(ADDRESS_LINE_1, 'error', {});
+    const mockValidationErrors = generateValidationErrors(FULL_ADDRESS, 'error', {});
 
-    it(`should call api.keystone.application.update.broker with all fields but not ${ADDRESS_LINE_1}`, async () => {
+    it(`should call api.keystone.application.update.broker with all fields but not ${FULL_ADDRESS}`, async () => {
       await save.broker(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);

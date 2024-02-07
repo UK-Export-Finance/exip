@@ -25,7 +25,7 @@ const completeSignInAndSubmitAnApplication = ({
   hasAntiBriberyCodeOfConduct,
   exportingWithCodeOfConduct,
   policyValueOverMvpMaximum = false,
-  usingBroker,
+  usingBroker = false,
   differentPolicyContact = false,
 }) => {
   completeSignInAndGoToApplication({}).then(({ referenceNumber }) => {

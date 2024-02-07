@@ -17,16 +17,8 @@ const {
     CREDIT_PERIOD_WITH_BUYER,
     REQUEST_JOINTLY_INSURED_PARTY,
     REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
-    BROKER: {
-      LEGEND,
-      USING_BROKER,
-      NAME,
-      ADDRESS_LINE_1,
-      ADDRESS_LINE_2,
-      COUNTY,
-      POSTCODE,
-      TOWN,
-    },
+    USING_BROKER,
+    BROKER_DETAILS: { NAME, FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -213,15 +205,15 @@ export const POLICY_FIELDS = {
     },
   },
   BROKER: {
-    [LEGEND]: {
-      LEGEND: 'Enter contact details for your broker',
-    },
     [USING_BROKER]: {
+      LABEL: 'Are you using a broker to get this insurance?',
       SUMMARY: {
         TITLE: 'Using a broker',
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
+  },
+  BROKER_DETAILS: {
     [NAME]: {
       LABEL: 'Name of broker or company',
       SUMMARY: {
@@ -229,31 +221,20 @@ export const POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
     },
-    [ADDRESS_LINE_1]: {
-      LABEL: 'Address line 1',
-      SUMMARY: {
-        TITLE: "Broker's address",
-        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
-      },
-    },
-    [ADDRESS_LINE_2]: {
-      LABEL: 'Address line 2 (optional)',
-    },
-    [TOWN]: {
-      LABEL: 'Town or city',
-    },
-    [COUNTY]: {
-      LABEL: 'County (optional)',
-    },
-    [POSTCODE]: {
-      LABEL: 'Postcode',
-    },
     [EMAIL]: {
       LABEL: 'Email address',
       SUMMARY: {
         TITLE: "Broker's email",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
+    },
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER,
+      },
+      MAXIMUM: 1000,
     },
   },
 };

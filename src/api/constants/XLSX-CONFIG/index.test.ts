@@ -1,16 +1,12 @@
 import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '.';
-import FIELD_IDS from '../field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
 import { mockApplication } from '../../test-mocks';
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-  },
-  POLICY: {
-    BROKER: { USING_BROKER },
-  },
-} = FIELD_IDS;
+  TYPE_OF_POLICY: { POLICY_TYPE },
+  USING_BROKER,
+} = POLICY_FIELD_IDS;
 
 describe('api/constants/XLSX-CONFIG', () => {
   describe('XLSX_CONFIG', () => {

@@ -169,6 +169,7 @@ export interface ApplicationVersion {
   DEFAULT_FINAL_DESTINATION_KNOWN: boolean;
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: boolean;
   DEFAULT_CURRENCY?: string;
+  BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
 }
 
 export interface SectionReview {

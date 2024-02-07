@@ -89,7 +89,7 @@ export const totalMonthsOfCoverOptions = FIELDS.CONTRACT_POLICY.MULTIPLE[TOTAL_M
 
 /**
  * get
- * Get the application and render the Multiple contract policy page
+ * Render the Multiple contract policy page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Multiple contract policy page
