@@ -9,14 +9,15 @@
  * 7) Check we are on the "all sections" application page.
  * @param {String} Account email address
  * @param {String} Company number/companies house number to use for application creation
+ * @param {Boolean} totalContractValueOverThreshold if total contract value in eligibility should be over threshold
  */
-const createAnAccountAndApplicationAndSignIn = (emailAddress, companyNumber) =>
+const createAnAccountAndApplicationAndSignIn = (emailAddress, companyNumber, totalContractValueOverThreshold = false) =>
   cy.createAccount({ emailAddress }).then(({ accountId, verifyAccountUrl }) => {
     // verify the account by navigating to the "verify account" page
     cy.navigateToUrl(verifyAccountUrl);
 
     // create an application directly via the API.
-    cy.createAnApplication(accountId, companyNumber).then((createdApplication) => {
+    cy.createAnApplication(accountId, companyNumber, totalContractValueOverThreshold).then((createdApplication) => {
       const { referenceNumber } = createdApplication;
 
       /**

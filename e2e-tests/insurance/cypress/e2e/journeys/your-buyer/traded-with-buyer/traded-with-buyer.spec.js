@@ -10,7 +10,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADED_WITH_BUYER;
 
 const {
   YOUR_BUYER: {
-    CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, CHECK_YOUR_ANSWERS, TRADING_HISTORY,
+    CONNECTION_WITH_BUYER, TRADED_WITH_BUYER, TRADING_HISTORY, BUYER_FINANCIAL_INFORMATION,
   },
 } = ROUTES.INSURANCE;
 
@@ -27,8 +27,8 @@ const ERROR_MESSAGE = ERRORS[FIELD_ID];
 context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I want to confirm my buyer details', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
   let tradingHistoryUrl;
+  let buyerFinancialInformationUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -41,7 +41,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
       tradingHistoryUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      buyerFinancialInformationUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
       cy.assertUrl(url);
     });
@@ -132,10 +132,10 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
     });
 
     describe('when submitting the form as "no"', () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+      it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
         cy.completeAndSubmitTradedWithBuyerForm({});
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(buyerFinancialInformationUrl);
       });
 
       describe('when going back to the page', () => {

@@ -20,7 +20,7 @@ const {
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
 
-const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADING_HISTORY } = YOUR_BUYER_ROUTES;
+const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADING_HISTORY, CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION } = YOUR_BUYER_ROUTES;
 
 export const FIELD_ID = TRADED_WITH_BUYER;
 
@@ -143,7 +143,16 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    /**
+     * if totalContractValue is over the threshold and payload answer is false
+     * then should redirect to CREDIT_INSURANCE_COVER
+     * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
+     */
+    if (application.totalContractValueOverThreshold && payload[FIELD_ID] === 'false') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
   } catch (err) {
     console.error('Error posting insurance - your buyer - traded with buyer %O', err);
 

@@ -186,6 +186,7 @@ interface Application extends ApplicationCore {
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   policyContact: ApplicationPolicyContact;
+  totalContractValueOverThreshold?: boolean;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
