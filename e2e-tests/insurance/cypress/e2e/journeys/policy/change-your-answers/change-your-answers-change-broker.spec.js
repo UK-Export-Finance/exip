@@ -7,7 +7,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   POLICY: {
-    BROKER: { USING_BROKER },
+    USING_BROKER,
     BROKER_DETAILS: {
       NAME,
       EMAIL,

@@ -21,9 +21,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  BROKER: {
-    USING_BROKER,
-  },
+  USING_BROKER,
   BROKER_DETAILS: {
     NAME,
     EMAIL,

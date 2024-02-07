@@ -14,7 +14,8 @@ const {
   NEED_PRE_CREDIT_PERIOD,
   CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
-  BROKER,
+  USING_BROKER,
+  BROKER_DETAILS,
 } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
@@ -67,21 +68,21 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
   });
 
   describe('`broker`', () => {
-    it(`should render a ${BROKER.USING_BROKER} summary list row`, () => {
-      checkSummaryList[BROKER.USING_BROKER]({ usingBroker: true });
+    it(`should render a ${USING_BROKER} summary list row`, () => {
+      checkSummaryList[USING_BROKER]({ usingBroker: true });
     });
 
     // TODO: EMS-2793 - re-enable
-    it.skip(`should render a ${BROKER.NAME} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER.NAME]({});
+    it.skip(`should render a ${BROKER_DETAILS.NAME} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER_DETAILS.NAME]({});
     });
 
-    it.skip(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER.ADDRESS_LINE_1]();
+    it.skip(`should render a ${BROKER_DETAILS.FULL_ADDRESS} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER_DETAILS.FULL_ADDRESS]();
     });
 
-    it.skip(`should render a ${BROKER.EMAIL} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER.EMAIL]();
+    it.skip(`should render a ${BROKER_DETAILS.EMAIL} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER_DETAILS.EMAIL]();
     });
   });
 });

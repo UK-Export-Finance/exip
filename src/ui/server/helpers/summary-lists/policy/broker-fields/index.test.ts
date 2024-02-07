@@ -1,7 +1,7 @@
 import { generateBrokerFields } from '.';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
@@ -13,11 +13,7 @@ const {
   POLICY: { BROKER: FORM_TITLE },
 } = FORM_TITLES;
 
-const {
-  POLICY: {
-    BROKER: { USING_BROKER },
-  },
-} = INSURANCE_FIELD_IDS;
+const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },

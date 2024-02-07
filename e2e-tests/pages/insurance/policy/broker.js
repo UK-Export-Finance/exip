@@ -1,7 +1,7 @@
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 
 const {
-  BROKER: { USING_BROKER },
+  USING_BROKER,
 } = POLICY_FIELD_IDS;
 
 const brokerPage = {

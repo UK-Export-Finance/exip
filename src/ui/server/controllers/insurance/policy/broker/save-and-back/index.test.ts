@@ -8,9 +8,7 @@ import mapAndSave from '../../map-and-save/broker';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
-const {
-  BROKER: { USING_BROKER },
-} = POLICY_FIELD_IDS;
+const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 

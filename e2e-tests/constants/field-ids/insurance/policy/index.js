@@ -55,9 +55,7 @@ export const POLICY = {
     COMPANY_NUMBER: 'companyNumber',
     COUNTRY: 'country',
   },
-  BROKER: {
-    USING_BROKER: 'isUsingBroker',
-  },
+  USING_BROKER: 'isUsingBroker',
   BROKER_DETAILS: {
     NAME: 'name',
     EMAIL: 'email',

@@ -273,7 +273,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the country the other company is based in',
         },
       },
-      [FIELD_IDS.INSURANCE.POLICY.BROKER.USING_BROKER]: {
+      [FIELD_IDS.INSURANCE.POLICY.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },
     },
