@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import getApplication from '../../../helpers/get-application';
-import totalContractValueOverThreshold from '../total-contract-value-over-threshold';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Next, Request, Response } from '../../../../types';
 
 const { PAGE_NOT_FOUND } = INSURANCE_ROUTES;
@@ -63,8 +63,8 @@ const getApplicationMiddleware = async (req: Request, res: Response, next: Next)
       const application = await getApplication(Number(referenceNumber));
 
       if (application) {
-        // adds totalContractValueOverThreshold to application
-        res.locals.application = totalContractValueOverThreshold(application);
+        // maps and adds totalContractValueOverThreshold to application
+        res.locals.application = mapTotalContractValueOverThreshold(application);
 
         return next();
       }

@@ -1,9 +1,9 @@
-import totalContractValueOverThreshold from '.';
+import mapTotalContractValueOverThreshold from '.';
 import { TOTAL_CONTRACT_VALUE } from '../../../constants';
 import { mockApplication } from '../../../test-mocks';
 import { Application } from '../../../../types';
 
-describe('middleware/insurance/total-contract-value-over-threshold', () => {
+describe('middleware/insurance/map-total-contract-value-over-threshold', () => {
   let application: Application;
 
   describe('when totalContractValue?.value is undefined', () => {
@@ -18,7 +18,7 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
     });
 
     it('should set totalContractValueOverThreshold to false', () => {
-      const result = totalContractValueOverThreshold(application);
+      const result = mapTotalContractValueOverThreshold(application);
 
       expect(result.totalContractValueOverThreshold).toEqual(false);
     });
@@ -39,7 +39,7 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
     });
 
     it('should set totalContractValueOverThreshold to false', () => {
-      const result = totalContractValueOverThreshold(application);
+      const result = mapTotalContractValueOverThreshold(application);
 
       expect(result.totalContractValueOverThreshold).toEqual(false);
     });
@@ -59,12 +59,8 @@ describe('middleware/insurance/total-contract-value-over-threshold', () => {
       };
     });
 
-    it('should call next()', () => {
-      totalContractValueOverThreshold(application);
-    });
-
     it('should set totalContractValueOverThreshold to true', () => {
-      const result = totalContractValueOverThreshold(application);
+      const result = mapTotalContractValueOverThreshold(application);
 
       expect(result.totalContractValueOverThreshold).toEqual(true);
     });

@@ -2,7 +2,7 @@ import getApplicationMiddleware, { RELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import api from '../../../api';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
-import totalContractValueOverThreshold from '../total-contract-value-over-threshold';
+import totalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Next, Request, Response } from '../../../../types';
 
 const {
