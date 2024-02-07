@@ -472,6 +472,7 @@ input CoverPeriodCreateInput {
 type Policy {
   id: ID!
   application: Application
+  jointlyInsuredParty: JointlyInsuredParty
   needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
@@ -494,6 +495,7 @@ input PolicyWhereInput {
   NOT: [PolicyWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
+  jointlyInsuredParty: JointlyInsuredPartyWhereInput
   policyType: StringNullableFilter
   requestedStartDate: DateTimeNullableFilter
   contractCompletionDate: DateTimeNullableFilter
@@ -520,6 +522,7 @@ input PolicyOrderByInput {
 
 input PolicyUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
+  jointlyInsuredParty: JointlyInsuredPartyRelateToOneForUpdateInput
   needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
@@ -530,6 +533,12 @@ input PolicyUpdateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+input JointlyInsuredPartyRelateToOneForUpdateInput {
+  create: JointlyInsuredPartyCreateInput
+  connect: JointlyInsuredPartyWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PolicyUpdateArgs {
@@ -539,6 +548,7 @@ input PolicyUpdateArgs {
 
 input PolicyCreateInput {
   application: ApplicationRelateToOneForCreateInput
+  jointlyInsuredParty: JointlyInsuredPartyRelateToOneForCreateInput
   needPreCreditPeriodCover: Boolean
   policyType: String
   requestedStartDate: DateTime
@@ -549,6 +559,11 @@ input PolicyCreateInput {
   totalMonthsOfCover: Int
   totalSalesToBuyer: Int
   maximumBuyerWillOwe: Int
+}
+
+input JointlyInsuredPartyRelateToOneForCreateInput {
+  create: JointlyInsuredPartyCreateInput
+  connect: JointlyInsuredPartyWhereUniqueInput
 }
 
 type PolicyContact {
@@ -606,6 +621,68 @@ input PolicyContactCreateInput {
   email: String
   position: String
   isSameAsOwner: Boolean
+}
+
+type JointlyInsuredParty {
+  id: ID!
+  policy: Policy
+  requested: Boolean
+  companyName: String
+  companyNumber: String
+  country: Country
+}
+
+input JointlyInsuredPartyWhereUniqueInput {
+  id: ID
+}
+
+input JointlyInsuredPartyWhereInput {
+  AND: [JointlyInsuredPartyWhereInput!]
+  OR: [JointlyInsuredPartyWhereInput!]
+  NOT: [JointlyInsuredPartyWhereInput!]
+  id: IDFilter
+  policy: PolicyWhereInput
+  companyName: StringFilter
+  companyNumber: StringFilter
+  country: CountryWhereInput
+}
+
+input JointlyInsuredPartyOrderByInput {
+  id: OrderDirection
+  companyName: OrderDirection
+  companyNumber: OrderDirection
+}
+
+input JointlyInsuredPartyUpdateInput {
+  policy: PolicyRelateToOneForUpdateInput
+  requested: Boolean
+  companyName: String
+  companyNumber: String
+  country: CountryRelateToOneForUpdateInput
+}
+
+input CountryRelateToOneForUpdateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input JointlyInsuredPartyUpdateArgs {
+  where: JointlyInsuredPartyWhereUniqueInput!
+  data: JointlyInsuredPartyUpdateInput!
+}
+
+input JointlyInsuredPartyCreateInput {
+  policy: PolicyRelateToOneForCreateInput
+  requested: Boolean
+  companyName: String
+  companyNumber: String
+  country: CountryRelateToOneForCreateInput
+}
+
+input CountryRelateToOneForCreateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
 }
 
 type ExportContract {
@@ -1457,12 +1534,6 @@ input BuyerUpdateInput {
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForUpdateInput
 }
 
-input CountryRelateToOneForUpdateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-  disconnect: Boolean
-}
-
 input BuyerTradingHistoryRelateToOneForUpdateInput {
   create: BuyerTradingHistoryCreateInput
   connect: BuyerTradingHistoryWhereUniqueInput
@@ -1489,11 +1560,6 @@ input BuyerCreateInput {
   exporterIsConnectedWithBuyer: Boolean
   connectionWithBuyerDescription: String
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForCreateInput
-}
-
-input CountryRelateToOneForCreateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
 }
 
 input BuyerTradingHistoryRelateToOneForCreateInput {
@@ -2172,6 +2238,12 @@ type Mutation {
   updatePolicyContacts(data: [PolicyContactUpdateArgs!]!): [PolicyContact]
   deletePolicyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
   deletePolicyContacts(where: [PolicyContactWhereUniqueInput!]!): [PolicyContact]
+  createJointlyInsuredParty(data: JointlyInsuredPartyCreateInput!): JointlyInsuredParty
+  createJointlyInsuredParties(data: [JointlyInsuredPartyCreateInput!]!): [JointlyInsuredParty]
+  updateJointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!, data: JointlyInsuredPartyUpdateInput!): JointlyInsuredParty
+  updateJointlyInsuredParties(data: [JointlyInsuredPartyUpdateArgs!]!): [JointlyInsuredParty]
+  deleteJointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!): JointlyInsuredParty
+  deleteJointlyInsuredParties(where: [JointlyInsuredPartyWhereUniqueInput!]!): [JointlyInsuredParty]
   createExportContract(data: ExportContractCreateInput!): ExportContract
   createExportContracts(data: [ExportContractCreateInput!]!): [ExportContract]
   updateExportContract(where: ExportContractWhereUniqueInput!, data: ExportContractUpdateInput!): ExportContract
@@ -2393,6 +2465,9 @@ type Query {
   policyContacts(where: PolicyContactWhereInput! = {}, orderBy: [PolicyContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyContactWhereUniqueInput): [PolicyContact!]
   policyContact(where: PolicyContactWhereUniqueInput!): PolicyContact
   policyContactsCount(where: PolicyContactWhereInput! = {}): Int
+  jointlyInsuredParties(where: JointlyInsuredPartyWhereInput! = {}, orderBy: [JointlyInsuredPartyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: JointlyInsuredPartyWhereUniqueInput): [JointlyInsuredParty!]
+  jointlyInsuredParty(where: JointlyInsuredPartyWhereUniqueInput!): JointlyInsuredParty
+  jointlyInsuredPartiesCount(where: JointlyInsuredPartyWhereInput! = {}): Int
   exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContract(where: ExportContractWhereUniqueInput!): ExportContract
   exportContractsCount(where: ExportContractWhereInput! = {}): Int

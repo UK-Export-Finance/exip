@@ -64,6 +64,7 @@ describe('custom-resolvers/create-an-application', () => {
       buyerId: application.buyer.id,
       eligibilityId: application.eligibility.id,
       policyId: application.policy.id,
+      // jointlyInsuredPartyId: application.jointlyInsuredParty.id,
       companyId: application.company.id,
       sectionReviewId: application.sectionReview.id,
     };
@@ -71,6 +72,7 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.buyerId).toEqual(expected.buyerId);
     expect(result.eligibilityId).toEqual(expected.eligibilityId);
     expect(result.policyId).toEqual(expected.policyId);
+    // expect(result.jointlyInsuredPartyId).toEqual(expected.jointlyInsuredPartyId);
     expect(result.companyId).toEqual(expected.companyId);
     expect(result.sectionReviewId).toEqual(expected.sectionReviewId);
   });

@@ -22,28 +22,37 @@ describe('helpers/create-a-policy', () => {
     application = (await applications.create({ context, data: {} })) as Application;
   });
 
-  test('it should return a policy with ID', async () => {
-    const result = await createAPolicy(context, application.id);
+  test('it should return a policy with ID and jointlyInsuredParty relationship', async () => {
+    const { policy } = await createAPolicy(context, application.id);
 
-    expect(result.id).toBeDefined();
-    expect(typeof result.id).toEqual('string');
-    expect(result.id.length).toBeGreaterThan(0);
+    expect(policy.id).toBeDefined();
+    expect(typeof policy.id).toEqual('string');
+    expect(policy.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty policy fields and default needPreCreditPeriodCover', async () => {
-    const result = await createAPolicy(context, application.id);
+  test('it should return empty policy fields, default needPreCreditPeriodCover', async () => {
+    const { policy } = await createAPolicy(context, application.id);
 
-    expect(result.applicationId).toEqual(application.id);
-    expect(result.needPreCreditPeriodCover).toEqual(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER);
-    expect(result.policyType).toEqual(null);
-    expect(result.requestedStartDate).toEqual(null);
-    expect(result.contractCompletionDate).toEqual(null);
-    expect(result.totalValueOfContract).toEqual(null);
-    expect(result.creditPeriodWithBuyer).toEqual('');
-    expect(result.policyCurrencyCode).toEqual('');
-    expect(result.totalMonthsOfCover).toEqual(null);
-    expect(result.totalSalesToBuyer).toEqual(null);
-    expect(result.maximumBuyerWillOwe).toEqual(null);
+    expect(policy.applicationId).toEqual(application.id);
+    expect(policy.needPreCreditPeriodCover).toEqual(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER);
+    expect(policy.policyType).toEqual(null);
+    expect(policy.requestedStartDate).toEqual(null);
+    expect(policy.contractCompletionDate).toEqual(null);
+    expect(policy.totalValueOfContract).toEqual(null);
+    expect(policy.creditPeriodWithBuyer).toEqual('');
+    expect(policy.policyCurrencyCode).toEqual('');
+    expect(policy.totalMonthsOfCover).toEqual(null);
+    expect(policy.totalSalesToBuyer).toEqual(null);
+    expect(policy.maximumBuyerWillOwe).toEqual(null);
+  });
+
+  test('it should return empty jointlyInsuredParty fields', async () => {
+    const { jointlyInsuredParty } = await createAPolicy(context, application.id);
+
+    expect(jointlyInsuredParty.requested).toEqual(null);
+    expect(jointlyInsuredParty.companyName).toEqual('');
+    expect(jointlyInsuredParty.companyNumber).toEqual('');
+    expect(jointlyInsuredParty.country).toEqual(undefined);
   });
 
   describe('when an invalid application ID is passed', () => {

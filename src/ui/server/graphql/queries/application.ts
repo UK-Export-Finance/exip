@@ -59,6 +59,15 @@ const applicationQuery = gql`
           position
           isSameAsOwner
         }
+        jointlyInsuredParty {
+          requested
+          companyName
+          companyNumber
+          country {
+            isoCode
+            name
+          }
+        }
         exportContract {
           id
           goodsOrServicesDescription
