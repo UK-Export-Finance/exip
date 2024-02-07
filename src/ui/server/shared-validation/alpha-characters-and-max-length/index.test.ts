@@ -14,7 +14,7 @@ describe('shared-validation/alpha-characters-and-max-length', () => {
     [FIELD_ID]: '',
   } as RequestBody;
 
-  describe('when a name is empty', () => {
+  describe('when a value is empty', () => {
     it('should return the result of emptyFieldValidation', () => {
       const result = alphaCharactersAndMaxLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, mockMaxLength);
 
@@ -24,7 +24,7 @@ describe('shared-validation/alpha-characters-and-max-length', () => {
     });
   });
 
-  describe('when a name contains a special character', () => {
+  describe('when a value contains a special character', () => {
     it('should return the result of alphaCharactersOnlyValidation', () => {
       mockBody[FIELD_ID] = 'a!';
 
@@ -36,7 +36,7 @@ describe('shared-validation/alpha-characters-and-max-length', () => {
     });
   });
 
-  describe('when a name contains a number', () => {
+  describe('when a value contains a number', () => {
     it('should return the result of alphaCharactersOnlyValidation', () => {
       mockBody[FIELD_ID] = 'a1';
 
@@ -48,7 +48,7 @@ describe('shared-validation/alpha-characters-and-max-length', () => {
     });
   });
 
-  describe('when a name is over the maximum', () => {
+  describe('when a value is over the maximum', () => {
     it('should return the result of maxLengthValidation', () => {
       mockBody[FIELD_ID] = 'a'.repeat(mockMaxLength + 1);
 
@@ -60,7 +60,7 @@ describe('shared-validation/alpha-characters-and-max-length', () => {
     });
   });
 
-  describe('when a name is valid', () => {
+  describe('when a value is valid', () => {
     it('should return the provided errors', () => {
       mockBody[FIELD_ID] = 'Mock name';
 

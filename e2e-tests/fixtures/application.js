@@ -38,6 +38,7 @@ const {
       DIFFERENT_NAME_ON_POLICY: { POSITION: CONTACT_POSITION },
       NEED_PRE_CREDIT_PERIOD,
       CREDIT_PERIOD_WITH_BUYER,
+      REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
       BROKER: {
         USING_BROKER,
         NAME,
@@ -74,7 +75,6 @@ const {
       COMPANY_OR_ORGANISATION: {
         NAME: COMPANY_OR_ORGANISATION_NAME,
         ADDRESS,
-        COUNTRY,
         REGISTRATION_NUMBER,
         WEBSITE,
         FIRST_NAME,
@@ -139,6 +139,11 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [COMPANY_NAME]: 'Mock jointly insured company name',
+    [COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
+    [COMPANY_NUMBER]: 'Mock jointly insured company number',
   },
   EXPORT_CONTRACT: {
     [DESCRIPTION]: 'Mock description',
