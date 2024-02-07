@@ -43,7 +43,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
     expect(result.requested).toEqual(null);
     expect(result.companyName).toEqual('');
     expect(result.companyNumber).toEqual('');
-    expect(result.country).toEqual(undefined);
+    expect(result.country).toBeUndefined();
   });
 
   describe('when an invalid policy ID is passed', () => {

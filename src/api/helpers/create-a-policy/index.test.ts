@@ -52,7 +52,7 @@ describe('helpers/create-a-policy', () => {
     expect(jointlyInsuredParty.requested).toEqual(null);
     expect(jointlyInsuredParty.companyName).toEqual('');
     expect(jointlyInsuredParty.companyNumber).toEqual('');
-    expect(jointlyInsuredParty.country).toEqual(undefined);
+    expect(jointlyInsuredParty.country).toBeUndefined();
   });
 
   describe('when an invalid application ID is passed', () => {

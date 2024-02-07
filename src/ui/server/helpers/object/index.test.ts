@@ -33,7 +33,7 @@ describe('server/helpers/object', () => {
         const mockField = 'notAnObject';
 
         const result = isAnObjectWithKeysAndValues(mockField);
-        expect(result).toEqual(undefined);
+        expect(result).toBeUndefined();
       });
     });
 
@@ -42,7 +42,7 @@ describe('server/helpers/object', () => {
         const mockField = {};
 
         const result = isAnObjectWithKeysAndValues(mockField);
-        expect(result).toEqual(undefined);
+        expect(result).toBeUndefined();
       });
     });
 
