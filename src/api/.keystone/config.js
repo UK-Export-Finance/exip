@@ -4360,7 +4360,8 @@ var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
   },
-  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+  BROKER: { USING_BROKER: USING_BROKER3 },
+  BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
 } = policy_default;
 var {
   COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
@@ -4612,7 +4613,8 @@ var {
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
   },
   POLICY: {
-    BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
+    BROKER: { USING_BROKER: USING_BROKER4 },
+    BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
   }
 } = insurance_default;
 var mapSicCodes2 = (sicCodes) => {
@@ -4627,14 +4629,10 @@ var mapBroker = (application2) => {
   const { broker } = application2;
   let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
   if (broker[USING_BROKER4]) {
-    const addressAnswer = {
-      lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
-      other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
-    };
     mapped = [
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_1], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
+      xlsx_row_default(XLSX.FIELDS[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
       xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
     ];
   }

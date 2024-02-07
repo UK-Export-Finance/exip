@@ -195,7 +195,7 @@ const checkPolicySummaryList = ({
   [BROKER.USING_BROKER]: ({ usingBroker = false }) => {
     const fieldId = BROKER.USING_BROKER;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_DETAILS);
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER);
 
     let expectedValue = FIELD_VALUES.NO;
 

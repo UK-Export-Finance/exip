@@ -1,19 +1,12 @@
-import { brokerPage } from '../../../../../../pages/insurance/policy';
 import partials from '../../../../../../partials';
-import { field } from '../../../../../../pages/shared';
+import { yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
-import application from '../../../../../../fixtures/application';
 
 const {
   BROKER: { USING_BROKER },
-  BROKER_DETAILS: {
-    NAME,
-    EMAIL,
-    FULL_ADDRESS,
-  },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -78,22 +71,20 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     });
   });
 
-  describe('save and back on a partially entered form', () => {
-    it(`should redirect to ${ALL_SECTIONS} retain the "insurance policy" task status as "in progress"`, () => {
+  describe(`when selecting yes for ${USING_BROKER}`, () => {
+    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "completed"`, () => {
       cy.navigateToUrl(url);
 
-      brokerPage[USING_BROKER].yesRadioInput().click();
-
-      cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
+      yesRadioInput().click();
 
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskStatus(task, COMPLETED);
     });
 
-    it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
+    it('should retain all the fields on the page', () => {
       cy.navigateToUrl(allSectionsUrl);
 
       cy.startInsurancePolicySection({});
@@ -104,75 +95,35 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
       cy.completeAndSubmitAnotherCompanyForm({});
 
-      cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
-      cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
-      cy.checkValue(field(EMAIL), '');
-      cy.checkValue(field(FULL_ADDRESS), '');
+      cy.assertRadioOptionIsChecked(yesRadioInput());
     });
   });
 
-  describe('when all fields are provided', () => {
-    describe(`when selecting yes for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "completed"`, () => {
-        cy.navigateToUrl(url);
+  describe(`when selecting no for ${USING_BROKER}`, () => {
+    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "Completed"`, () => {
+      cy.navigateToUrl(url);
 
-        brokerPage[USING_BROKER].yesRadioInput().click();
+      noRadioInput().click();
 
-        cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
-        cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
-        cy.keyboardInput(field(FULL_ADDRESS).input(), application.EXPORTER_BROKER[FULL_ADDRESS]);
+      cy.clickSaveAndBackButton();
 
-        cy.clickSaveAndBackButton();
+      cy.assertUrl(allSectionsUrl);
 
-        cy.assertUrl(allSectionsUrl);
-
-        cy.checkTaskStatus(task, COMPLETED);
-      });
-
-      it('should retain all the fields on the page', () => {
-        cy.navigateToUrl(allSectionsUrl);
-
-        cy.startInsurancePolicySection({});
-
-        // go through 5 policy forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 5 });
-
-        // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-        cy.completeAndSubmitAnotherCompanyForm({});
-
-        cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].yesRadioInput());
-        cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
-        cy.checkValue(field(EMAIL), application.EXPORTER_BROKER[EMAIL]);
-        cy.checkValue(field(FULL_ADDRESS), application.EXPORTER_BROKER[FULL_ADDRESS]);
-      });
+      cy.checkTaskStatus(task, COMPLETED);
     });
 
-    describe(`when selecting no for ${USING_BROKER}`, () => {
-      it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "Completed"`, () => {
-        cy.navigateToUrl(url);
+    it('should retain all the relevant fields on the page', () => {
+      cy.navigateToUrl(allSectionsUrl);
 
-        brokerPage[USING_BROKER].noRadioInput().click();
+      cy.startInsurancePolicySection({});
 
-        cy.clickSaveAndBackButton();
+      // go through 5 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
-        cy.assertUrl(allSectionsUrl);
+      // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
+      cy.completeAndSubmitAnotherCompanyForm({});
 
-        cy.checkTaskStatus(task, COMPLETED);
-      });
-
-      it('should retain all the relevant fields on the page', () => {
-        cy.navigateToUrl(allSectionsUrl);
-
-        cy.startInsurancePolicySection({});
-
-        // go through 5 policy forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 5 });
-
-        // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-        cy.completeAndSubmitAnotherCompanyForm({});
-
-        cy.assertRadioOptionIsChecked(brokerPage[USING_BROKER].noRadioInput());
-      });
+      cy.assertRadioOptionIsChecked(noRadioInput());
     });
   });
 });
