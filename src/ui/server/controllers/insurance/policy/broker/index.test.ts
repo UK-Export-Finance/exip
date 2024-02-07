@@ -13,7 +13,7 @@ import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
 
-const { USING_BROKER } = POLICY_FIELD_IDS.BROKER;
+const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,

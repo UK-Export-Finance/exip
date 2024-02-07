@@ -11,7 +11,7 @@ import mapAndSave from '../map-and-save/broker';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
-const { USING_BROKER } = POLICY_FIELD_IDS.BROKER;
+const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
