@@ -66,7 +66,7 @@ interface ApplicationCompanyAddress {
   premises?: string;
 }
 
-interface ApplicationExporterindustrySectorNames {
+interface ApplicationExporterIndustrySectorNames {
   id: string;
   industrySectorNames?: string;
 }
@@ -174,10 +174,20 @@ interface ApplicationPolicyContact {
   isSameAsOwner?: boolean;
 }
 
+interface ApplicationJointlyInsuredParty {
+  id: string;
+  requested?: boolean;
+  companyName?: string;
+  companyNumber?: string;
+  country?: Country;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
   exportContract: ApplicationExportContract;
   company: ApplicationCompany;
   business: ApplicationBusiness;
@@ -185,7 +195,6 @@ interface Application extends ApplicationCore {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
-  policyContact: ApplicationPolicyContact;
   totalContractValueOverThreshold?: boolean;
 }
 
@@ -209,7 +218,9 @@ export {
   ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicy,
-  ApplicationExporterindustrySectorNames,
+  ApplicationPolicyContact,
+  ApplicationJointlyInsuredParty,
+  ApplicationExporterIndustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
   ApplicationBuyer,
@@ -220,5 +231,4 @@ export {
   ApplicationDeclaration,
   ApplicationVersion,
   ApplicationOwner,
-  ApplicationPolicyContact,
 };

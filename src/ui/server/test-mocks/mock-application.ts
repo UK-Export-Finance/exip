@@ -9,6 +9,7 @@ import companyMock from './mock-company';
 import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
+import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import { GBP, EUR } from '../constants/supported-currencies';
 
 dotenv.config();
@@ -138,6 +139,8 @@ const mockApplication = {
   status: APPLICATION.STATUS.IN_PROGRESS,
   owner: mockOwner,
   policy: mockSinglePolicy,
+  policyContact: mockContact,
+  jointlyInsuredParty: mockJointlyInsuredParty,
   exportContract: mockExportContract,
   company: mockCompany,
   business: mockBusiness,
@@ -145,7 +148,6 @@ const mockApplication = {
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
-  policyContact: mockContact,
 };
 
 export const mockApplicationMultiplePolicy = {
