@@ -19,7 +19,6 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
-
 const { IN_PROGRESS } = TASKS.STATUS;
 
 const { taskList } = partials.insurancePartials;
