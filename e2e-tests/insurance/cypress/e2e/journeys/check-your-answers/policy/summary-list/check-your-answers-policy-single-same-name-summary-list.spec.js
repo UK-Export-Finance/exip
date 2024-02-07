@@ -72,16 +72,16 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
     });
 
     // TODO: EMS-2793 - re-enable
-    // it(`should render a ${BROKER.NAME} summary list row`, () => {
-    //   checkSummaryList.BROKER[BROKER.NAME]({});
-    // });
+    it.skip(`should render a ${BROKER.NAME} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER.NAME]({});
+    });
 
-    // it(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
-    //   checkSummaryList.BROKER[BROKER.ADDRESS_LINE_1]();
-    // });
+    it.skip(`should render a ${BROKER.ADDRESS_LINE_1} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER.ADDRESS_LINE_1]();
+    });
 
-    // it(`should render a ${BROKER.EMAIL} summary list row`, () => {
-    //   checkSummaryList.BROKER[BROKER.EMAIL]();
-    // });
+    it.skip(`should render a ${BROKER.EMAIL} summary list row`, () => {
+      checkSummaryList.BROKER[BROKER.EMAIL]();
+    });
   });
 });

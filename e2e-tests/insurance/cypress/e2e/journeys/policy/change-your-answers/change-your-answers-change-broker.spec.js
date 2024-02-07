@@ -1,6 +1,7 @@
 import { brokerPage } from '../../../../../../pages/insurance/policy';
 import { field, summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -82,122 +83,124 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
   });
 
   // TODO: EMS-2793 - re-enable
-  // describe('Address', () => {
-  //   const fieldId = FULL_ADDRESS;
+  describe.skip('Address', () => {
+    const fieldId = FULL_ADDRESS;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${BROKER_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     const mockNewAddress = 'Mock new address';
+    describe('form submission with a new answer', () => {
+      const mockNewAddress = 'Mock new address';
 
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.keyboardInput(field(fieldId).input(), mockNewAddress);
+        cy.keyboardInput(field(fieldId).input(), mockNewAddress);
 
-  //       cy.clickSubmitButton();
-  //     });
+        cy.clickSubmitButton();
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it('should render the new answer', () => {
-  //       const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
+      it('should render the new answer', () => {
+        const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
 
-  //       const row = summaryList.field(fieldId);
+        const row = summaryList.field(fieldId);
 
-  //       cy.checkText(
-  //         row.key(),
-  //         expectedKey,
-  //       );
+        cy.checkText(
+          row.key(),
+          expectedKey,
+        );
 
-  //       row.value().contains(mockNewAddress);
-  //     });
-  //   });
-  // });
+        row.value().contains(mockNewAddress);
+      });
+    });
+  });
 
-  // describe(NAME, () => {
-  //   const fieldId = NAME;
+  // TODO: EMS-2793 - re-enable
+  describe.skip(NAME, () => {
+    const fieldId = NAME;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${BROKER_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: NAME });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: NAME });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     const newAnswer = 'testing321@test.com';
+    describe('form submission with a new answer', () => {
+      const newAnswer = 'testing321@test.com';
 
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-  //       cy.clickSubmitButton();
-  //     });
+        cy.clickSubmitButton();
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it('should render the new answer', () => {
-  //       cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-  //     });
-  //   });
-  // });
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+      });
+    });
+  });
 
-  // describe(EMAIL, () => {
-  //   const fieldId = EMAIL;
+  // TODO: EMS-2793 - re-enable
+  describe.skip(EMAIL, () => {
+    const fieldId = EMAIL;
 
-  //   describe('when clicking the `change` link', () => {
-  //     it(`should redirect to ${BROKER_CHANGE}`, () => {
-  //       cy.navigateToUrl(url);
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${BROKER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: EMAIL });
-  //     });
-  //   });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHANGE, fieldId: EMAIL });
+      });
+    });
 
-  //   describe('form submission with a new answer', () => {
-  //     const newAnswer = 'testing321@test.com';
+    describe('form submission with a new answer', () => {
+      const newAnswer = 'testing321@test.com';
 
-  //     beforeEach(() => {
-  //       cy.navigateToUrl(url);
+      beforeEach(() => {
+        cy.navigateToUrl(url);
 
-  //       summaryList.field(fieldId).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-  //       cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(field(fieldId).input(), newAnswer);
 
-  //       cy.clickSubmitButton();
-  //     });
+        cy.clickSubmitButton();
+      });
 
-  //     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-  //       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-  //     });
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
 
-  //     it('should render the new answer', () => {
-  //       cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-  //     });
-  //   });
-  // });
+      it('should render the new answer', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+      });
+    });
+  });
 
   describe(USING_BROKER, () => {
     const fieldId = USING_BROKER;
