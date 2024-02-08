@@ -245,6 +245,7 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: "The policy holder's last name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          IS_EMPTY: "Enter the policy holder's email address in the correct format, like name@example.com",
           INCORRECT_FORMAT: "Enter the policy holder's email address in the correct format, like name@example.com",
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
@@ -258,10 +259,10 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Enter the period of pre-credit cover your require',
         ABOVE_MAXIMUM: 'The description of the period of pre-credit cover your require cannot be more than a 1000 characters',
       },
-      [FIELD_IDS.INSURANCE.POLICY.REQUEST_JOINTLY_INSURED_PARTY]: {
-        IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
-      },
       REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.REQUESTED]: {
+          IS_EMPTY: 'Select if there is another company that needs to be insured in your policy',
+        },
         [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: {
           IS_EMPTY: 'Enter the name of the other company',
           ABOVE_MAXIMUM: 'The name of the other company cannot be more than 200 characters',
@@ -275,6 +276,13 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
+      },
+      BROKER_DETAILS: {
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.EMAIL]: {
+          IS_EMPTY: 'Enter the email address of the broker or company',
+          ABOVE_MAXIMUM: 'The broker or company email cannot be more than 300 characters',
+          INCORRECT_FORMAT: 'Enter the broker or company email address in the correct format, like name@example.com',
+        },
       },
     },
     YOUR_BUYER: {
@@ -303,6 +311,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.EMAIL]: {
           IS_EMPTY: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
+          INCORRECT_FORMAT: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
           IS_EMPTY: 'Select whether we can contact the buyer about your application',
@@ -361,6 +370,7 @@ export const ERROR_MESSAGES = {
             IS_EMPTY: 'Enter your last name',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+            IS_EMPTY: 'Enter an email address in the correct format, like name@example.com',
             INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
             ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
@@ -383,6 +393,7 @@ export const ERROR_MESSAGES = {
       },
       PASSWORD_RESET: {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
+          IS_EMPTY: 'Enter an email address in the correct format, like name@example.com',
           INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
           ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
         },

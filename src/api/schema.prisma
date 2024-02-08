@@ -99,20 +99,21 @@ model CoverPeriod {
 }
 
 model Policy {
-  id                       String        @id @default(cuid())
-  application              Application?  @relation("Policy_application", fields: [applicationId], references: [id])
-  applicationId            String?       @map("application")
+  id                       String               @id @default(cuid())
+  application              Application?         @relation("Policy_application", fields: [applicationId], references: [id])
+  applicationId            String?              @map("application")
+  jointlyInsuredParty      JointlyInsuredParty? @relation("JointlyInsuredParty_policy")
   needPreCreditPeriodCover Boolean?
   policyType               String?
   requestedStartDate       DateTime?
   contractCompletionDate   DateTime?
   totalValueOfContract     Int?
-  creditPeriodWithBuyer    String        @default("")
-  policyCurrencyCode       String        @default("") @mysql.VarChar(3)
+  creditPeriodWithBuyer    String               @default("")
+  policyCurrencyCode       String               @default("") @mysql.VarChar(3)
   totalMonthsOfCover       Int?
   totalSalesToBuyer        Int?
   maximumBuyerWillOwe      Int?
-  from_Application_policy  Application[] @relation("Application_policy")
+  from_Application_policy  Application[]        @relation("Application_policy")
 
   @@index([applicationId])
 }
@@ -123,12 +124,25 @@ model PolicyContact {
   applicationId                  String?       @map("application")
   firstName                      String        @default("") @mysql.VarChar(300)
   lastName                       String        @default("") @mysql.VarChar(300)
-  email                          String        @default("")
+  email                          String        @default("") @mysql.VarChar(300)
   position                       String        @default("") @mysql.VarChar(50)
   isSameAsOwner                  Boolean?
   from_Application_policyContact Application[] @relation("Application_policyContact")
 
   @@index([applicationId])
+}
+
+model JointlyInsuredParty {
+  id            String   @id @default(cuid())
+  policy        Policy?  @relation("JointlyInsuredParty_policy", fields: [policyId], references: [id])
+  policyId      String?  @unique @map("policy")
+  requested     Boolean?
+  companyName   String   @default("") @mysql.VarChar(200)
+  companyNumber String   @default("") @mysql.VarChar(100)
+  country       Country? @relation("JointlyInsuredParty_country", fields: [countryId], references: [id])
+  countryId     String?  @map("country")
+
+  @@index([countryId])
 }
 
 model ExportContract {
@@ -149,7 +163,7 @@ model Account {
   updatedAt                        DateTime?
   firstName                        String                @default("")
   lastName                         String                @default("")
-  email                            String                @default("")
+  email                            String                @default("") @mysql.VarChar(300)
   salt                             String                @default("")
   hash                             String                @default("")
   isVerified                       Boolean               @default(false)
@@ -221,7 +235,7 @@ model Broker {
   town                    String        @default("")
   county                  String        @default("")
   postcode                String        @default("")
-  email                   String        @default("")
+  email                   String        @default("") @mysql.VarChar(300)
   from_Application_broker Application[] @relation("Application_broker")
 
   @@index([applicationId])
@@ -345,11 +359,12 @@ model BuyerTradingHistory {
 }
 
 model Country {
-  id                            String        @id @default(cuid())
-  isoCode                       String        @default("")
-  name                          String        @default("")
-  from_Buyer_country            Buyer[]       @relation("Buyer_country")
-  from_Eligibility_buyerCountry Eligibility[] @relation("Eligibility_buyerCountry")
+  id                               String                @id @default(cuid())
+  isoCode                          String                @default("")
+  name                             String                @default("")
+  from_JointlyInsuredParty_country JointlyInsuredParty[] @relation("JointlyInsuredParty_country")
+  from_Buyer_country               Buyer[]               @relation("Buyer_country")
+  from_Eligibility_buyerCountry    Eligibility[]         @relation("Eligibility_buyerCountry")
 }
 
 model Eligibility {

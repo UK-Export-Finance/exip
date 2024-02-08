@@ -29,19 +29,6 @@ interface ApplicationEligibility extends InsuranceEligibilityCore {
   buyerCountry: Country;
 }
 
-interface ApplicationPolicy {
-  id: string;
-  policyType?: string;
-  requestedStartDate?: Date;
-  contractCompletionDate?: Date;
-  totalValueOfContract?: number;
-  creditPeriodWithBuyer?: string;
-  policyCurrencyCode?: string;
-  totalMonthsOfCover?: number;
-  totalSalesToBuyer?: number;
-  maximumBuyerWillOwe?: number;
-}
-
 interface ApplicationExportContract {
   id: string;
   goodsOrServicesDescription?: string;
@@ -66,7 +53,7 @@ interface ApplicationCompanyAddress {
   premises?: string;
 }
 
-interface ApplicationExporterindustrySectorNames {
+interface ApplicationExporterIndustrySectorNames {
   id: string;
   industrySectorNames?: string;
 }
@@ -187,10 +174,33 @@ interface ApplicationPolicyContact {
   isSameAsOwner?: boolean;
 }
 
+interface ApplicationJointlyInsuredParty {
+  id: string;
+  requested?: boolean;
+  companyName?: string;
+  companyNumber?: string;
+  country?: Country;
+}
+
+interface ApplicationPolicy {
+  id: string;
+  policyType?: string;
+  requestedStartDate?: Date;
+  contractCompletionDate?: Date;
+  totalValueOfContract?: number;
+  creditPeriodWithBuyer?: string;
+  policyCurrencyCode?: string;
+  totalMonthsOfCover?: number;
+  totalSalesToBuyer?: number;
+  maximumBuyerWillOwe?: number;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
+}
+
 interface Application extends ApplicationCore {
   eligibility: ApplicationEligibility;
   owner: ApplicationOwner;
   policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
   exportContract: ApplicationExportContract;
   company: ApplicationCompany;
   business: ApplicationBusiness;
@@ -198,7 +208,6 @@ interface Application extends ApplicationCore {
   buyer: ApplicationBuyer;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
-  policyContact: ApplicationPolicyContact;
   totalContractValueOverThreshold?: boolean;
 }
 
@@ -222,7 +231,9 @@ export {
   ApplicationCompany,
   ApplicationFlat,
   ApplicationPolicy,
-  ApplicationExporterindustrySectorNames,
+  ApplicationPolicyContact,
+  ApplicationJointlyInsuredParty,
+  ApplicationExporterIndustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
   ApplicationBuyer,
@@ -233,5 +244,4 @@ export {
   ApplicationDeclaration,
   ApplicationVersion,
   ApplicationOwner,
-  ApplicationPolicyContact,
 };

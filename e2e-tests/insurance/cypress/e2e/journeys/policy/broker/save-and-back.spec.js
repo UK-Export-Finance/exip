@@ -72,7 +72,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
   });
 
   describe(`when selecting yes for ${USING_BROKER}`, () => {
-    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "completed"`, () => {
+    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "completed"`, () => {
       cy.navigateToUrl(url);
 
       yesRadioInput().click();
@@ -100,7 +100,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
   });
 
   describe(`when selecting no for ${USING_BROKER}`, () => {
-    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status as "Completed"`, () => {
+    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
       cy.navigateToUrl(url);
 
       noRadioInput().click();

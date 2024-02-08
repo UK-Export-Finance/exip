@@ -9,6 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -18,14 +19,18 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { REQUEST_JOINTLY_INSURED_PARTY } = POLICY_FIELD_IDS;
+const {
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
+} = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
 
 const {
   INSURANCE: {
     POLICY: {
-      [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+      },
     },
   },
 } = ERROR_MESSAGES;
@@ -53,7 +58,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
   describe('FIELD_ID', () => {
     it('should have the correct ID', () => {
-      const expected = REQUEST_JOINTLY_INSURED_PARTY;
+      const expected = REQUESTED;
 
       expect(FIELD_ID).toEqual(expected);
     });
@@ -63,7 +68,7 @@ describe('controllers/insurance/policy/another-company', () => {
     it('should have the correct properties', () => {
       const expected = {
         ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
-        HINT: FIELDS[REQUEST_JOINTLY_INSURED_PARTY].HINT,
+        HINT: FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED].HINT,
       };
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
@@ -113,6 +118,7 @@ describe('controllers/insurance/policy/another-company', () => {
         }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
+        submittedValues: mockApplication.policy.jointlyInsuredParty,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -132,11 +138,29 @@ describe('controllers/insurance/policy/another-company', () => {
   });
 
   describe('post', () => {
+    const validBody = {
+      [REQUESTED]: 'false',
+    };
+
+    mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(true));
+
     describe('when there are no validation errors', () => {
+      it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
       describe(`when ${FIELD_ID} is submitted as 'no'`, () => {
         beforeEach(() => {
           req.body = {
-            [REQUEST_JOINTLY_INSURED_PARTY]: 'false',
+            [REQUESTED]: 'false',
           };
         });
 
@@ -152,7 +176,7 @@ describe('controllers/insurance/policy/another-company', () => {
       describe(`when ${FIELD_ID} is submitted as 'yes'`, () => {
         beforeEach(() => {
           req.body = {
-            [REQUEST_JOINTLY_INSURED_PARTY]: 'true',
+            [REQUESTED]: 'true',
           };
         });
 
@@ -168,7 +192,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
     describe('when there are validation errors', () => {
       const mockInvalidBody = {
-        [REQUEST_JOINTLY_INSURED_PARTY]: '',
+        [REQUESTED]: '',
       };
 
       beforeEach(() => {
@@ -207,6 +231,42 @@ describe('controllers/insurance/policy/another-company', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.jointlyInsuredParty call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

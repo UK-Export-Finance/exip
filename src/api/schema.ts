@@ -271,6 +271,7 @@ export const lists = {
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
+      jointlyInsuredParty: relationship({ ref: 'JointlyInsuredParty.policy' }),
       needPreCreditPeriodCover: nullableCheckbox(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: select({
         options: [
@@ -312,11 +313,27 @@ export const lists = {
       lastName: text({
         db: { nativeType: 'VarChar(300)' },
       }),
-      email: text(),
+      email: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
       position: text({
         db: { nativeType: 'VarChar(50)' },
       }),
       isSameAsOwner: nullableCheckbox(),
+    },
+    access: allowAll,
+  }),
+  JointlyInsuredParty: list({
+    fields: {
+      policy: relationship({ ref: 'Policy.jointlyInsuredParty' }),
+      requested: nullableCheckbox(),
+      companyName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+      companyNumber: text({
+        db: { nativeType: 'VarChar(100)' },
+      }),
+      country: relationship({ ref: 'Country' }),
     },
     access: allowAll,
   }),
@@ -344,7 +361,10 @@ export const lists = {
       updatedAt: timestamp(),
       firstName: text({ validation: { isRequired: true } }),
       lastName: text({ validation: { isRequired: true } }),
-      email: text({ validation: { isRequired: true } }),
+      email: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(300)' },
+      }),
       salt: text({ validation: { isRequired: true } }),
       hash: text({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
@@ -457,7 +477,9 @@ export const lists = {
       town: text(),
       county: text(),
       postcode: text(),
-      email: text(),
+      email: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

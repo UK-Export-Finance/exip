@@ -8,6 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -16,24 +17,30 @@ const {
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-const { REQUEST_JOINTLY_INSURED_PARTY } = POLICY_FIELD_IDS;
+const {
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
+} = POLICY_FIELD_IDS;
 
 const { SHARED_PAGES } = TEMPLATES;
 
-export const FIELD_ID = REQUEST_JOINTLY_INSURED_PARTY;
+export const FIELD_ID = REQUESTED;
 
 export const PAGE_CONTENT_STRINGS = {
   ...PAGES.INSURANCE.POLICY.ANOTHER_COMPANY,
-  HINT: FIELDS[REQUEST_JOINTLY_INSURED_PARTY].HINT,
+  HINT: FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[REQUESTED].HINT,
 };
 
 const {
   INSURANCE: {
     POLICY: {
-      [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
+      REQUESTED_JOINTLY_INSURED_PARTY: {
+        [FIELD_ID]: { IS_EMPTY },
+      },
     },
   },
 } = ERROR_MESSAGES;
+
+export const ERROR_MESSAGE = IS_EMPTY;
 
 /**
  * pageVariables
@@ -83,6 +90,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
+    submittedValues: application.policy.jointlyInsuredParty,
   });
 };
 
@@ -123,11 +131,24 @@ export const post = async (req: Request, res: Response) => {
     });
   }
 
-  const answer = payload[FIELD_ID];
+  try {
+    // save the application
+    const saveResponse = await mapAndSave.jointlyInsuredParty(payload, application);
 
-  if (answer === 'true') {
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`);
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const answer = payload[FIELD_ID];
+
+    if (answer === 'true') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - policy - another company %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
-
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
 };

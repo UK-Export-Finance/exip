@@ -17,6 +17,7 @@ const DEFAULT_RESOLVERS = [
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',
+  'updateJointlyInsuredParty',
   'updatePolicy',
   'updatePolicyContact',
   'updateExportContract',

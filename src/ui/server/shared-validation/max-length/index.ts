@@ -10,7 +10,7 @@ import isAboveMaxLength from '../../helpers/is-above-max-length';
  * @param {number} maximum
  * @returns {object} errors
  */
-const validateInputMaxLength = (fieldBody: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
+const maxLengthValidation = (fieldBody: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
   let updatedErrors = errors;
 
   // is over maximum number of characters then will be false
@@ -23,4 +23,4 @@ const validateInputMaxLength = (fieldBody: string, fieldId: string, errorMessage
   return updatedErrors;
 };
 
-export default validateInputMaxLength;
+export default maxLengthValidation;

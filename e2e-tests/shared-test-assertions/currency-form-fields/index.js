@@ -13,7 +13,7 @@ import formSubmissionAssertions from './form-submission';
  * @param {Function} legend: Legend selector
  * @param {Function} hint: Hint selector
  * @param {Object} errors: Error messages object
- * @returns {Object} rendering and form submission assertion functions
+ * @returns {Object} Rendering and form submission assertion functions
  */
 export const assertCurrencyFormFields = ({ legend, hint, errors }) => {
   const assertions = fieldAssertions({

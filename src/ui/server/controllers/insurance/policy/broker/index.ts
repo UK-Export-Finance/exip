@@ -93,32 +93,32 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  // run validation on inputs
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
+  // if any errors then render template with errors
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+      userName: getUserNameFromSession(req.session.user),
+      ...pageVariables(application.referenceNumber),
+      application: mapApplicationToFormFields(application),
+      submittedValues: payload,
+      validationErrors,
+    });
+  }
+
   try {
-    const { application } = res.locals;
-
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
-
-    const { referenceNumber } = req.params;
-
-    const payload = constructPayload(req.body, [FIELD_ID]);
-
-    // run validation on inputs
-    const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
-
-    // if any errors then render template with errors
-    if (validationErrors) {
-      return res.render(TEMPLATE, {
-        ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
-        userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(application.referenceNumber),
-        validationErrors,
-        application: mapApplicationToFormFields(application),
-        submittedValues: payload,
-      });
-    }
-
     // if no errors, then runs save api call to db
     const saveResponse = await mapAndSave.broker(payload, application);
 

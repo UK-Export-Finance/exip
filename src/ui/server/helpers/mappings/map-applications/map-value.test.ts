@@ -5,6 +5,8 @@ import { DEFAULT } from '../../../content-strings';
 import formatCurrency from '../../format-currency';
 import mockApplication, { mockSinglePolicy, mockMultiplePolicy } from '../../../test-mocks/mock-application';
 
+const { policy: initPolicy } = mockApplication;
+
 const {
   POLICY: {
     CONTRACT_POLICY: {
@@ -56,7 +58,10 @@ describe('server/helpers/mappings/map-applications/map-value', () => {
       const result = mapInsuredFor({
         ...mockApplication,
         policy: {
-          id: mockApplication.policy.id,
+          id: initPolicy.id,
+          jointlyInsuredParty: {
+            id: initPolicy.jointlyInsuredParty.id,
+          },
         },
       });
 

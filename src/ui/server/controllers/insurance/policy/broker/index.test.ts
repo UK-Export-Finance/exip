@@ -124,17 +124,19 @@ describe('controllers/insurance/policy/broker', () => {
   });
 
   describe('post', () => {
+    const validBody = mockBroker;
+
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
+        await post(req, res);
+
         const sanitisedData = sanitiseData(req.body);
 
         const payload = constructPayload(sanitisedData, [FIELD_ID]);
-
-        await post(req, res);
 
         const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
@@ -142,9 +144,9 @@ describe('controllers/insurance/policy/broker', () => {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
-          validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
+          validationErrors,
         });
       });
     });
@@ -179,10 +181,7 @@ describe('controllers/insurance/policy/broker', () => {
       });
 
       it('should call mapAndSave.broker once with data from constructPayload function', async () => {
-        req.body = {
-          ...mockBroker,
-          injection: 1,
-        };
+        req.body = validBody;
 
         await post(req, res);
 
@@ -195,7 +194,7 @@ describe('controllers/insurance/policy/broker', () => {
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = mockBroker;
+          req.body = validBody;
 
           req.originalUrl = INSURANCE_ROUTES.POLICY.BROKER_CHECK_AND_CHANGE;
 
@@ -213,10 +212,46 @@ describe('controllers/insurance/policy/broker', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.broker call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

@@ -80,7 +80,7 @@ CREATE TABLE `Account` (
   `updatedAt` datetime(3) DEFAULT NULL,
   `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `isVerified` tinyint(1) NOT NULL DEFAULT '0',
@@ -764,7 +764,7 @@ CREATE TABLE `Broker` (
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `county` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `Broker_application_idx` (`application`),
   CONSTRAINT `Broker_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -877,6 +877,30 @@ CREATE TABLE `Feedback` (
 
 
 
+# Dump of table JointlyInsuredParty
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `JointlyInsuredParty`;
+
+CREATE TABLE `JointlyInsuredParty` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `policy` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `requested` tinyint(1) DEFAULT NULL,
+  `companyName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `companyNumber` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `JointlyInsuredParty_policy_key` (`policy`),
+  KEY `JointlyInsuredParty_country_idx` (`country`),
+  CONSTRAINT `JointlyInsuredParty_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `JointlyInsuredParty_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
 # Dump of table Page
 # ------------------------------------------------------------
 
@@ -921,7 +945,7 @@ CREATE TABLE `PolicyContact` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `firstName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `lastName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `position` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `isSameAsOwner` tinyint(1) DEFAULT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

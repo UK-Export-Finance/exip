@@ -7,6 +7,7 @@ import company from './company';
 import declarations from '../declarations';
 import companyDifferentTradingAddress from './companyDifferentTradingAddress';
 import exportContract from './exportContract';
+import jointlyInsuredParty from './jointlyInsuredParty';
 import policy from './policy';
 import policyContact from './policyContact';
 import sectionReview from './sectionReview';
@@ -26,6 +27,7 @@ const update = {
   declarations: declarations.update,
   companyDifferentTradingAddress,
   exportContract,
+  jointlyInsuredParty,
   policy,
   policyContact,
   sectionReview,

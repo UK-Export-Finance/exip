@@ -21,6 +21,7 @@ import mockBroker from './mock-broker';
 import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerContact } from './mock-buyer';
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
+import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
@@ -124,6 +125,7 @@ export {
   mockErrorMessagesObject,
   mockErrors,
   mockInsuranceFeedback,
+  mockJointlyInsuredParty,
   mockNext,
   mockUrlOrigin,
   mockSession,
