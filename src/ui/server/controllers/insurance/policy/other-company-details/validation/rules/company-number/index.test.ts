@@ -1,7 +1,6 @@
-import companyNumber from '.';
+import companyNumber, { MAXIMUM } from '.';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import maxLengthValidation from '../../../../../../../shared-validation/max-length';
 import { mockErrors } from '../../../../../../../test-mocks';
 
@@ -14,8 +13,6 @@ const {
     [FIELD_ID]: { ABOVE_MAXIMUM: ERROR_MESSAGE },
   },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
-
-const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
 
 describe('controllers/insurance/policy/other-company-details/validation/rules/company-number', () => {
   const mockBody = {

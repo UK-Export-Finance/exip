@@ -23,8 +23,8 @@ export const assertEmailFieldValidation = ({
 }) => {
   const field = fieldSelector(fieldId);
 
-  describe('email form field - validation', () => {
-    it(`should render a validation error when ${fieldId} is not entered`, () => {
+  describe(`${fieldId} form field validation`, () => {
+    it(`should render a validation error when ${fieldId} is left empty`, () => {
       cy.submitAndAssertFieldErrors(field, null, errorIndex, totalExpectedErrors, errorMessages.IS_EMPTY);
     });
 

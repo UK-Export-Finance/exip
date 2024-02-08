@@ -15,7 +15,7 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
+export const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
 
 /**
  * validate the "company number" in other company details response body
