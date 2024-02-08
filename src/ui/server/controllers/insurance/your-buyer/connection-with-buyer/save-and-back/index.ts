@@ -3,7 +3,7 @@ import hasFormData from '../../../../../helpers/has-form-data';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save/buyer';
+import mapAndSave from '../../map-and-save/buyer-relationship';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
@@ -37,7 +37,7 @@ export const post = async (req: Request, res: Response) => {
 
       const validationErrors = generateValidationErrors(payload);
 
-      const saveResponse = await mapAndSave.yourBuyer(payload, application, validationErrors);
+      const saveResponse = await mapAndSave.buyerRelationship(payload, application, validationErrors);
 
       if (!saveResponse) {
         return res.redirect(PROBLEM_WITH_SERVICE);

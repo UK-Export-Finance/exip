@@ -1,4 +1,4 @@
-import mapAndSave from '../../map-and-save/buyer';
+import mapAndSave from '../../map-and-save/buyer-relationship';
 import { FIELD_IDS } from '..';
 import { post } from '.';
 import { ROUTES } from '../../../../../constants';
@@ -22,7 +22,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/save-and-back',
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.yourBuyer = updateMapAndSave;
+    mapAndSave.buyerRelationship = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -102,7 +102,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/save-and-back',
         req.body = validBody;
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.yourBuyer = updateMapAndSave;
+        mapAndSave.buyerRelationship = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -118,7 +118,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/save-and-back',
 
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
-        mapAndSave.yourBuyer = updateMapAndSave;
+        mapAndSave.buyerRelationship = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
