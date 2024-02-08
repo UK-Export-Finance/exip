@@ -1,6 +1,5 @@
 import { field } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -13,11 +12,6 @@ const {
     ADDRESS,
     REGISTRATION_NUMBER,
     WEBSITE,
-    FIRST_NAME,
-    LAST_NAME,
-    POSITION,
-    EMAIL,
-    CAN_CONTACT_BUYER,
   },
 } = FIELD_IDS;
 
@@ -81,8 +75,6 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
-
       cy.keyboardInput(field(NAME).input(), BUYER[NAME]);
 
       cy.clickSaveAndBackButton();
@@ -97,18 +89,13 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.checkText(task.status(), expected);
     });
 
-    it(`should retain the ${NAME} and ${CAN_CONTACT_BUYER} input on the page and the other fields should be empty`, () => {
+    it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
       cy.startInsuranceYourBuyerSection({});
 
-      cy.assertRadioOptionIsChecked(companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput());
       cy.checkValue(field(NAME), BUYER[NAME]);
       cy.checkValue(field(ADDRESS), '');
       cy.checkValue(field(REGISTRATION_NUMBER), '');
       cy.checkValue(field(WEBSITE), '');
-      cy.checkValue(field(FIRST_NAME), '');
-      cy.checkValue(field(LAST_NAME), '');
-      cy.checkValue(field(POSITION), '');
-      cy.checkValue(field(EMAIL), '');
     });
   });
 
@@ -120,11 +107,6 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.keyboardInput(field(ADDRESS).input(), BUYER[ADDRESS]);
       cy.keyboardInput(field(REGISTRATION_NUMBER).input(), BUYER[REGISTRATION_NUMBER]);
       cy.keyboardInput(field(WEBSITE).input(), BUYER[WEBSITE]);
-      cy.keyboardInput(field(FIRST_NAME).input(), BUYER[FIRST_NAME]);
-      cy.keyboardInput(field(LAST_NAME).input(), BUYER[LAST_NAME]);
-      cy.keyboardInput(field(POSITION).input(), BUYER[POSITION]);
-      cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
 
       cy.clickSaveAndBackButton();
     });
@@ -141,14 +123,9 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     it('should retain all inputs on the page', () => {
       cy.startInsuranceYourBuyerSection({});
 
-      cy.assertRadioOptionIsChecked(companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput());
-
       cy.checkValue(field(ADDRESS), BUYER[ADDRESS]);
       cy.checkValue(field(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
       cy.checkValue(field(WEBSITE), BUYER[WEBSITE]);
-      cy.checkValue(field(FIRST_NAME), BUYER[FIRST_NAME]);
-      cy.checkValue(field(LAST_NAME), BUYER[LAST_NAME]);
-      cy.checkValue(field(POSITION), BUYER[POSITION]);
     });
   });
 });

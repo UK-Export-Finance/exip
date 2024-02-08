@@ -54,7 +54,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   it('should render a validation error and retain the submitted value when address is above the maximum', () => {
-    const expectedErrorsCount = 7;
+    const expectedErrorsCount = 2;
 
     cy.submitAndAssertFieldErrors(
       field,

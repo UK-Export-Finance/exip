@@ -19,11 +19,6 @@ const {
     COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
-    FIRST_NAME,
-    LAST_NAME,
-    POSITION,
-    EMAIL,
-    CAN_CONTACT_BUYER,
   },
 } = YOUR_BUYER_FIELD_IDS;
 
@@ -120,64 +115,6 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       field.input().should('exist');
     });
 
-    it('renders the contact details fieldset legend', () => {
-      const fieldId = FIRST_NAME;
-      const field = fieldSelector(fieldId);
-
-      field.legend().should('exist');
-      cy.checkText(field.legend(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LEGEND);
-    });
-
-    it(`renders ${FIRST_NAME} heading, hint, label and input`, () => {
-      const fieldId = FIRST_NAME;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.hint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
-
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-
-      field.input().should('exist');
-    });
-
-    it(`renders ${LAST_NAME} label and input`, () => {
-      const fieldId = LAST_NAME;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-
-      field.input().should('exist');
-    });
-
-    it(`renders ${POSITION} label and input`, () => {
-      const fieldId = POSITION;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-
-      field.input().should('exist');
-    });
-
-    it(`renders ${CAN_CONTACT_BUYER} label and input`, () => {
-      const fieldId = CAN_CONTACT_BUYER;
-      const field = companyOrOrganisationPage[fieldId];
-
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-
-      cy.checkText(field.yesNoRadioHint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
-
-      field.yesRadioInput().should('exist');
-      field.noRadioInput().should('exist');
-    });
-
-    it(`renders ${EMAIL} label and input`, () => {
-      const fieldId = EMAIL;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-
-      field.input().should('exist');
-    });
-
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
@@ -200,16 +137,9 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        const field = companyOrOrganisationPage[CAN_CONTACT_BUYER];
-
-        cy.assertRadioOptionIsChecked(field.yesRadioInput());
-
         cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
         cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
         cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);
-        cy.checkValue(fieldSelector(FIRST_NAME), BUYER[FIRST_NAME]);
-        cy.checkValue(fieldSelector(LAST_NAME), BUYER[LAST_NAME]);
-        cy.checkValue(fieldSelector(POSITION), BUYER[POSITION]);
       });
     });
   });

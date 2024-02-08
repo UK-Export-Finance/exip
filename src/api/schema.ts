@@ -579,7 +579,9 @@ export const lists = {
       contactFirstName: text(),
       contactLastName: text(),
       contactPosition: text(),
-      contactEmail: text(),
+      contactEmail: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
       canContactBuyer: nullableCheckbox(),
     },
     hooks: {

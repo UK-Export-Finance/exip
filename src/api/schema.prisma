@@ -323,7 +323,7 @@ model BuyerContact {
   contactFirstName String       @default("")
   contactLastName  String       @default("")
   contactPosition  String       @default("")
-  contactEmail     String       @default("")
+  contactEmail     String       @default("") @mysql.VarChar(300)
   canContactBuyer  Boolean?
 
   @@index([applicationId])

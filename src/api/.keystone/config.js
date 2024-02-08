@@ -1415,7 +1415,9 @@ var lists = {
       contactFirstName: (0, import_fields.text)(),
       contactLastName: (0, import_fields.text)(),
       contactPosition: (0, import_fields.text)(),
-      contactEmail: (0, import_fields.text)(),
+      contactEmail: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
       canContactBuyer: nullable_checkbox_default()
     },
     hooks: {

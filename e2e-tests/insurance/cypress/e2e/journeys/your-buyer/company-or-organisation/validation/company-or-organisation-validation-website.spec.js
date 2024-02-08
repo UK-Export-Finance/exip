@@ -50,7 +50,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   // for error assertion - common fields
   const ERROR_ASSERTIONS = {
     field: fieldSelector(FIELD_ID),
-    numberOfExpectedErrors: 8,
+    numberOfExpectedErrors: 3,
     errorIndex: 2,
   };
 
@@ -78,7 +78,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 7);
+      partials.errorSummaryListItems().should('have.length', 2);
     });
   });
 });
