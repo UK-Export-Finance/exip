@@ -21,8 +21,8 @@ const MINIMUM = 1;
  * validates number of uk employees input
  * only allows number without decimal
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const employeesUK = (formBody: RequestBody, errors: object) => {
   if (!objectHasProperty(formBody, FIELD_ID)) {

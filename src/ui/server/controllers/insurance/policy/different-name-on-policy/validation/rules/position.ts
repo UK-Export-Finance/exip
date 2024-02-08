@@ -15,8 +15,8 @@ const {
  * validates position field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const position = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 

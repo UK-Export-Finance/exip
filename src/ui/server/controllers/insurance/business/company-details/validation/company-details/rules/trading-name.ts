@@ -14,9 +14,9 @@ const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 /**
  * validates tradingName in company details response body
  * throws validation errors if there is no tradingName property
- * @param {Express.Request.body} responseBody containing an object with the company details response
- * @param {Object} errors errorList
- * @returns {object} object containing errors or blank object
+ * @param {Express.Request.body} formBody: containing an object with the company details response
+ * @param {Object} errors: errorList
+ * @returns {Object} Errors or empty object
  */
 const tradingName = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
 
