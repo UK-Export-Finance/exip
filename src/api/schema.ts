@@ -271,6 +271,7 @@ export const lists = {
   Policy: {
     fields: {
       application: relationship({ ref: 'Application' }),
+      jointlyInsuredParty: relationship({ ref: 'JointlyInsuredParty.policy' }),
       needPreCreditPeriodCover: nullableCheckbox(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: select({
         options: [
@@ -319,6 +320,20 @@ export const lists = {
         db: { nativeType: 'VarChar(50)' },
       }),
       isSameAsOwner: nullableCheckbox(),
+    },
+    access: allowAll,
+  }),
+  JointlyInsuredParty: list({
+    fields: {
+      policy: relationship({ ref: 'Policy.jointlyInsuredParty' }),
+      requested: nullableCheckbox(),
+      companyName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+      companyNumber: text({
+        db: { nativeType: 'VarChar(100)' },
+      }),
+      country: relationship({ ref: 'Country' }),
     },
     access: allowAll,
   }),

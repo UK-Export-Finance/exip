@@ -50,6 +50,16 @@ const applicationQuery = gql`
           totalMonthsOfCover
           totalSalesToBuyer
           maximumBuyerWillOwe
+          jointlyInsuredParty {
+            id
+            requested
+            companyName
+            companyNumber
+            country {
+              isoCode
+              name
+            }
+          }
         }
         policyContact {
           id

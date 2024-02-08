@@ -1,15 +1,15 @@
 import { APPLICATION } from '../../constants';
-import { Context } from '../../types';
+import createAJointlyInsuredParty from '../create-a-jointly-insured-party';
+import { Context, CreatePolicyResponse } from '../../types';
 
 /**
  * createAPolicy
  * Create a policy with an application relationship.
  * @param {Object} KeystoneJS context API
- * @param {String} Country ID
  * @param {String} Application ID
  * @returns {Object} Created policy
  */
-const createAPolicy = async (context: Context, applicationId: string) => {
+const createAPolicy = async (context: Context, applicationId: string): Promise<CreatePolicyResponse> => {
   console.info('Creating a policy for ', applicationId);
 
   try {
@@ -22,7 +22,12 @@ const createAPolicy = async (context: Context, applicationId: string) => {
       },
     });
 
-    return policy;
+    const jointlyInsuredParty = await createAJointlyInsuredParty(context, policy.id);
+
+    return {
+      policy,
+      jointlyInsuredParty,
+    };
   } catch (err) {
     console.error('Error creating a policy %O', err);
 

@@ -70,7 +70,7 @@ describe('server/helpers/summary-lists/generate-field-group-item', () => {
 
           expect(result.href).toEqual(mockInput.href);
           expect(result.renderAddLink).toEqual(true);
-          expect(result.renderChangeLink).toEqual(undefined);
+          expect(result.renderChangeLink).toBeUndefined();
         });
       });
 

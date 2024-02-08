@@ -93,7 +93,6 @@ export const get = (req: Request, res: Response) => {
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
 export const post = async (req: Request, res: Response) => {
-  try {
     const { application } = res.locals;
 
     if (!application) {
@@ -119,6 +118,7 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
+  try {
     // if no errors, then runs save api call to db
     const saveResponse = await mapAndSave.broker(payload, application);
 

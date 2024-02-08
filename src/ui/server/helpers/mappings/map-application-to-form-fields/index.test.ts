@@ -74,7 +74,12 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
         ...company,
         [FINANCIAL_YEAR_END_DATE]: null,
       },
-      policy: { id: policy.id },
+      policy: {
+        id: policy.id,
+        jointlyInsuredParty: {
+          id: policy.jointlyInsuredParty.id,
+        },
+      },
     };
 
     const result = mapApplicationToFormFields(minimalApplication);

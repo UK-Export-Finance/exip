@@ -209,8 +209,8 @@ var POLICY = {
   },
   NEED_PRE_CREDIT_PERIOD: "needPreCreditPeriodCover",
   CREDIT_PERIOD_WITH_BUYER: "creditPeriodWithBuyer",
-  REQUEST_JOINTLY_INSURED_PARTY: "requestJointlyInsuredParty",
   REQUESTED_JOINTLY_INSURED_PARTY: {
+    REQUESTED: "requested",
     COMPANY_NAME: "companyName",
     COMPANY_NUMBER: "companyNumber",
     COUNTRY: "country"
@@ -365,6 +365,7 @@ var DEFAULT_RESOLVERS = [
   "updateBuyerTradingHistory",
   "updateCompany",
   "updateDeclaration",
+  "updateJointlyInsuredParty",
   "updatePolicy",
   "updatePolicyContact",
   "updateExportContract",
@@ -1112,6 +1113,7 @@ var lists = {
   Policy: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
+      jointlyInsuredParty: (0, import_fields.relationship)({ ref: "JointlyInsuredParty.policy" }),
       needPreCreditPeriodCover: nullable_checkbox_default(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: (0, import_fields.select)({
         options: [
@@ -1160,6 +1162,20 @@ var lists = {
         db: { nativeType: "VarChar(50)" }
       }),
       isSameAsOwner: nullable_checkbox_default()
+    },
+    access: import_access.allowAll
+  }),
+  JointlyInsuredParty: (0, import_core2.list)({
+    fields: {
+      policy: (0, import_fields.relationship)({ ref: "Policy.jointlyInsuredParty" }),
+      requested: nullable_checkbox_default(),
+      companyName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
+      companyNumber: (0, import_fields.text)({
+        db: { nativeType: "VarChar(100)" }
+      }),
+      country: (0, import_fields.relationship)({ ref: "Country" })
     },
     access: import_access.allowAll
   }),
@@ -3436,6 +3452,25 @@ var createABuyer = async (context, countryId, applicationId) => {
 };
 var create_a_buyer_default = createABuyer;
 
+// helpers/create-a-jointly-insured-party/index.ts
+var createAJointlyInsuredParty = async (context, policyId) => {
+  console.info("Creating a jointly insured party for ", policyId);
+  try {
+    const jointlyInsuredParty = await context.db.JointlyInsuredParty.createOne({
+      data: {
+        policy: {
+          connect: { id: policyId }
+        }
+      }
+    });
+    return jointlyInsuredParty;
+  } catch (err) {
+    console.error("Error creating a jointly insured party %O", err);
+    throw new Error(`Creating a jointly insured party ${err}`);
+  }
+};
+var create_a_jointly_insured_party_default = createAJointlyInsuredParty;
+
 // helpers/create-a-policy/index.ts
 var createAPolicy = async (context, applicationId) => {
   console.info("Creating a policy for ", applicationId);
@@ -3448,7 +3483,11 @@ var createAPolicy = async (context, applicationId) => {
         needPreCreditPeriodCover: APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER
       }
     });
-    return policy;
+    const jointlyInsuredParty = await create_a_jointly_insured_party_default(context, policy.id);
+    return {
+      policy,
+      jointlyInsuredParty
+    };
   } catch (err) {
     console.error("Error creating a policy %O", err);
     throw new Error(`Creating a policy ${err}`);
@@ -3618,7 +3657,7 @@ var createAnApplication = async (root, variables, context) => {
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
-    const policy = await create_a_policy_default(context, applicationId);
+    const { policy } = await create_a_policy_default(context, applicationId);
     const company = await create_a_company_default(context, applicationId, companyData);
     const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
     const updatedApplication = await context.db.Application.updateOne({
