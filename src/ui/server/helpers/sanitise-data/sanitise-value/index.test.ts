@@ -13,7 +13,7 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
   POLICY: {
-    BROKER: { ADDRESS_LINE_1, ADDRESS_LINE_2, POSTCODE, NAME: BROKER_NAME },
+    BROKER_DETAILS: { NAME: BROKER_NAME },
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION, WEBSITE },
@@ -32,9 +32,6 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         COMPANY_SIC,
         PHONE_NUMBER,
         GOODS_OR_SERVICES,
-        ADDRESS_LINE_1,
-        ADDRESS_LINE_2,
-        POSTCODE,
         BROKER_NAME,
         NAME,
         REGISTRATION_NUMBER,

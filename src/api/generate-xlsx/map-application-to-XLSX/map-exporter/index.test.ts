@@ -16,6 +16,7 @@ const CONTENT_STRINGS = {
   ...FIELDS.NATURE_OF_YOUR_BUSINESS,
   ...FIELDS.TURNOVER,
   ...FIELDS.BROKER,
+  ...FIELDS.BROKER_DETAILS,
 };
 
 const {
@@ -26,7 +27,8 @@ const {
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
   POLICY: {
-    BROKER: { USING_BROKER, NAME: BROKER_NAME, ADDRESS_LINE_1, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL },
+    USING_BROKER,
+    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -86,15 +88,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
 
         const { broker } = mockApplication;
 
-        const expectedAddressAnswer = {
-          lineOneAndTwo: `${broker[ADDRESS_LINE_1]} ${NEW_LINE}${broker[ADDRESS_LINE_2]}`,
-          other: `${NEW_LINE}${broker[TOWN]} ${NEW_LINE}${broker[COUNTY]} ${NEW_LINE}${broker[POSTCODE]}`,
-        };
-
         const expected = [
           xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER])),
           xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-          xlsxRow(XLSX.FIELDS[ADDRESS_LINE_1], `${expectedAddressAnswer.lineOneAndTwo}${expectedAddressAnswer.other}`),
+          xlsxRow(XLSX.FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
           xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
         ];
 

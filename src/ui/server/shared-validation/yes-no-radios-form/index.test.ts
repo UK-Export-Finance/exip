@@ -26,9 +26,9 @@ describe('shared-validation/yes-no-radios-form', () => {
     });
   });
 
-  it('should return null', () => {
+  it('should return undefined', () => {
     const result = validation({ [FIELD_ID]: true }, FIELD_ID, mockErrorMessage);
 
-    expect(result).toEqual(null);
+    expect(result).toEqual(undefined);
   });
 });

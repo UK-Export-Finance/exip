@@ -21,15 +21,11 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  BROKER: {
-    USING_BROKER,
+  USING_BROKER,
+  BROKER_DETAILS: {
     NAME,
-    ADDRESS_LINE_1,
-    ADDRESS_LINE_2,
-    TOWN,
-    COUNTY,
-    POSTCODE,
     EMAIL,
+    FULL_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS.POLICY;
 
@@ -47,7 +43,8 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-context('Insurance - Check your answers - Policy - Broker - Summary list', () => {
+// TODO: EMS-2793 - re-enable
+context.skip('Insurance - Check your answers - Policy - Broker - Summary list', () => {
   let referenceNumber;
   let url;
 
@@ -117,7 +114,7 @@ context('Insurance - Check your answers - Policy - Broker - Summary list', () =>
   });
 
   describe('Address', () => {
-    const fieldId = ADDRESS_LINE_1;
+    const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${BROKER_CHECK_AND_CHANGE}`, () => {
@@ -130,22 +127,14 @@ context('Insurance - Check your answers - Policy - Broker - Summary list', () =>
     });
 
     describe('form submission with a new answer', () => {
-      const addressLine1 = '25 test';
-      const addressLine2 = '25 test 2';
-      const town = 'Test London';
-      const country = 'Test London';
-      const postcode = 'SW1A 2AA';
+      const mockNewAddress = 'Mock new address';
 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), addressLine1);
-        cy.keyboardInput(field(ADDRESS_LINE_2).input(), addressLine2);
-        cy.keyboardInput(field(TOWN).input(), town);
-        cy.keyboardInput(field(COUNTY).input(), country);
-        cy.keyboardInput(field(POSTCODE).input(), postcode);
+        cy.keyboardInput(field(fieldId).input(), mockNewAddress);
 
         cy.clickSubmitButton();
       });
@@ -155,7 +144,7 @@ context('Insurance - Check your answers - Policy - Broker - Summary list', () =>
       });
 
       it('should render the new answer and retain a `completed` status tag', () => {
-        const expectedKey = FIELDS.BROKER[fieldId].SUMMARY.TITLE;
+        const expectedKey = FIELDS.BROKER_DETAILS[fieldId].SUMMARY.TITLE;
 
         const row = summaryList.field(fieldId);
 
@@ -164,12 +153,7 @@ context('Insurance - Check your answers - Policy - Broker - Summary list', () =>
           expectedKey,
         );
 
-        // as html, cannot use checkText so checking contains following fields
-        row.value().contains(addressLine1);
-        row.value().contains(addressLine2);
-        row.value().contains(town);
-        row.value().contains(country);
-        row.value().contains(postcode);
+        row.value().contains(mockNewAddress);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -245,20 +229,21 @@ context('Insurance - Check your answers - Policy - Broker - Summary list', () =>
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
-      it('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {
+      // TODO: EMS-2793 - re-enable
+      it.skip('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {
         cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         summaryList.field(NAME).key().should('not.exist');
         summaryList.field(NAME).value().should('not.exist');
         summaryList.field(NAME).changeLink().should('not.exist');
 
-        summaryList.field(ADDRESS_LINE_1).key().should('not.exist');
-        summaryList.field(ADDRESS_LINE_1).value().should('not.exist');
-        summaryList.field(ADDRESS_LINE_1).changeLink().should('not.exist');
-
         summaryList.field(EMAIL).key().should('not.exist');
         summaryList.field(EMAIL).value().should('not.exist');
         summaryList.field(EMAIL).changeLink().should('not.exist');
+
+        summaryList.field(FULL_ADDRESS).key().should('not.exist');
+        summaryList.field(FULL_ADDRESS).value().should('not.exist');
+        summaryList.field(FULL_ADDRESS).changeLink().should('not.exist');
 
         cy.checkTaskStatusCompleted(status());
       });

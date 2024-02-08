@@ -42,7 +42,7 @@ const {
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
-  FIELD_ID: REQUEST_JOINTLY_INSURED_PARTY,
+  FIELD_ID,
   FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ANOTHER_COMPANY_SAVE_AND_BACK}`,
 });

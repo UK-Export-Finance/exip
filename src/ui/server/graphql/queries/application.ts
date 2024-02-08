@@ -117,11 +117,6 @@ const applicationQuery = gql`
           id
           isUsingBroker
           name
-          addressLine1
-          addressLine2
-          town
-          county
-          postcode
           email
         }
         buyer {

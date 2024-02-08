@@ -86,7 +86,7 @@ export const FIELD_IDS = [
 
 /**
  * get
- * Get the application and render the Single contract policy page
+ * Render the Single contract policy page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Single contract policy page

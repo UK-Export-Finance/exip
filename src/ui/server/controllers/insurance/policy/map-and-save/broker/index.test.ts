@@ -2,13 +2,11 @@ import mapAndSave from '.';
 import save from '../../save-data/broker';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { FIELD_IDS } from '../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 
 const {
-  POLICY: {
-    BROKER: { NAME },
-  },
-} = FIELD_IDS.INSURANCE;
+  BROKER_DETAILS: { NAME },
+} = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-and-save/broker', () => {
   jest.mock('../../save-data/broker');

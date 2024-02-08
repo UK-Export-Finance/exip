@@ -215,17 +215,11 @@ var POLICY = {
     COMPANY_NUMBER: "companyNumber",
     COUNTRY: "country"
   },
-  BROKER: {
-    LEGEND: "broker",
-    USING_BROKER: "isUsingBroker",
+  USING_BROKER: "isUsingBroker",
+  BROKER_DETAILS: {
     NAME: "name",
-    ADDRESS_LINE_1: "addressLine1",
-    ADDRESS_LINE_2: "addressLine2",
-    TOWN: "town",
-    COUNTY: "county",
-    POSTCODE: "postcode",
     EMAIL: "email",
-    DETAILS: "whyAppointBroker"
+    FULL_ADDRESS: "fullAddress"
   }
 };
 var policy_default = POLICY;
@@ -438,14 +432,16 @@ var VERSIONS = [
     MAXIMUM_BUYER_CAN_OWE: 5e5,
     TOTAL_VALUE_OF_CONTRACT: 5e5,
     DEFAULT_FINAL_DESTINATION_KNOWN: true,
-    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false
+    DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: false,
+    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: true
   },
   {
     VERSION_NUMBER: "2",
     OVER_500K_SUPPORT: true,
     DEFAULT_FINAL_DESTINATION_KNOWN: null,
     DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: null,
-    DEFAULT_CURRENCY: GBP
+    DEFAULT_CURRENCY: GBP,
+    BROKER_ADDRESS_AS_MULTIPLE_FIELDS: false
   }
 ];
 var versions_default = VERSIONS;
@@ -602,13 +598,9 @@ var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TY
 
 // constants/XLSX-CONFIG/index.ts
 var {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 }
-  },
-  POLICY: {
-    BROKER: { USING_BROKER }
-  }
-} = insurance_default;
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
+  USING_BROKER
+} = POLICY;
 var XLSX_ROW_INDEXES = (application2) => {
   const { policy, broker } = application2;
   const TITLES = {
@@ -4166,8 +4158,9 @@ var {
   POLICY: {
     CONTRACT_POLICY,
     EXPORT_VALUE,
-    BROKER: { USING_BROKER: USING_BROKER2, NAME, ADDRESS_LINE_1, EMAIL: EMAIL4 },
-    POLICY_TYPE: POLICY_TYPE3
+    POLICY_TYPE: POLICY_TYPE3,
+    USING_BROKER: USING_BROKER2,
+    BROKER_DETAILS: { NAME, EMAIL: EMAIL4, FULL_ADDRESS }
   }
 } = insurance_default;
 var POLICY_FIELDS = {
@@ -4232,23 +4225,29 @@ var POLICY_FIELDS = {
   },
   BROKER: {
     [USING_BROKER2]: {
+      LABEL: "Are you using a broker to get this insurance?",
       SUMMARY: {
         TITLE: "Using a broker"
       }
-    },
+    }
+  },
+  BROKER_DETAILS: {
     [NAME]: {
+      LABEL: "Name of broker or company",
       SUMMARY: {
         TITLE: "Broker's name or company"
       }
     },
-    [ADDRESS_LINE_1]: {
-      SUMMARY: {
-        TITLE: "Broker's address"
-      }
-    },
     [EMAIL4]: {
+      LABEL: "Email address",
       SUMMARY: {
         TITLE: "Broker's email"
+      }
+    },
+    [FULL_ADDRESS]: {
+      LABEL: "Broker's address",
+      SUMMARY: {
+        TITLE: "Broker's address"
       }
     }
   }
@@ -4447,7 +4446,8 @@ var {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
   },
-  BROKER: { USING_BROKER: USING_BROKER3, NAME: BROKER_NAME, ADDRESS_LINE_1: BROKER_ADDRESS, EMAIL: BROKER_EMAIL }
+  USING_BROKER: USING_BROKER3,
+  BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
 } = policy_default;
 var {
   COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
@@ -4699,7 +4699,8 @@ var {
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
   },
   POLICY: {
-    BROKER: { USING_BROKER: USING_BROKER4, NAME: BROKER_NAME2, ADDRESS_LINE_1: ADDRESS_LINE_12, ADDRESS_LINE_2, TOWN, COUNTY, POSTCODE, EMAIL: EMAIL7 }
+    USING_BROKER: USING_BROKER4,
+    BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
   }
 } = insurance_default;
 var mapSicCodes2 = (sicCodes) => {
@@ -4714,14 +4715,10 @@ var mapBroker = (application2) => {
   const { broker } = application2;
   let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
   if (broker[USING_BROKER4]) {
-    const addressAnswer = {
-      lineOneAndTwo: `${broker[ADDRESS_LINE_12]} ${xlsx_new_line_default}${broker[ADDRESS_LINE_2]}`,
-      other: `${xlsx_new_line_default}${broker[TOWN]} ${xlsx_new_line_default}${broker[COUNTY]} ${xlsx_new_line_default}${broker[POSTCODE]}`
-    };
     mapped = [
       ...mapped,
       xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(XLSX.FIELDS[ADDRESS_LINE_12], `${addressAnswer.lineOneAndTwo}${addressAnswer.other}`),
+      xlsx_row_default(XLSX.FIELDS[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
       xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
     ];
   }
