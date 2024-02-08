@@ -5,7 +5,7 @@ import { intro } from '../../../pages/shared';
  * Check intro text element.
  * @param {String} expected: Expected text
  */
-const checkIntroText = (selector, expected) => {
+const checkIntroText = (expected) => {
   cy.checkText(intro(), expected);
 };
 
