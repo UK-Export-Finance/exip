@@ -1,10 +1,7 @@
 import { singleInputField } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { STATUS: { IN_PROGRESS, NOT_STARTED_YET } } = TASKS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -61,7 +58,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     });
 
     it('should retain the status of task `declarations` as `not started yet`', () => {
-      cy.checkTaskStatus(task, NOT_STARTED_YET);
+      cy.checkTaskDeclarationsAndSubmitStatusIsNotStartedYet();
     });
   });
 
@@ -81,7 +78,7 @@ context('Insurance - Declarations - Confidentiality page - Save and go back', ()
     });
 
     it('should update the status of task `declarations` to `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

@@ -5,7 +5,7 @@ const { taskList } = insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
 
 /**
- * Check the the "business" task has an "in progress" status.
+ * Check that the "business" task has an "in progress" status.
  */
 const checkTaskBusinessStatusIsInProgress = () => {
   cy.checkTaskStatusInProgress(task.status());

@@ -1,7 +1,5 @@
 import { field } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
-import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -28,9 +26,6 @@ const {
     COMPANY_OR_ORGANISATION,
   },
 } = ROUTES.INSURANCE;
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
 
 const { BUYER } = application;
 
@@ -72,8 +67,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
-      const expected = TASKS.STATUS.NOT_STARTED_YET;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsNotStartedYet();
     });
   });
 

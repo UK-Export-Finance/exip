@@ -1,10 +1,5 @@
 import { insurance } from '../../../../../../pages';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.policy;
 
 const FIELD_ID = FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE;
 const multiplePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].multiple;
@@ -48,9 +43,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
     });
 
     it('should retain the `type of policy` task status as `not started yet`', () => {
-      const expected = TASKS.STATUS.NOT_STARTED_YET;
-
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsNotStartedYet();
     });
   });
 
