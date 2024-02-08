@@ -98,12 +98,12 @@ Cypress.Commands.add('checkTaskStatusCompleted', require('./tasks/check-task-sta
 Cypress.Commands.add('checkTaskEligibilityStatusIsComplete', require('./tasks/eligibility/is-complete'));
 
 Cypress.Commands.add('checkTaskBusinessStatusIsNotStartedYet', require('./tasks/business/is-not-started-yet'));
-Cypress.Commands.add('checkTaskBusinessStatusIsComplete', require('./tasks/business/is-complete'));
 Cypress.Commands.add('checkTaskBusinessStatusIsInProgress', require('./tasks/business/is-in-progress'));
+Cypress.Commands.add('checkTaskBusinessStatusIsComplete', require('./tasks/business/is-complete'));
 
 Cypress.Commands.add('checkTaskBuyerStatusIsNotStartedYet', require('./tasks/buyer/is-not-started-yet'));
-Cypress.Commands.add('checkTaskBuyerStatusIsComplete', require('./tasks/buyer/is-complete'));
 Cypress.Commands.add('checkTaskBuyerStatusIsInProgress', require('./tasks/buyer/is-in-progress'));
+Cypress.Commands.add('checkTaskBuyerStatusIsComplete', require('./tasks/buyer/is-complete'));
 
 Cypress.Commands.add('checkTaskPolicyStatusIsCannotStart', require('./tasks/policy/is-cannot-start'));
 Cypress.Commands.add('checkTaskPolicyStatusIsNotStartedYet', require('./tasks/policy/is-not-started-yet'));
