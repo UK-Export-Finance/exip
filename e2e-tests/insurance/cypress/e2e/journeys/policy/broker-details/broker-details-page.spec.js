@@ -21,6 +21,7 @@ const {
   POLICY: {
     BROKER_ROOT,
     BROKER_DETAILS_ROOT,
+    BROKER_CONFIRM_ADDRESS_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -31,6 +32,7 @@ const baseUrl = Cypress.config('baseUrl');
 context("Insurance - Policy - Broker details page - As an exporter, I want to provide UKEF with my broker's details, So that UKEF can communicate with the broker as needed whilst processing my application'", () => {
   let referenceNumber;
   let url;
+  let brokerConfirmAddressUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -48,6 +50,7 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+      brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -108,6 +111,16 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
 
     it('should display save and go back button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitBrokerDetailsForm();
+
+      cy.assertUrl(brokerConfirmAddressUrl);
     });
   });
 });
