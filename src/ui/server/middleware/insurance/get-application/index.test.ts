@@ -2,7 +2,7 @@ import getApplicationMiddleware, { RELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import api from '../../../api';
 import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
-import totalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
+import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
 import { Next, Request, Response } from '../../../../types';
 
 const {
@@ -91,10 +91,10 @@ describe('middleware/insurance/get-application', () => {
         expect(nextSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('should add the result of "totalContractValueOverThreshold" to res.locals', async () => {
+      it('should add the result of "mapTotalContractValueOverThreshold" to res.locals', async () => {
         await getApplicationMiddleware(req, res, next);
 
-        const expected = totalContractValueOverThreshold(mockApplication);
+        const expected = mapTotalContractValueOverThreshold(mockApplication);
 
         expect(res.locals.application).toEqual(expected);
       });

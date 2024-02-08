@@ -559,16 +559,9 @@ export const lists = {
       country: relationship({ ref: 'Country' }),
       registrationNumber: text(),
       website: text(),
-      contactFirstName: text(),
-      contactLastName: text(),
-      contactPosition: text(),
-      contactEmail: text(),
-      canContactBuyer: nullableCheckbox(),
-      exporterIsConnectedWithBuyer: nullableCheckbox(),
-      connectionWithBuyerDescription: text({
-        db: { nativeType: 'VarChar(1000)' },
-      }),
       buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
+      contact: relationship({ ref: 'BuyerContact.buyer' }),
+      relationship: relationship({ ref: 'BuyerRelationship.buyer' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -579,6 +572,50 @@ export const lists = {
     },
     access: allowAll,
   }),
+  BuyerContact: {
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.contact' }),
+      contactFirstName: text(),
+      contactLastName: text(),
+      contactPosition: text(),
+      contactEmail: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
+      canContactBuyer: nullableCheckbox(),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  },
+  BuyerRelationship: {
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.relationship' }),
+      exporterIsConnectedWithBuyer: nullableCheckbox(),
+      connectionWithBuyerDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      exporterHasPreviousCreditInsuranceWithBuyer: nullableCheckbox(),
+      exporterHasBuyerFinancialAccounts: nullableCheckbox(),
+      previousCreditInsuranceWithBuyerDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  },
   BuyerTradingHistory: list({
     fields: {
       application: relationship({ ref: 'Application' }),

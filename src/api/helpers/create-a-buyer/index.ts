@@ -1,5 +1,7 @@
 import { Context } from '../../types';
 import createABuyerTradingHistory from '../create-a-buyer-trading-history';
+import createABuyerContact from '../create-a-buyer-contact';
+import createABuyerRelationship from '../create-a-buyer-relationship';
 
 /**
  * createABuyer
@@ -27,12 +29,20 @@ const createABuyer = async (context: Context, countryId: string, applicationId: 
       },
     });
 
-    // Create a buyer trading address with buyer relationship
+    // Create a buyer trading address with buyer relationships
     const buyerTradingHistory = await createABuyerTradingHistory(context, buyer.id, applicationId);
+
+    // Create a buyer relationship row with buyer relationships
+    const buyerRelationship = await createABuyerRelationship(context, buyer.id, applicationId);
+
+    // Create a buyer contact with buyer relationship
+    const buyerContact = await createABuyerContact(context, buyer.id, applicationId);
 
     return {
       buyer,
       buyerTradingHistory,
+      buyerRelationship,
+      buyerContact,
     };
   } catch (err) {
     console.error('Error creating a buyer %O', err);

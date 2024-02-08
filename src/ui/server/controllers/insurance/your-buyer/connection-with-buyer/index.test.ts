@@ -12,7 +12,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save/buyer';
+import mapAndSave from '../map-and-save/buyer-relationship';
 
 const {
   INSURANCE_ROOT,
@@ -38,7 +38,7 @@ const {
 
 const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
-const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
+const { relationship } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   let req: Request;
@@ -125,7 +125,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
-        applicationAnswer: mockApplication.buyer[CONNECTION_WITH_BUYER],
+        applicationAnswer: mockApplication.buyer.relationship[CONNECTION_WITH_BUYER],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -146,12 +146,11 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
   describe('post', () => {
     const validBody = {
-      exporterIsConnectedWithBuyer,
-      connectionWithBuyerDescription,
+      ...relationship,
     };
 
     beforeEach(() => {
-      mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(true));
+      mapAndSave.buyerRelationship = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are no validation errors', () => {
@@ -169,11 +168,11 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
         await post(req, res);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.buyerRelationship).toHaveBeenCalledTimes(1);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.yourBuyer).toHaveBeenCalledWith(payload, mockApplication);
+        expect(mapAndSave.buyerRelationship).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
@@ -244,7 +243,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.yourBuyer = jest.fn(() => Promise.resolve(false));
+          mapAndSave.buyerRelationship = jest.fn(() => Promise.resolve(false));
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -258,7 +257,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         beforeEach(() => {
           req.body = validBody;
           res.locals = mockRes().locals;
-          mapAndSave.yourBuyer = jest.fn(() => Promise.reject(new Error('mock')));
+          mapAndSave.buyerRelationship = jest.fn(() => Promise.reject(new Error('mock')));
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
