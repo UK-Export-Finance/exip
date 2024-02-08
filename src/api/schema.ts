@@ -312,7 +312,9 @@ export const lists = {
       lastName: text({
         db: { nativeType: 'VarChar(300)' },
       }),
-      email: text(),
+      email: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
       position: text({
         db: { nativeType: 'VarChar(50)' },
       }),
@@ -344,7 +346,10 @@ export const lists = {
       updatedAt: timestamp(),
       firstName: text({ validation: { isRequired: true } }),
       lastName: text({ validation: { isRequired: true } }),
-      email: text({ validation: { isRequired: true } }),
+      email: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(300)' },
+      }),
       salt: text({ validation: { isRequired: true } }),
       hash: text({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
@@ -457,7 +462,9 @@ export const lists = {
       town: text(),
       county: text(),
       postcode: text(),
-      email: text(),
+      email: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

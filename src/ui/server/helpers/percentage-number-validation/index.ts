@@ -1,7 +1,7 @@
-import { RequestBody, ErrorMessageObject } from '../../../types';
 import generateValidationErrors from '../validation';
 import { objectHasProperty } from '../object';
 import { isNumber, numberHasDecimal, isNumberBelowMinimum, isNumberAboveMaximum } from '../number';
+import { RequestBody, ErrorMessageObject } from '../../../types';
 
 const MINIMUM = 0;
 const MAXIMUM = 100;

@@ -1,4 +1,4 @@
-import validateFeedbackInput from '.';
+import maxLengthValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
 import { mockErrors } from '../../test-mocks';
 
@@ -15,7 +15,7 @@ describe('shared-validation/feedback', () => {
         [mockFieldId]: 'a'.repeat(maximum + 1),
       };
 
-      const result = validateFeedbackInput(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, maximum);
+      const result = maxLengthValidation(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, maximum);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
 
@@ -29,7 +29,7 @@ describe('shared-validation/feedback', () => {
         [mockFieldId]: 'a',
       };
 
-      const result = validateFeedbackInput(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, maximum);
+      const result = maxLengthValidation(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, maximum);
 
       expect(result).toEqual(mockErrors);
     });

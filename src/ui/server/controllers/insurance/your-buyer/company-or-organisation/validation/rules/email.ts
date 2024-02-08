@@ -10,7 +10,7 @@ const {
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGE },
+      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES;
@@ -23,6 +23,6 @@ const {
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */
-const emailRules = (formBody: RequestBody, errors: object) => emailValidation(FIELD_ID, formBody[FIELD_ID], ERROR_MESSAGE.IS_EMPTY, errors);
+const emailRules = (formBody: RequestBody, errors: object) => emailValidation(FIELD_ID, formBody[FIELD_ID], ERROR_MESSAGES_OBJECT, errors);
 
 export default emailRules;

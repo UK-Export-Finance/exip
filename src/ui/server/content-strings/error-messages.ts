@@ -276,6 +276,13 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.USING_BROKER]: {
         IS_EMPTY: 'Select whether you are using a broker to get this insurance',
       },
+      BROKER_DETAILS: {
+        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.EMAIL]: {
+          IS_EMPTY: 'Enter the email address of the broker or company',
+          ABOVE_MAXIMUM: 'The broker or company email cannot be more than 300 characters',
+          INCORRECT_FORMAT: 'Enter the broker or company email address in the correct format, like name@example.com',
+        },
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
@@ -303,6 +310,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.EMAIL]: {
           IS_EMPTY: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
+          INCORRECT_FORMAT: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
           IS_EMPTY: 'Select whether we can contact the buyer about your application',

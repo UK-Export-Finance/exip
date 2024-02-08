@@ -1153,7 +1153,9 @@ var lists = {
       lastName: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
       }),
-      email: (0, import_fields.text)(),
+      email: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
       position: (0, import_fields.text)({
         db: { nativeType: "VarChar(50)" }
       }),
@@ -1185,7 +1187,10 @@ var lists = {
       updatedAt: (0, import_fields.timestamp)(),
       firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
       lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
-      email: (0, import_fields.text)({ validation: { isRequired: true } }),
+      email: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(300)" }
+      }),
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
@@ -1291,7 +1296,9 @@ var lists = {
       town: (0, import_fields.text)(),
       county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
-      email: (0, import_fields.text)()
+      email: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

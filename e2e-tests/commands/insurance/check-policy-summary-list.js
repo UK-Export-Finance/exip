@@ -210,7 +210,7 @@ const checkPolicySummaryList = ({
       const fieldId = BROKER_DETAILS.NAME;
 
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_DETAILS);
-      const expectedValue = application.EXPORTER_BROKER[fieldId];
+      const expectedValue = application.BROKER[fieldId];
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
@@ -226,13 +226,13 @@ const checkPolicySummaryList = ({
         expectedKey,
       );
 
-      row.value().contains(application.EXPORTER_BROKER[fieldId]);
+      row.value().contains(application.BROKER[fieldId]);
     },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;
 
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.BROKER_DETAILS);
-      const expectedValue = application.EXPORTER_BROKER[fieldId];
+      const expectedValue = application.BROKER[fieldId];
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },

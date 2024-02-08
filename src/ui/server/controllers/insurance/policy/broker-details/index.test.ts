@@ -1,4 +1,4 @@
-import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
+import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -7,16 +7,23 @@ import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/poli
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const { BROKER_DETAILS } = POLICY_FIELDS;
 
-const { referenceNumber } = mockApplication;
+const { referenceNumber, broker } = mockApplication;
 
 describe('controllers/insurance/policy/broker-details', () => {
   let req: Request;
@@ -29,6 +36,14 @@ describe('controllers/insurance/policy/broker-details', () => {
 
   afterAll(() => {
     jest.resetAllMocks();
+  });
+
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [NAME, EMAIL, FULL_ADDRESS];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
@@ -78,9 +93,9 @@ describe('controllers/insurance/policy/broker-details', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...pageVariables(referenceNumber),
       });
     });
 
@@ -91,6 +106,60 @@ describe('controllers/insurance/policy/broker-details', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors and submitted values', () => {
+        req.body = {};
+
+        post(req, res);
+
+        const sanitisedData = sanitiseData(req.body);
+
+        const payload = constructPayload(sanitisedData, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: mapApplicationToFormFields(mockApplication),
+          submittedValues: payload,
+          validationErrors,
+        });
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+        req.body = {
+          [EMAIL]: broker[EMAIL],
+        };
+
+        post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

@@ -130,11 +130,11 @@ describe('controllers/insurance/policy/broker', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
+        await post(req, res);
+
         const sanitisedData = sanitiseData(req.body);
 
         const payload = constructPayload(sanitisedData, [FIELD_ID]);
-
-        await post(req, res);
 
         const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
@@ -142,9 +142,9 @@ describe('controllers/insurance/policy/broker', () => {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
-          validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
+          validationErrors,
         });
       });
     });
@@ -213,8 +213,8 @@ describe('controllers/insurance/policy/broker', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

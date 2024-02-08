@@ -121,7 +121,7 @@ model PolicyContact {
   applicationId                  String?       @map("application")
   firstName                      String        @default("") @mysql.VarChar(300)
   lastName                       String        @default("") @mysql.VarChar(300)
-  email                          String        @default("")
+  email                          String        @default("") @mysql.VarChar(300)
   position                       String        @default("") @mysql.VarChar(50)
   isSameAsOwner                  Boolean?
   from_Application_policyContact Application[] @relation("Application_policyContact")
@@ -147,7 +147,7 @@ model Account {
   updatedAt                        DateTime?
   firstName                        String                @default("")
   lastName                         String                @default("")
-  email                            String                @default("")
+  email                            String                @default("") @mysql.VarChar(300)
   salt                             String                @default("")
   hash                             String                @default("")
   isVerified                       Boolean               @default(false)
@@ -219,7 +219,7 @@ model Broker {
   town                    String        @default("")
   county                  String        @default("")
   postcode                String        @default("")
-  email                   String        @default("")
+  email                   String        @default("") @mysql.VarChar(300)
   from_Application_broker Application[] @relation("Application_broker")
 
   @@index([applicationId])
