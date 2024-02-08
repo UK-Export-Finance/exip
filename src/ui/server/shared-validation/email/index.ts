@@ -18,7 +18,7 @@ export const MAXIMUM = 300;
 const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMessageObject, errors: object) => {
   try {
     if (!email) {
-      const errorMessage = errorMessages.IS_EMPTY || errorMessages.INCORRECT_FORMAT;
+      const errorMessage = errorMessages.IS_EMPTY;
 
       return generateValidationErrors(fieldId, errorMessage, errors);
     }

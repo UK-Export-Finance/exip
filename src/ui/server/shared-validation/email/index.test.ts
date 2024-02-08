@@ -9,31 +9,14 @@ describe('shared-validation/email', () => {
   const mockFieldId = 'email';
 
   describe('when the email is empty', () => {
-    const mockValue = '';
+    it('should return validation error', () => {
+      const mockValue = '';
 
-    describe('when an IS_EMPTY message is available', () => {
-      it('should return validation error with IS_EMPTY message', () => {
-        const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
+      const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
 
-        const expected = generateValidationErrors(mockFieldId, mockErrorMessagesObject.IS_EMPTY, mockErrors);
+      const expected = generateValidationErrors(mockFieldId, mockErrorMessagesObject.IS_EMPTY, mockErrors);
 
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe('when an IS_EMPTY message is NOT available', () => {
-      it('should return validation error with INCORRECT_FORMAT message', () => {
-        const mockErrorMessagesNoIsEmpty = {
-          ...mockErrorMessagesObject,
-          IS_EMPTY: '',
-        };
-
-        const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesNoIsEmpty, mockErrors);
-
-        const expected = generateValidationErrors(mockFieldId, mockErrorMessagesNoIsEmpty.INCORRECT_FORMAT, mockErrors);
-
-        expect(result).toEqual(expected);
-      });
+      expect(result).toEqual(expected);
     });
   });
 

@@ -8,7 +8,7 @@ const { EMAIL: FIELD_ID } = FIELD_IDS;
 const {
   ACCOUNT: {
     CREATE: {
-      YOUR_DETAILS: { [FIELD_ID]: ERROR_MESSAGE },
+      YOUR_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES.INSURANCE;
@@ -24,7 +24,7 @@ const {
 const emailRules = (formBody: RequestBody, errors: object) => {
   const fieldValue = formBody[FIELD_ID];
 
-  return emailValidation(FIELD_ID, fieldValue, ERROR_MESSAGE.INCORRECT_FORMAT, errors);
+  return emailValidation(FIELD_ID, fieldValue, ERROR_MESSAGES_OBJECT, errors);
 };
 
 export default emailRules;
