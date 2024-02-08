@@ -1,5 +1,5 @@
 import {
-  headingCaption, intro, yesRadio, noRadio, field, yesRadioInput,
+  headingCaption, yesRadio, noRadio, field, yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
@@ -73,7 +73,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
     });
 
     it('renders an intro', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     describe(OUTSTANDING_PAYMENTS, () => {

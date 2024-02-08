@@ -1,8 +1,4 @@
-import {
-  intro,
-  listItem,
-  yesRadio,
-} from '../../../../../../pages/shared';
+import { listItem, yesRadio } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -63,7 +59,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
     });
 
     it('renders intro copy', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     it('renders list items', () => {
