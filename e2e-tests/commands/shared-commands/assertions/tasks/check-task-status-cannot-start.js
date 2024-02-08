@@ -8,9 +8,7 @@ const { STATUS: { CANNOT_START } } = TASKS;
  * @param {Function} selector: Cypress selector
  */
 const checkCannotStartTaskStatus = (selector) => {
-  selector.invoke('text').then((text) => {
-    expect(text.trim()).equal(CANNOT_START);
-  });
+  cy.checkText(selector, CANNOT_START);
 };
 
 export default checkCannotStartTaskStatus;

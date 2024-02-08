@@ -8,9 +8,7 @@ const { STATUS: { IN_PROGRESS } } = TASKS;
  * @param {Function} selector: Cypress selector
  */
 const checkInProgressTaskStatus = (selector) => {
-  selector.invoke('text').then((text) => {
-    expect(text.trim()).equal(IN_PROGRESS);
-  });
+  cy.checkText(selector, IN_PROGRESS);
 };
 
 export default checkInProgressTaskStatus;

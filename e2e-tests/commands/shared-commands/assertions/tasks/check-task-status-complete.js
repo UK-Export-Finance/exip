@@ -8,9 +8,7 @@ const { STATUS: { COMPLETED } } = TASKS;
  * @param {Function} selector: Cypress selector
  */
 const checkCompletedTaskStatus = (selector) => {
-  selector.invoke('text').then((text) => {
-    expect(text.trim()).equal(COMPLETED);
-  });
+  cy.checkText(selector, COMPLETED);
 };
 
 export default checkCompletedTaskStatus;
