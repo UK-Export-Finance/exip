@@ -1,6 +1,4 @@
-import partials from '../../../../../../partials';
 import { yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -16,12 +14,6 @@ const {
     BROKER_ROOT,
   },
 } = INSURANCE_ROUTES;
-
-const { IN_PROGRESS, COMPLETED } = TASKS.STATUS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -67,7 +59,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
@@ -81,7 +73,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, COMPLETED);
+      cy.checkTaskPolicyStatusIsComplete();
     });
 
     it('should retain all the fields on the page', () => {
@@ -109,7 +101,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, COMPLETED);
+      cy.checkTaskPolicyStatusIsComplete();
     });
 
     it('should retain all the relevant fields on the page', () => {

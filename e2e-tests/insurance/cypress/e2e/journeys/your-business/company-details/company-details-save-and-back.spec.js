@@ -1,11 +1,9 @@
 import { field, yesRadioInput } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { TASKS } from '../../../../../../content-strings';
 
 const {
   EXPORTER_BUSINESS: {
@@ -23,11 +21,6 @@ const {
   ALL_SECTIONS,
   EXPORTER_BUSINESS: { COMPANY_DETAILS },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.business;
-
-const { IN_PROGRESS } = TASKS.STATUS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -68,7 +61,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -90,7 +83,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -114,7 +107,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should render valid submitted values when going back to the page', () => {
@@ -141,7 +134,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should render valid submitted values when going back to the page', () => {

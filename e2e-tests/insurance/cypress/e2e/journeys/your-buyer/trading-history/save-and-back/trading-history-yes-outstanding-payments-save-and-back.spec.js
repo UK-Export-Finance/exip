@@ -3,8 +3,6 @@ import {
   yesRadioInput,
   field,
 } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { TASKS } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
@@ -20,9 +18,6 @@ const {
 const { BUYER } = application;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your buyer - Trading history - Yes outstanding payments - Save and back', () => {
   let referenceNumber;
@@ -65,9 +60,8 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should retain the `your buyer` task status as `not started yet`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+    it('should retain the `your buyer` task status as `in progress`', () => {
+      cy.checkTaskBuyerStatusIsInProgress();
     });
   });
 
@@ -86,8 +80,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it('should retain completed input on the page', () => {
@@ -112,8 +105,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it('should retain all inputs on the page', () => {

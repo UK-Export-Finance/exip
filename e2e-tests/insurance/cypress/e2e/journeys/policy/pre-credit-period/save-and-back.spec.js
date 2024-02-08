@@ -1,13 +1,9 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../constants';
 import mockApplication from '../../../../../../fixtures/application';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT,
@@ -24,8 +20,6 @@ const {
 } = FIELDS;
 
 const descriptionField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -71,7 +65,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
@@ -91,7 +85,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have saved the submitted value when going back to the page', () => {
@@ -121,7 +115,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should not have saved the invalid submitted value when going back to the page', () => {
@@ -149,7 +143,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have saved all submitted value when going back to the page', () => {

@@ -88,12 +88,23 @@ Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert
 
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));
 
-Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
+Cypress.Commands.add('checkTaskStatus', require('./tasks/check-task-status'));
+Cypress.Commands.add('checkTaskStatusCompleted', require('./tasks/check-task-status-complete'));
+Cypress.Commands.add('checkTaskStatusInProgress', require('./tasks/check-task-status-in-progress'));
 
-Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task-status'));
+Cypress.Commands.add('checkTaskBusinessStatusIsComplete', require('./tasks/business/is-complete'));
+Cypress.Commands.add('checkTaskBusinessStatusIsInProgress', require('./tasks/business/is-in-progress'));
+
+Cypress.Commands.add('checkTaskBuyerStatusIsComplete', require('./tasks/buyer/is-complete'));
+Cypress.Commands.add('checkTaskBuyerStatusIsInProgress', require('./tasks/buyer/is-in-progress'));
+
+Cypress.Commands.add('checkTaskPolicyStatusIsComplete', require('./tasks/policy/is-complete'));
+Cypress.Commands.add('checkTaskPolicyStatusIsInProgress', require('./tasks/policy/is-in-progress'));
+
+Cypress.Commands.add('checkTaskExportContractStatusIsComplete', require('./tasks/export-contract/is-complete'));
+Cypress.Commands.add('checkTaskExportContractStatusIsInProgress', require('./tasks/export-contract/is-in-progress'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
-
 Cypress.Commands.add('checkValue', require('./check-value'));
 
 Cypress.Commands.add('checkActionReadAboutEligibility', checkActionReadAboutEligibility);

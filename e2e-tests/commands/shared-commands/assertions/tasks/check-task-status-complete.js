@@ -1,4 +1,4 @@
-import { TASKS } from '../../../content-strings';
+import { TASKS } from '../../../../content-strings';
 
 const { STATUS: { COMPLETED } } = TASKS;
 

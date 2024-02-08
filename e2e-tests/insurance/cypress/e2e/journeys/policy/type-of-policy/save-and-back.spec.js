@@ -72,10 +72,8 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
       cy.assertUrl(expected);
     });
 
-    it('should update the status of task `type of policy`to `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkText(task.status(), expected);
+    it('should update the status of task `type of policy` to `in progress`', () => {
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

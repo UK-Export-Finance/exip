@@ -1,11 +1,7 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../../../../constants';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -22,8 +18,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -70,7 +64,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
@@ -101,7 +95,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should not have saved the submitted values when going back to the page', () => {
@@ -135,7 +129,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have the submitted values when going back to the page', () => {
