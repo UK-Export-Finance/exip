@@ -116,6 +116,7 @@ Cypress.Commands.add('checkTaskExportContractStatusIsInProgress', require('./tas
 Cypress.Commands.add('checkTaskExportContractStatusIsComplete', require('./tasks/export-contract/is-complete'));
 
 Cypress.Commands.add('checkTaskCheckAnswersStatusIsNotStartedYet', require('./tasks/check-answers/is-not-started-yet'));
+Cypress.Commands.add('checkTaskCheckAnswersStatusIsInProgress', require('./tasks/check-answers/is-in-progress'));
 Cypress.Commands.add('checkTaskCheckAnswersStatusIsComplete', require('./tasks/check-answers/is-complete'));
 
 Cypress.Commands.add('checkTaskDeclarationsAndSubmitStatusIsNotStartedYet', require('./tasks/declarations-and-submit/is-not-started-yet'));
