@@ -22,7 +22,7 @@ describe('controllers/insurance/business/map-and-save/buyer-relationship - api e
     });
   });
 
-  describe('when save application buyer call fails', () => {
+  describe('when save application buyerRelationship call fails', () => {
     beforeEach(() => {
       save.buyerRelationship = jest.fn(() => Promise.reject(new Error('mock')));
     });

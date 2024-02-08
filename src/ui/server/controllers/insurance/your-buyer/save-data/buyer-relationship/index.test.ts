@@ -19,7 +19,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 
-  describe('broker', () => {
+  describe('buyer-relationship', () => {
     const mockFormBody = mockBuyerRelationship;
 
     beforeEach(() => {
@@ -66,7 +66,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
   });
 
   describe('api error handling', () => {
-    describe('update buyer call', () => {
+    describe('update buyerRelationship call', () => {
       const mockFormBody = mockBuyerRelationship;
 
       describe('when there is an error', () => {

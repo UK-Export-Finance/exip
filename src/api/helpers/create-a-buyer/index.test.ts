@@ -69,7 +69,7 @@ describe('helpers/create-a-buyer', () => {
     expect(buyerTradingHistory.failedPayments).toBeNull();
   });
 
-  test('it should return empty buyerRelationship fields with default currencyCode', async () => {
+  test('it should return empty buyerRelationship fields', async () => {
     const result = await createABuyer(context, country.id, application.id);
     const { buyerRelationship } = result;
 
@@ -80,7 +80,7 @@ describe('helpers/create-a-buyer', () => {
     expect(buyerRelationship.previousCreditInsuranceWithBuyerDescription).toBeNull();
   });
 
-  test('it should return empty buyerContact fields with default currencyCode', async () => {
+  test('it should return empty buyerContact fields', async () => {
     const result = await createABuyer(context, country.id, application.id);
     const { buyerContact } = result;
 
