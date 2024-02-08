@@ -13,6 +13,7 @@ const DEFAULT_RESOLVERS = [
   'updateBroker',
   'updateBusiness',
   'updateBuyer',
+  'updateBuyerRelationship',
   'updateBuyerTradingHistory',
   'updateCompany',
   'updateDeclaration',

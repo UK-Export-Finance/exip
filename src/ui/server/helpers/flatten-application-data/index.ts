@@ -33,7 +33,7 @@ export const policyContactMapped = (policyContact: ApplicationPolicyContact) => 
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
   const { policy, exportContract, company, broker, business, buyer, sectionReview, declaration, policyContact } = application;
-  const { buyerTradingHistory } = buyer;
+  const { buyerTradingHistory, contact, relationship } = buyer;
 
   const flattened = {
     ...application.eligibility,
@@ -55,6 +55,8 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     ...broker,
     ...buyer,
     ...buyerTradingHistory,
+    ...contact,
+    ...relationship,
     ...policyContactMapped(policyContact),
     ...getTrueAndFalseAnswers(sectionReview),
     ...getTrueAndFalseAnswers(declaration),
