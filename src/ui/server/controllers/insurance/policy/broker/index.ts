@@ -112,9 +112,9 @@ export const post = async (req: Request, res: Response) => {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
-      validationErrors,
       application: mapApplicationToFormFields(application),
       submittedValues: payload,
+      validationErrors,
     });
   }
 

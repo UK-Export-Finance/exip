@@ -3,8 +3,8 @@
  * Submit and assert errors for a field
  * @param {String} field: Field selector
  * @param {String} fieldValue: The value to input - can be null
- * @param {Number} errorIndex: Index of summary list error
- * @param {Number} errorSummaryLength: The number of expected errors in the summary list
+ * @param {Integer} errorIndex: Index of the summary list error
+ * @param {Integer} errorSummaryLength: The number of expected errors in the summary list
  * @param {String} errorMessage: Expected error message
  * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true
  */

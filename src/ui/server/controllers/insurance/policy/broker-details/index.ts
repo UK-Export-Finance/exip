@@ -6,13 +6,22 @@ import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/poli
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
-const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const { BROKER_DETAILS } = POLICY_FIELDS;
+
+export const FIELD_IDS = [NAME, EMAIL, FULL_ADDRESS];
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
@@ -61,12 +70,51 @@ export const get = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      ...pageVariables(application.referenceNumber),
     });
   } catch (err) {
     console.error('Error getting broker details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
+};
+
+/**
+ * post
+ * Check Policy - Broker details validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  const payload = constructPayload(req.body, FIELD_IDS);
+  const sanitisedData = sanitiseData(payload);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application: mapApplicationToFormFields(application),
+      submittedValues: sanitisedData,
+      validationErrors,
+    });
+  }
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
 };

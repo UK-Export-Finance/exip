@@ -4,6 +4,7 @@ import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insu
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY;
 
@@ -148,30 +149,13 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
 
   describe(EMAIL, () => {
     const FIELD_ID = EMAIL;
-    const ERROR = ERRORS[FIELD_ID];
 
-    const ERROR_ASSERTIONS = {
-      field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 4,
+    assertEmailFieldValidation({
+      fieldId: EMAIL,
       errorIndex: 2,
-    };
-
-    it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      const errorMessage = ERROR.INCORRECT_FORMAT;
-
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
-    });
-
-    it(`should render validation errors when ${FIELD_ID} is incorrectly entered`, () => {
-      const errorMessage = ERROR.INCORRECT_FORMAT;
-
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-      const value = 'test';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      errorMessages: ERRORS[FIELD_ID],
+      totalExpectedErrors: 4,
+      totalExpectedOtherErrorsWithValidEmail: 3,
     });
   });
 

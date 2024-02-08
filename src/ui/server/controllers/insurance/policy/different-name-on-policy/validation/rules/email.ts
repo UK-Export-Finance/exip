@@ -1,15 +1,13 @@
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
-import { RequestBody } from '../../../../../../../types';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emailValidation from '../../../../../../shared-validation/email';
+import { RequestBody } from '../../../../../../../types';
 
 const { EMAIL: FIELD_ID } = FIELD_IDS;
 
 const {
-  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+  DIFFERENT_NAME_ON_POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
-
-const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
 
 /**
  * validates email field
@@ -18,6 +16,6 @@ const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
  * @param {object} errors
  * @returns {object} errors
  */
-const emailAddress = (formBody: RequestBody, errors: object) => emailValidation(FIELD_ID, formBody[FIELD_ID], errorMessage, errors);
+const email = (formBody: RequestBody, errors: object) => emailValidation(FIELD_ID, formBody[FIELD_ID], ERROR_MESSAGES_OBJECT, errors);
 
-export default emailAddress;
+export default email;

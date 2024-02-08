@@ -153,7 +153,7 @@ const application = {
     [PERCENTAGE_TURNOVER]: '0',
     [HAS_CREDIT_CONTROL]: true,
   },
-  EXPORTER_BROKER: {
+  BROKER: {
     [USING_BROKER]: true,
     [NAME]: 'Mock broker name',
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),

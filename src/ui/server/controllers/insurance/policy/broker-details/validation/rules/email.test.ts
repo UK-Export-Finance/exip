@@ -1,29 +1,25 @@
-import emailRule from './email';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
+import email from './email';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import emailValidation from '../../../../../../shared-validation/email';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
 const {
-  COMPANY_OR_ORGANISATION: { EMAIL: FIELD_ID },
-} = FIELD_IDS;
+  BROKER_DETAILS: { EMAIL: FIELD_ID },
+} = POLICY_FIELD_IDS;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
-    },
-  },
-} = ERROR_MESSAGES;
+  BROKER_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
+} = ERROR_MESSAGES.INSURANCE.POLICY;
 
-describe('controllers/insurance/your-buyer/validation/email', () => {
+describe('controllers/insurance/policy/broker-details/validation/rules/email', () => {
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return `emailValidation`', () => {
-    const result = emailRule(mockBody, mockErrors);
+  it('should return the result of emailValidation', () => {
+    const result = email(mockBody, mockErrors);
 
     const expected = emailValidation(FIELD_ID, mockBody[FIELD_ID], ERROR_MESSAGES_OBJECT, mockErrors);
 

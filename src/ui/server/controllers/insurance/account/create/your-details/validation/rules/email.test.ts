@@ -9,7 +9,7 @@ const { EMAIL: FIELD_ID } = FIELD_IDS;
 const {
   ACCOUNT: {
     CREATE: {
-      YOUR_DETAILS: { [FIELD_ID]: ERROR_MESSAGE },
+      YOUR_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES.INSURANCE;
@@ -19,7 +19,7 @@ describe('controllers/insurance/account/create/your-details/validation/rules/ema
     const mockFormBody = {};
     const result = emailRules(mockFormBody, mockErrors);
 
-    const expected = emailValidation(FIELD_ID, mockFormBody[FIELD_ID], ERROR_MESSAGE.INCORRECT_FORMAT, mockErrors);
+    const expected = emailValidation(FIELD_ID, mockFormBody[FIELD_ID], ERROR_MESSAGES_OBJECT, mockErrors);
 
     expect(result).toEqual(expected);
   });
