@@ -36,7 +36,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
         const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
-        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerRelationship.id, expectedSanitisedData);
+        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.relationship.id, expectedSanitisedData);
       });
 
       it('should return the API response', async () => {
@@ -54,7 +54,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
 
         const dataToSave = getDataToSave(mockFormBody);
         const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
-        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerRelationship.id, expectedSanitisedData);
+        expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.relationship.id, expectedSanitisedData);
       });
 
       it('should return the API response', async () => {

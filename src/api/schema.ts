@@ -538,8 +538,8 @@ export const lists = {
       registrationNumber: text(),
       website: text(),
       buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
-      buyerContact: relationship({ ref: 'BuyerContact.buyer' }),
-      buyerRelationship: relationship({ ref: 'BuyerRelationship.buyer' }),
+      contact: relationship({ ref: 'BuyerContact.buyer' }),
+      relationship: relationship({ ref: 'BuyerRelationship.buyer' }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -550,10 +550,10 @@ export const lists = {
     },
     access: allowAll,
   }),
-  BuyerContact: list({
+  BuyerContact: {
     fields: {
       application: relationship({ ref: 'Application' }),
-      buyer: relationship({ ref: 'Buyer.buyerContact' }),
+      buyer: relationship({ ref: 'Buyer.contact' }),
       contactFirstName: text(),
       contactLastName: text(),
       contactPosition: text(),
@@ -568,11 +568,11 @@ export const lists = {
       },
     },
     access: allowAll,
-  }),
-  BuyerRelationship: list({
+  },
+  BuyerRelationship: {
     fields: {
       application: relationship({ ref: 'Application' }),
-      buyer: relationship({ ref: 'Buyer.buyerRelationship' }),
+      buyer: relationship({ ref: 'Buyer.relationship' }),
       exporterIsConnectedWithBuyer: nullableCheckbox(),
       connectionWithBuyerDescription: text({
         db: { nativeType: 'VarChar(1000)' },
@@ -591,7 +591,7 @@ export const lists = {
       },
     },
     access: allowAll,
-  }),
+  },
   BuyerTradingHistory: list({
     fields: {
       application: relationship({ ref: 'Application' }),

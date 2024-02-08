@@ -1,17 +1,10 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from 'govuk/components/label/macro.njk' import govukLabel %}
-{% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
-{% from "govuk/components/select/macro.njk" import govukSelect %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
-{% from "govuk/components/hint/macro.njk" import govukHint %}
-{% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
-{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/form-buttons.njk' as formButtons %}
-{% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}

@@ -24,7 +24,7 @@ const buyerRelationship = async (application: Application, formBody: RequestBody
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
-  const buyerRelationshipId = application.buyer.buyerRelationship?.id;
+  const buyerRelationshipId = application.buyer.relationship?.id;
 
   try {
     // send the form data to the API for database update.

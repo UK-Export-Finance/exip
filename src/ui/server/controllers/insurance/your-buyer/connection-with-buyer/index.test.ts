@@ -38,7 +38,7 @@ const {
 
 const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
 
-const { buyerRelationship } = mockBuyer;
+const { relationship } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   let req: Request;
@@ -125,7 +125,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
-        applicationAnswer: mockApplication.buyer.buyerRelationship[CONNECTION_WITH_BUYER],
+        applicationAnswer: mockApplication.buyer.relationship[CONNECTION_WITH_BUYER],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -146,7 +146,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
   describe('post', () => {
     const validBody = {
-      ...buyerRelationship,
+      ...relationship,
     };
 
     beforeEach(() => {

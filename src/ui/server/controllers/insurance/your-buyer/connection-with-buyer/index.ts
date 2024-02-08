@@ -91,7 +91,7 @@ export const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
-      applicationAnswer: application.buyer.buyerRelationship[CONNECTION_WITH_BUYER],
+      applicationAnswer: application.buyer.relationship[CONNECTION_WITH_BUYER],
     });
   } catch (err) {
     console.error('Error getting connection to the buyer %O', err);

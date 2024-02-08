@@ -39,10 +39,10 @@ describe('helpers/create-a-buyer-relationship', () => {
     const result = await createABuyerRelationship(context, buyer.id, applicationId);
 
     expect(result.exporterIsConnectedWithBuyer).toBeNull();
-    expect(result.connectionWithBuyerDescription).toBeNull();
+    expect(result.connectionWithBuyerDescription).toEqual('');
     expect(result.exporterHasPreviousCreditInsuranceWithBuyer).toBeNull();
     expect(result.exporterHasBuyerFinancialAccounts).toBeNull();
-    expect(result.previousCreditInsuranceWithBuyerDescription).toBeNull();
+    expect(result.previousCreditInsuranceWithBuyerDescription).toEqual('');
   });
 
   describe('when an invalid buyer ID is passed', () => {

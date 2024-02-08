@@ -1,7 +1,7 @@
+import mapSubmittedData from '../../map-submitted-data/buyer-relationship';
 import hasFormData from '../../../../../helpers/has-form-data';
 import save from '../../save-data/buyer-relationship';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
-import mapSubmittedData from '../../map-submitted-data/buyer-relationship';
 
 /**
  * maps buyerRelationship request and calls save function

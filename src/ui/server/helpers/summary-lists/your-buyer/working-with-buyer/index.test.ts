@@ -32,7 +32,7 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
           fieldGroupItem(
             {
               field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
-              data: mockAnswers.buyerRelationship,
+              data: mockAnswers.relationship,
               href: generateChangeLink(
                 CONNECTION_WITH_BUYER_CHANGE,
                 CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
@@ -42,11 +42,11 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
               ),
               renderChangeLink: true,
             },
-            mapYesNoField(mockAnswers.buyerRelationship[CONNECTION_WITH_BUYER]),
+            mapYesNoField(mockAnswers.relationship[CONNECTION_WITH_BUYER]),
           ),
           fieldGroupItem({
             field: getFieldById(FIELDS, CONNECTION_WITH_BUYER_DESCRIPTION),
-            data: mockAnswers.buyerRelationship,
+            data: mockAnswers.relationship,
             href: generateChangeLink(
               CONNECTION_WITH_BUYER_CHANGE,
               CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
@@ -64,14 +64,14 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
 
     describe(`${CONNECTION_WITH_BUYER} is false`, () => {
       it(`should return fields and values from the submitted data/answers, not including ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
-        mockAnswers.buyerRelationship[CONNECTION_WITH_BUYER] = false;
+        mockAnswers.relationship[CONNECTION_WITH_BUYER] = false;
         const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
 
         const expected = [
           fieldGroupItem(
             {
               field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
-              data: mockAnswers.buyerRelationship,
+              data: mockAnswers.relationship,
               href: generateChangeLink(
                 CONNECTION_WITH_BUYER_CHANGE,
                 CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
@@ -81,7 +81,7 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
               ),
               renderChangeLink: true,
             },
-            mapYesNoField(mockAnswers.buyerRelationship[CONNECTION_WITH_BUYER]),
+            mapYesNoField(mockAnswers.relationship[CONNECTION_WITH_BUYER]),
           ),
         ];
 
@@ -111,7 +111,7 @@ describe('server/helpers/summary-lists/your-buyer/working-with-buyer-fields', ()
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      mockAnswers.buyerRelationship[CONNECTION_WITH_BUYER] = true;
+      mockAnswers.relationship[CONNECTION_WITH_BUYER] = true;
 
       const result = workingWithBuyerFields(mockAnswers, referenceNumber, checkAndChange);
 

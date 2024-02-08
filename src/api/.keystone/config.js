@@ -1373,8 +1373,8 @@ var lists = {
       registrationNumber: (0, import_fields.text)(),
       website: (0, import_fields.text)(),
       buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
-      buyerContact: (0, import_fields.relationship)({ ref: "BuyerContact.buyer" }),
-      buyerRelationship: (0, import_fields.relationship)({ ref: "BuyerRelationship.buyer" })
+      contact: (0, import_fields.relationship)({ ref: "BuyerContact.buyer" }),
+      relationship: (0, import_fields.relationship)({ ref: "BuyerRelationship.buyer" })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -1385,10 +1385,10 @@ var lists = {
     },
     access: import_access.allowAll
   }),
-  BuyerContact: (0, import_core2.list)({
+  BuyerContact: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerContact" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.contact" }),
       contactFirstName: (0, import_fields.text)(),
       contactLastName: (0, import_fields.text)(),
       contactPosition: (0, import_fields.text)(),
@@ -1403,11 +1403,11 @@ var lists = {
       }
     },
     access: import_access.allowAll
-  }),
-  BuyerRelationship: (0, import_core2.list)({
+  },
+  BuyerRelationship: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerRelationship" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.relationship" }),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
       connectionWithBuyerDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
@@ -1426,7 +1426,7 @@ var lists = {
       }
     },
     access: import_access.allowAll
-  }),
+  },
   BuyerTradingHistory: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
@@ -3459,8 +3459,8 @@ var createABuyerContact = async (context, buyerId, applicationId) => {
     });
     return buyerContact;
   } catch (err) {
-    console.error("Error creating a buyer relationship %O", err);
-    throw new Error(`Creating a buyer relationship ${err}`);
+    console.error("Error creating a buyer contact %O", err);
+    throw new Error(`Creating a buyer contact ${err}`);
   }
 };
 var create_a_buyer_contact_default = createABuyerContact;

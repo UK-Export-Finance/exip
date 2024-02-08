@@ -31,7 +31,7 @@ const {
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
-const { buyerRelationship, ...companyOrOrganisationMock } = mockBuyer;
+const { relationship, ...companyOrOrganisationMock } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;

@@ -291,10 +291,10 @@ model Buyer {
   website                   String               @default("")
   buyerTradingHistory       BuyerTradingHistory? @relation("Buyer_buyerTradingHistory", fields: [buyerTradingHistoryId], references: [id])
   buyerTradingHistoryId     String?              @unique @map("buyerTradingHistory")
-  buyerContact              BuyerContact?        @relation("Buyer_buyerContact", fields: [buyerContactId], references: [id])
-  buyerContactId            String?              @unique @map("buyerContact")
-  buyerRelationship         BuyerRelationship?   @relation("Buyer_buyerRelationship", fields: [buyerRelationshipId], references: [id])
-  buyerRelationshipId       String?              @unique @map("buyerRelationship")
+  contact                   BuyerContact?        @relation("Buyer_contact", fields: [contactId], references: [id])
+  contactId                 String?              @unique @map("contact")
+  relationship              BuyerRelationship?   @relation("Buyer_relationship", fields: [relationshipId], references: [id])
+  relationshipId            String?              @unique @map("relationship")
   from_Application_buyer    Application[]        @relation("Application_buyer")
 
   @@index([applicationId])
@@ -305,7 +305,7 @@ model BuyerContact {
   id               String       @id @default(cuid())
   application      Application? @relation("BuyerContact_application", fields: [applicationId], references: [id])
   applicationId    String?      @map("application")
-  buyer            Buyer?       @relation("Buyer_buyerContact")
+  buyer            Buyer?       @relation("Buyer_contact")
   contactFirstName String       @default("")
   contactLastName  String       @default("")
   contactPosition  String       @default("")
@@ -319,7 +319,7 @@ model BuyerRelationship {
   id                                          String       @id @default(cuid())
   application                                 Application? @relation("BuyerRelationship_application", fields: [applicationId], references: [id])
   applicationId                               String?      @map("application")
-  buyer                                       Buyer?       @relation("Buyer_buyerRelationship")
+  buyer                                       Buyer?       @relation("Buyer_relationship")
   exporterIsConnectedWithBuyer                Boolean?
   connectionWithBuyerDescription              String       @default("") @mysql.VarChar(1000)
   exporterHasPreviousCreditInsuranceWithBuyer Boolean?

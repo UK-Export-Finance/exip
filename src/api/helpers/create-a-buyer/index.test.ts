@@ -48,14 +48,8 @@ describe('helpers/create-a-buyer', () => {
 
     expect(buyer.address).toEqual('');
     expect(buyer.applicationId).toEqual(application.id);
-    expect(buyer.canContactBuyer).toEqual(null);
     expect(buyer.companyOrOrganisationName).toEqual('');
-    expect(buyer.contactEmail).toEqual('');
-    expect(buyer.contactFirstName).toEqual('');
-    expect(buyer.contactLastName).toEqual('');
-    expect(buyer.contactPosition).toEqual('');
     expect(buyer.countryId).toEqual(country.id);
-    expect(buyer.exporterIsConnectedWithBuyer).toEqual(null);
     expect(buyer.registrationNumber).toEqual('');
     expect(buyer.website).toEqual('');
   });
@@ -74,20 +68,20 @@ describe('helpers/create-a-buyer', () => {
     const { buyerRelationship } = result;
 
     expect(buyerRelationship.exporterIsConnectedWithBuyer).toBeNull();
-    expect(buyerRelationship.connectionWithBuyerDescription).toBeNull();
+    expect(buyerRelationship.connectionWithBuyerDescription).toEqual('');
     expect(buyerRelationship.exporterHasPreviousCreditInsuranceWithBuyer).toBeNull();
     expect(buyerRelationship.exporterHasBuyerFinancialAccounts).toBeNull();
-    expect(buyerRelationship.previousCreditInsuranceWithBuyerDescription).toBeNull();
+    expect(buyerRelationship.previousCreditInsuranceWithBuyerDescription).toEqual('');
   });
 
   test('it should return empty buyerContact fields', async () => {
     const result = await createABuyer(context, country.id, application.id);
     const { buyerContact } = result;
 
-    expect(buyerContact.contactFirstName).toBeNull();
-    expect(buyerContact.contactLastName).toBeNull();
-    expect(buyerContact.contactPosition).toBeNull();
-    expect(buyerContact.contactEmail).toBeNull();
+    expect(buyerContact.contactFirstName).toEqual('');
+    expect(buyerContact.contactLastName).toEqual('');
+    expect(buyerContact.contactPosition).toEqual('');
+    expect(buyerContact.contactEmail).toEqual('');
     expect(buyerContact.canContactBuyer).toBeNull();
   });
 

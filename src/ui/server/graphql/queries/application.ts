@@ -138,7 +138,7 @@ const applicationQuery = gql`
             totalOverduePayments
             totalOutstandingPayments
           }
-          buyerContact {
+          contact {
             id
             contactFirstName
             contactLastName
@@ -146,7 +146,7 @@ const applicationQuery = gql`
             contactEmail
             canContactBuyer
           }
-          buyerRelationship {
+          relationship {
             id
             exporterIsConnectedWithBuyer
             connectionWithBuyerDescription

@@ -38,10 +38,10 @@ describe('helpers/create-a-buyer-contact', () => {
   test('it should return empty buyerContact fields', async () => {
     const result = await createABuyerContact(context, buyer.id, applicationId);
 
-    expect(result.contactFirstName).toBeNull();
-    expect(result.contactLastName).toBeNull();
-    expect(result.contactPosition).toBeNull();
-    expect(result.contactEmail).toBeNull();
+    expect(result.contactFirstName).toEqual('');
+    expect(result.contactLastName).toEqual('');
+    expect(result.contactPosition).toEqual('');
+    expect(result.contactEmail).toEqual('');
     expect(result.canContactBuyer).toBeNull();
   });
 

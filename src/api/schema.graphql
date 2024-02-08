@@ -1395,8 +1395,8 @@ type Buyer {
   registrationNumber: String
   website: String
   buyerTradingHistory: BuyerTradingHistory
-  buyerContact: BuyerContact
-  buyerRelationship: BuyerRelationship
+  contact: BuyerContact
+  relationship: BuyerRelationship
 }
 
 input BuyerWhereUniqueInput {
@@ -1415,8 +1415,8 @@ input BuyerWhereInput {
   registrationNumber: StringFilter
   website: StringFilter
   buyerTradingHistory: BuyerTradingHistoryWhereInput
-  buyerContact: BuyerContactWhereInput
-  buyerRelationship: BuyerRelationshipWhereInput
+  contact: BuyerContactWhereInput
+  relationship: BuyerRelationshipWhereInput
 }
 
 input BuyerOrderByInput {
@@ -1435,8 +1435,8 @@ input BuyerUpdateInput {
   registrationNumber: String
   website: String
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForUpdateInput
-  buyerContact: BuyerContactRelateToOneForUpdateInput
-  buyerRelationship: BuyerRelationshipRelateToOneForUpdateInput
+  contact: BuyerContactRelateToOneForUpdateInput
+  relationship: BuyerRelationshipRelateToOneForUpdateInput
 }
 
 input CountryRelateToOneForUpdateInput {
@@ -1476,8 +1476,8 @@ input BuyerCreateInput {
   registrationNumber: String
   website: String
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForCreateInput
-  buyerContact: BuyerContactRelateToOneForCreateInput
-  buyerRelationship: BuyerRelationshipRelateToOneForCreateInput
+  contact: BuyerContactRelateToOneForCreateInput
+  relationship: BuyerRelationshipRelateToOneForCreateInput
 }
 
 input CountryRelateToOneForCreateInput {

@@ -148,8 +148,8 @@ interface ApplicationBuyer extends ApplicationBuyerCore {
   id: string;
   country?: ApplicationBuyerCountry;
   buyerTradingHistory: BuyerTradingHistory;
-  buyerRelationship: BuyerRelationship;
-  buyerContact: BuyerContact;
+  relationship: BuyerRelationship;
+  contact: BuyerContact;
 }
 
 interface ApplicationBuyerUiInput extends ApplicationBuyerCore {

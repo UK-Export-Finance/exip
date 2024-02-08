@@ -31,7 +31,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/save-and-back
     jest.resetAllMocks();
   });
 
-  const { buyerRelationship, ...companyOrOrganisationMock } = mockBuyer;
+  const { relationship, ...companyOrOrganisationMock } = mockBuyer;
   const validBody = companyOrOrganisationMock;
 
   describe('when there are no validation errors', () => {

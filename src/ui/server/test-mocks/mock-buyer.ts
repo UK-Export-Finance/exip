@@ -43,8 +43,8 @@ const mockBuyer = {
   registrationNumber: '1234',
   website: 'www.gov.uk',
   buyerTradingHistory: mockBuyerTradingHistory,
-  buyerContact: mockBuyerContact,
-  buyerRelationship: mockBuyerRelationship,
+  contact: mockBuyerContact,
+  relationship: mockBuyerRelationship,
 };
 
 export default mockBuyer;
