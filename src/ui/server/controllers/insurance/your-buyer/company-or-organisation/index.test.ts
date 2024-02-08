@@ -31,7 +31,7 @@ const {
 
 const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
 
-const { exporterIsConnectedWithBuyer, ...companyOrOrganisationMock } = mockBuyer;
+const { buyerRelationship, ...companyOrOrganisationMock } = mockBuyer;
 
 describe('controllers/insurance/your-buyer/company-or-organisation', () => {
   let req: Request;
@@ -108,7 +108,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER];
+      const expected = [NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE];
 
       expect(FIELD_IDS).toEqual(expected);
     });

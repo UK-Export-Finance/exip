@@ -215,14 +215,62 @@ CREATE TABLE `Buyer` (
   `exporterIsConnectedWithBuyer` tinyint(1) DEFAULT NULL,
   `connectionWithBuyerDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `buyerTradingHistory` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buyerContact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `buyerRelationship` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Buyer_buyerTradingHistory_key` (`buyerTradingHistory`),
+  UNIQUE KEY `Buyer_buyerContact_key` (`buyerContact`),
+  UNIQUE KEY `Buyer_buyerRelationship_key` (`buyerRelationship`),
   KEY `Buyer_application_idx` (`application`),
   KEY `Buyer_country_idx` (`country`),
   CONSTRAINT `Buyer_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Buyer_buyerContact_fkey` FOREIGN KEY (`buyerContact`) REFERENCES `BuyerContact` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Buyer_buyerRelationship_fkey` FOREIGN KEY (`buyerRelationship`) REFERENCES `BuyerRelationship` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Buyer_buyerTradingHistory_fkey` FOREIGN KEY (`buyerTradingHistory`) REFERENCES `BuyerTradingHistory` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Buyer_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+# Dump of table BuyerContact
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `BuyerContact`;
+
+CREATE TABLE `BuyerContact` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contactFirstName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactLastName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactPosition` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactEmail` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `canContactBuyer` tinyint(1) DEFAULT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `BuyerContact_application_idx` (`application`),
+  CONSTRAINT `BuyerContact_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+# Dump of table BuyerRelationship
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `BuyerRelationship`;
+
+CREATE TABLE `BuyerRelationship` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exporterIsConnectedWithBuyer` tinyint(1) DEFAULT NULL,
+  `connectionWithBuyerDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `exporterHasPreviousCreditInsuranceWithBuyer` tinyint(1) DEFAULT NULL,
+  `exporterHasBuyerFinancialAccounts` tinyint(1) DEFAULT NULL,
+  `previousCreditInsuranceWithBuyerDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `BuyerRelationship_application_idx` (`application`),
+  CONSTRAINT `BuyerRelationship_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 # Dump of table BuyerTradingHistory

@@ -537,16 +537,51 @@ export const lists = {
       country: relationship({ ref: 'Country' }),
       registrationNumber: text(),
       website: text(),
+      buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
+      buyerContact: relationship({ ref: 'BuyerContact.buyer' }),
+      buyerRelationship: relationship({ ref: 'BuyerRelationship.buyer' }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
+  BuyerContact: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.buyerContact' }),
       contactFirstName: text(),
       contactLastName: text(),
       contactPosition: text(),
       contactEmail: text(),
       canContactBuyer: nullableCheckbox(),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
+  BuyerRelationship: list({
+    fields: {
+      application: relationship({ ref: 'Application' }),
+      buyer: relationship({ ref: 'Buyer.buyerRelationship' }),
       exporterIsConnectedWithBuyer: nullableCheckbox(),
       connectionWithBuyerDescription: text({
         db: { nativeType: 'VarChar(1000)' },
       }),
-      buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
+      exporterHasPreviousCreditInsuranceWithBuyer: nullableCheckbox(),
+      exporterHasBuyerFinancialAccounts: nullableCheckbox(),
+      previousCreditInsuranceWithBuyerDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

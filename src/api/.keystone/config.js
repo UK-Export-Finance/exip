@@ -368,6 +368,7 @@ var DEFAULT_RESOLVERS = [
   "updateBroker",
   "updateBusiness",
   "updateBuyer",
+  "updateBuyerRelationship",
   "updateBuyerTradingHistory",
   "updateCompany",
   "updateDeclaration",
@@ -1379,16 +1380,51 @@ var lists = {
       country: (0, import_fields.relationship)({ ref: "Country" }),
       registrationNumber: (0, import_fields.text)(),
       website: (0, import_fields.text)(),
+      buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
+      buyerContact: (0, import_fields.relationship)({ ref: "BuyerContact.buyer" }),
+      buyerRelationship: (0, import_fields.relationship)({ ref: "BuyerRelationship.buyer" })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
+  BuyerContact: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerContact" }),
       contactFirstName: (0, import_fields.text)(),
       contactLastName: (0, import_fields.text)(),
       contactPosition: (0, import_fields.text)(),
       contactEmail: (0, import_fields.text)(),
-      canContactBuyer: nullable_checkbox_default(),
+      canContactBuyer: nullable_checkbox_default()
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
+  BuyerRelationship: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      buyer: (0, import_fields.relationship)({ ref: "Buyer.buyerRelationship" }),
       exporterIsConnectedWithBuyer: nullable_checkbox_default(),
       connectionWithBuyerDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
       }),
-      buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" })
+      exporterHasPreviousCreditInsuranceWithBuyer: nullable_checkbox_default(),
+      exporterHasBuyerFinancialAccounts: nullable_checkbox_default(),
+      previousCreditInsuranceWithBuyerDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {
@@ -3411,6 +3447,58 @@ var createABuyerTradingHistory = async (context, buyerId, applicationId) => {
 };
 var create_a_buyer_trading_history_default = createABuyerTradingHistory;
 
+// helpers/create-a-buyer-contact/index.ts
+var createABuyerContact = async (context, buyerId, applicationId) => {
+  console.info("Creating a buyer contact for ", buyerId);
+  try {
+    const buyerContact = await context.db.BuyerContact.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
+          }
+        }
+      }
+    });
+    return buyerContact;
+  } catch (err) {
+    console.error("Error creating a buyer relationship %O", err);
+    throw new Error(`Creating a buyer relationship ${err}`);
+  }
+};
+var create_a_buyer_contact_default = createABuyerContact;
+
+// helpers/create-a-buyer-relationship/index.ts
+var createABuyerRelationship = async (context, buyerId, applicationId) => {
+  console.info("Creating a buyer relationship for ", buyerId);
+  try {
+    const buyerRelationship = await context.db.BuyerRelationship.createOne({
+      data: {
+        buyer: {
+          connect: {
+            id: buyerId
+          }
+        },
+        application: {
+          connect: {
+            id: applicationId
+          }
+        }
+      }
+    });
+    return buyerRelationship;
+  } catch (err) {
+    console.error("Error creating a buyer relationship %O", err);
+    throw new Error(`Creating a buyer relationship ${err}`);
+  }
+};
+var create_a_buyer_relationship_default = createABuyerRelationship;
+
 // helpers/create-a-buyer/index.ts
 var createABuyer = async (context, countryId, applicationId) => {
   console.info("Creating a buyer for ", applicationId);
@@ -3426,9 +3514,13 @@ var createABuyer = async (context, countryId, applicationId) => {
       }
     });
     const buyerTradingHistory = await create_a_buyer_trading_history_default(context, buyer.id, applicationId);
+    const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
+    const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
     return {
       buyer,
-      buyerTradingHistory
+      buyerTradingHistory,
+      buyerRelationship,
+      buyerContact
     };
   } catch (err) {
     console.error("Error creating a buyer %O", err);

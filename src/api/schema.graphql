@@ -1394,14 +1394,9 @@ type Buyer {
   country: Country
   registrationNumber: String
   website: String
-  contactFirstName: String
-  contactLastName: String
-  contactPosition: String
-  contactEmail: String
-  canContactBuyer: Boolean
-  exporterIsConnectedWithBuyer: Boolean
-  connectionWithBuyerDescription: String
   buyerTradingHistory: BuyerTradingHistory
+  buyerContact: BuyerContact
+  buyerRelationship: BuyerRelationship
 }
 
 input BuyerWhereUniqueInput {
@@ -1419,12 +1414,9 @@ input BuyerWhereInput {
   country: CountryWhereInput
   registrationNumber: StringFilter
   website: StringFilter
-  contactFirstName: StringFilter
-  contactLastName: StringFilter
-  contactPosition: StringFilter
-  contactEmail: StringFilter
-  connectionWithBuyerDescription: StringFilter
   buyerTradingHistory: BuyerTradingHistoryWhereInput
+  buyerContact: BuyerContactWhereInput
+  buyerRelationship: BuyerRelationshipWhereInput
 }
 
 input BuyerOrderByInput {
@@ -1433,11 +1425,6 @@ input BuyerOrderByInput {
   address: OrderDirection
   registrationNumber: OrderDirection
   website: OrderDirection
-  contactFirstName: OrderDirection
-  contactLastName: OrderDirection
-  contactPosition: OrderDirection
-  contactEmail: OrderDirection
-  connectionWithBuyerDescription: OrderDirection
 }
 
 input BuyerUpdateInput {
@@ -1447,14 +1434,9 @@ input BuyerUpdateInput {
   country: CountryRelateToOneForUpdateInput
   registrationNumber: String
   website: String
-  contactFirstName: String
-  contactLastName: String
-  contactPosition: String
-  contactEmail: String
-  canContactBuyer: Boolean
-  exporterIsConnectedWithBuyer: Boolean
-  connectionWithBuyerDescription: String
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForUpdateInput
+  buyerContact: BuyerContactRelateToOneForUpdateInput
+  buyerRelationship: BuyerRelationshipRelateToOneForUpdateInput
 }
 
 input CountryRelateToOneForUpdateInput {
@@ -1466,6 +1448,18 @@ input CountryRelateToOneForUpdateInput {
 input BuyerTradingHistoryRelateToOneForUpdateInput {
   create: BuyerTradingHistoryCreateInput
   connect: BuyerTradingHistoryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BuyerContactRelateToOneForUpdateInput {
+  create: BuyerContactCreateInput
+  connect: BuyerContactWhereUniqueInput
+  disconnect: Boolean
+}
+
+input BuyerRelationshipRelateToOneForUpdateInput {
+  create: BuyerRelationshipCreateInput
+  connect: BuyerRelationshipWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -1481,14 +1475,9 @@ input BuyerCreateInput {
   country: CountryRelateToOneForCreateInput
   registrationNumber: String
   website: String
-  contactFirstName: String
-  contactLastName: String
-  contactPosition: String
-  contactEmail: String
-  canContactBuyer: Boolean
-  exporterIsConnectedWithBuyer: Boolean
-  connectionWithBuyerDescription: String
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForCreateInput
+  buyerContact: BuyerContactRelateToOneForCreateInput
+  buyerRelationship: BuyerRelationshipRelateToOneForCreateInput
 }
 
 input CountryRelateToOneForCreateInput {
@@ -1499,6 +1488,134 @@ input CountryRelateToOneForCreateInput {
 input BuyerTradingHistoryRelateToOneForCreateInput {
   create: BuyerTradingHistoryCreateInput
   connect: BuyerTradingHistoryWhereUniqueInput
+}
+
+input BuyerContactRelateToOneForCreateInput {
+  create: BuyerContactCreateInput
+  connect: BuyerContactWhereUniqueInput
+}
+
+input BuyerRelationshipRelateToOneForCreateInput {
+  create: BuyerRelationshipCreateInput
+  connect: BuyerRelationshipWhereUniqueInput
+}
+
+type BuyerContact {
+  id: ID!
+  application: Application
+  buyer: Buyer
+  contactFirstName: String
+  contactLastName: String
+  contactPosition: String
+  contactEmail: String
+  canContactBuyer: Boolean
+}
+
+input BuyerContactWhereUniqueInput {
+  id: ID
+}
+
+input BuyerContactWhereInput {
+  AND: [BuyerContactWhereInput!]
+  OR: [BuyerContactWhereInput!]
+  NOT: [BuyerContactWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  buyer: BuyerWhereInput
+  contactFirstName: StringFilter
+  contactLastName: StringFilter
+  contactPosition: StringFilter
+  contactEmail: StringFilter
+}
+
+input BuyerContactOrderByInput {
+  id: OrderDirection
+  contactFirstName: OrderDirection
+  contactLastName: OrderDirection
+  contactPosition: OrderDirection
+  contactEmail: OrderDirection
+}
+
+input BuyerContactUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  buyer: BuyerRelateToOneForUpdateInput
+  contactFirstName: String
+  contactLastName: String
+  contactPosition: String
+  contactEmail: String
+  canContactBuyer: Boolean
+}
+
+input BuyerContactUpdateArgs {
+  where: BuyerContactWhereUniqueInput!
+  data: BuyerContactUpdateInput!
+}
+
+input BuyerContactCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  buyer: BuyerRelateToOneForCreateInput
+  contactFirstName: String
+  contactLastName: String
+  contactPosition: String
+  contactEmail: String
+  canContactBuyer: Boolean
+}
+
+type BuyerRelationship {
+  id: ID!
+  application: Application
+  buyer: Buyer
+  exporterIsConnectedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
+  exporterHasPreviousCreditInsuranceWithBuyer: Boolean
+  exporterHasBuyerFinancialAccounts: Boolean
+  previousCreditInsuranceWithBuyerDescription: String
+}
+
+input BuyerRelationshipWhereUniqueInput {
+  id: ID
+}
+
+input BuyerRelationshipWhereInput {
+  AND: [BuyerRelationshipWhereInput!]
+  OR: [BuyerRelationshipWhereInput!]
+  NOT: [BuyerRelationshipWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  buyer: BuyerWhereInput
+  connectionWithBuyerDescription: StringFilter
+  previousCreditInsuranceWithBuyerDescription: StringFilter
+}
+
+input BuyerRelationshipOrderByInput {
+  id: OrderDirection
+  connectionWithBuyerDescription: OrderDirection
+  previousCreditInsuranceWithBuyerDescription: OrderDirection
+}
+
+input BuyerRelationshipUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  buyer: BuyerRelateToOneForUpdateInput
+  exporterIsConnectedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
+  exporterHasPreviousCreditInsuranceWithBuyer: Boolean
+  exporterHasBuyerFinancialAccounts: Boolean
+  previousCreditInsuranceWithBuyerDescription: String
+}
+
+input BuyerRelationshipUpdateArgs {
+  where: BuyerRelationshipWhereUniqueInput!
+  data: BuyerRelationshipUpdateInput!
+}
+
+input BuyerRelationshipCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  buyer: BuyerRelateToOneForCreateInput
+  exporterIsConnectedWithBuyer: Boolean
+  connectionWithBuyerDescription: String
+  exporterHasPreviousCreditInsuranceWithBuyer: Boolean
+  exporterHasBuyerFinancialAccounts: Boolean
+  previousCreditInsuranceWithBuyerDescription: String
 }
 
 type BuyerTradingHistory {
@@ -2238,6 +2355,18 @@ type Mutation {
   updateBuyers(data: [BuyerUpdateArgs!]!): [Buyer]
   deleteBuyer(where: BuyerWhereUniqueInput!): Buyer
   deleteBuyers(where: [BuyerWhereUniqueInput!]!): [Buyer]
+  createBuyerContact(data: BuyerContactCreateInput!): BuyerContact
+  createBuyerContacts(data: [BuyerContactCreateInput!]!): [BuyerContact]
+  updateBuyerContact(where: BuyerContactWhereUniqueInput!, data: BuyerContactUpdateInput!): BuyerContact
+  updateBuyerContacts(data: [BuyerContactUpdateArgs!]!): [BuyerContact]
+  deleteBuyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
+  deleteBuyerContacts(where: [BuyerContactWhereUniqueInput!]!): [BuyerContact]
+  createBuyerRelationship(data: BuyerRelationshipCreateInput!): BuyerRelationship
+  createBuyerRelationships(data: [BuyerRelationshipCreateInput!]!): [BuyerRelationship]
+  updateBuyerRelationship(where: BuyerRelationshipWhereUniqueInput!, data: BuyerRelationshipUpdateInput!): BuyerRelationship
+  updateBuyerRelationships(data: [BuyerRelationshipUpdateArgs!]!): [BuyerRelationship]
+  deleteBuyerRelationship(where: BuyerRelationshipWhereUniqueInput!): BuyerRelationship
+  deleteBuyerRelationships(where: [BuyerRelationshipWhereUniqueInput!]!): [BuyerRelationship]
   createBuyerTradingHistory(data: BuyerTradingHistoryCreateInput!): BuyerTradingHistory
   createBuyerTradingHistories(data: [BuyerTradingHistoryCreateInput!]!): [BuyerTradingHistory]
   updateBuyerTradingHistory(where: BuyerTradingHistoryWhereUniqueInput!, data: BuyerTradingHistoryUpdateInput!): BuyerTradingHistory
@@ -2426,6 +2555,12 @@ type Query {
   buyers(where: BuyerWhereInput! = {}, orderBy: [BuyerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerWhereUniqueInput): [Buyer!]
   buyer(where: BuyerWhereUniqueInput!): Buyer
   buyersCount(where: BuyerWhereInput! = {}): Int
+  buyerContacts(where: BuyerContactWhereInput! = {}, orderBy: [BuyerContactOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerContactWhereUniqueInput): [BuyerContact!]
+  buyerContact(where: BuyerContactWhereUniqueInput!): BuyerContact
+  buyerContactsCount(where: BuyerContactWhereInput! = {}): Int
+  buyerRelationships(where: BuyerRelationshipWhereInput! = {}, orderBy: [BuyerRelationshipOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerRelationshipWhereUniqueInput): [BuyerRelationship!]
+  buyerRelationship(where: BuyerRelationshipWhereUniqueInput!): BuyerRelationship
+  buyerRelationshipsCount(where: BuyerRelationshipWhereInput! = {}): Int
   buyerTradingHistories(where: BuyerTradingHistoryWhereInput! = {}, orderBy: [BuyerTradingHistoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: BuyerTradingHistoryWhereUniqueInput): [BuyerTradingHistory!]
   buyerTradingHistory(where: BuyerTradingHistoryWhereUniqueInput!): BuyerTradingHistory
   buyerTradingHistoriesCount(where: BuyerTradingHistoryWhereInput! = {}): Int

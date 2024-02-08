@@ -29,7 +29,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/save-and-back',
     jest.resetAllMocks();
   });
 
-  const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer;
+  const { exporterIsConnectedWithBuyer, connectionWithBuyerDescription } = mockBuyer.buyerRelationship;
 
   const validBody = {
     [CONNECTION_WITH_BUYER]: exporterIsConnectedWithBuyer,

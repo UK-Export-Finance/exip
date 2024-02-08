@@ -31,7 +31,7 @@ export const optionalFields = (answers: ApplicationBuyer, referenceNumber: numbe
     fieldGroupItem(
       {
         field: getFieldById(FIELDS, CONNECTION_WITH_BUYER),
-        data: answers,
+        data: answers.buyerRelationship,
         href: generateChangeLink(
           CONNECTION_WITH_BUYER_CHANGE,
           CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
@@ -41,7 +41,7 @@ export const optionalFields = (answers: ApplicationBuyer, referenceNumber: numbe
         ),
         renderChangeLink: true,
       },
-      mapYesNoField(answers[CONNECTION_WITH_BUYER]),
+      mapYesNoField(answers.buyerRelationship[CONNECTION_WITH_BUYER]),
     ),
   ] as Array<SummaryListItemData>;
 
@@ -49,11 +49,11 @@ export const optionalFields = (answers: ApplicationBuyer, referenceNumber: numbe
    * if CONNECTION_WITH_BUYER is true
    * pushes CONNECTION_WITH_BUYER_DESCRIPTION to the summary list
    */
-  if (answers[CONNECTION_WITH_BUYER]) {
+  if (answers.buyerRelationship[CONNECTION_WITH_BUYER]) {
     fields.push(
       fieldGroupItem({
         field: getFieldById(FIELDS, CONNECTION_WITH_BUYER_DESCRIPTION),
-        data: answers,
+        data: answers.buyerRelationship,
         href: generateChangeLink(
           CONNECTION_WITH_BUYER_CHANGE,
           CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,

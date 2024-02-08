@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save/buyer';
+import mapAndSave from '../map-and-save/buyer-relationship';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 
@@ -91,7 +91,7 @@ export const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
-      applicationAnswer: application.buyer[CONNECTION_WITH_BUYER],
+      applicationAnswer: application.buyer.buyerRelationship[CONNECTION_WITH_BUYER],
     });
   } catch (err) {
     console.error('Error getting connection to the buyer %O', err);
@@ -136,7 +136,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     // if no errors, then runs save api call
-    const saveResponse = await mapAndSave.yourBuyer(payload, application);
+    const saveResponse = await mapAndSave.buyerRelationship(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

@@ -65,8 +65,30 @@ describe('helpers/create-a-buyer', () => {
     const { buyerTradingHistory } = result;
 
     expect(buyerTradingHistory.currencyCode).toEqual(GBP);
-    expect(buyerTradingHistory.outstandingPayments).toEqual(null);
-    expect(buyerTradingHistory.failedPayments).toEqual(null);
+    expect(buyerTradingHistory.outstandingPayments).toBeNull();
+    expect(buyerTradingHistory.failedPayments).toBeNull();
+  });
+
+  test('it should return empty buyerRelationship fields with default currencyCode', async () => {
+    const result = await createABuyer(context, country.id, application.id);
+    const { buyerRelationship } = result;
+
+    expect(buyerRelationship.exporterIsConnectedWithBuyer).toBeNull();
+    expect(buyerRelationship.connectionWithBuyerDescription).toBeNull();
+    expect(buyerRelationship.exporterHasPreviousCreditInsuranceWithBuyer).toBeNull();
+    expect(buyerRelationship.exporterHasBuyerFinancialAccounts).toBeNull();
+    expect(buyerRelationship.previousCreditInsuranceWithBuyerDescription).toBeNull();
+  });
+
+  test('it should return empty buyerContact fields with default currencyCode', async () => {
+    const result = await createABuyer(context, country.id, application.id);
+    const { buyerContact } = result;
+
+    expect(buyerContact.contactFirstName).toBeNull();
+    expect(buyerContact.contactLastName).toBeNull();
+    expect(buyerContact.contactPosition).toBeNull();
+    expect(buyerContact.contactEmail).toBeNull();
+    expect(buyerContact.canContactBuyer).toBeNull();
   });
 
   describe('when an invalid country ID is passed', () => {

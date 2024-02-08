@@ -124,19 +124,32 @@ interface ApplicationBuyerCore {
   address?: string;
   registrationNumber?: string;
   website?: string;
+}
+
+interface BuyerRelationship {
+  id: string;
+  exporterIsConnectedWithBuyer?: boolean;
+  connectionWithBuyerDescription?: string;
+  exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
+  exporterHasBuyerFinancialAccounts?: boolean;
+  previousCreditInsuranceWithBuyerDescription?: string;
+}
+
+interface BuyerContact {
+  id: string;
   contactFirstName?: string;
   contactLastName?: string;
   contactPosition?: string;
   contactEmail?: string;
   canContactBuyer?: boolean;
-  exporterIsConnectedWithBuyer?: boolean;
-  connectionWithBuyerDescription?: string;
 }
 
 interface ApplicationBuyer extends ApplicationBuyerCore {
   id: string;
   country?: ApplicationBuyerCountry;
   buyerTradingHistory: BuyerTradingHistory;
+  buyerRelationship: BuyerRelationship;
+  buyerContact: BuyerContact;
 }
 
 interface ApplicationBuyerUiInput extends ApplicationBuyerCore {

@@ -16,6 +16,23 @@ export const mockBuyerTradingHistory = {
   currencyCode: GBP.isoCode,
 };
 
+export const mockBuyerRelationship = {
+  id: 'clacdgc630000kdoqn7wcgre8t',
+  ...mockConnectionWithBuyer,
+  exporterHasPreviousCreditInsuranceWithBuyer: true,
+  exporterHasBuyerFinancialAccounts: true,
+  previousCreditInsuranceWithBuyerDescription: 'mock credit insurance buyer',
+};
+
+export const mockBuyerContact = {
+  id: 'clacdgc630000kdoqn7wcgre8e',
+  contactFirstName: 'Bob',
+  contactLastName: 'Smith',
+  contactPosition: 'CEO',
+  contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
+  canContactBuyer: true,
+};
+
 const mockBuyer = {
   companyOrOrganisationName: 'Test name',
   address: 'Address line 1 \r\n Address line 2 \r\n Test town \r\n Test Postcode \r\n United Kingdom',
@@ -25,14 +42,9 @@ const mockBuyer = {
   },
   registrationNumber: '1234',
   website: 'www.gov.uk',
-  contactFirstName: 'Bob',
-  contactLastName: 'Smith',
-  contactPosition: 'CEO',
-  contactEmail: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
-  canContactBuyer: true,
-  ...mockConnectionWithBuyer,
-  exporterIsConnectedWithBuyer: true,
   buyerTradingHistory: mockBuyerTradingHistory,
+  buyerContact: mockBuyerContact,
+  buyerRelationship: mockBuyerRelationship,
 };
 
 export default mockBuyer;

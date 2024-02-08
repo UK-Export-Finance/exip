@@ -134,13 +134,6 @@ const applicationQuery = gql`
           }
           registrationNumber
           website
-          contactFirstName
-          contactLastName
-          contactPosition
-          contactEmail
-          canContactBuyer
-          exporterIsConnectedWithBuyer
-          connectionWithBuyerDescription
           buyerTradingHistory {
             id
             exporterHasTradedWithBuyer
@@ -149,6 +142,22 @@ const applicationQuery = gql`
             failedPayments
             totalOverduePayments
             totalOutstandingPayments
+          }
+          buyerContact {
+            id
+            contactFirstName
+            contactLastName
+            contactPosition
+            contactEmail
+            canContactBuyer
+          }
+          buyerRelationship {
+            id
+            exporterIsConnectedWithBuyer
+            connectionWithBuyerDescription
+            exporterHasPreviousCreditInsuranceWithBuyer
+            exporterHasBuyerFinancialAccounts
+            previousCreditInsuranceWithBuyerDescription
           }
         }
         sectionReview {
