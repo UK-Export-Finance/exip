@@ -152,7 +152,7 @@ context('Insurance - Policy - Broker details page - validation', () => {
         value,
         errorIndex,
         expectedErrorsCount,
-        ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM
+        ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
       );
     });
   });
