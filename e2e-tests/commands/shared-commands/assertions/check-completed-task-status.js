@@ -2,8 +2,13 @@ import { TASKS } from '../../../content-strings';
 
 const { STATUS: { COMPLETED } } = TASKS;
 
-export default (selector) => {
-  selector.invoke('text').then((text) => {
-    expect(text.trim()).equal(COMPLETED);
-  });
+/**
+ * checkCompletedTaskStatus
+ * Check an tasks has a "completed" status
+ * @param {Function} selector: Cypress selector
+ */
+const checkCompletedTaskStatus = (selector) => {
+  cy.checkText(selector, COMPLETED);
 };
+
+export default checkCompletedTaskStatus;
