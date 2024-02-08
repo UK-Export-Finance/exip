@@ -1,8 +1,4 @@
-import insurancePartials from '../../../../../partials/insurance';
-
-const { taskList } = insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
+import task from '.';
 
 /**
  * Check that the "business" task has a "not started yet" status.

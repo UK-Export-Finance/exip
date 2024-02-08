@@ -1,8 +1,4 @@
-import insurancePartials from '../../../../../partials/insurance';
-
-const { taskList } = insurancePartials;
-
-const task = taskList.initialChecks.tasks.eligibility;
+import task from '.';
 
 /**
  * Check that the "eligibility" task has a "completed" status.

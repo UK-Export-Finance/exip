@@ -1,8 +1,4 @@
-import insurancePartials from '../../../../../partials/insurance';
-
-const { taskList } = insurancePartials;
-
-const task = taskList.submitApplication.tasks.declarationsAndSubmit;
+import task from '.';
 
 /**
  * Check that the "check answers" task has an "in progress" status.
