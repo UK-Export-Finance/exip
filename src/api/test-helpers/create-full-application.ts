@@ -85,7 +85,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   const { buyer } = await createABuyer(context, country.id, application.id);
 
   // create policy and associate with the application.
-  const policy = await createAPolicy(context, application.id);
+  const { policy } = await createAPolicy(context, application.id);
 
   // create company and associate with the application.
   const company = await createACompany(context, application.id, mockCompany);

@@ -121,6 +121,14 @@ export interface ApplicationPolicyContact extends Relationship {
   isSameAsOwner: boolean;
 }
 
+export interface ApplicationJointlyInsuredParty extends Relationship {
+  policyId: string;
+  requested?: boolean;
+  companyName?: string;
+  companyNumber?: string;
+  country: Country;
+}
+
 export interface ApplicationDifferentTradingAddress extends Relationship {
   fullAddress: string;
 }
@@ -184,6 +192,11 @@ export interface CreateAnApplicationVariables {
   eligibilityAnswers: ApplicationEligibility;
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
+}
+
+export interface CreatePolicyResponse {
+  policy: ApplicationPolicy;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
 }
 
 export interface DeleteApplicationByReferenceNumberVariables {

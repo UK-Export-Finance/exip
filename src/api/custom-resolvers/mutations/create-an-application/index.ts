@@ -79,7 +79,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const eligibility = await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
 
-    const policy = await createAPolicy(context, applicationId);
+    const { policy } = await createAPolicy(context, applicationId);
 
     const company = await createACompany(context, applicationId, companyData);
 
