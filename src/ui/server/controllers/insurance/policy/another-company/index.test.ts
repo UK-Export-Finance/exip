@@ -145,7 +145,7 @@ describe('controllers/insurance/policy/another-company', () => {
     mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(true));
 
     describe('when there are no validation errors', () => {
-      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+      it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', async () => {
         req.body = validBody;
 
         await post(req, res);
