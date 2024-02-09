@@ -13,9 +13,9 @@ const MAXIMUM = 100;
  * returns validation error if is not a number, has a decimal place, special characters, a comma, is empty or is below 0 or above 100.
  * @param {RequestBody} formBody
  * @param {String} field fieldId of the field being checked
- * @param {object} errors
+ * @param {Object} errors
  * @param {ErrorMessageObject} errorMessages object with different error messages
- * @returns {object} errors
+ * @returns {Object} errors
  */
 const percentageNumberValidation = (formBody: RequestBody, field: string, errors: object, errorMessages: ErrorMessageObject) => {
   const { IS_EMPTY, INCORRECT_FORMAT, BELOW_MINIMUM, ABOVE_MAXIMUM } = errorMessages;

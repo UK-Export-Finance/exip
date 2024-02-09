@@ -218,6 +218,7 @@ jobs:
             "policy/*.spec.js",
             "policy/another-company/**/*.spec.js",
             "policy/broker/**/*.spec.js",
+            "policy/broker-details/**/*.spec.js",
             "policy/change-your-answers/**/*.spec.js",
             "policy/check-your-answers/**/*.spec.js",
             "policy/different-name-on-policy/**/*.spec.js",

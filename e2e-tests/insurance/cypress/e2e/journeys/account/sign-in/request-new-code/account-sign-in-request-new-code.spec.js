@@ -1,4 +1,3 @@
-import { intro } from '../../../../../../../pages/shared';
 import { enterCodePage, requestNewCodePage } from '../../../../../../../pages/insurance/account/sign-in';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -51,7 +50,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
     });
 
     it('should render intro copy', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     describe('expandable details - do not have access to email', () => {

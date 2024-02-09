@@ -1,24 +1,24 @@
-import companyName, { MAXIMUM } from '.';
+import brokerName, { MAXIMUM } from '.';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
 import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME: FIELD_ID },
+  BROKER_DETAILS: { NAME: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
+  BROKER_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-describe('controllers/insurance/policy/other-company-details/validation/rules/company-name', () => {
+describe('controllers/insurance/policy/broker-details/validation/rules/name', () => {
   const mockBody = {
     [FIELD_ID]: '',
   };
 
   it('should return the result of providedAndMaxLength', () => {
-    const result = companyName(mockBody, mockErrors);
+    const result = brokerName(mockBody, mockErrors);
 
     const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM);
 

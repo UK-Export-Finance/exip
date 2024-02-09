@@ -140,10 +140,14 @@ describe('controllers/insurance/policy/broker-details', () => {
     });
 
     describe('when there are no validation errors', () => {
+      const validBody = {
+        [NAME]: broker[NAME],
+        [EMAIL]: broker[EMAIL],
+        [FULL_ADDRESS]: broker[FULL_ADDRESS],
+      };
+
       it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
-        req.body = {
-          [EMAIL]: broker[EMAIL],
-        };
+        req.body = validBody;
 
         post(req, res);
 

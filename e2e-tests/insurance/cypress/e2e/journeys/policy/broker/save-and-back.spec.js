@@ -81,11 +81,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // go through 5 policy forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 5 });
-
-      // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-      cy.completeAndSubmitAnotherCompanyForm({});
+      // go through 6 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 6 });
 
       cy.assertRadioOptionIsChecked(yesRadioInput());
     });
@@ -109,11 +106,8 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // go through 5 policy forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 5 });
-
-      // TODO: once EMS-2586 is complete, this can be replaced with clickSubmitButtonMultipleTimes.
-      cy.completeAndSubmitAnotherCompanyForm({});
+      // go through 6 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 6 });
 
       cy.assertRadioOptionIsChecked(noRadioInput());
     });

@@ -15,17 +15,17 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
+export const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
 
 /**
  * validate the "company number" in other company details response body
- * @param {Express.Request.body} responseBody: containing an object with the company details response
+ * @param {Express.Request.body} formBody: containing an object with the company details response
  * @param {Object} errors: errorList
- * @returns {Object} Object containing errors or blank object
+ * @returns {Object} Errors or empty object
  */
-const companyNumber = (responseBody: RequestBody, errors: object) => {
-  if (objectHasProperty(responseBody, FIELD_ID)) {
-    return maxLengthValidation(responseBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
+const companyNumber = (formBody: RequestBody, errors: object) => {
+  if (objectHasProperty(formBody, FIELD_ID)) {
+    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
   }
 
   return errors;

@@ -16,8 +16,8 @@ export const MAXIMUM = 1200;
  * validates improve service field
  * checks if answer has been provided
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const improveService = (formBody: RequestBody, errors: object) => {
   // if field has a value
