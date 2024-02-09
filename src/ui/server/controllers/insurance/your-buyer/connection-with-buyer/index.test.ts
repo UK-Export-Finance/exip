@@ -85,6 +85,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       const expected = {
         CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
         HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
       };
 
       expect(HTML_FLAGS).toEqual(expected);
