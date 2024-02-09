@@ -65,7 +65,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.keyboardInput(field(TOTAL_OUTSTANDING_PAYMENTS).input(), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
 
       saveAndBackButton().click();

@@ -121,7 +121,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
 
       describe(`when clicking ${NEED_PRE_CREDIT_PERIOD} 'yes' radio`, () => {
         it(`should render ${fieldId} label and input`, () => {
-          cy.clickYesRadioInput(0);
+          cy.clickYesRadioInput();
 
           field.textarea().should('be.visible');
 

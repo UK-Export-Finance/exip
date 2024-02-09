@@ -78,7 +78,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
       cy.assertNoRadioOptionIsChecked(0);
 
       // check input is not populated
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
     });
   });
@@ -101,7 +101,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
       cy.navigateToUrl(url);
 
       // check input is not populated
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
     });
   });

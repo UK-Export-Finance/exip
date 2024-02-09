@@ -36,7 +36,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
     cy.saveSession();
     cy.navigateToUrl(url);
     // press outstanding payments radio
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
   });
 
   after(() => {

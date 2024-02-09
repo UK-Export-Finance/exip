@@ -59,7 +59,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);

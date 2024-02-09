@@ -147,7 +147,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickSubmitButton();
     });
 

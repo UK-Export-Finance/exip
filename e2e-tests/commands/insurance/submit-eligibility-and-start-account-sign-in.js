@@ -4,6 +4,6 @@ export default () => {
   submitInsuranceEligibilityAnswersHappyPath();
 
   // submit "I already have an account"
-  cy.clickYesRadioInput(0);
+  cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };

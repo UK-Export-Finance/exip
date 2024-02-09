@@ -66,7 +66,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
     });

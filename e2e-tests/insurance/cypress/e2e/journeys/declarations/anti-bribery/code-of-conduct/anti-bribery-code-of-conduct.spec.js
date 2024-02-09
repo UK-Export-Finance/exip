@@ -110,7 +110,7 @@ context("Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
     });
 
     it('should display conditional `we will email you` hint when selecting the "yes" radio', () => {
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
 
       codeOfConductPage.revealText().should('be.visible');
 

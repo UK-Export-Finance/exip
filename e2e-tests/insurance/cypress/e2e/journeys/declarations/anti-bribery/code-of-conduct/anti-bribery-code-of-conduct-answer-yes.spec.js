@@ -43,7 +43,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
     cy.navigateToUrl(url);
 
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
     cy.clickSubmitButton();
   });
 

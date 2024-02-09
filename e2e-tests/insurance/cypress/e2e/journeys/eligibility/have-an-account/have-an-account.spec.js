@@ -94,7 +94,7 @@ context('Insurance - Eligibility - Have an account page - I want to confirm that
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        cy.clickYesRadioInput(0);
+        cy.clickYesRadioInput();
         cy.clickSubmitButton();
 
         const expected = `${baseUrl}${SIGN_IN.ROOT}`;

@@ -5,7 +5,7 @@ import { yesRadioInput } from '../../../pages/shared';
  * Click a "yes" radio input.
  * * @param {Integer} index: Optional radio index
  */
-const clickYesRadioInput = (index) => {
+const clickYesRadioInput = (index = 0) => {
   yesRadioInput().eq(index).click();
 };
 

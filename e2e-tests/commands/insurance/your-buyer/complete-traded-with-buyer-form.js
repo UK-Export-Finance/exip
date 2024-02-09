@@ -6,7 +6,7 @@
  */
 const completeTradedWithBuyerForm = ({ exporterHasTradedWithBuyer = false }) => {
   if (exporterHasTradedWithBuyer) {
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
   } else {
     cy.clickNoRadioInput();
   }

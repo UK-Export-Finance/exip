@@ -121,7 +121,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
 
       describe(`when clicking the 'yes' ${OUTSTANDING_PAYMENTS} radio`, () => {
         beforeEach(() => {
-          cy.clickYesRadioInput(0);
+          cy.clickYesRadioInput();
         });
 
         it('should render a heading', () => {
@@ -239,7 +239,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
             cy.assertNoRadioOptionIsChecked(0);
 
             // click first radio input to display optional fields
-            cy.clickYesRadioInput(0);
+            cy.clickYesRadioInput();
 
             cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
             cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');

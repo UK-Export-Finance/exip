@@ -20,7 +20,7 @@ const completeCreditInsuranceCoverForm = ({
   const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
   if (hasHadCreditInsuranceCover) {
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
     cy.keyboardInput(field(fieldId).textarea(), creditInsuranceCoverDescription);
   } else {
     cy.clickNoRadioInput();

@@ -31,7 +31,7 @@ const completeCompaniesDetailsForm = ({
   completeDifferentTradingName = true,
 }) => {
   if (differentTradingName) {
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
   } else {
     cy.clickNoRadioInput();
   }

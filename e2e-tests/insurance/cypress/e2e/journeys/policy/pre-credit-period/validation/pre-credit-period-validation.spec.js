@@ -79,7 +79,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
     });
 
     it(`should render a validation error when ${CREDIT_PERIOD_WITH_BUYER} is not provided`, () => {

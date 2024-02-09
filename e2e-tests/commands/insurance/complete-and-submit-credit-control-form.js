@@ -5,7 +5,7 @@
  */
 const completeAndSubmitCreditControlForm = ({ hasCreditControlProcess = true }) => {
   if (hasCreditControlProcess) {
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
   } else {
     cy.clickNoRadioInput();
   }

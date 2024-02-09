@@ -18,7 +18,7 @@ const completeTradingHistoryWithBuyerForm = ({
   outstandingPayments = false, failedToPay = false, amountOverDue = BUYER[TOTAL_AMOUNT_OVERDUE], totalOutstanding = BUYER[TOTAL_OUTSTANDING_PAYMENTS],
 }) => {
   if (outstandingPayments) {
-    cy.clickYesRadioInput(0);
+    cy.clickYesRadioInput();
 
     cy.keyboardInput(field(TOTAL_AMOUNT_OVERDUE).input(), amountOverDue);
     cy.keyboardInput(field(TOTAL_OUTSTANDING_PAYMENTS).input(), totalOutstanding);

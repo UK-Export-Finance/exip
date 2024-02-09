@@ -106,7 +106,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
       describe(`when clicking ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'yes' radio`, () => {
         it(`should render ${fieldId} label, hint and input`, () => {
-          cy.clickYesRadioInput(0);
+          cy.clickYesRadioInput();
 
           field.textarea().should('be.visible');
 
@@ -174,7 +174,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
           cy.assertNoRadioOptionIsChecked();
 
-          cy.clickYesRadioInput(0);
+          cy.clickYesRadioInput();
 
           const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
 

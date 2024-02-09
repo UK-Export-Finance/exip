@@ -35,7 +35,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.navigateToUrl(url);
 
-    cy.clickNoRadioInput(0);
+    cy.clickNoRadioInput();
 
     cy.clickSubmitButton();
   });

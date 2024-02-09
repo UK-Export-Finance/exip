@@ -142,7 +142,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
         beforeEach(() => {
           cy.navigateToUrl(url);
 
-          cy.clickYesRadioInput(0);
+          cy.clickYesRadioInput();
         });
 
         it('has working client side JS', () => {

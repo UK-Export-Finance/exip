@@ -21,12 +21,12 @@ export const completeAndSubmitBuyerBodyForm = () => {
 };
 
 export const completeAndSubmitExporterLocationForm = () => {
-  cy.clickYesRadioInput(0);
+  cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };
 
 export const completeAndSubmitUkContentForm = () => {
-  cy.clickYesRadioInput(0);
+  cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };
 

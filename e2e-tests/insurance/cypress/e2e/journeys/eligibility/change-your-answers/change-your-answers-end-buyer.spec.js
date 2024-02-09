@@ -58,7 +58,7 @@ context('Insurance - Eligibility - Change your answers - End buyer - As an expor
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickSubmitButton();
     });
 

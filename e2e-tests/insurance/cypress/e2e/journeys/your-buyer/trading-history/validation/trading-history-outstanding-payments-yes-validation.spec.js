@@ -70,7 +70,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when leaving ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS} empty`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
     });
 
@@ -82,7 +82,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value which is not a number for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
     });
 
@@ -96,7 +96,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value with a decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
     });
 
@@ -110,7 +110,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value with a comma and decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
     });
 
@@ -124,7 +124,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value below the minimum for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
     });
 
@@ -138,7 +138,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value with a special character for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
     });
 

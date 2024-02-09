@@ -56,7 +56,7 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list with status of "In progress"', () => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
       cy.clickYesRadioInput(1);
       cy.clickSaveAndBackButton();
 

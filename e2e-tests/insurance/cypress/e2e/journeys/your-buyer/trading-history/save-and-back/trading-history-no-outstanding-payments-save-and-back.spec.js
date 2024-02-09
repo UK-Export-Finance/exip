@@ -59,7 +59,7 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickNoRadioInput(0);
+      cy.clickNoRadioInput();
 
       saveAndBackButton().click();
     });

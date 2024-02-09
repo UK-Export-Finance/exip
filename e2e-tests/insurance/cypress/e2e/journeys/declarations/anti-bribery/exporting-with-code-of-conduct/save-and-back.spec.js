@@ -76,7 +76,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.clickYesRadioInput(0);
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
     });
