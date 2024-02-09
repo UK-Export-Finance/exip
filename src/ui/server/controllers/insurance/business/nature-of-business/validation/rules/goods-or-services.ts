@@ -18,8 +18,8 @@ export const MAXIMUM = 1000;
  * validates goods or services input
  * errors if empty or more than 1000 characters
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const goodsOrServices = (formBody: RequestBody, errors: object) => {
   // if body is empty

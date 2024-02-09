@@ -17,8 +17,8 @@ export const MAXIMUM = 1000;
  * validates alternative trading address input
  * errors if empty or more than 1000 characters
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const alternativeTradingAddress = (formBody: RequestBody, errors: object) => {
   // if body is empty

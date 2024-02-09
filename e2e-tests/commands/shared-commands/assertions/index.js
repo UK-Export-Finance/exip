@@ -25,6 +25,7 @@ Cypress.Commands.add('assertNoRadioOptionIsChecked', require('./assert-no-radio-
 
 Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
+Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
 
 Cypress.Commands.add('checkAnalyticsCookiesConsentAndAccept', analytics.checkAnalyticsCookiesConsentAndAccept);
 Cypress.Commands.add('checkAnalyticsCookieDoesNotExist', analytics.checkAnalyticsCookieDoesNotExist);
@@ -93,6 +94,7 @@ Cypress.Commands.add('checkTaskStatus', require('./check-task-status'));
 Cypress.Commands.add('checkTaskStatusCompleted', require('./check-completed-task-status'));
 
 Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkIntroText', require('./check-intro-text'));
 
 Cypress.Commands.add('checkValue', require('./check-value'));
 

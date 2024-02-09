@@ -6,9 +6,9 @@ import isAboveMaxLength from '../../helpers/is-above-max-length';
  * @param {string} fieldBody
  * @param {string} fieldId
  * @param {string} errorMessage
- * @param {object} errors
+ * @param {Object} errors
  * @param {number} maximum
- * @returns {object} errors
+ * @returns {Object} errors
  */
 const maxLengthValidation = (fieldBody: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
   let updatedErrors = errors;

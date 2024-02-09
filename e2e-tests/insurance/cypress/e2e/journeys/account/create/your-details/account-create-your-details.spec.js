@@ -1,5 +1,5 @@
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
-import { field as fieldSelector, intro } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { BUTTONS, PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
@@ -61,7 +61,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
     });
 
     it('renders intro text', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     it('renders `first name` label and input', () => {

@@ -13,8 +13,8 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 /**
  * validates website input is the correct format
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const companyWebsite = (formBody: RequestBody, errors: object) => {
   let updatedErrors = errors;

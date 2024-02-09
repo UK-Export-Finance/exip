@@ -23,8 +23,8 @@ const errorMessages = {
  * only numbers without decimals, special characters or commas
  * only allows numbers between 0 and 100
  * @param {RequestBody} formBody
- * @param {object} errors
- * @returns {object} errors
+ * @param {Object} errors
+ * @returns {Object} errors
  */
 const percentageTurnover = (formBody: RequestBody, errors: object) => percentageNumberValidation(formBody, FIELD_ID, errors, errorMessages);
 

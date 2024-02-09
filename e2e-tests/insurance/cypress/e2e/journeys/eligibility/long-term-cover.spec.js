@@ -1,4 +1,3 @@
-import { intro } from '../../../../../pages/shared';
 import { PAGES } from '../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../commands/forms';
@@ -61,7 +60,7 @@ context('Insurance - Eligibility - Long term cover page - I want to check if I c
     });
 
     it('should render intro text', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     it('should render `apply through PDF` copy and link', () => {

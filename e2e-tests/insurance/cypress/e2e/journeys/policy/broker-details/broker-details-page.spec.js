@@ -1,5 +1,5 @@
 import partials from '../../../../../../partials';
-import { field as fieldSelector, intro } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -82,7 +82,7 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
     });
 
     it('renders intro text', () => {
-      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
+      cy.checkIntroText(CONTENT_STRINGS.INTRO);
     });
 
     it(`renders ${NAME} label and input`, () => {
