@@ -153,7 +153,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
+      it('should call mapAndSave.buyerRelationship once with data from constructPayload function and application', async () => {
         await post(req, res);
 
         expect(mapAndSave.buyerRelationship).toHaveBeenCalledTimes(1);
