@@ -1,8 +1,4 @@
-import {
-  yesRadio,
-  noRadio,
-  field as fieldSelector,
-} from '../../../../../../../pages/shared';
+import { noRadio, field as fieldSelector } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -73,7 +69,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
   describe(`when ${NEED_PRE_CREDIT_PERIOD} is 'no'`, () => {
     it('should not render any validation errors', () => {
       cy.navigateToUrl(url);
-      noRadio().input().click();
+      cy.clickNoRadioInput();
 
       partials.errorSummaryListItems().should('not.exist');
     });
@@ -83,7 +79,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadio().input().click();
+      cy.clickYesRadioInput();
     });
 
     it(`should render a validation error when ${CREDIT_PERIOD_WITH_BUYER} is not provided`, () => {

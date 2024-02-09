@@ -67,7 +67,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "completed"`, () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
 
@@ -92,7 +92,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().click();
+      cy.clickNoRadioInput();
 
       cy.clickSaveAndBackButton();
 

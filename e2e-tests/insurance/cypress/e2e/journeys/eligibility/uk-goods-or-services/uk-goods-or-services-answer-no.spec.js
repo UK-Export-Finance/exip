@@ -1,6 +1,4 @@
-import {
-  backLink, cannotApplyPage, noRadio, noRadioInput,
-} from '../../../../../../pages/shared';
+import { backLink, cannotApplyPage, noRadioInput } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -21,7 +19,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     cy.completeAndSubmitTotalValueInsuredForm({});
     cy.completeCoverPeriodForm({});
 
-    noRadio().input().click();
+    cy.clickNoRadioInput();
     cy.clickSubmitButton();
   });
 

@@ -1,4 +1,3 @@
-import { noRadioInput, yesRadioInput } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -60,7 +59,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
@@ -83,7 +82,7 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().click();
+      cy.clickNoRadioInput();
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);

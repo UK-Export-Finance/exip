@@ -1,6 +1,4 @@
-import {
-  backLink, noRadio, noRadioInput,
-} from '../../../../../../pages/shared';
+import { backLink, noRadioInput } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -27,7 +25,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
     cy.navigateToUrl(url);
 
-    noRadio().input().click();
+    cy.clickNoRadioInput();
     cy.clickSubmitButton();
   });
 

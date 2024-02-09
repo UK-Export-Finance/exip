@@ -1,5 +1,3 @@
-import { yesRadioInput, noRadioInput } from '../../../pages/shared';
-
 /**
  * completeTradedWithBuyerForm
  * Completes the "traded with buyer" form.
@@ -8,9 +6,9 @@ import { yesRadioInput, noRadioInput } from '../../../pages/shared';
  */
 const completeTradedWithBuyerForm = ({ exporterHasTradedWithBuyer = false }) => {
   if (exporterHasTradedWithBuyer) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 };
 

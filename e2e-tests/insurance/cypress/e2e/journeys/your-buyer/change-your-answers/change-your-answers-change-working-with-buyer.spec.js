@@ -1,5 +1,5 @@
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
-import { summaryList, noRadioInput } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 
 const {
@@ -129,7 +129,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().click();
+        cy.clickNoRadioInput();
 
         cy.clickSubmitButton();
       });

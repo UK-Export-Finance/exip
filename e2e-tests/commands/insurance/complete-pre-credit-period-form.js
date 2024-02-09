@@ -1,4 +1,4 @@
-import { noRadioInput, yesRadioInput, field } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import mockApplication from '../../fixtures/application';
 
@@ -14,13 +14,13 @@ const completePreCreditPeriodForm = ({
   description = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER],
 }) => {
   if (needPreCreditPeriod) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
 
     const descriptionField = field(CREDIT_PERIOD_WITH_BUYER);
 
     cy.keyboardInput(descriptionField.textarea(), description);
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 };
 

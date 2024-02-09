@@ -103,7 +103,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
       describe(`when clicking ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'yes' radio`, () => {
         it(`should render ${fieldId} label, hint and input`, () => {
-          yesRadio().input().click();
+          cy.clickYesRadioInput();
 
           field.textarea().should('be.visible');
 

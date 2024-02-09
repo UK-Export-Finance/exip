@@ -1,7 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import {
-  yesRadioInput, noRadioInput, field,
-} from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import application from '../../../fixtures/application';
 
 const {
@@ -19,10 +17,10 @@ const completeConnectionToTheBuyerForm = ({
   description = application.BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
 }) => {
   if (hasConnectionToBuyer) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
     cy.keyboardInput(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), description);
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 };
 

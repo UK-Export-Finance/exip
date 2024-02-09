@@ -1,6 +1,4 @@
-import {
-  yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
-} from '../../../../../../pages/shared';
+import { yesRadio, yesNoRadioHint, noRadio } from '../../../../../../pages/shared';
 import {
   ERROR_MESSAGES,
   FIELDS,
@@ -96,7 +94,7 @@ context('Insurance - Eligibility - Have an account page - I want to confirm that
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        yesRadioInput().click();
+        cy.clickYesRadioInput();
         cy.clickSubmitButton();
 
         const expected = `${baseUrl}${SIGN_IN.ROOT}`;

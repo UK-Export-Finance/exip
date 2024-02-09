@@ -1,4 +1,3 @@
-import { yesRadio, noRadio } from '../../../pages/shared';
 import { FIELD_VALUES } from '../../../constants';
 
 /**
@@ -7,9 +6,9 @@ import { FIELD_VALUES } from '../../../constants';
  */
 export default (answer) => {
   if (answer === FIELD_VALUES.NO) {
-    noRadio().input().click();
+    cy.clickNoRadioInput();
   } else {
-    yesRadio().input().click();
+    cy.clickYesRadioInput();
   }
 
   cy.clickSubmitButton();

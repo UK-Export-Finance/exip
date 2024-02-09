@@ -1,4 +1,4 @@
-import { yesRadioInput, noRadioInput, field } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../fixtures/application';
 
@@ -20,10 +20,10 @@ const completeCreditInsuranceCoverForm = ({
   const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
   if (hasHadCreditInsuranceCover) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
     cy.keyboardInput(field(fieldId).textarea(), creditInsuranceCoverDescription);
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 };
 

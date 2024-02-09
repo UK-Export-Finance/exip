@@ -17,7 +17,6 @@ Cypress.Commands.add('assertNoRadioOptionIsChecked', require('./assert-no-radio-
 
 Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
-Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
 
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkLink', require('./check-link'));

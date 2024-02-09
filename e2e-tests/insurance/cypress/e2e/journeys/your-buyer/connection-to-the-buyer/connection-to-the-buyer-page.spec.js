@@ -1,5 +1,5 @@
 import {
-  headingCaption, field, yesRadio, noRadio, yesNoRadioHint, yesRadioInput,
+  headingCaption, field, yesRadio, noRadio, yesNoRadioHint,
 } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -105,7 +105,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
 
       describe(`when clicking the 'yes' ${CONNECTION_WITH_BUYER} radio`, () => {
         beforeEach(() => {
-          yesRadioInput().click();
+          cy.clickYesRadioInput();
         });
 
         it('renders a label', () => {

@@ -75,7 +75,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 
     beforeEach(() => {
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
     });
 
     it(`should render a validation error and retain the submitted value when ${fieldId} is empty`, () => {

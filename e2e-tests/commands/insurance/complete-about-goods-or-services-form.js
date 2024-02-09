@@ -1,10 +1,6 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/export-contract';
-import {
-  countryInput,
-  noRadio,
-  yesRadio,
-} from '../../pages/shared';
+import { countryInput } from '../../pages/shared';
 import application from '../../fixtures/application';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../fixtures/countries';
 
@@ -32,13 +28,13 @@ const completeAboutGoodsOrServicesForm = ({
   cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), description);
 
   if (finalDestinationKnown) {
-    yesRadio().input().click();
+    cy.clickYesRadioInput();
 
     if (includeFinalDestination) {
       cy.keyboardInput(countryInput.field(FINAL_DESTINATION).input(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
     }
   } else {
-    noRadio().input().click();
+    cy.clickNoRadioInput();
   }
 };
 

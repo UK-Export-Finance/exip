@@ -94,7 +94,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
     describe('when submitting the answer as `no`', () => {
       it(`should redirect to ${EXPORTER_LOCATION}`, () => {
-        noRadio().input().click();
+        cy.clickNoRadioInput();
         cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${EXPORTER_LOCATION}`;
