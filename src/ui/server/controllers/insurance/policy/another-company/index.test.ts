@@ -152,9 +152,11 @@ describe('controllers/insurance/policy/another-company', () => {
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
+        const sanitisedData = sanitiseData(payload);
+
         expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledWith(payload, mockApplication);
+        expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledWith(sanitisedData, mockApplication);
       });
 
       describe(`when ${FIELD_ID} is submitted as 'no'`, () => {
