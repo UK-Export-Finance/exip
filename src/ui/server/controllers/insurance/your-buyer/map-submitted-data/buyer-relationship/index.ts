@@ -9,6 +9,7 @@ const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANC
  * maps connectionToTheBuyer formBody and returns fields in correct format
  * if radios do not have a value, then should be deleted from populatedData
  * if CONNECTION_WITH_BUYER is false, then sets CONNECTION_WITH_BUYER_DESCRIPTION to an empty string
+ * if HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER is false, then sets PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER to an empty string
  * @param {RequestBody} formBody
  * @returns {Object} populatedData
  */
