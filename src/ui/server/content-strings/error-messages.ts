@@ -245,11 +245,14 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: "The policy holder's last name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
-          IS_EMPTY: "Enter the policy holder's email address in the correct format, like name@example.com",
+          IS_EMPTY: 'Enter the email address of the person you want named on the policy',
           INCORRECT_FORMAT: "Enter the policy holder's email address in the correct format, like name@example.com",
+          ABOVE_MAXIMUM: "The policy holder's email cannot be more than 300 characters",
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: "Enter the policy holder's position at the company",
+          ABOVE_MAXIMUM: "The description of the policy holder's role at the company cannot be more than 50 characters",
+          INCORRECT_FORMAT: "The policy holder's position at the company must not include any numbers or symbols",
         },
       },
       [FIELD_IDS.INSURANCE.POLICY.NEED_PRE_CREDIT_PERIOD]: {
