@@ -11,6 +11,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/buyer-relationship';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
@@ -118,6 +119,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
         }),
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        applicationAnswer: mockApplication.buyer.relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -137,6 +139,10 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
   });
 
   describe('post', () => {
+    beforeEach(() => {
+      mapAndSave.buyerRelationship = jest.fn(() => Promise.resolve(true));
+    });
+
     const validBody = {
       [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: 'false',
     };
@@ -151,6 +157,16 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.buyerRelationship once with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        expect(mapAndSave.buyerRelationship).toHaveBeenCalledTimes(1);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.buyerRelationship).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
