@@ -37,6 +37,7 @@ export const pageVariables = (referenceNumber: number) => ({
  */
 export const HTML_FLAGS = {
   HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
 };
 
 export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;

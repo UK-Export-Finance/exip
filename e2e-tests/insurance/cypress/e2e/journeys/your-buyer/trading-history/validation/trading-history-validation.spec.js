@@ -1,4 +1,4 @@
-import { yesRadio, noRadio } from '../../../../../../../pages/shared';
+import { noRadio } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -61,7 +61,7 @@ context('Insurance - Your Buyer - Trading history page - Validation', () => {
       );
 
       cy.submitAndAssertRadioErrors(
-        yesRadio(FAILED_PAYMENTS),
+        noRadio(FAILED_PAYMENTS),
         1,
         expectedErrorsCount,
         ERRORS[FAILED_PAYMENTS].IS_EMPTY,
