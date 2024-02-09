@@ -133,7 +133,7 @@ export const post = async (req: Request, res: Response) => {
 
   try {
     // save the application
-    const saveResponse = await mapAndSave.jointlyInsuredParty(payload, application);
+    const saveResponse = await mapAndSave.jointlyInsuredParty(sanitisedData, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
