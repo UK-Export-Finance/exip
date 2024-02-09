@@ -131,9 +131,17 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
 
     describe('when submitting the form as "yes"', () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.completeAndSubmitBuyerFinancialInformationForm({ holdexporterHasBuyerFinancialAccounts: true });
+        cy.completeAndSubmitBuyerFinancialInformationForm({ exporterHasBuyerFinancialAccounts: true });
 
         cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+        });
       });
     });
 
@@ -142,6 +150,14 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
         cy.completeAndSubmitBuyerFinancialInformationForm({});
 
         cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
       });
     });
   });

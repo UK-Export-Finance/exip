@@ -21,6 +21,7 @@ import {
   get as getBuyerFinancialInformation,
   post as postBuyerFinancialInformation,
 } from '../../../controllers/insurance/your-buyer/buyer-financial-information';
+import { post as postBuyerFinancialInformationSaveAndBack } from '../../../controllers/insurance/your-buyer/buyer-financial-information/save-and-back';
 
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/your-buyer/check-your-answers';
 
@@ -35,7 +36,7 @@ describe('routes/insurance/your-buyer', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(15);
-    expect(post).toHaveBeenCalledTimes(18);
+    expect(post).toHaveBeenCalledTimes(19);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -75,6 +76,7 @@ describe('routes/insurance/your-buyer', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, getBuyerFinancialInformation);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, postBuyerFinancialInformation);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_SAVE_AND_BACK}`, postBuyerFinancialInformationSaveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

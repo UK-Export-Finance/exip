@@ -10,6 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import mapAndSave from '../map-and-save/buyer-relationship';
 
 const {
   INSURANCE_ROOT,
@@ -90,6 +91,7 @@ export const get = (req: Request, res: Response) => {
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+      applicationAnswer: application.buyer.relationship[HAS_BUYER_FINANCIAL_ACCOUNTS],
     });
   } catch (err) {
     console.error('Error getting buyer financial information page %O', err);
@@ -131,6 +133,13 @@ export const post = async (req: Request, res: Response) => {
         submittedValues: sanitiseData(payload),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       });
+    }
+
+    // if no errors, then runs save api call
+    const saveResponse = await mapAndSave.buyerRelationship(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     /**
