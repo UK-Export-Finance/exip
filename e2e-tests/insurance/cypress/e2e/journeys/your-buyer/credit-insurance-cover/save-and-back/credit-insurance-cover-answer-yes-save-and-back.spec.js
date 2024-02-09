@@ -83,7 +83,9 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
       cy.navigateToUrl(url);
 
       cy.assertYesRadioOptionIsChecked();
-      cy.checkText(field(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea(), '');
+
+      const textArea = field(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
+      cy.checkText(textArea, '');
     });
   });
 
@@ -108,7 +110,9 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
       cy.navigateToUrl(url);
 
       cy.assertYesRadioOptionIsChecked();
-      cy.checkText(field(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea(), BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+
+      const textArea = field(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
+      cy.checkText(textArea, BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
     });
   });
 });
