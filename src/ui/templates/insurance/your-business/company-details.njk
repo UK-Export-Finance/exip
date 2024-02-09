@@ -93,7 +93,8 @@
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME],
           dataCyLegend: FIELDS.YOUR_COMPANY.HAS_DIFFERENT_TRADING_NAME + '-legend',
           conditionalYesHtml: conditionalYesHtml,
-          horizontalRadios: true
+          horizontalRadios: HORIZONTAL_RADIOS,
+          noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION
         }) }}
 
         {{ yesNoRadioButtons.render({
@@ -104,7 +105,8 @@
           submittedAnswer: submittedValues[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.TRADING_ADDRESS],
           dataCyLegend: FIELDS.YOUR_COMPANY.TRADING_ADDRESS + '-legend',
-          horizontalRadios: true
+          horizontalRadios: HORIZONTAL_RADIOS,
+          noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION
         }) }}
 
         {{ govukInput({

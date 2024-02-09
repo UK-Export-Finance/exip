@@ -68,7 +68,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables,
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
   });
 };

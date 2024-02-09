@@ -1,4 +1,4 @@
-import { pageVariables, get, post, TEMPLATE, FIELD_IDS } from '.';
+import { TEMPLATE, FIELD_IDS, pageVariables, HTML_FLAGS, get, post } from '.';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
@@ -89,6 +89,17 @@ describe('controllers/insurance/business/companies-details', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     describe('when application has populated company data', () => {
       it('should render the company-details template with correct variables', () => {
@@ -107,6 +118,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(referenceNumber),
@@ -161,6 +173,7 @@ describe('controllers/insurance/business/companies-details', () => {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
           ...pageVariables(mockApplication.referenceNumber),
