@@ -5,9 +5,9 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 
-const { CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
+const { CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
-export const nullOrEmptyStringFields = [CONNECTION_WITH_BUYER_DESCRIPTION];
+export const nullOrEmptyStringFields = [CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
 /**
  * gets fields to add to the database and sanitises them

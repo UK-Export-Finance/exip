@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  POLICY: { OTHER_COMPANY_DETAILS },
+  POLICY: { OTHER_COMPANY_DETAILS, ANOTHER_COMPANY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -19,6 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 context(`Insurance - Policy - Other company details page - Changing ${REQUESTED} from 'yes' to 'no'`, () => {
   let referenceNumber;
   let url;
+  let anotherCompanyUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -35,6 +36,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
       cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
+      anotherCompanyUrl = `${baseUrl}${ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
 
       cy.assertUrl(url);
     });
@@ -58,8 +60,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
        * Go back to the "other company"
        * So we can change "yes" to no"
        */
-      cy.go('back');
-      cy.go('back');
+      cy.navigateToUrl(anotherCompanyUrl);
 
       cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: false });
 

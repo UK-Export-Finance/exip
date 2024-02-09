@@ -1,13 +1,16 @@
 import {
-  headingCaption, yesRadio, noRadio, field as fieldSelector,
+  headingCaption, yesRadio, noRadio, field as fieldSelector, yesRadioInput,
 } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CREDIT_INSURANCE_COVER;
+
+const { BUYER } = application;
 
 const {
   ROOT,
@@ -125,6 +128,14 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
         cy.assertUrl(checkYourAnswersUrl);
       });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
+      });
     });
 
     describe(`when submitting the form with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} as "yes"`, () => {
@@ -132,6 +143,43 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
         cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCover: true });
 
         cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+
+          const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
+
+          cy.checkText(field, BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+        });
+      });
+    });
+
+    describe(`changing ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} from "yes" to "no"`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCover: true });
+        cy.assertUrl(checkYourAnswersUrl);
+
+        // resubmit as no
+        cy.navigateToUrl(url);
+        cy.completeAndSubmitCreditInsuranceCoverForm({});
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+
+          yesRadioInput().click();
+
+          const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
+
+          cy.checkText(field, '');
+        });
       });
     });
   });

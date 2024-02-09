@@ -73,6 +73,10 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
         cy.checkText(yesNoRadioHint(), CONTENT_STRINGS.HINT);
       });
 
+      it('renders `yes` and `no` radio buttons in the correct order', () => {
+        cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+      });
+
       it('renders `yes` radio button', () => {
         yesRadio().input().should('exist');
 

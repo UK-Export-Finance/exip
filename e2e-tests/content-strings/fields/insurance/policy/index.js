@@ -166,6 +166,7 @@ export const POLICY_FIELDS = {
   DIFFERENT_NAME_ON_POLICY: {
     [DIFFERENT_NAME_ON_POLICY.POSITION]: {
       LABEL: 'Position at company',
+      MAXIMUM: 50,
     },
     [EMAIL]: {
       SUMMARY: {

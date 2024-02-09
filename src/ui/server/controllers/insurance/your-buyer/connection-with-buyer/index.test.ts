@@ -55,6 +55,26 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
     jest.resetAllMocks();
   });
 
+  describe('FIELD_IDS', () => {
+    it('should have the correct FIELD_IDS', () => {
+      const expected = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
+
+      expect(FIELD_IDS).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
+    });
+  });
+
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct page content strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
+    });
+  });
+
   describe('pageVariables', () => {
     it('should have correct properties', () => {
       const result = pageVariables(mockApplication.referenceNumber);
@@ -85,29 +105,10 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
       const expected = {
         CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
         HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
       };
 
       expect(HTML_FLAGS).toEqual(expected);
-    });
-  });
-
-  describe('PAGE_CONTENT_STRINGS', () => {
-    it('should have the correct page content strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER);
-    });
-  });
-
-  describe('TEMPLATE', () => {
-    it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(SHARED_PAGES.SINGLE_RADIO);
-    });
-  });
-
-  describe('FIELD_IDS', () => {
-    it('should have the correct FIELD_IDS', () => {
-      const expected = [CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION];
-
-      expect(FIELD_IDS).toEqual(expected);
     });
   });
 

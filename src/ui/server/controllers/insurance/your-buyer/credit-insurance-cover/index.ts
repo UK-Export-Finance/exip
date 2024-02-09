@@ -11,6 +11,7 @@ import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/buyer-relationship';
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
@@ -92,6 +93,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(refNumber),
     userName: getUserNameFromSession(req.session.user),
+    applicationAnswer: application.buyer.relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
   });
 };
 
@@ -128,6 +130,13 @@ export const post = async (req: Request, res: Response) => {
         submittedValues: sanitiseData(payload),
         validationErrors,
       });
+    }
+
+    // if no errors, then runs save api call
+    const saveResponse = await mapAndSave.buyerRelationship(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
     /**

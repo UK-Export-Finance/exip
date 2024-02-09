@@ -1,6 +1,7 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
+import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -31,6 +32,14 @@ const {
     NAME: { CHARACTERS: MAX_NAME_CHARACTERS },
   },
 } = ACCOUNT_FIELDS;
+
+const {
+  DIFFERENT_NAME_ON_POLICY: {
+    [POSITION]: {
+      MAXIMUM: MAX_POSITION_CHARACTERS,
+    },
+  },
+} = POLICY_FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -156,6 +165,7 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       errorMessages: ERRORS[FIELD_ID],
       totalExpectedErrors: 4,
       totalExpectedOtherErrorsWithValidEmail: 3,
+      assertMaximumLength: true,
     });
   });
 
@@ -169,13 +179,38 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       errorIndex: 3,
     };
 
+    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
     it(`should render validation errors when ${FIELD_ID} left empty`, () => {
       const errorMessage = ERROR.IS_EMPTY;
 
-      const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
       const value = '';
 
       cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    });
+
+    it(`should render validation errors when ${FIELD_ID} is over ${MAX_POSITION_CHARACTERS} characters`, () => {
+      const value = 'a'.repeat(MAX_POSITION_CHARACTERS + 1);
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+    });
+
+    it(`should render validation errors when ${FIELD_ID} contains a special character`, () => {
+      const value = 'a!';
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+    });
+
+    it(`should render validation errors when ${FIELD_ID} contains a number`, () => {
+      const value = 'a1';
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+    });
+
+    it(`should render validation errors when ${FIELD_ID} contains a number and special character`, () => {
+      const value = 'a1!';
+
+      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
     });
   });
 });
