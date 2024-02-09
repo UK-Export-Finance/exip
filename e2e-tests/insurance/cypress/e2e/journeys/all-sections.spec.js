@@ -184,7 +184,7 @@ context('Insurance - All sections - new application', () => {
 
           task.link().should('not.exist');
 
-          cy.checkTaskPolicyStatusIsCannotStart();
+          cy.checkTaskCheckAnswersStatusIsCannotStart();
         });
 
         it('should render a `declarations and submit` task with no link and `cannot start yet` status', () => {
@@ -195,7 +195,7 @@ context('Insurance - All sections - new application', () => {
 
           task.link().should('not.exist');
 
-          cy.checkTaskPolicyStatusIsCannotStart();
+          cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
         });
       });
     });
