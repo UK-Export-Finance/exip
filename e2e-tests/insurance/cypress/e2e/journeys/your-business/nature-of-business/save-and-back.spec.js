@@ -1,6 +1,4 @@
-import partials from '../../../../../../partials';
 import { field } from '../../../../../../pages/shared';
-import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 
@@ -19,10 +17,6 @@ const {
     NATURE_OF_BUSINESS_ROOT,
   },
 } = ROUTES.INSURANCE;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -64,9 +58,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
@@ -84,9 +76,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {
@@ -117,8 +107,7 @@ context('Insurance - Your business - Nature of your business page - Save and bac
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it(`should retain the ${GOODS_OR_SERVICES} input on the page and the other fields should be empty`, () => {

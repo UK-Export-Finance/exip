@@ -9,7 +9,6 @@ import partials from '../../../../../../partials';
 import {
   PAGES,
   CREDIT_PERIOD_WITH_BUYER as CREDIT_PERIOD_WITH_BUYER_STRINGS,
-  TASKS,
 } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -18,7 +17,6 @@ import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/field
 import mockApplication from '../../../../../../fixtures/application';
 
 const { creditPeriodWithBuyer } = partials;
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.PRE_CREDIT_PERIOD;
 
@@ -31,8 +29,6 @@ const {
 const {
   NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
 } = POLICY_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -172,8 +168,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
     it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
       cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

@@ -1,9 +1,5 @@
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT,
@@ -12,8 +8,6 @@ const {
     MULTIPLE_CONTRACT_POLICY,
   },
 } = INSURANCE_ROUTES;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -56,7 +50,7 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 });

@@ -1,6 +1,6 @@
 import { headingCaption, status } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -92,7 +92,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
       });
 
       it('should retain the status of task `check your answers` as `in progress`', () => {
-        cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+        cy.checkTaskCheckAnswersStatusIsInProgress();
       });
     });
   });

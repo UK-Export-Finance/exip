@@ -1,6 +1,4 @@
-import partials from '../../../../../../partials';
 import { field } from '../../../../../../pages/shared';
-import { TASKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import application from '../../../../../../fixtures/application';
 
@@ -19,13 +17,7 @@ const {
   },
 } = ROUTES.INSURANCE;
 
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.business;
-
 const baseUrl = Cypress.config('baseUrl');
-
-const { IN_PROGRESS } = TASKS.STATUS;
 
 context('Insurance - Your business - Turnover page - Save and back', () => {
   let referenceNumber;
@@ -66,7 +58,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
@@ -84,7 +76,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it(`should retain the ${ESTIMATED_ANNUAL_TURNOVER} input on the page and the other fields should be empty`, () => {
@@ -113,7 +105,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should retain all the fields on the page', () => {

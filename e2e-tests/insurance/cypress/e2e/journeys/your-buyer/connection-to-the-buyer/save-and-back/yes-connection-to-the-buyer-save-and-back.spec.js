@@ -1,6 +1,4 @@
 import { yesRadioInput, field } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { TASKS } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
@@ -18,9 +16,6 @@ const {
 const { BUYER } = application;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
 
 context('Insurance - Your buyer - Connection to buyer - Has connection to buyer - Save and back', () => {
   let referenceNumber;
@@ -59,8 +54,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
   });
 
@@ -80,8 +74,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it('should retain completed input on the page', () => {
@@ -108,8 +101,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it('should retain all inputs on the page', () => {

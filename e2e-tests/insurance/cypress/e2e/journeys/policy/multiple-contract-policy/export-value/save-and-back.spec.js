@@ -1,12 +1,8 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { TASKS } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../../fixtures/application';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT,
@@ -26,8 +22,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
@@ -73,7 +67,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
@@ -94,7 +88,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -133,7 +127,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
-      cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

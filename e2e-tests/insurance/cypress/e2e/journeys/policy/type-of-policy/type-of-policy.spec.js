@@ -1,11 +1,6 @@
 import { field, headingCaption } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
-import partials from '../../../../../../partials';
-import {
-  ERROR_MESSAGES,
-  PAGES,
-  TASKS,
-} from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -28,13 +23,9 @@ const FIELD_ID = FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE;
 const singlePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].single;
 const multiplePolicyField = insurance.policy.typeOfPolicyPage[FIELD_ID].multiple;
 
-const { taskList } = partials.insurancePartials;
-
 const goToPageDirectly = (referenceNumber) => {
   cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`);
 };
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -181,8 +172,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        const expected = TASKS.STATUS.IN_PROGRESS;
-        cy.checkText(task.status(), expected);
+        cy.checkTaskPolicyStatusIsInProgress();
       });
     });
   });

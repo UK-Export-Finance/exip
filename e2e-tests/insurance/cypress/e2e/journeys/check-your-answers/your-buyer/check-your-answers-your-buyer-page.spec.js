@@ -1,6 +1,6 @@
 import { headingCaption, status } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { BUTTONS, PAGES, TASKS } from '../../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -17,6 +17,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER;
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Your buyer page - I want to confirm my selection for the your buyer section of my credit insurance application', () => {
   let referenceNumber;
@@ -37,9 +39,9 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
       // To get past "Your business" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
-      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -85,7 +87,7 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
 
         cy.clickSubmitButton();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
         cy.assertUrl(expectedUrl);
       });
 
@@ -95,7 +97,7 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
         });
 
         it('should change the status of task `check your answers` to `completed`', () => {
-          cy.checkTaskStatus(task, TASKS.STATUS.COMPLETED);
+          cy.checkTaskCheckAnswersStatusIsComplete();
         });
       });
     });

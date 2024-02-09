@@ -5,7 +5,6 @@ import {
   countryInput,
 } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { FIELD_VALUES } from '../../../../../../constants';
@@ -14,8 +13,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import COUNTRIES, { XAD, DZA } from '../../../../../../fixtures/countries';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
@@ -34,8 +31,6 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.exportContract;
 
 const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
@@ -199,7 +194,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        cy.checkTaskStatusCompleted(task.status());
+        cy.checkTaskExportContractStatusIsComplete();
       });
     });
 

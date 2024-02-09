@@ -1,5 +1,4 @@
 import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 
 const {
@@ -11,6 +10,8 @@ const {
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Check your answers - Policy page - Save and back', () => {
   let referenceNumber;
@@ -25,9 +26,9 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
 
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
-      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -50,6 +51,6 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
   it('should retain the status of task `check your answers` as `in progress`', () => {
     cy.navigateToUrl(allSectionsUrl);
 
-    cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+    cy.checkTaskCheckAnswersStatusIsInProgress();
   });
 });

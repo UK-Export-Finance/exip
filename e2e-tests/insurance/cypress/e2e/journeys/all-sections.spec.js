@@ -76,7 +76,7 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.COMPLETED);
+          cy.checkTaskEligibilityStatusIsComplete();
 
           task.link().should('not.exist');
         });
@@ -113,7 +113,7 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+          cy.checkTaskBusinessStatusIsNotStartedYet();
         });
 
         it('should render a `your buyer` task with link and `not started` status', () => {
@@ -128,7 +128,7 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+          cy.checkTaskBuyerStatusIsNotStartedYet();
         });
 
         it('should render a `type of policy` task with link and `not started` status', () => {
@@ -143,7 +143,7 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+          cy.checkTaskPolicyStatusIsNotStartedYet();
         });
 
         it('should render an `export contract` task with link and `not started` status', () => {
@@ -158,7 +158,7 @@ context('Insurance - All sections - new application', () => {
             expectedText,
           );
 
-          cy.checkText(task.status(), TASKS.STATUS.NOT_STARTED_YET);
+          cy.checkTaskExportContractStatusIsNotStartedYet();
         });
       });
     });
@@ -184,7 +184,7 @@ context('Insurance - All sections - new application', () => {
 
           task.link().should('not.exist');
 
-          cy.checkText(task.status(), TASKS.STATUS.CANNOT_START);
+          cy.checkTaskCheckAnswersStatusIsCannotStart();
         });
 
         it('should render a `declarations and submit` task with no link and `cannot start yet` status', () => {
@@ -195,7 +195,7 @@ context('Insurance - All sections - new application', () => {
 
           task.link().should('not.exist');
 
-          cy.checkText(task.status(), TASKS.STATUS.CANNOT_START);
+          cy.checkTaskDeclarationsAndSubmitStatusIsCannotStart();
         });
       });
     });

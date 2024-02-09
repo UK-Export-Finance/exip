@@ -1,6 +1,4 @@
 import { field } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -22,9 +20,6 @@ const {
     COMPANY_OR_ORGANISATION,
   },
 } = ROUTES.INSURANCE;
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
 
 const { BUYER } = application;
 
@@ -66,8 +61,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
-      const expected = TASKS.STATUS.NOT_STARTED_YET;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsNotStartedYet();
     });
   });
 
@@ -85,8 +79,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it(`should retain the ${NAME} input on the page and the other fields should be empty`, () => {
@@ -116,8 +109,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it('should retain all inputs on the page', () => {
