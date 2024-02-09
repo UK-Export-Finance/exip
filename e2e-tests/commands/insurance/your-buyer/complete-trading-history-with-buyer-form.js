@@ -1,4 +1,4 @@
-import { yesRadioInput, noRadioInput, field } from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../fixtures/application';
 
@@ -18,17 +18,18 @@ const completeTradingHistoryWithBuyerForm = ({
   outstandingPayments = false, failedToPay = false, amountOverDue = BUYER[TOTAL_AMOUNT_OVERDUE], totalOutstanding = BUYER[TOTAL_OUTSTANDING_PAYMENTS],
 }) => {
   if (outstandingPayments) {
-    yesRadioInput().first().click();
+    cy.clickYesRadioInput(0);
+
     cy.keyboardInput(field(TOTAL_AMOUNT_OVERDUE).input(), amountOverDue);
     cy.keyboardInput(field(TOTAL_OUTSTANDING_PAYMENTS).input(), totalOutstanding);
   } else {
-    noRadioInput().first().click();
+    cy.clickNoRadioInput();
   }
 
   if (failedToPay) {
-    yesRadioInput().last().click();
+    cy.clickYesRadioInput(1);
   } else {
-    noRadioInput().last().click();
+    cy.clickNoRadioInput(1);
   }
 };
 

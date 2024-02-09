@@ -109,7 +109,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
 
       describe(`when clicking the 'yes' ${CONNECTION_WITH_BUYER} radio`, () => {
         beforeEach(() => {
-          cy.clickYesRadioInput();
+          cy.clickYesRadioInput(0);
         });
 
         it('renders a label', () => {

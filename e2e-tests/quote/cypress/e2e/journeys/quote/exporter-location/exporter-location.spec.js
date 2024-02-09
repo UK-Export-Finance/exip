@@ -80,7 +80,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
-        cy.clickYesRadioInput();
+        cy.clickYesRadioInput(0);
         cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;

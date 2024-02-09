@@ -1,5 +1,5 @@
 import {
-  headingCaption, yesRadio, noRadio, field, yesRadioInput,
+  headingCaption, yesRadio, noRadio, field,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { PAGES } from '../../../../../../content-strings';
@@ -121,7 +121,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
 
       describe(`when clicking the 'yes' ${OUTSTANDING_PAYMENTS} radio`, () => {
         beforeEach(() => {
-          yesRadioInput().first().click();
+          cy.clickYesRadioInput(0);
         });
 
         it('should render a heading', () => {
@@ -239,7 +239,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
             cy.assertNoRadioOptionIsChecked(0);
 
             // click first radio input to display optional fields
-            yesRadioInput().first().click();
+            cy.clickYesRadioInput(0);
 
             cy.checkValue(field(TOTAL_OUTSTANDING_PAYMENTS), '');
             cy.checkValue(field(TOTAL_AMOUNT_OVERDUE), '');

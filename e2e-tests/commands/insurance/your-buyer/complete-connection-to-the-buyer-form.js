@@ -17,7 +17,7 @@ const completeConnectionToTheBuyerForm = ({
   description = application.BUYER[CONNECTION_WITH_BUYER_DESCRIPTION],
 }) => {
   if (hasConnectionToBuyer) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
     cy.keyboardInput(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), description);
   } else {
     cy.clickNoRadioInput();

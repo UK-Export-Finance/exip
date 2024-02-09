@@ -28,7 +28,7 @@ const completeAboutGoodsOrServicesForm = ({
   cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), description);
 
   if (finalDestinationKnown) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
 
     if (includeFinalDestination) {
       cy.keyboardInput(countryInput.field(FINAL_DESTINATION).input(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);

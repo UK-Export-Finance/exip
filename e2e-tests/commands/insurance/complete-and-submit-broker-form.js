@@ -7,7 +7,7 @@ const completeAndSubmitBrokerForm = ({
   usingBroker = false,
 }) => {
   if (usingBroker) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
   } else {
     cy.clickNoRadioInput();
   }

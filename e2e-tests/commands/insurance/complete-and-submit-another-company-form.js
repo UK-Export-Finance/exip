@@ -5,7 +5,7 @@
  */
 const completeAndSubmitAnotherCompanyForm = ({ otherCompanyInvolved = false }) => {
   if (otherCompanyInvolved) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
   } else {
     cy.clickNoRadioInput();
   }

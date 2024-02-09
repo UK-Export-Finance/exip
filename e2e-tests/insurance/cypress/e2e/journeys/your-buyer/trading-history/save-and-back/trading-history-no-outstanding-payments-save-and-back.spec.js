@@ -1,4 +1,4 @@
-import { saveAndBackButton, noRadioInput } from '../../../../../../../pages/shared';
+import { saveAndBackButton } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -59,7 +59,7 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      noRadioInput().first().click();
+      cy.clickNoRadioInput(0);
 
       saveAndBackButton().click();
     });

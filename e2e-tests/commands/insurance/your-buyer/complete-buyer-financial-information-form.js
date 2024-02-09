@@ -6,7 +6,7 @@
  */
 const completeBuyerFinancialInformationForm = ({ exporterHasBuyerFinancialAccounts = false }) => {
   if (exporterHasBuyerFinancialAccounts) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
   } else {
     cy.clickNoRadioInput();
   }

@@ -14,7 +14,7 @@ const completePreCreditPeriodForm = ({
   description = mockApplication.POLICY[CREDIT_PERIOD_WITH_BUYER],
 }) => {
   if (needPreCreditPeriod) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
 
     const descriptionField = field(CREDIT_PERIOD_WITH_BUYER);
 

@@ -1,8 +1,4 @@
-import {
-  saveAndBackButton,
-  yesRadioInput,
-  field,
-} from '../../../../../../../pages/shared';
+import { saveAndBackButton, field } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
@@ -69,7 +65,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().click();
+      cy.clickYesRadioInput(0);
       cy.keyboardInput(field(TOTAL_OUTSTANDING_PAYMENTS).input(), BUYER[TOTAL_OUTSTANDING_PAYMENTS]);
 
       saveAndBackButton().click();

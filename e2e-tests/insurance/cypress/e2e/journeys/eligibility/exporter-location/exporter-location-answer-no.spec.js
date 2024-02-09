@@ -1,6 +1,4 @@
-import {
-  backLink, cannotApplyPage, noRadioInput,
-} from '../../../../../../pages/shared';
+import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -59,7 +57,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
     it('should NOT have the originally submitted answer selected', () => {
       cy.clickBackLink();
 
-      noRadioInput().should('not.be.checked');
+      cy.assertNoRadioOptionIsNotChecked();
     });
   });
 });

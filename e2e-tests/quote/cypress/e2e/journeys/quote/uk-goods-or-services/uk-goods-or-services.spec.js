@@ -111,7 +111,7 @@ context('UK goods or services page - as an exporter, I want to check if my expor
       it(`should redirect to ${POLICY_TYPE}`, () => {
         cy.navigateToUrl(url);
 
-        cy.clickYesRadioInput();
+        cy.clickYesRadioInput(0);
         cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${POLICY_TYPE}`;

@@ -77,7 +77,7 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 
     beforeEach(() => {
-      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(0);
     });
 
     it(`should render a validation error when ${fieldId} is empty`, () => {

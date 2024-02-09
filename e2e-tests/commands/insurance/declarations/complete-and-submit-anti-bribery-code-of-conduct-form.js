@@ -8,7 +8,7 @@ export default (answer) => {
   if (answer === FIELD_VALUES.NO) {
     cy.clickNoRadioInput();
   } else {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
   }
 
   cy.clickSubmitButton();

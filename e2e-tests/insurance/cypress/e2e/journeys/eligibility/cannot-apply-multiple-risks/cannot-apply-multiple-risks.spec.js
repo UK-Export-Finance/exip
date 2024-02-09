@@ -33,7 +33,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
     cy.completeCoverPeriodForm({});
     cy.completeUkGoodsAndServicesForm();
 
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
     cy.clickSubmitButton();
 
     cy.assertUrl(url);

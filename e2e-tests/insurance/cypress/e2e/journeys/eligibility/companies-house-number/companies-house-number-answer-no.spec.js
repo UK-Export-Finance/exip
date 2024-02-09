@@ -1,4 +1,4 @@
-import { backLink, noRadioInput } from '../../../../../../pages/shared';
+import { backLink } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -51,7 +51,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
       cy.clickBackLink();
 
-      noRadioInput().should('not.be.checked');
+      cy.assertNoRadioOptionIsNotChecked();
     });
   });
 });

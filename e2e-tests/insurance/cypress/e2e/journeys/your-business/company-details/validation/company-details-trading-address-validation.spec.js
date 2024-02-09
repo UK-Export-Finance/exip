@@ -1,5 +1,4 @@
 import { companyDetails } from '../../../../../../../pages/your-business';
-import { noRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -36,7 +35,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     cy.navigateToUrl(url);
 
-    noRadioInput().first().click();
+    cy.clickNoRadioInput(0);
 
     cy.clickSubmitButton();
   });

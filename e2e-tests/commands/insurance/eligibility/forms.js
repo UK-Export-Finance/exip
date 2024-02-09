@@ -24,7 +24,7 @@ const {
  */
 const selectRadioAndSubmit = (answer) => {
   if (answer === FIELD_VALUES.YES) {
-    cy.clickYesRadioInput();
+    cy.clickYesRadioInput(0);
   }
 
   if (answer === FIELD_VALUES.NO) {

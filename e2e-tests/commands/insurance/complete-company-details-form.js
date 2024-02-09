@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { field, yesRadioInput, noRadioInput } from '../../pages/shared';
+import { field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const { YOUR_COMPANY } = application;
@@ -31,9 +31,9 @@ const completeCompaniesDetailsForm = ({
   completeDifferentTradingName = true,
 }) => {
   if (differentTradingName) {
-    yesRadioInput().first().click();
+    cy.clickYesRadioInput(0);
   } else {
-    noRadioInput().first().click();
+    cy.clickNoRadioInput();
   }
 
   if (differentTradingName && completeDifferentTradingName) {
@@ -41,9 +41,9 @@ const completeCompaniesDetailsForm = ({
   }
 
   if (differentTradingAddress) {
-    yesRadioInput().eq(1).click();
+    cy.clickYesRadioInput(1);
   } else {
-    noRadioInput().eq(1).click();
+    cy.clickNoRadioInput(1);
   }
 
   if (phoneNumber) {
