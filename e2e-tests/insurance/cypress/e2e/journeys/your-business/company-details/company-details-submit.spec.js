@@ -75,7 +75,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       const radioField = {
         ...field,
-        input: field.yesRadioInput,
+        input: field.noRadioInput,
       };
 
       cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY);
@@ -86,7 +86,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       const radioField = {
         ...field,
-        input: field.yesRadioInput,
+        input: field.noRadioInput,
       };
 
       cy.submitAndAssertRadioErrors(radioField, 1, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
@@ -122,7 +122,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${natureOfBusinessUrl}`, () => {
+      it(`should redirect to ${NATURE_OF_BUSINESS_ROOT}`, () => {
         cy.assertUrl(natureOfBusinessUrl);
       });
     });
@@ -136,7 +136,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         cy.clickSubmitButton();
       });
 
-      it(`should redirect to ${natureOfBusinessUrl}`, () => {
+      it(`should redirect to ${NATURE_OF_BUSINESS_ROOT}`, () => {
         cy.assertUrl(natureOfBusinessUrl);
       });
     });

@@ -97,6 +97,10 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
       field.input().should('exist');
     });
+
+    it('renders a `save and back` button', () => {
+      cy.assertSaveAndBackButton();
+    });
   });
 
   describe('form submission', () => {

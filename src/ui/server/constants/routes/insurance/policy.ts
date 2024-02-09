@@ -40,6 +40,7 @@ export const POLICY = {
   ANOTHER_COMPANY: `${ROOT}/another-company`,
   ANOTHER_COMPANY_SAVE_AND_BACK: `${ROOT}/another-company/save-and-go-back`,
   OTHER_COMPANY_DETAILS: `${ROOT}/other-company-details`,
+  OTHER_COMPANY_DETAILS_SAVE_AND_BACK: `${ROOT}/other-company-details/save-and-go-back`,
   BROKER_ROOT,
   BROKER_SAVE_AND_BACK: `${BROKER_ROOT}/save-and-back`,
   BROKER_CHANGE: `${BROKER_ROOT}/change`,

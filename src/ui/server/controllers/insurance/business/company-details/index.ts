@@ -51,6 +51,15 @@ const pageVariables = (referenceNumber: number) => {
 };
 
 /**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
+};
+
+/**
  * gets the template for company details page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
@@ -79,6 +88,7 @@ const get = (req: Request, res: Response) => {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(application.referenceNumber),
@@ -131,6 +141,7 @@ const post = async (req: Request, res: Response) => {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS: COMPANY_DETAILS,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(application.referenceNumber),

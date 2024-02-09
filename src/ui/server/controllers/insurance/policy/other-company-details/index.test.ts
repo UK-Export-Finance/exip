@@ -13,13 +13,15 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT },
+  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
 } = POLICY_FIELD_IDS;
+
+const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/other-company-details', () => {
   let req: Request;
@@ -50,7 +52,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables;
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -67,6 +69,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
             ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY],
           },
         },
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -96,7 +99,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables,
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
       };
 
@@ -134,7 +137,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables,
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
           validationErrors: generateValidationErrors(payload),
