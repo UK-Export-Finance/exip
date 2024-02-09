@@ -70,6 +70,7 @@ context('Insurance - Export contract - About goods or services page - form valid
   });
 
   it('should render validation errors for all required fields', () => {
+    const clearInput = false;
     const expectedErrorsCount = 2;
 
     // description
@@ -79,7 +80,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       0,
       expectedErrorsCount,
       ABOUT_ERROR_MESSAGES[DESCRIPTION].IS_EMPTY,
-      false,
+      clearInput,
     );
 
     // final destination known
@@ -89,7 +90,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       1,
       expectedErrorsCount,
       ABOUT_ERROR_MESSAGES[FINAL_DESTINATION_KNOWN].IS_EMPTY,
-      false,
+      clearInput,
     );
   });
 
@@ -107,7 +108,6 @@ context('Insurance - Export contract - About goods or services page - form valid
       errorIndex,
       expectedErrorsCount,
       errorMessage,
-      true,
     );
   });
 
@@ -119,6 +119,7 @@ context('Insurance - Export contract - About goods or services page - form valid
         includeFinalDestination: false,
       });
 
+      const clearInput = false;
       const expectedErrorsCount = 1;
 
       cy.submitAndAssertFieldErrors(
@@ -127,7 +128,7 @@ context('Insurance - Export contract - About goods or services page - form valid
         0,
         expectedErrorsCount,
         ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
-        false,
+        clearInput,
       );
     });
   });

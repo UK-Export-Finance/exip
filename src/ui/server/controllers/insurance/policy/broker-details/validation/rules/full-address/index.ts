@@ -5,21 +5,21 @@ import providedAndMaxLength from '../../../../../../../shared-validation/provide
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME: FIELD_ID },
+  BROKER_DETAILS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
+  BROKER_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-export const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIELD_ID].MAXIMUM);
+export const MAXIMUM = Number(POLICY_FIELDS.BROKER_DETAILS[FIELD_ID].MAXIMUM);
 
 /**
- * validate the "company name" in other company details response body
- * @param {Express.Request.body} responseBody: containing an object with the company details response
+ * validate the "full address" in broker details request body
+ * @param {Express.Request.body} responseBody: containing an object with broker form submission data
  * @param {Object} errors: errorList
  * @returns {Object} Object containing errors or blank object
  */
-const companyName = (responseBody: RequestBody, errors: object) => providedAndMaxLength(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
+const fullAddress = (responseBody: RequestBody, errors: object) => providedAndMaxLength(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
 
-export default companyName;
+export default fullAddress;

@@ -81,6 +81,7 @@ export const POLICY_FIELDS = {
   BROKER_DETAILS: {
     [NAME]: {
       LABEL: 'Name of broker or company',
+      MAXIMUM: 300,
       SUMMARY: {
         TITLE: "Broker's name or company",
       },
