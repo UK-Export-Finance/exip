@@ -1,5 +1,3 @@
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -9,9 +7,6 @@ const {
     TRADED_WITH_BUYER,
   },
 } = INSURANCE_ROUTES;
-
-const { taskList } = partials.insurancePartials;
-const task = taskList.prepareApplication.tasks.buyer;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -54,8 +49,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsInProgress();
     });
   });
 
@@ -72,8 +66,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     });
 
     it('should retain the `your buyer` task status as `completed`', () => {
-      const expected = TASKS.STATUS.COMPLETED;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskBuyerStatusIsComplete();
     });
 
     it('should retain all inputs on the page', () => {

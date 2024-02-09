@@ -1,10 +1,7 @@
 import { yesRadioInput, noRadioInput } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import { TASKS } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-
-const { STATUS: { IN_PROGRESS } } = TASKS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -72,7 +69,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
   });
 
@@ -90,7 +87,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -114,7 +111,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

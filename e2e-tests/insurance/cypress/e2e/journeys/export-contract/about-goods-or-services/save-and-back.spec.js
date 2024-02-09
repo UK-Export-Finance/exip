@@ -1,6 +1,4 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -18,12 +16,6 @@ const {
     },
   },
 } = FIELD_IDS;
-
-const { STATUS: { NOT_STARTED_YET, IN_PROGRESS } } = TASKS;
-
-const { taskList } = partials.insurancePartials;
-
-const task = taskList.prepareApplication.tasks.exportContract;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -64,7 +56,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it('should retain the `export contract` task status as `not started`', () => {
-      cy.checkTaskStatus(task, NOT_STARTED_YET);
+      cy.checkTaskExportContractStatusIsNotStartedYet();
     });
   });
 
@@ -84,7 +76,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it('should update the `export contract` task status to `in progress`', () => {
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -125,7 +117,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it('should update the `export contract` task status to `not started`', () => {
-      cy.checkTaskStatus(task, NOT_STARTED_YET);
+      cy.checkTaskExportContractStatusIsNotStartedYet();
     });
 
     it('should have no value in `description` when going back to the page', () => {

@@ -1,12 +1,8 @@
 import { field } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import { TASKS } from '../../../../../../content-strings';
-
-const { taskList } = partials.insurancePartials;
 
 const { POLICY_CONTACT } = application;
 
@@ -29,11 +25,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const task = taskList.prepareApplication.tasks.policy;
-
 const baseUrl = Cypress.config('baseUrl');
-
-const { IN_PROGRESS } = TASKS.STATUS;
 
 context('Insurance - Policy - Different name on policy - Save and go back', () => {
   let referenceNumber;
@@ -76,7 +68,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     });
 
     it('should retain the status of task `type of policy and exports` as `in progress`', () => {
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have the all inputs as empty when going back to the page after submission', () => {
@@ -104,7 +96,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     });
 
     it('should retain the status of task `type of policy and exports` as `in progress`', () => {
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have the originally submitted answers populated when going back to the page after submission', () => {
@@ -130,7 +122,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
     });
 
     it('should retain the status of task `type of policy and exports` as `in progress`', () => {
-      cy.checkText(task.status(), IN_PROGRESS);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should have the originally submitted answers populated when going back to the page after submission', () => {

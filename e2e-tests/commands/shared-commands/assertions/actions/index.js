@@ -126,3 +126,11 @@ export const checkActionContactUKEFTeam = ({
     expectedText,
   );
 };
+
+Cypress.Commands.add('checkActionReadAboutEligibility', checkActionReadAboutEligibility);
+Cypress.Commands.add('checkActionReadAboutEligibilityLinkRedirect', checkActionReadAboutEligibilityLinkRedirect);
+Cypress.Commands.add('checkActionContactApprovedBroker', checkActionContactApprovedBroker);
+Cypress.Commands.add('checkActionTalkToYourNearestEFM', checkActionTalkToYourNearestEFM);
+Cypress.Commands.add('checkActionTalkToYourNearestEFMLink', checkActionTalkToYourNearestEFMLink);
+Cypress.Commands.add('checkActionApplyThroughPDF', checkActionApplyThroughPDF);
+Cypress.Commands.add('checkActionContactUKEFTeam', checkActionContactUKEFTeam);

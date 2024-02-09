@@ -1,12 +1,9 @@
 import { countryInput } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import partials from '../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -22,8 +19,6 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   },
 } = INSURANCE_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.exportContract;
 
 const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
@@ -67,7 +62,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
       it('should update the `export contract` task status to `completed`', () => {
         cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        cy.checkTaskStatusCompleted(task.status());
+        cy.checkTaskExportContractStatusIsComplete();
       });
     });
 

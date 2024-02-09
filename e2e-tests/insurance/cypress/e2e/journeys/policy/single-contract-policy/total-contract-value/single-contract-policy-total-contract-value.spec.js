@@ -1,14 +1,11 @@
 import { field as fieldSelector, headingCaption } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { PAGES, TASKS } from '../../../../../../../content-strings';
+import { PAGES } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import application from '../../../../../../../fixtures/application';
 import { GBP, SYMBOLS } from '../../../../../../../fixtures/currencies';
-
-const { taskList } = partials.insurancePartials;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE;
 
@@ -29,8 +26,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -111,8 +106,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     it('should retain the `type of policy` task status as `in progress` after submitting the form', () => {
       cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-      const expected = TASKS.STATUS.IN_PROGRESS;
-      cy.checkText(task.status(), expected);
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

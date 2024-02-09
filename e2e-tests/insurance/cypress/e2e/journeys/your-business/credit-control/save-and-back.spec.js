@@ -1,6 +1,4 @@
-import partials from '../../../../../../partials/insurance';
 import { noRadioInput, yesRadioInput } from '../../../../../../pages/shared';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -8,10 +6,6 @@ const {
   ALL_SECTIONS,
   EXPORTER_BUSINESS: { CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
-
-const { STATUS: { IN_PROGRESS, COMPLETED } } = TASKS;
-
-const task = partials.taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -55,10 +49,10 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
+    it('should retain the status of task `your business` as `in progress`', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
@@ -72,10 +66,10 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should change the status of task 'your business' as '${COMPLETED}'`, () => {
+    it('should change the status of task `your business` as `completed`', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, COMPLETED);
+      cy.checkTaskBusinessStatusIsComplete();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
@@ -95,10 +89,10 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should change the status of task 'your business' as '${COMPLETED}'`, () => {
+    it('should change the status of task `your business` as `completed`', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, COMPLETED);
+      cy.checkTaskBusinessStatusIsComplete();
     });
 
     it('should have the originally submitted answer selected when going back to the page after submission', () => {

@@ -1,5 +1,4 @@
 import partials from '../../../../../../partials';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -53,6 +52,6 @@ context('Insurance - Check your answers - Your business page - Save and back', (
   it('should retain the status of task `check your answers` as `in progress`', () => {
     cy.navigateToUrl(allSectionsUrl);
 
-    cy.checkTaskStatus(task, TASKS.STATUS.IN_PROGRESS);
+    cy.checkTaskCheckAnswersStatusIsInProgress();
   });
 });

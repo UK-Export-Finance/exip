@@ -1,6 +1,4 @@
-import partials from '../../../../../../partials/insurance';
 import { field } from '../../../../../../pages/shared';
-import { TASKS } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -21,10 +19,6 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const { MAXIMUM } = FIELDS[FULL_ADDRESS];
-
-const { STATUS: { IN_PROGRESS } } = TASKS;
-
-const task = partials.taskList.prepareApplication.tasks.business;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -70,10 +64,10 @@ context('Insurance - Your business - Alternative trading address - Save and go b
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
+    it('should retain the status of task `your business` as `in progress', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
@@ -88,10 +82,10 @@ context('Insurance - Your business - Alternative trading address - Save and go b
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
+    it('should retain the status of task `your business` as `in progress', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should not have the originally submitted answer', () => {
@@ -112,10 +106,10 @@ context('Insurance - Your business - Alternative trading address - Save and go b
       cy.assertUrl(allSectionsUrl);
     });
 
-    it(`should retain the status of task 'your business' as '${IN_PROGRESS}'`, () => {
+    it('should retain the status of task `your business` as `in progress', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskStatus(task, IN_PROGRESS);
+      cy.checkTaskBusinessStatusIsInProgress();
     });
 
     it('should have the originally submitted answer', () => {

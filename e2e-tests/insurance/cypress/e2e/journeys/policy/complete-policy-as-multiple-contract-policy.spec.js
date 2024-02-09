@@ -1,8 +1,4 @@
-import partials from '../../../../../partials';
-import { TASKS } from '../../../../../content-strings';
 import { FIELD_VALUES, ROUTES } from '../../../../../constants';
-
-const { taskList } = partials.insurancePartials;
 
 const {
   INSURANCE: {
@@ -10,8 +6,6 @@ const {
     ALL_SECTIONS,
   },
 } = ROUTES;
-
-const task = taskList.prepareApplication.tasks.policy;
 
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
@@ -52,9 +46,6 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
 
     cy.assertUrl(expectedUrl);
 
-    cy.checkText(
-      task.status(),
-      TASKS.STATUS.COMPLETED,
-    );
+    cy.checkTaskPolicyStatusIsComplete();
   });
 });
