@@ -22,6 +22,7 @@ Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('checkText', require('./check-text'));
+Cypress.Commands.add('checkIntroText', require('./check-intro-text'));
 Cypress.Commands.add('checkValue', require('./check-value'));
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
