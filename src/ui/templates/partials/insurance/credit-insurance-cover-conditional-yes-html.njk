@@ -17,11 +17,12 @@
     text: FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.HINT,
     attributes: {
       'data-cy': fieldId + '-hint'
-    } 
+    }
   },
   attributes: {
     'data-cy': fieldId
   },
+  value: submittedValues[FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.ID] or application.buyer.relationship[FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.ID],
   maxlength: FIELDS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER.MAXIMUM,
   errorMessage: validationErrors.errorList[fieldId] and {
     text: validationErrors.errorList[fieldId].text,

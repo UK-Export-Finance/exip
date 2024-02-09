@@ -7,12 +7,12 @@ import { mockApplication, mockBuyerRelationship } from '../../../../../test-mock
 import generateValidationErrors from '../../../../../helpers/validation';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 
-const { CONNECTION_WITH_BUYER_DESCRIPTION } = YOUR_BUYER_FIELD_IDS;
+const { CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => {
   describe('nullOrEmptyStringFields', () => {
     it('should have the relevant fieldIds', () => {
-      expect(nullOrEmptyStringFields).toEqual([CONNECTION_WITH_BUYER_DESCRIPTION]);
+      expect(nullOrEmptyStringFields).toEqual([CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
     });
   });
 

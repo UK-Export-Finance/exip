@@ -16,6 +16,7 @@ import { post as postTradingHistorySaveAndBack } from '../../../controllers/insu
 import { get as getAlternativeCurrency, post as postAlternativeCurrency } from '../../../controllers/insurance/your-buyer/alternative-currency';
 
 import { get as getCreditInsuranceCover, post as postCreditInsuranceCover } from '../../../controllers/insurance/your-buyer/credit-insurance-cover';
+import { post as postCreditInsuranceCoverSaveAndBack } from '../../../controllers/insurance/your-buyer/credit-insurance-cover/save-and-back';
 
 import {
   get as getBuyerFinancialInformation,
@@ -63,6 +64,7 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, post
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, getCreditInsuranceCover);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, postCreditInsuranceCover);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_SAVE_AND_BACK}`, postCreditInsuranceCoverSaveAndBack);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, getBuyerFinancialInformation);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, postBuyerFinancialInformation);
