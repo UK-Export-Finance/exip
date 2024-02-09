@@ -70,7 +70,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - No', 
       cy.checkTaskBuyerStatusIsInProgress();
     });
 
-    it('should retain all inputs on the page', () => {
+    it('should have no radio selected when going back to the page', () => {
       cy.navigateToUrl(url);
 
       cy.assertNoRadioOptionIsChecked();

@@ -150,7 +150,10 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
           cy.navigateToUrl(url);
 
           cy.assertYesRadioOptionIsChecked();
-          cy.checkText(fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea(), BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+
+          const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
+
+          cy.checkText(field, BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
         });
       });
     });
@@ -172,7 +175,10 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
           cy.assertNoRadioOptionIsChecked();
 
           yesRadioInput().click();
-          cy.checkText(fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea(), '');
+
+          const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
+
+          cy.checkText(field, '');
         });
       });
     });
