@@ -251,6 +251,8 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: "Enter the policy holder's position at the company",
+          ABOVE_MAXIMUM: "The description of the policy holder's role at the company cannot be more than 50 characters",
+          INCORRECT_FORMAT: "The policy holder's position at the company must not include any numbers or symbols",
         },
       },
       [FIELD_IDS.INSURANCE.POLICY.NEED_PRE_CREDIT_PERIOD]: {

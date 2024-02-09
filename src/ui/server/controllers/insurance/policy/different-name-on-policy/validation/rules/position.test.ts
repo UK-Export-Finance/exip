@@ -1,7 +1,7 @@
-import position from './position';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import position, { MAXIMUM } from './position';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import alphaCharactersAndMaxLengthValidation from '../../../../../../shared-validation/alpha-characters-and-max-length';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
@@ -18,10 +18,10 @@ describe('controllers/insurance/policy/different-name-on-policy/validation/rules
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return the result of emptyFieldValidation', () => {
+  it('should return the result of alphaCharactersAndMaxLengthValidation', () => {
     const response = position(mockBody, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = alphaCharactersAndMaxLengthValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors, MAXIMUM);
 
     expect(response).toEqual(expected);
   });
