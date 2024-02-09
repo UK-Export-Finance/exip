@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT },
+  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -23,10 +23,11 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS
 
 /**
  * pageVariables
- * Page fields
+ * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
-export const pageVariables = {
+export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     COMPANY_NAME: {
       ID: COMPANY_NAME,
@@ -41,7 +42,8 @@ export const pageVariables = {
       ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY],
     },
   },
-};
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_SAVE_AND_BACK}`,
+});
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
@@ -97,7 +99,7 @@ export const post = (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables,
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       submittedValues: payload,
       validationErrors,
