@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import buyerFinancialInformationValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import mapAndSave from '../map-and-save/buyer-trading-history';
+import mapAndSave from '../map-and-save/buyer-relationship';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -113,6 +113,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+        applicationAnswer: mockApplication.buyer.relationship[HAS_BUYER_FINANCIAL_ACCOUNTS],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -137,7 +138,7 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
     };
 
     beforeEach(() => {
-      mapAndSave.buyerTradingHistory = jest.fn(() => Promise.resolve(true));
+      mapAndSave.buyerRelationship = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are no validation errors', () => {
@@ -150,6 +151,16 @@ describe('controllers/insurance/your-buyer/buyer-financial-information', () => {
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.yourBuyer once with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        expect(mapAndSave.buyerRelationship).toHaveBeenCalledTimes(1);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.buyerRelationship).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {
