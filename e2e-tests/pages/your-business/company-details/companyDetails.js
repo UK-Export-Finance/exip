@@ -14,14 +14,14 @@ const companyDetails = {
   yourBusinessHeading: () => cy.get(`[data-cy="${YOUR_BUSINESS}-heading`),
   [HAS_DIFFERENT_TRADING_NAME]: {
     label: () => cy.get(`[data-cy="${HAS_DIFFERENT_TRADING_NAME}-legend"]`),
-    yesRadioInput: () => yesRadioInput().first(),
     noRadioInput: () => noRadioInput().first(),
+    yesRadioInput: () => yesRadioInput().first(),
     errorMessage: () => cy.get(`[data-cy="${HAS_DIFFERENT_TRADING_NAME}-error-message"]`),
   },
   [TRADING_ADDRESS]: {
     label: () => cy.get(`[data-cy="${TRADING_ADDRESS}-legend"]`),
-    yesRadioInput: () => yesRadioInput().eq(1),
     noRadioInput: () => noRadioInput().eq(1),
+    yesRadioInput: () => yesRadioInput().eq(1),
     errorMessage: () => cy.get(`[data-cy="${TRADING_ADDRESS}-error-message"]`),
   },
 };

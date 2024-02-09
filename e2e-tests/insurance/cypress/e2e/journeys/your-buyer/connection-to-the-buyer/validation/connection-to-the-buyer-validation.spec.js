@@ -1,4 +1,4 @@
-import { field, yesRadioInput } from '../../../../../../../pages/shared';
+import { field, noRadioInput, yesRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -63,7 +63,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
 
       const radioField = {
         ...field(CONNECTION_WITH_BUYER),
-        input: yesRadioInput,
+        input: noRadioInput,
       };
 
       cy.submitAndAssertRadioErrors(radioField, errorIndex, expectedErrorsCount, errorMessage);

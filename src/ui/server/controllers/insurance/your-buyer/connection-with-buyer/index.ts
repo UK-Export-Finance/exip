@@ -62,6 +62,7 @@ export const pageVariables = (referenceNumber: number) => ({
 export const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: CONNECTION_WITH_BUYER_PARTIALS.CONDITIONAL_YES_HTML,
   HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
 };
 
 /**

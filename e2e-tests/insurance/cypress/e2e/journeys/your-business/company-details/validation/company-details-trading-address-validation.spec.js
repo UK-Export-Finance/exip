@@ -50,7 +50,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
     const radioField = {
       ...field,
-      input: field.yesRadioInput,
+      input: field.noRadioInput,
     };
 
     cy.submitAndAssertRadioErrors(radioField, 0, 1, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);

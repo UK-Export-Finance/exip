@@ -31,6 +31,14 @@ export const PAGE_VARIABLES = {
 };
 
 /**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  HORIZONTAL_RADIOS: true,
+};
+
+/**
  * get
  * Render the credit control page
  * @param {Express.Request} Express request
@@ -51,6 +59,7 @@ export const get = (req: Request, res: Response) => {
       ...singleInputPageVariables({
         ...PAGE_VARIABLES,
         BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
       }),
       FIELD_HINT: FIELDS[FIELD_ID].HINT,
       userName: getUserNameFromSession(req.session.user),
@@ -89,6 +98,7 @@ export const post = async (req: Request, res: Response) => {
         ...singleInputPageVariables({
           ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         FIELD_HINT: FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),

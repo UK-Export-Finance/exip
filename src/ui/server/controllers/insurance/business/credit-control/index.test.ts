@@ -1,4 +1,4 @@
-import { FIELD_ID, TEMPLATE, PAGE_VARIABLES, get, post } from '.';
+import { FIELD_ID, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import { TEMPLATES } from '../../../../constants';
@@ -63,6 +63,16 @@ describe('controllers/insurance/business/credit-control', () => {
     });
   });
 
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        HORIZONTAL_RADIOS: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
   describe('get', () => {
     it('should render template', () => {
       get(req, res);
@@ -71,6 +81,7 @@ describe('controllers/insurance/business/credit-control', () => {
         ...singleInputPageVariables({
           ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
         FIELD_HINT: FIELDS[FIELD_ID].HINT,
         userName: getUserNameFromSession(req.session.user),
@@ -113,6 +124,7 @@ describe('controllers/insurance/business/credit-control', () => {
           ...singleInputPageVariables({
             ...PAGE_VARIABLES,
             BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
           }),
           FIELD_HINT: FIELDS[FIELD_ID].HINT,
           userName: getUserNameFromSession(req.session.user),
