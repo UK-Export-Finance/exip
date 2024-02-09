@@ -156,6 +156,7 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       errorMessages: ERRORS[FIELD_ID],
       totalExpectedErrors: 4,
       totalExpectedOtherErrorsWithValidEmail: 3,
+      assertMaximumLength: true,
     });
   });
 
