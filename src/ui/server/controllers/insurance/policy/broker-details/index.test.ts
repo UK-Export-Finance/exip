@@ -10,6 +10,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -17,7 +18,7 @@ const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT },
+  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -77,7 +78,7 @@ describe('controllers/insurance/policy/broker-details', () => {
             ...BROKER_DETAILS[FULL_ADDRESS],
           },
         },
-        SAVE_AND_BACK_URL: `#${referenceNumber}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -113,11 +114,19 @@ describe('controllers/insurance/policy/broker-details', () => {
   });
 
   describe('post', () => {
+    const validBody = {
+      [NAME]: broker[NAME],
+      [EMAIL]: broker[EMAIL],
+      [FULL_ADDRESS]: broker[FULL_ADDRESS],
+    };
+
+    mapAndSave.broker = jest.fn(() => Promise.resolve(true));
+
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
+      it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
-        post(req, res);
+        await post(req, res);
 
         const sanitisedData = sanitiseData(req.body);
 
@@ -140,20 +149,26 @@ describe('controllers/insurance/policy/broker-details', () => {
     });
 
     describe('when there are no validation errors', () => {
-      const validBody = {
-        [NAME]: broker[NAME],
-        [EMAIL]: broker[EMAIL],
-        [FULL_ADDRESS]: broker[FULL_ADDRESS],
-      };
-
-      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         req.body = validBody;
 
-        post(req, res);
+        await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.broker once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.broker).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
       });
     });
 
@@ -162,10 +177,46 @@ describe('controllers/insurance/policy/broker-details', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.broker call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when no application is returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.broker = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

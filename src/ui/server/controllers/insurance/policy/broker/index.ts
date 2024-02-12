@@ -103,10 +103,8 @@ export const post = async (req: Request, res: Response) => {
 
   const payload = constructPayload(req.body, [FIELD_ID]);
 
-  // run validation on inputs
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
-  // if any errors then render template with errors
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
@@ -119,7 +117,6 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    // if no errors, then runs save api call to db
     const saveResponse = await mapAndSave.broker(payload, application);
 
     if (!saveResponse) {
@@ -138,7 +135,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - your business - broker %O', err);
+    console.error('Error updating application - policy - broker %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

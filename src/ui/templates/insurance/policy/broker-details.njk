@@ -91,7 +91,7 @@
           name: FIELDS.FULL_ADDRESS.ID,
           id: FIELDS.FULL_ADDRESS.ID,
           maxlength: FIELDS.FULL_ADDRESS.MAXIMUM,
-          value: submittedValues[FIELDS.FULL_ADDRESS.ID],
+          value: submittedValues[FIELDS.FULL_ADDRESS.ID] or application.broker[FIELDS.FULL_ADDRESS.ID],
           label: {
             text: FIELDS.FULL_ADDRESS.LABEL,
             classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",

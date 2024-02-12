@@ -235,6 +235,7 @@ model Broker {
   town                    String        @default("")
   county                  String        @default("")
   postcode                String        @default("")
+  fullAddress             String        @default("") @mysql.VarChar(300)
   email                   String        @default("") @mysql.VarChar(300)
   from_Application_broker Application[] @relation("Application_broker")
 

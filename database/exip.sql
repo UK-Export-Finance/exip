@@ -764,6 +764,7 @@ CREATE TABLE `Broker` (
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `county` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `fullAddress` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `Broker_application_idx` (`application`),
