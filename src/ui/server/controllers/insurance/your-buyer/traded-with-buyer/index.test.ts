@@ -58,6 +58,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
     it('should have correct properties', () => {
       const expected = {
         HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
       };
 
       expect(HTML_FLAGS).toEqual(expected);

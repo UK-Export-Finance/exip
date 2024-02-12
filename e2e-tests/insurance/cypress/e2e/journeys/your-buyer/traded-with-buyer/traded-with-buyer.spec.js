@@ -72,6 +72,10 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
+    it('renders `yes` and `no` radio buttons in the correct order', () => {
+      cy.assertYesNoRadiosOrder({ noRadioFirst: true });
+    });
+
     it('renders `yes` radio button', () => {
       yesRadio().input().should('exist');
 
@@ -102,7 +106,7 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
       const expectedErrorsCount = 1;
 
       cy.submitAndAssertRadioErrors(
-        yesRadio(FIELD_ID),
+        noRadio(FIELD_ID),
         0,
         expectedErrorsCount,
         ERROR_MESSAGE.IS_EMPTY,
