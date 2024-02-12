@@ -4,7 +4,6 @@ import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
-import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import generateAddressObject from '../../generate-address-object';
 import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
@@ -18,24 +17,8 @@ const {
 } = ROUTES;
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
 } = FIELD_IDS;
-
-/**
- * generateContactDetailsObject
- * generates object with fullname, position and email to generate html string for address section
- * @param {ApplicationBuyer} answers
- * @returns {Object}
- */
-export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
-  const fullName = `${answers[FIRST_NAME]} ${answers[LAST_NAME]}`;
-
-  return {
-    name: fullName,
-    position: answers[POSITION],
-    email: answers[EMAIL],
-  };
-};
 
 /**
  * generateCompanyOrOrganisationFields
@@ -46,7 +29,6 @@ export const generateContactDetailsObject = (answers: ApplicationBuyer) => {
  */
 const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
   const addressObject = generateAddressObject(answers[ADDRESS]);
-  const contactDetailsObject = generateContactDetailsObject(answers);
 
   const fields = [
     fieldGroupItem({
@@ -88,36 +70,6 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
       href: generateChangeLink(COMPANY_OR_ORGANISATION_CHANGE, COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE, `#${WEBSITE}-label`, referenceNumber, checkAndChange),
       renderChangeLink: true,
     }),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, FIRST_NAME),
-        data: answers,
-        href: generateChangeLink(
-          COMPANY_OR_ORGANISATION_CHANGE,
-          COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
-          `#${FIRST_NAME}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      },
-      generateMultipleFieldHtml(contactDetailsObject),
-    ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, CAN_CONTACT_BUYER),
-        data: answers,
-        href: generateChangeLink(
-          COMPANY_OR_ORGANISATION_CHANGE,
-          COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
-          `#${CAN_CONTACT_BUYER}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      },
-      mapYesNoField(answers[CAN_CONTACT_BUYER]),
-    ),
   ] as Array<SummaryListItemData>;
 
   return fields;

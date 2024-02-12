@@ -16,8 +16,6 @@ const {
     ADDRESS,
     REGISTRATION_NUMBER,
     WEBSITE,
-    FIRST_NAME,
-    CAN_CONTACT_BUYER,
   },
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
@@ -76,14 +74,6 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
 
   it(`should render a ${WEBSITE} summary list row`, () => {
     checkSummaryList[WEBSITE]();
-  });
-
-  it(`should render a ${FIRST_NAME} summary list row`, () => {
-    checkSummaryList[FIRST_NAME]();
-  });
-
-  it(`should render a ${CAN_CONTACT_BUYER} summary list row`, () => {
-    checkSummaryList[CAN_CONTACT_BUYER]();
   });
 
   it(`should render a ${CONNECTION_WITH_BUYER} summary list row`, () => {
