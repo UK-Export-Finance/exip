@@ -139,7 +139,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadio().input().click();
+      cy.clickYesRadioInput();
       cy.clickSubmitButton();
     });
 

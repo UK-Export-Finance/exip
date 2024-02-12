@@ -124,7 +124,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      noRadio().input().click();
+      cy.clickNoRadioInput();
       cy.clickSubmitButton();
     });
 
@@ -147,7 +147,7 @@ context('Insurance - End buyer page - as an exporter, I want to confirm if payme
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadio().input().click();
+      cy.clickYesRadioInput();
       cy.clickSubmitButton();
     });
 

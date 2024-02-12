@@ -1,6 +1,4 @@
-import {
-  yesRadioInput, field,
-} from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -80,7 +78,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
       cy.assertNoRadioOptionIsChecked(0);
 
       // check input is not populated
-      yesRadioInput().first().click();
+      cy.clickYesRadioInput();
       cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
     });
   });
@@ -103,7 +101,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
       cy.navigateToUrl(url);
 
       // check input is not populated
-      yesRadioInput().first().click();
+      cy.clickYesRadioInput();
       cy.checkValue(field(DIFFERENT_TRADING_NAME), '');
     });
   });

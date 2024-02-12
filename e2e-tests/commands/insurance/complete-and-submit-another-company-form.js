@@ -1,5 +1,3 @@
-import { noRadioInput, yesRadioInput } from '../../pages/shared';
-
 /**
  * completeAndSubmitAnotherCompanyForm
  * Complete and submit the "Another company" form
@@ -7,9 +5,9 @@ import { noRadioInput, yesRadioInput } from '../../pages/shared';
  */
 const completeAndSubmitAnotherCompanyForm = ({ otherCompanyInvolved = false }) => {
   if (otherCompanyInvolved) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 
   cy.clickSubmitButton();

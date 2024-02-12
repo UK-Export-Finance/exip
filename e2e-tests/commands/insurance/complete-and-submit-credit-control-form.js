@@ -1,5 +1,3 @@
-import { noRadioInput, yesRadioInput } from '../../pages/shared';
-
 /**
  * completeAndSubmitCreditControlForm
  * complete and submit the "credit control" form.
@@ -7,9 +5,9 @@ import { noRadioInput, yesRadioInput } from '../../pages/shared';
  */
 const completeAndSubmitCreditControlForm = ({ hasCreditControlProcess = true }) => {
   if (hasCreditControlProcess) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 
   cy.clickSubmitButton();

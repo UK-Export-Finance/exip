@@ -1,4 +1,4 @@
-import { status, summaryList, noRadioInput } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -171,7 +171,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().click();
+        cy.clickNoRadioInput();
 
         cy.clickSubmitButton();
       });

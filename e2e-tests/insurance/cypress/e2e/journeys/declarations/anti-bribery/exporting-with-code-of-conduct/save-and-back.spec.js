@@ -1,4 +1,3 @@
-import { yesRadioInput, noRadioInput } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -77,7 +76,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
     });
@@ -101,7 +100,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      noRadioInput().click();
+      cy.clickNoRadioInput();
 
       cy.clickSaveAndBackButton();
     });

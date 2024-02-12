@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { summaryList, noRadio } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 
 const { HAS_MINIMUM_UK_GOODS_OR_SERVICES } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -58,7 +58,7 @@ context('Insurance - Eligibility - Change your answers - UK goods or services - 
 
       summaryList.field(fieldId).changeLink().click();
 
-      noRadio().input().click();
+      cy.clickNoRadioInput();
       cy.clickSubmitButton();
     });
 

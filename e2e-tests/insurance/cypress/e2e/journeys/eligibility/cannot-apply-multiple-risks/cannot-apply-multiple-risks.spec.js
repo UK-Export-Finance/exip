@@ -1,4 +1,4 @@
-import { listItem, yesRadio } from '../../../../../../pages/shared';
+import { listItem } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -33,7 +33,7 @@ context('Insurance - Cannot apply - multiple risks page - as an exporter, I want
     cy.completeCoverPeriodForm({});
     cy.completeUkGoodsAndServicesForm();
 
-    yesRadio().input().click();
+    cy.clickYesRadioInput();
     cy.clickSubmitButton();
 
     cy.assertUrl(url);

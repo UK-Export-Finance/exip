@@ -1,5 +1,3 @@
-import { yesRadioInput, noRadioInput } from '../../../pages/shared';
-
 /**
  * completeBuyerFinancialInformationForm
  * Completes the "buyer financial information" form.
@@ -8,9 +6,9 @@ import { yesRadioInput, noRadioInput } from '../../../pages/shared';
  */
 const completeBuyerFinancialInformationForm = ({ exporterHasBuyerFinancialAccounts = false }) => {
   if (exporterHasBuyerFinancialAccounts) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 };
 

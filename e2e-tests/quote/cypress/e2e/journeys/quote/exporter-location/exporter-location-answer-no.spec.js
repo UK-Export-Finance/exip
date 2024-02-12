@@ -1,6 +1,4 @@
-import {
-  backLink, cannotApplyPage, noRadio,
-} from '../../../../../../pages/shared';
+import { backLink, cannotApplyPage } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../../../commands/forms';
@@ -30,7 +28,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
     cy.navigateToUrl(url);
 
-    noRadio().input().click();
+    cy.clickNoRadioInput();
     cy.clickSubmitButton();
   });
 

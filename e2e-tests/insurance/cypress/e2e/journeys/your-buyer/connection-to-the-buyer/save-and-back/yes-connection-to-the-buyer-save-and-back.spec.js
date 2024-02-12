@@ -1,4 +1,4 @@
-import { yesRadioInput, field } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
@@ -64,7 +64,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
 
       cy.completeConnectionToTheBuyerForm({});
 
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
     });

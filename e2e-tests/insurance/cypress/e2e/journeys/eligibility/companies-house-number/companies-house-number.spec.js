@@ -83,7 +83,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        yesRadio().input().click();
+        cy.clickYesRadioInput();
         cy.clickSubmitButton();
       });
 

@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { summaryList, yesRadio } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 
 const { HAS_END_BUYER } = INSURANCE_FIELD_IDS.ELIGIBILITY;
 
@@ -58,7 +58,7 @@ context('Insurance - Eligibility - Change your answers - End buyer - As an expor
 
       summaryList.field(fieldId).changeLink().click();
 
-      yesRadio().input().click();
+      cy.clickYesRadioInput();
       cy.clickSubmitButton();
     });
 

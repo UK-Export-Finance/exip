@@ -1,5 +1,3 @@
-import { yesRadioInput, noRadioInput } from '../../pages/shared';
-
 /**
  * completeAndSubmitBrokerForm
  * Complete and submit "using broker" form
@@ -9,9 +7,9 @@ const completeAndSubmitBrokerForm = ({
   usingBroker = false,
 }) => {
   if (usingBroker) {
-    yesRadioInput().click();
+    cy.clickYesRadioInput();
   } else {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
   }
 
   cy.clickSubmitButton();
