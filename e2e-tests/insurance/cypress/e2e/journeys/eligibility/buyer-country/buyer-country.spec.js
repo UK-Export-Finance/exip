@@ -2,8 +2,8 @@ import { countryInput } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
 import { PAGES } from '../../../../../../content-strings';
-import { COUNTRY_APPLICATION_SUPPORT, DZA, BRA } from '../../../../../../fixtures/countries';
-import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
+import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
+import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -17,9 +17,6 @@ const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 const COUNTRY_NAME = COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const { NAME: BRAZIL } = BRA;
-const { NAME: ALGERIA } = DZA;
 
 context('Insurance - Buyer country page - as an exporter, I want to check if UKEF offer credit insurance policy for where my buyer is based', () => {
   beforeEach(() => {
@@ -54,29 +51,7 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
   });
 
   describe('searchable autocomplete input', () => {
-    it('has working client side JS', () => {
-      checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(FIELD_ID));
-    });
-
-    it('renders an input', () => {
-      checkAutocompleteInput.rendersInput(countryInput.field(FIELD_ID));
-    });
-
-    it('renders `no results` message when no results are found', () => {
-      checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(FIELD_ID), 'test');
-    });
-
-    it('renders a single country result after searching', () => {
-      checkAutocompleteInput.rendersSingleResult(countryInput.field(FIELD_ID), 'Alg');
-    });
-
-    it('renders multiple country results after searching', () => {
-      checkAutocompleteInput.rendersMultipleResults(countryInput.field(FIELD_ID), 'Be');
-    });
-
-    it('allows user to remove a selected country and search again', () => {
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(FIELD_ID, ALGERIA, BRAZIL, BRAZIL);
-    });
+    assertCountryAutocompleteInput({ fieldId: FIELD_ID });
   });
 
   describe('form submission', () => {

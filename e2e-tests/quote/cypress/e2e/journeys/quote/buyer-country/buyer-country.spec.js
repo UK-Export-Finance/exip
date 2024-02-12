@@ -1,8 +1,8 @@
 import { backLink, countryInput } from '../../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
-import { COUNTRY_QUOTE_SUPPORT, DZA, BRA } from '../../../../../../fixtures/countries';
-import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
+import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
+import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.BUYER_COUNTRY;
 
@@ -42,32 +42,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
   });
 
   describe('searchable autocomplete input', () => {
-    it('has working client side JS', () => {
-      checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(FIELD_ID));
-    });
-
-    it('renders an input', () => {
-      checkAutocompleteInput.rendersInput(countryInput.field(FIELD_ID));
-    });
-
-    it('renders `no results` message when no results are found', () => {
-      checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(FIELD_ID), 'test');
-    });
-
-    it('renders a single country result after searching', () => {
-      checkAutocompleteInput.rendersSingleResult(countryInput.field(FIELD_ID), 'Alg');
-    });
-
-    it('renders multiple country results after searching', () => {
-      checkAutocompleteInput.rendersMultipleResults(countryInput.field(FIELD_ID), 'Be');
-    });
-
-    it('allows user to remove a selected country and search again', () => {
-      const algeria = DZA.NAME;
-      const brazil = BRA.NAME;
-
-      checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(FIELD_ID, algeria, brazil, brazil);
-    });
+    assertCountryAutocompleteInput({ fieldId: FIELD_ID });
   });
 
   describe('form submission', () => {

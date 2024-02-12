@@ -1,4 +1,4 @@
-import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { field as fieldSelector, countryInput } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -85,7 +85,7 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     const ERROR = ERRORS[FIELD_ID];
 
     const { field, numberOfExpectedErrors, errorIndex } = {
-      field: fieldSelector(FIELD_ID),
+      field: countryInput.field(FIELD_ID),
       numberOfExpectedErrors: 2,
       errorIndex: 1,
     };

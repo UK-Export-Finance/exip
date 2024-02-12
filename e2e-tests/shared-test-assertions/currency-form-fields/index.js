@@ -1,6 +1,6 @@
 import { FIELDS } from '../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import fieldAssertions from '../../commands/insurance/assert-currency-form-fields';
+import fieldAssertions from './assertions';
 
 const { CURRENCY: { ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
