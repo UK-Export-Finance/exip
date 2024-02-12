@@ -1,4 +1,3 @@
-import { yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -68,7 +67,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "completed"`, () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
 
@@ -94,7 +93,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().click();
+      cy.clickNoRadioInput();
 
       cy.clickSaveAndBackButton();
 
@@ -112,7 +111,6 @@ context('Insurance - Policy - Another company page - Save and back', () => {
       // go through 5 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
-      cy.assertRadioOptionIsChecked(noRadioInput());
       cy.assertNoRadioOptionIsChecked();
     });
   });

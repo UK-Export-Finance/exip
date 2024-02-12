@@ -217,7 +217,7 @@ context.skip('Insurance - Policy - Change your answers - Broker - As an exporter
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].noRadioInput().click();
+        brokerPage[fieldId].cy.clickNoRadioInput();
 
         cy.clickSubmitButton();
       });

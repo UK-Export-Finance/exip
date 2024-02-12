@@ -1,4 +1,3 @@
-import { yesRadioInput, noRadioInput } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -67,7 +66,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "completed"`, () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
 
       cy.clickSaveAndBackButton();
 
@@ -84,7 +83,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       // go through 6 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 6 });
 
-      cy.assertRadioOptionIsChecked(yesRadioInput());
+      cy.assertYesRadioOptionIsChecked();
     });
   });
 
@@ -92,7 +91,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
       cy.navigateToUrl(url);
 
-      noRadioInput().click();
+      cy.clickNoRadioInput();
 
       cy.clickSaveAndBackButton();
 
@@ -109,7 +108,7 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       // go through 6 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 6 });
 
-      cy.assertRadioOptionIsChecked(noRadioInput());
+      cy.assertNoRadioOptionIsChecked();
     });
   });
 });

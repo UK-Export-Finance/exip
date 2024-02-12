@@ -1,4 +1,4 @@
-import { yesRadioInput, field } from '../../../../../../../pages/shared';
+import { field } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -70,8 +70,8 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when leaving ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS} empty`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
     });
 
     it('should render validation errors', () => {
@@ -82,8 +82,8 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value which is not a number for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
     });
 
     it('should render validation errors', () => {
@@ -96,8 +96,8 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value with a decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
     });
 
     it('should render validation errors', () => {
@@ -110,8 +110,8 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value with a comma and decimal place for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
     });
 
     it('should render validation errors', () => {
@@ -124,8 +124,8 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value below the minimum for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
     });
 
     it('should render validation errors', () => {
@@ -138,8 +138,8 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
   describe(`when entering a value with a special character for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
     });
 
     it('should render validation errors', () => {

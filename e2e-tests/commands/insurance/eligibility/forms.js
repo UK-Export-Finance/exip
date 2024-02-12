@@ -1,7 +1,5 @@
 import { FIELD_VALUES } from '../../../constants';
-import {
-  yesRadio, noRadio, field,
-} from '../../../pages/shared';
+import { field } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { FIELDS_ELIGIBILITY } from '../../../content-strings/fields/insurance/eligibility';
 
@@ -26,11 +24,11 @@ const {
  */
 const selectRadioAndSubmit = (answer) => {
   if (answer === FIELD_VALUES.YES) {
-    yesRadio().input().click();
+    cy.clickYesRadioInput();
   }
 
   if (answer === FIELD_VALUES.NO) {
-    noRadio().input().click();
+    cy.clickNoRadioInput();
   }
 
   cy.clickSubmitButton();

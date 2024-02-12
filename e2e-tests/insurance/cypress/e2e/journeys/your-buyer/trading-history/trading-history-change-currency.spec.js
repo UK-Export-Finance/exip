@@ -3,7 +3,6 @@ import {
   SYMBOLS, USD_CURRENCY_CODE, EUR_CURRENCY_CODE, JPY_CURRENCY_CODE,
 } from '../../../../../../fixtures/currencies';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { yesRadioInput } from '../../../../../../pages/shared';
 
 const {
   ROOT,
@@ -37,7 +36,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
     cy.saveSession();
     cy.navigateToUrl(url);
     // press outstanding payments radio
-    yesRadioInput().first().click();
+    cy.clickYesRadioInput();
   });
 
   after(() => {

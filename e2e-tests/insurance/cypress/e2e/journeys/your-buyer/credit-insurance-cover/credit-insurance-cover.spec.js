@@ -1,5 +1,5 @@
 import {
-  headingCaption, yesRadio, noRadio, field as fieldSelector, yesRadioInput,
+  headingCaption, yesRadio, noRadio, field as fieldSelector,
 } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
@@ -106,7 +106,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
       describe(`when clicking ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'yes' radio`, () => {
         it(`should render ${fieldId} label, hint and input`, () => {
-          yesRadio().input().click();
+          cy.clickYesRadioInput();
 
           field.textarea().should('be.visible');
 
@@ -174,7 +174,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
           cy.assertNoRadioOptionIsChecked();
 
-          yesRadioInput().click();
+          cy.clickYesRadioInput();
 
           const field = fieldSelector(PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER).textarea();
 

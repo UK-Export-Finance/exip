@@ -1,4 +1,4 @@
-import { field, noRadioInput, yesRadioInput } from '../../../../../../../pages/shared';
+import { field, noRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -75,7 +75,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 
     beforeEach(() => {
-      yesRadioInput().click();
+      cy.clickYesRadioInput();
     });
 
     it(`should render a validation error and retain the submitted value when ${fieldId} is empty`, () => {

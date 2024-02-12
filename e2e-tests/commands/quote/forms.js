@@ -1,8 +1,4 @@
-import {
-  field,
-  yesRadio,
-  noRadio,
-} from '../../pages/shared';
+import { field } from '../../pages/shared';
 import { policyTypePage, tellUsAboutYourPolicyPage } from '../../pages/quote';
 import { FIELD_IDS } from '../../constants';
 import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
@@ -20,17 +16,17 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerBodyForm = () => {
-  noRadio().input().click();
+  cy.clickNoRadioInput();
   cy.clickSubmitButton();
 };
 
 export const completeAndSubmitExporterLocationForm = () => {
-  yesRadio().input().click();
+  cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };
 
 export const completeAndSubmitUkContentForm = () => {
-  yesRadio().input().click();
+  cy.clickYesRadioInput();
   cy.clickSubmitButton();
 };
 

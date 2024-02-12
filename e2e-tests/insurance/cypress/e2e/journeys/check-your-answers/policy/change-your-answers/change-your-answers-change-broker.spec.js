@@ -220,7 +220,7 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].noRadioInput().click();
+        brokerPage[fieldId].cy.clickNoRadioInput();
 
         cy.clickSubmitButton();
       });

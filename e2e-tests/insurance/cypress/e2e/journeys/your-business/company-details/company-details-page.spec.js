@@ -118,7 +118,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
     });
 
     it(`should display conditional ${DIFFERENT_TRADING_NAME} input when selecting the trading name "yes" radio`, () => {
-      yesRadioInput().first().click();
+      cy.clickYesRadioInput();
 
       field(DIFFERENT_TRADING_NAME).input().should('be.visible');
 

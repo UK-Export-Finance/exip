@@ -1,4 +1,4 @@
-import { field, yesRadioInput } from '../../../../../../pages/shared';
+import { field } from '../../../../../../pages/shared';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, VALID_PHONE_NUMBERS,
 } from '../../../../../../constants';
@@ -56,8 +56,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list with status of "In progress"', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      cy.clickYesRadioInput();
+      cy.clickYesRadioInput(1);
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);

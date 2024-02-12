@@ -1,4 +1,3 @@
-import { noRadioInput } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -24,7 +23,7 @@ context('Insurance - Eligibility - Have an account page - I want to confirm if I
   });
 
   it(`should redirect to ${CREATE.YOUR_DETAILS}`, () => {
-    noRadioInput().click();
+    cy.clickNoRadioInput();
     cy.clickSubmitButton();
 
     const expected = `${baseUrl}${CREATE.YOUR_DETAILS}`;
