@@ -1308,6 +1308,9 @@ var lists = {
       town: (0, import_fields.text)(),
       county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
+      fullAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(300)" }
+      }),
       email: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
       })

@@ -5,6 +5,7 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_DETAILS;
 
@@ -115,12 +116,32 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
+    it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
       cy.completeAndSubmitBrokerDetailsForm();
 
       cy.assertUrl(brokerConfirmAddressUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.checkValue(fieldSelector(NAME), application.BROKER[NAME]);
+        cy.checkValue(fieldSelector(EMAIL), application.BROKER[EMAIL]);
+
+        const addressField = fieldSelector(FULL_ADDRESS);
+
+        const textareaField = {
+          ...addressField,
+          input: addressField.textarea,
+        };
+
+        cy.checkValue(textareaField, application.BROKER[FULL_ADDRESS]);
+      });
     });
   });
 });

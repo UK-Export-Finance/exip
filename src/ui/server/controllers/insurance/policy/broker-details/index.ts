@@ -9,6 +9,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 
 const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
@@ -87,7 +88,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -116,5 +117,16 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+  try {
+    const saveResponse = await mapAndSave.broker(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - policy - broker details %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

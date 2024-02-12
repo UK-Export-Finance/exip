@@ -1116,6 +1116,7 @@ type Broker {
   town: String
   county: String
   postcode: String
+  fullAddress: String
   email: String
 }
 
@@ -1135,6 +1136,7 @@ input BrokerWhereInput {
   town: StringFilter
   county: StringFilter
   postcode: StringFilter
+  fullAddress: StringFilter
   email: StringFilter
 }
 
@@ -1146,6 +1148,7 @@ input BrokerOrderByInput {
   town: OrderDirection
   county: OrderDirection
   postcode: OrderDirection
+  fullAddress: OrderDirection
   email: OrderDirection
 }
 
@@ -1158,6 +1161,7 @@ input BrokerUpdateInput {
   town: String
   county: String
   postcode: String
+  fullAddress: String
   email: String
 }
 
@@ -1175,6 +1179,7 @@ input BrokerCreateInput {
   town: String
   county: String
   postcode: String
+  fullAddress: String
   email: String
 }
 

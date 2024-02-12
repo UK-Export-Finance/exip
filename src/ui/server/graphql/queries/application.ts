@@ -128,6 +128,7 @@ const applicationQuery = gql`
           isUsingBroker
           name
           email
+          fullAddress
         }
         buyer {
           id
