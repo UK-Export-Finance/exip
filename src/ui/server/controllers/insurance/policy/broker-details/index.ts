@@ -16,7 +16,7 @@ const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT },
+  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -49,7 +49,7 @@ export const pageVariables = (referenceNumber: number) => ({
       ...BROKER_DETAILS[FULL_ADDRESS],
     },
   },
-  SAVE_AND_BACK_URL: `#${referenceNumber}`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_SAVE_AND_BACK}`,
 });
 
 /**

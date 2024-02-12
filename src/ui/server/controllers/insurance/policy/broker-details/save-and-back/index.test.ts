@@ -1,10 +1,10 @@
 import { post } from '.';
-import { FIELD_ID, ERROR_MESSAGE } from '..';
 import { ROUTES } from '../../../../../constants';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import constructPayload from '../../../../../helpers/construct-payload';
-import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
+import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/broker';
+import { FIELD_IDS } from '..';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 
@@ -12,7 +12,7 @@ const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/policy/broker/save-and-back', () => {
+describe('controllers/insurance/policy/broker-details/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -47,8 +47,8 @@ describe('controllers/insurance/policy/broker/save-and-back', () => {
 
       await post(req, res);
 
-      const payload = constructPayload(req.body, [FIELD_ID]);
-      const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+      const payload = constructPayload(req.body, FIELD_IDS);
+      const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
@@ -72,8 +72,8 @@ describe('controllers/insurance/policy/broker/save-and-back', () => {
 
       await post(req, res);
 
-      const payload = constructPayload(req.body, [FIELD_ID]);
-      const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+      const payload = constructPayload(req.body, FIELD_IDS);
+      const validationErrors = generateValidationErrors(payload);
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 

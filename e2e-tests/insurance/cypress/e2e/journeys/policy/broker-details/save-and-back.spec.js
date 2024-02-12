@@ -1,22 +1,24 @@
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+import mockApplication from '../../../../../../fixtures/application';
 
 const {
-  USING_BROKER,
+  BROKER_DETAILS: { NAME },
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
   ALL_SECTIONS,
   POLICY: {
-    BROKER_ROOT,
+    BROKER_DETAILS_ROOT,
   },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Broker page - Save and back', () => {
+context('Insurance - Policy - Broker details page - Save and back', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
@@ -34,8 +36,9 @@ context('Insurance - Policy - Broker page - Save and back', () => {
       cy.completeAndSubmitNameOnPolicyForm({});
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
+      cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
@@ -62,36 +65,31 @@ context('Insurance - Policy - Broker page - Save and back', () => {
     });
   });
 
-  describe(`when selecting yes for ${USING_BROKER}`, () => {
-    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "completed"`, () => {
+  describe('when fields are partially completed', () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
-      cy.clickYesRadioInput();
+    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+      cy.keyboardInput(fieldSelector(NAME).input(), mockApplication.BROKER[NAME]);
 
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
-    it('should retain all the fields on the page', () => {
-      cy.navigateToUrl(allSectionsUrl);
-
-      cy.startInsurancePolicySection({});
-
-      // go through 6 policy forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 6 });
-
-      cy.assertYesRadioOptionIsChecked();
+    it('should retain all the relevant fields on the page', () => {
+      cy.checkValue(fieldSelector(NAME), mockApplication.BROKER[NAME]);
     });
   });
 
-  describe(`when selecting no for ${USING_BROKER}`, () => {
+  describe('when all fields are provided', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
       cy.navigateToUrl(url);
 
-      cy.clickNoRadioInput();
+      cy.completeBrokerDetailsForm();
 
       cy.clickSaveAndBackButton();
 
@@ -105,10 +103,10 @@ context('Insurance - Policy - Broker page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // go through 6 policy forms.
-      cy.clickSubmitButtonMultipleTimes({ count: 6 });
+      // go through 7 policy forms.
+      cy.clickSubmitButtonMultipleTimes({ count: 7 });
 
-      cy.assertNoRadioOptionIsChecked();
+      cy.assertBrokerDetailsFieldValues({});
     });
   });
 });
