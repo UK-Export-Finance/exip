@@ -16,7 +16,7 @@ const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_CONFIRM_ADDRESS_ROOT, BROKER_DETAILS_SAVE_AND_BACK },
+  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -124,7 +124,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
     console.error('Error updating application - policy - broker details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

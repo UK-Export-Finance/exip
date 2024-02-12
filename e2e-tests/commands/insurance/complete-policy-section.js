@@ -48,6 +48,10 @@ const completePolicySection = ({
 
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
+  if (usingBroker) {
+    cy.completeAndSubmitBrokerDetailsForm({});
+  }
+
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();
   }
