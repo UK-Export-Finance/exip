@@ -64,7 +64,7 @@
           },
           id: FIELDS.COMPANY_NAME.ID,
           name: FIELDS.COMPANY_NAME.ID,
-          value: submittedValues[FIELDS.COMPANY_NAME.ID] or application.policy[FIELDS.COMPANY_NAME.ID],
+          value: submittedValues[FIELDS.COMPANY_NAME.ID] or application.policy.jointlyInsuredParty[FIELDS.COMPANY_NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.COMPANY_NAME.ID] and {
             text: validationErrors.errorList[FIELDS.COMPANY_NAME.ID].text,
             attributes: {
@@ -94,7 +94,7 @@
           },
           id: FIELDS.COUNTRY.ID,
           name: FIELDS.COUNTRY.ID,
-          value: submittedValues[FIELDS.COUNTRY.ID] or application.policy[FIELDS.COUNTRY.ID],
+          value: submittedValues[FIELDS.COUNTRY.ID] or application.policy.jointlyInsuredParty[FIELDS.COUNTRY.ID],
           errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID] and {
             text: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
             attributes: {
@@ -124,7 +124,7 @@
           },
           id: FIELDS.COMPANY_NUMBER.ID,
           name: FIELDS.COMPANY_NUMBER.ID,
-          value: submittedValues[FIELDS.COMPANY_NUMBER.ID] or application.policy[FIELDS.COMPANY_NUMBER.ID],
+          value: submittedValues[FIELDS.COMPANY_NUMBER.ID] or application.policy.jointlyInsuredParty[FIELDS.COMPANY_NUMBER.ID],
           errorMessage: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID] and {
             text: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID].text,
             attributes: {

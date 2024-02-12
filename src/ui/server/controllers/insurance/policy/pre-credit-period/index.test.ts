@@ -253,7 +253,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
           req.body = validBody;
         });
 
-        describe('when no application is returned', () => {
+        describe('when a true boolean is not returned', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 

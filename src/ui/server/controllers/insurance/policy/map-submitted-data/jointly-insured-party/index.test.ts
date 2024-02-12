@@ -1,5 +1,6 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { mockJointlyInsuredParty } from '../../../../../test-mocks';
+import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
+import { mockApplication,  mockCountries, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
 
 const {
@@ -7,29 +8,33 @@ const {
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party', () => {
-  describe(`when ${REQUESTED} is false`, () => {
+  describe(`when form body ${REQUESTED} is true`, () => {
     const mockBody = {
-      [REQUESTED]: false,
-      mockOtherField: true,
+      [REQUESTED]: 'true',
+      [COUNTRY]: mockApplication.policy.jointlyInsuredParty.country,
+      mockOtherField: 'true',
     };
 
-    it('should return form data as provided', () => {
-      const result = mapSubmittedData(mockBody);
+    it('should return form data as provided, but with country mapping', () => {
+      const result = mapSubmittedData(mockBody, mockApplication, mockCountries);
 
-      const expected = mockBody;
+      const expected = {
+        ...mockBody,
+        [COUNTRY]: getCountryByIsoCode(mockCountries, mockBody[COUNTRY]).isoCode,
+      };
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when ${REQUESTED} is false`, () => {
+  describe(`when form body ${REQUESTED} and application ${REQUESTED} are both false`, () => {
     it('should nullify all other fields', () => {
       const mockBody = {
         ...mockJointlyInsuredParty,
-        [REQUESTED]: false,
+        [REQUESTED]: 'false',
       };
 
-      const result = mapSubmittedData(mockBody);
+      const result = mapSubmittedData(mockBody, mockApplication, mockCountries);
 
       const expected = {
         ...mockBody,
@@ -46,7 +51,7 @@ describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party'
     it('should return form data as provided', () => {
       const mockBody = {};
 
-      const result = mapSubmittedData(mockBody);
+      const result = mapSubmittedData(mockBody, mockApplication, mockCountries);
 
       const expected = mockBody;
 

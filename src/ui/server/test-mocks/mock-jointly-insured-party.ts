@@ -5,7 +5,7 @@ const mockJointlyInsuredParty = {
   requested: false,
   companyName: 'Mock company name',
   companyNumber: 'Mock company number',
-  country: mockCountries[0],
+  country: mockCountries[0].isoCode,
 };
 
 export default mockJointlyInsuredParty;

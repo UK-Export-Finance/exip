@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import mapSubmittedData from '../../map-submitted-data/jointly-insured-party';
 import save from '../../save-data/jointly-insured-party';
-import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
+import { mockApplication, mockCountries, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 
@@ -22,7 +22,7 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
 
   const mockValidationErrors = generateValidationErrors(REQUESTED, 'error', {});
 
-  const populatedData = mapSubmittedData(mockFormBody);
+  const populatedData = mapSubmittedData(mockFormBody, mockApplication, mockCountries);
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {

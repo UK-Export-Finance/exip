@@ -4,6 +4,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-id
 import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
@@ -110,6 +111,15 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       cy.completeAndSubmitOtherCompanyDetailsForm();
 
       cy.assertUrl(brokerUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.checkValue(fieldSelector(COMPANY_NAME), application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME]);
+        cy.checkValue(fieldSelector(COUNTRY), application.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY]);
+      });
     });
   });
 });

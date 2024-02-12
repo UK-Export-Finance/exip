@@ -6,7 +6,9 @@ import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insu
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -70,6 +72,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    application,
   });
 };
 
@@ -80,7 +83,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -90,6 +93,7 @@ export const post = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
   const payload = constructPayload(req.body, FIELD_IDS);
+  const sanitisedData = sanitiseData(payload);
 
   const validationErrors = generateValidationErrors(payload);
 
@@ -101,10 +105,24 @@ export const post = (req: Request, res: Response) => {
       }),
       ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      submittedValues: payload,
+      application,
+      submittedValues: sanitisedData,
       validationErrors,
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  try {
+    // TODO: add countries here.
+    const saveResponse = await mapAndSave.jointlyInsuredParty(sanitisedData, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
+  } catch (err) {
+    console.error('Error updating application - policy - other company details %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

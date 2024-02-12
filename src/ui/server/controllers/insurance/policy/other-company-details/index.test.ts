@@ -7,7 +7,9 @@ import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insu
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
@@ -101,6 +103,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        application: mockApplication,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -120,6 +123,8 @@ describe('controllers/insurance/policy/other-company-details', () => {
   });
 
   describe('post', () => {
+    mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(true));
+
     const validBody = {
       [COMPANY_NAME]: 'Mock company name',
       [COMPANY_NUMBER]: 'Mock company number',
@@ -127,8 +132,8 @@ describe('controllers/insurance/policy/other-company-details', () => {
     };
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values from constructPayload function', () => {
-        post(req, res);
+      it('should render template with validation errors and submitted values from constructPayload function', async () => {
+        await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -139,6 +144,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
+          application: mockApplication,
           submittedValues: payload,
           validationErrors: generateValidationErrors(payload),
         });
@@ -150,8 +156,22 @@ describe('controllers/insurance/policy/other-company-details', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${BROKER_ROOT}`, () => {
-        post(req, res);
+      it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const sanitisedData = sanitiseData(payload);
+
+        expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.jointlyInsuredParty).toHaveBeenCalledWith(sanitisedData, mockApplication);
+      });
+
+      it(`should redirect to ${BROKER_ROOT}`, async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
 
@@ -164,10 +184,46 @@ describe('controllers/insurance/policy/other-company-details', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.jointlyInsuredParty call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

@@ -397,7 +397,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
           req.body = validBody;
         });
 
-        describe('when no application is returned', () => {
+        describe('when a true boolean is not returned', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 

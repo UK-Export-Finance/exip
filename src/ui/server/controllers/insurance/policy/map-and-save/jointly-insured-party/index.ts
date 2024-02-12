@@ -1,7 +1,7 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import mapSubmittedData from '../../map-submitted-data/jointly-insured-party';
 import save from '../../save-data/jointly-insured-party';
-import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
+import { Application, Country, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
  * mapAndSave jointlyInsuredParty
@@ -11,10 +11,10 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * @param {Object} Validation errors
  * @returns {Boolean}
  */
-const jointlyInsuredParty = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const jointlyInsuredParty = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors, countries?: Array<Country>) => {
   try {
     if (hasFormData(formBody)) {
-      const populatedData = mapSubmittedData(formBody);
+      const populatedData = mapSubmittedData(formBody, application, countries);
 
       let saveResponse;
 
