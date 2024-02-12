@@ -8,7 +8,7 @@ import {
   NON_STANDARD_CURRENCY_CODE,
   NON_STANDARD_CURRENCY_NAME,
 } from '../../fixtures/currencies';
-import { checkAutocompleteInput } from '../../shared-test-assertions';
+import { checkAutocompleteInput } from '../autocomplete-assertions';
 import { DZA } from '../../fixtures/countries';
 import partials from '../../partials';
 

@@ -138,7 +138,7 @@ const application = {
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [COMPANY_NAME]: 'Mock jointly insured company name',
-    [COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
+    [COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
     [COMPANY_NUMBER]: 'Mock jointly insured company number',
   },
   EXPORT_CONTRACT: {

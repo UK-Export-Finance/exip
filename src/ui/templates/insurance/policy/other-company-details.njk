@@ -1,7 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/label/macro.njk" import govukLabel %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -73,35 +75,26 @@
           }
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.COUNTRY.LABEL,
+        <div class="govuk-form-group">
+          {{ govukLabel({
+            for: FIELDS.COUNTRY.ID,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            text: FIELDS.COUNTRY.LABEL,
             attributes: {
-              id: FIELDS.COUNTRY.ID + '-label',
-              'data-cy': FIELDS.COUNTRY.ID + '-label'
+              id: FIELDS.COUNTRY.ID + "-label",
+              "data-cy": FIELDS.COUNTRY.ID + "-label"
             }
-          },
-          hint: {
-            text: FIELDS.COUNTRY.HINT,
-            attributes: {
-              'data-cy': FIELDS.COUNTRY.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-20",
-          attributes: {
-            'data-cy': FIELDS.COUNTRY.ID + '-input'
-          },
-          id: FIELDS.COUNTRY.ID,
-          name: FIELDS.COUNTRY.ID,
-          value: submittedValues[FIELDS.COUNTRY.ID] or application.policy[FIELDS.COUNTRY.ID],
-          errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID] and {
-            text: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
-            attributes: {
-              "data-cy": FIELDS.COUNTRY.ID + "-error-message"
-            }
-          }
-        }) }}
+          }) }}
+
+          <div class="govuk-input--width-20">
+            {{ accessibleAutoCompleteSelect.render({
+              errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
+              fieldId: FIELDS.COUNTRY.ID,
+              integrity: SRI.ACCESSIBILITY,
+              options: countries
+            }) }}
+          </div>
+        </div>
 
         {{ govukInput({
           label: {

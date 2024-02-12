@@ -3,7 +3,7 @@ import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/expo
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
+import { checkAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const {
   ROOT: INSURANCE_ROOT,

@@ -1,5 +1,4 @@
 {% from "govuk/components/label/macro.njk" import govukLabel %}
-{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 {% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
 
 <div class="govuk-grid-row">
@@ -20,19 +19,13 @@
       }
     }) }}
 
-    {{ govukErrorMessage({
-      text: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID].text,
-      attributes: {
-        "data-cy": FIELDS.FINAL_DESTINATION.ID + "-error-message"
-      }
-    }) }}
-
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
         {{ accessibleAutoCompleteSelect.render({
+          errorMessage: validationErrors.errorList[FIELDS.FINAL_DESTINATION.ID].text,
           fieldId: FIELDS.FINAL_DESTINATION.ID,
-          options: conditionalHtmlData,
-          integrity: SRI.ACCESSIBILITY
+          integrity: SRI.ACCESSIBILITY,
+          options: conditionalHtmlData
         }) }}
       </div>
     </div>
