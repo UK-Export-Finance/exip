@@ -148,7 +148,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
-        // countries: mapCountries(mockCountries, mockApplication.exportContract[FINAL_DESTINATION]),
         countries: mapCountries(mockCountries),
       };
 

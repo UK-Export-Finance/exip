@@ -7,7 +7,7 @@ const { NAME: ALGERIA } = DZA;
 
 /**
  * assertCountryAutocompleteInput
- * Assert email field validation
+ * Assert a country autocomplete field
  * @param {String} fieldId: Country field ID
  */
 export const assertCountryAutocompleteInput = ({

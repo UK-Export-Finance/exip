@@ -127,7 +127,6 @@ export const post = async (req: Request, res: Response) => {
     try {
       countries = await api.keystone.countries.getAll();
 
-      // TODO - need unit tests for this, maybe in about goods services as well?
       if (!isPopulatedArray(countries)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
