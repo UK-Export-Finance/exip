@@ -16,7 +16,7 @@ const {
     BROKER_DETAILS: { NAME: BROKER_NAME },
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, FIRST_NAME, LAST_NAME, POSITION, WEBSITE },
+    COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, WEBSITE },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -36,9 +36,6 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         NAME,
         REGISTRATION_NUMBER,
         ADDRESS,
-        FIRST_NAME,
-        LAST_NAME,
-        POSITION,
       ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);

@@ -325,9 +325,6 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
           INCORRECT_FORMAT: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
         },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
-          IS_EMPTY: 'Select whether we can contact the buyer about your application',
-        },
       },
       [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER]: {
         IS_EMPTY: "Select whether you're connected with the buyer in any way",

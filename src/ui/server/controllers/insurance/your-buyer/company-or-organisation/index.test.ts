@@ -29,7 +29,7 @@ const {
   COMPANY_OR_ORGANISATION_CHECK_AND_CHANGE,
 } = YOUR_BUYER_ROUTES;
 
-const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE, FIRST_NAME, LAST_NAME, POSITION, EMAIL, CAN_CONTACT_BUYER } = COMPANY_OR_ORGANISATION;
+const { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE } = COMPANY_OR_ORGANISATION;
 
 const { relationship, ...companyOrOrganisationMock } = mockBuyer;
 
@@ -71,26 +71,6 @@ describe('controllers/insurance/your-buyer/company-or-organisation', () => {
           WEBSITE: {
             ID: WEBSITE,
             ...FIELDS.COMPANY_OR_ORGANISATION[WEBSITE],
-          },
-          FIRST_NAME: {
-            ID: FIRST_NAME,
-            ...FIELDS.COMPANY_OR_ORGANISATION[FIRST_NAME],
-          },
-          LAST_NAME: {
-            ID: LAST_NAME,
-            ...FIELDS.COMPANY_OR_ORGANISATION[LAST_NAME],
-          },
-          POSITION: {
-            ID: POSITION,
-            ...FIELDS.COMPANY_OR_ORGANISATION[POSITION],
-          },
-          EMAIL: {
-            ID: EMAIL,
-            ...FIELDS.COMPANY_OR_ORGANISATION[EMAIL],
-          },
-          CAN_CONTACT_BUYER: {
-            ID: CAN_CONTACT_BUYER,
-            ...FIELDS.COMPANY_OR_ORGANISATION[CAN_CONTACT_BUYER],
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_OR_ORGANISATION_SAVE_AND_BACK}`,
