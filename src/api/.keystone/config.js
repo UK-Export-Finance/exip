@@ -286,12 +286,7 @@ var YOUR_BUYER = {
     ADDRESS: "address",
     COUNTRY: "country",
     REGISTRATION_NUMBER: "registrationNumber",
-    WEBSITE: "website",
-    FIRST_NAME: "contactFirstName",
-    LAST_NAME: "contactLastName",
-    POSITION: "contactPosition",
-    EMAIL: "contactEmail",
-    CAN_CONTACT_BUYER: "canContactBuyer"
+    WEBSITE: "website"
   },
   CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
   CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
@@ -4434,25 +4429,6 @@ var YOUR_BUYER_FIELDS = {
       SUMMARY: {
         TITLE: "Buyer website (optional)"
       }
-    },
-    [COMPANY_OR_ORGANISATION.FIRST_NAME]: {
-      SUMMARY: {
-        TITLE: "Contact details"
-      }
-    },
-    [COMPANY_OR_ORGANISATION.LAST_NAME]: {
-      LABEL: "Last name"
-    },
-    [COMPANY_OR_ORGANISATION.POSITION]: {
-      LABEL: "Position"
-    },
-    [COMPANY_OR_ORGANISATION.EMAIL]: {
-      LABEL: "Email address"
-    },
-    [COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
-      SUMMARY: {
-        TITLE: "Can we contact the buyer?"
-      }
     }
   },
   [CONNECTION_WITH_BUYER]: {
@@ -4811,7 +4787,7 @@ var CONTENT_STRINGS4 = {
   ...YOUR_BUYER_FIELDS
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4, FIRST_NAME: FIRST_NAME4, LAST_NAME: LAST_NAME4, POSITION, EMAIL: EMAIL8, CAN_CONTACT_BUYER },
+  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
   CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER2,
   TRADED_WITH_BUYER: TRADED_WITH_BUYER2
 } = your_buyer_default;
@@ -4823,8 +4799,6 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(XLSX.FIELDS[FIRST_NAME4], `${buyer[FIRST_NAME4]} ${buyer[LAST_NAME4]} ${xlsx_new_line_default}${buyer[POSITION]} ${xlsx_new_line_default}${buyer[EMAIL8]}`),
-    xlsx_row_default(String(CONTENT_STRINGS4[CAN_CONTACT_BUYER].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CAN_CONTACT_BUYER])),
     xlsx_row_default(String(CONTENT_STRINGS4[CONNECTION_WITH_BUYER2].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTION_WITH_BUYER2])),
     xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER2].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER2]))
   ];

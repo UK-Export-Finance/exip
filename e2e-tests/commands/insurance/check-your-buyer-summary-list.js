@@ -12,8 +12,6 @@ const {
         ADDRESS,
         REGISTRATION_NUMBER,
         WEBSITE,
-        FIRST_NAME,
-        CAN_CONTACT_BUYER,
       },
       CONNECTION_WITH_BUYER,
       CONNECTION_WITH_BUYER_DESCRIPTION,
@@ -62,29 +60,6 @@ const checkYourBusinessSummaryList = ({
     const expectedValue = application.BUYER[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [FIRST_NAME]: () => {
-    const fieldId = FIRST_NAME;
-    const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
-
-    const row = summaryList.field(fieldId);
-
-    cy.checkText(
-      row.key(),
-      expectedKey,
-    );
-
-    // TODO: EMS-2301 - remove
-    row.value().contains('undefined undefined');
-
-    row.changeLink().should('exist');
-  },
-  [CAN_CONTACT_BUYER]: () => {
-    const fieldId = CAN_CONTACT_BUYER;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.COMPANY_OR_ORGANISATION);
-    // TODO: EMS-2301 - remove;
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, null, expectedChangeLinkText);
   },
   [CONNECTION_WITH_BUYER]: () => {
     const fieldId = CONNECTION_WITH_BUYER;

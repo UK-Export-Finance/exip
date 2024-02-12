@@ -46,30 +46,6 @@ export const YOUR_BUYER_FIELDS = {
         TITLE: 'Buyer website (optional)',
       },
     },
-    [COMPANY_OR_ORGANISATION.FIRST_NAME]: {
-      LEGEND: "Enter details for your contact at the buyer's company or organisation",
-      HINT: 'We will not contact them without your permission',
-      LABEL: 'First name',
-      SUMMARY: {
-        TITLE: 'Contact details',
-      },
-    },
-    [COMPANY_OR_ORGANISATION.LAST_NAME]: {
-      LABEL: 'Last name',
-    },
-    [COMPANY_OR_ORGANISATION.POSITION]: {
-      LABEL: 'Position',
-    },
-    [COMPANY_OR_ORGANISATION.EMAIL]: {
-      LABEL: 'Email address',
-    },
-    [COMPANY_OR_ORGANISATION.CAN_CONTACT_BUYER]: {
-      LABEL: 'Can we contact the buyer about this application, if we need to?',
-      HINT: 'For example, if we need to contact them for their accounts.',
-      SUMMARY: {
-        TITLE: 'Can we contact the buyer?',
-      },
-    },
   },
   [CONNECTION_WITH_BUYER]: {
     LABEL: 'Are you connected with the buyer in any way?',
