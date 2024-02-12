@@ -1,6 +1,6 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
-import { mockApplication,  mockCountries, mockJointlyInsuredParty } from '../../../../../test-mocks';
+import { mockApplication, mockCountries, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
 
 const {
