@@ -8,9 +8,9 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
 // const {
-  // BROKER_DETAILS: {
-    // FULL_ADDRESS,
-  // },
+// BROKER_DETAILS: {
+// FULL_ADDRESS,
+// },
 // } = POLICY_FIELD_IDS;
 
 const {
@@ -18,7 +18,7 @@ const {
   POLICY: {
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_DETAILS_ROOT,
-    CHECK_YOUR_ANSWERS
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
