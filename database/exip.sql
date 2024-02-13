@@ -891,11 +891,7 @@ CREATE TABLE `JointlyInsuredParty` (
   `countryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `JointlyInsuredParty_policy_key` (`policy`),
-  KEY `JointlyInsuredParty_country_idx` (`country`),
-  CONSTRAINT `JointlyInsuredParty_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE
-  SET
-    NULL ON UPDATE CASCADE,
-    CONSTRAINT `JointlyInsuredParty_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE
+  CONSTRAINT `JointlyInsuredParty_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
