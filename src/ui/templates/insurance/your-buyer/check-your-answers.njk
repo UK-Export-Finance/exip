@@ -1,9 +1,8 @@
 {% extends 'index.njk' %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
-{% from 'govuk/components/button/macro.njk' import govukButton %}
 {% import '../../components/form-buttons.njk' as formButtons %}
+{% import '../../components/group-of-summary-lists.njk' as groupOfSummaryLists %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -26,8 +25,8 @@
     </div>
   </div>
 
-  {{ govukSummaryList({
-    rows: SUMMARY_LIST
+  {{ groupOfSummaryLists.render({
+    summaryLists: SUMMARY_LISTS
   }) }}
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>

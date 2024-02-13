@@ -1,4 +1,5 @@
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -6,9 +7,13 @@ import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateChangeLink from '../../../generate-change-link';
 import generateAddressObject from '../../generate-address-object';
-import { ApplicationBuyer, SummaryListItemData } from '../../../../../types';
+import { ApplicationBuyer, SummaryListGroupData, SummaryListItemData } from '../../../../../types';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
+
+const {
+  YOUR_BUYER: { COMPANY_DETAILS: FORM_TITLE },
+} = FORM_TITLES;
 
 const {
   INSURANCE: {
@@ -27,7 +32,7 @@ const {
  * @param {Number} referenceNumber application reference number
  * @returns {Object} All company fields and values in an object structure for GOVUK summary list structure
  */
-const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
+const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
   const addressObject = generateAddressObject(answers[ADDRESS]);
 
   const fields = [
@@ -72,7 +77,10 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
     }),
   ] as Array<SummaryListItemData>;
 
-  return fields;
+  return {
+    title: FORM_TITLE,
+    fields,
+  };
 };
 
 export default generateCompanyOrOrganisationFields;
