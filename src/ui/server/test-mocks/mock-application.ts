@@ -100,7 +100,6 @@ export const mockBroker = {
 };
 
 export const mockApplicationBuyer = {
-  id: 'clcyyopna0158m8noaglyy9aa',
   ...buyer,
 };
 

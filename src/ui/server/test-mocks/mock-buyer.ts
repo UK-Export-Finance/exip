@@ -14,6 +14,8 @@ export const mockBuyerTradingHistory = {
   outstandingPayments: true,
   failedPayments: true,
   currencyCode: GBP.isoCode,
+  totalOutstandingPayments: 500,
+  totalOverduePayments: 600,
 };
 
 export const mockBuyerRelationship = {
@@ -34,6 +36,7 @@ export const mockBuyerContact = {
 };
 
 const mockBuyer = {
+  id: 'clacdgc630000kdoqn7wcgrdde',
   companyOrOrganisationName: 'Test name',
   address: 'Address line 1 \r\n Address line 2 \r\n Test town \r\n Test Postcode \r\n United Kingdom',
   country: {

@@ -19,6 +19,11 @@ const {
   },
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
+  TRADED_WITH_BUYER,
+  OUTSTANDING_PAYMENTS,
+  FAILED_PAYMENTS,
+  TOTAL_AMOUNT_OVERDUE,
+  TOTAL_OUTSTANDING_PAYMENTS,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
@@ -83,8 +88,31 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
     checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: false });
   });
 
-  // TODO: EMS-2628
-  // it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-  //   checkSummaryList[TRADED_WITH_BUYER]();
-  // });
+  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[TRADED_WITH_BUYER]();
+  });
+
+  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[TRADED_WITH_BUYER]();
+  });
+
+  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[TRADED_WITH_BUYER]();
+  });
+
+  it(`should render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
+    checkSummaryList[OUTSTANDING_PAYMENTS]();
+  });
+
+  it(`should not render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
+    checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: false });
+  });
+
+  it(`should not render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
+    checkSummaryList[TOTAL_OUTSTANDING_PAYMENTS]({ shouldRender: false });
+  });
+
+  it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
+    checkSummaryList[FAILED_PAYMENTS]();
+  });
 });
