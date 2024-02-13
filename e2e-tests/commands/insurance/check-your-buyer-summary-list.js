@@ -16,6 +16,10 @@ const {
       CONNECTION_WITH_BUYER,
       CONNECTION_WITH_BUYER_DESCRIPTION,
       TRADED_WITH_BUYER,
+      OUTSTANDING_PAYMENTS,
+      FAILED_PAYMENTS,
+      TOTAL_AMOUNT_OVERDUE,
+      TOTAL_OUTSTANDING_PAYMENTS,
     },
   },
 } = FIELD_IDS;
@@ -88,6 +92,46 @@ const checkYourBusinessSummaryList = ({
     const expectedValue = application.BUYER[fieldId];
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [OUTSTANDING_PAYMENTS]: () => {
+    const fieldId = OUTSTANDING_PAYMENTS;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = application.BUYER[fieldId];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [FAILED_PAYMENTS]: () => {
+    const fieldId = FAILED_PAYMENTS;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = application.BUYER[fieldId];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [TOTAL_AMOUNT_OVERDUE]: ({ shouldRender = true }) => {
+    const fieldId = TOTAL_AMOUNT_OVERDUE;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+      const expectedValue = application.BUYER[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [TOTAL_OUTSTANDING_PAYMENTS]: ({ shouldRender = true }) => {
+    const fieldId = TOTAL_OUTSTANDING_PAYMENTS;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+      const expectedValue = application.BUYER[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
   },
 });
 

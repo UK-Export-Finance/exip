@@ -8,6 +8,7 @@ export const FORM_TITLES = {
   YOUR_BUYER: {
     COMPANY_DETAILS: 'Company details',
     CONNECTION_TO_BUYER: 'Connection to the buyer',
+    TRADING_HISTORY: 'Trading history',
     CREDIT_INSURANCE_HISTORY: 'Credit insurance history',
     FINANCIAL_ACCOUNTS: 'Financial accounts',
   },

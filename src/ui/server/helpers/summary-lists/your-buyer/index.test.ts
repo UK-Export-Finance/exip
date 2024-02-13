@@ -1,6 +1,7 @@
 import { generateFields, yourBuyerSummaryList } from '.';
 import generateCompanyOrOrganisationFields from './company-or-organisation';
 import connectionWithBuyerFields from './connection-with-buyer';
+import tradingHistoryFields from './trading-history';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import mockApplication, { mockApplicationBuyer } from '../../../test-mocks/mock-application';
 
@@ -15,6 +16,7 @@ describe('server/helpers/summary-lists/your-buyer', () => {
       const expected = [
         generateCompanyOrOrganisationFields(buyer, referenceNumber, checkAndChange),
         connectionWithBuyerFields(buyer.relationship, referenceNumber, checkAndChange),
+        tradingHistoryFields(buyer.buyerTradingHistory, referenceNumber, checkAndChange),
       ];
 
       expect(result).toEqual(expected);

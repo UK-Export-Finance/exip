@@ -67,9 +67,15 @@ export const YOUR_BUYER_FIELDS = {
   },
   [OUTSTANDING_PAYMENTS]: {
     LABEL: 'Do you currently have any outstanding or overdue payments from the buyer?',
+    SUMMARY: {
+      TITLE: 'Outstanding or overdue payments',
+    },
   },
   [FAILED_PAYMENTS]: {
     LABEL: 'Has the buyer ever failed to pay you on time?',
+    SUMMARY: {
+      TITLE: 'Buyer failed to pay on time?',
+    },
   },
   [CURRENCY_CODE]: {
     LEGEND: 'What currency are the outstanding or overdue payments in?',
@@ -85,8 +91,14 @@ export const YOUR_BUYER_FIELDS = {
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',
     LABEL: 'Total outstanding, including overdue',
+    SUMMARY: {
+      TITLE: 'Total outstanding including overdue',
+    },
   },
   [TOTAL_AMOUNT_OVERDUE]: {
     LABEL: 'Amount overdue',
+    SUMMARY: {
+      TITLE: 'Amount overdue',
+    },
   },
 };
