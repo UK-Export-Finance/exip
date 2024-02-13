@@ -21,7 +21,7 @@ const {
   POLICY: {
     BROKER_ROOT,
     BROKER_DETAILS_ROOT,
-    BROKER_CONFIRM_ADDRESS_ROOT,
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -32,7 +32,7 @@ const baseUrl = Cypress.config('baseUrl');
 context("Insurance - Policy - Broker details page - As an exporter, I want to provide UKEF with my broker's details, So that UKEF can communicate with the broker as needed whilst processing my application'", () => {
   let referenceNumber;
   let url;
-  let brokerConfirmAddressUrl;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -50,7 +50,7 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
-      brokerConfirmAddressUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -115,12 +115,22 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
+    it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
       cy.completeAndSubmitBrokerDetailsForm();
 
-      cy.assertUrl(brokerConfirmAddressUrl);
+      cy.assertUrl(checkYourAnswersUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertBrokerDetailsFieldValues({});
+      });
     });
   });
 });

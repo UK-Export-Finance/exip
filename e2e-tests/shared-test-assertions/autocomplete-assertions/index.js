@@ -1,6 +1,6 @@
-import { countryInput } from '../../../pages/shared';
+import { countryInput } from '../../pages/shared';
 
-const checkAutocompleteInput = {
+export const checkAutocompleteInput = {
   isVisible: (field) => {
     field.input().should('be.visible');
   },

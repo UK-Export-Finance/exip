@@ -1,10 +1,20 @@
-{% from 'govuk/components/button/macro.njk' import govukButton %}
+{% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
 
 {% macro render(params) %}
 
+  {% set errorMessage = params.errorMessage %}
   {% set fieldId = params.fieldId %}
-  {% set options = params.options %}
   {% set integrity = params.integrity %}
+  {% set options = params.options %}
+
+  {% if errorMessage %}
+    {{ govukErrorMessage({
+      text: errorMessage,
+      attributes: {
+        "data-cy": fieldId + "-error-message"
+      }
+    }) }}
+  {% endif %}
 
   <select class="govuk-select" id="{{ fieldId }}" name="{{ fieldId }}">
     <option value="" disabled selected></option>

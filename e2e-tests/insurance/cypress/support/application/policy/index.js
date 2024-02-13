@@ -23,6 +23,7 @@ Cypress.Commands.add('completeAndSubmitPreCreditPeriodForm', require('../../../.
 Cypress.Commands.add('completeAndSubmitAnotherCompanyForm', require('../../../../../commands/insurance/complete-and-submit-another-company-form'));
 Cypress.Commands.add('completeAndSubmitOtherCompanyDetailsForm', require('../../../../../commands/insurance/complete-and-submit-other-company-details-form'));
 Cypress.Commands.add('completeAndSubmitBrokerForm', require('../../../../../commands/insurance/complete-and-submit-broker-form'));
+Cypress.Commands.add('completeBrokerDetailsForm', require('../../../../../commands/insurance/complete-broker-details-form'));
 Cypress.Commands.add('completeAndSubmitBrokerDetailsForm', require('../../../../../commands/insurance/complete-and-submit-broker-details-form'));
 
 Cypress.Commands.add('completeBusinessSection', require('../../../../../commands/insurance/complete-business-section'));

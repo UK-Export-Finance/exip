@@ -215,7 +215,7 @@ interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore,
   buyerCountry: string;
 }
 
-type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationCompany & ApplicationDeclaration;
+type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;
 
 interface ApplicationVersion {
   VERSION_NUMBER: string;

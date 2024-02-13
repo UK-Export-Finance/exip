@@ -11,8 +11,8 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
-import COUNTRIES, { XAD, DZA } from '../../../../../../fixtures/countries';
-import checkAutocompleteInput from '../../../../../../commands/shared-commands/assertions/check-autocomplete-input';
+import COUNTRIES from '../../../../../../fixtures/countries';
+import { assertCountryAutocompleteInput, checkAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
@@ -35,9 +35,6 @@ const {
 const finalDestinationField = countryInput.field(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
-
-const { NAME: ABU_DHABI } = XAD;
-const { NAME: ALGERIA } = DZA;
 
 context('Insurance - Export contract - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
@@ -145,29 +142,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
           cy.clickYesRadioInput();
         });
 
-        it('has working client side JS', () => {
-          checkAutocompleteInput.hasWorkingClientSideJS(field);
-        });
-
-        it('renders an input', () => {
-          checkAutocompleteInput.rendersInput(field);
-        });
-
-        it('renders `no results` message when no results are found', () => {
-          checkAutocompleteInput.rendersNoResultsMessage(field, 'test');
-        });
-
-        it('renders a single country result after searching', () => {
-          checkAutocompleteInput.rendersSingleResult(field, 'Alg');
-        });
-
-        it('renders multiple country results after searching', () => {
-          checkAutocompleteInput.rendersMultipleResults(field);
-        });
-
-        it('allows user to remove a selected country and search again', () => {
-          checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(fieldId, ABU_DHABI, ALGERIA, ALGERIA);
-        });
+        assertCountryAutocompleteInput({ fieldId });
       });
     });
 

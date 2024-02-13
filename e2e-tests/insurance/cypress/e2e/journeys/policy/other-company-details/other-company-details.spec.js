@@ -5,6 +5,7 @@ import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
+import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
@@ -83,12 +84,8 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       field.input().should('exist');
     });
 
-    it(`renders ${COUNTRY} label and input`, () => {
-      const fieldId = COUNTRY;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
-      field.input().should('exist');
+    describe(`searchable autocomplete input (${COUNTRY})`, () => {
+      assertCountryAutocompleteInput({ fieldId: COUNTRY });
     });
 
     it(`renders ${COMPANY_NUMBER} label and input`, () => {

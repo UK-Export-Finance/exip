@@ -52,7 +52,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
   });
 
   describe('when no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} retain the "insurance policy" task status as "in progress"`, () => {
+    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
       cy.clickSaveAndBackButton();

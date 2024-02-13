@@ -477,6 +477,9 @@ export const lists = {
       town: text(),
       county: text(),
       postcode: text(),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(300)' },
+      }),
       email: text({
         db: { nativeType: 'VarChar(300)' },
       }),

@@ -46,6 +46,7 @@ export const POLICY = {
   BROKER_CHANGE: `${BROKER_ROOT}/change`,
   BROKER_CHECK_AND_CHANGE: `${BROKER_ROOT}/check-and-change`,
   BROKER_DETAILS_ROOT,
+  BROKER_DETAILS_SAVE_AND_BACK: `${BROKER_DETAILS_ROOT}/save-and-back`,
   BROKER_CONFIRM_ADDRESS_ROOT,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };

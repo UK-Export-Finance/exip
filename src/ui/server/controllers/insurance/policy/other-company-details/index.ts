@@ -3,12 +3,17 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
+import api from '../../../../api';
+import { isPopulatedArray } from '../../../../helpers/array';
+import mapCountries from '../../../../helpers/mappings/map-countries';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/jointly-insured-party';
+import { objectHasProperty } from '../../../../helpers/object';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -58,7 +63,7 @@ export const FIELD_IDS = [COMPANY_NAME, COMPANY_NUMBER, COUNTRY];
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} Policy - Other company details page
  */
-export const get = (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -98,17 +103,44 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
-    return res.render(TEMPLATE, {
-      ...insuranceCorePageVariables({
-        PAGE_CONTENT_STRINGS,
-        BACK_LINK: req.headers.referer,
-      }),
-      ...pageVariables(application.referenceNumber),
-      userName: getUserNameFromSession(req.session.user),
-      application,
-      submittedValues: sanitisedData,
-      validationErrors,
-    });
+    let countries;
+
+    try {
+      countries = await api.keystone.countries.getAll();
+
+      if (!isPopulatedArray(countries)) {
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
+
+      let mappedCountries;
+
+      if (objectHasProperty(payload, COUNTRY)) {
+        const submittedCountry = payload[COUNTRY];
+
+        const country = getCountryByIsoCode(countries, submittedCountry);
+
+        mappedCountries = mapCountries(countries, country?.isoCode);
+      } else {
+        mappedCountries = mapCountries(countries);
+      }
+
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: req.headers.referer,
+        }),
+        ...pageVariables(application.referenceNumber),
+        userName: getUserNameFromSession(req.session.user),
+        application,
+        submittedValues: payload,
+        countries: mappedCountries,
+        validationErrors,
+      });
+    } catch (err) {
+      console.error('Error getting countries %O', err);
+
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
   }
 
   try {

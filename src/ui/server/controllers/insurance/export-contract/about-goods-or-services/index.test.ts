@@ -48,8 +48,8 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
   const mockApplicationWithoutCountryCode = {
     ...mockApplication,
-    policy: {
-      ...mockApplication.policy,
+    exportContract: {
+      ...mockApplication.exportContract,
       [FINAL_DESTINATION]: null,
     },
   };
@@ -148,13 +148,13 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
-        countries: mapCountries(mockCountries, mockApplication.exportContract[FINAL_DESTINATION]),
+        countries: mapCountries(mockCountries),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
-    describe('when a final destination has been previously submitted', () => {
+    describe('when a country has been previously submitted', () => {
       const mockApplicationWithCountry = {
         ...mockApplication,
         policy: {
@@ -318,7 +318,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
 
-      describe('when a final destination is submitted', () => {
+      describe('when a country is submitted', () => {
         const mockFormBody = {
           [FINAL_DESTINATION]: countryIsoCode,
         };
