@@ -40,8 +40,9 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       alternativeCurrencyUrl = `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
-      // TODO: EMS-2659 - use buyer commands to get here
-      cy.navigateToUrl(url);
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

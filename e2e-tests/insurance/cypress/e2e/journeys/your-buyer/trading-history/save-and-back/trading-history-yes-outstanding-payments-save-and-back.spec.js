@@ -30,8 +30,9 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      // TODO: EMS-2659 - use buyer commands to get here
-      cy.navigateToUrl(url);
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

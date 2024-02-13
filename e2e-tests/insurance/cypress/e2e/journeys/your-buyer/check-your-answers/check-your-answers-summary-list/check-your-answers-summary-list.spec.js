@@ -126,6 +126,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
         cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
         cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true, failedToPay: true });
+        cy.completeAndSubmitBuyerFinancialInformationForm({});
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
