@@ -68,10 +68,10 @@ const {
       },
     },
     YOUR_BUYER: {
-      COUNTRY,
       COMPANY_OR_ORGANISATION: {
-        NAME: COMPANY_OR_ORGANISATION_NAME,
         ADDRESS,
+        COUNTRY,
+        NAME: COMPANY_OR_ORGANISATION_NAME,
         REGISTRATION_NUMBER,
         WEBSITE,
       },
