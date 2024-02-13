@@ -90,6 +90,7 @@ const BROKER_DETAILS = {
 const BROKER_CONFIRM_ADDRESS = {
   ...SHARED,
   PAGE_TITLE: "Confirm broker's address",
+  USE_DIFFERENT_ADDRESS: 'Use a different address',
 };
 
 const CHECK_YOUR_ANSWERS = {

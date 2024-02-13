@@ -1,20 +1,21 @@
 import partials from '../../../../../../partials';
+import { insetText } from '../../../../../../pages/shared';
+import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-// import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
-// import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
+import mockApplication from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
-// const {
-// BROKER_DETAILS: {
-// FULL_ADDRESS,
-// },
-// } = POLICY_FIELD_IDS;
+const {
+  BROKER_DETAILS: { FULL_ADDRESS },
+} = POLICY_FIELD_IDS;
 
 const {
   ROOT,
+  ALL_SECTIONS,
   POLICY: {
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_DETAILS_ROOT,
@@ -22,14 +23,14 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-// const { BROKER_CONFIRM_ADDRESS: FIELD_STRINGS } = FIELDS;
-
 const baseUrl = Cypress.config('baseUrl');
 
 context("As an exporter, I want to be able to review the broker's contact details that I have provided, So that I can confirm my input or amend any errors if needed", () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
+  let brokerDetailsUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -49,6 +50,8 @@ context("As an exporter, I want to be able to review the broker's contact detail
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -80,12 +83,27 @@ context("As an exporter, I want to be able to review the broker's contact detail
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    // TODO: test address inset text.
-    // TODO: 'use a different address' link.
+    it(`renders ${FULL_ADDRESS} inset text`, () => {
+      const expected = mockApplication.BROKER[FULL_ADDRESS];
 
-    // it('renders intro text', () => {
-    //   cy.checkIntroText(CONTENT_STRINGS.INTRO);
-    // });
+      cy.checkText(insetText(), expected);
+    });
+
+    describe('`use a different address` link', () => {
+      it('renders', () => {
+        cy.checkLink(
+          brokerConfirmAddressPage.useDifferentAddressLink(),
+          `${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+          CONTENT_STRINGS.USE_DIFFERENT_ADDRESS,
+        );
+      });
+
+      it(`should redirect to ${ALL_SECTIONS} page`, () => {
+        brokerConfirmAddressPage.useDifferentAddressLink().click();
+
+        cy.assertUrl(brokerDetailsUrl);
+      });
+    });
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
@@ -102,13 +120,15 @@ context("As an exporter, I want to be able to review the broker's contact detail
 
       cy.assertUrl(checkYourAnswersUrl);
     });
+  });
 
-    describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        cy.navigateToUrl(url);
+  describe('when clicking the `save and back` button', () => {
+    it(`should redirect to ${ALL_SECTIONS} page`, () => {
+      cy.navigateToUrl(url);
 
-        cy.assertBrokerDetailsFieldValues({});
-      });
+      cy.clickSaveAndBackButton();
+
+      cy.assertUrl(allSectionsUrl);
     });
   });
 });

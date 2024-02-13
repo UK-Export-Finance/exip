@@ -10,7 +10,12 @@ const {
   BROKER_DETAILS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY: { BROKER_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
@@ -18,11 +23,12 @@ export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
 /**
  * pageVariables
- * "Save and go back" URL
+ * "Use different address" and "Save and go back" URL
  * @param {Number} Application reference number
  * @returns {Object} Page variables
  */
 export const pageVariables = (referenceNumber: number) => ({
+  USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
 });
 
@@ -48,4 +54,23 @@ export const get = (req: Request, res: Response) => {
     userName: getUserNameFromSession(req.session.user),
     address: application.broker[FULL_ADDRESS],
   });
+};
+
+/**
+ * post
+ * Redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow
+ */
+export const post = (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = application;
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

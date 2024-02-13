@@ -30,7 +30,7 @@ import { get as getBroker, post as postBroker } from '../../../controllers/insur
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/policy/broker/save-and-back';
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../controllers/insurance/policy/broker-details/save-and-back';
-import { get as getBrokerConfirmAddress } from '../../../controllers/insurance/policy/broker-confirm-address';
+import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../controllers/insurance/policy/broker-confirm-address';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
 
 // @ts-ignore
@@ -152,6 +152,7 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_DE
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_DETAILS_SAVE_AND_BACK}`, postBrokerDetailsSaveAndBack);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

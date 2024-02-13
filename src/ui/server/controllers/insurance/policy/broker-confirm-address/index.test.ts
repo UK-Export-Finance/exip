@@ -1,4 +1,4 @@
-import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
+import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -12,7 +12,12 @@ const {
   BROKER_DETAILS: { FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
 
-const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  ALL_SECTIONS,
+  POLICY: { BROKER_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 describe('controllers/insurance/policy/broker-confirm-address', () => {
   let req: Request;
@@ -44,6 +49,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
+        USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_DETAILS_ROOT}`,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       };
 
@@ -73,6 +79,28 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      post(req, res);
+
+      const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+      expect(res.redirect).toHaveBeenCalledWith(expected);
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

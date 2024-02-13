@@ -29,8 +29,15 @@
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
         {{ govukInsetText({
-          text: address
+          text: address,
+          attributes: {
+            'data-cy': 'inset-text'
+          }
         }) }}
+
+        <p class="govuk-body">
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ USE_DIFFERENT_ADDRESS_URL }}" data-cy="use-different-address-link">{{ CONTENT_STRINGS.USE_DIFFERENT_ADDRESS }}</a>
+        </p>
 
       </div>
     </div>
