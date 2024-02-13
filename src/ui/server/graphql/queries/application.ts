@@ -55,10 +55,7 @@ const applicationQuery = gql`
             requested
             companyName
             companyNumber
-            country {
-              isoCode
-              name
-            }
+            countryCode
           }
         }
         policyContact {

@@ -10,7 +10,7 @@ const {
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY,
+    REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE,
   },
 } = POLICY_FIELD_IDS;
 
@@ -70,7 +70,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
 
     it('should not have fields populated on different name on policy page', () => {
       cy.checkValue(fieldSelector(COMPANY_NAME), '');
-      cy.checkValue(countryInput.field(COUNTRY), '');
+      cy.checkValue(countryInput.field(COUNTRY_CODE), '');
       cy.checkValue(fieldSelector(COMPANY_NUMBER), '');
     });
   });

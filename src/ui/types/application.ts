@@ -179,7 +179,7 @@ interface ApplicationJointlyInsuredParty {
   requested?: boolean;
   companyName?: string;
   companyNumber?: string;
-  country?: Country;
+  country?: string;
 }
 
 interface ApplicationPolicy {

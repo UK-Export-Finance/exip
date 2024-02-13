@@ -138,11 +138,11 @@ describe('controllers/insurance/policy/another-company', () => {
   });
 
   describe('post', () => {
+    mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(true));
+
     const validBody = {
       [REQUESTED]: 'false',
     };
-
-    mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(true));
 
     describe('when there are no validation errors', () => {
       it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', async () => {
@@ -242,7 +242,7 @@ describe('controllers/insurance/policy/another-company', () => {
           req.body = validBody;
         });
 
-        describe('when no application is returned', () => {
+        describe('when a true boolean is not returned', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 

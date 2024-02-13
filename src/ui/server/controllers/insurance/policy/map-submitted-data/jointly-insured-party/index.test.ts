@@ -1,15 +1,16 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { mockJointlyInsuredParty } from '../../../../../test-mocks';
+import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party', () => {
-  describe(`when ${REQUESTED} is false`, () => {
+  describe(`when form body ${REQUESTED} is true`, () => {
     const mockBody = {
-      [REQUESTED]: false,
+      [REQUESTED]: true,
+      [COUNTRY_CODE]: mockApplication.policy.jointlyInsuredParty.countryCode,
       mockOtherField: true,
     };
 
@@ -22,8 +23,8 @@ describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party'
     });
   });
 
-  describe(`when ${REQUESTED} is false`, () => {
-    it('should nullify all other fields', () => {
+  describe(`when form body ${REQUESTED} is false`, () => {
+    it('should wipe all other fields', () => {
       const mockBody = {
         ...mockJointlyInsuredParty,
         [REQUESTED]: false,
@@ -35,7 +36,7 @@ describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party'
         ...mockBody,
         [COMPANY_NAME]: '',
         [COMPANY_NUMBER]: '',
-        [COUNTRY]: null,
+        [COUNTRY_CODE]: '',
       };
 
       expect(result).toEqual(expected);

@@ -27,11 +27,9 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, [FIELD_ID]);
 
-    // run validation on inputs
     const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
     if (!validationErrors) {
-      // runs save and go back command
       const saveResponse = await mapAndSave.jointlyInsuredParty(payload, application);
 
       if (!saveResponse) {
@@ -39,7 +37,6 @@ const post = async (req: Request, res: Response) => {
       }
     }
 
-    // redirect to all sections page
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
     console.error('Error updating application - policy - another company (save and back) %O', err);

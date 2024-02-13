@@ -16,7 +16,7 @@ const {
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
     REQUESTED_JOINTLY_INSURED_PARTY: {
-      REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY,
+      REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE,
     },
     USING_BROKER,
     BROKER_DETAILS: { NAME, FULL_ADDRESS },
@@ -202,7 +202,7 @@ export const POLICY_FIELDS = {
       LABEL: 'Registration number of the other company (optional)',
       MAXIMUM: 100,
     },
-    [COUNTRY]: {
+    [COUNTRY_CODE]: {
       LABEL: 'What country is the other company based in?',
     },
   },
