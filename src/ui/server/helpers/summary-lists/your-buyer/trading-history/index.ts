@@ -35,8 +35,8 @@ export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenc
   const fields = [] as Array<SummaryListItemData>;
 
   /**
-   * if CONNECTION_WITH_BUYER is true
-   * pushes CONNECTION_WITH_BUYER_DESCRIPTION to the summary list
+   * if OUTSTANDING_PAYMENTS is true
+   * pushes TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE to the summary list
    */
   if (answers[OUTSTANDING_PAYMENTS]) {
     fields.push(
