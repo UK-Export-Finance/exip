@@ -87,6 +87,11 @@ const BROKER_DETAILS = {
     "Your broker's contact details will be stored securely and in line with GDPR. They will also be our main point of contact when processing your application.",
 };
 
+const BROKER_CONFIRM_ADDRESS = {
+  ...SHARED,
+  PAGE_TITLE: "Confirm broker's address",
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -106,5 +111,6 @@ export default {
   OTHER_COMPANY_DETAILS,
   BROKER,
   BROKER_DETAILS,
+  BROKER_CONFIRM_ADDRESS,
   CHECK_YOUR_ANSWERS,
 };
