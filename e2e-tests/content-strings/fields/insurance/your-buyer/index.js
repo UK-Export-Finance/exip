@@ -1,4 +1,5 @@
 import { FIELD_IDS } from '../../../../constants';
+import { FORM_TITLES } from '../../../form-titles';
 
 const {
   YOUR_BUYER: {
@@ -16,12 +17,19 @@ const {
   CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
 
+const {
+  YOUR_BUYER: {
+    COMPANY_DETAILS, CONNECTION_TO_BUYER,
+  },
+} = FORM_TITLES;
+
 export const YOUR_BUYER_FIELDS = {
   COMPANY_OR_ORGANISATION: {
     [COMPANY_OR_ORGANISATION.NAME]: {
       LABEL: "Buyer's company or organisation name",
       SUMMARY: {
         TITLE: 'Company or organisation name',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
@@ -29,6 +37,7 @@ export const YOUR_BUYER_FIELDS = {
       MAXIMUM: 330,
       SUMMARY: {
         TITLE: 'Buyer address',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
@@ -38,12 +47,14 @@ export const YOUR_BUYER_FIELDS = {
       LABEL: 'Registration number (optional)',
       SUMMARY: {
         TITLE: 'Registration number (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
       LABEL: 'Enter their  website (optional)',
       SUMMARY: {
         TITLE: 'Buyer website (optional)',
+        FORM_TITLE: COMPANY_DETAILS,
       },
     },
   },
@@ -52,6 +63,7 @@ export const YOUR_BUYER_FIELDS = {
     HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
     SUMMARY: {
       TITLE: 'Connected with the buyer',
+      FORM_TITLE: CONNECTION_TO_BUYER,
     },
   },
   [CONNECTION_WITH_BUYER_DESCRIPTION]: {
@@ -59,6 +71,7 @@ export const YOUR_BUYER_FIELDS = {
     MAXIMUM: 1000,
     SUMMARY: {
       TITLE: 'Details of connection',
+      FORM_TITLE: CONNECTION_TO_BUYER,
     },
   },
   [TRADED_WITH_BUYER]: {

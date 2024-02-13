@@ -1,7 +1,7 @@
-import generateSummaryListRows from '../generate-summary-list-rows';
 import generateCompanyOrOrganisationFields from './company-or-organisation';
-import workingWithBuyerFields from './working-with-buyer';
-import { SummaryListItemData, ApplicationBuyer } from '../../../../types';
+import connectionWithBuyerFields from './connection-with-buyer';
+import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
+import { SummaryListGroupData, ApplicationBuyer } from '../../../../types';
 
 /**
  * generateFields
@@ -10,11 +10,11 @@ import { SummaryListItemData, ApplicationBuyer } from '../../../../types';
  * @param {Number} referenceNumber
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
-const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean) => {
+const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean): Array<SummaryListGroupData> => {
   const fields = [
-    ...generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
-    ...workingWithBuyerFields(answersBuyer, referenceNumber, checkAndChange),
-  ] as Array<SummaryListItemData>;
+    generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
+    connectionWithBuyerFields(answersBuyer.relationship, referenceNumber, checkAndChange),
+  ] as Array<SummaryListGroupData>;
 
   return fields;
 };
@@ -29,7 +29,7 @@ const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number,
 const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange = false) => {
   const fields = generateFields(answersBuyer, referenceNumber, checkAndChange);
 
-  const summaryList = generateSummaryListRows(fields);
+  const summaryList = generateGroupsOfSummaryLists(fields);
 
   return summaryList;
 };

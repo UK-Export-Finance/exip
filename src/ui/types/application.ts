@@ -113,7 +113,7 @@ interface ApplicationBuyerCore {
   website?: string;
 }
 
-interface BuyerRelationship {
+interface ApplicationBuyerRelationship {
   id: string;
   exporterIsConnectedWithBuyer?: boolean;
   connectionWithBuyerDescription?: string;
@@ -135,7 +135,7 @@ interface ApplicationBuyer extends ApplicationBuyerCore {
   id: string;
   country?: ApplicationBuyerCountry;
   buyerTradingHistory: BuyerTradingHistory;
-  relationship: BuyerRelationship;
+  relationship: ApplicationBuyerRelationship;
   contact: BuyerContact;
 }
 
@@ -237,6 +237,7 @@ export {
   ApplicationBusiness,
   ApplicationBroker,
   ApplicationBuyer,
+  ApplicationBuyerRelationship,
   ApplicationBuyerUiInput,
   ApplicationBuyerApiInput,
   ApplicationExportContract,

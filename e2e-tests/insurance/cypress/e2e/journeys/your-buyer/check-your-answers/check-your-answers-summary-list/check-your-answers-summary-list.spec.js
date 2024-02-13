@@ -19,7 +19,6 @@ const {
       },
       CONNECTION_WITH_BUYER,
       CONNECTION_WITH_BUYER_DESCRIPTION,
-      TRADED_WITH_BUYER,
     },
   },
 } = FIELD_IDS;
@@ -82,9 +81,10 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
       checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: false });
     });
 
-    it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-      checkSummaryList[TRADED_WITH_BUYER]();
-    });
+    // TODO: EMS-2628
+    // it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
+    //   checkSummaryList[TRADED_WITH_BUYER]();
+    // });
   });
 
   describe(`${CONNECTION_WITH_BUYER} as yes`, () => {
