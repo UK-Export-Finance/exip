@@ -1,46 +1,42 @@
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
-import { mockApplication, mockCountries, mockJointlyInsuredParty } from '../../../../../test-mocks';
+import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import mapSubmittedData from '.';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party', () => {
   describe(`when form body ${REQUESTED} is true`, () => {
     const mockBody = {
-      [REQUESTED]: 'true',
-      [COUNTRY]: mockApplication.policy.jointlyInsuredParty.country,
-      mockOtherField: 'true',
+      [REQUESTED]: true,
+      [COUNTRY_CODE]: mockApplication.policy.jointlyInsuredParty.countryCode,
+      mockOtherField: true,
     };
 
-    it('should return form data as provided, but with country mapping', () => {
-      const result = mapSubmittedData(mockBody, mockApplication, mockCountries);
+    it('should return form data as provided', () => {
+      const result = mapSubmittedData(mockBody);
 
-      const expected = {
-        ...mockBody,
-        [COUNTRY]: getCountryByIsoCode(mockCountries, mockBody[COUNTRY]).isoCode,
-      };
+      const expected = mockBody;
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when form body ${REQUESTED} and application ${REQUESTED} are both false`, () => {
-    it('should nullify all other fields', () => {
+  describe(`when form body ${REQUESTED} is false`, () => {
+    it('should wipe all other fields', () => {
       const mockBody = {
         ...mockJointlyInsuredParty,
-        [REQUESTED]: 'false',
+        [REQUESTED]: false,
       };
 
-      const result = mapSubmittedData(mockBody, mockApplication, mockCountries);
+      const result = mapSubmittedData(mockBody);
 
       const expected = {
         ...mockBody,
         [COMPANY_NAME]: '',
         [COMPANY_NUMBER]: '',
-        [COUNTRY]: null,
+        [COUNTRY_CODE]: '',
       };
 
       expect(result).toEqual(expected);
@@ -51,7 +47,7 @@ describe('controllers/insurance/policy/map-submitted-data/jointly-insured-party'
     it('should return form data as provided', () => {
       const mockBody = {};
 
-      const result = mapSubmittedData(mockBody, mockApplication, mockCountries);
+      const result = mapSubmittedData(mockBody);
 
       const expected = mockBody;
 

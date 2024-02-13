@@ -1,4 +1,4 @@
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { field as fieldSelector, countryInput, headingCaption } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
@@ -15,7 +15,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const { REQUESTED_JOINTLY_INSURED_PARTY: FIELD_STRINGS } = FIELDS;
@@ -84,8 +84,8 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       field.input().should('exist');
     });
 
-    describe(`searchable autocomplete input (${COUNTRY})`, () => {
-      assertCountryAutocompleteInput({ fieldId: COUNTRY });
+    describe(`searchable autocomplete input (${COUNTRY_CODE})`, () => {
+      assertCountryAutocompleteInput({ fieldId: COUNTRY_CODE });
     });
 
     it(`renders ${COMPANY_NUMBER} label and input`, () => {
@@ -115,7 +115,9 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
         cy.navigateToUrl(url);
 
         cy.checkValue(fieldSelector(COMPANY_NAME), application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME]);
-        cy.checkValue(fieldSelector(COUNTRY), application.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY]);
+        cy.checkValue(countryInput.field(COUNTRY_CODE), application.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY_CODE]);
+
+        cy.checkValue(fieldSelector(COMPANY_NUMBER), application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER]);
       });
     });
   });

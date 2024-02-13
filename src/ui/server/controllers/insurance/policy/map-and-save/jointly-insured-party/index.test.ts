@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import mapSubmittedData from '../../map-submitted-data/jointly-insured-party';
 import save from '../../save-data/jointly-insured-party';
-import { mockApplication, mockCountries, mockJointlyInsuredParty } from '../../../../../test-mocks';
+import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 
@@ -17,12 +17,12 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
     [REQUESTED]: mockJointlyInsuredParty[REQUESTED],
   };
 
-  const mockSaveBroker = jest.fn(() => Promise.resolve({}));
-  save.jointlyInsuredParty = mockSaveBroker;
+  const mockSaveJointlyInsuredParty = jest.fn(() => Promise.resolve({}));
+  save.jointlyInsuredParty = mockSaveJointlyInsuredParty;
 
   const mockValidationErrors = generateValidationErrors(REQUESTED, 'error', {});
 
-  const populatedData = mapSubmittedData(mockFormBody, mockApplication, mockCountries);
+  const populatedData = mapSubmittedData(mockFormBody, mockApplication);
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {

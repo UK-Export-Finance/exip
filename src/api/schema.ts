@@ -333,7 +333,9 @@ export const lists = {
       companyNumber: text({
         db: { nativeType: 'VarChar(100)' },
       }),
-      country: relationship({ ref: 'Country' }),
+      countryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
     access: allowAll,
   }),
@@ -344,7 +346,9 @@ export const lists = {
         db: { nativeType: 'VarChar(1000)' },
       }),
       finalDestinationKnown: nullableCheckbox(),
-      finalDestinationCountryCode: text(),
+      finalDestinationCountryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

@@ -13,7 +13,6 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/jointly-insured-party';
 import { objectHasProperty } from '../../../../helpers/object';
-import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -23,7 +22,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
@@ -44,9 +43,9 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: COMPANY_NUMBER,
       ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER],
     },
-    COUNTRY: {
-      ID: COUNTRY,
-      ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY],
+    COUNTRY_CODE: {
+      ID: COUNTRY_CODE,
+      ...FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY_CODE],
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_SAVE_AND_BACK}`,
@@ -54,7 +53,7 @@ export const pageVariables = (referenceNumber: number) => ({
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
 
-export const FIELD_IDS = [COMPANY_NAME, COMPANY_NUMBER, COUNTRY];
+export const FIELD_IDS = [COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE];
 
 /**
  * get
@@ -70,15 +69,38 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS,
-      BACK_LINK: req.headers.referer,
-    }),
-    ...pageVariables(application.referenceNumber),
-    userName: getUserNameFromSession(req.session.user),
-    application,
-  });
+  try {
+    const countries = await api.keystone.countries.getAll();
+
+    if (!isPopulatedArray(countries)) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    let mappedCountries;
+
+    const { jointlyInsuredParty } = application.policy;
+
+    if (objectHasProperty(jointlyInsuredParty, COUNTRY_CODE)) {
+      mappedCountries = mapCountries(countries, jointlyInsuredParty[COUNTRY_CODE]);
+    } else {
+      mappedCountries = mapCountries(countries);
+    }
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(application.referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application,
+      countries: mappedCountries,
+    });
+  } catch (err) {
+    console.error('Error getting countries %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };
 
 /**
@@ -103,10 +125,8 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
-    let countries;
-
     try {
-      countries = await api.keystone.countries.getAll();
+      const countries = await api.keystone.countries.getAll();
 
       if (!isPopulatedArray(countries)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
@@ -114,12 +134,10 @@ export const post = async (req: Request, res: Response) => {
 
       let mappedCountries;
 
-      if (objectHasProperty(payload, COUNTRY)) {
-        const submittedCountry = payload[COUNTRY];
+      if (objectHasProperty(payload, COUNTRY_CODE)) {
+        const submittedCountryCode = payload[COUNTRY_CODE];
 
-        const country = getCountryByIsoCode(countries, submittedCountry);
-
-        mappedCountries = mapCountries(countries, country?.isoCode);
+        mappedCountries = mapCountries(countries, submittedCountryCode);
       } else {
         mappedCountries = mapCountries(countries);
       }
@@ -144,7 +162,6 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    // TODO: add countries here.
     const saveResponse = await mapAndSave.jointlyInsuredParty(sanitisedData, application);
 
     if (!saveResponse) {

@@ -629,7 +629,7 @@ type JointlyInsuredParty {
   requested: Boolean
   companyName: String
   companyNumber: String
-  country: Country
+  countryCode: String
 }
 
 input JointlyInsuredPartyWhereUniqueInput {
@@ -644,13 +644,14 @@ input JointlyInsuredPartyWhereInput {
   policy: PolicyWhereInput
   companyName: StringFilter
   companyNumber: StringFilter
-  country: CountryWhereInput
+  countryCode: StringFilter
 }
 
 input JointlyInsuredPartyOrderByInput {
   id: OrderDirection
   companyName: OrderDirection
   companyNumber: OrderDirection
+  countryCode: OrderDirection
 }
 
 input JointlyInsuredPartyUpdateInput {
@@ -658,13 +659,7 @@ input JointlyInsuredPartyUpdateInput {
   requested: Boolean
   companyName: String
   companyNumber: String
-  country: CountryRelateToOneForUpdateInput
-}
-
-input CountryRelateToOneForUpdateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
-  disconnect: Boolean
+  countryCode: String
 }
 
 input JointlyInsuredPartyUpdateArgs {
@@ -677,12 +672,7 @@ input JointlyInsuredPartyCreateInput {
   requested: Boolean
   companyName: String
   companyNumber: String
-  country: CountryRelateToOneForCreateInput
-}
-
-input CountryRelateToOneForCreateInput {
-  create: CountryCreateInput
-  connect: CountryWhereUniqueInput
+  countryCode: String
 }
 
 type ExportContract {
@@ -1521,6 +1511,12 @@ input BuyerUpdateInput {
   relationship: BuyerRelationshipRelateToOneForUpdateInput
 }
 
+input CountryRelateToOneForUpdateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
+  disconnect: Boolean
+}
+
 input BuyerTradingHistoryRelateToOneForUpdateInput {
   create: BuyerTradingHistoryCreateInput
   connect: BuyerTradingHistoryWhereUniqueInput
@@ -1554,6 +1550,11 @@ input BuyerCreateInput {
   buyerTradingHistory: BuyerTradingHistoryRelateToOneForCreateInput
   contact: BuyerContactRelateToOneForCreateInput
   relationship: BuyerRelationshipRelateToOneForCreateInput
+}
+
+input CountryRelateToOneForCreateInput {
+  create: CountryCreateInput
+  connect: CountryWhereUniqueInput
 }
 
 input BuyerTradingHistoryRelateToOneForCreateInput {

@@ -77,19 +77,19 @@
 
         <div class="govuk-form-group">
           {{ govukLabel({
-            for: FIELDS.COUNTRY.ID,
+            for: FIELDS.COUNTRY_CODE.ID,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            text: FIELDS.COUNTRY.LABEL,
+            text: FIELDS.COUNTRY_CODE.LABEL,
             attributes: {
-              id: FIELDS.COUNTRY.ID + "-label",
-              "data-cy": FIELDS.COUNTRY.ID + "-label"
+              id: FIELDS.COUNTRY_CODE.ID + "-label",
+              "data-cy": FIELDS.COUNTRY_CODE.ID + "-label"
             }
           }) }}
 
           <div class="govuk-input--width-20">
             {{ accessibleAutoCompleteSelect.render({
-              errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
-              fieldId: FIELDS.COUNTRY.ID,
+              errorMessage: validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text,
+              fieldId: FIELDS.COUNTRY_CODE.ID,
               integrity: SRI.ACCESSIBILITY,
               options: countries
             }) }}

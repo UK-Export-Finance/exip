@@ -3,7 +3,7 @@ import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/
 import application from '../../fixtures/application';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const { REQUESTED_JOINTLY_INSURED_PARTY: FIXTURES } = application;
@@ -14,7 +14,8 @@ const { REQUESTED_JOINTLY_INSURED_PARTY: FIXTURES } = application;
  */
 const completeAndSubmitOtherCompanyDetailsForm = () => {
   cy.keyboardInput(field(COMPANY_NAME).input(), FIXTURES[COMPANY_NAME]);
-  cy.keyboardInput(countryInput.field(COUNTRY).input(), FIXTURES[COUNTRY]);
+  cy.keyboardInput(countryInput.field(COUNTRY_CODE).input(), FIXTURES[COUNTRY_CODE]);
+  cy.keyboardInput(field(COMPANY_NUMBER).input(), FIXTURES[COMPANY_NUMBER]);
 
   cy.clickSubmitButton();
 };

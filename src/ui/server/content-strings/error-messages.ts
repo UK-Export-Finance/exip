@@ -273,7 +273,7 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: {
           ABOVE_MAXIMUM: 'The registration number of the other company cannot be more than 100 characters',
         },
-        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY]: {
+        [FIELD_IDS.INSURANCE.POLICY.REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: {
           IS_EMPTY: 'Enter the country the other company is based in',
         },
       },
