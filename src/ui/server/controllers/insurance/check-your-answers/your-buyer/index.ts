@@ -70,7 +70,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       status,
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryList,
       ...pageVariables(referenceNumber),
     });
   } catch (err) {

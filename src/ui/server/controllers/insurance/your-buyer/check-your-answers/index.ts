@@ -29,7 +29,7 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryList = yourBuyerSummaryList(application.buyer, refNumber);
+    const summaryLists = yourBuyerSummaryList(application.buyer, refNumber);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -38,7 +38,7 @@ const get = (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      SUMMARY_LIST: summaryList,
+      SUMMARY_LISTS: summaryLists,
       SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`,
     });
   } catch (err) {

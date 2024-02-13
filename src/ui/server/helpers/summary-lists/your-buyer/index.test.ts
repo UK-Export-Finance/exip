@@ -1,11 +1,11 @@
 import { generateFields, yourBuyerSummaryList } from '.';
-import generateSummaryListRows from '../generate-summary-list-rows';
 import generateCompanyOrOrganisationFields from './company-or-organisation';
-import workingWithBuyerFields from './working-with-buyer';
+import connectionWithBuyerFields from './connection-with-buyer';
+import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import mockApplication, { mockApplicationBuyer } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-buyer', () => {
-  const { referenceNumber } = mockApplication;
+  const { referenceNumber, buyer } = mockApplication;
   const checkAndChange = false;
 
   describe('generateFields', () => {
@@ -13,21 +13,21 @@ describe('server/helpers/summary-lists/your-buyer', () => {
       const result = generateFields(mockApplicationBuyer, referenceNumber, checkAndChange);
 
       const expected = [
-        ...generateCompanyOrOrganisationFields(mockApplicationBuyer, referenceNumber, checkAndChange),
-        ...workingWithBuyerFields(mockApplicationBuyer, referenceNumber, checkAndChange),
+        generateCompanyOrOrganisationFields(buyer, referenceNumber, checkAndChange),
+        connectionWithBuyerFields(buyer.relationship, referenceNumber, checkAndChange),
       ];
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('yourBusinessSummaryList', () => {
+  describe('yourBuyerSummaryList', () => {
     it('should return an array of summary list rows', () => {
       const result = yourBuyerSummaryList(mockApplicationBuyer, referenceNumber);
 
       const fields = generateFields(mockApplicationBuyer, referenceNumber, checkAndChange);
 
-      const expected = generateSummaryListRows(fields);
+      const expected = generateGroupsOfSummaryLists(fields);
 
       expect(result).toEqual(expected);
     });

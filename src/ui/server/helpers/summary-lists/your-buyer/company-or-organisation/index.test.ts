@@ -1,5 +1,6 @@
 import generateCompanyOrOrganisationFields from '.';
 import generateAddressObject from '../../generate-address-object';
+import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { ROUTES } from '../../../../constants';
@@ -10,6 +11,10 @@ import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
+
+const {
+  YOUR_BUYER: { COMPANY_DETAILS: FORM_TITLE },
+} = FORM_TITLES;
 
 const {
   INSURANCE: {
@@ -83,7 +88,12 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
     it('should return fields and values from the submitted data/answers', () => {
       const result = generateCompanyOrOrganisationFields(mockAnswers, referenceNumber, checkAndChange);
 
-      expect(result).toEqual(expectedBase);
+      const expected = {
+        title: FORM_TITLE,
+        fields: expectedBase,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });
