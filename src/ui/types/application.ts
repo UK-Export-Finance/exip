@@ -98,7 +98,7 @@ interface ApplicationBuyerCountry {
   name?: string;
 }
 
-interface BuyerTradingHistory {
+interface ApplicationBuyerTradingHistory {
   id: string;
   exporterHasTradedWithBuyer?: boolean;
   currencyCode?: string;
@@ -134,7 +134,7 @@ interface BuyerContact {
 interface ApplicationBuyer extends ApplicationBuyerCore {
   id: string;
   country?: ApplicationBuyerCountry;
-  buyerTradingHistory: BuyerTradingHistory;
+  buyerTradingHistory: ApplicationBuyerTradingHistory;
   relationship: ApplicationBuyerRelationship;
   contact: BuyerContact;
 }
@@ -179,7 +179,7 @@ interface ApplicationJointlyInsuredParty {
   requested?: boolean;
   companyName?: string;
   companyNumber?: string;
-  country?: Country;
+  country?: string;
 }
 
 interface ApplicationPolicy {
@@ -238,6 +238,7 @@ export {
   ApplicationBroker,
   ApplicationBuyer,
   ApplicationBuyerRelationship,
+  ApplicationBuyerTradingHistory,
   ApplicationBuyerUiInput,
   ApplicationBuyerApiInput,
   ApplicationExportContract,

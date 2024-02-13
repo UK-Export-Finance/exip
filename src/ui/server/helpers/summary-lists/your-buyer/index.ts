@@ -1,5 +1,6 @@
 import generateCompanyOrOrganisationFields from './company-or-organisation';
 import connectionWithBuyerFields from './connection-with-buyer';
+import tradingHistoryFields from './trading-history';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { SummaryListGroupData, ApplicationBuyer } from '../../../../types';
 
@@ -14,6 +15,7 @@ const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number,
   const fields = [
     generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
     connectionWithBuyerFields(answersBuyer.relationship, referenceNumber, checkAndChange),
+    tradingHistoryFields(answersBuyer.buyerTradingHistory, referenceNumber, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;

@@ -139,10 +139,7 @@ model JointlyInsuredParty {
   requested     Boolean?
   companyName   String   @default("") @mysql.VarChar(200)
   companyNumber String   @default("") @mysql.VarChar(100)
-  country       Country? @relation("JointlyInsuredParty_country", fields: [countryId], references: [id])
-  countryId     String?  @map("country")
-
-  @@index([countryId])
+  countryCode   String   @default("") @mysql.VarChar(3)
 }
 
 model ExportContract {
@@ -151,7 +148,7 @@ model ExportContract {
   applicationId                   String?       @map("application")
   goodsOrServicesDescription      String        @default("") @mysql.VarChar(1000)
   finalDestinationKnown           Boolean?
-  finalDestinationCountryCode     String        @default("")
+  finalDestinationCountryCode     String        @default("") @mysql.VarChar(3)
   from_Application_exportContract Application[] @relation("Application_exportContract")
 
   @@index([applicationId])
@@ -360,12 +357,11 @@ model BuyerTradingHistory {
 }
 
 model Country {
-  id                               String                @id @default(cuid())
-  isoCode                          String                @default("")
-  name                             String                @default("")
-  from_JointlyInsuredParty_country JointlyInsuredParty[] @relation("JointlyInsuredParty_country")
-  from_Buyer_country               Buyer[]               @relation("Buyer_country")
-  from_Eligibility_buyerCountry    Eligibility[]         @relation("Eligibility_buyerCountry")
+  id                            String        @id @default(cuid())
+  isoCode                       String        @default("")
+  name                          String        @default("")
+  from_Buyer_country            Buyer[]       @relation("Buyer_country")
+  from_Eligibility_buyerCountry Eligibility[] @relation("Eligibility_buyerCountry")
 }
 
 model Eligibility {

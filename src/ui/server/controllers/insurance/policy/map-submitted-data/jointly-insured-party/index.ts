@@ -2,7 +2,7 @@ import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/polic
 import { RequestBody } from '../../../../../../types';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 /**
@@ -14,10 +14,10 @@ const {
 const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
-  if (!populatedData[REQUESTED]) {
+  if (populatedData[REQUESTED] === false) {
     populatedData[COMPANY_NAME] = '';
     populatedData[COMPANY_NUMBER] = '';
-    populatedData[COUNTRY] = null;
+    populatedData[COUNTRY_CODE] = '';
   }
 
   return populatedData;

@@ -19,7 +19,7 @@ const {
 
 const {
   YOUR_BUYER: {
-    COMPANY_DETAILS, CONNECTION_TO_BUYER,
+    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER,
   },
 } = FORM_TITLES;
 
@@ -79,13 +79,22 @@ export const YOUR_BUYER_FIELDS = {
     HINT: 'If yes, we will request a copy of your trading history once the application has been submitted.',
     SUMMARY: {
       TITLE: 'Trading history',
+      FORM_TITLE: TRADING_HISTORY,
     },
   },
   [OUTSTANDING_PAYMENTS]: {
     LABEL: 'Do you currently have any outstanding or overdue payments from the buyer?',
+    SUMMARY: {
+      TITLE: 'Outstanding or overdue payments',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [FAILED_PAYMENTS]: {
     LABEL: 'Has the buyer ever failed to pay you on time?',
+    SUMMARY: {
+      TITLE: 'Buyer failed to pay on time?',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [CURRENCY_CODE]: {
     LEGEND: 'What currency are the outstanding or overdue payments in?',
@@ -101,8 +110,16 @@ export const YOUR_BUYER_FIELDS = {
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',
     LABEL: 'Total outstanding, including overdue',
+    SUMMARY: {
+      TITLE: 'Total outstanding including overdue',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
   [TOTAL_AMOUNT_OVERDUE]: {
     LABEL: 'Amount overdue',
+    SUMMARY: {
+      TITLE: 'Amount overdue',
+      FORM_TITLE: TRADING_HISTORY,
+    },
   },
 };

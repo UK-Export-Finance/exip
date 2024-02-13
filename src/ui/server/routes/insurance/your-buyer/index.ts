@@ -58,6 +58,10 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CONNECTION_WITH_BUYER_CHECK_
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, getTradingHistory);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, postTradingHistory);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_SAVE_AND_BACK}`, postTradingHistorySaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHANGE}`, getTradingHistory);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHANGE}`, postTradingHistory);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, getTradingHistory);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, postTradingHistory);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, getAlternativeCurrency);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, postAlternativeCurrency);

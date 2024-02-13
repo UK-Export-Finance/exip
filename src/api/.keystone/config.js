@@ -213,7 +213,7 @@ var POLICY = {
     REQUESTED: "requested",
     COMPANY_NAME: "companyName",
     COMPANY_NUMBER: "companyNumber",
-    COUNTRY: "country"
+    COUNTRY_CODE: "countryCode"
   },
   USING_BROKER: "isUsingBroker",
   BROKER_DETAILS: {
@@ -1171,7 +1171,9 @@ var lists = {
       companyNumber: (0, import_fields.text)({
         db: { nativeType: "VarChar(100)" }
       }),
-      country: (0, import_fields.relationship)({ ref: "Country" })
+      countryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      })
     },
     access: import_access.allowAll
   }),
@@ -1182,7 +1184,9 @@ var lists = {
         db: { nativeType: "VarChar(1000)" }
       }),
       finalDestinationKnown: nullable_checkbox_default(),
-      finalDestinationCountryCode: (0, import_fields.text)()
+      finalDestinationCountryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      })
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

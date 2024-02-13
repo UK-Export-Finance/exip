@@ -4,7 +4,7 @@ import emptyFieldValidation from '../../../../../../../shared-validation/empty-f
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COUNTRY: FIELD_ID },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COUNTRY_CODE: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -19,6 +19,6 @@ const {
  * @param {Object} errors: errorList
  * @returns {Object} Errors or empty object
  */
-const country = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
+const countryCode = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
 
-export default country;
+export default countryCode;

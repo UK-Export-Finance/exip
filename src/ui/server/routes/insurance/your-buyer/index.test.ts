@@ -36,8 +36,8 @@ describe('routes/insurance/your-buyer', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(15);
-    expect(post).toHaveBeenCalledTimes(20);
+    expect(get).toHaveBeenCalledTimes(17);
+    expect(post).toHaveBeenCalledTimes(22);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -68,6 +68,10 @@ describe('routes/insurance/your-buyer', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, getTradingHistory);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY}`, postTradingHistory);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_SAVE_AND_BACK}`, postTradingHistorySaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHANGE}`, getTradingHistory);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHANGE}`, postTradingHistory);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, getTradingHistory);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CHANGE}`, postTradingHistory);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, getAlternativeCurrency);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, postAlternativeCurrency);

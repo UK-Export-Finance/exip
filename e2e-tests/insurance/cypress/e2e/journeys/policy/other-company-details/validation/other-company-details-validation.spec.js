@@ -13,7 +13,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -80,8 +80,8 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     });
   });
 
-  describe(COUNTRY, () => {
-    const FIELD_ID = COUNTRY;
+  describe(COUNTRY_CODE, () => {
+    const FIELD_ID = COUNTRY_CODE;
     const ERROR = ERRORS[FIELD_ID];
 
     const { field, numberOfExpectedErrors, errorIndex } = {

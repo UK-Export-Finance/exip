@@ -53,7 +53,7 @@ export const POLICY = {
     REQUESTED: 'requested',
     COMPANY_NAME: 'companyName',
     COMPANY_NUMBER: 'companyNumber',
-    COUNTRY: 'country',
+    COUNTRY_CODE: 'countryCode',
   },
   USING_BROKER: 'isUsingBroker',
   BROKER_DETAILS: {

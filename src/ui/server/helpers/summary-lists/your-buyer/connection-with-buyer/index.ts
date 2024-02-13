@@ -24,9 +24,9 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
 
 /**
  * optionalFields
- * optionalFields for working with buyer summary list
+ * optionalFields for connection with buyer summary list
  * if CONNECTION_WITH_BUYER is true, then renders extra row in summary list
- * @param {BuyerRelationship} answers
+ * @param {ApplicationBuyerRelationship} answers
  * @param {Number} referenceNumber
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure

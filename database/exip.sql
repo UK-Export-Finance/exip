@@ -740,7 +740,7 @@ CREATE TABLE `ExportContract` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `goodsOrServicesDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `finalDestinationCountryCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `finalDestinationCountryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `finalDestinationKnown` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `ExportContract_application_idx` (`application`),
@@ -888,14 +888,10 @@ CREATE TABLE `JointlyInsuredParty` (
   `requested` tinyint(1) DEFAULT NULL,
   `companyName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyNumber` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `countryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `JointlyInsuredParty_policy_key` (`policy`),
-  KEY `JointlyInsuredParty_country_idx` (`country`),
-  CONSTRAINT `JointlyInsuredParty_country_fkey` FOREIGN KEY (`country`) REFERENCES `Country` (`id`) ON DELETE
-  SET
-    NULL ON UPDATE CASCADE,
-    CONSTRAINT `JointlyInsuredParty_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE
+  CONSTRAINT `JointlyInsuredParty_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;

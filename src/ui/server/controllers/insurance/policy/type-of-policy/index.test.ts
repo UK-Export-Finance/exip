@@ -280,7 +280,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
       });
 
       describe('mapAndSave.policy call', () => {
-        describe('when no application is returned', () => {
+        describe('when a true boolean is not returned', () => {
           beforeEach(() => {
             const savePolicyDataSpy = jest.fn(() => Promise.resolve(false));
 

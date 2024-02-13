@@ -5,7 +5,7 @@ import emptyFieldValidation from '../../../../../../../shared-validation/empty-f
 import { mockErrors, mockCountries } from '../../../../../../../test-mocks';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COUNTRY: FIELD_ID },
+  REQUESTED_JOINTLY_INSURED_PARTY: { COUNTRY_CODE: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {

@@ -17,8 +17,8 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
     [REQUESTED]: mockJointlyInsuredParty[REQUESTED],
   };
 
-  const mockSaveBroker = jest.fn(() => Promise.resolve({}));
-  save.jointlyInsuredParty = mockSaveBroker;
+  const mockSaveJointlyInsuredParty = jest.fn(() => Promise.resolve({}));
+  save.jointlyInsuredParty = mockSaveJointlyInsuredParty;
 
   const mockValidationErrors = generateValidationErrors(REQUESTED, 'error', {});
 

@@ -66,7 +66,7 @@
           },
           id: FIELDS.COMPANY_NAME.ID,
           name: FIELDS.COMPANY_NAME.ID,
-          value: submittedValues[FIELDS.COMPANY_NAME.ID] or application.policy[FIELDS.COMPANY_NAME.ID],
+          value: submittedValues[FIELDS.COMPANY_NAME.ID] or application.policy.jointlyInsuredParty[FIELDS.COMPANY_NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.COMPANY_NAME.ID] and {
             text: validationErrors.errorList[FIELDS.COMPANY_NAME.ID].text,
             attributes: {
@@ -77,19 +77,19 @@
 
         <div class="govuk-form-group">
           {{ govukLabel({
-            for: FIELDS.COUNTRY.ID,
+            for: FIELDS.COUNTRY_CODE.ID,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            text: FIELDS.COUNTRY.LABEL,
+            text: FIELDS.COUNTRY_CODE.LABEL,
             attributes: {
-              id: FIELDS.COUNTRY.ID + "-label",
-              "data-cy": FIELDS.COUNTRY.ID + "-label"
+              id: FIELDS.COUNTRY_CODE.ID + "-label",
+              "data-cy": FIELDS.COUNTRY_CODE.ID + "-label"
             }
           }) }}
 
           <div class="govuk-input--width-20">
             {{ accessibleAutoCompleteSelect.render({
-              errorMessage: validationErrors.errorList[FIELDS.COUNTRY.ID].text,
-              fieldId: FIELDS.COUNTRY.ID,
+              errorMessage: validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text,
+              fieldId: FIELDS.COUNTRY_CODE.ID,
               integrity: SRI.ACCESSIBILITY,
               options: countries
             }) }}
@@ -117,7 +117,7 @@
           },
           id: FIELDS.COMPANY_NUMBER.ID,
           name: FIELDS.COMPANY_NUMBER.ID,
-          value: submittedValues[FIELDS.COMPANY_NUMBER.ID] or application.policy[FIELDS.COMPANY_NUMBER.ID],
+          value: submittedValues[FIELDS.COMPANY_NUMBER.ID] or application.policy.jointlyInsuredParty[FIELDS.COMPANY_NUMBER.ID],
           errorMessage: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID] and {
             text: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID].text,
             attributes: {
