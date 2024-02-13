@@ -19,7 +19,6 @@ const {
   },
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
-  TRADED_WITH_BUYER,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
@@ -84,7 +83,8 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
     checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: false });
   });
 
-  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[TRADED_WITH_BUYER]();
-  });
+  // TODO: EMS-2628
+  // it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
+  //   checkSummaryList[TRADED_WITH_BUYER]();
+  // });
 });

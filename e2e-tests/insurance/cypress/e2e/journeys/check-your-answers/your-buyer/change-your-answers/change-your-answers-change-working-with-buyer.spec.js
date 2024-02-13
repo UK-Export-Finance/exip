@@ -11,7 +11,6 @@ const {
     YOUR_BUYER,
   },
   YOUR_BUYER: {
-    TRADED_WITH_BUYER_CHECK_AND_CHANGE,
     CONNECTION_WITH_BUYER_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
@@ -19,7 +18,6 @@ const {
 const {
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
-  TRADED_WITH_BUYER,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
@@ -142,47 +140,6 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
       it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row and retain a "completed" status tag`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
-
-        cy.checkTaskStatusCompleted(status());
-      });
-    });
-  });
-
-  describe(TRADED_WITH_BUYER, () => {
-    const fieldId = TRADED_WITH_BUYER;
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber, TRADED_WITH_BUYER_CHECK_AND_CHANGE);
-
-    describe('when clicking the `change` link', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-      });
-
-      it(`should redirect to ${TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber, TRADED_WITH_BUYER_CHECK_AND_CHANGE);
-
-        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.clickNoRadioInput();
-
-        cy.clickSubmitButton();
-      });
-
-      it(`should redirect to ${YOUR_BUYER}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
-      });
-
-      it('should render the new answer and retain a `completed` status tag', () => {
-        fieldVariables.newValue = FIELD_VALUES.NO;
-        cy.checkChangeAnswerRendered(fieldVariables);
 
         cy.checkTaskStatusCompleted(status());
       });

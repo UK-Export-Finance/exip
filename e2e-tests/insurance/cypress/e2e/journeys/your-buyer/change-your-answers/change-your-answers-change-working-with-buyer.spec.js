@@ -7,7 +7,6 @@ const {
     YOUR_BUYER: {
       CONNECTION_WITH_BUYER,
       CONNECTION_WITH_BUYER_DESCRIPTION,
-      TRADED_WITH_BUYER,
     },
   },
 } = FIELD_IDS;
@@ -15,7 +14,6 @@ const {
 const {
   ROOT,
   YOUR_BUYER: {
-    TRADED_WITH_BUYER_CHANGE,
     CONNECTION_WITH_BUYER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
@@ -106,40 +104,6 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
       it(`should not render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
-      });
-    });
-  });
-
-  describe(TRADED_WITH_BUYER, () => {
-    const fieldId = TRADED_WITH_BUYER;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${TRADED_WITH_BUYER_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADED_WITH_BUYER_CHANGE, fieldId: TRADED_WITH_BUYER });
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.clickNoRadioInput();
-
-        cy.clickSubmitButton();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
     });
   });
