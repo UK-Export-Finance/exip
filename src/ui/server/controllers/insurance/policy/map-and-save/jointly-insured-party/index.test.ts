@@ -22,7 +22,7 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
 
   const mockValidationErrors = generateValidationErrors(REQUESTED, 'error', {});
 
-  const populatedData = mapSubmittedData(mockFormBody, mockApplication);
+  const populatedData = mapSubmittedData(mockFormBody);
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {

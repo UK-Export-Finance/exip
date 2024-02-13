@@ -328,66 +328,66 @@ describe('controllers/insurance/policy/other-company-details', () => {
       });
     });
 
-    // describe('api error handling', () => {
-    //   describe('when the get countries API call fails', () => {
-    //     beforeEach(() => {
-    //       getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-    //       api.keystone.countries.getAll = getCountriesSpy;
-    //     });
+    describe('api error handling', () => {
+      describe('when the get countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
 
-    //     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-    //       await post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
-    //       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    //     });
-    //   });
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
 
-    //   describe('when the get countries response does not return a populated array', () => {
-    //     beforeEach(() => {
-    //       getCountriesSpy = jest.fn(() => Promise.resolve([]));
-    //       api.keystone.countries.getAll = getCountriesSpy;
-    //     });
+      describe('when the get countries response does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
 
-    //     it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-    //       await post(req, res);
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
 
-    //       expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    //     });
-    //   });
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
 
-    //   describe('mapAndSave.jointlyInsuredParty call', () => {
-    //     beforeEach(() => {
-    //       req.body = validBody;
-    //     });
+      describe('mapAndSave.jointlyInsuredParty call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
 
-    //     describe('when a true boolean is not returned', () => {
-    //       beforeEach(() => {
-    //         const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
-    //         mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
-    //       });
+            mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
+          });
 
-    //       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-    //         await post(req, res);
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
 
-    //         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    //       });
-    //     });
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
 
-    //     describe('when there is an error', () => {
-    //       beforeEach(() => {
-    //         const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-    //         mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
-    //       });
+            mapAndSave.jointlyInsuredParty = mapAndSaveSpy;
+          });
 
-    //       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-    //         await post(req, res);
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
 
-    //         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-    //       });
-    //     });
-    //   });
-    // });
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+      });
+    });
   });
 });
