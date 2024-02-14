@@ -1,4 +1,9 @@
-import { field, saveAndBackButton, yesRadioInput } from '../../../../../../pages/shared';
+import {
+  field,
+  saveAndBackButton,
+  yesRadio,
+  yesRadioInput,
+} from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import {
   INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES, COMPANIES_HOUSE_NUMBER, VALID_PHONE_NUMBERS,
@@ -63,8 +68,8 @@ describe('Insurance - Your business - Company details page - Save and go back', 
     it('should not display validation errors and redirect to task list with status of "In progress"', () => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().first().click();
-      yesRadioInput().eq(1).click();
+      yesRadio().label().first().click();
+      yesRadio().label().eq(1).click();
       saveAndBackButton().click();
 
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);

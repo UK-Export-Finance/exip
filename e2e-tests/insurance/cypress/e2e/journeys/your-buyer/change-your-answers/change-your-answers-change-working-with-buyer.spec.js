@@ -72,7 +72,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadio().label().click();
+        workingWithBuyerPage[fieldId].noRadio().click();
 
         submitButton().click();
       });
@@ -106,7 +106,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadio().label().click();
+        workingWithBuyerPage[fieldId].noRadio().click();
 
         submitButton().click();
       });
