@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import YOUR_BUYER_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
