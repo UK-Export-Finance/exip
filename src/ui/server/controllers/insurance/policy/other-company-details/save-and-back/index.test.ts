@@ -15,13 +15,15 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
   let req: Request;
   let res: Response;
 
-  let updateMapAndSave = jest.fn(() => Promise.resolve(true));
+  const updateMapAndSaveSuccess = jest.fn(() => Promise.resolve(true));
+  const updateMapAndSaveFalse = jest.fn(() => Promise.resolve(false));
+  const updateMapAndSaveError = jest.fn(() => Promise.reject(new Error('mock')));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.jointlyInsuredParty = updateMapAndSave;
+    mapAndSave.jointlyInsuredParty = updateMapAndSaveSuccess;
   });
 
   afterAll(() => {
@@ -48,11 +50,11 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
     it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', () => {
       const payload = constructPayload(req.body, FIELD_IDS);
 
-      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+      expect(updateMapAndSaveSuccess).toHaveBeenCalledTimes(1);
 
       const validationErrors = generateValidationErrors(validBody);
 
-      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
+      expect(updateMapAndSaveSuccess).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
     });
   });
 
@@ -74,11 +76,11 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
     it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function and validation errors', () => {
       const payload = constructPayload(req.body, FIELD_IDS);
 
-      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
+      expect(updateMapAndSaveSuccess).toHaveBeenCalledTimes(1);
 
       const validationErrors = generateValidationErrors(mockInvalidBody);
 
-      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
+      expect(updateMapAndSaveSuccess).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
     });
   });
 
@@ -104,8 +106,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
     describe('when mapAndSave.jointlyInsuredParty returns false', () => {
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        updateMapAndSave = jest.fn(() => Promise.resolve(false));
-        mapAndSave.jointlyInsuredParty = updateMapAndSave;
+        mapAndSave.jointlyInsuredParty = updateMapAndSaveFalse;
 
         await post(req, res);
 
@@ -115,8 +116,7 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
     describe('when mapAndSave.jointlyInsuredParty fails', () => {
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
-        mapAndSave.jointlyInsuredParty = updateMapAndSave;
+        mapAndSave.jointlyInsuredParty = updateMapAndSaveError;
 
         await post(req, res);
 
