@@ -1,4 +1,5 @@
-import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
@@ -6,31 +7,29 @@ const {
   YOUR_BUYER: {
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: {
-        NAME,
-        ADDRESS,
-        REGISTRATION_NUMBER,
-        WEBSITE,
-      },
-      CONNECTION_WITH_BUYER,
-      CONNECTION_WITH_BUYER_DESCRIPTION,
-      TRADED_WITH_BUYER,
-      OUTSTANDING_PAYMENTS,
-      FAILED_PAYMENTS,
-      TOTAL_AMOUNT_OVERDUE,
-      TOTAL_OUTSTANDING_PAYMENTS,
-    },
+  COMPANY_OR_ORGANISATION: {
+    NAME,
+    ADDRESS,
+    REGISTRATION_NUMBER,
+    WEBSITE,
   },
-} = FIELD_IDS;
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
+  TRADED_WITH_BUYER,
+  OUTSTANDING_PAYMENTS,
+  FAILED_PAYMENTS,
+  TOTAL_AMOUNT_OVERDUE,
+  TOTAL_OUTSTANDING_PAYMENTS,
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+} = YOUR_BUYER_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Check your answers - Summary list - your buyer', () => {
+context('Insurance - Your buyer - Check your answers - Summary list - your buyer - application below total contract value threshold', () => {
   let referenceNumber;
   let url;
 
@@ -112,6 +111,14 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
 
     it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
       checkSummaryList[FAILED_PAYMENTS]();
+    });
+
+    it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
+      checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+    });
+
+    it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
+      checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
   });
 

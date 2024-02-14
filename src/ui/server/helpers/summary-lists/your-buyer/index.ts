@@ -1,21 +1,58 @@
 import generateCompanyOrOrganisationFields from './company-or-organisation';
 import connectionWithBuyerFields from './connection-with-buyer';
 import tradingHistoryFields from './trading-history';
+import creditInsuranceHistoryFields from './credit-insurance-history';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { SummaryListGroupData, ApplicationBuyer } from '../../../../types';
 
 /**
- * generateFields
- * Create all fields for the insurance - Your business govukSummaryList
- * @param {ApplicationBuyer} answersCompany Application buyer object
+ * optionalFields
+ * optional fields for the your buyer summary list
+ * if totalContractValueOverThreshold is true,
+ * then pushes fields and values for credit insurance history
+ * if totalContractValueOverThreshold is false,
+ * then returns an empty array
+ * @param {ApplicationBuyer} answersBuyer
  * @param {Number} referenceNumber
- * @returns {Object} All your business values in an object structure for GOVUK summary list structure
+ * @param {Boolean} totalContractValueOverThreshold if total contract value in application is above threshold
+ * @param {Boolean} checkAndChange if is check and change route
+ * @returns {Array<SummaryListGroupData>} empty array or fields and values for credit insurance history
  */
-const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean): Array<SummaryListGroupData> => {
+const optionalFields = (
+  answersBuyer: ApplicationBuyer,
+  referenceNumber: number,
+  totalContractValueOverThreshold?: boolean,
+  checkAndChange?: boolean,
+): Array<SummaryListGroupData> => {
+  const fields = [] as Array<SummaryListGroupData>;
+
+  if (totalContractValueOverThreshold) {
+    fields.push(creditInsuranceHistoryFields(answersBuyer.relationship, referenceNumber, checkAndChange));
+  }
+
+  return fields;
+};
+
+/**
+ * generateFields
+ * Create all fields for the insurance - Your buyer govukSummaryList
+ * @param {ApplicationBuyer} answersBuyer Application buyer object
+ * @param {Number} referenceNumber
+ * @param {Boolean} totalContractValueOverThreshold if total contract value in application is above threshold
+ * @param {Boolean} checkAndChange if is check and change route
+ * @returns {Object} All your buyer values in an object structure for GOVUK summary list structure
+ */
+const generateFields = (
+  answersBuyer: ApplicationBuyer,
+  referenceNumber: number,
+  totalContractValueOverThreshold?: boolean,
+  checkAndChange?: boolean,
+): Array<SummaryListGroupData> => {
   const fields = [
     generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
     connectionWithBuyerFields(answersBuyer.relationship, referenceNumber, checkAndChange),
     tradingHistoryFields(answersBuyer.buyerTradingHistory, referenceNumber, checkAndChange),
+    ...optionalFields(answersBuyer, referenceNumber, totalContractValueOverThreshold, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;
@@ -26,14 +63,16 @@ const generateFields = (answersBuyer: ApplicationBuyer, referenceNumber: number,
  * Create multiple groups with govukSummaryList data structure
  * @param {ApplicationBuyer} answersCompany Application buyer object
  * @param {Number} referenceNumber
+ * @param {Boolean} totalContractValueOverThreshold if total contract value in application is above threshold
+ * @param {Boolean} checkAndChange if is check and change route
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number, checkAndChange = false) => {
-  const fields = generateFields(answersBuyer, referenceNumber, checkAndChange);
+const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number, totalContractValueOverThreshold?: boolean, checkAndChange = false) => {
+  const fields = generateFields(answersBuyer, referenceNumber, totalContractValueOverThreshold, checkAndChange);
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 
   return summaryList;
 };
 
-export { generateFields, yourBuyerSummaryList };
+export { optionalFields, generateFields, yourBuyerSummaryList };

@@ -19,7 +19,7 @@ const {
 
 const {
   YOUR_BUYER: {
-    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER,
+    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY,
   },
 } = FORM_TITLES;
 
@@ -101,11 +101,19 @@ export const YOUR_BUYER_FIELDS = {
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',
+    SUMMARY: {
+      TITLE: 'Credit insurance previously held for the buyer',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
   },
   [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Tell us about the credit insurance cover you had on the buyer',
     HINT: 'Include the name of the insurer(s) and the credit limit.',
     MAXIMUM: 1000,
+    SUMMARY: {
+      TITLE: 'Details of credit insurance',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',

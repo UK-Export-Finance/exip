@@ -39,7 +39,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
         ...mockBuyer,
       } as ApplicationBuyer;
 
-      const summaryList = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.referenceNumber);
+      const summaryList = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.referenceNumber, mockApplication.totalContractValueOverThreshold);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
