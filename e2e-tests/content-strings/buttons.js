@@ -27,4 +27,5 @@ export const BUTTONS = {
   SUBMIT: 'Submit',
   SUBMIT_APPLICATION: 'Submit application',
   SIGN_IN: 'Sign in',
+  USE_THIS_ADDRESS: 'Use this address',
 };

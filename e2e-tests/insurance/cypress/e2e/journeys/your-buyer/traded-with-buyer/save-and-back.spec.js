@@ -65,8 +65,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should retain the `your buyer` task status as `completed`', () => {
-      cy.checkTaskBuyerStatusIsComplete();
+    it('should retain the `your buyer` task status as `in progress`', () => {
+      cy.checkTaskBuyerStatusIsInProgress();
     });
 
     it('should retain all inputs on the page', () => {

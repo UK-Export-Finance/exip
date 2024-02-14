@@ -24,6 +24,11 @@ const generateGroupsAndTasks = (
   isUsingBroker?: boolean,
   hasDifferentTradingName?: boolean,
   hasAntiBriberyCodeOfConduct?: boolean | null,
+  connectionWithBuyer?: boolean,
+  tradedWithBuyer?: boolean,
+  outstandingPayments?: boolean,
+  hasPreviousCreditInsuranceWithBuyer?: boolean,
+  totalContractValueOverThreshold?: boolean,
 ): TaskListData => {
   let groups = [
     {
@@ -39,7 +44,19 @@ const generateGroupsAndTasks = (
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(referenceNumber, groups, policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName),
+      tasks: prepareApplicationTasks(
+        referenceNumber,
+        groups,
+        policyType,
+        finalDestinationKnown,
+        isUsingBroker,
+        hasDifferentTradingName,
+        connectionWithBuyer,
+        tradedWithBuyer,
+        outstandingPayments,
+        hasPreviousCreditInsuranceWithBuyer,
+        totalContractValueOverThreshold,
+      ),
     },
   ] as TaskListData;
 

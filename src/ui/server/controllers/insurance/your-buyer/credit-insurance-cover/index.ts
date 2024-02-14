@@ -18,7 +18,7 @@ const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANC
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BUYER_FINANCIAL_INFORMATION },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -155,7 +155,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
   } catch (err) {
     console.error('Error posting alternative currency %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

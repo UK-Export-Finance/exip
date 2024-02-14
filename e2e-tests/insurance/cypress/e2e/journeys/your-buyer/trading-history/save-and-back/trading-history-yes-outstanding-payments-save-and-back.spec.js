@@ -24,14 +24,13 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-      // TODO: EMS-2659 - use buyer commands to get here
-      cy.navigateToUrl(url);
+      cy.startInsuranceYourBuyerSection({});
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });
@@ -91,7 +90,7 @@ context('Insurance - Your buyer - Trading history - Yes outstanding payments - S
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
+      cy.completeTradingHistoryWithBuyerForm({ outstandingPayments: true });
 
       saveAndBackButton().click();
     });

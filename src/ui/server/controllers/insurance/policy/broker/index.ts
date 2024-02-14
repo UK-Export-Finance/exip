@@ -62,27 +62,22 @@ export const HTML_FLAGS = {
  * Render the Broker page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders check your answers page with previously submitted details
+ * @returns {Express.Response.render} renders broker page with previously submitted details
  */
 export const get = (req: Request, res: Response) => {
-  try {
-    const { application } = res.locals;
+  const { application } = res.locals;
 
-    if (!application) {
-      return res.redirect(PROBLEM_WITH_SERVICE);
-    }
-
-    return res.render(TEMPLATE, {
-      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
-      userName: getUserNameFromSession(req.session.user),
-      application: mapApplicationToFormFields(application),
-      applicationAnswer: application.broker[USING_BROKER],
-      ...pageVariables(application.referenceNumber),
-    });
-  } catch (err) {
-    console.error('Error getting broker %O', err);
+  if (!application) {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
+
+  return res.render(TEMPLATE, {
+    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+    userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(application),
+    applicationAnswer: application.broker[USING_BROKER],
+    ...pageVariables(application.referenceNumber),
+  });
 };
 
 /**

@@ -22,11 +22,12 @@ const {
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/prepare-application', () => {
-  const { referenceNumber, broker, company, policy, exportContract } = mockApplication;
+  const { referenceNumber, broker, company, policy, exportContract, buyer } = mockApplication;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
   const { policyType } = policy;
   const { finalDestinationKnown } = exportContract;
+  const { relationship, buyerTradingHistory } = buyer;
 
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
@@ -40,7 +41,19 @@ describe('server/helpers/task-list/prepare-application', () => {
     ] as TaskListData;
 
     it('should return EXIP `prepare application` tasks', () => {
-      const result = createPrepareApplicationTasks(referenceNumber, previousGroups, policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName);
+      const result = createPrepareApplicationTasks(
+        referenceNumber,
+        previousGroups,
+        policyType,
+        finalDestinationKnown,
+        isUsingBroker,
+        hasDifferentTradingName,
+        relationship.exporterIsConnectedWithBuyer,
+        buyerTradingHistory.exporterHasTradedWithBuyer,
+        buyerTradingHistory.outstandingPayments,
+        relationship.exporterHasPreviousCreditInsuranceWithBuyer,
+        mockApplication.totalContractValueOverThreshold,
+      );
 
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
@@ -56,7 +69,13 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-        fields: yourBuyerRequiredFields(),
+        fields: yourBuyerRequiredFields({
+          connectionWithBuyer: relationship.exporterIsConnectedWithBuyer,
+          tradedWithBuyer: buyerTradingHistory.exporterHasTradedWithBuyer,
+          outstandingPayments: buyerTradingHistory.outstandingPayments,
+          hasPreviousCreditInsuranceWithBuyer: relationship.exporterHasPreviousCreditInsuranceWithBuyer,
+          totalContractValueOverThreshold: mockApplication.totalContractValueOverThreshold,
+        }),
         dependencies: expectedDependencies,
       };
 

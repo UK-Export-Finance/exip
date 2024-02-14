@@ -19,7 +19,7 @@ import api from '../../../../api';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, ALTERNATIVE_CURRENCY },
+  YOUR_BUYER: { TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, ALTERNATIVE_CURRENCY, BUYER_FINANCIAL_INFORMATION, CREDIT_INSURANCE_COVER },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -188,7 +188,16 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    /**
+     * if totalContractValue is over the threshold
+     * then should redirect to CREDIT_INSURANCE_COVER
+     * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
+     */
+    if (application.totalContractValueOverThreshold) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`);
   } catch (err) {
     console.error('Error posting trading history with the buyer %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

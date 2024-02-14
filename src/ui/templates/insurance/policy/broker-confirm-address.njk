@@ -1,0 +1,54 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+        <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+        {{ govukInsetText({
+          text: address,
+          attributes: {
+            'data-cy': 'inset-text'
+          }
+        }) }}
+
+        <p class="govuk-body">
+          <a class="govuk-link govuk-link--no-visited-state" href="{{ USE_DIFFERENT_ADDRESS_URL }}" data-cy="use-different-address-link">{{ CONTENT_STRINGS.USE_DIFFERENT_ADDRESS }}</a>
+        </p>
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      submitText: CONTENT_STRINGS.BUTTONS.USE_THIS_ADDRESS,
+      saveAndBackUrl: SAVE_AND_BACK_URL,
+      saveAndBackAsALink: true
+    }) }}
+
+  </form>
+
+{% endblock %}

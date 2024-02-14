@@ -31,13 +31,16 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policy, exportContract, broker, declaration, company } = mockApplication;
+      const { referenceNumber, policy, exportContract, broker, declaration, company, buyer, totalContractValueOverThreshold } = mockApplication;
 
       const { policyType } = policy;
       const { finalDestinationKnown } = exportContract;
       const { isUsingBroker } = broker;
       const { hasDifferentTradingName } = company;
       const { hasAntiBriberyCodeOfConduct } = declaration;
+      const { buyerTradingHistory, relationship } = buyer;
+      const { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer } = relationship;
+      const { outstandingPayments, exporterHasTradedWithBuyer } = buyerTradingHistory;
 
       const flatApplicationData = flattenApplicationData(mockApplication);
 
@@ -48,6 +51,11 @@ describe('controllers/insurance/all-sections', () => {
         isUsingBroker,
         hasDifferentTradingName,
         hasAntiBriberyCodeOfConduct,
+        exporterIsConnectedWithBuyer,
+        exporterHasTradedWithBuyer,
+        outstandingPayments,
+        exporterHasPreviousCreditInsuranceWithBuyer,
+        totalContractValueOverThreshold,
       );
 
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);

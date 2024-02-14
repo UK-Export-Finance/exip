@@ -59,7 +59,7 @@ export const get = async (req: Request, res: Response) => {
 
     const summaryList = yourBuyerSummaryList(application.buyer, referenceNumber, checkAndChange);
 
-    const fields = requiredFields();
+    const fields = requiredFields({});
 
     const status = sectionStatus(fields, application);
 

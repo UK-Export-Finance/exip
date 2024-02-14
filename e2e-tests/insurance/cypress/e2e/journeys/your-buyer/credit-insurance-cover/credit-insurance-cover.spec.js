@@ -14,7 +14,7 @@ const { BUYER } = application;
 
 const {
   ROOT,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION, TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -27,19 +27,21 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, I want to provide information, So that UKEF can better understand the risk undertaken if I am given insurance cover', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let buyerFinancialInformationUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
-      // TODO: EMS-2659 - use buyer commands to get here
-      cy.navigateToUrl(url);
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+      cy.completeAndSubmitTradingHistoryWithBuyerForm({});
 
       cy.assertUrl(url);
     });
@@ -57,7 +59,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`,
-      backLink: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}#`,
+      backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
     });
   });
 
@@ -123,10 +125,10 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
     });
 
     describe(`when submitting the form with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} as "no"`, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+      it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
         cy.completeAndSubmitCreditInsuranceCoverForm({});
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(buyerFinancialInformationUrl);
       });
 
       describe('when going back to the page', () => {
@@ -139,10 +141,10 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
     });
 
     describe(`when submitting the form with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} as "yes"`, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+      it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
         cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCover: true });
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(buyerFinancialInformationUrl);
       });
 
       describe('when going back to the page', () => {
@@ -159,9 +161,9 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
     });
 
     describe(`changing ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} from "yes" to "no"`, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+      it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
         cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCover: true });
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(buyerFinancialInformationUrl);
 
         // resubmit as no
         cy.navigateToUrl(url);

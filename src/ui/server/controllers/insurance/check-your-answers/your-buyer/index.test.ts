@@ -77,7 +77,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
       const checkAndChange = true;
       const summaryList = yourBuyerSummaryList(mockApplication.buyer, mockApplication.referenceNumber, checkAndChange);
 
-      const fields = requiredFields();
+      const fields = requiredFields({});
 
       const status = sectionStatus(fields, mockApplication);
 

@@ -18,7 +18,13 @@ const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANC
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER_SAVE_AND_BACK, CREDIT_INSURANCE_COVER_CHANGE, CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: {
+    CREDIT_INSURANCE_COVER_SAVE_AND_BACK,
+    CREDIT_INSURANCE_COVER_CHANGE,
+    CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+    BUYER_FINANCIAL_INFORMATION,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -154,7 +160,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
