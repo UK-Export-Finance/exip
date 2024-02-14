@@ -27,7 +27,7 @@ const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANC
  * optionalFields for connection with buyer summary list
  * if CONNECTION_WITH_BUYER is true, then renders extra row in summary list
  * @param {ApplicationBuyerRelationship} answers
- * @param {Number} referenceNumber
+ * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure
  */
@@ -61,7 +61,7 @@ export const optionalFields = (answers: ApplicationBuyerRelationship, referenceN
  * creditInsuranceHistoryFields
  * Create all credit insurance fields and values for the Insurance - your buyer govukSummaryList
  * @param {ApplicationBuyer} answers buyer relationship data
- * @param {Number} referenceNumber application reference number
+ * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} All credit insurance fields and values in an object structure for GOVUK summary list structure
  */

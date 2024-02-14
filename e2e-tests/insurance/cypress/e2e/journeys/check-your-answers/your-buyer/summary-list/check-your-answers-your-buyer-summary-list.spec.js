@@ -32,7 +32,7 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Your buyer page - Summary list', () => {
+context('Insurance - Check your answers - Your buyer page - Summary list - application below total contract value threshold', () => {
   let referenceNumber;
   let url;
 
@@ -118,11 +118,11 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
     checkSummaryList[FAILED_PAYMENTS]();
   });
 
-  it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+  it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
     checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
   });
 
-  it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+  it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
     checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
   });
 });

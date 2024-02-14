@@ -32,7 +32,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Check your answers - Summary list - your buyer', () => {
+context('Insurance - Your buyer - Check your answers - Summary list - your buyer - application below total contract value threshold', () => {
   let referenceNumber;
   let url;
 
@@ -116,11 +116,11 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
       checkSummaryList[FAILED_PAYMENTS]();
     });
 
-    it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+    it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
       checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
 
-    it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+    it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
       checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
   });
