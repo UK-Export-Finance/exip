@@ -140,7 +140,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       });
 
       it(`should redirect to ${POLICY.SINGLE_CONTRACT_POLICY}`, () => {
-        singlePolicyField.input().click();
+        singlePolicyField.label().click();
 
         submitButton().click();
 

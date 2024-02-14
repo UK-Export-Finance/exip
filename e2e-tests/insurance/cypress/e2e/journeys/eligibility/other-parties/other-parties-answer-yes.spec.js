@@ -43,7 +43,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
 
     cy.navigateToUrl(url);
 
-    yesRadio().input().click();
+    yesRadio().label().click();
     submitButton().click();
   });
 

@@ -84,7 +84,7 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
       summaryList.field(fieldId).changeLink().click();
 
-      typeOfPolicyPage[fieldId].multiple.input().click();
+      typeOfPolicyPage[fieldId].multiple.label().click();
       submitButton().click();
 
       cy.completeAndSubmitMultipleContractPolicyForm({});

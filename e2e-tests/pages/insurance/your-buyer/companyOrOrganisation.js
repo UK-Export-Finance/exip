@@ -1,8 +1,8 @@
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
 import {
   field,
-  yesRadioInput,
-  noRadioInput,
+  yesRadio,
+  noRadio,
   yesNoRadioHint,
 } from '../../shared';
 
@@ -14,8 +14,8 @@ const companyOrOrganisation = {
   [COUNTRY]: () => cy.get(`[data-cy="${COUNTRY}"]`),
   [CAN_CONTACT_BUYER]: {
     ...field(CAN_CONTACT_BUYER),
-    yesRadioInput: () => yesRadioInput().first(),
-    noRadioInput: () => noRadioInput().first(),
+    yesRadio: () => yesRadio().label(),
+    noRadio: () => noRadio().label(),
     yesNoRadioHint,
   },
 };

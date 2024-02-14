@@ -32,7 +32,7 @@ const completeAndSubmitCompanyOrOrganisationForm = ({
   cy.keyboardInput(field(LAST_NAME).input(), lastName);
   cy.keyboardInput(field(POSITION).input(), BUYER[POSITION]);
   cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
-  companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
+  companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadio().click();
 
   submitButton().click();
 };

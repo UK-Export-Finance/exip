@@ -61,7 +61,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
 
       task.link().click();
 
-      multiplePolicyField.input().click();
+      multiplePolicyField.label().click();
       saveAndBackButton().click();
     });
 

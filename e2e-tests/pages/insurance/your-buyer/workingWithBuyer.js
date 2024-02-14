@@ -1,5 +1,5 @@
 import { YOUR_BUYER as FIELD_IDS } from '../../../constants/field-ids/insurance/your-buyer';
-import { yesRadioInput, noRadioInput } from '../../shared';
+import { yesRadio, noRadio } from '../../shared';
 
 const {
   WORKING_WITH_BUYER: {
@@ -12,15 +12,15 @@ const workingWithBuyer = {
   [CONNECTED_WITH_BUYER]: {
     label: () => cy.get(`[data-cy="${CONNECTED_WITH_BUYER}-label"]`),
     hint: () => cy.get(`[data-cy="${CONNECTED_WITH_BUYER}-hint"]`),
-    yesRadioInput: () => yesRadioInput().first(),
-    noRadioInput: () => noRadioInput().first(),
+    yesRadio: () => yesRadio().label().eq(0),
+    noRadio: () => noRadio().label().eq(0),
     errorMessage: () => cy.get(`[data-cy="${CONNECTED_WITH_BUYER}-error-message"]`),
   },
   [TRADED_WITH_BUYER]: {
     label: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-label"]`),
     hint: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-hint"]`),
-    yesRadioInput: () => yesRadioInput().eq(1),
-    noRadioInput: () => noRadioInput().eq(1),
+    yesRadio: () => yesRadio().label().eq(1),
+    noRadio: () => noRadio().label().eq(1),
     errorMessage: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-error-message"]`),
   },
 };

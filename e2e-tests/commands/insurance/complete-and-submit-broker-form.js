@@ -26,7 +26,7 @@ const completeAndSubmitBrokerForm = ({
   usingBroker = false,
 }) => {
   if (usingBroker) {
-    brokerPage[USING_BROKER].yesRadioInput().click();
+    brokerPage[USING_BROKER].yesRadio().click();
     cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
     cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
     cy.keyboardInput(field(ADDRESS_LINE_2).input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -35,7 +35,7 @@ const completeAndSubmitBrokerForm = ({
     cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
     cy.keyboardInput(field(POSTCODE).input(), application.EXPORTER_BROKER[POSTCODE]);
   } else {
-    brokerPage[USING_BROKER].noRadioInput().click();
+    brokerPage[USING_BROKER].noRadio().click();
   }
 
   submitButton().click();

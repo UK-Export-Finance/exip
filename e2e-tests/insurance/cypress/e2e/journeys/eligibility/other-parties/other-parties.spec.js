@@ -133,7 +133,7 @@ context('Insurance - Other parties page - I want to check if I can use online se
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        noRadio().input().click();
+        noRadio().label().click();
         submitButton().click();
       });
 

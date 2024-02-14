@@ -17,7 +17,7 @@ context('Insurance - UK goods or services page - as an exporter, I want to check
     completeAndSubmitBuyerCountryForm();
     completeExporterLocationForm();
 
-    noRadio().input().click();
+    noRadio().label().click();
     submitButton().click();
   });
 
