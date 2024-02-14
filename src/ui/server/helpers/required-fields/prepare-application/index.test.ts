@@ -19,7 +19,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
-  YOUR_BUYER: { CONNECTION_WITH_BUYER },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER, OUTSTANDING_PAYMENTS, TRADED_WITH_BUYER, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
 } = INSURANCE_FIELD_IDS;
 
 describe('server/helpers/required-fields/section-review', () => {
@@ -38,7 +38,13 @@ describe('server/helpers/required-fields/section-review', () => {
         finalDestinationKnown: flatApplicationData[FINAL_DESTINATION_KNOWN],
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
-      ...requiredYourBuyerFields(flatApplicationData[CONNECTION_WITH_BUYER]),
+      ...requiredYourBuyerFields({
+        connectionWithBuyer: flatApplicationData[CONNECTION_WITH_BUYER],
+        tradedWithBuyer: flatApplicationData[TRADED_WITH_BUYER],
+        outstandingPayments: flatApplicationData[OUTSTANDING_PAYMENTS],
+        hasPreviousCreditInsuranceWithBuyer: flatApplicationData[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+        totalContractValueOverThreshold: flatApplicationData.totalContractValueOverThreshold,
+      }),
     ];
 
     expect(result).toEqual(expected);

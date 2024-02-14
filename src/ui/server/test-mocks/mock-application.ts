@@ -147,6 +147,7 @@ const mockApplication = {
   buyer: mockApplicationBuyer,
   sectionReview: mockSectionReview,
   declaration: mockApplicationDeclaration,
+  totalContractValueOverThreshold: false,
 };
 
 export const mockApplicationMultiplePolicy = {

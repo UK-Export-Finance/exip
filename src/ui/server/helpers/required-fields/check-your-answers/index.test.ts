@@ -21,7 +21,7 @@ describe('server/helpers/required-fields/check-your-answers', () => {
       ...requiredEligibilityFields(),
       ...requiredPolicyFields(flatApplicationData[POLICY_TYPE]),
       ...requiredBusinessFields(),
-      ...requiredYourBuyerFields(),
+      ...requiredYourBuyerFields({}),
     ];
 
     expect(result).toEqual(expected);

@@ -30,8 +30,9 @@ context('Insurance - Your Buyer - Trading history page - Validation', () => {
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
-      // TODO: EMS-2659 - use buyer commands to get here
-      cy.navigateToUrl(url);
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
     });

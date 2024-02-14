@@ -24,6 +24,8 @@ const {
     TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK,
     CHECK_YOUR_ANSWERS,
     ALTERNATIVE_CURRENCY,
+    BUYER_FINANCIAL_INFORMATION,
+    CREDIT_INSURANCE_COVER,
   },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
@@ -186,7 +188,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -199,6 +201,21 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         const payload = constructPayload(req.body, FIELD_IDS);
 
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe('when the totalContractValueOverThreshold is true', () => {
+        it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: true,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_INSURANCE_COVER}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       describe("when the url's last substring is `check`", () => {
