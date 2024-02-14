@@ -4,6 +4,7 @@ import {
   headingCaption,
   saveAndBackButton,
   yesRadioInput,
+  noRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
@@ -170,8 +171,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       cy.checkText(field.yesNoRadioHint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-      field.yesRadioInput().should('exist');
-      field.noRadioInput().should('exist');
+      yesRadioInput().should('exist');
+      noRadioInput().should('exist');
     });
 
     it(`renders ${EMAIL} label and input`, () => {

@@ -14,6 +14,8 @@ const workingWithBuyer = {
     hint: () => cy.get(`[data-cy="${CONNECTED_WITH_BUYER}-hint"]`),
     yesRadio: () => yesRadio().label().eq(0),
     noRadio: () => noRadio().label().eq(0),
+    yesRadioInput: () => yesRadio().input().eq(0),
+    noRadioInput: () => noRadio().input().eq(0),
     errorMessage: () => cy.get(`[data-cy="${CONNECTED_WITH_BUYER}-error-message"]`),
   },
   [TRADED_WITH_BUYER]: {
@@ -21,6 +23,8 @@ const workingWithBuyer = {
     hint: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-hint"]`),
     yesRadio: () => yesRadio().label().eq(1),
     noRadio: () => noRadio().label().eq(1),
+    yesRadioInput: () => yesRadio().input().eq(1),
+    noRadioInput: () => noRadio().input().eq(1),
     errorMessage: () => cy.get(`[data-cy="${TRADED_WITH_BUYER}-error-message"]`),
   },
 };

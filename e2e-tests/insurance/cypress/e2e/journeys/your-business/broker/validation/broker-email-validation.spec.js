@@ -1,5 +1,4 @@
-import { brokerPage } from '../../../../../../../pages/your-business';
-import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { field as fieldSelector, yesRadio } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
@@ -7,7 +6,6 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 
 const {
   BROKER: {
-    USING_BROKER: FIELD_ID,
     EMAIL,
   },
 } = FIELD_IDS;
@@ -24,8 +22,6 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-
-const field = brokerPage[FIELD_ID];
 
 const ERROR_ASSERTIONS = {
   errorField: fieldSelector(EMAIL),
@@ -62,7 +58,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when the email field is left empty', () => {
-    field.yesRadio().label().click();
+    yesRadio().label().click();
 
     const {
       errorField, errorIndex, expectedErrorsCount, errorMessage,
@@ -73,7 +69,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain an @ symbol', () => {
-    field.yesRadio().label().click();
+    yesRadio().label().click();
 
     const {
       errorField, errorIndex, expectedErrorsCount, errorMessage,
@@ -86,7 +82,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain at least one dot', () => {
-    field.yesRadio().label().click();
+    yesRadio().label().click();
 
     const {
       errorField, errorIndex, expectedErrorsCount, errorMessage,
@@ -99,7 +95,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email contains a space', () => {
-    field.yesRadio().label().click();
+    yesRadio().label().click();
 
     const {
       errorField, errorIndex, expectedErrorsCount, errorMessage,
@@ -112,7 +108,7 @@ context('Insurance - Your business - Broker Page - Validation - Email', () => {
   });
 
   it('should display validation errors when email does not contain a domain', () => {
-    field.yesRadio().label().click();
+    yesRadio().label().click();
 
     const {
       errorField, errorIndex, expectedErrorsCount, errorMessage,
