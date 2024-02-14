@@ -3,6 +3,7 @@
 {% if userName %}
 
   {{ govukHeader({
+    useTudorCrown: true,
     homepageUrl: "https://www.gov.uk",
     serviceName: CONTENT_STRINGS.PRODUCT.DESCRIPTION,
     serviceUrl: START_ROUTE,
@@ -40,6 +41,7 @@
   {% else %}
 
   {{ govukHeader({
+    useTudorCrown: true,
     homepageUrl: "https://www.gov.uk",
     serviceName: CONTENT_STRINGS.PRODUCT.DESCRIPTION,
     serviceUrl: START_ROUTE,
