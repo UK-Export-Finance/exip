@@ -5,7 +5,7 @@ import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-id
 
 const {
   ROOT,
-  YOUR_BUYER: { TRADING_HISTORY, CHECK_YOUR_ANSWERS },
+  YOUR_BUYER: { TRADING_HISTORY, BUYER_FINANCIAL_INFORMATION },
 } = INSURANCE_ROUTES;
 
 const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = FIELD_IDS;
@@ -41,17 +41,16 @@ const submitAndAssertBothFields = (value, errorTotalOutstanding, errorAmountOver
 context('Insurance - Your Buyer - Trading history page - Outstanding payments yes validation', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let buyerFinancialInformationUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
+      cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
@@ -155,9 +154,9 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+    it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
       cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
-      cy.assertUrl(checkYourAnswersUrl);
+      cy.assertUrl(buyerFinancialInformationUrl);
     });
   });
 });

@@ -18,12 +18,10 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
+      cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
@@ -84,7 +82,7 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+      cy.completeTradingHistoryWithBuyerForm({});
 
       saveAndBackButton().click();
     });
