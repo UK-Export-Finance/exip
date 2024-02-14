@@ -3,6 +3,7 @@ import generateCompanyOrOrganisationFields from './company-or-organisation';
 import connectionWithBuyerFields from './connection-with-buyer';
 import tradingHistoryFields from './trading-history';
 import creditInsuranceHistoryFields from './credit-insurance-history';
+import financialAccountsFields from './financial-accounts';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import mockApplication, { mockApplicationBuyer } from '../../../test-mocks/mock-application';
 
@@ -37,6 +38,7 @@ describe('server/helpers/summary-lists/your-buyer', () => {
         connectionWithBuyerFields(buyer.relationship, referenceNumber, checkAndChange),
         tradingHistoryFields(buyer.buyerTradingHistory, referenceNumber, checkAndChange),
         ...optionalFields(buyer, referenceNumber, totalContractValueOverThreshold, checkAndChange),
+        financialAccountsFields(buyer.relationship, referenceNumber, checkAndChange),
       ];
 
       expect(result).toEqual(expected);

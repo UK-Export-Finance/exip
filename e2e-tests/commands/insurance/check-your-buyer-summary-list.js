@@ -22,6 +22,7 @@ const {
       TOTAL_OUTSTANDING_PAYMENTS,
       PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
       HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      HAS_BUYER_FINANCIAL_ACCOUNTS,
     },
   },
 } = FIELD_IDS;
@@ -165,6 +166,14 @@ const checkYourBusinessSummaryList = ({
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: () => {
+    const fieldId = HAS_BUYER_FINANCIAL_ACCOUNTS;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = application.BUYER[fieldId];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
 });
 

@@ -2,6 +2,7 @@ import generateCompanyOrOrganisationFields from './company-or-organisation';
 import connectionWithBuyerFields from './connection-with-buyer';
 import tradingHistoryFields from './trading-history';
 import creditInsuranceHistoryFields from './credit-insurance-history';
+import financialAccountsFields from './financial-accounts';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { SummaryListGroupData, ApplicationBuyer } from '../../../../types';
 
@@ -53,6 +54,7 @@ const generateFields = (
     connectionWithBuyerFields(answersBuyer.relationship, referenceNumber, checkAndChange),
     tradingHistoryFields(answersBuyer.buyerTradingHistory, referenceNumber, checkAndChange),
     ...optionalFields(answersBuyer, referenceNumber, totalContractValueOverThreshold, checkAndChange),
+    financialAccountsFields(answersBuyer.relationship, referenceNumber, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;
