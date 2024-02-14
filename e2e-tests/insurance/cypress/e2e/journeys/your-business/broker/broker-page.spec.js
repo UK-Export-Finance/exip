@@ -1,6 +1,11 @@
 import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import {
+  field as fieldSelector,
+  saveAndBackButton,
+  submitButton,
+  yesRadioInput,
+} from '../../../../../../pages/shared';
 import {
   PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
@@ -223,7 +228,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+              yesRadioInput().should('be.checked');
               cy.checkValue(fieldSelector(NAME), application.EXPORTER_BROKER[NAME]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);

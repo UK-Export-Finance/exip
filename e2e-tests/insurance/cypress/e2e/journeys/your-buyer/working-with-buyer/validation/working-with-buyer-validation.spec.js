@@ -126,7 +126,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
 
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().label().click();
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().click();
 
           field.yesRadio().label().click();
 
@@ -140,7 +140,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
 
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().label().click();
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().click();
 
           field.noRadio().label().click();
 

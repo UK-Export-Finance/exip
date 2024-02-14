@@ -1,6 +1,13 @@
-import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { field, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import {
+  field,
+  saveAndBackButton,
+  submitButton,
+  noRadio,
+  noRadioInput,
+  yesRadio,
+  yesRadioInput,
+} from '../../../../../../pages/shared';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
@@ -79,7 +86,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
-      brokerPage[USING_BROKER].yesRadio().label().click();
+      yesRadio().label().click();
 
       cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
 
@@ -105,7 +112,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       // submit turnover form
       submitButton().click();
 
-      brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+      yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
       cy.checkValue(field(ADDRESS_LINE_1), '');
       cy.checkValue(field(ADDRESS_LINE_2), '');
@@ -121,7 +128,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
         cy.navigateToUrl(url);
 
-        brokerPage[USING_BROKER].yesRadio().label().click();
+        yesRadio().label().click();
 
         cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
         cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
@@ -153,7 +160,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         // submit turnover form
         submitButton().click();
 
-        brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+        yesRadioInput().should('be.checked');
         cy.checkValue(field(NAME), application.EXPORTER_BROKER[NAME]);
         cy.checkValue(field(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
         cy.checkValue(field(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -168,7 +175,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "Completed"`, () => {
         cy.navigateToUrl(url);
 
-        brokerPage[USING_BROKER].noRadio().label().click();
+        noRadio().label().click();
 
         saveAndBackButton().click();
 
@@ -192,7 +199,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
         // submit turnover form
         submitButton().click();
 
-        brokerPage[USING_BROKER].noRadioInput().should('be.checked');
+        noRadioInput().should('be.checked');
       });
     });
   });
