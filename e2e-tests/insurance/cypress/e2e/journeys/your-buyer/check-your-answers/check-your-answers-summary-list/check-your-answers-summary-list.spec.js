@@ -24,6 +24,8 @@ const {
       FAILED_PAYMENTS,
       TOTAL_AMOUNT_OVERDUE,
       TOTAL_OUTSTANDING_PAYMENTS,
+      HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
     },
   },
 } = FIELD_IDS;
@@ -112,6 +114,14 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
 
     it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
       checkSummaryList[FAILED_PAYMENTS]();
+    });
+
+    it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+      checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+    });
+
+    it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+      checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
   });
 
