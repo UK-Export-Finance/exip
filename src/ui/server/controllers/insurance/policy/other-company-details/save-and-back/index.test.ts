@@ -104,7 +104,8 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
     describe('when mapAndSave.jointlyInsuredParty returns false', () => {
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-        mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(false));
+        updateMapAndSave = jest.fn(() => Promise.resolve(false));
+        mapAndSave.jointlyInsuredParty = updateMapAndSave;
 
         await post(req, res);
 
