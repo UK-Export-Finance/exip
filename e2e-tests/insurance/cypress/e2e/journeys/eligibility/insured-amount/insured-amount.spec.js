@@ -92,7 +92,7 @@ context('Insurance - Insured amount page - I want to check if I can use online s
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        noRadio().input().click();
+        noRadio().label().click();
         submitButton().click();
       });
 

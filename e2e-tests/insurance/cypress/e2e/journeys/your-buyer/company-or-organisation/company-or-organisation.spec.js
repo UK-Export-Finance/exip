@@ -3,6 +3,8 @@ import {
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
+  yesRadioInput,
+  noRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
@@ -169,8 +171,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
       cy.checkText(field.yesNoRadioHint(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].HINT);
 
-      field.yesRadioInput().should('exist');
-      field.noRadioInput().should('exist');
+      yesRadioInput().should('exist');
+      noRadioInput().should('exist');
     });
 
     it(`renders ${EMAIL} label and input`, () => {
@@ -204,7 +206,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+        yesRadioInput().should('be.checked');
         cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
         cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
         cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);

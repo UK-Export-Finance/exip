@@ -1,5 +1,5 @@
 import {
-  submitButton, yesRadioInput, yesRadio, yesNoRadioHint, noRadio,
+  submitButton, yesRadio, yesNoRadioHint, noRadio,
 } from '../../../../../../pages/shared';
 import {
   ERROR_MESSAGES,
@@ -94,7 +94,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         cy.navigateToUrl(url);
 
-        yesRadioInput().click();
+        yesRadio().label().click();
         submitButton().click();
 
         const expected = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;

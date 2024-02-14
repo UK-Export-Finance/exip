@@ -75,7 +75,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
     describe('when submitting the answer as `yes`', () => {
       it(`should redirect to ${UK_GOODS_OR_SERVICES}`, () => {
-        yesRadio().input().click();
+        yesRadio().label().click();
         submitButton().click();
 
         const expectedUrl = `${baseUrl}${UK_GOODS_OR_SERVICES}`;

@@ -51,7 +51,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
 
-      field(SATISFIED).input().click();
+      field(SATISFIED).label().click();
       cy.keyboardInput(field(IMPROVEMENT).textarea(), 'test');
       cy.keyboardInput(field(OTHER_COMMENTS).textarea(), 'test');
       submitButton().click();
@@ -81,7 +81,7 @@ context('Insurance - Feedback - Submit feedback form', () => {
       cy.navigateToUrl(startUrl);
       partials.phaseBanner.feedbackLink().click();
 
-      field(SATISFIED).input().click();
+      field(SATISFIED).label().click();
       cy.keyboardInput(field(IMPROVEMENT).textarea(), longString);
       cy.keyboardInput(field(OTHER_COMMENTS).textarea(), longString);
       submitButton().click();

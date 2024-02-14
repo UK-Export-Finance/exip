@@ -100,7 +100,7 @@ context('Insurance - Eligibility - Letter of credit page - I want to check if I 
       beforeEach(() => {
         cy.navigateToUrl(url);
 
-        noRadio().input().click();
+        noRadio().label().click();
         submitButton().click();
       });
 

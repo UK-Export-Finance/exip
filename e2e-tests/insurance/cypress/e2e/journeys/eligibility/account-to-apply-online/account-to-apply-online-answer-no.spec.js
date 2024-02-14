@@ -1,4 +1,4 @@
-import { submitButton, noRadioInput } from '../../../../../../pages/shared';
+import { submitButton, noRadio } from '../../../../../../pages/shared';
 import { ROUTES } from '../../../../../../constants';
 
 const {
@@ -22,7 +22,7 @@ context('Insurance - Eligibility - Account to apply online page - I want to conf
   });
 
   it(`should redirect to ${CREATE.YOUR_DETAILS}`, () => {
-    noRadioInput().click();
+    noRadio().label().click();
     submitButton().click();
 
     const expected = `${Cypress.config('baseUrl')}${CREATE.YOUR_DETAILS}`;

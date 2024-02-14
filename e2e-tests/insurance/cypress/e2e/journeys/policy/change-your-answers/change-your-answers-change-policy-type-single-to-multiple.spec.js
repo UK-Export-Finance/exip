@@ -91,7 +91,7 @@ context('Insurance - Policy - Change your answers - Policy type - single to mult
 
       summaryList.field(POLICY_TYPE).changeLink().click();
 
-      typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
+      typeOfPolicyPage[POLICY_TYPE].multiple.label().click();
       submitButton().click();
 
       cy.completeAndSubmitMultipleContractPolicyForm({});

@@ -1,4 +1,4 @@
-import { submitButton, noRadioInput, backLink } from '../../../../../../../pages/shared';
+import { submitButton, noRadio, backLink } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -43,7 +43,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
 
     cy.navigateToUrl(url);
 
-    noRadioInput().click();
+    noRadio().label().click();
     submitButton().click();
   });
 
@@ -60,6 +60,6 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   it('should have the originally submitted answer selected when going back to the page after submission', () => {
     backLink().click();
 
-    noRadioInput().should('be.checked');
+    noRadio().input().should('be.checked');
   });
 });

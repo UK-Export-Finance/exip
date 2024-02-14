@@ -19,7 +19,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
 
       cy.navigateToUrl(COOKIES);
 
-      cookiesPage[FIELD_ID].accept.input().click();
+      cookiesPage[FIELD_ID].accept.label().click();
 
       submitButton().click();
     });
@@ -41,7 +41,7 @@ context('Cookies saved page - Insurance - visit the page directly as a signed in
     beforeEach(() => {
       cy.navigateToUrl(COOKIES);
 
-      cookiesPage[FIELD_ID].accept.input().click();
+      cookiesPage[FIELD_ID].accept.label().click();
 
       submitButton().click();
     });

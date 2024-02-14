@@ -25,7 +25,7 @@ context('Cannot apply exit page', () => {
 
     cy.assertUrl(expectedUrl);
 
-    noRadio().input().click();
+    noRadio().label().click();
     submitButton().click();
 
     expectedUrl = `${baseUrl}${CANNOT_APPLY}`;

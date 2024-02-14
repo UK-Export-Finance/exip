@@ -130,7 +130,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      noRadio().input().click();
+      noRadio().label().click();
       submitButton().click();
     });
 

@@ -194,7 +194,7 @@ context('Cookies page - Quote', () => {
 
           partials.footer.supportLinks.cookies().click();
 
-          accept.input().click();
+          accept.label().click();
           submitButton().click();
         });
 
@@ -233,7 +233,7 @@ context('Cookies page - Quote', () => {
 
           partials.footer.supportLinks.cookies().click();
 
-          reject.input().click();
+          reject.label().click();
           submitButton().click();
         });
 
@@ -270,7 +270,7 @@ context('Cookies page - Quote', () => {
 
           cy.navigateToUrl(COOKIES);
 
-          accept.input().click();
+          accept.label().click();
           submitButton().click();
         });
 
@@ -291,7 +291,7 @@ context('Cookies page - Quote', () => {
 
           cy.navigateToUrl(COOKIES);
 
-          accept.input().click();
+          accept.label().click();
           submitButton().click();
         });
 

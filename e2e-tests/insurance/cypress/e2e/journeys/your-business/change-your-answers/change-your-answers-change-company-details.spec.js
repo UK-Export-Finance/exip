@@ -9,7 +9,7 @@ import {
   field,
   submitButton,
   summaryList,
-  noRadioInput,
+  noRadio,
 } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -145,7 +145,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().first().click();
+        noRadio().label().first().click();
 
         submitButton().click();
       });
@@ -181,7 +181,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().eq(1).click();
+        noRadio().label().eq(1).click();
 
         submitButton().click();
       });

@@ -86,7 +86,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field(SAME_NAME).input().click();
+      field(SAME_NAME).label().click();
     });
 
     it('should display validation error', () => {

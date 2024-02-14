@@ -21,28 +21,28 @@ const {
 } = FIELD_IDS;
 
 export const completeAndSubmitBuyerBodyForm = () => {
-  noRadio().input().click();
+  noRadio().label().click();
   submitButton().click();
 };
 
 export const completeAndSubmitExporterLocationForm = () => {
-  yesRadio().input().click();
+  yesRadio().label().click();
   submitButton().click();
 };
 
 export const completeAndSubmitUkContentForm = () => {
-  yesRadio().input().click();
+  yesRadio().label().click();
   submitButton().click();
 };
 
 export const completeAndSubmitPolicyTypeSingleForm = () => {
-  policyTypePage[POLICY_TYPE].single.input().click();
+  policyTypePage[POLICY_TYPE].single.label().click();
 
   submitButton().click();
 };
 
 export const completeAndSubmitPolicyTypeMultiForm = () => {
-  policyTypePage[POLICY_TYPE].multiple.input().click();
+  policyTypePage[POLICY_TYPE].multiple.label().click();
 
   submitButton().click();
 };
