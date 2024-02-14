@@ -11,7 +11,7 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
   const { referenceNumber, policy, exportContract, broker, declaration, company } = mockApplication;
 
-  const { policyType } = policy;
+  const { policyType, jointlyInsuredParty } = policy;
   const { finalDestinationKnown } = exportContract;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
@@ -21,6 +21,7 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
     const result = generateGroupsAndTasks(
       referenceNumber,
       policyType,
+      jointlyInsuredParty.requested,
       finalDestinationKnown,
       isUsingBroker,
       hasDifferentTradingName,
@@ -37,7 +38,15 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(referenceNumber, [initialChecks], policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName),
+      tasks: prepareApplicationTasks(
+        referenceNumber,
+        [initialChecks],
+        policyType,
+        jointlyInsuredParty.requested,
+        finalDestinationKnown,
+        isUsingBroker,
+        hasDifferentTradingName,
+      ),
     };
 
     const submitApplication = {

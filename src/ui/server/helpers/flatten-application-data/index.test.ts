@@ -23,6 +23,7 @@ describe('server/helpers/flatten-application-data', () => {
       status: mockApplication.status,
       buyerCountry: mockApplication.eligibility.buyerCountry.isoCode,
       ...policy,
+      ...policy.jointlyInsuredParty,
       ...exportContract,
       ...company,
       ...business,

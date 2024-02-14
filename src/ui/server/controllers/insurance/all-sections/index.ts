@@ -25,7 +25,7 @@ export const get = (req: Request, res: Response) => {
   }
 
   const { referenceNumber, policy, exportContract, broker, company, declaration, buyer, totalContractValueOverThreshold } = application;
-  const { policyType } = policy;
+  const { policyType, jointlyInsuredParty } = policy;
   const { finalDestinationKnown } = exportContract;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
@@ -40,6 +40,7 @@ export const get = (req: Request, res: Response) => {
     referenceNumber,
     policyType,
     finalDestinationKnown,
+    jointlyInsuredParty.requested,
     isUsingBroker,
     hasDifferentTradingName,
     hasAntiBriberyCodeOfConduct,

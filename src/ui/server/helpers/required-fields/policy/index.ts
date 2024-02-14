@@ -11,6 +11,7 @@ const {
   },
   TYPE_OF_POLICY,
   NAME_ON_POLICY,
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COUNTRY_CODE },
   USING_BROKER,
   BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
@@ -41,9 +42,23 @@ export const getContractPolicyTasks = (policyType?: string): object => {
 };
 
 /**
+ * getJointlyInsuredPartyTasks
+ * Get "Jointly insured party" tasks depending on the jointlyInsuredParty field.
+ * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
+ * @returns {Array} Array of tasks
+ */
+export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
+  if (jointlyInsuredParty) {
+    return [COMPANY_NAME, COUNTRY_CODE];
+  }
+
+  return [REQUESTED];
+};
+
+/**
  * getBrokerTasks
  * Get broker section tasks depending on the isUsingBroker field
- * @param {Boolean} isUsingBroker: Application "Is using broker" flag
+ * @param {Boolean} isUsingBroker: "Is using broker" flag
  * @returns {Array} Array of tasks
  */
 export const getBrokerTasks = (isUsingBroker?: boolean) => {
@@ -56,21 +71,24 @@ export const getBrokerTasks = (isUsingBroker?: boolean) => {
 
 interface RequiredFields {
   policyType?: string;
+  jointlyInsuredParty?: boolean;
   isUsingBroker?: boolean;
 }
 
 /**
  * Required fields for the insurance - policy section
  * @param {String} policyType: Application "Policy type"
- * @param {Boolean} finalDestinationKnown: Application "Final destination known"
- * @param {Boolean} isUsingBroker: Application "Is using broker"
+ * @param {Boolean} finalDestinationKnown: "Final destination known"
+ * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
+ * @param {Boolean} isUsingBroker: "Is using broker"
  * @returns {Array} Required field IDs
  */
-const requiredFields = ({ policyType, isUsingBroker }: RequiredFields): Array<string> => [
+const requiredFields = ({ policyType, jointlyInsuredParty, isUsingBroker }: RequiredFields): Array<string> => [
   ...Object.values(TYPE_OF_POLICY),
   REQUESTED_START_DATE,
   POLICY_CURRENCY_CODE,
   ...Object.values(getContractPolicyTasks(policyType)),
+  ...Object.values(getJointlyInsuredPartyTasks(jointlyInsuredParty)),
   IS_SAME_AS_OWNER,
   FIRST_NAME,
   LAST_NAME,
