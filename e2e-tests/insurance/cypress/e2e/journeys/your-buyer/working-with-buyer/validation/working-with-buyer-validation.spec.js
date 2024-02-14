@@ -82,7 +82,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
       describe('yes radio', () => {
         it('should not display validation errors', () => {
-          field.yesRadioInput().click();
+          field.yesRadio().label().click();
           submitButton().click();
 
           partials.errorSummaryListItems().should('have.length', 1);
@@ -91,7 +91,7 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
 
       describe('no radio', () => {
         it('should not display validation errors', () => {
-          field.noRadioInput().click();
+          field.noRadio().label().click();
           submitButton().click();
 
           partials.errorSummaryListItems().should('have.length', 1);
@@ -126,9 +126,9 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
 
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().label().click();
 
-          field.yesRadioInput().click();
+          field.yesRadio().label().click();
 
           submitButton().click();
 
@@ -140,9 +140,9 @@ context('Insurance - Your Buyer - Working with buyer page - form validation', ()
         it('should not display validation errors', () => {
           cy.navigateToUrl(url);
 
-          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+          workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().label().click();
 
-          field.noRadioInput().click();
+          field.noRadio().label().click();
 
           submitButton().click();
 

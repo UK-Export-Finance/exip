@@ -291,7 +291,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyOrOrganisationPage[fieldId].noRadioInput().click();
+        companyOrOrganisationPage[fieldId].noRadio().label().click();
 
         submitButton().click();
       });

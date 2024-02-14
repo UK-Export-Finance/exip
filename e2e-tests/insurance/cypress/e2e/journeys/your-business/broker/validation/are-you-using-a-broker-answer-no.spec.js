@@ -57,7 +57,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     it(`should  not display validation errors and redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       const field = brokerPage[FIELD_ID];
 
-      field.noRadioInput().click();
+      field.noRadio().label().click();
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 0);

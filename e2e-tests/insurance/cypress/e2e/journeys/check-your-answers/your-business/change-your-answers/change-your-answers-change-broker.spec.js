@@ -243,7 +243,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].noRadioInput().click();
+        brokerPage[fieldId].noRadio().label().click();
 
         submitButton().click();
       });

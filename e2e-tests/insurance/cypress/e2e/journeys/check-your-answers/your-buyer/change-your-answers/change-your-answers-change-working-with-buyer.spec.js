@@ -96,7 +96,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
         summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadioInput().click();
+        workingWithBuyerPage[fieldId].noRadio().label().click();
 
         submitButton().click();
       });
@@ -137,7 +137,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page- 
 
         summaryList.field(fieldId).changeLink().click();
 
-        workingWithBuyerPage[fieldId].noRadioInput().click();
+        workingWithBuyerPage[fieldId].noRadio().label().click();
 
         submitButton().click();
       });

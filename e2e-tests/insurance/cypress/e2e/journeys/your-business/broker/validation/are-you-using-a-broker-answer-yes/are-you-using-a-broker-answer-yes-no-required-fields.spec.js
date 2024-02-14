@@ -63,7 +63,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   it('should display validation errors when the yes radio is selected and no required fields are entered', () => {
     const expectedErrorsCount = 5;
 
-    field.yesRadioInput().click();
+    field.yesRadio().label().click();
 
     // NAME error check
     cy.submitAndAssertFieldErrors(fieldSelector(NAME), null, 0, expectedErrorsCount, BROKER_ERRORS[NAME].IS_EMPTY);

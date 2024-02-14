@@ -244,7 +244,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].noRadioInput().click();
+        brokerPage[fieldId].noRadio().label().click();
 
         submitButton().click();
       });

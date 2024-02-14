@@ -80,7 +80,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
+      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadio().label().click();
 
       cy.keyboardInput(field(NAME).input(), BUYER[NAME]);
 
@@ -123,7 +123,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.keyboardInput(field(LAST_NAME).input(), BUYER[LAST_NAME]);
       cy.keyboardInput(field(POSITION).input(), BUYER[POSITION]);
       cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().click();
+      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadio().label().click();
 
       saveAndBackButton().click();
     });

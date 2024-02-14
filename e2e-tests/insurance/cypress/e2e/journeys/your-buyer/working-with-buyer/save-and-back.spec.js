@@ -72,7 +72,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().label().click();
 
       saveAndBackButton().click();
     });
@@ -101,8 +101,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
-      workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().click();
+      workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().label().click();
+      workingWithBuyerPage[TRADED_WITH_BUYER].noRadio().label().click();
 
       saveAndBackButton().click();
     });

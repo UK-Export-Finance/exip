@@ -338,7 +338,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyOrOrganisationPage[fieldId].noRadioInput().click();
+        companyOrOrganisationPage[fieldId].noRadio().label().click();
 
         submitButton().click();
       });

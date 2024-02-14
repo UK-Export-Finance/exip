@@ -79,7 +79,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} retain the "your business" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
-      brokerPage[USING_BROKER].yesRadioInput().click();
+      brokerPage[USING_BROKER].yesRadio().label().click();
 
       cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
 
@@ -121,7 +121,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "completed"`, () => {
         cy.navigateToUrl(url);
 
-        brokerPage[USING_BROKER].yesRadioInput().click();
+        brokerPage[USING_BROKER].yesRadio().label().click();
 
         cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
         cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
@@ -168,7 +168,7 @@ context('Insurance - Your business - Broker page - Save and back', () => {
       it(`should redirect to ${ALL_SECTIONS} and change the "your business" task status as "Completed"`, () => {
         cy.navigateToUrl(url);
 
-        brokerPage[USING_BROKER].noRadioInput().click();
+        brokerPage[USING_BROKER].noRadio().label().click();
 
         saveAndBackButton().click();
 

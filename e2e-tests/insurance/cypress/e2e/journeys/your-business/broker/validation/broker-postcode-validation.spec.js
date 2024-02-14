@@ -73,7 +73,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode field is left empty', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageEmpty,
@@ -85,7 +85,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has 1 letter in the first part', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -99,7 +99,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has no letters in the first part', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -113,7 +113,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has 2 digits in the second part', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -127,7 +127,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has 3 digits in the second part', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -141,7 +141,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has all letters in the second part', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -155,7 +155,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has more than 7 characters', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -169,7 +169,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has more than 7 characters without spaces', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -183,7 +183,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has less than 5 characters', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -197,7 +197,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should display validation errors when the postcode has less than 5 characters without spaces', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       const {
         errorField, errorIndex, expectedErrorsCount, errorMessageFormat,
@@ -213,7 +213,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should not display validation errors when the postcode has a space', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITH_SPACE);
       submitButton().click();
@@ -224,7 +224,7 @@ context('Insurance - Your business - Broker Page - Validation - Postcode', () =>
     it('should not display validation errors when the postcode does not have a space', () => {
       cy.navigateToUrl(url);
 
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       cy.keyboardInput(fieldSelector(POSTCODE).input(), VALID_POSTCODES.WITHOUT_SPACE);
       submitButton().click();

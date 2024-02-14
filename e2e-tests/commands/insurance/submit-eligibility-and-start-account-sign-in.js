@@ -1,10 +1,10 @@
 import submitInsuranceEligibilityAnswersHappyPath from './eligibility/submit-answers-happy-path';
-import { yesRadioInput, submitButton } from '../../pages/shared';
+import { yesRadio, submitButton } from '../../pages/shared';
 
 export default () => {
   submitInsuranceEligibilityAnswersHappyPath();
 
   // submit "I already have an account"
-  yesRadioInput().click();
+  yesRadio().label().click();
   submitButton().click();
 };

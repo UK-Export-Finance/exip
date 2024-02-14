@@ -1,8 +1,8 @@
 import {
   saveAndBackButton,
   submitButton,
-  yesRadioInput,
-  noRadioInput,
+  yesRadio,
+  noRadio,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { TASKS } from '../../../../../../../content-strings';
@@ -87,7 +87,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      yesRadioInput().click();
+      yesRadio().label().click();
 
       saveAndBackButton().click();
     });
@@ -103,7 +103,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       navigateBackToPage();
 
-      yesRadioInput().should('be.checked');
+      yesRadio().input().should('be.checked');
     });
   });
 
@@ -111,7 +111,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      noRadioInput().click();
+      noRadio().label().click();
 
       saveAndBackButton().click();
     });
@@ -127,7 +127,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - Save a
     it('should have the originally submitted answer selected when going back to the page after submission', () => {
       navigateBackToPage();
 
-      noRadioInput().should('be.checked');
+      noRadio().input().should('be.checked');
     });
   });
 });

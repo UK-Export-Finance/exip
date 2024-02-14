@@ -73,7 +73,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   it('should NOT display validation errors when yes radio is selected', () => {
-    field.yesRadioInput().click();
+    field.yesRadio().label().click();
 
     submitButton().click();
 
@@ -82,7 +82,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   it('should NOT display validation errors when no radio is selected', () => {
-    field.noRadioInput().click();
+    field.noRadio().label().click();
 
     submitButton().click();
 

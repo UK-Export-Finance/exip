@@ -141,7 +141,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     it('should display conditional broker section when selecting the "yes" radio', () => {
       const fieldId = USING_BROKER;
       const field = brokerPage[fieldId];
-      field.yesRadioInput().click();
+      field.yesRadio().label().click();
 
       cy.checkText(fieldSelector(LEGEND).legend(), FIELDS.BROKER[LEGEND].LEGEND);
 
@@ -237,7 +237,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
         describe(`when selecting no for ${USING_BROKER}`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-            brokerPage[USING_BROKER].noRadioInput().click();
+            brokerPage[USING_BROKER].noRadio().label().click();
             submitButton().click();
 
             cy.assertUrl(checkYourAnswersUrl);
