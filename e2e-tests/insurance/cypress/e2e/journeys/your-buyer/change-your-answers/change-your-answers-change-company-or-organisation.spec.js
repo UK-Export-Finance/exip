@@ -5,8 +5,12 @@ import {
   ROUTES,
   WEBSITE_EXAMPLES,
 } from '../../../../../../constants';
-import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import {
+  field,
+  submitButton,
+  summaryList,
+  noRadio,
+} from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
@@ -291,7 +295,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyOrOrganisationPage[fieldId].noRadio().label().click();
+        noRadio().label().click();
 
         submitButton().click();
       });

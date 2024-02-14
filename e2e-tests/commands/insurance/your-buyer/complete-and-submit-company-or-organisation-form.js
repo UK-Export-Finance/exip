@@ -1,6 +1,5 @@
 import { FIELD_IDS } from '../../../constants';
-import { companyOrOrganisationPage } from '../../../pages/insurance/your-buyer';
-import { field, submitButton } from '../../../pages/shared';
+import { field, submitButton, yesRadio } from '../../../pages/shared';
 import mockApplication from '../../../fixtures/application';
 
 const {
@@ -13,7 +12,6 @@ const {
     LAST_NAME,
     POSITION,
     EMAIL,
-    CAN_CONTACT_BUYER,
   },
 } = FIELD_IDS.INSURANCE.YOUR_BUYER;
 
@@ -32,7 +30,7 @@ const completeAndSubmitCompanyOrOrganisationForm = ({
   cy.keyboardInput(field(LAST_NAME).input(), lastName);
   cy.keyboardInput(field(POSITION).input(), BUYER[POSITION]);
   cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
-  companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadio().click();
+  yesRadio().label().click();
 
   submitButton().click();
 };

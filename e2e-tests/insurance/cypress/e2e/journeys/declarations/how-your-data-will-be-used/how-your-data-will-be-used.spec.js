@@ -109,8 +109,8 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       });
     });
 
-    it("renders `I've read and agree` label and input", () => {
-      cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
+    it("renders `I've read and agree` legend and input", () => {
+      cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');
     });

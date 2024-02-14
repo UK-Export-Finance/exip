@@ -1,6 +1,10 @@
-import { field, saveAndBackButton } from '../../../../../../pages/shared';
+import {
+  field,
+  saveAndBackButton,
+  yesRadio,
+  yesRadioInput,
+} from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
-import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { TASKS } from '../../../../../../content-strings';
 import { ROUTES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -80,7 +84,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadio().label().click();
+      yesRadio().label().click();
 
       cy.keyboardInput(field(NAME).input(), BUYER[NAME]);
 
@@ -99,7 +103,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     it(`should retain the ${NAME} and ${CAN_CONTACT_BUYER} input on the page and the other fields should be empty`, () => {
       task.link().click();
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+      yesRadioInput().should('be.checked');
       cy.checkValue(field(NAME), BUYER[NAME]);
       cy.checkValue(field(ADDRESS), '');
       cy.checkValue(field(REGISTRATION_NUMBER), '');
@@ -123,7 +127,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.keyboardInput(field(LAST_NAME).input(), BUYER[LAST_NAME]);
       cy.keyboardInput(field(POSITION).input(), BUYER[POSITION]);
       cy.keyboardInput(field(EMAIL).input(), BUYER[EMAIL]);
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadio().label().click();
+      yesRadio().label().click();
 
       saveAndBackButton().click();
     });
@@ -140,7 +144,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     it('should retain all inputs on the page', () => {
       task.link().click();
 
-      companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+      yesRadioInput().should('be.checked');
       cy.checkValue(field(ADDRESS), BUYER[ADDRESS]);
       cy.checkValue(field(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
       cy.checkValue(field(WEBSITE), BUYER[WEBSITE]);

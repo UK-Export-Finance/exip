@@ -1,5 +1,4 @@
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
-import { yesRadio, noRadio } from '../../shared';
 
 const {
   EXPORTER_BUSINESS: {
@@ -10,8 +9,6 @@ const {
 const brokerPage = {
   [USING_BROKER]: {
     value: () => cy.get(`[data-cy="${USING_BROKER}`),
-    yesRadio: () => yesRadio().label(),
-    noRadio: () => noRadio().label(),
     errorMessage: () => cy.get(`[data-cy="${USING_BROKER}-error-message`),
   },
   [DETAILS]: {

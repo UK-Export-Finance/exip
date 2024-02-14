@@ -1,5 +1,6 @@
 import {
   field,
+  noRadio,
   submitButton,
   status,
   summaryList,
@@ -8,7 +9,6 @@ import partials from '../../../../../../../partials';
 import { WEBSITE_EXAMPLES, FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
 
@@ -338,7 +338,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         summaryList.field(fieldId).changeLink().click();
 
-        companyOrOrganisationPage[fieldId].noRadio().label().click();
+        noRadio().label().click();
 
         submitButton().click();
       });

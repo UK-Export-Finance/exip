@@ -3,6 +3,7 @@ import {
   field as fieldSelector,
   headingCaption,
   saveAndBackButton,
+  yesRadioInput,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
@@ -204,7 +205,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        companyOrOrganisationPage[CAN_CONTACT_BUYER].yesRadioInput().should('be.checked');
+        yesRadioInput().should('be.checked');
         cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
         cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
         cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);

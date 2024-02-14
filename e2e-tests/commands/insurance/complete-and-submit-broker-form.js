@@ -1,11 +1,14 @@
-import { brokerPage } from '../../pages/your-business';
-import { field, submitButton } from '../../pages/shared';
+import {
+  field,
+  submitButton,
+  yesRadio,
+  noRadio,
+} from '../../pages/shared';
 import { FIELD_IDS } from '../../constants';
 import application from '../../fixtures/application';
 
 const {
   BROKER: {
-    USING_BROKER,
     NAME,
     ADDRESS_LINE_1,
     ADDRESS_LINE_2,
@@ -26,7 +29,7 @@ const completeAndSubmitBrokerForm = ({
   usingBroker = false,
 }) => {
   if (usingBroker) {
-    brokerPage[USING_BROKER].yesRadio().click();
+    yesRadio().label().click();
     cy.keyboardInput(field(NAME).input(), application.EXPORTER_BROKER[NAME]);
     cy.keyboardInput(field(ADDRESS_LINE_1).input(), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
     cy.keyboardInput(field(ADDRESS_LINE_2).input(), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -35,7 +38,7 @@ const completeAndSubmitBrokerForm = ({
     cy.keyboardInput(field(EMAIL).input(), application.EXPORTER_BROKER[EMAIL]);
     cy.keyboardInput(field(POSTCODE).input(), application.EXPORTER_BROKER[POSTCODE]);
   } else {
-    brokerPage[USING_BROKER].noRadio().click();
+    noRadio().label().click();
   }
 
   submitButton().click();
