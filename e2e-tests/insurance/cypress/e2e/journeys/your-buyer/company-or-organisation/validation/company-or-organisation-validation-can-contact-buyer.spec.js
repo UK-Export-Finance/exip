@@ -1,4 +1,6 @@
-import { submitButton, yesRadio, yesRadioInput, noRadio } from '../../../../../../../pages/shared';
+import {
+  submitButton, yesRadio, yesRadioInput, noRadio,
+} from '../../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
