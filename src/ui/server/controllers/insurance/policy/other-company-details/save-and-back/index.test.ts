@@ -97,14 +97,15 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
   });
 
   describe('api error handling', () => {
-    describe('when mapAndSave.jointlyInsuredParty returns false', () => {
-      beforeEach(() => {
-        req.body = validBody;
-        res.locals = mockRes().locals;
-        mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(false));
-      });
+    beforeEach(() => {
+      req.body = validBody;
+      res.locals = mockRes().locals;
+    });
 
+    describe('when mapAndSave.jointlyInsuredParty returns false', () => {
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        mapAndSave.jointlyInsuredParty = jest.fn(() => Promise.resolve(false));
+
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
@@ -112,14 +113,10 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
     });
 
     describe('when mapAndSave.jointlyInsuredParty fails', () => {
-      beforeEach(() => {
-        req.body = validBody;
-        res.locals = mockRes().locals;
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
         mapAndSave.jointlyInsuredParty = updateMapAndSave;
-      });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
