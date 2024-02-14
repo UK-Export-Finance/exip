@@ -17,6 +17,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - No', 
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });

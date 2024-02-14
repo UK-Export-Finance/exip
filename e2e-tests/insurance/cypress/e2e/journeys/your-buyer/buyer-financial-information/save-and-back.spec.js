@@ -19,6 +19,8 @@ context('Insurance - Your buyer - Buyer financial information - Save and back', 
 
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
@@ -67,8 +69,8 @@ context('Insurance - Your buyer - Buyer financial information - Save and back', 
         cy.assertUrl(allSectionsUrl);
       });
 
-      it('should retain the `your buyer` task status as `in progress`', () => {
-        cy.checkTaskBuyerStatusIsInProgress();
+      it('should retain the `your buyer` task status as `completed`', () => {
+        cy.checkTaskBuyerStatusIsComplete();
       });
 
       it('should retain all inputs on the page', () => {
@@ -92,8 +94,8 @@ context('Insurance - Your buyer - Buyer financial information - Save and back', 
         cy.assertUrl(allSectionsUrl);
       });
 
-      it('should retain the `your buyer` task status as `in progress`', () => {
-        cy.checkTaskBuyerStatusIsInProgress();
+      it('should retain the `your buyer` task status as `completed`', () => {
+        cy.checkTaskBuyerStatusIsComplete();
       });
 
       it('should retain all inputs on the page', () => {

@@ -17,7 +17,7 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredEligibilityFields(),
   ...requiredPolicyFields(application[POLICY_TYPE]),
   ...requiredBusinessFields(),
-  ...requiredYourBuyerFields(),
+  ...requiredYourBuyerFields({}),
 ];
 
 export default requiredFields;

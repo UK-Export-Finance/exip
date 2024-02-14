@@ -11,7 +11,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.BUYER_FINANCIAL_INFORMATION;
 
 const {
   YOUR_BUYER: {
-    BUYER_FINANCIAL_INFORMATION, CHECK_YOUR_ANSWERS,
+    BUYER_FINANCIAL_INFORMATION, CHECK_YOUR_ANSWERS, TRADED_WITH_BUYER,
   },
 } = ROUTES.INSURANCE;
 
@@ -37,7 +37,10 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
       url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
       checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.navigateToUrl(url);
+      cy.startInsuranceYourBuyerSection({});
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({});
 
       cy.assertUrl(url);
     });
@@ -55,7 +58,7 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}#`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`,
     });
   });
 

@@ -14,7 +14,7 @@ const { BUYER } = application;
 
 const {
   ROOT,
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION },
+  YOUR_BUYER: { CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION, TRADING_HISTORY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -59,7 +59,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`,
-      backLink: `${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}#`,
+      backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
     });
   });
 

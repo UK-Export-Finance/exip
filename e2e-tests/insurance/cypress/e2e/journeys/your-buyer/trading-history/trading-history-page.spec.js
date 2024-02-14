@@ -13,7 +13,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.TRADING_HISTORY;
 
 const {
   ROOT,
-  YOUR_BUYER: { TRADING_HISTORY, CHECK_YOUR_ANSWERS, ALTERNATIVE_CURRENCY },
+  YOUR_BUYER: {
+    TRADING_HISTORY, BUYER_FINANCIAL_INFORMATION, ALTERNATIVE_CURRENCY, TRADED_WITH_BUYER,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -27,7 +29,7 @@ const { BUYER } = application;
 context('Insurance - Your Buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let buyerFinancialInformationUrl;
   let alternativeCurrencyUrl;
 
   before(() => {
@@ -37,7 +39,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       cy.startInsuranceYourBuyerSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      buyerFinancialInformationUrl = `${baseUrl}${ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
       alternativeCurrencyUrl = `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
@@ -60,7 +62,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
-      backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}#`,
+      backLink: `${ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`,
     });
   });
 
@@ -179,12 +181,12 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
   describe('form submission', () => {
     describe('when submitting a fully filled form', () => {
       describe(`${OUTSTANDING_PAYMENTS} as "no"`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitTradingHistoryWithBuyerForm({});
 
-          cy.assertUrl(checkYourAnswersUrl);
+          cy.assertUrl(buyerFinancialInformationUrl);
         });
 
         describe('when going back to the page', () => {
@@ -198,12 +200,12 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       });
 
       describe(`${OUTSTANDING_PAYMENTS} as "yes"`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
           cy.navigateToUrl(url);
 
           cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
 
-          cy.assertUrl(checkYourAnswersUrl);
+          cy.assertUrl(buyerFinancialInformationUrl);
         });
 
         describe('when going back to the page', () => {

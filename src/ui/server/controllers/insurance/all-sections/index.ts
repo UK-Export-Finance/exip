@@ -33,6 +33,11 @@ export const get = (req: Request, res: Response) => {
     application.broker.isUsingBroker,
     application.company.hasDifferentTradingName,
     application.declaration.hasAntiBriberyCodeOfConduct,
+    application.buyer.relationship.exporterIsConnectedWithBuyer,
+    application.buyer.buyerTradingHistory.exporterHasTradedWithBuyer,
+    application.buyer.buyerTradingHistory.outstandingPayments,
+    application.buyer.relationship.exporterHasPreviousCreditInsuranceWithBuyer,
+    application.totalContractValueOverThreshold,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);
