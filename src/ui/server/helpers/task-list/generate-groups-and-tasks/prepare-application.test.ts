@@ -25,7 +25,7 @@ describe('server/helpers/task-list/prepare-application', () => {
   const { referenceNumber, broker, company, policy, exportContract, buyer } = mockApplication;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
-  const { policyType } = policy;
+  const { policyType, jointlyInsuredParty } = policy;
   const { finalDestinationKnown } = exportContract;
   const { relationship, buyerTradingHistory } = buyer;
 
@@ -45,6 +45,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         referenceNumber,
         previousGroups,
         policyType,
+        jointlyInsuredParty.requested,
         finalDestinationKnown,
         isUsingBroker,
         hasDifferentTradingName,
@@ -83,7 +84,11 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
         id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-        fields: policyRequiredFields({ policyType, isUsingBroker }),
+        fields: policyRequiredFields({
+          policyType,
+          jointlyInsuredParty: jointlyInsuredParty.requested,
+          isUsingBroker,
+        }),
         dependencies: expectedDependencies,
       };
 

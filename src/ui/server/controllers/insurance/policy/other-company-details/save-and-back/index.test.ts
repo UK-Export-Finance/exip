@@ -3,6 +3,7 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants/routes';
 import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/jointly-insured-party';
+import generateValidationErrors from '../validation';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 import { Request, Response } from '../../../../../../types';
 
@@ -29,29 +30,29 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
 
   const validBody = {
     [COMPANY_NAME]: mockApplication.policy.jointlyInsuredParty[COMPANY_NAME],
-    [COMPANY_NUMBER]: mockApplication.policy.jointlyInsuredParty[COMPANY_NUMBER],
     [COUNTRY_CODE]: mockApplication.policy.jointlyInsuredParty[COUNTRY_CODE],
+    [COMPANY_NUMBER]: mockApplication.policy.jointlyInsuredParty[COMPANY_NUMBER],
   };
 
   describe('when there are no validation errors', () => {
-    it('should redirect to all sections page', async () => {
+    beforeEach(async () => {
       req.body = validBody;
 
       await post(req, res);
+    });
 
+    it('should redirect to all sections page', () => {
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', async () => {
-      req.body = validBody;
-
-      await post(req, res);
-
+    it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', () => {
       const payload = constructPayload(req.body, FIELD_IDS);
 
       expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication);
+      const validationErrors = generateValidationErrors(validBody);
+
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
     });
   });
 
@@ -60,20 +61,24 @@ describe('controllers/insurance/policy/other-company-details/save-and-back', () 
       [COMPANY_NAME]: '',
     };
 
-    it('should redirect to all sections page', async () => {
+    beforeEach(async () => {
       req.body = mockInvalidBody;
 
       await post(req, res);
+    });
 
+    it('should redirect to all sections page', () => {
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should NOT call mapAndSave.jointlyInsuredParty', async () => {
-      req.body = mockInvalidBody;
+    it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function and validation errors', () => {
+      const payload = constructPayload(req.body, FIELD_IDS);
 
-      await post(req, res);
+      expect(updateMapAndSave).toHaveBeenCalledTimes(1);
 
-      expect(updateMapAndSave).toHaveBeenCalledTimes(0);
+      const validationErrors = generateValidationErrors(mockInvalidBody);
+
+      expect(updateMapAndSave).toHaveBeenCalledWith(payload, mockApplication, validationErrors);
     });
   });
 
