@@ -27,7 +27,7 @@ const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOT
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} Array including or excluding TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE in correct structure
  */
-export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange: boolean) => {
+export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [] as Array<SummaryListItemData>;
 
   /**
@@ -70,7 +70,7 @@ export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenc
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} All trading history fields and values in an object structure for GOVUK summary list structure
  */
-const tradingHistoryFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const tradingHistoryFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem(
       {

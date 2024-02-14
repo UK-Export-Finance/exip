@@ -16,12 +16,12 @@ const {
 
 /**
  * workingWithBuyerTasks
- * Get working with buyer tasks depending on the connectedWithBuyer field
- * if connectedWithBuyer is true,
+ * Get working with buyer tasks depending on the connectionWithBuyer field
+ * if connectionWithBuyer is true,
  * then returns CONNECTION_WITH_BUYER_DESCRIPTION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER (yes no radios and description field)
  * else returns CONNECTION_WITH_BUYER, TRADED_WITH_BUYER (yes no radios)
- * @param {Boolean} hasDifferentTradingName "has different trading name" flag
- * @returns {Array} Array of fieldIds
+ * @param {Boolean} connectionWithBuyer
+ * @returns {Array<String>} Array of fieldIds
  */
 export const workingWithBuyerTasks = ({ connectionWithBuyer }: { connectionWithBuyer?: boolean }): Array<string> => {
   if (connectionWithBuyer) {
