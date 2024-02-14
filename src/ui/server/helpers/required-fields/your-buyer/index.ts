@@ -23,8 +23,8 @@ const {
  * @param {Boolean} hasDifferentTradingName "has different trading name" flag
  * @returns {Array} Array of fieldIds
  */
-export const workingWithBuyerTasks = (connectedWithBuyer?: boolean): Array<string> => {
-  if (connectedWithBuyer) {
+export const workingWithBuyerTasks = ({ connectionWithBuyer }: { connectionWithBuyer?: boolean }): Array<string> => {
+  if (connectionWithBuyer) {
     return [CONNECTION_WITH_BUYER_DESCRIPTION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER];
   }
 
@@ -43,7 +43,7 @@ export const workingWithBuyerTasks = (connectedWithBuyer?: boolean): Array<strin
  * @param {Boolean} outstandingPayments
  * @returns {Array<String>} fieldIds
  */
-export const tradingHistoryTasks = (tradedWithBuyer?: boolean, outstandingPayments?: boolean): Array<string> => {
+export const tradingHistoryTasks = ({ tradedWithBuyer, outstandingPayments }: { tradedWithBuyer?: boolean; outstandingPayments?: boolean }): Array<string> => {
   if (tradedWithBuyer) {
     if (outstandingPayments) {
       return [OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS, FAILED_PAYMENTS];
@@ -67,7 +67,13 @@ export const tradingHistoryTasks = (tradedWithBuyer?: boolean, outstandingPaymen
  * @param {Boolean} hasPreviousCreditInsuranceWithBuyer
  * @returns {Array<String>} fieldIds
  */
-export const creditInsuranceCoverTasks = (totalContractValueOverThreshold?: boolean, hasPreviousCreditInsuranceWithBuyer?: boolean): Array<string> => {
+export const creditInsuranceCoverTasks = ({
+  totalContractValueOverThreshold,
+  hasPreviousCreditInsuranceWithBuyer,
+}: {
+  totalContractValueOverThreshold?: boolean;
+  hasPreviousCreditInsuranceWithBuyer?: boolean;
+}): Array<string> => {
   if (totalContractValueOverThreshold && !hasPreviousCreditInsuranceWithBuyer) {
     return [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
   }
@@ -80,7 +86,13 @@ export const creditInsuranceCoverTasks = (totalContractValueOverThreshold?: bool
 };
 
 /**
+ * requiredFields
  * Required fields for the insurance - your buyer section
+ * @param {Boolean} connectionWithBuyer
+ * @param {Boolean} tradedWithBuyer
+ * @param {Boolean} outstandingPayments
+ * @param {Boolean} hasPreviousCreditInsuranceWithBuyer
+ * @param {Boolean} totalContractValueOverThreshold
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({
@@ -98,9 +110,9 @@ const requiredFields = ({
 }): Array<string> =>
   [
     ...Object.values({ ...COMPANY_OR_ORGANISATION_FIELDS }),
-    ...workingWithBuyerTasks(connectionWithBuyer),
-    ...tradingHistoryTasks(tradedWithBuyer, outstandingPayments),
-    ...creditInsuranceCoverTasks(totalContractValueOverThreshold, hasPreviousCreditInsuranceWithBuyer),
+    ...workingWithBuyerTasks({ connectionWithBuyer }),
+    ...tradingHistoryTasks({ tradedWithBuyer, outstandingPayments }),
+    ...creditInsuranceCoverTasks({ totalContractValueOverThreshold, hasPreviousCreditInsuranceWithBuyer }),
     HAS_BUYER_FINANCIAL_ACCOUNTS,
   ] as Array<string>;
 

@@ -28,9 +28,9 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
       const expected = [
         ...Object.values({ ...COMPANY_OR_ORGANISATION_FIELDS }),
-        ...workingWithBuyerTasks(true),
-        ...tradingHistoryTasks(true, true),
-        ...creditInsuranceCoverTasks(true, true),
+        ...workingWithBuyerTasks({ connectionWithBuyer: true }),
+        ...tradingHistoryTasks({ tradedWithBuyer: true, outstandingPayments: true }),
+        ...creditInsuranceCoverTasks({ totalContractValueOverThreshold: true, hasPreviousCreditInsuranceWithBuyer: true }),
         HAS_BUYER_FINANCIAL_ACCOUNTS,
       ];
 
@@ -41,7 +41,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
   describe('workingWithBuyerTasks', () => {
     describe('when connectedWithBuyer is "true"', () => {
       it('should return array of relevant working with buyer fields', () => {
-        const result = workingWithBuyerTasks(true);
+        const result = workingWithBuyerTasks({ connectionWithBuyer: true });
 
         const expected = [CONNECTION_WITH_BUYER_DESCRIPTION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER];
 
@@ -51,7 +51,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
     describe('when connectedWithBuyer is "false"', () => {
       it('should return array of relevant working with buyer fields', () => {
-        const result = workingWithBuyerTasks(false);
+        const result = workingWithBuyerTasks({ connectionWithBuyer: false });
 
         const expected = [CONNECTION_WITH_BUYER, TRADED_WITH_BUYER];
 
@@ -63,7 +63,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
   describe('tradingHistoryTasks', () => {
     describe('when tradedWithBuyer is "true" and outstandingPayments is true', () => {
       it('should return array of relevant tradingHistoryTasks fields', () => {
-        const result = tradingHistoryTasks(true, true);
+        const result = tradingHistoryTasks({ tradedWithBuyer: true, outstandingPayments: true });
 
         const expected = [OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS, FAILED_PAYMENTS];
 
@@ -73,7 +73,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
     describe('when tradedWithBuyer is "true" and outstandingPayments is false', () => {
       it('should return array of relevant tradingHistoryTasks fields', () => {
-        const result = tradingHistoryTasks(true, false);
+        const result = tradingHistoryTasks({ tradedWithBuyer: true, outstandingPayments: false });
 
         const expected = [OUTSTANDING_PAYMENTS, FAILED_PAYMENTS];
 
@@ -83,7 +83,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
     describe('when tradedWithBuyer is "false" and outstandingPayments is false', () => {
       it('should return an empty array', () => {
-        const result = tradingHistoryTasks(false, false);
+        const result = tradingHistoryTasks({ tradedWithBuyer: false, outstandingPayments: false });
 
         expect(result).toEqual([]);
       });
@@ -93,7 +93,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
   describe('creditInsuranceCoverTasks', () => {
     describe('when totalContractValueOverThreshold is "true" and hasPreviousCreditInsuranceWithBuyer is true', () => {
       it('should return array of relevant creditInsuranceCoverTasks fields', () => {
-        const result = creditInsuranceCoverTasks(true, true);
+        const result = creditInsuranceCoverTasks({ totalContractValueOverThreshold: true, hasPreviousCreditInsuranceWithBuyer: true });
 
         const expected = [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
@@ -103,7 +103,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
     describe('when totalContractValueOverThreshold is "true" and hasPreviousCreditInsuranceWithBuyer is false', () => {
       it('should return array of relevant creditInsuranceCoverTasks fields', () => {
-        const result = creditInsuranceCoverTasks(true, false);
+        const result = creditInsuranceCoverTasks({ totalContractValueOverThreshold: true, hasPreviousCreditInsuranceWithBuyer: false });
 
         const expected = [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
@@ -113,7 +113,7 @@ describe('server/helpers/required-fields/your-buyer', () => {
 
     describe('when tradedWithBuyer is "false" and outstandingPayments is false', () => {
       it('should return an empty array', () => {
-        const result = creditInsuranceCoverTasks(false, false);
+        const result = creditInsuranceCoverTasks({ totalContractValueOverThreshold: false, hasPreviousCreditInsuranceWithBuyer: true });
 
         expect(result).toEqual([]);
       });
