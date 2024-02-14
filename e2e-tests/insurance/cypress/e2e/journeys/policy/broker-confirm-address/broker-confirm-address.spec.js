@@ -25,7 +25,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("As an exporter, I want to be able to review the broker's contact details that I have provided, So that I can confirm my input or amend any errors if needed", () => {
+context("Insurance - Policy - Broker confirm address - As an exporter, I want to be able to review the broker's contact details that I have provided, So that I can confirm my input or amend any errors if needed", () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
