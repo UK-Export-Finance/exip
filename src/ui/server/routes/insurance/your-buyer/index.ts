@@ -69,10 +69,18 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, post
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, getCreditInsuranceCover);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, postCreditInsuranceCover);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_SAVE_AND_BACK}`, postCreditInsuranceCoverSaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHANGE}`, getCreditInsuranceCover);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHANGE}`, postCreditInsuranceCover);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE}`, getCreditInsuranceCover);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE}`, postCreditInsuranceCover);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, getBuyerFinancialInformation);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, postBuyerFinancialInformation);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_SAVE_AND_BACK}`, postBuyerFinancialInformationSaveAndBack);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHANGE}`, getBuyerFinancialInformation);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHANGE}`, postBuyerFinancialInformation);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHECK_AND_CHANGE}`, getBuyerFinancialInformation);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHECK_AND_CHANGE}`, postBuyerFinancialInformation);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
