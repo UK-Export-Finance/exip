@@ -31,6 +31,9 @@ export const PARTIALS = {
       CREDIT_PERIOD_WITH_BUYER: {
         CUSTOM_CONTENT_HTML: 'partials/insurance/credit-period-with-buyer-description.njk',
       },
+      LOSS_PAYEE: {
+        HINT_HTML: 'partials/insurance/loss-payee-hint.njk',
+      },
     },
     UK_GOODS_OR_SERVICES: {
       CUSTOM_CONTENT_HTML: 'partials/insurance/uk-goods-and-services-details.njk',

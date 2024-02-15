@@ -61,4 +61,7 @@ export const POLICY = {
     EMAIL: 'email',
     FULL_ADDRESS: 'fullAddress',
   },
+  LOSS_PAYEE: {
+    IS_APPOINTED: 'isAppointed',
+  },
 };

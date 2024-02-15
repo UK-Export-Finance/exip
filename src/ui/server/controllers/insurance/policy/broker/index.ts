@@ -15,7 +15,7 @@ const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BROKER_DETAILS_ROOT },
+  POLICY: { BROKER_SAVE_AND_BACK, LOSS_PAYEE_ROOT, BROKER_DETAILS_ROOT },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -128,7 +128,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);
   } catch (err) {
     console.error('Error updating application - policy - broker %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

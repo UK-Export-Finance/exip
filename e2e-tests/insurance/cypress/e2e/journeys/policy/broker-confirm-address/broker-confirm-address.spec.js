@@ -19,7 +19,7 @@ const {
   POLICY: {
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_DETAILS_ROOT,
-    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -28,7 +28,7 @@ const baseUrl = Cypress.config('baseUrl');
 context("Insurance - Policy - Broker confirm address - As an exporter, I want to be able to review the broker's contact details that I have provided, So that I can confirm my input or amend any errors if needed", () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let lossPayeeUrl;
   let brokerDetailsUrl;
   let allSectionsUrl;
 
@@ -49,7 +49,7 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
       cy.completeAndSubmitBrokerDetailsForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
       brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
@@ -115,10 +115,10 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+    it(`should redirect to ${LOSS_PAYEE_ROOT} page`, () => {
       cy.clickSubmitButton();
 
-      cy.assertUrl(checkYourAnswersUrl);
+      cy.assertUrl(lossPayeeUrl);
     });
   });
 

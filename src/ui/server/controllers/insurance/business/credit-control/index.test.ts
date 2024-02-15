@@ -1,4 +1,4 @@
-import { FIELD_ID, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
+import { FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { FIELDS } from '../../../../content-strings/fields/insurance/your-business';
 import { TEMPLATES } from '../../../../constants';
@@ -46,11 +46,17 @@ describe('controllers/insurance/business/credit-control', () => {
     });
   });
 
+  describe('PAGE_CONTENT_STRINGS', () => {
+    it('should have the correct strings', () => {
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL);
+    });
+  });
+
   describe('PAGE_VARIABLES', () => {
     it('should have correct properties', () => {
       const expected = {
-        FIELD_ID: BUSINESS_FIELD_IDS.HAS_CREDIT_CONTROL,
-        PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL,
+        FIELD_ID,
+        PAGE_CONTENT_STRINGS,
       };
 
       expect(PAGE_VARIABLES).toEqual(expected);
