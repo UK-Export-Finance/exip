@@ -138,6 +138,7 @@ CREATE TABLE `Application` (
 	`version` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
 	`dealType` varchar(4) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'EXIP',
   `policyContact` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `nominatedLossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `Application_eligibility_idx` (`eligibility`),
   KEY `Application_referenceNumber_idx` (`referenceNumber`),
@@ -151,6 +152,7 @@ CREATE TABLE `Application` (
 	KEY `Application_sectionReview_idx` (`sectionReview`),
 	KEY `Application_owner_idx` (`owner`),
   KEY `Application_policyContact_idx` (`policyContact`),
+  KEY `Application_nominatedLossPayee_idx` (`nominatedLossPayee`),
 	CONSTRAINT `Application_buyer_fkey` FOREIGN KEY (`buyer`) REFERENCES `Buyer` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_declaration_fkey` FOREIGN KEY (`declaration`) REFERENCES `Declaration` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_eligibility_fkey` FOREIGN KEY (`eligibility`) REFERENCES `Eligibility` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -158,6 +160,7 @@ CREATE TABLE `Application` (
   CONSTRAINT `Application_business_fkey` FOREIGN KEY (`business`) REFERENCES `Business` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_exportContract_fkey` FOREIGN KEY (`exportContract`) REFERENCES `ExportContract` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Application_nominatedLossPayee_fkey` FOREIGN KEY (`nominatedLossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Application_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_sectionReview_fkey` FOREIGN KEY (`sectionReview`) REFERENCES `SectionReview` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
 	CONSTRAINT `Application_owner_fkey` FOREIGN KEY (`owner`) REFERENCES `Account` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
@@ -892,6 +895,67 @@ CREATE TABLE `JointlyInsuredParty` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `JointlyInsuredParty_policy_key` (`policy`),
   CONSTRAINT `JointlyInsuredParty_policy_fkey` FOREIGN KEY (`policy`) REFERENCES `Policy` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
+# Dump of table LossPayeeFinancialInternational
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `LossPayeeFinancialInternational`;
+
+CREATE TABLE `LossPayeeFinancialInternational` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bicSwiftCodeSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bicSwiftCodeHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ibanSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ibanHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddressSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddressHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `LossPayeeFinancialInternational_lossPayee_key` (`lossPayee`),
+  CONSTRAINT `LossPayeeFinancialInternational_lossPayee_fkey` FOREIGN KEY (`lossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
+# Dump of table LossPayeeFinancialUk
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `LossPayeeFinancialUk`;
+
+CREATE TABLE `LossPayeeFinancialUk` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sortCodeSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sortCodeHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accountNumberSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accountNumberHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddressSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddressHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `LossPayeeFinancialUk_lossPayee_key` (`lossPayee`),
+  CONSTRAINT `LossPayeeFinancialUk_lossPayee_fkey` FOREIGN KEY (`lossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+# Dump of table NominatedLossPayee
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `NominatedLossPayee`;
+
+CREATE TABLE `NominatedLossPayee` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `isAppointed` tinyint(1) DEFAULT NULL,
+  `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `locatedInUk` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `NominatedLossPayee_application_idx` (`application`),
+  CONSTRAINT `NominatedLossPayee_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;

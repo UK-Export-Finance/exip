@@ -78,6 +78,33 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+export interface ApplicationNominatedLossPayee extends Relationship {
+  applicationId?: string;
+  isAppointed?: boolean;
+  name?: string;
+  locatedInUk?: boolean;
+}
+
+export interface ApplicationLossPayeeFinancialInternational extends Relationship {
+  lossPayeeId?: string;
+  bankAddressSalt?: string;
+  bankAddressHash?: string;
+  bicSwiftCodeSalt?: string;
+  bicSwiftCodeHash?: string;
+  ibanSalt?: string;
+  ibanHash?: string;
+}
+
+export interface ApplicationLossPayeeFinancialUk extends Relationship {
+  lossPayeeId?: string;
+  accountNumberSalt?: string;
+  accountNumberHash?: string;
+  bankAddressSalt?: string;
+  bankAddressHash?: string;
+  sortCodeSalt?: string;
+  sortCodeHash?: string;
+}
+
 export interface TotalContractValue extends Relationship {
   value: string;
   valueId: number;
@@ -147,17 +174,18 @@ export interface Application {
   previousStatus?: string;
   eligibility: ApplicationEligibility;
   exportContract: ApplicationExportContract;
-  owner: ApplicationOwner;
-  policy: ApplicationPolicy;
-  policyContact: ApplicationPolicyContact;
+  broker: Relationship;
+  business: ApplicationBusiness;
+  buyer: ApplicationBuyer;
   company: ApplicationCompany;
   companySicCodes: Array<ApplicationCompanySicCode>;
   companyAddress: ApplicationCompanyAddress;
-  business: ApplicationBusiness;
-  broker: Relationship;
-  buyer: ApplicationBuyer;
-  sectionReview: Relationship;
   declaration: ApplicationDeclaration;
+  nominatedLossPayee: ApplicationNominatedLossPayee;
+  owner: ApplicationOwner;
+  policy: ApplicationPolicy;
+  policyContact: ApplicationPolicyContact;
+  sectionReview: Relationship;
   version: number;
 }
 
