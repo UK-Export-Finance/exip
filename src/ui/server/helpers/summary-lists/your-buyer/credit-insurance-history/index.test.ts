@@ -2,7 +2,7 @@ import creditInsuranceHistoryFields, { optionalFields } from '.';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
-import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { ROUTES } from '../../../../constants';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
@@ -14,8 +14,10 @@ const {
 } = FORM_TITLES;
 
 const {
-  YOUR_BUYER: { CREDIT_INSURANCE_COVER_CHANGE, CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE },
-} = INSURANCE_ROUTES;
+  INSURANCE: {
+    YOUR_BUYER: { CREDIT_INSURANCE_COVER_CHANGE, CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE },
+  },
+} = ROUTES;
 
 const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 

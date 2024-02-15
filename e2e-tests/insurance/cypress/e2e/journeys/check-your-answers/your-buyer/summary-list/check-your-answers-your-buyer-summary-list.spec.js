@@ -26,6 +26,7 @@ const {
   TOTAL_OUTSTANDING_PAYMENTS,
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
   PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+  HAS_BUYER_FINANCIAL_ACCOUNTS,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
@@ -118,11 +119,15 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
     checkSummaryList[FAILED_PAYMENTS]();
   });
 
-  it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
+  it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
     checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
   });
 
-  it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row as application is not over the total contract value threshold`, () => {
+  it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
     checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+  });
+
+  it(`should render a ${HAS_BUYER_FINANCIAL_ACCOUNTS} summary list row`, () => {
+    checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]();
   });
 });

@@ -1,5 +1,4 @@
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
 import checkSummaryList from '../../../../../../../commands/insurance/check-your-buyer-summary-list';
 
 const {
@@ -7,12 +6,16 @@ const {
   YOUR_BUYER: {
     CHECK_YOUR_ANSWERS,
   },
-} = INSURANCE_ROUTES;
+} = ROUTES.INSURANCE;
 
 const {
-  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-} = YOUR_BUYER_FIELD_IDS;
+  INSURANCE: {
+    YOUR_BUYER: {
+      PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    },
+  },
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 

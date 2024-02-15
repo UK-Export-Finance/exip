@@ -12,6 +12,7 @@ const {
     PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
     TOTAL_OUTSTANDING_PAYMENTS,
     TOTAL_AMOUNT_OVERDUE,
+    HAS_BUYER_FINANCIAL_ACCOUNTS,
   },
   CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
@@ -105,6 +106,11 @@ export const YOUR_BUYER_FIELDS = {
     LABEL: 'Amount overdue',
     SUMMARY: {
       TITLE: 'Amount overdue',
+    },
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: {
+    SUMMARY: {
+      TITLE: 'Financial accounts relating to the buyer',
     },
   },
 };
