@@ -78,12 +78,13 @@ type Application {
   exportContract: ExportContract
   owner: Account
   business: Business
-  company: Company
   broker: Broker
   buyer: Buyer
-  sectionReview: SectionReview
+  company: Company
   declaration: Declaration
+  nominatedLossPayee: NominatedLossPayee
   policyContact: PolicyContact
+  sectionReview: SectionReview
   version: String
   dealType: String
 }
@@ -113,12 +114,13 @@ input ApplicationWhereInput {
   exportContract: ExportContractWhereInput
   owner: AccountWhereInput
   business: BusinessWhereInput
-  company: CompanyWhereInput
   broker: BrokerWhereInput
   buyer: BuyerWhereInput
-  sectionReview: SectionReviewWhereInput
+  company: CompanyWhereInput
   declaration: DeclarationWhereInput
+  nominatedLossPayee: NominatedLossPayeeWhereInput
   policyContact: PolicyContactWhereInput
+  sectionReview: SectionReviewWhereInput
   version: StringFilter
   dealType: StringFilter
 }
@@ -228,12 +230,13 @@ input ApplicationUpdateInput {
   exportContract: ExportContractRelateToOneForUpdateInput
   owner: AccountRelateToOneForUpdateInput
   business: BusinessRelateToOneForUpdateInput
-  company: CompanyRelateToOneForUpdateInput
   broker: BrokerRelateToOneForUpdateInput
   buyer: BuyerRelateToOneForUpdateInput
-  sectionReview: SectionReviewRelateToOneForUpdateInput
+  company: CompanyRelateToOneForUpdateInput
   declaration: DeclarationRelateToOneForUpdateInput
+  nominatedLossPayee: NominatedLossPayeeRelateToOneForUpdateInput
   policyContact: PolicyContactRelateToOneForUpdateInput
+  sectionReview: SectionReviewRelateToOneForUpdateInput
   version: String
   dealType: String
 }
@@ -268,12 +271,6 @@ input BusinessRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input CompanyRelateToOneForUpdateInput {
-  create: CompanyCreateInput
-  connect: CompanyWhereUniqueInput
-  disconnect: Boolean
-}
-
 input BrokerRelateToOneForUpdateInput {
   create: BrokerCreateInput
   connect: BrokerWhereUniqueInput
@@ -286,9 +283,9 @@ input BuyerRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
-input SectionReviewRelateToOneForUpdateInput {
-  create: SectionReviewCreateInput
-  connect: SectionReviewWhereUniqueInput
+input CompanyRelateToOneForUpdateInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -298,9 +295,21 @@ input DeclarationRelateToOneForUpdateInput {
   disconnect: Boolean
 }
 
+input NominatedLossPayeeRelateToOneForUpdateInput {
+  create: NominatedLossPayeeCreateInput
+  connect: NominatedLossPayeeWhereUniqueInput
+  disconnect: Boolean
+}
+
 input PolicyContactRelateToOneForUpdateInput {
   create: PolicyContactCreateInput
   connect: PolicyContactWhereUniqueInput
+  disconnect: Boolean
+}
+
+input SectionReviewRelateToOneForUpdateInput {
+  create: SectionReviewCreateInput
+  connect: SectionReviewWhereUniqueInput
   disconnect: Boolean
 }
 
@@ -324,12 +333,13 @@ input ApplicationCreateInput {
   exportContract: ExportContractRelateToOneForCreateInput
   owner: AccountRelateToOneForCreateInput
   business: BusinessRelateToOneForCreateInput
-  company: CompanyRelateToOneForCreateInput
   broker: BrokerRelateToOneForCreateInput
   buyer: BuyerRelateToOneForCreateInput
-  sectionReview: SectionReviewRelateToOneForCreateInput
+  company: CompanyRelateToOneForCreateInput
   declaration: DeclarationRelateToOneForCreateInput
+  nominatedLossPayee: NominatedLossPayeeRelateToOneForCreateInput
   policyContact: PolicyContactRelateToOneForCreateInput
+  sectionReview: SectionReviewRelateToOneForCreateInput
   version: String
   dealType: String
 }
@@ -359,11 +369,6 @@ input BusinessRelateToOneForCreateInput {
   connect: BusinessWhereUniqueInput
 }
 
-input CompanyRelateToOneForCreateInput {
-  create: CompanyCreateInput
-  connect: CompanyWhereUniqueInput
-}
-
 input BrokerRelateToOneForCreateInput {
   create: BrokerCreateInput
   connect: BrokerWhereUniqueInput
@@ -374,9 +379,9 @@ input BuyerRelateToOneForCreateInput {
   connect: BuyerWhereUniqueInput
 }
 
-input SectionReviewRelateToOneForCreateInput {
-  create: SectionReviewCreateInput
-  connect: SectionReviewWhereUniqueInput
+input CompanyRelateToOneForCreateInput {
+  create: CompanyCreateInput
+  connect: CompanyWhereUniqueInput
 }
 
 input DeclarationRelateToOneForCreateInput {
@@ -384,9 +389,19 @@ input DeclarationRelateToOneForCreateInput {
   connect: DeclarationWhereUniqueInput
 }
 
+input NominatedLossPayeeRelateToOneForCreateInput {
+  create: NominatedLossPayeeCreateInput
+  connect: NominatedLossPayeeWhereUniqueInput
+}
+
 input PolicyContactRelateToOneForCreateInput {
   create: PolicyContactCreateInput
   connect: PolicyContactWhereUniqueInput
+}
+
+input SectionReviewRelateToOneForCreateInput {
+  create: SectionReviewCreateInput
+  connect: SectionReviewWhereUniqueInput
 }
 
 type TotalContractValue {
@@ -467,6 +482,209 @@ input CoverPeriodUpdateArgs {
 input CoverPeriodCreateInput {
   valueId: Int
   value: String
+}
+
+type LossPayeeFinancialInternational {
+  id: ID!
+  lossPayee: NominatedLossPayee
+  bankAddressSalt: String
+  bankAddressHash: String
+  bicSwiftCodeSalt: String
+  bicSwiftCodeHash: String
+  ibanSalt: String
+  ibanHash: String
+}
+
+input LossPayeeFinancialInternationalWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialInternationalWhereInput {
+  AND: [LossPayeeFinancialInternationalWhereInput!]
+  OR: [LossPayeeFinancialInternationalWhereInput!]
+  NOT: [LossPayeeFinancialInternationalWhereInput!]
+  id: IDFilter
+  lossPayee: NominatedLossPayeeWhereInput
+  bankAddressSalt: StringFilter
+  bankAddressHash: StringFilter
+  bicSwiftCodeSalt: StringFilter
+  bicSwiftCodeHash: StringFilter
+  ibanSalt: StringFilter
+  ibanHash: StringFilter
+}
+
+input LossPayeeFinancialInternationalOrderByInput {
+  id: OrderDirection
+  bankAddressSalt: OrderDirection
+  bankAddressHash: OrderDirection
+  bicSwiftCodeSalt: OrderDirection
+  bicSwiftCodeHash: OrderDirection
+  ibanSalt: OrderDirection
+  ibanHash: OrderDirection
+}
+
+input LossPayeeFinancialInternationalUpdateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
+  bankAddressSalt: String
+  bankAddressHash: String
+  bicSwiftCodeSalt: String
+  bicSwiftCodeHash: String
+  ibanSalt: String
+  ibanHash: String
+}
+
+input LossPayeeFinancialInternationalUpdateArgs {
+  where: LossPayeeFinancialInternationalWhereUniqueInput!
+  data: LossPayeeFinancialInternationalUpdateInput!
+}
+
+input LossPayeeFinancialInternationalCreateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForCreateInput
+  bankAddressSalt: String
+  bankAddressHash: String
+  bicSwiftCodeSalt: String
+  bicSwiftCodeHash: String
+  ibanSalt: String
+  ibanHash: String
+}
+
+type LossPayeeFinancialUk {
+  id: ID!
+  lossPayee: NominatedLossPayee
+  accountNumberSalt: String
+  accountNumberHash: String
+  bankAddressSalt: String
+  bankAddressHash: String
+  sortCodeSalt: String
+  sortCodeHash: String
+}
+
+input LossPayeeFinancialUkWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialUkWhereInput {
+  AND: [LossPayeeFinancialUkWhereInput!]
+  OR: [LossPayeeFinancialUkWhereInput!]
+  NOT: [LossPayeeFinancialUkWhereInput!]
+  id: IDFilter
+  lossPayee: NominatedLossPayeeWhereInput
+  accountNumberSalt: StringFilter
+  accountNumberHash: StringFilter
+  bankAddressSalt: StringFilter
+  bankAddressHash: StringFilter
+  sortCodeSalt: StringFilter
+  sortCodeHash: StringFilter
+}
+
+input LossPayeeFinancialUkOrderByInput {
+  id: OrderDirection
+  accountNumberSalt: OrderDirection
+  accountNumberHash: OrderDirection
+  bankAddressSalt: OrderDirection
+  bankAddressHash: OrderDirection
+  sortCodeSalt: OrderDirection
+  sortCodeHash: OrderDirection
+}
+
+input LossPayeeFinancialUkUpdateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
+  accountNumberSalt: String
+  accountNumberHash: String
+  bankAddressSalt: String
+  bankAddressHash: String
+  sortCodeSalt: String
+  sortCodeHash: String
+}
+
+input LossPayeeFinancialUkUpdateArgs {
+  where: LossPayeeFinancialUkWhereUniqueInput!
+  data: LossPayeeFinancialUkUpdateInput!
+}
+
+input LossPayeeFinancialUkCreateInput {
+  lossPayee: NominatedLossPayeeRelateToOneForCreateInput
+  accountNumberSalt: String
+  accountNumberHash: String
+  bankAddressSalt: String
+  bankAddressHash: String
+  sortCodeSalt: String
+  sortCodeHash: String
+}
+
+type NominatedLossPayee {
+  id: ID!
+  application: Application
+  financialUk: LossPayeeFinancialUk
+  financialInternational: LossPayeeFinancialInternational
+  isAppointing: Boolean
+  locatedInUk: Boolean
+  name: String
+}
+
+input NominatedLossPayeeWhereUniqueInput {
+  id: ID
+}
+
+input NominatedLossPayeeWhereInput {
+  AND: [NominatedLossPayeeWhereInput!]
+  OR: [NominatedLossPayeeWhereInput!]
+  NOT: [NominatedLossPayeeWhereInput!]
+  id: IDFilter
+  application: ApplicationWhereInput
+  financialUk: LossPayeeFinancialUkWhereInput
+  financialInternational: LossPayeeFinancialInternationalWhereInput
+  name: StringFilter
+}
+
+input NominatedLossPayeeOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+}
+
+input NominatedLossPayeeUpdateInput {
+  application: ApplicationRelateToOneForUpdateInput
+  financialUk: LossPayeeFinancialUkRelateToOneForUpdateInput
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForUpdateInput
+  isAppointing: Boolean
+  locatedInUk: Boolean
+  name: String
+}
+
+input LossPayeeFinancialUkRelateToOneForUpdateInput {
+  create: LossPayeeFinancialUkCreateInput
+  connect: LossPayeeFinancialUkWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialInternationalRelateToOneForUpdateInput {
+  create: LossPayeeFinancialInternationalCreateInput
+  connect: LossPayeeFinancialInternationalWhereUniqueInput
+  disconnect: Boolean
+}
+
+input NominatedLossPayeeUpdateArgs {
+  where: NominatedLossPayeeWhereUniqueInput!
+  data: NominatedLossPayeeUpdateInput!
+}
+
+input NominatedLossPayeeCreateInput {
+  application: ApplicationRelateToOneForCreateInput
+  financialUk: LossPayeeFinancialUkRelateToOneForCreateInput
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForCreateInput
+  isAppointing: Boolean
+  locatedInUk: Boolean
+  name: String
+}
+
+input LossPayeeFinancialUkRelateToOneForCreateInput {
+  create: LossPayeeFinancialUkCreateInput
+  connect: LossPayeeFinancialUkWhereUniqueInput
+}
+
+input LossPayeeFinancialInternationalRelateToOneForCreateInput {
+  create: LossPayeeFinancialInternationalCreateInput
+  connect: LossPayeeFinancialInternationalWhereUniqueInput
 }
 
 type Policy {
@@ -2349,6 +2567,24 @@ type Mutation {
   updateCoverPeriods(data: [CoverPeriodUpdateArgs!]!): [CoverPeriod]
   deleteCoverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
   deleteCoverPeriods(where: [CoverPeriodWhereUniqueInput!]!): [CoverPeriod]
+  createLossPayeeFinancialInternational(data: LossPayeeFinancialInternationalCreateInput!): LossPayeeFinancialInternational
+  createLossPayeeFinancialInternationals(data: [LossPayeeFinancialInternationalCreateInput!]!): [LossPayeeFinancialInternational]
+  updateLossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!, data: LossPayeeFinancialInternationalUpdateInput!): LossPayeeFinancialInternational
+  updateLossPayeeFinancialInternationals(data: [LossPayeeFinancialInternationalUpdateArgs!]!): [LossPayeeFinancialInternational]
+  deleteLossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
+  deleteLossPayeeFinancialInternationals(where: [LossPayeeFinancialInternationalWhereUniqueInput!]!): [LossPayeeFinancialInternational]
+  createLossPayeeFinancialUk(data: LossPayeeFinancialUkCreateInput!): LossPayeeFinancialUk
+  createLossPayeeFinancialUks(data: [LossPayeeFinancialUkCreateInput!]!): [LossPayeeFinancialUk]
+  updateLossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!, data: LossPayeeFinancialUkUpdateInput!): LossPayeeFinancialUk
+  updateLossPayeeFinancialUks(data: [LossPayeeFinancialUkUpdateArgs!]!): [LossPayeeFinancialUk]
+  deleteLossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
+  deleteLossPayeeFinancialUks(where: [LossPayeeFinancialUkWhereUniqueInput!]!): [LossPayeeFinancialUk]
+  createNominatedLossPayee(data: NominatedLossPayeeCreateInput!): NominatedLossPayee
+  createNominatedLossPayees(data: [NominatedLossPayeeCreateInput!]!): [NominatedLossPayee]
+  updateNominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!, data: NominatedLossPayeeUpdateInput!): NominatedLossPayee
+  updateNominatedLossPayees(data: [NominatedLossPayeeUpdateArgs!]!): [NominatedLossPayee]
+  deleteNominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!): NominatedLossPayee
+  deleteNominatedLossPayees(where: [NominatedLossPayeeWhereUniqueInput!]!): [NominatedLossPayee]
   createPolicy(data: PolicyCreateInput!): Policy
   createPolicies(data: [PolicyCreateInput!]!): [Policy]
   updatePolicy(where: PolicyWhereUniqueInput!, data: PolicyUpdateInput!): Policy
@@ -2594,6 +2830,15 @@ type Query {
   coverPeriods(where: CoverPeriodWhereInput! = {}, orderBy: [CoverPeriodOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: CoverPeriodWhereUniqueInput): [CoverPeriod!]
   coverPeriod(where: CoverPeriodWhereUniqueInput!): CoverPeriod
   coverPeriodsCount(where: CoverPeriodWhereInput! = {}): Int
+  lossPayeeFinancialInternationals(where: LossPayeeFinancialInternationalWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalWhereUniqueInput): [LossPayeeFinancialInternational!]
+  lossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
+  lossPayeeFinancialInternationalsCount(where: LossPayeeFinancialInternationalWhereInput! = {}): Int
+  lossPayeeFinancialUks(where: LossPayeeFinancialUkWhereInput! = {}, orderBy: [LossPayeeFinancialUkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkWhereUniqueInput): [LossPayeeFinancialUk!]
+  lossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
+  lossPayeeFinancialUksCount(where: LossPayeeFinancialUkWhereInput! = {}): Int
+  nominatedLossPayees(where: NominatedLossPayeeWhereInput! = {}, orderBy: [NominatedLossPayeeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NominatedLossPayeeWhereUniqueInput): [NominatedLossPayee!]
+  nominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!): NominatedLossPayee
+  nominatedLossPayeesCount(where: NominatedLossPayeeWhereInput! = {}): Int
   policies(where: PolicyWhereInput! = {}, orderBy: [PolicyOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PolicyWhereUniqueInput): [Policy!]
   policy(where: PolicyWhereUniqueInput!): Policy
   policiesCount(where: PolicyWhereInput! = {}): Int

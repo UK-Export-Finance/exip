@@ -38,6 +38,11 @@ const applicationQuery = gql`
           }
           validExporterLocation
         }
+        nominatedLossPayee {
+          isAppointing
+          locatedInUk
+          name
+        }
         policy {
           id
           needPreCreditPeriodCover
