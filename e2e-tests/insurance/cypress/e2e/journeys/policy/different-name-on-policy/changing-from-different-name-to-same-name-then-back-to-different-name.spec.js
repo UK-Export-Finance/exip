@@ -36,6 +36,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${OTHER_N
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({});
+      cy.completeAndLossPayeeForm();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
