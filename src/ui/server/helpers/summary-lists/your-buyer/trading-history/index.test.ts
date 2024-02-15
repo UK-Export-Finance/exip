@@ -7,6 +7,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
+import formatCurrency from '../../../format-currency';
 import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
 
 const {
@@ -18,6 +19,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS } = INSURANCE_FIELD_IDS.YOUR_BUYER;
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
 describe('server/helpers/summary-lists/your-buyer/trading-history-fields', () => {
   const mockAnswers = mockApplicationBuyer.buyerTradingHistory;
@@ -30,30 +32,36 @@ describe('server/helpers/summary-lists/your-buyer/trading-history-fields', () =>
         const result = optionalFields(mockAnswers, referenceNumber, checkAndChange);
 
         const expected = [
-          fieldGroupItem({
-            field: getFieldById(FIELDS, TOTAL_OUTSTANDING_PAYMENTS),
-            data: mockAnswers,
-            href: generateChangeLink(
-              TRADING_HISTORY_CHANGE,
-              TRADING_HISTORY_CHECK_AND_CHANGE,
-              `#${TOTAL_OUTSTANDING_PAYMENTS}-label`,
-              referenceNumber,
-              checkAndChange,
-            ),
-            renderChangeLink: true,
-          }),
-          fieldGroupItem({
-            field: getFieldById(FIELDS, TOTAL_AMOUNT_OVERDUE),
-            data: mockAnswers,
-            href: generateChangeLink(
-              TRADING_HISTORY_CHANGE,
-              TRADING_HISTORY_CHECK_AND_CHANGE,
-              `#${TOTAL_AMOUNT_OVERDUE}-label`,
-              referenceNumber,
-              checkAndChange,
-            ),
-            renderChangeLink: true,
-          }),
+          fieldGroupItem(
+            {
+              field: getFieldById(FIELDS, TOTAL_OUTSTANDING_PAYMENTS),
+              data: mockAnswers,
+              href: generateChangeLink(
+                TRADING_HISTORY_CHANGE,
+                TRADING_HISTORY_CHECK_AND_CHANGE,
+                `#${TOTAL_OUTSTANDING_PAYMENTS}-label`,
+                referenceNumber,
+                checkAndChange,
+              ),
+              renderChangeLink: true,
+            },
+            formatCurrency(mockAnswers[TOTAL_OUTSTANDING_PAYMENTS], mockAnswers[CURRENCY_CODE]),
+          ),
+          fieldGroupItem(
+            {
+              field: getFieldById(FIELDS, TOTAL_AMOUNT_OVERDUE),
+              data: mockAnswers,
+              href: generateChangeLink(
+                TRADING_HISTORY_CHANGE,
+                TRADING_HISTORY_CHECK_AND_CHANGE,
+                `#${TOTAL_AMOUNT_OVERDUE}-label`,
+                referenceNumber,
+                checkAndChange,
+              ),
+              renderChangeLink: true,
+            },
+            formatCurrency(mockAnswers[TOTAL_AMOUNT_OVERDUE], mockAnswers[CURRENCY_CODE]),
+          ),
         ];
 
         expect(result).toEqual(expected);

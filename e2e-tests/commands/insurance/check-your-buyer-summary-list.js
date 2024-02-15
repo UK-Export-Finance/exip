@@ -1,31 +1,34 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
-import { FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { FIELD_VALUES } from '../../constants';
+import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../content-strings/fields/insurance/your-buyer';
 import application from '../../fixtures/application';
+import formatCurrency from '../../helpers/format-currency';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: {
-        NAME,
-        ADDRESS,
-        REGISTRATION_NUMBER,
-        WEBSITE,
-      },
-      CONNECTION_WITH_BUYER,
-      CONNECTION_WITH_BUYER_DESCRIPTION,
-      TRADED_WITH_BUYER,
-      OUTSTANDING_PAYMENTS,
-      FAILED_PAYMENTS,
-      TOTAL_AMOUNT_OVERDUE,
-      TOTAL_OUTSTANDING_PAYMENTS,
-      PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-      HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-      HAS_BUYER_FINANCIAL_ACCOUNTS,
-    },
+  CURRENCY: {
+    CURRENCY_CODE,
   },
-} = FIELD_IDS;
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: {
+      NAME,
+      ADDRESS,
+      REGISTRATION_NUMBER,
+      WEBSITE,
+    },
+    CONNECTION_WITH_BUYER,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
+    TRADED_WITH_BUYER,
+    OUTSTANDING_PAYMENTS,
+    FAILED_PAYMENTS,
+    TOTAL_AMOUNT_OVERDUE,
+    TOTAL_OUTSTANDING_PAYMENTS,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    HAS_BUYER_FINANCIAL_ACCOUNTS,
+  },
+} = INSURANCE_FIELD_IDS;
 
 const checkYourBusinessSummaryList = ({
   [NAME]: () => {
@@ -117,7 +120,7 @@ const checkYourBusinessSummaryList = ({
 
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-      const expectedValue = application.BUYER[fieldId];
+      const expectedValue = formatCurrency(application.BUYER[fieldId], application.BUYER[CURRENCY_CODE]);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
@@ -129,7 +132,7 @@ const checkYourBusinessSummaryList = ({
 
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-      const expectedValue = application.BUYER[fieldId];
+      const expectedValue = formatCurrency(application.BUYER[fieldId], application.BUYER[CURRENCY_CODE]);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
