@@ -55,7 +55,7 @@ context('Insurance - Policy - Type of policy page - Save and go back', () => {
 
       cy.startInsurancePolicySection({});
 
-      multiplePolicyField.input().click();
+      multiplePolicyField.label().click();
       cy.clickSaveAndBackButton();
     });
 

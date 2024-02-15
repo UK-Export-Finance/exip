@@ -6,7 +6,7 @@ import { radios } from '../../../pages/shared';
 const changeAnswerRadioField = (fieldVariables) => {
   const { fieldId, newValueInput } = fieldVariables;
 
-  radios(fieldId, newValueInput).option.input().click();
+  radios(fieldId, newValueInput).option.label().click();
 
   cy.clickSubmitButton();
 };

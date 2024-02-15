@@ -192,7 +192,7 @@ context('Cookies page - Insurance', () => {
         beforeEach(() => {
           cy.saveSession();
 
-          cookiesPage[FIELD_ID].accept.input().click();
+          cookiesPage[FIELD_ID].accept.label().click();
           cy.clickSubmitButton();
         });
 
@@ -231,7 +231,7 @@ context('Cookies page - Insurance', () => {
         beforeEach(() => {
           cy.saveSession();
 
-          cookiesPage[FIELD_ID].reject.input().click();
+          cookiesPage[FIELD_ID].reject.label().click();
           cy.clickSubmitButton();
         });
 
@@ -272,7 +272,7 @@ context('Cookies page - Insurance', () => {
 
           cy.navigateToUrl(url);
 
-          cookiesPage[FIELD_ID].accept.input().click();
+          cookiesPage[FIELD_ID].accept.label().click();
           cy.clickSubmitButton();
         });
 
@@ -293,7 +293,7 @@ context('Cookies page - Insurance', () => {
 
           cy.navigateToUrl(url);
 
-          cookiesPage[FIELD_ID].reject.input().click();
+          cookiesPage[FIELD_ID].reject.label().click();
           cy.clickSubmitButton();
         });
 

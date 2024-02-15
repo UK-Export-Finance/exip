@@ -53,14 +53,14 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-    policyTypePage[POLICY_TYPE].multiple.input().click();
+    policyTypePage[POLICY_TYPE].multiple.label().click();
     cy.clickSubmitButton();
 
     cy.assertUrl(tellUsAboutPolicyUrl);
   });
 
   it('renders credit period field in the `tell us about your policy` page', () => {
-    policyTypePage[POLICY_TYPE].multiple.input().click();
+    policyTypePage[POLICY_TYPE].multiple.label().click();
     cy.clickSubmitButton();
 
     const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
@@ -72,7 +72,7 @@ context('Change your answers (policy type) - multiple times via back button - as
     before(() => {
       completePreviousForms();
 
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
       cy.clickBackLink();
@@ -100,7 +100,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       completePreviousForms();
 
       // 1st time - change from single to multiple
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
       // 2nd time - change from multiple to single
@@ -118,7 +118,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.clickBackLink();
       cy.assertUrl(policyTypeUrl);
 
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
       cy.assertUrl(tellUsAboutPolicyUrl);

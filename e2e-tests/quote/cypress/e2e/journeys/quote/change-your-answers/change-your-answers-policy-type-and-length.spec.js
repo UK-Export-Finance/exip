@@ -113,7 +113,7 @@ context('Change your answers - as an exporter, I want to change the details befo
     });
 
     it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
       const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
@@ -135,7 +135,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
       row.changeLink().click();
 
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       cy.clickSubmitButton();
 
       // max amount owed and credit period fields are now required because it's a multiple policy
@@ -210,7 +210,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-        policyTypePage[POLICY_TYPE].multiple.input().click();
+        policyTypePage[POLICY_TYPE].multiple.label().click();
         cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
@@ -302,7 +302,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       });
 
       it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-        policyTypePage[POLICY_TYPE].single.input().click();
+        policyTypePage[POLICY_TYPE].single.label().click();
         cy.clickSubmitButton();
 
         const expectedUrl = `${baseUrl}${TELL_US_ABOUT_YOUR_POLICY}#heading`;
