@@ -55,23 +55,25 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.referenceNumber).toEqual(expected);
   });
 
-  test('it should create buyer, eligibility, policy, company and sectionReview relationships', async () => {
+  test('it should application relationships', async () => {
     result = await createAnApplication({}, variables, context);
 
     const application = await applications.get({ context, applicationId: result.id });
 
     const expected = {
       buyerId: application.buyer.id,
-      eligibilityId: application.eligibility.id,
-      policyId: application.policy.id,
       companyId: application.company.id,
+      eligibilityId: application.eligibility.id,
+      nominatedLossPayeeId: application.nominatedLossPayee.id,
+      policyId: application.policy.id,
       sectionReviewId: application.sectionReview.id,
     };
 
     expect(result.buyerId).toEqual(expected.buyerId);
-    expect(result.eligibilityId).toEqual(expected.eligibilityId);
-    expect(result.policyId).toEqual(expected.policyId);
     expect(result.companyId).toEqual(expected.companyId);
+    expect(result.eligibilityId).toEqual(expected.eligibilityId);
+    expect(result.nominatedLossPayeeId).toEqual(expected.nominatedLossPayeeId);
+    expect(result.policyId).toEqual(expected.policyId);
     expect(result.sectionReviewId).toEqual(expected.sectionReviewId);
   });
 

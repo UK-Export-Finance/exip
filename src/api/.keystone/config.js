@@ -931,12 +931,13 @@ var lists = {
         many: false
       }),
       business: (0, import_fields.relationship)({ ref: "Business" }),
-      company: (0, import_fields.relationship)({ ref: "Company" }),
       broker: (0, import_fields.relationship)({ ref: "Broker" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer" }),
-      sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
+      company: (0, import_fields.relationship)({ ref: "Company" }),
       declaration: (0, import_fields.relationship)({ ref: "Declaration" }),
+      nominatedLossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee" }),
       policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
+      sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       version: (0, import_fields.text)({
         defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true }
@@ -1102,6 +1103,43 @@ var lists = {
       valueId: (0, import_fields.integer)(),
       value: (0, import_fields.text)({
         db: { nativeType: "VarChar(70)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
+  LossPayeeFinancialInternational: {
+    fields: {
+      lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialInternational" }),
+      bankAddressSalt: (0, import_fields.text)(),
+      bankAddressHash: (0, import_fields.text)(),
+      bicSwiftCodeSalt: (0, import_fields.text)(),
+      bicSwiftCodeHash: (0, import_fields.text)(),
+      ibanSalt: (0, import_fields.text)(),
+      ibanHash: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  LossPayeeFinancialUk: {
+    fields: {
+      lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialUk" }),
+      accountNumberSalt: (0, import_fields.text)(),
+      accountNumberHash: (0, import_fields.text)(),
+      bankAddressSalt: (0, import_fields.text)(),
+      bankAddressHash: (0, import_fields.text)(),
+      sortCodeSalt: (0, import_fields.text)(),
+      sortCodeHash: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  NominatedLossPayee: (0, import_core2.list)({
+    fields: {
+      application: (0, import_fields.relationship)({ ref: "Application" }),
+      financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.lossPayee" }),
+      financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.lossPayee" }),
+      isAppointed: nullable_checkbox_default(),
+      locatedInUk: nullable_checkbox_default(),
+      name: (0, import_fields.text)({
+        db: { nativeType: "VarChar(100)" }
       })
     },
     access: import_access.allowAll
@@ -3591,6 +3629,65 @@ var createAPolicy = async (context, applicationId) => {
 };
 var create_a_policy_default = createAPolicy;
 
+// helpers/create-a-loss-payee-financial-international/index.ts
+var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
+  console.info("Creating a loss payee financial (international) for ", lossPayeeId);
+  try {
+    const lossPayeeFinancialInternational = await context.db.LossPayeeFinancialInternational.createOne({
+      data: {
+        lossPayee: {
+          connect: { id: lossPayeeId }
+        }
+      }
+    });
+    return lossPayeeFinancialInternational;
+  } catch (err) {
+    console.error("Error creating a loss payee financial (international) for %O", err);
+    throw new Error(`Creating a loss payee financial (international) for ${err}`);
+  }
+};
+var create_a_loss_payee_financial_international_default = createALossPayeeFinancialInternational;
+
+// helpers/create-a-loss-payee-financial-uk/index.ts
+var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
+  console.info("Creating a loss payee financial (UK) for ", lossPayeeId);
+  try {
+    const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
+      data: {
+        lossPayee: {
+          connect: { id: lossPayeeId }
+        }
+      }
+    });
+    return lossPayeeFinancialUk;
+  } catch (err) {
+    console.error("Error creating a loss payee financial (UK) for %O", err);
+    throw new Error(`Creating a loss payee financial (UK) for ${err}`);
+  }
+};
+var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
+
+// helpers/create-a-nominated-loss-payee/index.ts
+var createANominatedLossPayee = async (context, applicationId) => {
+  console.info("Creating a nominated loss payee for ", applicationId);
+  try {
+    const nominatedLossPayee = await context.db.NominatedLossPayee.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        }
+      }
+    });
+    await create_a_loss_payee_financial_international_default(context, nominatedLossPayee.id);
+    await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
+    return nominatedLossPayee;
+  } catch (err) {
+    console.error("Error creating a nominated loss payee for %O", err);
+    throw new Error(`Creating a nominated loss payee for ${err}`);
+  }
+};
+var create_a_nominated_loss_payee_default = createANominatedLossPayee;
+
 // helpers/create-a-company-address/index.ts
 var createACompanyAddress = async (context, addressData, companyId) => {
   console.info("Creating a company address for ", companyId);
@@ -3754,6 +3851,7 @@ var createAnApplication = async (root, variables, context) => {
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
     const { policy } = await create_a_policy_default(context, applicationId);
+    const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
     const company = await create_a_company_default(context, applicationId, companyData);
     const sectionReview = await create_a_section_review_default(context, applicationId, sectionReviewData);
     const updatedApplication = await context.db.Application.updateOne({
@@ -3764,14 +3862,17 @@ var createAnApplication = async (root, variables, context) => {
         buyer: {
           connect: { id: buyer.id }
         },
+        company: {
+          connect: { id: company.id }
+        },
         eligibility: {
           connect: { id: eligibility.id }
         },
+        nominatedLossPayee: {
+          connect: { id: nominatedLossPayee.id }
+        },
         policy: {
           connect: { id: policy.id }
-        },
-        company: {
-          connect: { id: company.id }
         },
         sectionReview: {
           connect: { id: sectionReview.id }

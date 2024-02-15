@@ -40,21 +40,24 @@ model Application {
   ownerId                              String?               @map("owner")
   business                             Business?             @relation("Application_business", fields: [businessId], references: [id])
   businessId                           String?               @map("business")
-  company                              Company?              @relation("Application_company", fields: [companyId], references: [id])
-  companyId                            String?               @map("company")
   broker                               Broker?               @relation("Application_broker", fields: [brokerId], references: [id])
   brokerId                             String?               @map("broker")
   buyer                                Buyer?                @relation("Application_buyer", fields: [buyerId], references: [id])
   buyerId                              String?               @map("buyer")
-  sectionReview                        SectionReview?        @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
-  sectionReviewId                      String?               @map("sectionReview")
+  company                              Company?              @relation("Application_company", fields: [companyId], references: [id])
+  companyId                            String?               @map("company")
   declaration                          Declaration?          @relation("Application_declaration", fields: [declarationId], references: [id])
   declarationId                        String?               @map("declaration")
+  nominatedLossPayee                   NominatedLossPayee?   @relation("Application_nominatedLossPayee", fields: [nominatedLossPayeeId], references: [id])
+  nominatedLossPayeeId                 String?               @map("nominatedLossPayee")
   policyContact                        PolicyContact?        @relation("Application_policyContact", fields: [policyContactId], references: [id])
   policyContactId                      String?               @map("policyContact")
+  sectionReview                        SectionReview?        @relation("Application_sectionReview", fields: [sectionReviewId], references: [id])
+  sectionReviewId                      String?               @map("sectionReview")
   version                              String                @default("2")
   dealType                             String                @default("EXIP") @mysql.VarChar(4)
   from_ReferenceNumber_application     ReferenceNumber[]     @relation("ReferenceNumber_application")
+  from_NominatedLossPayee_application  NominatedLossPayee[]  @relation("NominatedLossPayee_application")
   from_Policy_application              Policy[]              @relation("Policy_application")
   from_PolicyContact_application       PolicyContact[]       @relation("PolicyContact_application")
   from_ExportContract_application      ExportContract[]      @relation("ExportContract_application")
@@ -76,12 +79,13 @@ model Application {
   @@index([exportContractId])
   @@index([ownerId])
   @@index([businessId])
-  @@index([companyId])
   @@index([brokerId])
   @@index([buyerId])
-  @@index([sectionReviewId])
+  @@index([companyId])
   @@index([declarationId])
+  @@index([nominatedLossPayeeId])
   @@index([policyContactId])
+  @@index([sectionReviewId])
 }
 
 model TotalContractValue {
@@ -96,6 +100,44 @@ model CoverPeriod {
   valueId                      Int?
   value                        String        @default("") @mysql.VarChar(70)
   from_Eligibility_coverPeriod Eligibility[] @relation("Eligibility_coverPeriod")
+}
+
+model LossPayeeFinancialInternational {
+  id               String              @id @default(cuid())
+  lossPayee        NominatedLossPayee? @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId      String?             @unique @map("lossPayee")
+  bankAddressSalt  String              @default("")
+  bankAddressHash  String              @default("")
+  bicSwiftCodeSalt String              @default("")
+  bicSwiftCodeHash String              @default("")
+  ibanSalt         String              @default("")
+  ibanHash         String              @default("")
+}
+
+model LossPayeeFinancialUk {
+  id                String              @id @default(cuid())
+  lossPayee         NominatedLossPayee? @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId       String?             @unique @map("lossPayee")
+  accountNumberSalt String              @default("")
+  accountNumberHash String              @default("")
+  bankAddressSalt   String              @default("")
+  bankAddressHash   String              @default("")
+  sortCodeSalt      String              @default("")
+  sortCodeHash      String              @default("")
+}
+
+model NominatedLossPayee {
+  id                                  String                           @id @default(cuid())
+  application                         Application?                     @relation("NominatedLossPayee_application", fields: [applicationId], references: [id])
+  applicationId                       String?                          @map("application")
+  financialUk                         LossPayeeFinancialUk?            @relation("LossPayeeFinancialUk_lossPayee")
+  financialInternational              LossPayeeFinancialInternational? @relation("LossPayeeFinancialInternational_lossPayee")
+  isAppointed                         Boolean?
+  locatedInUk                         Boolean?
+  name                                String                           @default("") @mysql.VarChar(100)
+  from_Application_nominatedLossPayee Application[]                    @relation("Application_nominatedLossPayee")
+
+  @@index([applicationId])
 }
 
 model Policy {
