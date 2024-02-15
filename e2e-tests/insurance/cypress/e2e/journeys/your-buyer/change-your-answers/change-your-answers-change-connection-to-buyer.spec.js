@@ -1,15 +1,13 @@
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      CONNECTION_WITH_BUYER,
-      CONNECTION_WITH_BUYER_DESCRIPTION,
-    },
-  },
-} = FIELD_IDS;
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
+} = YOUR_BUYER_FIELD_IDS;
 
 const {
   ROOT,
@@ -17,7 +15,7 @@ const {
     CONNECTION_WITH_BUYER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { BUYER } = application;
 

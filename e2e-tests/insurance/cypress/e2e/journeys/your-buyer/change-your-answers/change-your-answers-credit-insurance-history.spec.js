@@ -1,15 +1,13 @@
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-      HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-    },
-  },
-} = FIELD_IDS;
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+} = YOUR_BUYER_FIELD_IDS;
 
 const {
   ROOT,
@@ -17,7 +15,7 @@ const {
     CREDIT_INSURANCE_COVER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { BUYER } = application;
 

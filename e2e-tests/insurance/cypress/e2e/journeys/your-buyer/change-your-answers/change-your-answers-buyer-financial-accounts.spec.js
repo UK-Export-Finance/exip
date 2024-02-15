@@ -1,13 +1,9 @@
 import { FIELD_VALUES } from '../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
 
-const {
-  YOUR_BUYER: {
-    HAS_BUYER_FINANCIAL_ACCOUNTS,
-  },
-} = INSURANCE_FIELD_IDS;
+const { HAS_BUYER_FINANCIAL_ACCOUNTS } = YOUR_BUYER_FIELD_IDS;
 
 const {
   ROOT,

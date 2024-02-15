@@ -1,23 +1,17 @@
-import {
-  FIELD_IDS,
-  ROUTES,
-  WEBSITE_EXAMPLES,
-} from '../../../../../../constants';
+import { WEBSITE_EXAMPLES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { field, summaryList } from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: {
-        NAME,
-        ADDRESS,
-        REGISTRATION_NUMBER,
-        WEBSITE,
-      },
-    },
+  COMPANY_OR_ORGANISATION: {
+    NAME,
+    ADDRESS,
+    REGISTRATION_NUMBER,
+    WEBSITE,
   },
-} = FIELD_IDS;
+} = YOUR_BUYER_FIELD_IDS;
 
 const {
   ROOT,
@@ -25,7 +19,7 @@ const {
     COMPANY_OR_ORGANISATION_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;
