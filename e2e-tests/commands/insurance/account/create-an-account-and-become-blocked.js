@@ -13,7 +13,9 @@ const {
 
 const { ACCOUNT: { PASSWORD } } = INSURANCE_FIELD_IDS;
 
-const accountSuspendedEmailSentUrl = `${Cypress.config('baseUrl')}${EMAIL_SENT}`;
+const baseUrl = Cypress.config('baseUrl');
+
+const accountSuspendedEmailSentUrl = `${baseUrl}${EMAIL_SENT}`;
 
 const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
 

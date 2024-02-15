@@ -8,6 +8,8 @@ const {
   ACCOUNT: { CREATE: { YOUR_DETAILS, CONFIRM_EMAIL } },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Confirm email page - As an Exporter I want to create an account for UKEF digital service, So that I can readily use it for my Export Insurance Application with UKEF', () => {
   before(() => {
     cy.deleteAccount();
@@ -17,7 +19,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    const expected = `${baseUrl}${CONFIRM_EMAIL}`;
 
     cy.assertUrl(expected);
   });
@@ -46,7 +48,7 @@ context('Insurance - Account - Create - Confirm email page - As an Exporter I wa
     it(`should redirect to ${CONFIRM_EMAIL} and render core page elements and content`, () => {
       expectedUrl = CONFIRM_EMAIL;
 
-      cy.assertUrl(`${Cypress.config('baseUrl')}${expectedUrl}`);
+      cy.assertUrl(`${baseUrl}${expectedUrl}`);
 
       cy.corePageChecks({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,

@@ -18,6 +18,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your business - Change your answers - Nature of your business- As an exporter, I want to change my answers to the nature of your business section', () => {
   let referenceNumber;
   let url;
@@ -35,7 +37,7 @@ context('Insurance - Your business - Change your answers - Nature of your busine
       cy.completeAndSubmitTurnoverForm();
       cy.completeAndSubmitCreditControlForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 

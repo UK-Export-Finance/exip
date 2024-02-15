@@ -27,6 +27,8 @@ const assertAllFieldErrors = () => {
   cy.submitAndAssertFieldErrors(passwordField, null, 1, TOTAL_REQUIRED_FIELDS, SIGN_IN_ERROR_MESSAGES[PASSWORD].INCORRECT);
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Validation', () => {
   let url;
 
@@ -35,7 +37,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
     cy.submitEligibilityAndStartAccountSignIn();
 
-    url = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+    url = `${baseUrl}${SIGN_IN_ROOT}`;
 
     cy.assertUrl(url);
   });

@@ -19,6 +19,8 @@ const {
   },
 } = ERROR_MESSAGES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your Buyer - Company or organisation page - form validation', () => {
   let referenceNumber;
 
@@ -28,7 +30,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       cy.startInsuranceYourBuyerSection({});
 
-      const expected = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
+      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION}`;
 
       cy.assertUrl(expected);
     });

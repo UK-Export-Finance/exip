@@ -7,6 +7,8 @@ const CONTENT_STRINGS = PAGES.CONTACT_US_PAGE;
 
 const { GENERAL_ENQUIRIES, APPLICATION_ENQUIRES } = CONTENT_STRINGS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Contact us page - Insurance', () => {
   const url = ROUTES.INSURANCE.CONTACT_US;
 
@@ -16,7 +18,7 @@ context('Contact us page - Insurance', () => {
     // click on contact link in footer
     footer.supportLinks.contact().click();
 
-    cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
+    cy.assertUrl(`${baseUrl}${url}`);
 
     cy.saveSession();
   });

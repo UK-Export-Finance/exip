@@ -19,6 +19,8 @@ const {
 
 const { BUYER } = application;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your buyer - Change your answers - Connection to the buyer - As an exporter, I want to change my answers to the connection to the buyer section', () => {
   let url;
   let referenceNumber;
@@ -36,7 +38,7 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 

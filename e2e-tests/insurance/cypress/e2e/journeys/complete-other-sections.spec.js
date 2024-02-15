@@ -11,8 +11,10 @@ const {
 
 const CONTENT_STRINGS = PAGES.INSURANCE.COMPLETE_OTHER_SECTIONS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Complete other sections page', () => {
-  const insuranceRoute = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}`;
+  const insuranceRoute = `${baseUrl}${INSURANCE_ROOT}`;
 
   let referenceNumber;
   let completeOtherSectionsUrl;

@@ -32,6 +32,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const baseUrl = Cypress.config('baseUrl');
+
 const getFieldVariables = (fieldId, referenceNumber) => ({
   route: BROKER_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
@@ -55,7 +57,7 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
 
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
     });

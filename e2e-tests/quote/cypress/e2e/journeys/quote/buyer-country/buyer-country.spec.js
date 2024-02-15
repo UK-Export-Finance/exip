@@ -13,6 +13,7 @@ const {
 } = ROUTES;
 
 const supportedCountryName = COUNTRY_QUOTE_SUPPORT.ONLINE.NAME;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Buyer country page - as an exporter, I want to check if UKEF issue credit insurance cover for where my buyer is based', () => {
@@ -56,7 +57,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
       });
 
       it('renders a back link with correct url', () => {
-        const expectedHref = `${Cypress.config('baseUrl')}${BUYER_COUNTRY}`;
+        const expectedHref = `${baseUrl}${BUYER_COUNTRY}`;
 
         cy.checkLink(
           backLink(),

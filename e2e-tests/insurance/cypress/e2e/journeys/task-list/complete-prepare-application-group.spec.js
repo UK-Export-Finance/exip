@@ -2,6 +2,8 @@ import { ROUTES } from '../../../../../constants';
 
 const { ROOT, ALL_SECTIONS } = ROUTES.INSURANCE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Task list - complete `prepare application` group', () => {
   let referenceNumber;
 
@@ -9,7 +11,7 @@ context('Insurance - Task list - complete `prepare application` group', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      const url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const url = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
