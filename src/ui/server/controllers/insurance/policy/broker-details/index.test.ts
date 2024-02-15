@@ -18,7 +18,7 @@ const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, BROKER_CONFIRM_ADDRESS_ROOT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -149,12 +149,12 @@ describe('controllers/insurance/policy/broker-details', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT}`, async () => {
         req.body = validBody;
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

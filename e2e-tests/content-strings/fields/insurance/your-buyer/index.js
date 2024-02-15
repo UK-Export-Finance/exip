@@ -13,13 +13,14 @@ const {
     PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
     TOTAL_OUTSTANDING_PAYMENTS,
     TOTAL_AMOUNT_OVERDUE,
+    HAS_BUYER_FINANCIAL_ACCOUNTS,
   },
   CURRENCY: { CURRENCY_CODE },
 } = FIELD_IDS.INSURANCE;
 
 const {
   YOUR_BUYER: {
-    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER,
+    COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS,
   },
 } = FORM_TITLES;
 
@@ -101,11 +102,19 @@ export const YOUR_BUYER_FIELDS = {
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Have you in the past held credit insurance cover on the buyer?',
+    SUMMARY: {
+      TITLE: 'Credit insurance previously held for the buyer',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
   },
   [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Tell us about the credit insurance cover you had on the buyer',
     HINT: 'Include the name of the insurer(s) and the credit limit.',
     MAXIMUM: 1000,
+    SUMMARY: {
+      TITLE: 'Details of credit insurance',
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY,
+    },
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',
@@ -120,6 +129,12 @@ export const YOUR_BUYER_FIELDS = {
     SUMMARY: {
       TITLE: 'Amount overdue',
       FORM_TITLE: TRADING_HISTORY,
+    },
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: {
+    SUMMARY: {
+      TITLE: 'Financial accounts relating to the buyer',
+      FORM_TITLE: FINANCIAL_ACCOUNTS,
     },
   },
 };

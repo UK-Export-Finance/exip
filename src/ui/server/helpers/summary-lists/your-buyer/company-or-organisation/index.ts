@@ -32,7 +32,7 @@ const {
  * @param {Number} referenceNumber application reference number
  * @returns {SummaryListGroupData} All company fields and values in an SummaryListGroupData structure for GOVUK summary list structure
  */
-const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const addressObject = generateAddressObject(answers[ADDRESS]);
 
   const fields = [

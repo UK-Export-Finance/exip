@@ -50,6 +50,7 @@ Cypress.Commands.add('checkRadioInputYesAriaLabel', require('./check-radio-input
 Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-no-aria-label'));
 
 Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
+Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));
 Cypress.Commands.add('assertBrokerDetailsFieldValues', require('./assert-broker-details-field-values'));
 
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));

@@ -75,9 +75,14 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     it('should render template', async () => {
       await get(req, res);
       const checkAndChange = true;
-      const summaryList = yourBuyerSummaryList(mockApplication.buyer, mockApplication.referenceNumber, checkAndChange);
+      const summaryList = yourBuyerSummaryList(
+        mockApplication.buyer,
+        mockApplication.referenceNumber,
+        mockApplication.totalContractValueOverThreshold,
+        checkAndChange,
+      );
 
-      const fields = requiredFields();
+      const fields = requiredFields({});
 
       const status = sectionStatus(fields, mockApplication);
 

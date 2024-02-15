@@ -17,7 +17,7 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME },
   },
-  YOUR_BUYER: { CONNECTION_WITH_BUYER },
+  YOUR_BUYER: { CONNECTION_WITH_BUYER, OUTSTANDING_PAYMENTS, TRADED_WITH_BUYER, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
 } = INSURANCE_FIELD_IDS;
 
 /**
@@ -34,7 +34,13 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
     finalDestinationKnown: application[FINAL_DESTINATION_KNOWN],
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
-  ...requiredYourBuyerFields(application[CONNECTION_WITH_BUYER]),
+  ...requiredYourBuyerFields({
+    connectionWithBuyer: application[CONNECTION_WITH_BUYER],
+    tradedWithBuyer: application[TRADED_WITH_BUYER],
+    outstandingPayments: application[OUTSTANDING_PAYMENTS],
+    hasPreviousCreditInsuranceWithBuyer: application[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+    totalContractValueOverThreshold: application.totalContractValueOverThreshold,
+  }),
 ];
 
 export default requiredFields;

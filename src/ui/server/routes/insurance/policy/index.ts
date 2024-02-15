@@ -24,12 +24,14 @@ import { get as preCreditPeriodGet, post as preCreditPeriodPost } from '../../..
 import { get as anotherCompanyGet, post as anotherCompanyPost } from '../../../controllers/insurance/policy/another-company';
 import { post as anotherCompanySaveAndBackPost } from '../../../controllers/insurance/policy/another-company/save-and-back';
 import { get as otherCompanyDetailsGet, post as otherCompanyDetailsPost } from '../../../controllers/insurance/policy/other-company-details';
+import { post as otherCompanyDetailsSaveAndBackPost } from '../../../controllers/insurance/policy/other-company-details/save-and-back';
 import { post as preCreditPeriodSaveAndBackPost } from '../../../controllers/insurance/policy/pre-credit-period/save-and-back';
 import { post as differentNameOnPolicySaveAndBackPost } from '../../../controllers/insurance/policy/different-name-on-policy/save-and-back';
 import { get as getBroker, post as postBroker } from '../../../controllers/insurance/policy/broker';
 import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/policy/broker/save-and-back';
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../controllers/insurance/policy/broker-details/save-and-back';
+import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../controllers/insurance/policy/broker-confirm-address';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
 
 // @ts-ignore
@@ -137,6 +139,7 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ANOTHER_C
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.OTHER_COMPANY_DETAILS}`, otherCompanyDetailsGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.OTHER_COMPANY_DETAILS}`, otherCompanyDetailsPost);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.OTHER_COMPANY_DETAILS_SAVE_AND_BACK}`, otherCompanyDetailsSaveAndBackPost);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, getBroker);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_ROOT}`, postBroker);
@@ -149,6 +152,9 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CH
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_DETAILS_ROOT}`, getBrokerDetails);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_DETAILS_ROOT}`, postBrokerDetails);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_DETAILS_SAVE_AND_BACK}`, postBrokerDetailsSaveAndBack);
+
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

@@ -11,5 +11,6 @@ export const POLICY_TEMPLATES = {
   DIFFERENT_NAME_ON_POLICY: 'insurance/policy/different-name-on-policy.njk',
   OTHER_COMPANY_DETAILS: 'insurance/policy/other-company-details.njk',
   BROKER_DETAILS: 'insurance/policy/broker-details.njk',
+  BROKER_CONFIRM_ADDRESS: 'insurance/policy/broker-confirm-address.njk',
   CHECK_YOUR_ANSWERS: 'insurance/policy/check-your-answers.njk',
 };

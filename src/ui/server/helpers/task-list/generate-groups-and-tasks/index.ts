@@ -9,21 +9,33 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 /**
  * generateGroupsAndTasks
- * @param {Number} Application reference number
- * @param {String} Application "Policy type"
- * @param {Boolean} Application "Final destination known" flag
- * @param {Boolean} Application "Is using broker" flag
- * @param {Boolean} Application "Has different trading name" flag
- * @param {String} Application "Has anti-bribery code of conduct" flag
+ * @param {Number} referenceNumber: Application reference number
+ * @param {String} policyType: "Policy type"
+ * @param {Boolean} finalDestinationKnown: "Final destination known" flag
+ * @param {Boolean} jointlyInsuredParty: "Jointly insured party" flag
+ * @param {Boolean} isUsingBroker: "Is using broker" flag
+ * @param {Boolean} hasDifferentTradingName "Has different trading name" flag
+ * @param {Boolean} hasAntiBriberyCodeOfConduct: "Has anti-bribery code of conduct" flag
+ * @param {Boolean} connectionWithBuyer: "Exporter has a connection with the buyer" flag
+ * @param {Boolean} tradedWithBuyer: "Exporter has a traded with the buyer" flag
+ * @param {Boolean} outstandingPayments: "Buyer has outstanding payments" flag
+ * @param {Boolean} hasPreviousCreditInsuranceWithBuyer: "Exporter has previous credit insurance with buyer" flag
+ * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
  * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (
   referenceNumber: number,
   policyType?: string,
   finalDestinationKnown?: boolean,
+  jointlyInsuredParty?: boolean,
   isUsingBroker?: boolean,
   hasDifferentTradingName?: boolean,
   hasAntiBriberyCodeOfConduct?: boolean | null,
+  connectionWithBuyer?: boolean,
+  tradedWithBuyer?: boolean,
+  outstandingPayments?: boolean,
+  hasPreviousCreditInsuranceWithBuyer?: boolean,
+  totalContractValueOverThreshold?: boolean,
 ): TaskListData => {
   let groups = [
     {
@@ -39,7 +51,20 @@ const generateGroupsAndTasks = (
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(referenceNumber, groups, policyType, finalDestinationKnown, isUsingBroker, hasDifferentTradingName),
+      tasks: prepareApplicationTasks(
+        referenceNumber,
+        groups,
+        policyType,
+        finalDestinationKnown,
+        jointlyInsuredParty,
+        isUsingBroker,
+        hasDifferentTradingName,
+        connectionWithBuyer,
+        tradedWithBuyer,
+        outstandingPayments,
+        hasPreviousCreditInsuranceWithBuyer,
+        totalContractValueOverThreshold,
+      ),
     },
   ] as TaskListData;
 

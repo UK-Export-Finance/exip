@@ -1,26 +1,22 @@
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { ROUTES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import { ApplicationBuyerTradingHistory, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 
-const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
-
 const {
   YOUR_BUYER: { TRADING_HISTORY: FORM_TITLE },
 } = FORM_TITLES;
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: { TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE, TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE },
-  },
-} = ROUTES;
+  YOUR_BUYER: { TRADED_WITH_BUYER_CHANGE, TRADED_WITH_BUYER_CHECK_AND_CHANGE, TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE },
+} = INSURANCE_ROUTES;
 
-const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS } = FIELD_IDS;
+const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 /**
  * optionalFields
@@ -31,7 +27,7 @@ const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOT
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} Array including or excluding TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE in correct structure
  */
-export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange: boolean) => {
+export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [] as Array<SummaryListItemData>;
 
   /**
@@ -74,7 +70,7 @@ export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenc
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} All trading history fields and values in an object structure for GOVUK summary list structure
  */
-const tradingHistoryFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const tradingHistoryFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem(
       {

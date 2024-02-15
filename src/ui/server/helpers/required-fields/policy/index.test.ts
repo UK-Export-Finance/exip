@@ -1,4 +1,4 @@
-import requiredFields, { getContractPolicyTasks, getBrokerTasks } from '.';
+import requiredFields, { getContractPolicyTasks, getJointlyInsuredPartyTasks, getBrokerTasks } from '.';
 import { FIELD_VALUES } from '../../../constants';
 import POLICY_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
@@ -15,6 +15,7 @@ const {
   },
   TYPE_OF_POLICY,
   NAME_ON_POLICY,
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COUNTRY_CODE },
   USING_BROKER,
   BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
@@ -25,7 +26,7 @@ const { FIRST_NAME, LAST_NAME } = ACCOUNT_FIELD_IDS;
 
 describe('server/helpers/required-fields/policy', () => {
   const {
-    policy: { policyType },
+    policy: { policyType, jointlyInsuredParty },
     broker: { isUsingBroker },
   } = mockApplication;
 
@@ -58,6 +59,42 @@ describe('server/helpers/required-fields/policy', () => {
         const result = getContractPolicyTasks();
 
         const expected = TYPE_OF_POLICY;
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
+  describe('getJointlyInsuredPartyTasks', () => {
+    describe('when jointlyInsuredParty is true', () => {
+      it('should return multiple field ids in an array', () => {
+        const jointlyInsuredPartyFlag = true;
+
+        const result = getJointlyInsuredPartyTasks(jointlyInsuredPartyFlag);
+
+        const expected = [COMPANY_NAME, COUNTRY_CODE];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when jointlyInsuredParty is undefined', () => {
+      it(`should return an array with ${REQUESTED} field`, () => {
+        const result = getJointlyInsuredPartyTasks();
+
+        const expected = [REQUESTED];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when jointlyInsuredParty is false', () => {
+      it(`should return an array with ${REQUESTED} field`, () => {
+        const jointlyInsuredPartyFlag = false;
+
+        const result = getJointlyInsuredPartyTasks(jointlyInsuredPartyFlag);
+
+        const expected = [REQUESTED];
 
         expect(result).toEqual(expected);
       });
@@ -98,13 +135,18 @@ describe('server/helpers/required-fields/policy', () => {
 
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ policyType, isUsingBroker });
+      const result = requiredFields({
+        policyType,
+        jointlyInsuredParty: jointlyInsuredParty[REQUESTED],
+        isUsingBroker,
+      });
 
       const expected = [
         ...Object.values(TYPE_OF_POLICY),
         REQUESTED_START_DATE,
         POLICY_CURRENCY_CODE,
         ...Object.values(getContractPolicyTasks(policyType)),
+        ...Object.values(getJointlyInsuredPartyTasks(jointlyInsuredParty[REQUESTED])),
         IS_SAME_AS_OWNER,
         FIRST_NAME,
         LAST_NAME,

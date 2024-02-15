@@ -1,10 +1,9 @@
-import { field as fieldSelector, countryInput, headingCaption } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import application from '../../../../../../fixtures/application';
 import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.OTHER_COMPANY_DETAILS;
@@ -114,10 +113,7 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.checkValue(fieldSelector(COMPANY_NAME), application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME]);
-        cy.checkValue(countryInput.field(COUNTRY_CODE), application.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY_CODE]);
-
-        cy.checkValue(fieldSelector(COMPANY_NUMBER), application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER]);
+        cy.assertOtherCompanyDetailsFieldValues({});
       });
     });
   });

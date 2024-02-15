@@ -24,13 +24,16 @@ const {
   FAILED_PAYMENTS,
   TOTAL_AMOUNT_OVERDUE,
   TOTAL_OUTSTANDING_PAYMENTS,
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+  HAS_BUYER_FINANCIAL_ACCOUNTS,
 } = INSURANCE_FIELD_IDS.YOUR_BUYER;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-context('Insurance - Check your answers - Your buyer page - Summary list', () => {
+context('Insurance - Check your answers - Your buyer page - Summary list - application below total contract value threshold', () => {
   let referenceNumber;
   let url;
 
@@ -114,5 +117,17 @@ context('Insurance - Check your answers - Your buyer page - Summary list', () =>
 
   it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
     checkSummaryList[FAILED_PAYMENTS]();
+  });
+
+  it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+  });
+
+  it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+    checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+  });
+
+  it(`should render a ${HAS_BUYER_FINANCIAL_ACCOUNTS} summary list row`, () => {
+    checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]();
   });
 });

@@ -1,6 +1,6 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
-import { FIELD_IDS } from '../../constants';
+import { FIELD_IDS, FIELD_VALUES } from '../../constants';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../content-strings/fields/insurance/your-buyer';
 import application from '../../fixtures/application';
 
@@ -20,6 +20,9 @@ const {
       FAILED_PAYMENTS,
       TOTAL_AMOUNT_OVERDUE,
       TOTAL_OUTSTANDING_PAYMENTS,
+      PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+      HAS_BUYER_FINANCIAL_ACCOUNTS,
     },
   },
 } = FIELD_IDS;
@@ -132,6 +135,45 @@ const checkYourBusinessSummaryList = ({
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
+  },
+  [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: ({ shouldRender = true, isYes = false }) => {
+    const fieldId = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+
+      let expectedValue;
+
+      if (isYes) {
+        expectedValue = FIELD_VALUES.YES;
+      } else {
+        expectedValue = application.BUYER[fieldId];
+      }
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: ({ shouldRender = true }) => {
+    const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+      const expectedValue = application.BUYER[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: () => {
+    const fieldId = HAS_BUYER_FINANCIAL_ACCOUNTS;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+    const expectedValue = application.BUYER[fieldId];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
 });
 

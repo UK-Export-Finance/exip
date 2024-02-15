@@ -57,9 +57,9 @@ export const get = async (req: Request, res: Response) => {
 
     const checkAndChange = true;
 
-    const summaryList = yourBuyerSummaryList(application.buyer, referenceNumber, checkAndChange);
+    const summaryList = yourBuyerSummaryList(application.buyer, referenceNumber, application.totalContractValueOverThreshold, checkAndChange);
 
-    const fields = requiredFields();
+    const fields = requiredFields({});
 
     const status = sectionStatus(fields, application);
 

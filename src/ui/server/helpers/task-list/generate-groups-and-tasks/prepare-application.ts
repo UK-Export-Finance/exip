@@ -31,8 +31,14 @@ const createPrepareApplicationTasks = (
   otherGroups: TaskListData,
   policyType?: string,
   finalDestinationKnown?: boolean,
+  jointlyInsuredParty?: boolean,
   isUsingBroker?: boolean,
   hasDifferentTradingName?: boolean,
+  connectionWithBuyer?: boolean,
+  tradedWithBuyer?: boolean,
+  outstandingPayments?: boolean,
+  hasPreviousCreditInsuranceWithBuyer?: boolean,
+  totalContractValueOverThreshold?: boolean,
 ): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
@@ -52,7 +58,13 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`,
     title: PREPARE_APPLICATION.TASKS.BUYER,
     id: TASK_IDS.PREPARE_APPLICATION.BUYER,
-    fields: yourBuyerRequiredFields(),
+    fields: yourBuyerRequiredFields({
+      connectionWithBuyer,
+      tradedWithBuyer,
+      outstandingPayments,
+      hasPreviousCreditInsuranceWithBuyer,
+      totalContractValueOverThreshold,
+    }),
     dependencies,
   };
 
@@ -60,7 +72,7 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-    fields: policyRequiredFields({ policyType, isUsingBroker }),
+    fields: policyRequiredFields({ policyType, jointlyInsuredParty, isUsingBroker }),
     dependencies,
   };
 

@@ -213,6 +213,7 @@ interface Application extends ApplicationCore {
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {
   buyerCountry: string;
+  totalContractValueOverThreshold?: boolean;
 }
 
 type ApplicationFlat = ApplicationFlatCore & ApplicationPolicy & ApplicationBroker & ApplicationCompany & ApplicationDeclaration;

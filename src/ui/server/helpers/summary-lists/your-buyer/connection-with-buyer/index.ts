@@ -31,7 +31,7 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} Array including or excluding CONNECTION_WITH_BUYER_DESCRIPTION in an object structure for GOVUK summary list structure
  */
-export const optionalFields = (answers: ApplicationBuyerRelationship, referenceNumber: number, checkAndChange: boolean) => {
+export const optionalFields = (answers: ApplicationBuyerRelationship, referenceNumber: number, checkAndChange?: boolean) => {
   const fields = [] as Array<SummaryListItemData>;
 
   /**
@@ -65,7 +65,7 @@ export const optionalFields = (answers: ApplicationBuyerRelationship, referenceN
  * @param {Boolean} checkAndChange
  * @returns {Array<SummaryListItemData>} All connection with buyer fields and values in an object structure for GOVUK summary list structure
  */
-const connectionWithBuyerFields = (answers: ApplicationBuyerRelationship, referenceNumber: number, checkAndChange: boolean): SummaryListGroupData => {
+const connectionWithBuyerFields = (answers: ApplicationBuyerRelationship, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
   const fields = [
     fieldGroupItem(
       {
