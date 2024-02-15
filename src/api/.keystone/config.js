@@ -1136,7 +1136,7 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.lossPayee" }),
       financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.lossPayee" }),
-      isAppointing: nullable_checkbox_default(),
+      isAppointed: nullable_checkbox_default(),
       locatedInUk: nullable_checkbox_default(),
       name: (0, import_fields.text)({
         db: { nativeType: "VarChar(100)" }

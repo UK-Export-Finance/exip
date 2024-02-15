@@ -80,7 +80,7 @@ export interface ApplicationDeclaration extends Relationship {
 
 export interface ApplicationNominatedLossPayee extends Relationship {
   applicationId?: string;
-  isAppointing?: boolean;
+  isAppointed?: boolean;
   name?: string;
   locatedInUk?: boolean;
 }

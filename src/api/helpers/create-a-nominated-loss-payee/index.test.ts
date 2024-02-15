@@ -33,7 +33,7 @@ describe('helpers/create-a-nominated-loss-payee', () => {
     const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
 
     expect(nominatedLossPayee.applicationId).toEqual(application.id);
-    expect(nominatedLossPayee.isAppointing).toEqual(null);
+    expect(nominatedLossPayee.isAppointed).toEqual(null);
     expect(nominatedLossPayee.name).toEqual('');
     expect(nominatedLossPayee.locatedInUk).toEqual(null);
   });

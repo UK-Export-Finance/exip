@@ -39,7 +39,7 @@ const applicationQuery = gql`
           validExporterLocation
         }
         nominatedLossPayee {
-          isAppointing
+          isAppointed
           locatedInUk
           name
         }

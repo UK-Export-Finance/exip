@@ -132,7 +132,7 @@ model NominatedLossPayee {
   applicationId                       String?                          @map("application")
   financialUk                         LossPayeeFinancialUk?            @relation("LossPayeeFinancialUk_lossPayee")
   financialInternational              LossPayeeFinancialInternational? @relation("LossPayeeFinancialInternational_lossPayee")
-  isAppointing                        Boolean?
+  isAppointed                         Boolean?
   locatedInUk                         Boolean?
   name                                String                           @default("") @mysql.VarChar(100)
   from_Application_nominatedLossPayee Application[]                    @relation("Application_nominatedLossPayee")

@@ -617,7 +617,7 @@ type NominatedLossPayee {
   application: Application
   financialUk: LossPayeeFinancialUk
   financialInternational: LossPayeeFinancialInternational
-  isAppointing: Boolean
+  isAppointed: Boolean
   locatedInUk: Boolean
   name: String
 }
@@ -646,7 +646,7 @@ input NominatedLossPayeeUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   financialUk: LossPayeeFinancialUkRelateToOneForUpdateInput
   financialInternational: LossPayeeFinancialInternationalRelateToOneForUpdateInput
-  isAppointing: Boolean
+  isAppointed: Boolean
   locatedInUk: Boolean
   name: String
 }
@@ -672,7 +672,7 @@ input NominatedLossPayeeCreateInput {
   application: ApplicationRelateToOneForCreateInput
   financialUk: LossPayeeFinancialUkRelateToOneForCreateInput
   financialInternational: LossPayeeFinancialInternationalRelateToOneForCreateInput
-  isAppointing: Boolean
+  isAppointed: Boolean
   locatedInUk: Boolean
   name: String
 }
