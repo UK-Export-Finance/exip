@@ -2,7 +2,6 @@ import {
   summaryList,
   field as fieldSelector,
 } from '../../../../../../pages/shared';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import mockApplication from '../../../../../../fixtures/application';
@@ -42,7 +41,7 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
 
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
