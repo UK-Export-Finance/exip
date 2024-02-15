@@ -24,8 +24,8 @@ The repository is based on the [template-typescript-package](https://github.com/
 **CD** 🚀
 
 ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev)
-![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)
 ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature)
+![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=staging)
 ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=production)
 
 ## Prerequisites :gear:
