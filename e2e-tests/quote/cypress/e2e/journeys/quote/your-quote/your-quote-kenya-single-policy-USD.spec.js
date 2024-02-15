@@ -39,7 +39,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     completeAndSubmitExporterLocationForm();
     completeAndSubmitUkContentForm();
 
-    policyTypePage[POLICY_TYPE].single.input().click();
+    policyTypePage[POLICY_TYPE].single.label().click();
 
     cy.clickSubmitButton();
   });

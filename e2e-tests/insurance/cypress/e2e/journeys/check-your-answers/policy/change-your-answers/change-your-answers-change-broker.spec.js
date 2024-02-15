@@ -4,7 +4,6 @@ import {
   summaryList,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import { brokerPage } from '../../../../../../../pages/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -220,7 +219,7 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].cy.clickNoRadioInput();
+        cy.clickNoRadioInput();
 
         cy.clickSubmitButton();
       });

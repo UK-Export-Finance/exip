@@ -130,7 +130,7 @@ const assertCurrencyFormFields = ({
 
     const option = currencyRadio({ fieldId, currency });
 
-    option.input().click();
+    option.label().click();
     cy.clickSubmitButton();
 
     cy.url().should('include', url);
@@ -142,7 +142,7 @@ const assertCurrencyFormFields = ({
 
     const option = currencyRadio({ fieldId, currency });
 
-    option.input().click();
+    option.label().click();
     cy.clickSubmitButton();
 
     cy.go('back');
@@ -163,7 +163,7 @@ const assertCurrencyFormFields = ({
     const option5 = currencyRadio({ alternativeCurrencyFieldId });
 
     // clicks alternative currency radio
-    option5.input().click();
+    option5.label().click();
 
     // search for currency
     cy.autocompleteKeyboardInput(alternativeCurrencyFieldId, NON_STANDARD_CURRENCY_NAME);

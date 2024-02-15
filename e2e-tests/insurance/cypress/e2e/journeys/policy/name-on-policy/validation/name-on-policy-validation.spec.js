@@ -89,7 +89,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      fieldSelector(SAME_NAME).input().click();
+      fieldSelector(SAME_NAME).label().click();
     });
 
     const { field, numberOfExpectedErrors, errorIndex } = {

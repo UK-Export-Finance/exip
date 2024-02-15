@@ -72,7 +72,7 @@ context('Insurance - Declarations - How your data will be used page - Save and g
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      singleInputField(FIELD_ID).input().click();
+      singleInputField(FIELD_ID).label().click();
 
       cy.clickSaveAndBackButton();
     });

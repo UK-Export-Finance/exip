@@ -11,9 +11,9 @@ export default (policyType) => {
   const fieldId = POLICY_TYPE;
 
   if (policyType === FIELD_VALUES.POLICY_TYPE.SINGLE) {
-    typeOfPolicyPage[fieldId].single.input().click();
+    typeOfPolicyPage[fieldId].single.label().click();
   } else if (policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE) {
-    typeOfPolicyPage[fieldId].multiple.input().click();
+    typeOfPolicyPage[fieldId].multiple.label().click();
   }
 
   cy.clickSubmitButton();
