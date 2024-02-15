@@ -36,8 +36,8 @@ describe('routes/insurance/your-buyer', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(17);
-    expect(post).toHaveBeenCalledTimes(22);
+    expect(get).toHaveBeenCalledTimes(21);
+    expect(post).toHaveBeenCalledTimes(26);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.ROOT}`, buyerRootGet);
 
@@ -79,10 +79,18 @@ describe('routes/insurance/your-buyer', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, getCreditInsuranceCover);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, postCreditInsuranceCover);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_SAVE_AND_BACK}`, postCreditInsuranceCoverSaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHANGE}`, getCreditInsuranceCover);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHANGE}`, postCreditInsuranceCover);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE}`, getCreditInsuranceCover);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER_CHECK_AND_CHANGE}`, postCreditInsuranceCover);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, getBuyerFinancialInformation);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION}`, postBuyerFinancialInformation);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_SAVE_AND_BACK}`, postBuyerFinancialInformationSaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHANGE}`, getBuyerFinancialInformation);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHANGE}`, postBuyerFinancialInformation);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHECK_AND_CHANGE}`, getBuyerFinancialInformation);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.BUYER_FINANCIAL_INFORMATION_CHECK_AND_CHANGE}`, postBuyerFinancialInformation);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${YOUR_BUYER.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

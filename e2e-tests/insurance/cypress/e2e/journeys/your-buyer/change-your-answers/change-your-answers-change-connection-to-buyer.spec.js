@@ -21,7 +21,7 @@ const {
 
 const { BUYER } = application;
 
-context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
+context('Insurance - Your buyer - Change your answers - Connection to the buyer - As an exporter, I want to change my answers to the connection to the buyer section', () => {
   let url;
   let referenceNumber;
 
