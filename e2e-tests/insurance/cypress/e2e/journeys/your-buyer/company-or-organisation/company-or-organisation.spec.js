@@ -2,6 +2,7 @@ import {
   countryInput,
   field as fieldSelector,
   headingCaption,
+  intro,
 } from '../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../pages/insurance/your-buyer';
 import { PAGES } from '../../../../../../content-strings';
@@ -71,6 +72,10 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
+    });
+
+    it('renders an into heading', () => {
+      cy.checkText(intro(), CONTENT_STRINGS.INTRO);
     });
 
     it('renders a buyer country section', () => {

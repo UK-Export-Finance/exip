@@ -21,6 +21,7 @@ const ROOT = {
 const COMPANY_OR_ORGANISATION = {
   ...SHARED,
   PAGE_TITLE: "Buyer's company or organisation",
+  INTRO: "Enter details for the buyer's company or organisation",
 };
 
 const CONNECTION_WITH_BUYER = {

@@ -303,7 +303,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
           IS_EMPTY: "Enter the buyer's address",
-          ABOVE_MAXIMUM: 'Buyer address cannot be more than 300 characters',
+          ABOVE_MAXIMUM: 'Buyer address cannot be more than 1000 characters',
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.COUNTRY]: {
           IS_EMPTY: "Select the buyer's country",
