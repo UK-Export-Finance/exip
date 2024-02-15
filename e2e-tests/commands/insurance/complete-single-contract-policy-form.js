@@ -39,7 +39,7 @@ const completeSingleContractPolicyForm = ({
 
       cy.autocompleteKeyboardInput(ALTERNATIVE_CURRENCY_CODE, isoCode);
     } else {
-      radios(CURRENCY_CODE, isoCode).option.input().click();
+      radios(CURRENCY_CODE, isoCode).option.label().click();
     }
   }
 };
