@@ -1,4 +1,4 @@
-import { noRadioInput } from '../../../pages/shared';
+import { noRadio } from '../../../pages/shared';
 
 /**
  * clickNoRadioInput
@@ -6,7 +6,7 @@ import { noRadioInput } from '../../../pages/shared';
  * @param {Integer} index: Optional radio index
  */
 const clickNoRadioInput = (index = 0) => {
-  noRadioInput().eq(index).click();
+  noRadio().label().eq(index).click();
 };
 
 export default clickNoRadioInput;
