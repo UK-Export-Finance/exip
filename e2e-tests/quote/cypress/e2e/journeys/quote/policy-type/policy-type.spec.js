@@ -92,7 +92,7 @@ context('Policy type page - as an exporter, I want to get UKEF credit insurance 
 
     describe('when form is valid', () => {
       it(`should redirect to ${TELL_US_ABOUT_YOUR_POLICY}`, () => {
-        policyTypePage[FIELD_ID].single.input().click();
+        policyTypePage[FIELD_ID].single.label().click();
 
         cy.clickSubmitButton();
 

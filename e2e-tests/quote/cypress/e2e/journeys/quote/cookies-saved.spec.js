@@ -26,7 +26,7 @@ context('Cookies saved page - Quote', () => {
 
     cy.saveSession();
 
-    cookiesPage[FIELD_ID].accept.input().click();
+    cookiesPage[FIELD_ID].accept.label().click();
 
     cy.clickSubmitButton();
 

@@ -71,7 +71,7 @@ context('Insurance - Declarations - Confirmation and acknowledgements page - Sav
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      singleInputField(FIELD_ID).input().click();
+      singleInputField(FIELD_ID).label().click();
 
       cy.clickSaveAndBackButton();
     });

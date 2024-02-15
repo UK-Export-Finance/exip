@@ -37,7 +37,7 @@ const changeFromSingleToMultiple = () => {
 
   row.changeLink().click();
 
-  policyTypePage[POLICY_TYPE].multiple.input().click();
+  policyTypePage[POLICY_TYPE].multiple.label().click();
 
   cy.clickSubmitButton();
 
@@ -58,7 +58,7 @@ const changeFromMultipleToSingle = () => {
   // change from multiple to single
   row.changeLink().click();
 
-  policyTypePage[POLICY_TYPE].single.input().click();
+  policyTypePage[POLICY_TYPE].single.label().click();
 
   cy.clickSubmitButton();
 

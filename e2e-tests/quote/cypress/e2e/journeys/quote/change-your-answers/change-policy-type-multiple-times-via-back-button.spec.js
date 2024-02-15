@@ -79,7 +79,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       cy.assertUrl(policyTypeUrl);
 
-      policyTypePage[POLICY_TYPE].single.input().click();
+      policyTypePage[POLICY_TYPE].single.label().click();
 
       cy.clickSubmitButton();
 
@@ -108,7 +108,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       cy.assertUrl(policyTypeUrl);
 
-      policyTypePage[POLICY_TYPE].single.input().click();
+      policyTypePage[POLICY_TYPE].single.label().click();
 
       cy.clickSubmitButton();
 

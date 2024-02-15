@@ -72,7 +72,7 @@ context('Insurance - Declarations - Anti-bribery page - Save and go back', () =>
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      singleInputField(FIELD_ID).input().click();
+      singleInputField(FIELD_ID).label().click();
 
       cy.clickSaveAndBackButton();
     });
