@@ -153,7 +153,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     });
 
     it('renders the new answers and `insured for` in the quote after submitting a new answer', () => {
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
 
       // go through 2 get a quote forms.
       cy.clickSubmitButtonMultipleTimes({ count: 2 });

@@ -13,7 +13,7 @@ const {
 const changePolicyTypeToMultipleAndSubmitContractPolicyForm = () => {
   summaryList.field(POLICY_TYPE).changeLink().click();
 
-  typeOfPolicyPage[POLICY_TYPE].multiple.input().click();
+  typeOfPolicyPage[POLICY_TYPE].multiple.label().click();
   cy.clickSubmitButton();
 
   cy.completeAndSubmitMultipleContractPolicyForm({});

@@ -1,4 +1,4 @@
-import { yesRadioInput } from '../../../pages/shared';
+import { yesRadio } from '../../../pages/shared';
 
 /**
  * clickYesRadioInput
@@ -6,7 +6,7 @@ import { yesRadioInput } from '../../../pages/shared';
  * * @param {Integer} index: Optional radio index
  */
 const clickYesRadioInput = (index = 0) => {
-  yesRadioInput().eq(index).click();
+  yesRadio().label().eq(index).click();
 };
 
 export default clickYesRadioInput;
