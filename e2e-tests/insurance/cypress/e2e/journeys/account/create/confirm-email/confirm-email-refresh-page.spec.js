@@ -6,6 +6,8 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL } },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Confirm email page - refreshing the page', () => {
   before(() => {
     cy.deleteAccount();
@@ -15,7 +17,7 @@ context('Insurance - Account - Create - Confirm email page - refreshing the page
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    const expected = `${baseUrl}${CONFIRM_EMAIL}`;
 
     cy.assertUrl(expected);
 

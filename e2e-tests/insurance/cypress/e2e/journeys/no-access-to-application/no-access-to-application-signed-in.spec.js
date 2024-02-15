@@ -10,6 +10,8 @@ const {
 const firstAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 const secondAccountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - no access to application page - signed in', () => {
   let referenceNumbers;
   let firstApplicationUrl;
@@ -21,7 +23,7 @@ context('Insurance - no access to application page - signed in', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumbers = [refNumber];
 
-      firstApplicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${refNumber}${ALL_SECTIONS}`;
+      firstApplicationUrl = `${baseUrl}${ROOT}/${refNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -48,7 +50,7 @@ context('Insurance - no access to application page - signed in', () => {
     });
 
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
+      const expectedUrl = `${baseUrl}${NO_ACCESS_TO_APPLICATION}`;
 
       cy.assertUrl(expectedUrl);
     });

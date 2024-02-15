@@ -22,6 +22,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 // TODO: EMS-2793 - re-enable
 context.skip('Insurance - Policy - Change your answers - Broker - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
@@ -33,7 +35,7 @@ context.skip('Insurance - Policy - Change your answers - Broker - As an exporter
 
       cy.completePolicySection({ usingBroker: false });
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 

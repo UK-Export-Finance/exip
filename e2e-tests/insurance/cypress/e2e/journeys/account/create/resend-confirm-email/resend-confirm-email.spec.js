@@ -9,6 +9,8 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Resend confirm email page - As an Exporter I want to request a new link to confirm my email address, So that I can readily use my email address to set up an account that I can use for UKEF digital service such as EXIP digital service', () => {
   before(() => {
     cy.deleteAccount();
@@ -42,7 +44,7 @@ context('Insurance - Account - Create - Resend confirm email page - As an Export
 
         url = `${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
-        cy.assertUrl(`${Cypress.config('baseUrl')}${url}`);
+        cy.assertUrl(`${baseUrl}${url}`);
       });
     });
 

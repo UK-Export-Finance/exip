@@ -16,6 +16,8 @@ const {
 
 const { startPage } = insurance;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance Eligibility - start page', () => {
   const url = START;
 
@@ -125,7 +127,7 @@ context('Insurance Eligibility - start page', () => {
 
       cy.clickSubmitButton();
 
-      const expected = `${Cypress.config('baseUrl')}${CHECK_IF_ELIGIBLE}`;
+      const expected = `${baseUrl}${CHECK_IF_ELIGIBLE}`;
 
       cy.assertUrl(expected);
     });

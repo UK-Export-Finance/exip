@@ -12,6 +12,8 @@ const {
   },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Signed out -  As an Exporter I want the system to securely manage my UKEF digital service sessions, So that my UKEF digital service account is securely managed and not compromised', () => {
   const url = SIGNED_OUT;
 
@@ -47,7 +49,7 @@ context('Insurance - Account - Signed out -  As an Exporter I want the system to
     it(`should redirect to ${SIGN_IN_ROOT} when clicking 'sign in'`, () => {
       signedOutPage.signIn().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+      const expectedUrl = `${baseUrl}${SIGN_IN_ROOT}`;
 
       cy.assertUrl(expectedUrl);
     });

@@ -19,6 +19,8 @@ const {
 
 const { BUYER } = application;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your buyer - Change your answers - Credit insurance history - As an exporter, I want to change my answers to the credit insurance history section', () => {
   let url;
   let referenceNumber;
@@ -35,7 +37,7 @@ context('Insurance - Your buyer - Change your answers - Credit insurance history
       cy.completeAndSubmitCreditInsuranceCoverForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 

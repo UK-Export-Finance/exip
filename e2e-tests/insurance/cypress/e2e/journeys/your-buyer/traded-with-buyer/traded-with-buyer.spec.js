@@ -24,6 +24,8 @@ const {
 
 const ERROR_MESSAGE = ERRORS[FIELD_ID];
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I want to confirm my buyer details', () => {
   let referenceNumber;
   let url;
@@ -39,9 +41,9 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionToTheBuyerForm({});
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
-      tradingHistoryUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      buyerFinancialInformationUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
+      tradingHistoryUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
+      buyerFinancialInformationUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
       cy.assertUrl(url);
     });

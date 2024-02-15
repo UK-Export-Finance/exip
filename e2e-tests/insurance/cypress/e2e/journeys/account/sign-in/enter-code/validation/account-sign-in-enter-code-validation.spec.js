@@ -25,8 +25,10 @@ const fieldIndex = 0;
 const TOTAL_REQUIRED_FIELDS = 1;
 const expectedMessage = String(SECURITY_CODE_ERROR_MESSAGE.INCORRECT);
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Enter code - validation', () => {
-  const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const url = `${baseUrl}${ENTER_CODE}`;
 
   before(() => {
     cy.deleteAccount();
@@ -86,7 +88,7 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
       cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
 
       cy.getReferenceNumber().then((referenceNumber) => {
-        const expectedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
         cy.assertUrl(expectedUrl);
       });
     });

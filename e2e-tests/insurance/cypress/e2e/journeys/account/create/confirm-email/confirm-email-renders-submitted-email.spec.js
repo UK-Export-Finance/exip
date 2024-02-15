@@ -14,6 +14,8 @@ const {
 
 const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Confirm email page should render the submitted email', () => {
   beforeEach(() => {
     cy.saveSession();
@@ -23,7 +25,7 @@ context('Insurance - Account - Create - Confirm email page should render the sub
     cy.submitEligibilityAndStartAccountCreation();
     cy.completeAndSubmitCreateAccountForm();
 
-    const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+    const expected = `${baseUrl}${CONFIRM_EMAIL}`;
 
     cy.assertUrl(expected);
   });

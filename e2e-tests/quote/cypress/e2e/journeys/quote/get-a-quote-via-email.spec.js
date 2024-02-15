@@ -9,6 +9,8 @@ const FIELD_ID = FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY;
 
 const COUNTRY_NAME_QUOTE_BY_EMAIL_ONLY = 'Egypt';
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Get a quote via email exit page', () => {
   beforeEach(() => {
     cy.login();
@@ -20,7 +22,7 @@ context('Get a quote via email exit page', () => {
 
     cy.clickSubmitButton();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
+    const expectedUrl = `${baseUrl}${ROUTES.QUOTE.GET_A_QUOTE_BY_EMAIL}`;
 
     cy.assertUrl(expectedUrl);
   });

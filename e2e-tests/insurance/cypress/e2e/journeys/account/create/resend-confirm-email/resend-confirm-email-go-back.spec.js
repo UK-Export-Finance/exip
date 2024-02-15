@@ -6,8 +6,10 @@ const {
   ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Resend confirm email page - Go back to confirm email page via back button', () => {
-  const confirmEmailUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+  const confirmEmailUrl = `${baseUrl}${CONFIRM_EMAIL}`;
 
   let expectedUrl;
   let account;
@@ -40,7 +42,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
 
       confirmEmailPage.havingProblems.requestNew.link().click();
 
-      expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
+      expectedUrl = `${baseUrl}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
       cy.assertUrl(expectedUrl);
 
@@ -49,7 +51,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   });
 
   it('renders the page without error and have the account ID in the URL params', () => {
-    expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}?id=${account.id}`;
+    expectedUrl = `${baseUrl}${CONFIRM_EMAIL}?id=${account.id}`;
 
     cy.assertUrl(expectedUrl);
 

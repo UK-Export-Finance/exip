@@ -6,6 +6,8 @@ import {
   submitButton,
 } from '../pages/shared';
 
+const baseUrl = Cypress.config('baseUrl');
+
 // const lighthouseAudit = (lightHouseThresholds = {}) => {
 //   cy.lighthouse({
 //     accessibility: 100,
@@ -29,7 +31,7 @@ const checkBackLink = (currentHref, expectedHref) => {
 
   cy.clickBackLink();
 
-  let expectedUrl = `${Cypress.config('baseUrl')}${expectedHref}`;
+  let expectedUrl = `${baseUrl}${expectedHref}`;
 
   /**
    * Some back links (start of the eligibility flow) can have external links.
@@ -42,7 +44,7 @@ const checkBackLink = (currentHref, expectedHref) => {
   cy.url().should('eq', expectedUrl);
 
   // go back to current page
-  cy.visit(`${Cypress.config('baseUrl')}${currentHref}`);
+  cy.visit(`${baseUrl}${currentHref}`);
 };
 
 /**
