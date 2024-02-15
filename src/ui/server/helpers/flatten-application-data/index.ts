@@ -49,6 +49,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     status: application.status,
     buyerCountry: application.eligibility?.buyerCountry?.isoCode,
     ...policy,
+    ...policy.jointlyInsuredParty,
     ...exportContract,
     ...company,
     ...business,

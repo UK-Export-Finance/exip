@@ -33,7 +33,7 @@ describe('controllers/insurance/all-sections', () => {
 
       const { referenceNumber, policy, exportContract, broker, declaration, company, buyer, totalContractValueOverThreshold } = mockApplication;
 
-      const { policyType } = policy;
+      const { policyType, jointlyInsuredParty } = policy;
       const { finalDestinationKnown } = exportContract;
       const { isUsingBroker } = broker;
       const { hasDifferentTradingName } = company;
@@ -48,6 +48,7 @@ describe('controllers/insurance/all-sections', () => {
         referenceNumber,
         policyType,
         finalDestinationKnown,
+        jointlyInsuredParty.requested,
         isUsingBroker,
         hasDifferentTradingName,
         hasAntiBriberyCodeOfConduct,
