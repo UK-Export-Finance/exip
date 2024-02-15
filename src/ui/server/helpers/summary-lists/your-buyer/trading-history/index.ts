@@ -6,6 +6,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
+import formatCurrency from '../../../format-currency';
 import { ApplicationBuyerTradingHistory, SummaryListItemData, SummaryListGroupData } from '../../../../../types';
 
 const {
@@ -17,6 +18,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS } = INSURANCE_FIELD_IDS.YOUR_BUYER;
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
 /**
  * optionalFields
@@ -36,27 +38,33 @@ export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenc
    */
   if (answers[OUTSTANDING_PAYMENTS]) {
     fields.push(
-      fieldGroupItem({
-        field: getFieldById(FIELDS, TOTAL_OUTSTANDING_PAYMENTS),
-        data: answers,
-        href: generateChangeLink(
-          TRADING_HISTORY_CHANGE,
-          TRADING_HISTORY_CHECK_AND_CHANGE,
-          `#${TOTAL_OUTSTANDING_PAYMENTS}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      }),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS, TOTAL_OUTSTANDING_PAYMENTS),
+          data: answers,
+          href: generateChangeLink(
+            TRADING_HISTORY_CHANGE,
+            TRADING_HISTORY_CHECK_AND_CHANGE,
+            `#${TOTAL_OUTSTANDING_PAYMENTS}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        },
+        formatCurrency(answers[TOTAL_OUTSTANDING_PAYMENTS], answers[CURRENCY_CODE]),
+      ),
     );
 
     fields.push(
-      fieldGroupItem({
-        field: getFieldById(FIELDS, TOTAL_AMOUNT_OVERDUE),
-        data: answers,
-        href: generateChangeLink(TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, `#${TOTAL_AMOUNT_OVERDUE}-label`, referenceNumber, checkAndChange),
-        renderChangeLink: true,
-      }),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS, TOTAL_AMOUNT_OVERDUE),
+          data: answers,
+          href: generateChangeLink(TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE, `#${TOTAL_AMOUNT_OVERDUE}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        },
+        formatCurrency(answers[TOTAL_AMOUNT_OVERDUE], answers[CURRENCY_CODE]),
+      ),
     );
   }
 

@@ -1,15 +1,13 @@
-import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 
 const {
-  INSURANCE: {
-    YOUR_BUYER: {
-      CONNECTION_WITH_BUYER,
-      CONNECTION_WITH_BUYER_DESCRIPTION,
-    },
-  },
-} = FIELD_IDS;
+  CONNECTION_WITH_BUYER,
+  CONNECTION_WITH_BUYER_DESCRIPTION,
+} = YOUR_BUYER_FIELD_IDS;
 
 const {
   ROOT,
@@ -17,11 +15,11 @@ const {
     CONNECTION_WITH_BUYER_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
-} = ROUTES.INSURANCE;
+} = INSURANCE_ROUTES;
 
 const { BUYER } = application;
 
-context('Insurance - Your buyer - Change your answers - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
+context('Insurance - Your buyer - Change your answers - Connection to the buyer - As an exporter, I want to change my answers to the connection to the buyer section', () => {
   let url;
   let referenceNumber;
 
