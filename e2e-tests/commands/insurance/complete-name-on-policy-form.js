@@ -23,10 +23,10 @@ const { POLICY_CONTACT } = application;
  */
 const completeNameOnPolicyForm = ({ sameName = true }) => {
   if (sameName) {
-    field(SAME_NAME).input().click();
+    field(SAME_NAME).label().click();
     cy.keyboardInput(field(POSITION).input(), POLICY_CONTACT[POSITION]);
   } else {
-    field(OTHER_NAME).input().click();
+    field(OTHER_NAME).label().click();
   }
 };
 

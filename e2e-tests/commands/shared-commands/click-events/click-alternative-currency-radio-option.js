@@ -12,7 +12,7 @@ const {
 const clickAlternativeCurrencyRadioOption = (fieldId = ALTERNATIVE_CURRENCY_CODE) => {
   const { option } = radios(fieldId);
 
-  option.input().click();
+  option.label().click();
 };
 
 export default clickAlternativeCurrencyRadioOption;

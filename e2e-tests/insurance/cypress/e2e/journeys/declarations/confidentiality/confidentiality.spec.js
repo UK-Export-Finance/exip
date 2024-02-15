@@ -110,8 +110,8 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       });
     });
 
-    it('renders a `confirm` label and input', () => {
-      cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
+    it('renders a `confirm` legend and input', () => {
+      cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');
     });

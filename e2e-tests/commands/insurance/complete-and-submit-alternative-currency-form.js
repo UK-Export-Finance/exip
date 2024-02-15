@@ -19,7 +19,7 @@ const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency
     partials.provideAlternativeCurrencyLink().click();
 
     // selects currency radio and submits form
-    radios(CURRENCY_CODE, isoCode).option.input().click();
+    radios(CURRENCY_CODE, isoCode).option.label().click();
     cy.clickSubmitButton();
   }
 

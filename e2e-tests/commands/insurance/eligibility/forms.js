@@ -67,7 +67,7 @@ export const completeAndSubmitTotalValueInsuredForm = ({ underThreshold = true }
     fieldId = `${TOTAL_CONTRACT_VALUE}-${TOTAL_CONTRACT_VALUE_BELOW.ID}`;
   }
 
-  field(fieldId).input().click();
+  field(fieldId).label().click();
   cy.clickSubmitButton();
 };
 
@@ -84,7 +84,7 @@ export const completeCoverPeriodForm = ({ underThreshold = true }) => {
     fieldId = `${COVER_PERIOD}-${COVER_PERIOD_BELOW.ID}`;
   }
 
-  field(fieldId).input().click();
+  field(fieldId).label().click();
   cy.clickSubmitButton();
 };
 

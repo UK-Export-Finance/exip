@@ -6,7 +6,7 @@ const FIELD_ID = FIELD_IDS.INSURANCE.DECLARATIONS.AGREE_HOW_YOUR_DATA_WILL_BE_US
 const field = singleInputField(FIELD_ID);
 
 export default () => {
-  field.input().click();
+  field.label().click();
 
   cy.clickSubmitButton();
 };

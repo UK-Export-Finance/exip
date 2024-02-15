@@ -145,8 +145,8 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       });
     });
 
-    it("renders `I've read and agree` label and input", () => {
-      cy.checkText(field.label(), FIELDS[FIELD_ID].LABEL);
+    it("renders `I've read and agree` legend and input", () => {
+      cy.checkText(field.legend(), FIELDS[FIELD_ID].LABEL);
 
       field.input().should('exist');
     });

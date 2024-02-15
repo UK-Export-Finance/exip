@@ -1,5 +1,23 @@
 # Changelog
 
+## [2.4.3](https://github.com/UK-Export-Finance/exip/compare/v2.4.2...v2.4.3) (2024-01-15)
+
+
+### Bug Fixes
+
+* **deployment:** added back API_KEY ([2fff33b](https://github.com/UK-Export-Finance/exip/commit/2fff33ba07a8c0b8f4665cfe2e46225a280c7c1b))
+* **deployment:** removed frivolous variables ([21c0015](https://github.com/UK-Export-Finance/exip/commit/21c00159973867480d1ed48f389ba5d6f2988cf0))
+* **deployment:** removed TLS_* variables ([32e0ee1](https://github.com/UK-Export-Finance/exip/commit/32e0ee153c71b9f5313b66fb26a15ea52e135a90))
+
+## [2.4.2](https://github.com/UK-Export-Finance/exip/compare/v2.4.1...v2.4.2) (2024-01-04)
+
+
+### Bug Fixes
+
+* **feature-deployment:** added feature environment for deployment ([68df6ae](https://github.com/UK-Export-Finance/exip/commit/68df6ae48b0f2c79a2e87433a0367728c11ba71d))
+* **feature-deployment:** renamed GHA pull_request target branch name ([2b58999](https://github.com/UK-Export-Finance/exip/commit/2b58999a4b638c6a893ddaa51d5677320a77e164))
+* **iac:** added feature environment to infrastructure.yml ([75505e2](https://github.com/UK-Export-Finance/exip/commit/75505e21bbfa4ac31110fbeb851b547b7ccbe9e7))
+
 ## [2.4.1](https://github.com/UK-Export-Finance/exip/compare/v2.4.0...v2.4.1) (2024-01-02)
 
 
