@@ -41,7 +41,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   const field = fieldSelector(ADDRESS);
-  const submittedValue = 'a'.repeat(301);
+  const submittedValue = 'a'.repeat(1001);
 
   beforeEach(() => {
     cy.saveSession();

@@ -34,8 +34,8 @@ export const YOUR_BUYER_FIELDS = {
       },
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
-      LABEL: 'Address',
-      MAXIMUM: 330,
+      LABEL: 'Company address',
+      MAXIMUM: 1000,
       SUMMARY: {
         TITLE: 'Buyer address',
         FORM_TITLE: COMPANY_DETAILS,
@@ -45,14 +45,14 @@ export const YOUR_BUYER_FIELDS = {
       LABEL: 'Buyer country',
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
-      LABEL: 'Registration number (optional)',
+      LABEL: 'Company registration number (optional)',
       SUMMARY: {
         TITLE: 'Registration number (optional)',
         FORM_TITLE: COMPANY_DETAILS,
       },
     },
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
-      LABEL: 'Enter their  website (optional)',
+      LABEL: 'Enter their website (optional)',
       SUMMARY: {
         TITLE: 'Buyer website (optional)',
         FORM_TITLE: COMPANY_DETAILS,
