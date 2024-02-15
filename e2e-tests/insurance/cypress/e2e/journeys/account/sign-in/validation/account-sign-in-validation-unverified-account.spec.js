@@ -14,6 +14,8 @@ const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.CONFIRM_EMAIL_RESENT;
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Validation - unverified account', () => {
   let account;
 
@@ -30,7 +32,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
 
     yourDetailsPage.signInButtonLink().click();
 
-    const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN_ROOT}`;
+    const expectedUrl = `${baseUrl}${SIGN_IN_ROOT}`;
     cy.assertUrl(expectedUrl);
   });
 
@@ -54,7 +56,7 @@ context('Insurance - Account - Sign in - Validation - unverified account', () =>
     });
 
     it(`should redirect to ${CONFIRM_EMAIL_RESENT} with account ID in the URL params and render submitted email copy`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
+      const expectedUrl = `${baseUrl}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
 
       cy.assertUrl(expectedUrl);
 

@@ -5,6 +5,8 @@ const {
   ALL_SECTIONS,
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Complete `prepare your application` tasks', () => {
   let referenceNumber;
   let allSectionsUrl;
@@ -15,7 +17,7 @@ context('Insurance - Complete `prepare your application` tasks', () => {
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      allSectionsUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.navigateToUrl(allSectionsUrl);
 

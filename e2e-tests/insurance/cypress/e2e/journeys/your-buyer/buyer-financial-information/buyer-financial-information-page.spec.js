@@ -25,6 +25,8 @@ const {
 
 const ERROR_MESSAGE = ERRORS[FIELD_ID];
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your Buyer - Buyer financial information - As an exporter, I want to provide the details on the buyer of my export trade, So that UKEF can gain clarity on the buyer history as part of due diligence', () => {
   let referenceNumber;
   let url;
@@ -34,8 +36,8 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
-      checkYourAnswersUrl = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});

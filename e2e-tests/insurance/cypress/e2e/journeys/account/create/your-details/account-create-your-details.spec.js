@@ -24,6 +24,8 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS.CREATE.YOUR_DETAILS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Your details page - As an exporter, I want to provide my details when creating my UKEF digital service account, So that the details of the UKEF digital service account created can be unique to me', () => {
   let url;
 
@@ -34,7 +36,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${baseUrl}${YOUR_DETAILS}`;
 
     cy.assertUrl(url);
   });
@@ -137,7 +139,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       it(`should redirect to ${SIGN_IN.ROOT}`, () => {
         yourDetailsPage.signInButtonLink().click();
 
-        const expectedUrl = `${Cypress.config('baseUrl')}${SIGN_IN.ROOT}`;
+        const expectedUrl = `${baseUrl}${SIGN_IN.ROOT}`;
 
         cy.assertUrl(expectedUrl);
       });
@@ -152,7 +154,7 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
       it(`should redirect to ${CONFIRM_EMAIL}`, () => {
         cy.completeAndSubmitCreateAccountForm();
 
-        const expected = `${Cypress.config('baseUrl')}${CONFIRM_EMAIL}`;
+        const expected = `${baseUrl}${CONFIRM_EMAIL}`;
         cy.assertUrl(expected);
       });
     });

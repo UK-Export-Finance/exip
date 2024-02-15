@@ -13,7 +13,9 @@ const {
   ACCOUNT: { EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-const linkSentUrl = `${Cypress.config('baseUrl')}${LINK_SENT}`;
+const baseUrl = Cypress.config('baseUrl');
+
+const linkSentUrl = `${baseUrl}${LINK_SENT}`;
 
 /**
  * completeAndSubmitPasswordResetForm

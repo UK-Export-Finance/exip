@@ -20,6 +20,8 @@ const ERROR_ASSERTIONS = {
   errorIndex: 1,
 };
 
+const baseUrl = Cypress.config('baseUrl');
+
 describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_ID}`, () => {
   let referenceNumber;
   let url;
@@ -33,7 +35,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ROOT}`;
 
       cy.assertUrl(url);
     });

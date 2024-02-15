@@ -13,6 +13,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Your buyer - Change your answers - Buyer financial accounts - As an exporter, I want to change my answers to the buyer financial accounts section', () => {
   let referenceNumber;
   let url;
@@ -28,7 +30,7 @@ context('Insurance - Your buyer - Change your answers - Buyer financial accounts
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 

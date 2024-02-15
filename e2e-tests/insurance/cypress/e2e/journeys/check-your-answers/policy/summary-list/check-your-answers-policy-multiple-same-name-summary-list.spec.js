@@ -22,6 +22,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Policy - Multiple contract policy - Same name - Summary List', () => {
   let url;
   let referenceNumber;
@@ -33,7 +35,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
 
       task.link().click();
 
-      url = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
     });

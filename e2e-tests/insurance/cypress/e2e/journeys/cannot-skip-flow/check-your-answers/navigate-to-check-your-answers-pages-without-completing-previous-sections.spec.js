@@ -10,8 +10,10 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - cannot skip to any Check your answers page without completing other required fields/sections', () => {
-  const insuranceRoute = `${Cypress.config('baseUrl')}${INSURANCE_ROOT}`;
+  const insuranceRoute = `${baseUrl}${INSURANCE_ROOT}`;
 
   let referenceNumber;
   let completeOtherSectionsUrl;

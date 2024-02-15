@@ -39,6 +39,8 @@ const fieldErrorAssertions = (value) => ({
   errorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
 });
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Password reset - new password page - form validation - password', () => {
   let url;
   let resetPasswordToken;
@@ -53,7 +55,7 @@ context('Insurance - Account - Password reset - new password page - form validat
 
     cy.completeAndSubmitPasswordResetForm({});
 
-    url = `${Cypress.config('baseUrl')}${LINK_SENT}`;
+    url = `${baseUrl}${LINK_SENT}`;
 
     cy.assertUrl(url);
   });
@@ -71,7 +73,7 @@ context('Insurance - Account - Password reset - new password page - form validat
       // Get an account's password reset token
       resetPasswordToken = await api.getAccountPasswordResetToken();
 
-      url = `${Cypress.config('baseUrl')}${NEW_PASSWORD}?token=${resetPasswordToken}`;
+      url = `${baseUrl}${NEW_PASSWORD}?token=${resetPasswordToken}`;
     });
 
     describe('form validation', () => {

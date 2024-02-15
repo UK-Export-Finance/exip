@@ -8,8 +8,10 @@ const {
   DASHBOARD,
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Enter code - without completing eligibility', () => {
-  const enterCodeUrl = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
 
   before(() => {
     cy.deleteAccount();
@@ -44,7 +46,7 @@ context('Insurance - Account - Sign in - Enter code - without completing eligibi
     it(`should redirect to ${DASHBOARD}`, () => {
       cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+      const expectedUrl = `${baseUrl}${DASHBOARD}`;
 
       cy.assertUrl(expectedUrl);
     });

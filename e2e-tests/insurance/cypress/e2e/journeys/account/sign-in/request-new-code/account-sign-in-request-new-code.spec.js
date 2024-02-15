@@ -11,8 +11,10 @@ const {
   },
 } = ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - Request new code page - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
-  const url = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
+  const url = `${baseUrl}${REQUEST_NEW_CODE}`;
   before(() => {
     cy.deleteAccount();
 
@@ -97,7 +99,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
     });
 
     it(`should redirect to ${ENTER_CODE}`, () => {
-      const expected = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+      const expected = `${baseUrl}${ENTER_CODE}`;
       cy.assertUrl(expected);
     });
 

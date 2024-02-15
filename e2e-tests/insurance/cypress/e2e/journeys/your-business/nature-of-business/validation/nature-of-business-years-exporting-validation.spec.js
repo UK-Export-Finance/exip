@@ -16,6 +16,8 @@ const field = fieldSelector(fieldId);
 
 const expectedErrorsCount = 3;
 
+const baseUrl = Cypress.config('baseUrl');
+
 describe('Insurance - Your business - Nature of your business page - As an Exporter I want to enter details about the nature of my business - years exporting input validation', () => {
   let referenceNumber;
   let url;
@@ -28,7 +30,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
       cy.completeAndSubmitCompanyDetails({});
 
-      url = `${Cypress.config('baseUrl')}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
+      url = `${baseUrl}${ROUTES.INSURANCE.ROOT}/${referenceNumber}${ROUTES.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_BUSINESS_ROOT}`;
 
       cy.assertUrl(url);
     });

@@ -33,6 +33,8 @@ const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Your buyer page - Summary list - application below total contract value threshold', () => {
   let referenceNumber;
   let url;
@@ -51,7 +53,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
       // To get past "Your business" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
       cy.assertUrl(url);
     });

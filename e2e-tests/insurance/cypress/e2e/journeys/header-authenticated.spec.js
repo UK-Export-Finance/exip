@@ -18,17 +18,19 @@ const {
   },
 } = FIELD_IDS;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - header - authenticated - As an Exporter, I want the system to have a login service header across every page of the digital service once I am signed in, So that I can easily access the header content anywhere on the application', () => {
   let referenceNumber;
   let allSectionsUrl;
 
-  const dashboardUrl = `${Cypress.config('baseUrl')}${DASHBOARD}`;
+  const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      allSectionsUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -56,7 +58,7 @@ context('Insurance - header - authenticated - As an Exporter, I want the system 
     it(`should redirect to ${MANAGE} when clicking the link`, () => {
       selector().click();
 
-      const expectedUrl = `${Cypress.config('baseUrl')}${MANAGE}`;
+      const expectedUrl = `${baseUrl}${MANAGE}`;
 
       cy.assertUrl(expectedUrl);
     });

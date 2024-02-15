@@ -29,6 +29,8 @@ const fieldErrorAssertions = (value) => ({
   errorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
 });
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Create - Your details page - form validation - password', () => {
   let url;
 
@@ -37,7 +39,7 @@ context('Insurance - Account - Create - Your details page - form validation - pa
 
     cy.submitEligibilityAndStartAccountCreation();
 
-    url = `${Cypress.config('baseUrl')}${YOUR_DETAILS}`;
+    url = `${baseUrl}${YOUR_DETAILS}`;
 
     cy.assertUrl(url);
   });

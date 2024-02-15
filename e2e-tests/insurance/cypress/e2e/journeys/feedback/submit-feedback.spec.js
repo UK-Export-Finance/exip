@@ -16,9 +16,11 @@ const {
   FEEDBACK_SENT,
 } = ROUTES.INSURANCE;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Feedback - Submit feedback form', () => {
-  const startUrl = `${Cypress.config('baseUrl')}${START}`;
-  const feedbackConfirmationUrl = `${Cypress.config('baseUrl')}${FEEDBACK_SENT}`;
+  const startUrl = `${baseUrl}${START}`;
+  const feedbackConfirmationUrl = `${baseUrl}${FEEDBACK_SENT}`;
 
   describe('when submitting an empty form', () => {
     beforeEach(() => {

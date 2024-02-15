@@ -42,6 +42,8 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Check your answers - Company or organisation - Your buyer page - Summary list', () => {
   let referenceNumber;
   let url;
@@ -60,7 +62,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
       // To get past "Your business" check your answers page
       cy.submitCheckYourAnswersForm();
 
-      url = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 
       cy.assertUrl(url);
     });

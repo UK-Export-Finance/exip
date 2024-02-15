@@ -11,6 +11,8 @@ const {
   NO_ACCESS_APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - no access to application when application is submitted', () => {
   let referenceNumber;
   let applicationUrl;
@@ -19,8 +21,8 @@ context('Insurance - no access to application when application is submitted', ()
     cy.completeSignInAndSubmitAnApplication({}).then((refNumber) => {
       referenceNumber = refNumber;
 
-      const submittedUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
-      applicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const submittedUrl = `${baseUrl}${ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
+      applicationUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(submittedUrl);
     });
@@ -35,7 +37,7 @@ context('Insurance - no access to application when application is submitted', ()
   });
 
   describe('when trying to access an application which has already been submitted', () => {
-    const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_APPLICATION_SUBMITTED}`;
+    const expectedUrl = `${baseUrl}${NO_ACCESS_APPLICATION_SUBMITTED}`;
 
     beforeEach(() => {
       cy.saveSession();

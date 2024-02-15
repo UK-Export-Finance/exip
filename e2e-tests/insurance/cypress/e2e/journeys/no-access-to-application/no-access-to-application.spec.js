@@ -11,6 +11,8 @@ const {
   NO_ACCESS_TO_APPLICATION,
 } = INSURANCE_ROUTES;
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - no access to application page - signed out', () => {
   let referenceNumber;
   let applicationUrl;
@@ -22,7 +24,7 @@ context('Insurance - no access to application page - signed out', () => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      applicationUrl = `${Cypress.config('baseUrl')}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      applicationUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(applicationUrl);
     });
@@ -41,7 +43,7 @@ context('Insurance - no access to application page - signed out', () => {
     });
 
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {
-      const expectedUrl = `${Cypress.config('baseUrl')}${NO_ACCESS_TO_APPLICATION}`;
+      const expectedUrl = `${baseUrl}${NO_ACCESS_TO_APPLICATION}`;
 
       cy.assertUrl(expectedUrl);
     });

@@ -20,8 +20,10 @@ const {
 
 const FIELD_STRINGS = ACCOUNT_FIELDS[SECURITY_CODE];
 
+const baseUrl = Cypress.config('baseUrl');
+
 context('Insurance - Account - Sign in - I want to sign in into my UKEF digital service account after completing eligibility, So that I can complete my application for a UKEF Export Insurance Policy', () => {
-  const url = `${Cypress.config('baseUrl')}${ENTER_CODE}`;
+  const url = `${baseUrl}${ENTER_CODE}`;
 
   before(() => {
     cy.deleteAccount();
@@ -85,7 +87,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         it(`should re-direct to ${REQUEST_NEW_CODE}`, () => {
           enterCodePage.requestNewCodeLink().click();
 
-          const expectedUrl = `${Cypress.config('baseUrl')}${REQUEST_NEW_CODE}`;
+          const expectedUrl = `${baseUrl}${REQUEST_NEW_CODE}`;
 
           cy.assertUrl(expectedUrl);
         });
