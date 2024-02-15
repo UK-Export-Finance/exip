@@ -1,6 +1,7 @@
 export * from './company-details-examples';
 export * from './companies-house-number-examples';
 export * from './email-examples';
+export * from './full-address-examples';
 export * from './password-examples';
 export * from './phone-number-examples';
 export * from './postcode-examples';
