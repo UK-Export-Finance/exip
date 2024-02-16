@@ -3,6 +3,7 @@ const BROKER_ROOT = `${ROOT}/broker`;
 const BROKER_DETAILS_ROOT = `${ROOT}/broker-details`;
 const BROKER_CONFIRM_ADDRESS_ROOT = `${ROOT}/broker-confirm-address`;
 const LOSS_PAYEE_ROOT = `${ROOT}/loss-payee`;
+const LOSS_PAYEE_DETAILS_ROOT = `${ROOT}/loss-payee-details`;
 
 export const POLICY = {
   ROOT,
@@ -52,5 +53,6 @@ export const POLICY = {
   BROKER_DETAILS_CHECK_AND_CHANGE: `${BROKER_DETAILS_ROOT}/check-and-change`,
   BROKER_CONFIRM_ADDRESS_ROOT,
   LOSS_PAYEE_ROOT,
+  LOSS_PAYEE_DETAILS_ROOT,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };

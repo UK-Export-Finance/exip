@@ -40,7 +40,8 @@ const applicationQuery = gql`
         }
         nominatedLossPayee {
           isAppointed
-          locatedInUk
+          isLocatedInUk
+          isLocatedInternationally
           name
         }
         policy {

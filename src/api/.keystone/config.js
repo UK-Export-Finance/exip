@@ -223,6 +223,12 @@ var POLICY = {
   },
   LOSS_PAYEE: {
     IS_APPOINTED: "isAppointed"
+  },
+  LOSS_PAYEE_DETAILS: {
+    NAME: "name",
+    LOCATION: "location",
+    IS_LOCATED_IN_UK: "isLocatedInUk",
+    IS_LOCATED_INTERNATIONALLY: "isLocatedInternationally"
   }
 };
 var policy_default = POLICY;
@@ -1140,7 +1146,8 @@ var lists = {
       financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.lossPayee" }),
       financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.lossPayee" }),
       isAppointed: nullable_checkbox_default(),
-      locatedInUk: nullable_checkbox_default(),
+      isLocatedInUk: nullable_checkbox_default(),
+      isLocatedInternationally: nullable_checkbox_default(),
       name: (0, import_fields.text)({
         db: { nativeType: "VarChar(100)" }
       })
@@ -4315,7 +4322,8 @@ var {
     POLICY_TYPE: POLICY_TYPE3,
     USING_BROKER: USING_BROKER2,
     BROKER_DETAILS: { NAME, EMAIL: EMAIL4, FULL_ADDRESS },
-    LOSS_PAYEE: { IS_APPOINTED }
+    LOSS_PAYEE: { IS_APPOINTED },
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY }
   }
 } = insurance_default;
 var POLICY_FIELDS = {
@@ -4407,10 +4415,32 @@ var POLICY_FIELDS = {
       }
     }
   },
-  [IS_APPOINTED]: {
-    HINT: {
-      INTRO: "A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.",
-      OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant."
+  LOSS_PAYEE: {
+    [IS_APPOINTED]: {
+      HINT: {
+        INTRO: "A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.",
+        OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant."
+      }
+    }
+  },
+  LOSS_PAYEE_DETAILS: {
+    [LOSS_PAYEE_NAME]: {
+      LABEL: "Name of the loss payee"
+    },
+    [LOCATION]: {
+      LABEL: "Where is the loss payee located?",
+      OPTIONS: {
+        UK: {
+          ID: IS_LOCATED_IN_UK,
+          VALUE: IS_LOCATED_IN_UK,
+          TEXT: "United Kingdom"
+        },
+        INTERNATIONAL: {
+          ID: IS_LOCATED_INTERNATIONALLY,
+          VALUE: IS_LOCATED_INTERNATIONALLY,
+          TEXT: "International"
+        }
+      }
     }
   }
 };

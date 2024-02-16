@@ -64,4 +64,10 @@ export const POLICY = {
   LOSS_PAYEE: {
     IS_APPOINTED: 'isAppointed',
   },
+  LOSS_PAYEE_DETAILS: {
+    NAME: 'name',
+    LOCATION: 'location',
+    IS_LOCATED_IN_UK: 'isLocatedInUk',
+    IS_LOCATED_INTERNATIONALLY: 'isLocatedInternationally',
+  },
 };

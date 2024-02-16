@@ -33,6 +33,7 @@ import { get as getBrokerDetails, post as postBrokerDetails } from '../../../con
 import { post as postBrokerDetailsSaveAndBack } from '../../../controllers/insurance/policy/broker-details/save-and-back';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../controllers/insurance/policy/broker-confirm-address';
 import { get as getLossPayee, post as postLossPayee } from '../../../controllers/insurance/policy/loss-payee';
+import { get as getLossPayeeDetails } from '../../../controllers/insurance/policy/loss-payee-details';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
 
 // @ts-ignore
@@ -163,6 +164,8 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CO
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_ROOT}`, getLossPayee);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_ROOT}`, postLossPayee);
+
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_ROOT}`, getLossPayeeDetails);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

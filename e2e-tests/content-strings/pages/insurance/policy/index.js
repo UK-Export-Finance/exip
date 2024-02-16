@@ -98,6 +98,11 @@ const LOSS_PAYEE = {
   PAGE_TITLE: 'Are you appointing a loss payee?',
 };
 
+const LOSS_PAYEE_DETAILS = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the nominated loss payee',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -119,5 +124,6 @@ module.exports = {
   BROKER_DETAILS,
   BROKER_CONFIRM_ADDRESS,
   LOSS_PAYEE,
+  LOSS_PAYEE_DETAILS,
   CHECK_YOUR_ANSWERS,
 };

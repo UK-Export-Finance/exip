@@ -12,5 +12,6 @@ export const POLICY_TEMPLATES = {
   OTHER_COMPANY_DETAILS: 'insurance/policy/other-company-details.njk',
   BROKER_DETAILS: 'insurance/policy/broker-details.njk',
   BROKER_CONFIRM_ADDRESS: 'insurance/policy/broker-confirm-address.njk',
+  LOSS_PAYEE_DETAILS: 'insurance/policy/loss-payee-details.njk',
   CHECK_YOUR_ANSWERS: 'insurance/policy/check-your-answers.njk',
 };
