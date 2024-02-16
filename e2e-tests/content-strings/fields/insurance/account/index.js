@@ -2,7 +2,7 @@ import { FIELD_IDS } from '../../../../constants';
 
 const { ACCOUNT } = FIELD_IDS.INSURANCE;
 const {
-  FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, SECURITY_CODE,
+  FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ACCESS_CODE,
 } = ACCOUNT;
 
 const PASSWORD_HINT = {
@@ -36,7 +36,7 @@ export const ACCOUNT_FIELDS = {
       HIDE: 'Hide',
     },
   },
-  [SECURITY_CODE]: {
+  [ACCESS_CODE]: {
     LABEL: 'Access code',
   },
   CREATE: {

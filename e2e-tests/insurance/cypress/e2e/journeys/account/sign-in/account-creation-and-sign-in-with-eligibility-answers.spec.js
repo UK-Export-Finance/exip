@@ -46,17 +46,17 @@ context('Insurance - Account - When answering eligibility answers, creating an a
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('after signing in with a valid security code', () => {
-    let validSecurityCode;
+  describe('after signing in with a valid access code', () => {
+    let validAccessCode;
 
     before(() => {
       cy.navigateToUrl(enterCodeUrl);
 
       // create and get an OTP for the exporter's account
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.accountAddAndGetOTP().then((accessCode) => {
+        validAccessCode = accessCode;
 
-        cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
+        cy.completeAndSubmitEnterCodeAccountForm(validAccessCode);
       });
     });
 

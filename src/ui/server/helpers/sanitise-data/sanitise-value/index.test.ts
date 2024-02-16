@@ -3,7 +3,7 @@ import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { mockPhoneNumbers, mockBuyer } from '../../../test-mocks';
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
   COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { PHONE_NUMBER },
@@ -26,7 +26,7 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
   describe('STRING_NUMBER_FIELDS', () => {
     it('should return an explicit array of field IDs that are string fields that could have a pure number value', () => {
       const expected = [
-        SECURITY_CODE,
+        ACCESS_CODE,
         DESCRIPTION,
         COMPANY_NUMBER,
         COMPANY_SIC,

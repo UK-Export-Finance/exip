@@ -15,10 +15,10 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { EMAIL, PASSWORD, SECURITY_CODE },
+  ACCOUNT: { EMAIL, PASSWORD, ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
-context('Insurance - Account - Sign in - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
+context('Insurance - Account - Sign in - I want to enter the new access code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
   const baseUrl = Cypress.config('baseUrl');
 
   before(() => {
@@ -59,18 +59,18 @@ context('Insurance - Account - Sign in - I want to enter the new security code s
     });
   });
 
-  describe('when submitting a valid security code', () => {
-    let validSecurityCode;
+  describe('when submitting a valid access code', () => {
+    let validAccessCode;
 
     before(() => {
       // create and get an OTP for the exporter's account
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.accountAddAndGetOTP().then((accessCode) => {
+        validAccessCode = accessCode;
       });
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
+      cy.keyboardInput(field(ACCESS_CODE).input(), validAccessCode);
 
       cy.clickSubmitButton();
 

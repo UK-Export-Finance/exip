@@ -149,7 +149,7 @@ var ACCOUNT = {
   PASSWORD: "password",
   SALT: "salt",
   HASH: "hash",
-  SECURITY_CODE: "securityCode",
+  ACCESS_CODE: "securityCode",
   IS_VERIFIED: "isVerified",
   IS_BLOCKED: "isBlocked",
   PASSWORD_RESET_HASH: "passwordResetHash",
@@ -745,7 +745,7 @@ var ACCOUNT2 = {
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
-    SECURITY_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
+    ACCESS_CODE: "b92650d1-9187-4510-ace2-5eec7ca7e626",
     PASSWORD_RESET: "86d5f582-e1d3-4b55-b103-50141401fd13",
     REACTIVATE_ACCOUNT_CONFIRM_EMAIL: "2abf173a-52fc-4ec8-b28c-d7a862b8cf37"
   },
@@ -2240,17 +2240,17 @@ var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash
   }
 };
 
-// emails/security-code-email/index.ts
-var securityCodeEmail = async (emailAddress, name, securityCode) => {
+// emails/access-code-email/index.ts
+var accessCodeEmail = async (emailAddress, name, securityCode) => {
   try {
-    console.info("Sending security code email for account sign in");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.SECURITY_CODE;
+    console.info("Sending access code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.ACCESS_CODE;
     const variables = { name, securityCode };
     const response = await callNotify(templateId, emailAddress, variables);
     return response;
   } catch (err) {
-    console.error("Error sending security code email for account sign in %O", err);
-    throw new Error(`Sending security code email for account sign in ${err}`);
+    console.error("Error sending access code email for account sign in %O", err);
+    throw new Error(`Sending access code email for account sign in ${err}`);
   }
 };
 
@@ -2435,7 +2435,7 @@ var insuranceFeedbackEmail = async (variables) => {
 import_dotenv4.default.config();
 var sendEmail = {
   confirmEmailAddress,
-  securityCodeEmail,
+  accessCodeEmail,
   passwordResetLink,
   reactivateAccountLink,
   application: application_default2,
@@ -2966,7 +2966,7 @@ var accountSignInSendNewCode = async (root, variables, context) => {
     const { securityCode } = await generate_otp_and_update_account_default(context, account2.id);
     const { email } = account2;
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
+    const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
     if (emailResponse.success) {
       return {
         ...emailResponse,

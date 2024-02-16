@@ -4,8 +4,8 @@
  * 2) Verify the account via "verify email" page (mimicking clicking email link)
  * 3) Create an application directly via the API, associated with the created user; Avoiding going through the full eligibility flow.
  * 4) Complete and submit the "account sign in" form
- * 5) Add a new OTP/security code and get it directly from the API
- * 6) Complete and submit the "enter security code" form
+ * 5) Add a new OTP/access code and get it directly from the API
+ * 6) Complete and submit the "enter access code" form
  * 7) Check we are on the "all sections" application page.
  * @param {String} Account email address
  * @param {String} Company number/companies house number to use for application creation

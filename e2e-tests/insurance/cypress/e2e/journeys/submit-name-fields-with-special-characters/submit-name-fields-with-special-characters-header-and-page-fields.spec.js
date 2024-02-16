@@ -7,7 +7,7 @@ import mockAccount from '../../../../../fixtures/account';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
 
 const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME, SECURITY_CODE },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -41,11 +41,11 @@ context('Insurance - Name fields - Header and page fields should render special 
       // sign in to the account. Behind the scenes, an application is created at this point.
       cy.completeAndSubmitSignInAccountForm({});
 
-      // get the OTP security code
+      // get the OTP access code
       cy.accountAddAndGetOTP(mockAccount.emailAddress).then((securityCode) => {
-        cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
+        cy.keyboardInput(field(ACCESS_CODE).input(), securityCode);
 
-        // submit the OTP security code
+        // submit the OTP access code
         cy.clickSubmitButton();
       });
     });

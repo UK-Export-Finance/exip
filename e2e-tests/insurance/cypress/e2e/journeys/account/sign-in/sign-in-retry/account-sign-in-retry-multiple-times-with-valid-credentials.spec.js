@@ -50,22 +50,22 @@ context('Insurance - Account - Sign in - Submitting the form with valid credenti
       cy.assertUrl(enterCodeUrl);
     });
 
-    describe('when submitting a valid security code', () => {
-      let validSecurityCode;
+    describe('when submitting a valid access code', () => {
+      let validAccessCode;
 
       before(() => {
         cy.saveSession();
 
         // create and get an OTP for the exporter's account
-        cy.accountAddAndGetOTP().then((securityCode) => {
-          validSecurityCode = securityCode;
+        cy.accountAddAndGetOTP().then((accessCode) => {
+          validAccessCode = accessCode;
         });
       });
 
       it(`should successfully sign the user in and redirect to ${DASHBOARD}`, () => {
         cy.navigateToUrl(enterCodeUrl);
 
-        cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
+        cy.completeAndSubmitEnterCodeAccountForm(validAccessCode);
 
         cy.assertUrl(dashboardUrl);
       });

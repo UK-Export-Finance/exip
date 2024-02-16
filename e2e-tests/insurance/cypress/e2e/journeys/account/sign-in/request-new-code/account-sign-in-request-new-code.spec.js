@@ -13,7 +13,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Account - Sign in - Request new code page - I want to enter the new security code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
+context('Insurance - Account - Sign in - Request new code page - I want to enter the new access code sent to my email by UK Export Finance, So that I can sign in into my UKEF digital service account', () => {
   const url = `${baseUrl}${REQUEST_NEW_CODE}`;
   before(() => {
     cy.deleteAccount();
@@ -41,7 +41,7 @@ context('Insurance - Account - Sign in - Request new code page - I want to enter
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: REQUEST_NEW_CODE,
       backLink: ENTER_CODE,
-      submitButtonCopy: BUTTONS.SEND_NEW_SECURITY_CODE,
+      submitButtonCopy: BUTTONS.SEND_NEW_ACCESS_CODE,
       assertAuthenticatedHeader: false,
     });
   });

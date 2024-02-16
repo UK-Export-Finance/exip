@@ -13,8 +13,8 @@ const {
 
 /**
  * isValidOTP
- * Check if the provided OTP/security code is valid
- * @param {Number} OTP/security code
+ * Check if the provided OTP/access code is valid
+ * @param {Number} OTP/access code
  * @param {String} OTP salt
  * @param {String} OTP hash
  * @returns {Boolean}
