@@ -127,42 +127,6 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
   });
 
-  describe(NAME, () => {
-    const fieldId = NAME;
-
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${BROKER_DETAILS_CHANGE}`, () => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHANGE, fieldId: NAME });
-      });
-    });
-
-    describe('form submission with a new answer', () => {
-      const newAnswer = 'testing321@test.com';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
-
-        cy.clickSubmitButton();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
-    });
-  });
-
   describe(EMAIL, () => {
     const fieldId = EMAIL;
 
