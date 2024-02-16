@@ -28,8 +28,12 @@
 
         <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
 
+        {% set addressHtml %}
+          <span data-cy="inset-text-html">{{ application.broker[FIELD_ID] | safe }}</span>
+        {% endset %}
+
         {{ govukInsetText({
-          text: address,
+          html: addressHtml,
           attributes: {
             'data-cy': 'inset-text'
           }

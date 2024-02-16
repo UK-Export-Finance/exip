@@ -89,7 +89,7 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
     it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeBrokerDetailsForm();
+      cy.completeBrokerDetailsForm({});
 
       cy.clickSaveAndBackButton();
 

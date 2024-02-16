@@ -120,7 +120,7 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
     });
 
     it(`should redirect to ${BROKER_CONFIRM_ADDRESS_ROOT} page`, () => {
-      cy.completeAndSubmitBrokerDetailsForm();
+      cy.completeAndSubmitBrokerDetailsForm({});
 
       cy.assertUrl(brokerConfirmAddressUrl);
     });

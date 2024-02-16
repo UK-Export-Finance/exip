@@ -1,6 +1,7 @@
 import mapTextareaFields from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
+import replaceNewLineWithLineBreak from '../../replace-new-line-with-line-break';
 import { mockApplication } from '../../../test-mocks';
 
 const {
@@ -11,7 +12,10 @@ const {
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
   },
-  POLICY: { CREDIT_PERIOD_WITH_BUYER },
+  POLICY: {
+    BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
+    CREDIT_PERIOD_WITH_BUYER,
+  },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { ADDRESS },
     CONNECTION_WITH_BUYER_DESCRIPTION,
@@ -19,7 +23,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { business, buyer, company, exportContract, policy } = mockApplication;
+const { broker, business, buyer, company, exportContract, policy } = mockApplication;
 
 describe('server/helpers/mappings/map-textarea-fields', () => {
   it('should return textarea fields with replaceCharacterCodesWithCharacters function', () => {
@@ -27,6 +31,10 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
 
     const expected = {
       ...mockApplication,
+      broker: {
+        ...broker,
+        [BROKER_ADDRESS]: replaceNewLineWithLineBreak(broker[BROKER_ADDRESS]),
+      },
       business: {
         ...business,
         [GOODS_OR_SERVICES]: replaceCharacterCodesWithCharacters(business[GOODS_OR_SERVICES]),

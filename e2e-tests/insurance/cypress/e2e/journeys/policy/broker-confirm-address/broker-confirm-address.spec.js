@@ -46,7 +46,7 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
-      cy.completeAndSubmitBrokerDetailsForm();
+      cy.completeAndSubmitBrokerDetailsForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
       lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
