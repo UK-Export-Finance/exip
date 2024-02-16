@@ -952,7 +952,8 @@ CREATE TABLE `NominatedLossPayee` (
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isAppointed` tinyint(1) DEFAULT NULL,
   `name` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `locatedInUk` tinyint(1) DEFAULT NULL,
+  `isLocatedInUk` tinyint(1) DEFAULT NULL,
+  `isLocatedInternationally` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `NominatedLossPayee_application_idx` (`application`),
   CONSTRAINT `NominatedLossPayee_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE

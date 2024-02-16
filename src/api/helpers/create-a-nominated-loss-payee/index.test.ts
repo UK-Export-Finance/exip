@@ -35,7 +35,8 @@ describe('helpers/create-a-nominated-loss-payee', () => {
     expect(nominatedLossPayee.applicationId).toEqual(application.id);
     expect(nominatedLossPayee.isAppointed).toEqual(null);
     expect(nominatedLossPayee.name).toEqual('');
-    expect(nominatedLossPayee.locatedInUk).toEqual(null);
+    expect(nominatedLossPayee.isLocatedInUk).toEqual(null);
+    expect(nominatedLossPayee.isLocatedInternationally).toEqual(null);
   });
 
   describe('when an invalid application ID is passed', () => {

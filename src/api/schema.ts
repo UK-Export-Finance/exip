@@ -299,7 +299,8 @@ export const lists = {
       financialUk: relationship({ ref: 'LossPayeeFinancialUk.lossPayee' }),
       financialInternational: relationship({ ref: 'LossPayeeFinancialInternational.lossPayee' }),
       isAppointed: nullableCheckbox(),
-      locatedInUk: nullableCheckbox(),
+      isLocatedInUk: nullableCheckbox(),
+      isLocatedInternationally: nullableCheckbox(),
       name: text({
         db: { nativeType: 'VarChar(100)' },
       }),

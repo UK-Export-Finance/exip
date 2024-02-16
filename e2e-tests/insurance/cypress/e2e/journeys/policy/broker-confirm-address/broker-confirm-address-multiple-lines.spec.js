@@ -1,6 +1,5 @@
 import { insetTextHtml } from '../../../../../../pages/shared';
 import {
-  FIELD_VALUES,
   FULL_ADDRESS_MULTI_LINE_STRING,
   FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
 } from '../../../../../../constants';
@@ -29,7 +28,7 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });

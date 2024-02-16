@@ -82,7 +82,8 @@ export interface ApplicationNominatedLossPayee extends Relationship {
   applicationId?: string;
   isAppointed?: boolean;
   name?: string;
-  locatedInUk?: boolean;
+  isLocatedInUk?: boolean;
+  isLocatedInternationally?: boolean;
 }
 
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
