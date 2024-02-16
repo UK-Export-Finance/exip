@@ -104,7 +104,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.startInsurancePolicySection({});
 
       // complete the first form - single contract policy
-      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitPolicyTypeForm({ policyType });
 
       // complete and submit the next 2 forms
       cy.completeAndSubmitSingleContractPolicyForm({});
@@ -135,7 +135,7 @@ context('Insurance - Dashboard - populated application', () => {
       cy.startInsurancePolicySection({});
 
       // complete the first form - single contract policy
-      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitPolicyTypeForm({ policyType });
 
       // complete and submit the next 2 forms
       cy.completeAndSubmitMultipleContractPolicyForm({});
