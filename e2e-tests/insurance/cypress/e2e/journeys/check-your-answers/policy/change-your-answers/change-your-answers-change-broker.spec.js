@@ -76,7 +76,7 @@ context('Insurance - Check your answers - Policy - Broker - Summary list', () =>
   describe(NAME, () => {
     const fieldId = NAME;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+    const fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
