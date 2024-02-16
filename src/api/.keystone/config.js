@@ -364,6 +364,7 @@ var DEFAULT_RESOLVERS = [
   "updateBuyerTradingHistory",
   "updateCompany",
   "updateDeclaration",
+  "updateNominatedLossPayee",
   "updateJointlyInsuredParty",
   "updatePolicy",
   "updatePolicyContact",

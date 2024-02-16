@@ -295,6 +295,9 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: "The broker's address cannot be more than 1000 characters",
         },
       },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
+        IS_EMPTY: 'Select if you are appointing a loss payee',
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {

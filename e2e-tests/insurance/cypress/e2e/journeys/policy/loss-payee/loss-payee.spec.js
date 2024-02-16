@@ -1,7 +1,12 @@
 import partials from '../../../../../../partials';
-import { noRadio, yesRadio } from '../../../../../../pages/shared';
+import {
+  field as fieldSelector,
+  noRadio,
+  noRadioInput,
+  yesRadio,
+} from '../../../../../../pages/shared';
 import { lossPayeePage } from '../../../../../../pages/insurance/policy';
-import { PAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -18,11 +23,19 @@ const {
   POLICY: {
     BROKER_ROOT,
     LOSS_PAYEE_ROOT,
+    LOSS_PAYEE_DETAILS_ROOT,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE: FIELD_STRINGS } = FIELDS;
+
+const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
+
+const ERROR_ASSERTIONS = {
+  numberOfExpectedErrors: 1,
+  errorIndex: 0,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -30,6 +43,7 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
+  let lossPayeeDetailsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -48,6 +62,7 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -113,12 +128,55 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
-      cy.clickSubmitButton();
+    describe('when submitting an empty form', () => {
+      it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        cy.navigateToUrl(url);
 
-      cy.assertUrl(checkYourAnswersUrl);
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
+        const radioField = {
+          ...fieldSelector(FIELD_ID),
+          input: noRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
+      });
+    });
+
+    describe(`when selecting no for ${FIELD_ID}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: false });
+
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
+      });
+    });
+
+    describe(`when selecting yes for ${FIELD_ID}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_DETAILS_ROOT} page`, () => {
+        cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+
+        cy.assertUrl(lossPayeeDetailsUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+        });
+      });
     });
   });
 });
