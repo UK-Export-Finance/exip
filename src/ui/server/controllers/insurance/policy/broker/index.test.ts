@@ -17,7 +17,7 @@ const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, BROKER_DETAILS_ROOT },
+  POLICY: { BROKER_SAVE_AND_BACK, LOSS_PAYEE_ROOT, BROKER_DETAILS_ROOT },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -153,14 +153,14 @@ describe('controllers/insurance/policy/broker', () => {
 
     describe('when there are no validation errors', () => {
       describe('when the answer is false', () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${LOSS_PAYEE_ROOT}`, async () => {
           req.body = {
             [FIELD_ID]: 'false',
           };
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

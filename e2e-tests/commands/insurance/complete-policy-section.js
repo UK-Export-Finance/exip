@@ -55,6 +55,8 @@ const completePolicySection = ({
     cy.clickSubmitButton();
   }
 
+  cy.completeAndSubmitLossPayeeForm();
+
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();
   }
