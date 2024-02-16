@@ -107,6 +107,25 @@ export const get = async (req: Request, res: Response) => {
 
     const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
 
+    let isChange;
+    let isCheckAndChange;
+
+    /**
+     * If is a change route
+     * set isChange to true
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      isChange = true;
+    }
+
+    /**
+     * If is a check-and-change route
+     * set isCheckAndChange to true
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      isCheckAndChange = true;
+    }
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
@@ -116,6 +135,8 @@ export const get = async (req: Request, res: Response) => {
       ...generatedPageVariables,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      isChange,
+      isCheckAndChange,
     });
   } catch (err) {
     console.error('Error getting trading history with the buyer %O', err);

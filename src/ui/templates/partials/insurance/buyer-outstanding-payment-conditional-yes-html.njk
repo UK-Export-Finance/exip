@@ -1,5 +1,19 @@
 {% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
 
+{#
+  sets url for alternative currency link
+  if isChange - then adds /change to url
+  if isCheckAndChange - then adds /check-and-change to url
+  else sets it to PROVIDE_ALTERNATIVE_CURRENCY_URL
+#}
+{% if isChange === true %}
+  {% set alternativeCurrencyUrl = PROVIDE_ALTERNATIVE_CURRENCY_URL + "/change"%}
+{% elif isCheckAndChange === true %}
+  {% set alternativeCurrencyUrl = PROVIDE_ALTERNATIVE_CURRENCY_URL + "/check-and-change"%}
+{% else %}
+  {% set alternativeCurrencyUrl = PROVIDE_ALTERNATIVE_CURRENCY_URL%}
+{% endif %}
+
 <div class="govuk-grid-row">
   <span data-cy="{{FIELDS.TOTAL_OUTSTANDING_PAYMENTS.ID}}-heading" class="govuk-heading-m govuk-!-margin-bottom-4">{{ FIELDS.TOTAL_OUTSTANDING_PAYMENTS.HEADING }}</span>
 
@@ -22,6 +36,6 @@
   }) }}
 
   <p class-"govuk-body">
-    <a class="govuk-link" data-cy="provide-alternative-currency-link" href="{{ PROVIDE_ALTERNATIVE_CURRENCY_URL }}">{{ CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY }}</a>
+    <a class="govuk-link" data-cy="provide-alternative-currency-link" href="{{ alternativeCurrencyUrl }}">{{ CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY }}</a>
   </p>
 <div>

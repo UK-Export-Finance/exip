@@ -151,9 +151,57 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         userName: getUserNameFromSession(req.session.user),
         ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
         application: mapApplicationToFormFields(mockApplication),
+        isChange: undefined,
+        isCheckAndChange: undefined,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+    });
+
+    describe("when the url's last substring is `check`", () => {
+      it('should render template with isChange set to true', async () => {
+        req.originalUrl = TRADING_HISTORY_CHANGE;
+
+        await get(req, res);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
+          }),
+          userName: getUserNameFromSession(req.session.user),
+          ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
+          application: mapApplicationToFormFields(mockApplication),
+          isChange: true,
+          isCheckAndChange: undefined,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe("when the url's last substring is `check-and-change`", () => {
+      it('should render template with isCheckAndChange set to true', async () => {
+        req.originalUrl = TRADING_HISTORY_CHECK_AND_CHANGE;
+
+        await get(req, res);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
+          }),
+          userName: getUserNameFromSession(req.session.user),
+          ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
+          application: mapApplicationToFormFields(mockApplication),
+          isChange: undefined,
+          isCheckAndChange: true,
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
     });
 
     describe('when there is no application', () => {
