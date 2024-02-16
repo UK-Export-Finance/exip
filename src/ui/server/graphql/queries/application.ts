@@ -39,6 +39,7 @@ const applicationQuery = gql`
           validExporterLocation
         }
         nominatedLossPayee {
+          id
           isAppointed
           isLocatedInUk
           isLocatedInternationally

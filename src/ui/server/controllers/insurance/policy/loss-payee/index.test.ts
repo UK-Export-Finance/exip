@@ -1,11 +1,14 @@
-import { FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
-import { PAGES } from '../../../../content-strings';
+import { FIELD_ID, ERROR_MESSAGE, PAGE_CONTENT_STRINGS, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
+import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/nominated-loss-payee';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -16,7 +19,7 @@ const {
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -40,6 +43,14 @@ describe('controllers/insurance/policy/loss-payee', () => {
       const expected = IS_APPOINTED;
 
       expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
+  describe('ERROR_MESSAGE', () => {
+    it('should have the correct error message', () => {
+      const expected = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
+
+      expect(ERROR_MESSAGE).toEqual(expected);
     });
   });
 
@@ -89,6 +100,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
           HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
+        applicationAnswer: mockApplication.nominatedLossPayee[IS_APPOINTED],
         FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       });
@@ -108,11 +120,76 @@ describe('controllers/insurance/policy/loss-payee', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      post(req, res);
+    const validBody = {
+      [FIELD_ID]: 'true',
+    };
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      expect(res.redirect).toHaveBeenCalledWith(expected);
+    mapAndSave.nominatedLossPayee = jest.fn(() => Promise.resolve(true));
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors and submitted values', async () => {
+        req.body = {};
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...singleInputPageVariables({
+            ...PAGE_VARIABLES,
+            BACK_LINK: req.headers.referer,
+            HTML_FLAGS,
+          }),
+          userName: getUserNameFromSession(req.session.user),
+          FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+          submittedValues: payload,
+          validationErrors,
+        });
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      describe('when the answer is false', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the answer is true', () => {
+        it(`should redirect to ${LOSS_PAYEE_DETAILS_ROOT}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledWith(payload, mockApplication);
+      });
     });
 
     describe('when there is no application', () => {
@@ -120,10 +197,46 @@ describe('controllers/insurance/policy/loss-payee', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.nominatedLossPayee call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.nominatedLossPayee = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.nominatedLossPayee = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

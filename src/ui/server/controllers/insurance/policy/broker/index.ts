@@ -83,7 +83,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * posts broker page
- * runs validation and either renders template with errors or redirects to next page
+ * Run validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page

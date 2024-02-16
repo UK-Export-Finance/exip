@@ -24,6 +24,8 @@ const {
     TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK,
     CHECK_YOUR_ANSWERS,
     ALTERNATIVE_CURRENCY,
+    ALTERNATIVE_CURRENCY_CHANGE,
+    ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
     BUYER_FINANCIAL_INFORMATION,
     CREDIT_INSURANCE_COVER,
   },
@@ -98,6 +100,81 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
       };
 
       expect(result).toEqual(expected);
+    });
+
+    describe('when isChange is provided as true', () => {
+      it(`should have correct properties with "PROVIDE_ALTERNATIVE_CURRENCY_URL" set to ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
+        const isChange = true;
+
+        const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue, isChange);
+
+        const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
+
+        const expected = {
+          FIELDS: {
+            OUTSTANDING_PAYMENTS: {
+              ID: OUTSTANDING_PAYMENTS,
+              ...FIELDS[OUTSTANDING_PAYMENTS],
+            },
+            FAILED_PAYMENTS: {
+              ID: FAILED_PAYMENTS,
+              ...FIELDS[FAILED_PAYMENTS],
+            },
+            TOTAL_OUTSTANDING_PAYMENTS: {
+              ID: TOTAL_OUTSTANDING_PAYMENTS,
+              ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
+            },
+            TOTAL_AMOUNT_OVERDUE: {
+              ID: TOTAL_AMOUNT_OVERDUE,
+              ...FIELDS[TOTAL_AMOUNT_OVERDUE],
+            },
+          },
+          PAGE_CONTENT_STRINGS,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
+          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`,
+          CURRENCY_PREFIX_SYMBOL: currency.symbol,
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isCheckAndChange is provided as true', () => {
+      it(`should have correct properties with "PROVIDE_ALTERNATIVE_CURRENCY_URL" set to ${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
+        const isChange = undefined;
+        const isCheckAndChange = true;
+
+        const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
+
+        const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
+
+        const expected = {
+          FIELDS: {
+            OUTSTANDING_PAYMENTS: {
+              ID: OUTSTANDING_PAYMENTS,
+              ...FIELDS[OUTSTANDING_PAYMENTS],
+            },
+            FAILED_PAYMENTS: {
+              ID: FAILED_PAYMENTS,
+              ...FIELDS[FAILED_PAYMENTS],
+            },
+            TOTAL_OUTSTANDING_PAYMENTS: {
+              ID: TOTAL_OUTSTANDING_PAYMENTS,
+              ...FIELDS[TOTAL_OUTSTANDING_PAYMENTS],
+            },
+            TOTAL_AMOUNT_OVERDUE: {
+              ID: TOTAL_AMOUNT_OVERDUE,
+              ...FIELDS[TOTAL_AMOUNT_OVERDUE],
+            },
+          },
+          PAGE_CONTENT_STRINGS,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
+          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
+          CURRENCY_PREFIX_SYMBOL: currency.symbol,
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 

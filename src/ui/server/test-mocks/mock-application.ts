@@ -10,6 +10,7 @@ import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
+import mockNominatedLossPayee from './mock-nominated-loss-payee';
 import { GBP, EUR } from '../constants/supported-currencies';
 
 dotenv.config();
@@ -138,6 +139,7 @@ const mockApplication = {
   },
   status: APPLICATION.STATUS.IN_PROGRESS,
   owner: mockOwner,
+  nominatedLossPayee: mockNominatedLossPayee,
   policy: mockSinglePolicy,
   policyContact: mockContact,
   exportContract: mockExportContract,

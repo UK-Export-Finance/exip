@@ -41,11 +41,11 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      // cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
-      // url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 
-      // cy.assertUrl(url);
+      cy.assertUrl(url);
     });
   });
 
@@ -57,18 +57,18 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
     cy.deleteApplication(referenceNumber);
   });
 
-  // it('renders core page elements', () => {
-  //   cy.corePageChecks({
-  //     pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-  //     currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`,
-  //     backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`,
-  //   });
-  // });
+  it('renders core page elements', () => {
+    cy.corePageChecks({
+      pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`,
+      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`,
+    });
+  });
 
   describe('page tests', () => {
     beforeEach(() => {
-      // cy.navigateToUrl(url);
-      cy.navigateToUrl(`${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`);
+      cy.navigateToUrl(url);
+      // cy.navigateToUrl(`${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`);
     });
 
     it('renders a heading caption', () => {

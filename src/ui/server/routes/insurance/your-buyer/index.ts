@@ -65,6 +65,10 @@ yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.TRADING_HISTORY_CHECK_AND_CH
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, getAlternativeCurrency);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY}`, postAlternativeCurrency);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHANGE}`, getAlternativeCurrency);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHANGE}`, postAlternativeCurrency);
+yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, getAlternativeCurrency);
+yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, postAlternativeCurrency);
 
 yourBuyerRouter.get(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, getCreditInsuranceCover);
 yourBuyerRouter.post(`/:referenceNumber${YOUR_BUYER.CREDIT_INSURANCE_COVER}`, postCreditInsuranceCover);

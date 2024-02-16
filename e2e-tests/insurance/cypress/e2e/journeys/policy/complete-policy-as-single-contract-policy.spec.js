@@ -23,7 +23,7 @@ context('Insurance - Policy - Complete the entire section as a single contract p
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({});
-      cy.completeAndSubmitLossPayeeForm();
+      cy.completeAndSubmitLossPayeeForm({});
 
       // go back to the all sections page
       cy.clickSaveAndBackButton();
