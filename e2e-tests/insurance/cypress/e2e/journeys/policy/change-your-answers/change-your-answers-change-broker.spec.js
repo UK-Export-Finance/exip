@@ -218,7 +218,6 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         summaryList.field(fieldId).changeLink().click();
 
-        // brokerPage[fieldId].cy.clickNoRadioInput();
         cy.clickNoRadioInput();
 
         cy.clickSubmitButton();
