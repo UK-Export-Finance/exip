@@ -10,8 +10,8 @@ const {
  * Complete and submit the "sign in - enter code" form
  * @param {String} Valid OTP
  */
-const completeAndSubmitEnterCodeAccountForm = (securityCode) => {
-  cy.keyboardInput(field(ACCESS_CODE).input(), securityCode);
+const completeAndSubmitEnterCodeAccountForm = (accessCode) => {
+  cy.keyboardInput(field(ACCESS_CODE).input(), accessCode);
 
   cy.clickSubmitButton();
 };

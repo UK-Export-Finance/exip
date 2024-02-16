@@ -42,8 +42,8 @@ context('Insurance - Name fields - Header and page fields should render special 
       cy.completeAndSubmitSignInAccountForm({});
 
       // get the OTP access code
-      cy.accountAddAndGetOTP(mockAccount.emailAddress).then((securityCode) => {
-        cy.keyboardInput(field(ACCESS_CODE).input(), securityCode);
+      cy.accountAddAndGetOTP(mockAccount.emailAddress).then((accessCode) => {
+        cy.keyboardInput(field(ACCESS_CODE).input(), accessCode);
 
         // submit the OTP access code
         cy.clickSubmitButton();
