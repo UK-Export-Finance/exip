@@ -13,7 +13,7 @@ const {
 
 /**
  * verifyAccountSignInCode
- * Check if a OTP/security code is valid and if so, wipe the retry entries and generate and return a JWT
+ * Check if a OTP/access code is valid and if so, wipe the retry entries and generate and return a JWT
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AccountSignIn mutation
  * @param {Object} KeystoneJS context API

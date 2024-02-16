@@ -3,7 +3,7 @@ import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { field } from '../../../pages/shared';
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -31,11 +31,11 @@ const signInAndAssertAllSectionsUrl = ({
 
   cy.completeAndSubmitSignInAccountForm({ emailAddress });
 
-  // get the OTP security code
-  cy.accountAddAndGetOTP(emailAddress).then((securityCode) => {
-    cy.keyboardInput(field(SECURITY_CODE).input(), securityCode);
+  // get the OTP access code
+  cy.accountAddAndGetOTP(emailAddress).then((accessCode) => {
+    cy.keyboardInput(field(ACCESS_CODE).input(), accessCode);
 
-    // submit the OTP security code
+    // submit the OTP access code
     cy.clickSubmitButton();
 
     if (referenceNumber) {

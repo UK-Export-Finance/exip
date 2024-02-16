@@ -16,7 +16,7 @@ export const BUTTONS = {
   SAVE_CHANGES: 'Save changes',
   SAVE_AND_BACK: 'Save and back to all sections',
   SEARCH: 'Search',
-  SEND_NEW_SECURITY_CODE: 'Send new security code',
+  SEND_NEW_ACCESS_CODE: 'Send new access code',
   SEND_NEW_LINK: 'Send me a new link',
   SEND_FEEDBACK: 'Send feedback',
   START_APPLICATION: 'Start an application',

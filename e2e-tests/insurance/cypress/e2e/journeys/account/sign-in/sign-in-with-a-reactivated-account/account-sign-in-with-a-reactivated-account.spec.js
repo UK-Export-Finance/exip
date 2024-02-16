@@ -52,20 +52,20 @@ context('Insurance - Account - Sign in - after account has been blocked and reac
       });
     });
 
-    describe('when submitting the sign in form and entering a valid security code', () => {
-      let validSecurityCode;
+    describe('when submitting the sign in form and entering a valid access code', () => {
+      let validAccessCode;
 
       before(() => {
         // create and get an OTP for the exporter's account
-        cy.accountAddAndGetOTP().then((securityCode) => {
-          validSecurityCode = securityCode;
+        cy.accountAddAndGetOTP().then((accessCode) => {
+          validAccessCode = accessCode;
         });
       });
 
       it(`should redirect to ${DASHBOARD}`, () => {
         cy.navigateToUrl(enterCodeUrl);
 
-        cy.completeAndSubmitEnterCodeAccountForm(validSecurityCode);
+        cy.completeAndSubmitEnterCodeAccountForm(validAccessCode);
 
         cy.assertUrl(dashboardUrl);
       });

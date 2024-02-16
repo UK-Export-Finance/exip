@@ -5,7 +5,7 @@ import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { SanitiseValueObjParams } from '../../../../types';
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
   COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_SIC },
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { PHONE_NUMBER },
@@ -34,7 +34,7 @@ const {
  * @returns {Array} Field IDs
  */
 export const STRING_NUMBER_FIELDS = [
-  SECURITY_CODE,
+  ACCESS_CODE,
   DESCRIPTION,
   COMPANY_NUMBER,
   COMPANY_SIC,

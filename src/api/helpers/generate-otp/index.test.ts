@@ -12,7 +12,7 @@ const {
 } = ENCRYPTION;
 
 describe('api/helpers/generate-otp', () => {
-  it('should return a security code', () => {
+  it('should return a access code', () => {
     const result = generate.otp();
 
     expect(result.securityCode.length).toEqual(OTP.DIGITS);

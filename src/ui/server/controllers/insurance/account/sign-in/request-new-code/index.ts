@@ -20,10 +20,10 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.REQUEST_NEW_
 
 /**
  * get
- * Render the Request a new security code page
+ * Render the Request a new access code page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Request a new security code page
+ * @returns {Express.Response.render} Request a new access code page
  */
 export const get = (req: Request, res: Response) => {
   if (req.session.user?.id) {

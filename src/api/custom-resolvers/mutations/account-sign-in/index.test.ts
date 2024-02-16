@@ -20,7 +20,7 @@ describe('custom-resolvers/account-sign-in', () => {
 
   generate.otp = () => mockOTP;
 
-  const securityCodeEmailSpy = jest.fn();
+  const accessCodeEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -197,14 +197,14 @@ describe('custom-resolvers/account-sign-in', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.securityCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
         await accountSignIn({}, variables, context);
       } catch (err) {
-        expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
+        expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(`Validating password or sending email for account sign in (accountSignIn mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);

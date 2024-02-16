@@ -1,7 +1,7 @@
 import { FIELD_IDS } from '../../../../constants';
 
 const { ACCOUNT } = FIELD_IDS.INSURANCE;
-const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, SECURITY_CODE } = ACCOUNT;
+const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD, ACCESS_CODE } = ACCOUNT;
 
 const PASSWORD_HINT = {
   INTRO: 'Your password must contain at least 14 characters and have:',
@@ -29,8 +29,8 @@ export const ACCOUNT_FIELDS = {
       HIDE: 'Hide',
     },
   },
-  [SECURITY_CODE]: {
-    LABEL: 'Security code',
+  [ACCESS_CODE]: {
+    LABEL: 'Access code',
   },
   CREATE: {
     YOUR_DETAILS: {

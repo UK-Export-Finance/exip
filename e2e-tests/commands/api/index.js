@@ -329,14 +329,14 @@ const deleteAnAccount = async (email) => {
 /**
  * addAndGetOTP
  * Create and get an OTP for an account directly from the API,
- * so that we can assert enter a valid security code and continue the journey.
+ * so that we can assert enter a valid access code and continue the journey.
  * This is to ensure that we are testing a real world scenario.
  *
- * The alternative approach is to either intercept the UI requests and fake the security code validation,
+ * The alternative approach is to either intercept the UI requests and fake the access code validation,
  * or have email inbox testing capabilities which can be risky/flaky.
- * This approach practically mimics "get my security code from my email inbox".
+ * This approach practically mimics "get my access code from my email inbox".
  * @param {String} Account email address
- * @returns {Object} security code
+ * @returns {Object} access code
  */
 const addAndGetOTP = async (emailAddress) => {
   let email = emailAddress;

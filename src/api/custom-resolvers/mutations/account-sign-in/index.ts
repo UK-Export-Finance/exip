@@ -14,7 +14,7 @@ import { Account, AccountSignInVariables, AccountSignInResponse, Context } from 
  * 3) Get and validate email and password.
  * 4) If the provided credentials are valid:
  *   4.1) Generate an OTP, save in the database.
- *   4.2) Send the user an email with security code.
+ *   4.2) Send the user an email with access code.
  *
  * 5) If the provided credentials are invalid:
  *   5.1) Create a new retry entry for the account.
@@ -60,7 +60,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
      * 1) Check if the password matches what is encrypted in the database.
      * 2) If the password is valid:
      *   - If the account is unverified, but has a valid has/token, send verification email.
-     *   - If the account is verified, generate an OTP/security code and send via email.
+     *   - If the account is verified, generate an OTP/access code and send via email.
      * 3) Otherwise, we return a rejection because either:
      *   - The password is invalid.
      *   - The email was not sent.

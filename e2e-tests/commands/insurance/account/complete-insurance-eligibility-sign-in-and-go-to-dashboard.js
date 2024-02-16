@@ -11,8 +11,8 @@ const startUrl = `${baseUrl}${START}`;
  * 3) Create an account directly via the API
  * 4) Verify the account via "verify email" page (mimicking clicking email link)
  * 5) Complete and submit the "account sign in" form
- * 6) Add a new OTP/security code and get it directly from the API
- * 7) Complete and submit the "enter security code" form
+ * 6) Add a new OTP/access code and get it directly from the API
+ * 7) Complete and submit the "enter access code" form
  * 8) Check we are on the "all sections" application page.
  * @param {String} Account email address
  */

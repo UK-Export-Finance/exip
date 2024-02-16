@@ -17,7 +17,7 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -51,16 +51,16 @@ context('Insurance - Account - Manage - As an Exporter, I want the service to ha
     cy.saveSession();
   });
 
-  describe('after signing in with a valid security code and navigating to the `manage account` page', () => {
-    let validSecurityCode;
+  describe('after signing in with a valid access code and navigating to the `manage account` page', () => {
+    let validAccessCode;
 
     before(() => {
-      cy.accountAddAndGetOTP().then((securityCode) => {
-        validSecurityCode = securityCode;
+      cy.accountAddAndGetOTP().then((accessCode) => {
+        validAccessCode = accessCode;
 
         cy.navigateToUrl(enterCodeUrl);
 
-        cy.keyboardInput(field(SECURITY_CODE).input(), validSecurityCode);
+        cy.keyboardInput(field(ACCESS_CODE).input(), validAccessCode);
 
         cy.clickSubmitButton();
 

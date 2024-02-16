@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import { confirmEmailAddress } from './confirm-email-address';
-import { securityCodeEmail } from './security-code-email';
+import { accessCodeEmail } from './access-code-email';
 import { passwordResetLink } from './password-reset-link';
 import { reactivateAccountLink } from './reactivate-account-link';
 import application from './application';
@@ -11,7 +11,7 @@ dotenv.config();
 
 const sendEmail = {
   confirmEmailAddress,
-  securityCodeEmail,
+  accessCodeEmail,
   passwordResetLink,
   reactivateAccountLink,
   application,

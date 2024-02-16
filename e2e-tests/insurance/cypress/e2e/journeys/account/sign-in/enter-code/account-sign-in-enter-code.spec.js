@@ -15,10 +15,10 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { SECURITY_CODE },
+  ACCOUNT: { ACCESS_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const FIELD_STRINGS = ACCOUNT_FIELDS[SECURITY_CODE];
+const FIELD_STRINGS = ACCOUNT_FIELDS[ACCESS_CODE];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -61,8 +61,8 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
         cy.navigateToUrl(url);
       });
 
-      it('renders `security code` label and input', () => {
-        const fieldId = SECURITY_CODE;
+      it('renders `access code` label and input', () => {
+        const fieldId = ACCESS_CODE;
         const field = fieldSelector(fieldId);
 
         cy.checkText(field.label(), FIELD_STRINGS.LABEL);
