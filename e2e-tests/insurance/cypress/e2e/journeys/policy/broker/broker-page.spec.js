@@ -136,52 +136,56 @@ context('Insurance - Policy - Broker page - As an Exporter I want to confirm if 
     it('should display save and go back button', () => {
       cy.assertSaveAndBackButton();
     });
+  });
 
-    describe('form submission', () => {
-      describe('when submitting an empty form', () => {
-        it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    describe('when submitting an empty form', () => {
+      it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        cy.navigateToUrl(url);
+
+        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
+
+        const radioField = {
+          ...fieldSelector(FIELD_ID),
+          input: noRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
+      });
+    });
+
+    describe(`when selecting no for ${FIELD_ID}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_ROOT} page`, () => {
+        cy.completeAndSubmitBrokerForm({ usingBroker: false });
+
+        cy.assertUrl(lossPayeeUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
           cy.navigateToUrl(url);
 
-          const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
-          const radioField = {
-            ...fieldSelector(FIELD_ID),
-            input: noRadioInput,
-          };
-
-          cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
+          cy.assertNoRadioOptionIsChecked();
         });
       });
+    });
 
-      describe(`when selecting no for ${FIELD_ID}`, () => {
-        it(`should redirect to ${LOSS_PAYEE_ROOT} page`, () => {
-          cy.completeAndSubmitBrokerForm({ usingBroker: false });
+    describe(`when selecting yes for ${FIELD_ID}`, () => {
+      it(`should redirect to ${BROKER_DETAILS_ROOT} page`, () => {
+        cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
-          cy.assertUrl(lossPayeeUrl);
-        });
-
-        describe('when going back to the page', () => {
-          it('should have the submitted value', () => {
-            cy.navigateToUrl(url);
-
-            cy.assertNoRadioOptionIsChecked();
-          });
-        });
+        cy.assertUrl(brokerDetailsUrl);
       });
 
-      describe(`when selecting yes for ${FIELD_ID}`, () => {
-        it(`should redirect to ${BROKER_DETAILS_ROOT} page`, () => {
-          cy.completeAndSubmitBrokerForm({ usingBroker: true });
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
 
-          cy.assertUrl(brokerDetailsUrl);
-        });
-
-        describe('when going back to the page', () => {
-          it('should have the submitted value', () => {
-            cy.navigateToUrl(url);
-
-            cy.assertYesRadioOptionIsChecked();
-          });
+          cy.assertYesRadioOptionIsChecked();
         });
       });
     });

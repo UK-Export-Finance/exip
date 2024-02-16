@@ -1,10 +1,13 @@
-import { PAGES } from '../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import mapAndSave from '../map-and-save/nominated-loss-payee';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -14,11 +17,13 @@ const {
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 export const FIELD_ID = IS_APPOINTED;
+
+export const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE;
 
@@ -63,6 +68,7 @@ export const get = (req: Request, res: Response) => {
       HTML_FLAGS,
     }),
     userName: getUserNameFromSession(req.session.user),
+    applicationAnswer: application.nominatedLossPayee[IS_APPOINTED],
     FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`,
   });
@@ -70,12 +76,12 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Redirect to the next part of the flow.
+ * Run validation and either renders template with errors or redirects to next page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -84,5 +90,41 @@ export const post = (req: Request, res: Response) => {
 
   const { referenceNumber } = application;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...singleInputPageVariables({
+        ...PAGE_VARIABLES,
+        BACK_LINK: req.headers.referer,
+        HTML_FLAGS,
+      }),
+      userName: getUserNameFromSession(req.session.user),
+      FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
+      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`,
+      submittedValues: payload,
+      validationErrors,
+    });
+  }
+
+  try {
+    const saveResponse = await mapAndSave.nominatedLossPayee(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const answer = payload[FIELD_ID];
+
+    if (answer === 'true') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error updating application - policy - nominated loss payee %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

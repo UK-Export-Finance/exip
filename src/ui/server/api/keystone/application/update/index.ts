@@ -8,6 +8,7 @@ import declarations from '../declarations';
 import companyDifferentTradingAddress from './companyDifferentTradingAddress';
 import exportContract from './exportContract';
 import jointlyInsuredParty from './jointlyInsuredParty';
+import nominatedLossPayee from './nominatedLossPayee';
 import policy from './policy';
 import policyContact from './policyContact';
 import sectionReview from './sectionReview';
@@ -28,6 +29,7 @@ const update = {
   companyDifferentTradingAddress,
   exportContract,
   jointlyInsuredParty,
+  nominatedLossPayee,
   policy,
   policyContact,
   sectionReview,

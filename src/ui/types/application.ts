@@ -182,6 +182,11 @@ interface ApplicationJointlyInsuredParty {
   country?: string;
 }
 
+interface ApplicationNominatedLossPayee {
+  id: string;
+  isAppointed?: boolean;
+}
+
 interface ApplicationPolicy {
   id: string;
   policyType?: string;
@@ -206,6 +211,7 @@ interface Application extends ApplicationCore {
   business: ApplicationBusiness;
   broker: ApplicationBroker;
   buyer: ApplicationBuyer;
+  nominatedLossPayee: ApplicationNominatedLossPayee;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
   totalContractValueOverThreshold?: boolean;

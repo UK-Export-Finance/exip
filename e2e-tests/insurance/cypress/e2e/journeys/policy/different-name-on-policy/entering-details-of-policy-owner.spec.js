@@ -70,7 +70,7 @@ context(`Insurance - Policy - Different name on Policy page - Entering name of p
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({});
-      cy.completeAndSubmitLossPayeeForm();
+      cy.completeAndSubmitLossPayeeForm({});
 
       summaryList.field(NAME).changeLink().click();
     });
