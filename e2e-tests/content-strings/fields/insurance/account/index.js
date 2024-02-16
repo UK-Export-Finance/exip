@@ -37,7 +37,7 @@ export const ACCOUNT_FIELDS = {
     },
   },
   [SECURITY_CODE]: {
-    LABEL: 'Security code',
+    LABEL: 'Access code',
   },
   CREATE: {
     YOUR_DETAILS: {
