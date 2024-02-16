@@ -11,13 +11,21 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBroker } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_SAVE_AND_BACK, LOSS_PAYEE_ROOT, BROKER_DETAILS_ROOT },
+  POLICY: {
+    BROKER_SAVE_AND_BACK,
+    LOSS_PAYEE_ROOT,
+    BROKER_CHECK_AND_CHANGE,
+    BROKER_DETAILS_ROOT,
+    BROKER_DETAILS_CHANGE,
+    BROKER_DETAILS_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -29,6 +37,8 @@ const {
   },
   ATTRIBUTES: { CLASSES },
 } = TEMPLATES;
+
+const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/broker', () => {
   let req: Request;
@@ -73,11 +83,11 @@ describe('controllers/insurance/policy/broker', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD_ID: USING_BROKER,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -106,7 +116,7 @@ describe('controllers/insurance/policy/broker', () => {
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.broker[USING_BROKER],
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
       });
     });
 
@@ -124,7 +134,13 @@ describe('controllers/insurance/policy/broker', () => {
   });
 
   describe('post', () => {
-    const validBody = mockBroker;
+    const bodyAnswerTrue = {
+      [FIELD_ID]: 'true',
+    };
+
+    const bodyAnswerFalse = {
+      [FIELD_ID]: 'false',
+    };
 
     mapAndSave.broker = jest.fn(() => Promise.resolve(true));
 
@@ -143,7 +159,7 @@ describe('controllers/insurance/policy/broker', () => {
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
           validationErrors,
@@ -154,13 +170,11 @@ describe('controllers/insurance/policy/broker', () => {
     describe('when there are no validation errors', () => {
       describe('when the answer is false', () => {
         it(`should redirect to ${LOSS_PAYEE_ROOT}`, async () => {
-          req.body = {
-            [FIELD_ID]: 'false',
-          };
+          req.body = bodyAnswerFalse;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -168,20 +182,18 @@ describe('controllers/insurance/policy/broker', () => {
 
       describe('when the answer is true', () => {
         it(`should redirect to ${BROKER_DETAILS_ROOT}`, async () => {
-          req.body = {
-            [FIELD_ID]: 'true',
-          };
+          req.body = bodyAnswerTrue;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_DETAILS_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       it('should call mapAndSave.broker once with data from constructPayload function', async () => {
-        req.body = validBody;
+        req.body = bodyAnswerFalse;
 
         await post(req, res);
 
@@ -192,17 +204,59 @@ describe('controllers/insurance/policy/broker', () => {
         expect(mapAndSave.broker).toHaveBeenCalledWith(payload, mockApplication);
       });
 
+      describe("when the url's last substring is `change`", () => {
+        describe(`when ${USING_BROKER} is true`, () => {
+          it(`should redirect to ${BROKER_DETAILS_CHANGE}`, async () => {
+            req.originalUrl = BROKER_DETAILS_CHANGE;
+            req.body = bodyAnswerTrue;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHANGE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+
+        describe(`when ${USING_BROKER} is false`, () => {
+          it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+            req.originalUrl = BROKER_DETAILS_CHANGE;
+            req.body = bodyAnswerFalse;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
+      });
+
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.body = validBody;
+        describe(`when ${USING_BROKER} is true`, () => {
+          it(`should redirect to ${BROKER_DETAILS_CHECK_AND_CHANGE}`, async () => {
+            req.body = bodyAnswerTrue;
+            req.originalUrl = BROKER_CHECK_AND_CHANGE;
 
-          req.originalUrl = INSURANCE_ROUTES.POLICY.BROKER_CHECK_AND_CHANGE;
+            await post(req, res);
 
-          await post(req, res);
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHECK_AND_CHANGE}`;
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
+        });
 
-          expect(res.redirect).toHaveBeenCalledWith(expected);
+        describe(`when ${USING_BROKER} is false`, () => {
+          it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+            req.originalUrl = INSURANCE_ROUTES.POLICY.BROKER_CHECK_AND_CHANGE;
+            req.body = bodyAnswerFalse;
+
+            await post(req, res);
+
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+            expect(res.redirect).toHaveBeenCalledWith(expected);
+          });
         });
       });
     });
@@ -222,7 +276,7 @@ describe('controllers/insurance/policy/broker', () => {
     describe('api error handling', () => {
       describe('mapAndSave.broker call', () => {
         beforeEach(() => {
-          req.body = validBody;
+          req.body = bodyAnswerFalse;
         });
 
         describe('when a true boolean is not returned', () => {

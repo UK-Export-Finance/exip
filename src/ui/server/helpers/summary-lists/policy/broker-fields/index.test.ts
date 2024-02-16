@@ -1,4 +1,4 @@
-import { generateBrokerFields } from '.';
+import { generateBrokerFields, optionalBrokerFields } from '.';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
@@ -13,64 +13,64 @@ const {
   POLICY: { BROKER: FORM_TITLE },
 } = FORM_TITLES;
 
-const { USING_BROKER } = POLICY_FIELD_IDS;
+const {
+  USING_BROKER,
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+} = POLICY_FIELD_IDS;
 
 const {
-  POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE },
+  POLICY: { BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 describe('server/helpers/summary-lists/policy/broker-fields', () => {
-  // TODO: EMS-2793 - re-enable
-  // describe('optionalBrokerFields', () => {
-  //   const { referenceNumber } = mockApplication;
-  //   const checkAndChange = false;
+  describe('optionalBrokerFields', () => {
+    const { referenceNumber } = mockApplication;
+    const checkAndChange = false;
 
-  // const mockAddress = mockBroker[FULL_ADDRESS];
+    describe(`${USING_BROKER} is Yes`, () => {
+      it('should return fields from the submitted data/answers', () => {
+        mockBroker[USING_BROKER] = true;
 
-  // describe(`${USING_BROKER} is Yes`, () => {
-  //   it('should return fields from the submitted data/answers', () => {
-  //     mockBroker[USING_BROKER] = true;
+        const result = optionalBrokerFields(mockBroker, referenceNumber, checkAndChange);
 
-  //     const result = optionalBrokerFields(mockBroker, referenceNumber, checkAndChange);
+        const expected = [
+          fieldGroupItem({
+            field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, NAME),
+            data: mockBroker,
+            href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          }),
+          fieldGroupItem(
+            {
+              field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, FULL_ADDRESS),
+              data: mockBroker,
+              href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
+              renderChangeLink: true,
+            },
+            mockBroker[FULL_ADDRESS],
+          ),
+          fieldGroupItem({
+            field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, EMAIL),
+            data: mockBroker,
+            href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          }),
+        ];
 
-  //     const expected = [
-  //       fieldGroupItem({
-  //         field: getFieldById(POLICY_FIELDS.BROKER, NAME),
-  //         data: mockBroker,
-  //         href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
-  //         renderChangeLink: true,
-  //       }),
-  //       fieldGroupItem(
-  //         {
-  //           field: getFieldById(POLICY_FIELDS.BROKER, ADDRESS_LINE_1),
-  //           data: mockBroker,
-  //           href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${ADDRESS_LINE_1}-label`, referenceNumber, checkAndChange),
-  //           renderChangeLink: true,
-  //         },
-  //         generateMultipleFieldHtml(mockAddress),
-  //       ),
-  //       fieldGroupItem({
-  //         field: getFieldById(POLICY_FIELDS.BROKER, EMAIL),
-  //         data: mockBroker,
-  //         href: generateChangeLink(BROKER_CHANGE, BROKER_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
-  //         renderChangeLink: true,
-  //       }),
-  //     ];
+        expect(result).toEqual(expected);
+      });
+    });
 
-  //     expect(result).toEqual(expected);
-  //   });
-  // });
+    describe(`${USING_BROKER} is false`, () => {
+      it('should return an empty array', () => {
+        mockBroker[USING_BROKER] = false;
 
-  //   describe(`${USING_BROKER} is false`, () => {
-  //     it('should return an empty array', () => {
-  //       mockBroker[USING_BROKER] = false;
+        const result = optionalBrokerFields(mockBroker, referenceNumber, checkAndChange);
 
-  //       const result = optionalBrokerFields(mockBroker, referenceNumber, checkAndChange);
-
-  //       expect(result).toEqual([]);
-  //     });
-  //   });
-  // });
+        expect(result).toEqual([]);
+      });
+    });
+  });
 
   describe('generateBrokerFields', () => {
     const { referenceNumber } = mockApplication;
@@ -91,7 +91,7 @@ describe('server/helpers/summary-lists/policy/broker-fields', () => {
           },
           mapYesNoField(mockBroker[USING_BROKER]),
         ),
-        // ...optionalBrokerFields(mockBroker, referenceNumber, checkAndChange),
+        ...optionalBrokerFields(mockBroker, referenceNumber, checkAndChange),
       ];
 
       const expected = {

@@ -14,8 +14,6 @@ const {
   NEED_PRE_CREDIT_PERIOD,
   CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
-  USING_BROKER,
-  BROKER_DETAILS,
 } = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
@@ -65,24 +63,5 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
 
   it(`should render a ${NAME} summary list row`, () => {
     checkSummaryList[NAME]({});
-  });
-
-  describe('`broker`', () => {
-    it(`should render a ${USING_BROKER} summary list row`, () => {
-      checkSummaryList[USING_BROKER]({ usingBroker: false });
-    });
-
-    // TODO: EMS-2793 - re-enable
-    it.skip(`should render a ${BROKER_DETAILS.NAME} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER_DETAILS.NAME]({});
-    });
-
-    it.skip(`should render a ${BROKER_DETAILS.FULL_ADDRESS} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER_DETAILS.FULL_ADDRESS]();
-    });
-
-    it.skip(`should render a ${BROKER_DETAILS.EMAIL} summary list row`, () => {
-      checkSummaryList.BROKER[BROKER_DETAILS.EMAIL]();
-    });
   });
 });
