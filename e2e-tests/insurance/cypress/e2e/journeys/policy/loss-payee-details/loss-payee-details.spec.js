@@ -70,7 +70,6 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
   describe('page tests', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-      // cy.navigateToUrl(`${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`);
     });
 
     it('renders a heading caption', () => {
