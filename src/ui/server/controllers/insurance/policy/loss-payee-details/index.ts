@@ -9,12 +9,7 @@ import { Request, Response } from '../../../../../types';
 
 const { NAME, LOCATION } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
-const {
-  INSURANCE_ROOT,
-  POLICY: { BROKER_DETAILS_SAVE_AND_BACK, BROKER_CONFIRM_ADDRESS_ROOT, CHECK_YOUR_ANSWERS },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
-  PROBLEM_WITH_SERVICE,
-} = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
 
@@ -57,7 +52,6 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  console.log('')
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
