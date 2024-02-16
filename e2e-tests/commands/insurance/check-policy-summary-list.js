@@ -215,7 +215,7 @@ const checkPolicySummaryList = ({
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
     [BROKER_DETAILS.FULL_ADDRESS]: () => {
-      const fieldId = BROKER_DETAILS.ADDRESS_LINE_1;
+      const fieldId = BROKER_DETAILS.FULL_ADDRESS;
 
       const expectedKey = FIELDS.BROKER_DETAILS[fieldId].SUMMARY.TITLE;
 

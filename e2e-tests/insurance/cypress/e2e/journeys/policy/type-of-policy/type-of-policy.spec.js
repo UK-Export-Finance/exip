@@ -2,7 +2,7 @@ import { field, headingCaption } from '../../../../../../pages/shared';
 import { insurance } from '../../../../../../pages';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import { APPLICATION, FIELD_IDS } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
@@ -152,7 +152,7 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
       });
 
       it(`should redirect to ${MULTIPLE_CONTRACT_POLICY}`, () => {
-        cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+        cy.completeAndSubmitPolicyTypeForm({ policyType: APPLICATION.POLICY_TYPE.MULTIPLE });
 
         const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

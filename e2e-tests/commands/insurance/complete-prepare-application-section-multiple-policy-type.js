@@ -1,6 +1,6 @@
-import { FIELD_VALUES } from '../../constants';
+import { APPLICATION } from '../../constants';
 
-const { POLICY_TYPE } = FIELD_VALUES;
+const { POLICY_TYPE } = APPLICATION;
 
 /**
  * completePrepareApplicationMultiplePolicyType

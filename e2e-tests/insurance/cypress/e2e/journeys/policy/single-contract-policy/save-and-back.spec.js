@@ -1,7 +1,6 @@
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { FIELD_VALUES } from '../../../../../../constants';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -34,7 +33,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 

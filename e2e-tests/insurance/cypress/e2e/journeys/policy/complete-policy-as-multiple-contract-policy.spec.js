@@ -20,7 +20,7 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
 
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitPolicyTypeForm({ policyType });
       cy.completeAndSubmitMultipleContractPolicyForm({});
       cy.completeAndSubmitExportValueForm({ policyType });
       cy.completeAndSubmitNameOnPolicyForm({});

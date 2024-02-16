@@ -37,7 +37,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitPolicyTypeForm({ policyType });
       cy.completeAndSubmitMultipleContractPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
