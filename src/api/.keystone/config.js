@@ -2890,7 +2890,7 @@ var accountChecks = async (context, account2, urlOrigin) => {
     }
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.securityCodeEmail(email, name, securityCode);
+    const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
     if (emailResponse?.success) {
       return {
         ...emailResponse,

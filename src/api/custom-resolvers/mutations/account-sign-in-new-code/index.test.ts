@@ -17,7 +17,7 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
   generate.otp = () => mockOTP;
 
-  let securityCodeEmailSpy = jest.fn();
+  let accessCodeEmailSpy = jest.fn();
 
   afterAll(() => {
     jest.resetAllMocks();
@@ -34,9 +34,9 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
     jest.resetAllMocks();
 
-    securityCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.securityCodeEmail = securityCodeEmailSpy;
+    sendEmail.accessCodeEmail = accessCodeEmailSpy;
 
     variables = {
       accountId: account.id,
@@ -54,13 +54,13 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
       expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
     });
 
-    test('it should call sendEmail.securityCodeEmail', () => {
+    test('it should call sendEmail.accessCodeEmail', () => {
       const { email } = account;
 
       const name = getFullNameString(account);
 
-      expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
+      expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
+      expect(accessCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
     });
 
     test('it should return the email response and accountId', () => {
@@ -88,14 +88,14 @@ describe('custom-resolvers/account-sign-in-new-code', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.securityCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
         await accountSignInSendNewCode({}, variables, context);
       } catch (err) {
-        expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
+        expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(`Generating and sending new sign in code for account (accountSignInSendNewCode mutation) ${mockSendEmailResponse}`);
         expect(err).toEqual(expected);

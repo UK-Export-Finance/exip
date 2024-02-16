@@ -79,7 +79,7 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
     // send "security code" email.
     const name = getFullNameString(account);
 
-    const emailResponse = await sendEmail.securityCodeEmail(email, name, securityCode);
+    const emailResponse = await sendEmail.accessCodeEmail(email, name, securityCode);
 
     if (emailResponse?.success) {
       return {

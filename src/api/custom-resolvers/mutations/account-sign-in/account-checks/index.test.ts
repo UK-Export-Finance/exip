@@ -23,7 +23,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
   generate.otp = () => mockOTP;
 
   let sendConfirmEmailAddressEmailSpy = jest.fn();
-  let securityCodeEmailSpy = jest.fn();
+  let accessCodeEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -51,8 +51,8 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
     jest.resetAllMocks();
 
-    securityCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-    sendEmail.securityCodeEmail = securityCodeEmailSpy;
+    accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+    sendEmail.accessCodeEmail = accessCodeEmailSpy;
 
     result = await accountChecks(context, account, mockUrlOrigin);
 
@@ -66,13 +66,13 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
     });
 
-    test('it should call sendEmail.securityCodeEmail', () => {
+    test('it should call sendEmail.accessCodeEmail', () => {
       const { email } = account;
 
       const name = getFullNameString(account);
 
-      expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
-      expect(securityCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
+      expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
+      expect(accessCodeEmailSpy).toHaveBeenCalledWith(email, name, mockOTP.securityCode);
     });
 
     test('it should return the email response and accountId', () => {
@@ -159,7 +159,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       });
 
       test('it should NOT call confirmEmailAddressEmail.send', async () => {
-        sendEmail.securityCodeEmail = securityCodeEmailSpy;
+        sendEmail.accessCodeEmail = accessCodeEmailSpy;
 
         expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(0);
       });
@@ -176,14 +176,14 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
   describe('error handling', () => {
     beforeEach(() => {
-      sendEmail.securityCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = jest.fn(() => Promise.reject(mockSendEmailResponse));
     });
 
     test('should throw an error', async () => {
       try {
         await accountChecks(context, account, mockUrlOrigin);
       } catch (err) {
-        expect(securityCodeEmailSpy).toHaveBeenCalledTimes(1);
+        expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(
           `Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${mockSendEmailResponse}`,
