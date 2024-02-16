@@ -52,7 +52,7 @@ context('Insurance - Policy - Broker page - As an Exporter I want to confirm if 
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
