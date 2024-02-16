@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 import formatCurrency from '../../../../../../helpers/format-currency';
-import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
+import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../../../../../fixtures/currencies';
 import partials from '../../../../../../partials';
 
 const {
@@ -55,7 +55,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`changing ${CURRENCY_CODE} to Euros`, () => {
+  describe(`changing ${CURRENCY_CODE} to ${SYMBOLS.EUR}`, () => {
     const fieldId = OUTSTANDING_PAYMENTS;
     const currency = EUR_CURRENCY_CODE;
 
@@ -85,14 +85,14 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
       });
 
-      it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+      it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE} including ${SYMBOLS.EUR}`, () => {
         const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
         const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
 
         cy.checkText(row.value(), expected);
       });
 
-      it(`should render the new answer for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+      it(`should render the new answer for ${TOTAL_OUTSTANDING_PAYMENTS} including ${SYMBOLS.EUR}`, () => {
         const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
         const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
 

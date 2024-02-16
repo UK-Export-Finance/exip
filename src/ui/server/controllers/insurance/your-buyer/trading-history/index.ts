@@ -19,7 +19,15 @@ import api from '../../../../api';
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK, CHECK_YOUR_ANSWERS, ALTERNATIVE_CURRENCY, BUYER_FINANCIAL_INFORMATION, CREDIT_INSURANCE_COVER },
+  YOUR_BUYER: {
+    TRADING_HISTORY_SAVE_AND_BACK: SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+    ALTERNATIVE_CURRENCY,
+    ALTERNATIVE_CURRENCY_CHANGE,
+    ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    BUYER_FINANCIAL_INFORMATION,
+    CREDIT_INSURANCE_COVER,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -54,8 +62,38 @@ export const HTML_FLAGS = {
   LEGEND_CLASS: `${LEGEND.S} ${FONT_WEIGHT.REGULAR}`,
 };
 
-export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
+/**
+ * pageVariables for trading-history page
+ * When is changeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHANGE
+ * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+ * else should be ALTERNATIVE_CURRENCY
+ * @param {Number} referenceNumber
+ * @param {Array<Currency>} currencies array of currencies
+ * @param {String} currencyCode provided currency code
+ * @param {Boolean} changeRoute req.originalUrl is a change route
+ * @param {Boolean} checkAndChangeRoute req.originalUrl is a check-and-change route
+ * @returns {Object} pageVariables
+ */
+export const pageVariables = (
+  referenceNumber: number,
+  currencies: Array<Currency>,
+  currencyCode: string,
+  changeRoute?: boolean,
+  checkAndChangeRoute?: boolean,
+) => {
   const currency = getCurrencyByCode(currencies, currencyCode);
+
+  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
+
+  // if changeRoute, then URL should be ALTERNATIVE_CURRENCY_CHANGE
+  if (changeRoute) {
+    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`;
+  }
+
+  // if checkAndChangeRoute, then URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+  if (checkAndChangeRoute) {
+    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
+  }
 
   return {
     FIELDS: {
@@ -78,7 +116,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
     },
     PAGE_CONTENT_STRINGS,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
-    PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
+    PROVIDE_ALTERNATIVE_CURRENCY_URL: alternativeCurrencyUrl,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
   };
 };
@@ -105,8 +143,6 @@ export const get = async (req: Request, res: Response) => {
 
     const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
-
     let isChange;
     let isCheckAndChange;
 
@@ -126,6 +162,8 @@ export const get = async (req: Request, res: Response) => {
       isCheckAndChange = true;
     }
 
+    const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]), isChange, isCheckAndChange);
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
@@ -135,8 +173,6 @@ export const get = async (req: Request, res: Response) => {
       ...generatedPageVariables,
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      isChange,
-      isCheckAndChange,
     });
   } catch (err) {
     console.error('Error getting trading history with the buyer %O', err);
@@ -164,6 +200,25 @@ export const post = async (req: Request, res: Response) => {
       buyer: { buyerTradingHistory },
     } = application;
 
+    let isChange;
+    let isCheckAndChange;
+
+    /**
+     * If is a change route
+     * set isChange to true
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      isChange = true;
+    }
+
+    /**
+     * If is a check-and-change route
+     * set isCheckAndChange to true
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      isCheckAndChange = true;
+    }
+
     const payload = constructPayload(req.body, FIELD_IDS);
 
     const validationErrors = generateValidationErrors(payload);
@@ -171,7 +226,13 @@ export const post = async (req: Request, res: Response) => {
     if (validationErrors) {
       const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(buyerTradingHistory[CURRENCY_CODE]));
+      const generatedPageVariables = pageVariables(
+        referenceNumber,
+        supportedCurrencies,
+        String(buyerTradingHistory[CURRENCY_CODE]),
+        isChange,
+        isCheckAndChange,
+      );
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -197,7 +258,7 @@ export const post = async (req: Request, res: Response) => {
      * If is a change route
      * redirect to CHECK_YOUR_ANSWERS
      */
-    if (isChangeRoute(req.originalUrl)) {
+    if (isChange) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
@@ -205,7 +266,7 @@ export const post = async (req: Request, res: Response) => {
      * If is a check-and-change route
      * redirect to CHECK_AND_CHANGE_ROUTE
      */
-    if (isCheckAndChangeRoute(req.originalUrl)) {
+    if (isCheckAndChange) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
