@@ -23,7 +23,7 @@ const {
   POLICY: {
     BROKER_ROOT,
     BROKER_DETAILS_ROOT,
-    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_ROOT,
     ANOTHER_COMPANY,
   },
 } = INSURANCE_ROUTES;
@@ -42,7 +42,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Broker page - As an Exporter I want to confirm if I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my credit insurance', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let lossPayeeUrl;
   let brokerDetailsUrl;
 
   before(() => {
@@ -60,7 +60,7 @@ context('Insurance - Policy - Broker page - As an Exporter I want to confirm if 
       cy.completeAndSubmitAnotherCompanyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_ROOT}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
       brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
 
       cy.assertUrl(url);
@@ -154,10 +154,10 @@ context('Insurance - Policy - Broker page - As an Exporter I want to confirm if 
       });
 
       describe(`when selecting no for ${FIELD_ID}`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        it(`should redirect to ${LOSS_PAYEE_ROOT} page`, () => {
           cy.completeAndSubmitBrokerForm({ usingBroker: false });
 
-          cy.assertUrl(checkYourAnswersUrl);
+          cy.assertUrl(lossPayeeUrl);
         });
 
         describe('when going back to the page', () => {

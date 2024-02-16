@@ -93,6 +93,11 @@ const BROKER_CONFIRM_ADDRESS = {
   USE_DIFFERENT_ADDRESS: 'Use a different address',
 };
 
+const LOSS_PAYEE = {
+  ...SHARED,
+  PAGE_TITLE: 'Are you appointing a loss payee?',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -113,5 +118,6 @@ export default {
   BROKER,
   BROKER_DETAILS,
   BROKER_CONFIRM_ADDRESS,
+  LOSS_PAYEE,
   CHECK_YOUR_ANSWERS,
 };

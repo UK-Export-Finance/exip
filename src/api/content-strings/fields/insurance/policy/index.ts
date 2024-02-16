@@ -7,6 +7,7 @@ const {
     POLICY_TYPE,
     USING_BROKER,
     BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+    LOSS_PAYEE: { IS_APPOINTED },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -97,6 +98,13 @@ export const POLICY_FIELDS = {
       SUMMARY: {
         TITLE: "Broker's address",
       },
+    },
+  },
+  [IS_APPOINTED]: {
+    HINT: {
+      INTRO:
+        'A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.',
+      OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant.",
     },
   },
 };

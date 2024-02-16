@@ -32,6 +32,7 @@ import { post as postBrokerSaveAndBack } from '../../../controllers/insurance/po
 import { get as getBrokerDetails, post as postBrokerDetails } from '../../../controllers/insurance/policy/broker-details';
 import { post as postBrokerDetailsSaveAndBack } from '../../../controllers/insurance/policy/broker-details/save-and-back';
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../controllers/insurance/policy/broker-confirm-address';
+import { get as getLossPayee, post as postLossPayee } from '../../../controllers/insurance/policy/loss-payee';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
 
 describe('routes/insurance/policy', () => {
@@ -44,8 +45,8 @@ describe('routes/insurance/policy', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(35);
-    expect(post).toHaveBeenCalledTimes(46);
+    expect(get).toHaveBeenCalledTimes(36);
+    expect(post).toHaveBeenCalledTimes(47);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -187,6 +188,9 @@ describe('routes/insurance/policy', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CONFIRM_ADDRESS_ROOT}`, getBrokerConfirmAddress);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.BROKER_CONFIRM_ADDRESS_ROOT}`, postBrokerConfirmAddress);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_ROOT}`, getLossPayee);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_ROOT}`, postLossPayee);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

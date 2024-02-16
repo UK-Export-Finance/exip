@@ -11,7 +11,10 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   ROOT,
   ALL_SECTIONS,
-  POLICY,
+  POLICY: {
+    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_ROOT,
+  },
   EXPORT_CONTRACT,
 } = INSURANCE_ROUTES;
 
@@ -30,7 +33,7 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
 
       cy.completePolicySection({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
@@ -48,8 +51,8 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`,
-      backLink: `${ROOT}/${referenceNumber}${POLICY.BROKER_ROOT}`,
+      currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
+      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`,
       submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
     });
   });

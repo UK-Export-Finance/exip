@@ -8,4 +8,5 @@ import { DEFAULT } from '../../../content-strings';
  * @returns {Object}
  */
 const generateAddressObject = (rawAddress?: string) => (rawAddress ? { address: replaceNewLineWithLineBreak(rawAddress) } : { address: DEFAULT.EMPTY });
+
 export default generateAddressObject;

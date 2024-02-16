@@ -1,26 +1,28 @@
-import { pageVariables, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
+import { FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  LOSS_PAYEE: { IS_APPOINTED },
 } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/policy/broker-confirm-address', () => {
+const { referenceNumber } = mockApplication;
+
+describe('controllers/insurance/policy/loss-payee', () => {
   let req: Request;
   let res: Response;
 
@@ -33,44 +35,62 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
     jest.resetAllMocks();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct ID', () => {
+      const expected = IS_APPOINTED;
+
+      expect(FIELD_ID).toEqual(expected);
+    });
+  });
+
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.POLICY.LOSS_PAYEE);
     });
   });
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
-  describe('pageVariables', () => {
+  describe('HTML_FLAGS', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
-
       const expected = {
-        FIELD_ID: FULL_ADDRESS,
-        USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_DETAILS_ROOT}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
+        HINT_HTML: TEMPLATES.PARTIALS.INSURANCE.POLICY.LOSS_PAYEE.HINT_HTML,
+        HORIZONTAL_RADIOS: true,
+        NO_RADIO_AS_FIRST_OPTION: true,
       };
 
-      expect(result).toEqual(expected);
+      expect(HTML_FLAGS).toEqual(expected);
+    });
+  });
+
+  describe('PAGE_VARIABLES', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        FIELD_ID,
+        PAGE_CONTENT_STRINGS,
+      };
+
+      expect(PAGE_VARIABLES).toEqual(expected);
     });
   });
 
   describe('get', () => {
-    it('should render the broker template with correct variables', () => {
+    it('should render template', () => {
       get(req, res);
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-        ...insuranceCorePageVariables({
-          PAGE_CONTENT_STRINGS,
+        ...singleInputPageVariables({
+          ...PAGE_VARIABLES,
           BACK_LINK: req.headers.referer,
+          HTML_FLAGS,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplication),
+        FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       });
     });
 
@@ -88,11 +108,10 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${LOSS_PAYEE_ROOT}`;
-
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
 

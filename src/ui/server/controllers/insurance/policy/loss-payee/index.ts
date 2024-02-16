@@ -2,43 +2,52 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
+import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  LOSS_PAYEE: { IS_APPOINTED },
 } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
   ALL_SECTIONS,
-  POLICY: { BROKER_DETAILS_ROOT, LOSS_PAYEE_ROOT },
+  POLICY: { CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
+export const FIELD_ID = IS_APPOINTED;
 
-export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE;
+
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
 
 /**
- * pageVariables
- * "Use different address" and "Save and go back" URL
- * @param {Number} Application reference number
- * @returns {Object} Page variables
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
  */
-export const pageVariables = (referenceNumber: number) => ({
-  FIELD_ID: FULL_ADDRESS,
-  USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-});
+export const HTML_FLAGS = {
+  HINT_HTML: TEMPLATES.PARTIALS.INSURANCE.POLICY.LOSS_PAYEE.HINT_HTML,
+  HORIZONTAL_RADIOS: true,
+  NO_RADIO_AS_FIRST_OPTION: true,
+};
 
 /**
- * Render the Confirm broker address page
+ * PAGE_VARIABLES
+ * Field ID and page content strings.
+ */
+export const PAGE_VARIABLES = {
+  FIELD_ID,
+  PAGE_CONTENT_STRINGS,
+};
+
+/**
+ * Render the Loss payee page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} renders Confirm broker address page with previously submitted details
+ * @returns {Express.Response.render} renders Loss payee page with previously submitted details
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -48,13 +57,14 @@ export const get = (req: Request, res: Response) => {
   }
 
   return res.render(TEMPLATE, {
-    ...insuranceCorePageVariables({
-      PAGE_CONTENT_STRINGS,
+    ...singleInputPageVariables({
+      ...PAGE_VARIABLES,
       BACK_LINK: req.headers.referer,
+      HTML_FLAGS,
     }),
-    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
-    application: mapApplicationToFormFields(application),
+    FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
+    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`,
   });
 };
 
@@ -74,5 +84,5 @@ export const post = (req: Request, res: Response) => {
 
   const { referenceNumber } = application;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };
