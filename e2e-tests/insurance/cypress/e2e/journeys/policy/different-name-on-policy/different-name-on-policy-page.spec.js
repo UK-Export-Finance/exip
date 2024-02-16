@@ -2,7 +2,6 @@ import { headingCaption, field as fieldSelector } from '../../../../../../pages/
 import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { ACCOUNT_FIELDS } from '../../../../../../content-strings/fields/insurance/account';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import mockApplication from '../../../../../../fixtures/application';
@@ -43,7 +42,7 @@ context('Insurance - Policy - Different name on Policy page - I want to enter th
 
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });

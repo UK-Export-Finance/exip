@@ -3,7 +3,6 @@ import partials from '../../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { FIELD_VALUES } from '../../../../../../../../constants';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -42,7 +41,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;

@@ -1,6 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_VALUES, ELIGIBILITY } from '../../../../../../../constants';
+import { ELIGIBILITY } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import dateField from '../../../../../../../commands/insurance/date-field';
@@ -58,7 +58,7 @@ context('Insurance - Policy - Single contract policy page - form validation - co
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 

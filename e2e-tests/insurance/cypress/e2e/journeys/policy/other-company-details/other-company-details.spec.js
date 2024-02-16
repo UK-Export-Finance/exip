@@ -1,5 +1,4 @@
 import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { PAGES } from '../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
@@ -35,7 +34,7 @@ context(`Insurance - Policy - Other company details page - ${story}`, () => {
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });

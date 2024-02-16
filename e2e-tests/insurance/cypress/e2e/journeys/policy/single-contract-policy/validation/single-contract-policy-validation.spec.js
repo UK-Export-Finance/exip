@@ -1,9 +1,12 @@
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { FIELD_VALUES, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 
-const { INSURANCE } = ROUTES;
+const {
+  ROOT,
+  POLICY: { SINGLE_CONTRACT_POLICY },
+} = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -36,9 +39,9 @@ context('Insurance - Policy - Single contract policy page - form validation', ()
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
 
-      url = `${baseUrl}${INSURANCE.ROOT}/${referenceNumber}${INSURANCE.POLICY.SINGLE_CONTRACT_POLICY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });

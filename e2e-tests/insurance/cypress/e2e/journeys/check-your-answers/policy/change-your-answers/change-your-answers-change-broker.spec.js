@@ -16,6 +16,7 @@ const {
   },
   POLICY: {
     BROKER_CHECK_AND_CHANGE,
+    BROKER_DETAILS_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -35,7 +36,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 const baseUrl = Cypress.config('baseUrl');
 
 const getFieldVariables = (fieldId, referenceNumber) => ({
-  route: BROKER_CHECK_AND_CHANGE,
+  route: BROKER_DETAILS_CHECK_AND_CHANGE,
   checkYourAnswersRoute: TYPE_OF_POLICY,
   newValueInput: '',
   fieldId,
@@ -44,8 +45,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
-// TODO: EMS-2793 - re-enable
-context.skip('Insurance - Check your answers - Policy - Broker - Summary list', () => {
+context('Insurance - Check your answers - Policy - Broker - Summary list', () => {
   let referenceNumber;
   let url;
 
@@ -76,18 +76,19 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
   describe(NAME, () => {
     const fieldId = NAME;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber);
+    const fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${BROKER_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${BROKER_DETAILS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -118,12 +119,12 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
     const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${BROKER_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${BROKER_DETAILS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_CHECK_AND_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -135,7 +136,7 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), mockNewAddress);
+        cy.keyboardInput(field(fieldId).textarea(), mockNewAddress);
 
         cy.clickSubmitButton();
       });
@@ -171,7 +172,7 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
         cy.navigateToUrl(url);
       });
 
-      it(`should redirect to ${BROKER_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${BROKER_DETAILS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
         fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
@@ -230,8 +231,7 @@ context.skip('Insurance - Check your answers - Policy - Broker - Summary list', 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
-      // TODO: EMS-2793 - re-enable
-      it.skip('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {
+      it('should render the new answer, not render the optional broker sections and retain a `completed` status tag', () => {
         cy.checkText(summaryList.field(fieldId).value(), FIELD_VALUES.NO);
 
         summaryList.field(NAME).key().should('not.exist');

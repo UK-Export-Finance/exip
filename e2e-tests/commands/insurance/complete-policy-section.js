@@ -1,6 +1,6 @@
-import { FIELD_VALUES } from '../../constants';
+import { APPLICATION } from '../../constants';
 
-const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
+const { POLICY_TYPE } = APPLICATION;
 
 /**
  * completePolicySection
@@ -15,7 +15,7 @@ const { SINGLE } = FIELD_VALUES.POLICY_TYPE;
  */
 const completePolicySection = ({
   viaTaskList,
-  policyType = SINGLE,
+  policyType = POLICY_TYPE.SINGLE,
   policyValueOverMvpMaximum = false,
   sameName = true,
   needPreCreditPeriod = false,
@@ -24,9 +24,9 @@ const completePolicySection = ({
 }) => {
   cy.startInsurancePolicySection({ viaTaskList });
 
-  cy.completeAndSubmitPolicyTypeForm(policyType);
+  cy.completeAndSubmitPolicyTypeForm({ policyType });
 
-  if (policyType === SINGLE) {
+  if (policyType === POLICY_TYPE.SINGLE) {
     cy.completeAndSubmitSingleContractPolicyForm({});
 
     cy.completeAndSubmitTotalContractValueForm({ policyValueOverMvpMaximum });

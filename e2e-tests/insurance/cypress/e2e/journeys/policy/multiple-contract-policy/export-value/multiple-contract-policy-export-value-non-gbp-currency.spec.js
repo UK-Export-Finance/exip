@@ -36,7 +36,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(policyType);
+      cy.completeAndSubmitPolicyTypeForm({ policyType });
 
       cy.completeAndSubmitMultipleContractPolicyForm({
         isoCode: USD.isoCode,

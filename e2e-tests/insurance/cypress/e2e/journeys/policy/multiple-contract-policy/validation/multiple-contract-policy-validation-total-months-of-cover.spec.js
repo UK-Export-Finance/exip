@@ -1,11 +1,12 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { APPLICATION, FIELD_VALUES } from '../../../../../../../constants';
+import { APPLICATION } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   POLICY: { TOTAL_MONTHS_OF_COVER: MAXIMUM_MONTHS_OF_COVER },
+  POLICY_TYPE,
 } = APPLICATION;
 
 const {
@@ -45,7 +46,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
       referenceNumber = refNumber;
 
       cy.startInsurancePolicySection({});
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.MULTIPLE);
+      cy.completeAndSubmitPolicyTypeForm({ policyType: POLICY_TYPE.MULTIPLE });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 

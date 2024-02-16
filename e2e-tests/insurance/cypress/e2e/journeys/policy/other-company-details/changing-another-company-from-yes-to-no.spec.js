@@ -1,5 +1,4 @@
 import { field as fieldSelector, countryInput } from '../../../../../../pages/shared';
-import { FIELD_VALUES } from '../../../../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -28,7 +27,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });

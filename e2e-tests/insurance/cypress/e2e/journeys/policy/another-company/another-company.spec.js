@@ -65,7 +65,7 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       // go to the page we want to test.
       cy.startInsurancePolicySection({});
 
-      cy.completeAndSubmitPolicyTypeForm(FIELD_VALUES.POLICY_TYPE.SINGLE);
+      cy.completeAndSubmitPolicyTypeForm({});
       cy.completeAndSubmitSingleContractPolicyForm({});
       cy.completeAndSubmitTotalContractValueForm({});
       cy.completeAndSubmitNameOnPolicyForm({ sameName: true });

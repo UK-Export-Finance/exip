@@ -8,6 +8,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/broker';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
@@ -15,7 +16,7 @@ const { USING_BROKER } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_SAVE_AND_BACK, LOSS_PAYEE_ROOT, BROKER_DETAILS_ROOT },
+  POLICY: { BROKER_SAVE_AND_BACK, LOSS_PAYEE_ROOT, BROKER_DETAILS_ROOT, BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
@@ -118,14 +119,39 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = payload[FIELD_ID];
+    const isUsingBroker = payload[FIELD_ID] === 'true';
 
-    if (answer === 'true') {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
+    if (isChangeRoute(req.originalUrl)) {
+      /**
+       * If change route and "is using broker" answer is submitted,
+       * redirect to broker details page with /change in URL.
+       * This ensures that the next page can consume /change in the URL
+       * and therefore correctly redirect on submission.
+       */
+
+      if (isUsingBroker) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
+      /**
+       * If check-and-change route and "is using broker" answer is submitted,
+       * redirect to different broker details page with /check-and-change in url.
+       * This ensures that the next page can consume /check-and-change in the URL
+       * and therefore correctly redirect on submission.
+       */
+      if (isUsingBroker) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
+    if (isUsingBroker) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`);
