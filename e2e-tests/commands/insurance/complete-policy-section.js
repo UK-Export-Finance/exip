@@ -1,6 +1,6 @@
 import { APPLICATION } from '../../constants';
 
-const { POLICY_TYPE } = APPLICATION;;
+const { POLICY_TYPE } = APPLICATION;
 
 /**
  * completePolicySection
