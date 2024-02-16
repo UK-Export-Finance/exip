@@ -13,10 +13,10 @@ import { SummaryListGroupData, ApplicationBuyer } from '../../../../types';
  * then pushes fields and values for credit insurance history
  * if totalContractValueOverThreshold is false,
  * then returns an empty array
- * @param {ApplicationBuyer} answersBuyer
- * @param {Number} referenceNumber
- * @param {Boolean} totalContractValueOverThreshold if total contract value in application is above threshold
- * @param {Boolean} checkAndChange if is check and change route
+ * @param {ApplicationBuyer} answersBuyer: Buyer answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListGroupData>} empty array or fields and values for credit insurance history
  */
 const optionalFields = (
@@ -37,10 +37,10 @@ const optionalFields = (
 /**
  * generateFields
  * Create all fields for the insurance - Your buyer govukSummaryList
- * @param {ApplicationBuyer} answersBuyer Application buyer object
- * @param {Number} referenceNumber
- * @param {Boolean} totalContractValueOverThreshold if total contract value in application is above threshold
- * @param {Boolean} checkAndChange if is check and change route
+ * @param {ApplicationBuyer} answersBuyer: Buyer answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All your buyer values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
@@ -63,10 +63,10 @@ const generateFields = (
 /**
  * yourBuyerSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationBuyer} answersCompany Application buyer object
- * @param {Number} referenceNumber
- * @param {Boolean} totalContractValueOverThreshold if total contract value in application is above threshold
- * @param {Boolean} checkAndChange if is check and change route
+ * @param {ApplicationBuyer} answersCompany: Application buyer object
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number, totalContractValueOverThreshold?: boolean, checkAndChange = false) => {

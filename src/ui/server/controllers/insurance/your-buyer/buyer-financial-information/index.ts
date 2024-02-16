@@ -39,7 +39,7 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.BUYER_FINANCIAL_I
 /**
  * pageVariables
  * returns pageVariables for buyer-financial information
- * @param {Number} referenceNumber
+ * @param {Number} referenceNumber: Application reference number
  * @returns {Object} pageVariables
  */
 export const pageVariables = (referenceNumber: number) => ({

@@ -24,9 +24,9 @@ const {
 /**
  * optionalBrokerFields
  * if yes selected for broker, populates and returns optional fields in an array
- * @param {ApplicationBroker} answers
- * @param {Number} referenceNumber
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
+ * @param {ApplicationBroker} answers: Broker answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
  */
 export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber: number, checkAndChange: boolean) => {

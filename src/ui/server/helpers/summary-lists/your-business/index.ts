@@ -8,9 +8,10 @@ import { ApplicationCompany, ApplicationBusiness, SummaryListGroupData } from '.
 /**
  * generateFields
  * Create all fields for the insurance - Your business govukSummaryList
- * @param {ApplicationCompany} answersCompany Application company object
- * @param {ApplicationBusiness} answersBusiness Application company object
- * @param {Number} referenceNumber
+ * @param {ApplicationCompany} answersCompany: Application company object
+ * @param {ApplicationBusiness} answersBusiness: Application business object
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All your business values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
@@ -32,10 +33,10 @@ const generateFields = (
 /**
  * yourBusinessSummaryLists
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationCompany} answersCompany Application company object
- * @param {ApplicationBusiness} answersBusiness Application business object
- * @param {Number} referenceNumber
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
+ * @param {ApplicationCompany} answersCompany: Application company object
+ * @param {ApplicationBusiness} answersBusiness: Application business object
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const yourBusinessSummaryLists = (

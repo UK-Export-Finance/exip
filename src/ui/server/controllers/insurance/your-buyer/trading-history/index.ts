@@ -67,11 +67,11 @@ export const HTML_FLAGS = {
  * When is changeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHANGE
  * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
  * else should be ALTERNATIVE_CURRENCY
- * @param {Number} referenceNumber
- * @param {Array<Currency>} currencies array of currencies
- * @param {String} currencyCode provided currency code
- * @param {Boolean} changeRoute req.originalUrl is a change route
- * @param {Boolean} checkAndChangeRoute req.originalUrl is a check-and-change route
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array<Currency>} currencies: Array of currencies
+ * @param {String} currencyCode: Provided currency code
+ * @param {Boolean} changeRoute: req.originalUrl is a change route
+ * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
  * @returns {Object} pageVariables
  */
 export const pageVariables = (

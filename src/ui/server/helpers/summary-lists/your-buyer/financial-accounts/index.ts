@@ -23,9 +23,9 @@ const { HAS_BUYER_FINANCIAL_ACCOUNTS } = YOUR_BUYER_FIELD_IDS;
 /**
  * financialAccountsFields
  * Create all buyer financial accounts fields and values for the Insurance - your buyer govukSummaryList
- * @param {ApplicationBuyer} answers buyer relationship data
- * @param {Number} referenceNumber application reference number
- * @param {Boolean} checkAndChange
+ * @param {ApplicationBuyer} answers: buyer relationship data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: Is "check and change"
  * @returns {Array<SummaryListItemData>} All buyer financial account fields and values in an object structure for GOVUK summary list structure
  */
 const financialAccountsFields = (answers: ApplicationBuyerRelationship, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
