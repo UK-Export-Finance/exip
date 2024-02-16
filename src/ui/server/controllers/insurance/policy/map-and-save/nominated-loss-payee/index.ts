@@ -33,7 +33,7 @@ const nominatedLossPayee = async (formBody: RequestBody, application: Applicatio
 
     return true;
   } catch (err) {
-    console.error('Error mapping and saving application - policy - jointly insured party %O', err);
+    console.error('Error mapping and saving application - policy - nominated loss payee %O', err);
 
     return false;
   }

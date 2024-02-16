@@ -24,9 +24,9 @@ const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
  * optionalFields
  * optionalFields for trading history summary list
  * if OUTSTANDING_PAYMENTS is true, then renders extra rows in summary list
- * @param {ApplicationBuyerTradingHistory} answers
- * @param {Number} referenceNumber
- * @param {Boolean} checkAndChange
+ * @param {ApplicationBuyerTradingHistory} answers: Buyer trading history answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} Array including or excluding TOTAL_OUTSTANDING_PAYMENTS and TOTAL_AMOUNT_OVERDUE in correct structure
  */
 export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean) => {
@@ -73,9 +73,9 @@ export const optionalFields = (answers: ApplicationBuyerTradingHistory, referenc
 /**
  * tradingHistoryFields
  * Create all trading history fields and values for the Insurance - your buyer govukSummaryList
- * @param {ApplicationBuyerTradingHistory} answers buyer trading history data
- * @param {Number} referenceNumber application reference number
- * @param {Boolean} checkAndChange
+ * @param {ApplicationBuyerTradingHistory} answers: buyer trading history data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: Is "check and change"
  * @returns {Array<SummaryListItemData>} All trading history fields and values in an object structure for GOVUK summary list structure
  */
 const tradingHistoryFields = (answers: ApplicationBuyerTradingHistory, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {

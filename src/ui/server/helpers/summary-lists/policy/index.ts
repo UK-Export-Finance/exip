@@ -35,12 +35,12 @@ const generateFields = (
 /**
  * policySummaryLists
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationPolicy} answers policy answers/submitted data in a simple object/text structure
- * @param {ApplicationPolicyContact} answersPolicyContact policyContact answers/submitted data in a simple object/text structure
- * @param {ApplicationBroker} answersBroker broker answers/submitted data in a simple object/text structure
- * @param {Number} referenceNumber Application reference number
- * @param {Array<Currency>} currencies Currencies
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
+ * @param {ApplicationPolicy} answers: policy answers/submitted data in a simple object/text structure
+ * @param {ApplicationPolicyContact} answersPolicyContact: policyContact answers/submitted data in a simple object/text structure
+ * @param {ApplicationBroker} answersBroker: broker answers/submitted data in a simple object/text structure
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array<Currency>} currencies: Currencies
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section.  Default as false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const policySummaryLists = (
