@@ -61,11 +61,17 @@ jobs:
     steps:
       - name: Pre-production 💫
         if: contains('["dev", "feature", "staging"]', env.TARGET)
-        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+        run: |
+          echo "TYPE=Preproduction"  >> $GITHUB_ENV
+          echo "DB_SKU=${{ VARS.DB_NON_PROD_SKU }}"  >> $GITHUB_ENV
+          echo "DB_TIER=${{ VARS.DB_NON_PROD_TIER }}" >> $GITHUB_ENV
 
       - name: Production 💫
         if: ${{ 'production' == env.TARGET }}
-        run: echo "TYPE=Production" >> $GITHUB_ENV
+        run: |
+          echo "TYPE=Production"  >> $GITHUB_ENV
+          echo "DB_SKU=${{ VARS.DB_PROD_SKU }}"  >> $GITHUB_ENV
+          echo "DB_TIER=${{ VARS.DB_PROD_TIER }}" >> $GITHUB_ENV
 
       - name: Tags 🏷️
         run: echo TAGS='Environment=${{ env.TYPE }}' \
@@ -249,13 +255,16 @@ jobs:
             --admin-user ${{ secrets.MYSQL_USER }} \
             --admin-password ${{ secrets.MYSQL_PASSWORD }} \
             --database-name ${{ env.PRODUCT }} \
-            --sku-name Standard_B1ms \
-            --tier Burstable \
+            --storage-size ${{ vars.DB_STORAGE_SIZE_GB }} \
+            --sku-name ${{ env.DB_SKU }} \
+            --tier ${{ env.DB_TIER }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --address-prefixes ${{ vars.VNET_ADDRESS_PREFIX }} \
             --subnet-prefix ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
-            --backup-retention 30 \
+            --backup-retention ${{ vars.DB_DR_DAYS }} \
+            --auto-scale-iops Enabled \
+            --storage-auto-grow Enabled \
             --yes \
             --tags ${{ env.TAGS }}
 
