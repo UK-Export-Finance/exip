@@ -1,6 +1,14 @@
 import { brokerPage } from '../../../../../../pages/your-business';
 import partials from '../../../../../../partials';
-import { field as fieldSelector, saveAndBackButton, submitButton } from '../../../../../../pages/shared';
+import {
+  field as fieldSelector,
+  noRadio,
+  noRadioInput,
+  saveAndBackButton,
+  submitButton,
+  yesRadio,
+  yesRadioInput,
+} from '../../../../../../pages/shared';
 import {
   PAGES, BUTTONS, ERROR_MESSAGES, LINKS,
 } from '../../../../../../content-strings';
@@ -45,7 +53,7 @@ const ERROR_MESSAGE_BROKER = BROKER_ERRORS[USING_BROKER];
 const { APPROVED_BROKER_LIST } = LINKS.EXTERNAL;
 
 const ERROR_ASSERTIONS = {
-  field: brokerPage[USING_BROKER],
+  field: yesRadio(USING_BROKER),
   numberOfExpectedErrors: 1,
   errorIndex: 0,
 };
@@ -139,9 +147,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
     });
 
     it('should display conditional broker section when selecting the "yes" radio', () => {
-      const fieldId = USING_BROKER;
-      const field = brokerPage[fieldId];
-      field.yesRadioInput().click();
+      yesRadio().label().click();
 
       cy.checkText(fieldSelector(LEGEND).legend(), FIELDS.BROKER[LEGEND].LEGEND);
 
@@ -202,12 +208,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
           const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
-          const radioField = {
-            ...field,
-            input: field.yesRadioInput,
-          };
-
-          cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
+          cy.submitAndAssertRadioErrors(field, errorIndex, numberOfExpectedErrors, errorMessage);
         });
       });
 
@@ -223,7 +224,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].yesRadioInput().should('be.checked');
+              yesRadioInput().should('be.checked');
               cy.checkValue(fieldSelector(NAME), application.EXPORTER_BROKER[NAME]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_1), application.EXPORTER_BROKER[ADDRESS_LINE_1]);
               cy.checkValue(fieldSelector(ADDRESS_LINE_2), application.EXPORTER_BROKER[ADDRESS_LINE_2]);
@@ -237,7 +238,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
         describe(`when selecting no for ${USING_BROKER}`, () => {
           it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-            brokerPage[USING_BROKER].noRadioInput().click();
+            noRadio().label().click();
             submitButton().click();
 
             cy.assertUrl(checkYourAnswersUrl);
@@ -247,7 +248,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
             it('should have the submitted values', () => {
               cy.navigateToUrl(url);
 
-              brokerPage[USING_BROKER].noRadioInput().should('be.checked');
+              noRadioInput().should('be.checked');
             });
           });
         });

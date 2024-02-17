@@ -54,14 +54,14 @@ context('Change your answers (policy type) - multiple times via back button - as
   });
 
   it(`redirects to ${TELL_US_ABOUT_YOUR_POLICY} when submitting new answers`, () => {
-    policyTypePage[POLICY_TYPE].multiple.input().click();
+    policyTypePage[POLICY_TYPE].multiple.label().click();
     submitButton().click();
 
     cy.assertUrl(tellUsAboutPolicyUrl);
   });
 
   it('renders credit period field in the `tell us about your policy` page', () => {
-    policyTypePage[POLICY_TYPE].multiple.input().click();
+    policyTypePage[POLICY_TYPE].multiple.label().click();
     submitButton().click();
 
     const field = tellUsAboutYourPolicyPage[CREDIT_PERIOD];
@@ -73,14 +73,14 @@ context('Change your answers (policy type) - multiple times via back button - as
     before(() => {
       completePreviousForms();
 
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       submitButton().click();
 
       cy.clickBackLink();
 
       cy.assertUrl(policyTypeUrl);
 
-      policyTypePage[POLICY_TYPE].single.input().click();
+      policyTypePage[POLICY_TYPE].single.label().click();
 
       submitButton().click();
 
@@ -101,7 +101,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       completePreviousForms();
 
       // 1st time - change from single to multiple
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       submitButton().click();
 
       // 2nd time - change from multiple to single
@@ -109,7 +109,7 @@ context('Change your answers (policy type) - multiple times via back button - as
 
       cy.assertUrl(policyTypeUrl);
 
-      policyTypePage[POLICY_TYPE].single.input().click();
+      policyTypePage[POLICY_TYPE].single.label().click();
 
       submitButton().click();
 
@@ -119,7 +119,7 @@ context('Change your answers (policy type) - multiple times via back button - as
       cy.clickBackLink();
       cy.assertUrl(policyTypeUrl);
 
-      policyTypePage[POLICY_TYPE].multiple.input().click();
+      policyTypePage[POLICY_TYPE].multiple.label().click();
       submitButton().click();
 
       cy.assertUrl(tellUsAboutPolicyUrl);

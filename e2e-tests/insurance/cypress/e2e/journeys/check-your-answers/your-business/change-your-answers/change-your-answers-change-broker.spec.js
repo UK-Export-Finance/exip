@@ -3,9 +3,9 @@ import {
   submitButton,
   status,
   summaryList,
+  noRadio,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import { brokerPage } from '../../../../../../../pages/your-business';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -243,7 +243,7 @@ context('Insurance - Check your answers - Broker - Your business - Summary list'
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].noRadioInput().click();
+        noRadio().label().click();
 
         submitButton().click();
       });

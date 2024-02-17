@@ -79,7 +79,7 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
 
     describe('when submitting the answer as `yes`', () => {
       beforeEach(() => {
-        yesRadio().input().click();
+        yesRadio().label().click();
         submitButton().click();
       });
 

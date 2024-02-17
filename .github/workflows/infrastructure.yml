@@ -84,7 +84,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -92,7 +92,7 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: Resource group 🏗️
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az group create \
@@ -100,7 +100,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Plan 📝
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az appservice plan create \
@@ -110,7 +110,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Log analytics workspace 📝
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az monitor log-analytics workspace create \
@@ -121,7 +121,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Container registry 📦️
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az acr create \
@@ -132,7 +132,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Virtual network 🧵
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az network vnet create \
@@ -141,7 +141,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Subnets 💫
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Database
@@ -163,7 +163,7 @@ jobs:
             --vnet-name vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: VNET Peer - AMI 🔀
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Azure Managed Instance (AMI) SQL DB VNET peering
@@ -191,7 +191,7 @@ jobs:
             --query peeringState)"
 
       - name: VNET Peer - APIM 🔀
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # API management (APIM) VNET peering
@@ -219,7 +219,7 @@ jobs:
             --query peeringState)"
 
       - name: VNET Peer - UKS 🔀
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # UKS VNET peering
@@ -247,7 +247,7 @@ jobs:
             --query peeringState)"
 
       - name: Database 💾
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az mysql flexible-server create \
@@ -269,7 +269,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Web app - UI 🌐
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp create \
@@ -282,7 +282,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Web app - API 🌐
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp create  \
@@ -295,7 +295,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Front Door 🚪
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Profile
@@ -348,7 +348,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -356,13 +356,13 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: Extension ➕
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az extension add --name front-door
 
       - name: Private endpoint 🔏
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             #UI
@@ -386,7 +386,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Private DNS 🌍
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az network private-dns zone create \
@@ -394,7 +394,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: DNS VNET ➕
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az network private-dns link vnet create \
@@ -405,7 +405,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: DNS Records 📝
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             #UI
@@ -423,7 +423,7 @@ jobs:
             --zone-name webapp
 
       - name: Front Door 🚪
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Origin
@@ -457,7 +457,7 @@ jobs:
             --enabled-state Enabled
 
       - name: WAF 🔥
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # WAF
@@ -512,7 +512,7 @@ jobs:
 
       - name: VPN 🧱
         if: contains('["dev", "feature", "staging"]', env.TARGET)
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Custom rule - IP 
@@ -554,7 +554,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -562,7 +562,7 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: CD 🔀
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # UI
@@ -576,7 +576,7 @@ jobs:
             --enable-cd true
 
       - name: Configuration 🔨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # UI
@@ -601,7 +601,7 @@ jobs:
           echo "MYSQL_URL=$(az mysql flexible-server list --query [].fullyQualifiedDomainName -o tsv)" >> $GITHUB_ENV
 
       - name: Setting 🧱
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # UI
@@ -647,7 +647,7 @@ jobs:
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
       - name: Extension ➕
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
@@ -656,7 +656,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Database 💾
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az webapp connection create mysql-flexible \
@@ -687,7 +687,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -695,7 +695,7 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: Log analytics workspace 📝
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az monitor diagnostic-settings create \
@@ -706,7 +706,7 @@ jobs:
             --metrics "[{category:allMetrics,enabled:true}]"
 
       - name: Database 💾
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az monitor diagnostic-settings create \
@@ -717,7 +717,7 @@ jobs:
             --metrics "[{category:allMetrics,enabled:true}]"
 
       - name: WebApp 🌐
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # UI
@@ -741,7 +741,7 @@ jobs:
             --web-server-logging ${{ vars.WEBAPP_LOG_DESTINATION }}
 
       - name: Front Door 🚪
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az monitor diagnostic-settings create \
@@ -752,7 +752,7 @@ jobs:
             --metrics "[{category:allMetrics,enabled:true}]"
 
       - name: Private links 🔏
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # UI
@@ -795,7 +795,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Azure defaults ✨
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Basic
@@ -803,7 +803,7 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }}
 
       - name: Action group 📩
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             az monitor action-group create \
@@ -814,7 +814,7 @@ jobs:
             --tags ${{ env.TAGS }}
 
       - name: Alert 📩
-        uses: Azure/cli@v1.0.8
+        uses: azure/cli@v1.0.9
         with:
           inlineScript: |
             # Dimension

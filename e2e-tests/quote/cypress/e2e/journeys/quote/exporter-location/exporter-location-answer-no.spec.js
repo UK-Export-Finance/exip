@@ -30,7 +30,7 @@ context('Exporter location page - as an exporter, I want to check if my company 
 
     cy.navigateToUrl(url);
 
-    noRadio().input().click();
+    noRadio().label().click();
     submitButton().click();
   });
 

@@ -43,7 +43,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
 
       taskList.prepareApplication.tasks.policy.link().click();
 
-      multiplePolicyField.input().click();
+      multiplePolicyField.label().click();
       submitButton().click();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;

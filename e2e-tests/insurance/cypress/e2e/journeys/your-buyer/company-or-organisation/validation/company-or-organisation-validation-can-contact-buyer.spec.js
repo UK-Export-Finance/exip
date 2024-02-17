@@ -1,4 +1,6 @@
-import { submitButton } from '../../../../../../../pages/shared';
+import {
+  submitButton, yesRadio, yesRadioInput, noRadio,
+} from '../../../../../../../pages/shared';
 import { companyOrOrganisationPage } from '../../../../../../../pages/insurance/your-buyer';
 import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
@@ -55,7 +57,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   const field = companyOrOrganisationPage[FIELD_ID];
 
   const ERROR_ASSERTIONS = {
-    field: companyOrOrganisationPage[FIELD_ID],
+    field: yesRadio,
     numberOfExpectedErrors: 7,
     errorIndex: 6,
   };
@@ -66,14 +68,14 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
     const radioField = {
       ...field,
-      input: field.yesRadioInput,
+      input: yesRadioInput,
     };
 
     cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
   });
 
   it('should NOT display validation errors when yes radio is selected', () => {
-    field.yesRadioInput().click();
+    yesRadio().label().click();
 
     submitButton().click();
 
@@ -82,7 +84,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   });
 
   it('should NOT display validation errors when no radio is selected', () => {
-    field.noRadioInput().click();
+    noRadio().label().click();
 
     submitButton().click();
 

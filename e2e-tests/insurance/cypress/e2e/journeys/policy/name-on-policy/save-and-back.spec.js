@@ -104,7 +104,7 @@ context('Insurance - Policy - Name on policy - Save and go back', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      field(SAME_NAME).input().click();
+      field(SAME_NAME).label().click();
       saveAndBackButton().click();
     });
 

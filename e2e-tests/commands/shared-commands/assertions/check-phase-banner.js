@@ -10,7 +10,7 @@ const { PREFIX, LINK_TEXT, SUFFIX } = PHASE_BANNER;
  * @param {Boolean} isInsurancePage - If page is an insurance page or otherwise
  */
 const checkPhaseBanner = ({ isInsurancePage }) => {
-  cy.checkText(partials.phaseBanner.tag(), 'alpha');
+  cy.checkText(partials.phaseBanner.tag(), 'Alpha');
 
   cy.checkText(partials.phaseBanner.text(), `${PREFIX} ${LINK_TEXT} ${SUFFIX}`);
 

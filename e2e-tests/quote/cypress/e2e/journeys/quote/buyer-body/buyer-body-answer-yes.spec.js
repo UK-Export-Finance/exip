@@ -27,7 +27,7 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
 
     cy.navigateToUrl(url);
 
-    yesRadio().input().click();
+    yesRadio().label().click();
     submitButton().click();
   });
 

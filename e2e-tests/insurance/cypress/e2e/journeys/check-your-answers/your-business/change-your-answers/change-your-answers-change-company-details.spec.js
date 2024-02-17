@@ -1,5 +1,5 @@
 import {
-  field, submitButton, status, summaryList, noRadioInput,
+  field, submitButton, status, summaryList, noRadio,
 } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import {
@@ -168,7 +168,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().first().click();
+        noRadio().label().first().click();
 
         submitButton().click();
       });
@@ -209,7 +209,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         summaryList.field(fieldId).changeLink().click();
 
-        noRadioInput().eq(1).click();
+        noRadio().label().eq(1).click();
 
         submitButton().click();
       });

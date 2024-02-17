@@ -49,7 +49,7 @@ context('Insurance - Eligibility - Companies house number page - I want to check
 
     cy.navigateToUrl(url);
 
-    noRadio().input().click();
+    noRadio().label().click();
     submitButton().click();
   });
 

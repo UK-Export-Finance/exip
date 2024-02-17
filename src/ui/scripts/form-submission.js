@@ -8,7 +8,6 @@ const submitButton = document.getElementById('submit-button');
 const disableButton = () => {
   submitButton.setAttribute('disabled', 'true');
   submitButton.setAttribute('aria-disabled', 'true');
-  submitButton.classList.add('govuk-button--disabled');
 };
 
 /**

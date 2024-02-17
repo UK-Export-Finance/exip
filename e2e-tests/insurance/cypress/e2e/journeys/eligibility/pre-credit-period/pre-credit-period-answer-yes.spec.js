@@ -47,7 +47,7 @@ context('Insurance - Eligibility - Pre-credit period page - I want to check if I
 
     cy.navigateToUrl(url);
 
-    yesRadio().input().click();
+    yesRadio().label().click();
     submitButton().click();
   });
 

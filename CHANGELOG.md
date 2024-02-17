@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.4.3](https://github.com/UK-Export-Finance/exip/compare/v2.4.2...v2.4.3) (2024-01-15)
+
+
+### Bug Fixes
+
+* **deployment:** added back API_KEY ([2fff33b](https://github.com/UK-Export-Finance/exip/commit/2fff33ba07a8c0b8f4665cfe2e46225a280c7c1b))
+* **deployment:** removed frivolous variables ([21c0015](https://github.com/UK-Export-Finance/exip/commit/21c00159973867480d1ed48f389ba5d6f2988cf0))
+* **deployment:** removed TLS_* variables ([32e0ee1](https://github.com/UK-Export-Finance/exip/commit/32e0ee153c71b9f5313b66fb26a15ea52e135a90))
+
 ## [2.4.2](https://github.com/UK-Export-Finance/exip/compare/v2.4.1...v2.4.2) (2024-01-04)
 
 

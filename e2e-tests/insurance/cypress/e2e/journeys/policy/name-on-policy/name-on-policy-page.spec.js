@@ -106,7 +106,7 @@ context('Insurance - Policy - Name on Policy page - I want to enter the details 
     });
 
     it(`should display conditional "${POSITION}" section when selecting the "yes" radio`, () => {
-      field(SAME_NAME).input().click();
+      field(SAME_NAME).label().click();
 
       field(POSITION).input().should('be.visible');
       cy.checkText(field(POSITION).label(), FIELDS.NAME_ON_POLICY[POSITION].LABEL);

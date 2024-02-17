@@ -1,5 +1,4 @@
-import { brokerPage } from '../../../../../../../../pages/your-business';
-import { field as fieldSelector } from '../../../../../../../../pages/shared';
+import { field as fieldSelector, yesRadio } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/business';
@@ -7,7 +6,6 @@ import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
 
 const {
   BROKER: {
-    USING_BROKER: FIELD_ID,
     NAME,
     ADDRESS_LINE_1,
     TOWN,
@@ -25,8 +23,6 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.prepareApplication.tasks.business;
 
 const BROKER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-
-const field = brokerPage[FIELD_ID];
 
 context('Insurance - Your business - Broker Page - As an Exporter I want to confirm that I am using a broker for my export Insurance so that UKEF and I can easily collaborate and manage correspondence regarding my export insurance', () => {
   let referenceNumber;
@@ -63,7 +59,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
   it('should display validation errors when the yes radio is selected and no required fields are entered', () => {
     const expectedErrorsCount = 5;
 
-    field.yesRadioInput().click();
+    yesRadio().label().click();
 
     // NAME error check
     cy.submitAndAssertFieldErrors(fieldSelector(NAME), null, 0, expectedErrorsCount, BROKER_ERRORS[NAME].IS_EMPTY);

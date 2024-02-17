@@ -1,6 +1,10 @@
 import partials from '../../../../../../partials';
-import { brokerPage } from '../../../../../../pages/your-business';
-import { field, submitButton, summaryList } from '../../../../../../pages/shared';
+import {
+  field,
+  noRadio,
+  submitButton,
+  summaryList,
+} from '../../../../../../pages/shared';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -244,7 +248,7 @@ context('Insurance - Your business - Change your answers - Broker - As an export
 
         summaryList.field(fieldId).changeLink().click();
 
-        brokerPage[fieldId].noRadioInput().click();
+        noRadio().label().click();
 
         submitButton().click();
       });

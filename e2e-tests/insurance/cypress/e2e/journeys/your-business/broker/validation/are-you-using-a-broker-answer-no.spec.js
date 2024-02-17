@@ -1,14 +1,6 @@
-import { brokerPage } from '../../../../../../../pages/your-business';
 import partials from '../../../../../../../partials';
-import { submitButton } from '../../../../../../../pages/shared';
+import { noRadio, submitButton } from '../../../../../../../pages/shared';
 import { ROUTES } from '../../../../../../../constants';
-import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
-
-const {
-  BROKER: {
-    USING_BROKER: FIELD_ID,
-  },
-} = FIELD_IDS;
 
 const {
   ROOT,
@@ -55,9 +47,7 @@ context('Insurance - Your business - Broker Page - As an Exporter I want to conf
 
   describe('when the no radio is selected', () => {
     it(`should  not display validation errors and redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      const field = brokerPage[FIELD_ID];
-
-      field.noRadioInput().click();
+      noRadio().label().click();
       submitButton().click();
 
       partials.errorSummaryListItems().should('have.length', 0);

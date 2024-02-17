@@ -16,12 +16,12 @@ const {
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" form. Defaults to "yes".
  */
 export default ({ exporterHasTradedWithBuyer = true }) => {
-  workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadioInput().click();
+  workingWithBuyerPage[CONNECTED_WITH_BUYER].yesRadio().click();
 
   if (exporterHasTradedWithBuyer) {
-    workingWithBuyerPage[TRADED_WITH_BUYER].yesRadioInput().click();
+    workingWithBuyerPage[TRADED_WITH_BUYER].yesRadio().click();
   } else {
-    workingWithBuyerPage[TRADED_WITH_BUYER].noRadioInput().click();
+    workingWithBuyerPage[TRADED_WITH_BUYER].noRadio().click();
   }
 
   submitButton().click();
