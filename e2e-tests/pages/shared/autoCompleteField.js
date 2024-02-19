@@ -5,7 +5,7 @@ import fieldSelector from './field';
  * "Autocomplete" cypress selector.
  * This field is used for any autocomplete fields, e.g country and currency fields.
  * @param {String} fieldId: Field ID
- * @returns 
+ * @returns
  */
 const autoCompleteField = (fieldId) => ({
   ...fieldSelector(fieldId),
