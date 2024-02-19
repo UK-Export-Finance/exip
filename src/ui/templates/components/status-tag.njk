@@ -17,11 +17,11 @@
   {% endif %}
 
   {% if status === "Completed" %}
-    {% set classes = "govuk-tag--green" %}
+    {% set classes = "govuk-tag--turquoise" %}
   {% endif %}
 
   {% if status === "Submitted to UKEF" %}
-    {% set classes = "govuk-tag--purple" %}
+    {% set classes = "govuk-tag--green" %}
   {% endif %}
 
   {{ govukTag({
