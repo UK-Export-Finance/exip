@@ -23,7 +23,7 @@ The repository is based on the [template-typescript-package](https://github.com/
 
 **CD** 🚀
 
-| CD Status | Environment |
+| Status | Environment |
 | -------- | ------- |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=dev) | `dev` |
 | ![Release](https://github.com/UK-Export-Finance/exip/actions/workflows/deployment.yml/badge.svg?branch=feature) | `feature` |
