@@ -1,4 +1,4 @@
-import { field, countryInput } from '../../pages/shared';
+import { field, autoCompleteField } from '../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import application from '../../fixtures/application';
 
@@ -14,7 +14,7 @@ const { REQUESTED_JOINTLY_INSURED_PARTY: FIXTURES } = application;
  */
 const completeAndSubmitOtherCompanyDetailsForm = () => {
   cy.keyboardInput(field(COMPANY_NAME).input(), FIXTURES[COMPANY_NAME]);
-  cy.keyboardInput(countryInput.field(COUNTRY_CODE).input(), FIXTURES[COUNTRY_CODE]);
+  cy.keyboardInput(autoCompleteField(COUNTRY_CODE).input(), FIXTURES[COUNTRY_CODE]);
   cy.keyboardInput(field(COMPANY_NUMBER).input(), FIXTURES[COMPANY_NUMBER]);
 
   cy.clickSubmitButton();

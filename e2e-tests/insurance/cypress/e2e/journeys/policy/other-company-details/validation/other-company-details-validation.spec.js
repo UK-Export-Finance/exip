@@ -1,4 +1,4 @@
-import { field as fieldSelector, countryInput } from '../../../../../../../pages/shared';
+import { field as fieldSelector, autoCompleteField } from '../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance';
@@ -84,7 +84,7 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     const ERROR = ERRORS[FIELD_ID];
 
     const { field, numberOfExpectedErrors, errorIndex } = {
-      field: countryInput.field(FIELD_ID),
+      field: autoCompleteField(FIELD_ID),
       numberOfExpectedErrors: 2,
       errorIndex: 1,
     };

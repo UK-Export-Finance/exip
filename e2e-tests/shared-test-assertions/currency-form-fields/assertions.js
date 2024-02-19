@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { field, radios, countryInput } from '../../pages/shared';
+import { field, radios, autoCompleteField } from '../../pages/shared';
 import {
   EUR,
   GBP,
@@ -85,24 +85,24 @@ const assertCurrencyFormFields = ({
   alternativeCurrencyInput: () => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    checkAutocompleteInput.hasWorkingClientSideJS(countryInput.field(alternativeCurrencyFieldId));
-    checkAutocompleteInput.rendersInput(countryInput.field(alternativeCurrencyFieldId));
+    checkAutocompleteInput.hasWorkingClientSideJS(autoCompleteField(alternativeCurrencyFieldId));
+    checkAutocompleteInput.rendersInput(autoCompleteField(alternativeCurrencyFieldId));
   },
   doesNotRenderSupportedCurrencies: () => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), 'not a currency');
+    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), 'not a currency');
     // should not render radio values in alternate currency input
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), GBP.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), USD.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), JPY.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(countryInput.field(alternativeCurrencyFieldId), EUR.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), GBP.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), USD.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), JPY.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), EUR.isoCode);
   },
   rendersAlternativeCurrencies: () => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    checkAutocompleteInput.rendersSingleResult(countryInput.field(alternativeCurrencyFieldId), 'Alg');
-    checkAutocompleteInput.rendersMultipleResults(countryInput.field(alternativeCurrencyFieldId), 'Be');
+    checkAutocompleteInput.rendersSingleResult(autoCompleteField(alternativeCurrencyFieldId), 'Alg');
+    checkAutocompleteInput.rendersMultipleResults(autoCompleteField(alternativeCurrencyFieldId), 'Be');
 
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
     checkAutocompleteInput
@@ -177,7 +177,7 @@ const assertCurrencyFormFields = ({
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
 
     // alternative currency input should render correct result
-    checkAutocompleteInput.checkInput(countryInput.field(alternativeCurrencyFieldId), expectedValue);
+    checkAutocompleteInput.checkInput(autoCompleteField(alternativeCurrencyFieldId), expectedValue);
   },
 });
 

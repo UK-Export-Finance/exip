@@ -1,4 +1,4 @@
-import { countryInput } from '../../../../../../pages/shared';
+import { autoCompleteField } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -20,7 +20,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const finalDestinationField = countryInput.field(FINAL_DESTINATION);
+const finalDestinationField = autoCompleteField(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
 
