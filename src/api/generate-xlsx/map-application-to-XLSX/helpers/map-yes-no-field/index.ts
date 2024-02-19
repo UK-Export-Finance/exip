@@ -2,9 +2,9 @@ import { DEFAULT } from '../../../../content-strings';
 
 /**
  * mapYesNoField
- * maps true or false fields to Yes/No
+ * Map a "true" or "false" field to Yes/No
  * @param {Boolean} answer
- * @returns {String} Yes/No or original provided answer
+ * @returns {String} "Yes/No" or DEFAULT.EMPTY
  */
 const mapYesNoField = (answer?: boolean) => {
   if (answer === false) {

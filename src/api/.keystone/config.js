@@ -527,7 +527,8 @@ var XLSX_ROW_INDEXES = (application2) => {
     POLICY: 20,
     EXPORTER_BUSINESS: 30,
     BUYER: 49,
-    ELIGIBILITY: 59
+    ELIGIBILITY: 59,
+    DECLARATIONS: 70
   };
   const INDEXES = {
     TITLES,
@@ -550,6 +551,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     TITLES.EXPORTER_BUSINESS += 1;
     TITLES.BUYER += 1;
     TITLES.ELIGIBILITY += 1;
+    TITLES.DECLARATIONS += 1;
     INDEXES.COMPANY_ADDRESS += 1;
     INDEXES.COMPANY_SIC_CODES += 1;
     INDEXES.BROKER_ADDRESS += 1;
@@ -559,6 +561,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isUsingBroker) {
     TITLES.BUYER += 3;
     TITLES.ELIGIBILITY += 3;
+    TITLES.DECLARATIONS += 3;
   }
   return INDEXES;
 };
@@ -3731,6 +3734,50 @@ var xlsx_row_default = xlsxRow;
 var ROW_SEPERATOR = xlsx_row_default("", "");
 var xlsx_row_seperator_default = ROW_SEPERATOR;
 
+// content-strings/fields/insurance/declarations/index.ts
+var {
+  DECLARATIONS: {
+    AGREE_CONFIDENTIALITY,
+    AGREE_ANTI_BRIBERY,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
+    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT
+  }
+} = insurance_default;
+var DECLARATIONS_FIELDS = {
+  [AGREE_CONFIDENTIALITY]: {
+    SUMMARY: {
+      TITLE: "Confidentiality"
+    }
+  },
+  [AGREE_ANTI_BRIBERY]: {
+    SUMMARY: {
+      TITLE: "Anti-bribery and corruption"
+    }
+  },
+  [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]: {
+    SUMMARY: {
+      TITLE: "Do you have a code of conduct?"
+    }
+  },
+  [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
+    SUMMARY: {
+      TITLE: "Will you export using your code of conduct?"
+    }
+  },
+  [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
+    SUMMARY: {
+      TITLE: "Confirmation and acknowledgements"
+    }
+  },
+  [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
+    SUMMARY: {
+      TITLE: "How your data will be used"
+    }
+  }
+};
+
 // content-strings/fields/insurance/eligibility/index.ts
 var {
   BUYER_COUNTRY,
@@ -4085,13 +4132,15 @@ var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
 } = your_buyer_default;
 var XLSX = {
+  AGREED: "Agreed",
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
     POLICY: "Type of policy and exports",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
-    ELIGIBILITY: "Eligibility"
+    ELIGIBILITY: "Eligibility",
+    DECLARATIONS: "Declarations"
   },
   FIELDS: {
     [FIRST_NAME]: "Applicant first name",
@@ -4442,6 +4491,41 @@ var mapEligibility = (application2) => {
 };
 var map_eligibility_default = mapEligibility;
 
+// generate-xlsx/map-application-to-XLSX/helpers/map-agreed-field/index.ts
+var mapAgreedField = (answer) => {
+  if (answer === true) {
+    return XLSX.AGREED;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_agreed_field_default = mapAgreedField;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
+var {
+  DECLARATIONS: {
+    AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
+    AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2,
+    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
+  }
+} = insurance_default;
+var mapDeclarations = (application2) => {
+  const { declaration } = application2;
+  const mapped = [
+    xlsx_row_default(XLSX.SECTION_TITLES.DECLARATIONS, ""),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
+  ];
+  return mapped;
+};
+var map_declarations_default = mapDeclarations;
+
 // generate-xlsx/map-application-to-XLSX/index.ts
 var mapApplicationToXLSX = (application2) => {
   try {
@@ -4458,7 +4542,9 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
-      ...map_eligibility_default(application2)
+      ...map_eligibility_default(application2),
+      xlsx_row_seperator_default,
+      ...map_declarations_default(application2)
     ];
     return mapped;
   } catch (err) {

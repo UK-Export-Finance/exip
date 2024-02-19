@@ -6,6 +6,7 @@ export interface XLSXTitleRowIndexes {
   EXPORTER_BUSINESS: number;
   BUYER: number;
   ELIGIBILITY: number;
+  DECLARATIONS: number;
 }
 
 export interface XLSXRowIndexes {
