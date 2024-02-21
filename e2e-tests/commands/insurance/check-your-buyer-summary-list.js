@@ -71,11 +71,18 @@ const checkYourBusinessSummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [CONNECTION_WITH_BUYER]: () => {
+  [CONNECTION_WITH_BUYER]: ({ isYes = false }) => {
     const fieldId = CONNECTION_WITH_BUYER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.BUYER[fieldId];
+
+    let expectedValue;
+
+    if (isYes) {
+      expectedValue = FIELD_VALUES.YES;
+    } else {
+      expectedValue = application.BUYER[fieldId];
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -91,31 +98,41 @@ const checkYourBusinessSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [TRADED_WITH_BUYER]: () => {
+  [TRADED_WITH_BUYER]: ({ isYes = false }) => {
     const fieldId = TRADED_WITH_BUYER;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.BUYER[fieldId];
+
+    let expectedValue;
+
+    if (isYes) {
+      expectedValue = FIELD_VALUES.YES;
+    } else {
+      expectedValue = application.BUYER[fieldId];
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [OUTSTANDING_PAYMENTS]: () => {
+  [OUTSTANDING_PAYMENTS]: ({ shouldRender = false, isYes = false }) => {
     const fieldId = OUTSTANDING_PAYMENTS;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.BUYER[fieldId];
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      let expectedValue;
+
+      if (isYes) {
+        expectedValue = FIELD_VALUES.YES;
+      } else {
+        expectedValue = application.BUYER[fieldId];
+      }
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
   },
-  [FAILED_PAYMENTS]: () => {
-    const fieldId = FAILED_PAYMENTS;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.BUYER[fieldId];
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
-  [TOTAL_AMOUNT_OVERDUE]: ({ shouldRender = true }) => {
+  [TOTAL_AMOUNT_OVERDUE]: ({ shouldRender = false }) => {
     const fieldId = TOTAL_AMOUNT_OVERDUE;
 
     if (shouldRender) {
@@ -127,12 +144,31 @@ const checkYourBusinessSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [TOTAL_OUTSTANDING_PAYMENTS]: ({ shouldRender = true }) => {
+  [TOTAL_OUTSTANDING_PAYMENTS]: ({ shouldRender = false }) => {
     const fieldId = TOTAL_OUTSTANDING_PAYMENTS;
 
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
       const expectedValue = formatCurrency(application.BUYER[fieldId], application.BUYER[CURRENCY_CODE]);
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [FAILED_PAYMENTS]: ({ shouldRender = false, isYes = false }) => {
+    const fieldId = FAILED_PAYMENTS;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
+
+      let expectedValue;
+
+      if (isYes) {
+        expectedValue = FIELD_VALUES.YES;
+      } else {
+        expectedValue = application.BUYER[fieldId];
+      }
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
@@ -170,11 +206,18 @@ const checkYourBusinessSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [HAS_BUYER_FINANCIAL_ACCOUNTS]: () => {
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: ({ isYes = false }) => {
     const fieldId = HAS_BUYER_FINANCIAL_ACCOUNTS;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = application.BUYER[fieldId];
+  
+    let expectedValue;
+
+    if (isYes) {
+      expectedValue = FIELD_VALUES.YES;
+    } else {
+      expectedValue = application.BUYER[fieldId];
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },

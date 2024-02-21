@@ -6,17 +6,23 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * completePrepareYourApplicationSectionSingle
  * Runs through the full prepare your application journey for a single policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
- * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
- * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
- * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
- * - policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount
- * - differentPolicyContact: Should submit an application with a different policy contact to the owner
- * - needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
- * - submitCheckYourAnswers: Should click each section's "check your answers" submit button
+ * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
+ * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
+ * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
+ * @param {Boolean} fullPopulatedBuyerTradingHistory
+ * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
+ * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
+ * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount
+ * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner
+ * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
+ * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button
  */
 const completePrepareApplicationSinglePolicyType = ({
   differentTradingAddress = false,
+  hasConnectionToBuyer,
   exporterHasTradedWithBuyer,
+  fullPopulatedBuyerTradingHistory,
+  exporterHasBuyerFinancialAccounts,
   usingBroker,
   policyValueOverMvpMaximum = false,
   differentPolicyContact,
@@ -26,7 +32,10 @@ const completePrepareApplicationSinglePolicyType = ({
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
 
   cy.completeBuyerSection({
+    hasConnectionToBuyer,
     exporterHasTradedWithBuyer,
+    fullPopulatedBuyerTradingHistory,
+    exporterHasBuyerFinancialAccounts,
     submitCheckYourAnswers,
   });
 

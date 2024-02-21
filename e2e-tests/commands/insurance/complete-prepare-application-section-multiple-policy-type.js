@@ -17,6 +17,7 @@ const { POLICY_TYPE } = APPLICATION;
 const completePrepareApplicationMultiplePolicyType = ({
   differentTradingAddress = false,
   exporterHasTradedWithBuyer = false,
+  fullPopulatedBuyerTradingHistory = false,
   usingBroker = false,
   policyValueOverMvpMaximum = false,
   differentPolicyContact = false,
@@ -27,6 +28,7 @@ const completePrepareApplicationMultiplePolicyType = ({
 
   cy.completeBuyerSection({
     exporterHasTradedWithBuyer,
+    fullPopulatedBuyerTradingHistory,
     submitCheckYourAnswers,
   });
 
