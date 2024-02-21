@@ -207,6 +207,7 @@ jobs:
             "check-your-answers/policy/**/*.spec.js",
             "check-your-answers/your-business/**/*.spec.js",
             "check-your-answers/your-buyer/**/*.spec.js",
+            "cookies-consent/**/*.spec.js",
             "dashboard/**/*.spec.js",
             "declarations/anti-bribery/**/*.spec.js",
             "declarations/confidentiality/**/*.spec.js",

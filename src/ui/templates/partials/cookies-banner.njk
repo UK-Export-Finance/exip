@@ -10,7 +10,7 @@
 {% endset %}
 
 {% set acceptHtml %}
-  <p class="govuk-body" data-cy="cookies-accepted-banner-copy">{{ CONTENT_STRINGS.COOKIES_CONSENT.ACCEPTED.COPY_1 }} <a class="govuk-link" href="/cookies" role="button" data-cy="cookies-banner-cookies-link">{{ CONTENT_STRINGS.COOKIES_CONSENT.COOKIES_LINK }}</a> {{ CONTENT_STRINGS.COOKIES_CONSENT.ACCEPTED.COPY_2 }}</p>
+  <p class="govuk-body" data-cy="cookies-accepted-banner-copy">{{ CONTENT_STRINGS.COOKIES_CONSENT.ACCEPTED.COPY_1 }} <a class="govuk-link" href="{{ COOKIES_ROUTE }}" role="button" data-cy="cookies-banner-cookies-link">{{ CONTENT_STRINGS.COOKIES_CONSENT.COOKIES_LINK }}</a> {{ CONTENT_STRINGS.COOKIES_CONSENT.ACCEPTED.COPY_2 }}</p>
 
   {{ govukButton({
     text: CONTENT_STRINGS.COOKIES_CONSENT.HIDE_BUTTON,
@@ -22,7 +22,7 @@
 {% endset %}
 
 {% set rejectHtml %}
-  <p class="govuk-body" data-cy="cookies-rejected-banner-copy">{{ CONTENT_STRINGS.COOKIES_CONSENT.REJECTED.COPY_1 }} <a class="govuk-link" href="/cookies" role="button" data-cy="cookies-banner-cookies-link">{{ CONTENT_STRINGS.COOKIES_CONSENT.COOKIES_LINK }}</a> {{ CONTENT_STRINGS.COOKIES_CONSENT.REJECTED.COPY_2 }}</p>
+  <p class="govuk-body" data-cy="cookies-rejected-banner-copy">{{ CONTENT_STRINGS.COOKIES_CONSENT.REJECTED.COPY_1 }} <a class="govuk-link" href="{{ COOKIES_ROUTE }}" role="button" data-cy="cookies-banner-cookies-link">{{ CONTENT_STRINGS.COOKIES_CONSENT.COOKIES_LINK }}</a> {{ CONTENT_STRINGS.COOKIES_CONSENT.REJECTED.COPY_2 }}</p>
 
   {{ govukButton({
     text: CONTENT_STRINGS.COOKIES_CONSENT.HIDE_BUTTON,
@@ -95,7 +95,7 @@
             },
             {
               "text": CONTENT_STRINGS.COOKIES_CONSENT.QUESTION.VIEW_COOKIES,
-              "href": "/cookies",
+              "href": COOKIES_ROUTE,
               attributes: {
                 "data-cy": "cookies-banner-cookies-link"
               }
