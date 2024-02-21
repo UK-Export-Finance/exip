@@ -1,4 +1,4 @@
-import improveService, { MAXIMUM } from './registration-number';
+import registrationNumber, { MAXIMUM } from './registration-number';
 import BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -27,7 +27,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/validation/ru
       const mockValue = Number(MAXIMUM) + 1;
 
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
-      const response = improveService(mockBody, mockErrors);
+      const response = registrationNumber(mockBody, mockErrors);
 
       const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM);
 
