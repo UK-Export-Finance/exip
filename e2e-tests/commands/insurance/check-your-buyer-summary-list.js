@@ -210,7 +210,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = HAS_BUYER_FINANCIAL_ACCOUNTS;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-  
+
     let expectedValue;
 
     if (isYes) {
