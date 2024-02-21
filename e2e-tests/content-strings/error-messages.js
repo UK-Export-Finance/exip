@@ -310,7 +310,7 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: 'Buyer address cannot be more than 1000 characters',
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.WEBSITE]: {
-          INCORRECT_FORMAT: "Enter the buyer's website in the correct format - for example www.example.com",
+          INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
           ABOVE_MAXIMUM: "Your buyer's company registration number cannot be more than a 100 characters",
