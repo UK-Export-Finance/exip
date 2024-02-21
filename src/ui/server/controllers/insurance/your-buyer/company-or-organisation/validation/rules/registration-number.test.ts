@@ -1,17 +1,23 @@
-import improveService, { MAXIMUM } from './improve-service';
-import { FIELD_IDS } from '../../../../../../constants';
+import improveService, { MAXIMUM } from './registration-number';
+import BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
+import { RequestBody } from '../../../../../../../types';
 
 const {
-  FEEDBACK: { IMPROVEMENT: FIELD_ID },
-} = FIELD_IDS;
+  COMPANY_OR_ORGANISATION: { REGISTRATION_NUMBER: FIELD_ID },
+} = BUYER_FIELD_IDS;
 
-const { [FIELD_ID]: ERROR_MESSAGE } = ERROR_MESSAGES;
+const {
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: {
+      [FIELD_ID]: { ABOVE_MAXIMUM: ERROR_MESSAGE },
+    },
+  },
+} = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/feedback/feedback-form/validation/rules/improve-service', () => {
+describe('controllers/insurance/your-buyer/company-or-organisation/validation/rules/registration-number', () => {
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;
