@@ -1,5 +1,14 @@
 # Changelog
 
+## [2.5.0](https://github.com/UK-Export-Finance/exip/compare/v2.4.3...v2.5.0) (2024-02-19)
+
+
+### Features
+
+* **EMS-2898:** conditional DB tier setup ([50958b5](https://github.com/UK-Export-Finance/exip/commit/50958b5c28e0c3e1b720433b81cb97e023d2d533))
+* **EMS-2898:** trigger test ([404d8e3](https://github.com/UK-Export-Finance/exip/commit/404d8e3aeae06e55e89564022bb5d03fb4339532))
+* **EMS-2989:** improved documentation ([e2eb580](https://github.com/UK-Export-Finance/exip/commit/e2eb580fe610938da969e335185174493c56b737))
+
 ## [2.4.3](https://github.com/UK-Export-Finance/exip/compare/v2.4.2...v2.4.3) (2024-01-15)
 
 
