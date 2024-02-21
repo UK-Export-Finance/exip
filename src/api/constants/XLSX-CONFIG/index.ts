@@ -30,6 +30,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     EXPORTER_BUSINESS: 30,
     BUYER: 49,
     ELIGIBILITY: 59,
+    DECLARATIONS: 70,
   } as XLSXTitleRowIndexes;
 
   const INDEXES = {
@@ -58,6 +59,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     TITLES.EXPORTER_BUSINESS += 1;
     TITLES.BUYER += 1;
     TITLES.ELIGIBILITY += 1;
+    TITLES.DECLARATIONS += 1;
 
     INDEXES.COMPANY_ADDRESS += 1;
     INDEXES.COMPANY_SIC_CODES += 1;
@@ -69,6 +71,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (isUsingBroker) {
     TITLES.BUYER += 3;
     TITLES.ELIGIBILITY += 3;
+    TITLES.DECLARATIONS += 3;
   }
 
   return INDEXES;

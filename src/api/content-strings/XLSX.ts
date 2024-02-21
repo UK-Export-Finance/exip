@@ -24,6 +24,7 @@ const {
 } = YOUR_BUYER;
 
 export const XLSX = {
+  AGREED: 'Agreed',
   SECTION_TITLES: {
     KEY_INFORMATION: 'Key information',
     EXPORTER_CONTACT_DETAILS: 'Exporter contact details',
@@ -31,6 +32,7 @@ export const XLSX = {
     EXPORTER_BUSINESS: 'About your business',
     BUYER: 'Your buyer',
     ELIGIBILITY: 'Eligibility',
+    DECLARATIONS: 'Declarations',
   },
   FIELDS: {
     [FIRST_NAME]: 'Applicant first name',

@@ -7,6 +7,7 @@ import mapPolicy from './map-policy';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
 import mapEligibility from './map-eligibility';
+import mapDeclarations from './map-declarations';
 import { generateSubmittedApplication } from '../../test-helpers';
 import { Application } from '../../types';
 
@@ -46,6 +47,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/index', () => {
       ROW_SEPERATOR,
 
       ...mapEligibility(submittedApplication),
+
+      ROW_SEPERATOR,
+
+      ...mapDeclarations(submittedApplication),
     ];
 
     expect(result).toEqual(expected);
