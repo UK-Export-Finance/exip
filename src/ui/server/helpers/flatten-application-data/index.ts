@@ -32,7 +32,7 @@ export const policyContactMapped = (policyContact: ApplicationPolicyContact) => 
  * @returns {Object} Application as a single level object
  */
 const flattenApplicationData = (application: Application): ApplicationFlat => {
-  const { policy, exportContract, company, broker, business, buyer, sectionReview, declaration, policyContact } = application;
+  const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = application;
   const { buyerTradingHistory, contact, relationship } = buyer;
 
   const flattened = {
@@ -48,19 +48,21 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     submissionDate: application.submissionDate,
     status: application.status,
     buyerCountry: application.eligibility?.buyerCountry?.isoCode,
-    ...policy,
-    ...policy.jointlyInsuredParty,
-    ...exportContract,
-    ...company,
     ...business,
     ...broker,
     ...buyer,
     ...buyerTradingHistory,
+    ...company,
     ...contact,
+    ...getTrueAndFalseAnswers(declaration),
+    ...exportContract,
+    ...nominatedLossPayee,
+    ...getTrueAndFalseAnswers(nominatedLossPayee),
     ...relationship,
+    ...policy,
+    ...policy.jointlyInsuredParty,
     ...policyContactMapped(policyContact),
     ...getTrueAndFalseAnswers(sectionReview),
-    ...getTrueAndFalseAnswers(declaration),
   };
 
   return flattened;

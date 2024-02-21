@@ -6,7 +6,7 @@ describe('server/helpers/flatten-application-data', () => {
   it('should return an application with a flat structure with no nested objects', () => {
     const result = flattenApplicationData(mockApplication);
 
-    const { policy, exportContract, company, broker, business, buyer, sectionReview, declaration, policyContact } = mockApplication;
+    const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = mockApplication;
     const { buyerTradingHistory, contact, relationship } = mockApplication.buyer;
 
     const expected = {
@@ -22,19 +22,21 @@ describe('server/helpers/flatten-application-data', () => {
       submissionDate: mockApplication.submissionDate,
       status: mockApplication.status,
       buyerCountry: mockApplication.eligibility.buyerCountry.isoCode,
-      ...policy,
-      ...policy.jointlyInsuredParty,
-      ...exportContract,
-      ...company,
       ...business,
       ...broker,
       ...buyer,
       ...buyerTradingHistory,
+      ...company,
       ...contact,
+      ...getTrueAndFalseAnswers(declaration),
+      ...exportContract,
+      ...nominatedLossPayee,
+      ...getTrueAndFalseAnswers(nominatedLossPayee),
       ...relationship,
+      ...policy,
+      ...policy.jointlyInsuredParty,
       ...policyContactMapped(policyContact),
       ...getTrueAndFalseAnswers(sectionReview),
-      ...getTrueAndFalseAnswers(declaration),
     };
 
     expect(result).toEqual(expected);

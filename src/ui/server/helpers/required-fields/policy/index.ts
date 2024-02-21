@@ -7,13 +7,19 @@ const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 const {
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-    MULTIPLE,
+    MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+  },
+  EXPORT_VALUE: {
+    MULTIPLE: {
+      TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE
+    },
   },
   TYPE_OF_POLICY,
   NAME_ON_POLICY,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COUNTRY_CODE },
   USING_BROKER,
   BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  LOSS_PAYEE,
 } = POLICY_FIELD_IDS;
 
 const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
@@ -35,7 +41,11 @@ export const getContractPolicyTasks = (policyType?: string): object => {
   }
 
   if (policyType && isMultiplePolicyType(policyType)) {
-    return MULTIPLE;
+    return {
+      TOTAL_MONTHS_OF_COVER,
+      TOTAL_SALES_TO_BUYER,
+      MAXIMUM_BUYER_WILL_OWE,
+    };
   }
 
   return TYPE_OF_POLICY;
@@ -96,6 +106,7 @@ const requiredFields = ({ policyType, jointlyInsuredParty, isUsingBroker }: Requ
   POSITION,
   USING_BROKER,
   ...getBrokerTasks(isUsingBroker),
+  LOSS_PAYEE.IS_APPOINTED,
 ];
 
 export default requiredFields;
