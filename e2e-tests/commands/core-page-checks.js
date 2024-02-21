@@ -93,7 +93,7 @@ const corePageChecks = ({
 
   if (assertCookies) {
   // check analytics cookie banner
-    cy.checkAnalyticsCookiesConsentAndAccept();
+    cy.checkAnalyticsCookiesConsentAndAccept({ isInsurancePage });
     cy.rejectAnalyticsCookies();
   }
 
