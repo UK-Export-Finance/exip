@@ -33,11 +33,12 @@ interface CorePageVariablesInput extends CorePageVariablesInitialInput {
 }
 
 interface CorePageVariables {
-  CONTENT_STRINGS: PageVariablesContentStrings;
   BACK_LINK?: string;
+  CONTENT_STRINGS: PageVariablesContentStrings;
+  COOKIES_ROUTE?: string;
+  DATA_CY: PageVariablesDataCy;
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
-  DATA_CY: PageVariablesDataCy;
 }
 
 interface SingleInputPageVariablesInitialInput {

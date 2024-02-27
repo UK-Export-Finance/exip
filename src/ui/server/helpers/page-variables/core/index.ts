@@ -9,9 +9,9 @@ import {
   LINKS,
   PRODUCT as PRODUCT_CONTENT_STRINGS,
 } from '../../../content-strings';
-import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
 import { ROUTES } from '../../../constants';
 import isInsuranceRoute from '../../is-insurance-route';
+import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
 
 const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
@@ -26,16 +26,17 @@ const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
  */
 const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER }: CorePageVariablesInput): CorePageVariables => {
   /**
-   * checks if rhe ORIGINAL_URL is an insurance route or not
-   * if insurance - either contains insurance or is undefined
-   * if is not undefined and does not contain insurance, then is a quote route
+   * Check if the ORIGINAL_URL is an insurance route or not.
+   * If insurance - ORIGINAL_URL contains "insurance".
+   * Otherwise, ORIGINAL_URL is a "quote" route.
    */
   const insuranceRoute = isInsuranceRoute(ORIGINAL_URL);
 
+  let COOKIES_ROUTE = ROUTES.COOKIES;
+  let FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK;
   let FOOTER = QUOTE_FOOTER;
   let PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.QUOTE };
   let START_ROUTE = ROUTES.QUOTE.START;
-  let FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK;
 
   if (USE_GENERIC_HEADER) {
     PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.GENERIC };
@@ -46,10 +47,11 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
    * this sets the footer, product and start route to be insurance ones
    */
   if (insuranceRoute) {
+    COOKIES_ROUTE = ROUTES.INSURANCE.COOKIES;
+    FEEDBACK_ROUTE = ROUTES.INSURANCE.FEEDBACK;
     FOOTER = INSURANCE_FOOTER;
     PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.APPLICATION };
     START_ROUTE = ROUTES.INSURANCE.START;
-    FEEDBACK_ROUTE = ROUTES.INSURANCE.FEEDBACK;
   }
 
   return {
@@ -58,15 +60,16 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
       BUTTONS,
       COOKIES_CONSENT,
       ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-      HEADER,
       FOOTER,
+      HEADER,
       LINKS,
       PHASE_BANNER,
       PRODUCT,
     },
     BACK_LINK,
-    START_ROUTE,
+    COOKIES_ROUTE,
     FEEDBACK_ROUTE,
+    START_ROUTE,
     DATA_CY: {
       HEADING: 'heading',
       BACK_LINK: 'back-link',
