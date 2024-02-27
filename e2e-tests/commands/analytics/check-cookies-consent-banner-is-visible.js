@@ -17,13 +17,7 @@ const checkCookiesConsentBannerIsVisible = ({ isInsurancePage }) => {
 
   cy.checkText(partials.cookieBanner.question.rejectButton(), COOKIES_CONSENT.QUESTION.REJECT_BUTTON);
 
-  let expectedLink;
-
-  if (isInsurancePage) {
-    expectedLink = ROUTES.INSURANCE.COOKIES;
-  } else {
-    expectedLink = ROUTES.COOKIES;
-  }
+  let expectedLink = isInsurancePage ? ROUTES.INSURANCE.COOKIES : ROUTES.COOKIES;
 
   cy.checkLink(
     partials.cookieBanner.cookiesLink(),
