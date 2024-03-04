@@ -10,7 +10,6 @@ export const ROOT = {
     ITEMS: [
       'what your estimated annual turnover is for this year',
       'if you have any credit management processes',
-      'about any other credit insurance you have in place',
     ],
   },
   OUTRO: 'It should only take a few minutes to complete.',
