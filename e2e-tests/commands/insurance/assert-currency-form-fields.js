@@ -1,5 +1,5 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
-import { field, radios, autoCompleteField } from '../../pages/shared';
+import { field as fieldSelector, radios, autoCompleteField } from '../../pages/shared';
 import {
   EUR,
   GBP,
@@ -52,8 +52,8 @@ const assertCurrencyFormFields = ({
   alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE,
   errors,
 }) => ({
-  legend: legend ? () => cy.checkText(field(fieldId).legend(), legend) : null,
-  hint: hint ? () => cy.checkText(field(fieldId).hint(), hint) : null,
+  legend: legend ? () => cy.checkText(fieldSelector(fieldId).legend(), legend) : null,
+  hint: hint ? () => cy.checkText(fieldSelector(fieldId).hint(), hint) : null,
   radios: () => {
     const option1 = currencyRadio({ fieldId, currency: EUR.isoCode });
     const option2 = currencyRadio({ fieldId, currency: GBP.isoCode });
@@ -91,12 +91,14 @@ const assertCurrencyFormFields = ({
   doesNotRenderSupportedCurrencies: () => {
     cy.clickAlternativeCurrencyRadioOption();
 
-    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), 'not a currency');
+    const field = autoCompleteField(alternativeCurrencyFieldId);
+
+    checkAutocompleteInput.rendersNoResultsMessage(field, 'not a currency');
     // should not render radio values in alternate currency input
-    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), GBP.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), USD.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), JPY.isoCode);
-    checkAutocompleteInput.rendersNoResultsMessage(autoCompleteField(alternativeCurrencyFieldId), EUR.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(field, GBP.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(field, USD.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(field, JPY.isoCode);
+    checkAutocompleteInput.rendersNoResultsMessage(field, EUR.isoCode);
   },
   rendersAlternativeCurrencies: () => {
     cy.clickAlternativeCurrencyRadioOption();
@@ -119,7 +121,7 @@ const assertCurrencyFormFields = ({
     );
 
     cy.checkText(
-      field(alternativeCurrencyFieldId).errorMessage(),
+      fieldSelector(alternativeCurrencyFieldId).errorMessage(),
       `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`,
     );
   },
