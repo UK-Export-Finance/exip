@@ -1,5 +1,5 @@
-import { field } from '../../../../../../pages/shared';
-import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
+import { field } from '../../../../../../../pages/shared';
+import { PAGES, ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
   ROUTES,
   COMPANIES_HOUSE_NUMBER as VALID_COMPANIES_HOUSE_NUMBER,
@@ -10,9 +10,9 @@ import {
   COMPANIES_HOUSE_NUMBER_WITH_SPACES,
   COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE,
   COMPANIES_HOUSE_NUMBER_NOT_FOUND,
-} from '../../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+} from '../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_NUMBER;
 
