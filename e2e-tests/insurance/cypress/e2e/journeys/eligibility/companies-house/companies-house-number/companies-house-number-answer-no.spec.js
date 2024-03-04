@@ -1,6 +1,6 @@
-import { backLink } from '../../../../../../pages/shared';
-import { LINKS } from '../../../../../../content-strings';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { backLink } from '../../../../../../../pages/shared';
+import { LINKS } from '../../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   ELIGIBILITY: { COMPANIES_HOUSE_NUMBER, NO_COMPANIES_HOUSE_NUMBER },

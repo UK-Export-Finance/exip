@@ -1,5 +1,5 @@
-import { COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../constants/examples';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { COMPANIES_HOUSE_NUMBER_NO_FINANCIAL_YEAR_END_DATE } from '../../../../../../../constants/examples';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   START,
