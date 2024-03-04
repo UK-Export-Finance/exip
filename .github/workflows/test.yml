@@ -210,7 +210,7 @@ jobs:
             "declarations/confidentiality/**/*.spec.js",
             "declarations/confirmation-and-acknowledgements/**/*.spec.js",
             "declarations/how-your-data-will-be-used/**/*.spec.js",
-            "eligibility/**/*.spec.js",
+            "eligibility/*.spec.js",
             "export-contract/about-goods-or-services/**/*.spec.js",
             "feedback/**/*.spec.js",
             "no-access-application-submitted/**/*.spec.js",
