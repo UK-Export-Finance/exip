@@ -309,24 +309,11 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: "Enter the buyer's address",
           ABOVE_MAXIMUM: 'Buyer address cannot be more than 1000 characters',
         },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.COUNTRY]: {
-          IS_EMPTY: "Select the buyer's country",
-        },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.WEBSITE]: {
-          INCORRECT_FORMAT: "Enter the buyer's website in the correct format - for example www.example.com",
+          INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",
         },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.FIRST_NAME]: {
-          IS_EMPTY: "Enter the first name of your contact at the buyer's company or organisation",
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.LAST_NAME]: {
-          IS_EMPTY: "Enter the last name of your contact at the buyer's company or organisation",
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.POSITION]: {
-          IS_EMPTY: "Enter the position of your contact at the buyer's company or organisation",
-        },
-        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.EMAIL]: {
-          IS_EMPTY: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
-          INCORRECT_FORMAT: "Enter an email address for your contact at the buyer's company or organisation in the correct format, like name@example.com",
+        [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
+          ABOVE_MAXIMUM: "Your buyer's company registration number cannot be more than a 100 characters",
         },
       },
       [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER]: {
