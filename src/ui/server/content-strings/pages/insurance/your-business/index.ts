@@ -10,11 +10,7 @@ const EXPORTER_BUSINESS = {
     INTRO: 'In this section, we want to understand more about your business and the types of products or services you export.',
     LIST: {
       INTRO: "We'll ask you to tell us:",
-      ITEMS: [
-        'what your estimated annual turnover is for this year',
-        'if you have any credit management processes',
-        'about any other credit insurance you have in place',
-      ],
+      ITEMS: ['what your estimated annual turnover is for this year', 'if you have any credit management processes'],
     },
     OUTRO: 'It should only take a few minutes to complete.',
   },

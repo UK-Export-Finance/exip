@@ -1,6 +1,6 @@
-import { companiesHouseUnavailablePage } from '../../../../../../pages/insurance/eligibility';
-import { PAGES } from '../../../../../../content-strings';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { companiesHouseUnavailablePage } from '../../../../../../../pages/insurance/eligibility';
+import { PAGES } from '../../../../../../../content-strings';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ELIGIBILITY.COMPANIES_HOUSE_UNAVAILABLE;
 
