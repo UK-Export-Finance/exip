@@ -1,4 +1,4 @@
-const ROOT = '/insurance-policy';
+const ROOT = '/policy';
 const BROKER_ROOT = `${ROOT}/broker`;
 const BROKER_DETAILS_ROOT = `${ROOT}/broker-details`;
 const BROKER_CONFIRM_ADDRESS_ROOT = `${ROOT}/broker-confirm-address`;
