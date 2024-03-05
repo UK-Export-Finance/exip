@@ -3,7 +3,7 @@ import {
   completeAndSubmitExporterLocationForm,
   completeAndSubmitUkContentForm,
 } from '../../../../../../commands/quote/forms';
-import { countryInput, field, summaryList } from '../../../../../../pages/shared';
+import { autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { USD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
@@ -30,8 +30,8 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
   before(() => {
     cy.login();
 
-    cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), 'Kenya');
-    const results = countryInput.field(BUYER_COUNTRY).results();
+    cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), 'Kenya');
+    const results = autoCompleteField(BUYER_COUNTRY).results();
     results.first().click();
     cy.clickSubmitButton();
 

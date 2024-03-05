@@ -1,4 +1,4 @@
-import { backLink, countryInput } from '../../../../../../pages/shared';
+import { backLink, autoCompleteField } from '../../../../../../pages/shared';
 import { LINKS, PAGES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { COUNTRY_QUOTE_SUPPORT } from '../../../../../../fixtures/countries';
@@ -72,7 +72,7 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
     });
 
     describe('when submitting with a supported country', () => {
-      const field = countryInput.field(FIELD_ID);
+      const field = autoCompleteField(FIELD_ID);
 
       beforeEach(() => {
         cy.keyboardInput(field.input(), supportedCountryName);
