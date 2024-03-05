@@ -1,5 +1,5 @@
 import hasFormData from '../../../../../helpers/has-form-data';
-import mapSubmittedData from '../../map-submitted-data/jointly-insured-party';
+import mapSubmittedData from '../../map-submitted-data/loss-payee';
 import save from '../../save-data/nominated-loss-payee';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
