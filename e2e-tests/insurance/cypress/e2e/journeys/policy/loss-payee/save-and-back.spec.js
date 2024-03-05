@@ -80,7 +80,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // go through 6 policy forms.
+      // go through 7 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 7 });
 
       cy.assertYesRadioOptionIsChecked();
@@ -105,7 +105,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
 
       cy.startInsurancePolicySection({});
 
-      // go through 6 policy forms.
+      // go through 7 policy forms.
       cy.clickSubmitButtonMultipleTimes({ count: 7 });
 
       cy.assertNoRadioOptionIsChecked();

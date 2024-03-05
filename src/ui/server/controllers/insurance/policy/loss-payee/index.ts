@@ -39,8 +39,9 @@ export const HTML_FLAGS = {
 };
 
 /**
- * PAGE_VARIABLES
- * Field ID and page content strings.
+ * pageVariables
+ * @param {Number} referenceNumber
+ * @returns {Object} with FIELD_ID, PAGE_CONTENT_STRINGS, save and back url and FIELD_HINT
  */
 export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,
