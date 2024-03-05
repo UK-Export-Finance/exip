@@ -16,8 +16,7 @@ const {
 
 const {
   INSURANCE_ROOT,
-  ALL_SECTIONS,
-  POLICY: { LOSS_PAYEE_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -43,10 +42,12 @@ export const HTML_FLAGS = {
  * PAGE_VARIABLES
  * Field ID and page content strings.
  */
-export const PAGE_VARIABLES = {
+export const pageVariables = (referenceNumber: number) => ({
   FIELD_ID,
   PAGE_CONTENT_STRINGS,
-};
+  FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_SAVE_AND_BACK}`,
+});
 
 /**
  * Render the Loss payee page
@@ -63,14 +64,14 @@ export const get = (req: Request, res: Response) => {
 
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({
-      ...PAGE_VARIABLES,
+      FIELD_ID,
+      PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
       HTML_FLAGS,
     }),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     applicationAnswer: application.nominatedLossPayee[IS_APPOINTED],
-    FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`,
   });
 };
 
@@ -97,13 +98,13 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({
-        ...PAGE_VARIABLES,
+        FIELD_ID,
+        PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
         HTML_FLAGS,
       }),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
-      SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${application.referenceNumber}${ALL_SECTIONS}`,
       submittedValues: payload,
       validationErrors,
     });

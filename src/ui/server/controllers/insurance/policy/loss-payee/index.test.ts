@@ -1,4 +1,4 @@
-import { FIELD_ID, ERROR_MESSAGE, PAGE_CONTENT_STRINGS, TEMPLATE, PAGE_VARIABLES, HTML_FLAGS, get, post } from '.';
+import { FIELD_ID, ERROR_MESSAGE, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, pageVariables, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
@@ -18,8 +18,7 @@ const {
 
 const {
   INSURANCE_ROOT,
-  ALL_SECTIONS,
-  POLICY: { LOSS_PAYEE_DETAILS_ROOT, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -83,9 +82,11 @@ describe('controllers/insurance/policy/loss-payee', () => {
       const expected = {
         FIELD_ID,
         PAGE_CONTENT_STRINGS,
+        FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_SAVE_AND_BACK}`,
       };
 
-      expect(PAGE_VARIABLES).toEqual(expected);
+      expect(pageVariables(referenceNumber)).toEqual(expected);
     });
   });
 
@@ -95,14 +96,14 @@ describe('controllers/insurance/policy/loss-payee', () => {
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...singleInputPageVariables({
-          ...PAGE_VARIABLES,
+          FIELD_ID,
+          PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         applicationAnswer: mockApplication.nominatedLossPayee[IS_APPOINTED],
-        FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       });
     });
 
@@ -138,13 +139,13 @@ describe('controllers/insurance/policy/loss-payee', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({
-            ...PAGE_VARIABLES,
+            FIELD_ID,
+            PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
             HTML_FLAGS,
           }),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          FIELD_HINT: POLICY_FIELDS.LOSS_PAYEE[FIELD_ID].HINT,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
           submittedValues: payload,
           validationErrors,
         });
