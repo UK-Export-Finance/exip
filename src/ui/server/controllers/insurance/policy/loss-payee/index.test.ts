@@ -77,7 +77,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
     });
   });
 
-  describe('PAGE_VARIABLES', () => {
+  describe('pageVariables', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID,
