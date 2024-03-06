@@ -158,7 +158,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer, 1);
       });
     });
   });
@@ -198,8 +198,8 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
         summaryList.field(NAME).value().should('not.exist');
         summaryList.field(NAME).changeLink().should('not.exist');
 
-        summaryList.field(EMAIL).key().should('not.exist');
-        summaryList.field(EMAIL).value().should('not.exist');
+        summaryList.field(EMAIL).key().eq(1).should('not.exist');
+        summaryList.field(EMAIL).value().eq(1).should('not.exist');
         summaryList.field(EMAIL).changeLink().should('not.exist');
 
         summaryList.field(FULL_ADDRESS).key().should('not.exist');

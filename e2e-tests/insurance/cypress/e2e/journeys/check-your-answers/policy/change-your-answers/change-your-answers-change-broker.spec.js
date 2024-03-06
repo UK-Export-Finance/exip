@@ -196,7 +196,8 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        // 1 as is the second email field on the page
+        cy.checkChangeAnswerRendered(fieldVariables, 1);
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -238,8 +239,8 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
         summaryList.field(NAME).value().should('not.exist');
         summaryList.field(NAME).changeLink().should('not.exist');
 
-        summaryList.field(EMAIL).key().should('not.exist');
-        summaryList.field(EMAIL).value().should('not.exist');
+        summaryList.field(EMAIL).key().eq(1).should('not.exist');
+        summaryList.field(EMAIL).value().eq(1).should('not.exist');
         summaryList.field(EMAIL).changeLink().should('not.exist');
 
         summaryList.field(FULL_ADDRESS).key().should('not.exist');

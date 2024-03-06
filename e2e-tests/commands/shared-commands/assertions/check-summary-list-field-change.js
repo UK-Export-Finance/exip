@@ -14,14 +14,22 @@ export const checkChangeLinkUrl = (fieldVariables, referenceNumber) => {
 /**
  * checks if value is set in summary list
  * @param {Object} fieldVariables
+ * @param {Number} fieldNumber eg the first or second answer of identical field_id'd rows
  */
-export const checkChangeAnswerRendered = (fieldVariables) => {
+export const checkChangeAnswerRendered = (fieldVariables, fieldNumber) => {
   const {
     newValue, fieldId, summaryList,
   } = fieldVariables;
 
-  cy.checkText(
-    summaryList.field(fieldId).value(),
-    newValue,
-  );
+  if (fieldNumber) {
+    cy.checkText(
+      summaryList.field(fieldId).value().eq(fieldNumber),
+      newValue,
+    );
+  } else {
+    cy.checkText(
+      summaryList.field(fieldId).value(),
+      newValue,
+    );
+  }
 };
