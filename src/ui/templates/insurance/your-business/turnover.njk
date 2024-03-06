@@ -70,7 +70,7 @@
 
           {{ monetaryValueInput.render({
             fieldId: annualTurnoverId,
-            currencyPrefixSymbol: annualTurnover.PREFIX,
+            currencyPrefixSymbol: CURRENCY_PREFIX_SYMBOL,
             submittedValue: submittedValues[annualTurnoverId] or application.business[annualTurnoverId],
             validationError: validationErrors.errorList[annualTurnoverId]
           }) }}

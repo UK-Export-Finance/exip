@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse, 
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -213,6 +213,30 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
         const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is `check`", () => {
+        it(`should redirect to ${TURNOVER_CHANGE}`, async () => {
+          req.originalUrl = TURNOVER_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${TURNOVER_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = TURNOVER_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
