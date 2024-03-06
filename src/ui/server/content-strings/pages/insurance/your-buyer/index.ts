@@ -5,15 +5,11 @@ const SHARED = {
 const ROOT = {
   ...SHARED,
   PAGE_TITLE: 'Who is your buyer?',
-  INTRO: "Next we'll ask you questions about your buyer and whether you've worked with them in the past.",
+  INTRO: "Next we'll ask you questions about your buyer. This includes:",
   LIST: {
-    INTRO: 'We may also ask you to upload some documents. These are:',
-    ITEMS: [
-      'your trading history (for example, transactions with them over the last 12 months)',
-      "any credit insurance you've previously held with them",
-      "records of your buyer's financial accounts (for example, management reports)",
-    ],
-    OUTRO: "You don't have to provide these if you don't have them, or you would prefer not to share them.",
+    ITEMS: ["if you're connected to them in any way", "whether you've worked with them in the past", "if you've held credit insurance for them previously "],
+    OUTRO:
+      "We'll also ask if you have access to their financial accounts. You don't have to provide them if you don't have them, or you would prefer not to share them.",
   },
   OUTRO: 'However, they will make it easier for us to process your application and we may ask you to provide them later on.',
 };
