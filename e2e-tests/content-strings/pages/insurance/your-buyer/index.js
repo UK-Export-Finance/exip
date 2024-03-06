@@ -10,7 +10,7 @@ export const ROOT = {
     ITEMS: [
       "if you're connected to them in any way",
       "whether you've worked with them in the past",
-      "if you've held credit insurance for them previously ",
+      "if you've held credit insurance for them previously",
     ],
     OUTRO: "We'll also ask if you have access to their financial accounts. You don't have to provide them if you don't have them, or you would prefer not to share them.",
   },
