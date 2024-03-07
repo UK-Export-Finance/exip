@@ -108,7 +108,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -197,7 +197,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
         // 1 as is the second email field on the page
-        cy.checkChangeAnswerRendered(fieldVariables, 1);
+        cy.checkChangeAnswerRendered({ fieldVariables, index: 1 });
 
         cy.checkTaskStatusCompleted(status());
       });
