@@ -2,7 +2,11 @@ import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import field from '../../pages/shared/field';
 
-const { LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY } } = POLICY_FIELD_IDS;
+const {
+  LOSS_PAYEE_DETAILS: {
+    NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY,
+  },
+} = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
 
