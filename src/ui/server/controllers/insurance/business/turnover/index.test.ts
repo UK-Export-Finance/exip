@@ -13,7 +13,7 @@ import mapAndSave from '../map-and-save/turnover';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
 
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE } = BUSINESS_FIELD_IDS.TURNOVER;
 
@@ -200,6 +200,34 @@ describe('controllers/insurance/business/turnover', () => {
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
+
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+    });
   });
 
   describe('post', () => {
@@ -293,6 +321,34 @@ describe('controllers/insurance/business/turnover', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

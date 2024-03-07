@@ -12,6 +12,7 @@ import mapAndSave from '../map-and-save/turnover';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
+import isPopulatedArray from '../../../../helpers/is-populated-array';
 import api from '../../../../api';
 import { Request, Response, Currency } from '../../../../../types';
 
@@ -42,6 +43,18 @@ const {
 
 const { TURNOVER: TURNOVER_FIELDS } = FIELDS;
 
+/**
+ * pageVariables for turnover page
+ * When is changeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHANGE
+ * when is checkAndChangeRoute, then alternative currency url should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+ * else should be ALTERNATIVE_CURRENCY
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array<Currency>} currencies: Array of currencies
+ * @param {String} currencyCode: Provided currency code
+ * @param {Boolean} changeRoute: req.originalUrl is a change route
+ * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check-and-change route
+ * @returns {Object} pageVariables
+ */
 const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string, changeRoute?: boolean, checkAndChangeRoute?: boolean) => {
   const currency = getCurrencyByCode(currencies, currencyCode);
 
@@ -95,6 +108,10 @@ const get = async (req: Request, res: Response) => {
     const { referenceNumber, business } = application;
 
     const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+
+    if (!isPopulatedArray(supportedCurrencies)) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
 
     let isChange;
     let isCheckAndChange;
@@ -180,6 +197,10 @@ const post = async (req: Request, res: Response) => {
       const { referenceNumber: applicationReferenceNumber, business } = application;
 
       const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+
+      if (!isPopulatedArray(supportedCurrencies)) {
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
 
       const generatedPageVariables = pageVariables(
         applicationReferenceNumber,
