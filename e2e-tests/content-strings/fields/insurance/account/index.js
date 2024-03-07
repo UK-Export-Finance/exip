@@ -18,7 +18,7 @@ const PASSWORD_HINT = {
 export const ACCOUNT_FIELDS = {
   MAXIMUM: {
     NAME: {
-      CHARACTERS: 300,
+      CHARACTERS: 100,
     },
   },
   [FIRST_NAME]: {

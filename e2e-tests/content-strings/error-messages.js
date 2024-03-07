@@ -299,6 +299,13 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
         IS_EMPTY: 'Select if you are appointing a loss payee',
       },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.NAME]: {
+        IS_EMPTY: 'Enter the name of the loss payee',
+        ABOVE_MAXIMUM: 'The name of the loss payee cannot be more than 100  characters',
+      },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.LOCATION]: {
+        IS_EMPTY: 'Select where your loss payee is located',
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
