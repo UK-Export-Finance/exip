@@ -1,6 +1,7 @@
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
@@ -16,6 +17,8 @@ const {
   NAME_ON_POLICY: { NAME },
   USING_BROKER,
 } = POLICY_FIELD_IDS;
+
+const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -64,6 +67,10 @@ context('Insurance - Check your answers - Policy - Single contract policy - Diff
 
   it(`should render a ${NAME} summary list row`, () => {
     checkSummaryList[NAME]({ sameName: false });
+  });
+
+  it(`should render a ${EMAIL} summary list row`, () => {
+    checkSummaryList[EMAIL]({});
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {

@@ -102,7 +102,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
@@ -141,7 +141,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
@@ -180,7 +180,7 @@ context('Insurance - Check your answers - Nature of your Business - Your busines
 
       it('should render the new answer', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
