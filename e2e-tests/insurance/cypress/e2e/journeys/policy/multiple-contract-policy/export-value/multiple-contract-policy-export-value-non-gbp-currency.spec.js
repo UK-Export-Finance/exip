@@ -2,6 +2,7 @@ import { field } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { PAGES } from '../../../../../../../content-strings';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { USD, SYMBOLS } from '../../../../../../../fixtures/currencies';
 
@@ -11,6 +12,7 @@ const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
     MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
+    MULTIPLE_CONTRACT_POLICY,
   },
 } = INSURANCE_ROUTES;
 
@@ -23,6 +25,8 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
+const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -30,6 +34,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Multiple contract policy - Export value page - Non-GBP (supported) currency', () => {
   let referenceNumber;
   let url;
+  let multipleContractPolicyUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -43,6 +48,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE}`;
+      multipleContractPolicyUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 
       cy.assertUrl(url);
     });
@@ -74,6 +80,13 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
 
     it(`should render a ${MAXIMUM_BUYER_WILL_OWE} ${USD.name} prefix`, () => {
       cy.checkText(field(MAXIMUM_BUYER_WILL_OWE).prefix(), SYMBOLS.USD);
+    });
+
+    it('should prepopulate the radio on the multiple contract value page', () => {
+      cy.navigateToUrl(multipleContractPolicyUrl);
+
+      const fieldId = `${CURRENCY_CODE}-${USD.isoCode}`;
+      cy.assertRadioOptionIsChecked(field(fieldId).input());
     });
   });
 });
