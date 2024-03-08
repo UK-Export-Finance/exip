@@ -21,15 +21,14 @@ export const checkChangeAnswerRendered = ({ fieldVariables, index }) => {
     newValue, fieldId, summaryList,
   } = fieldVariables;
 
+  let selector = summaryList.field(fieldId).value();
+
   if (index) {
-    cy.checkText(
-      summaryList.field(fieldId).value().eq(index),
-      newValue,
-    );
-  } else {
-    cy.checkText(
-      summaryList.field(fieldId).value(),
-      newValue,
-    );
+    selector = selector.eq(index);
   }
+
+  cy.checkText(
+    selector,
+    newValue,
+  );
 };
