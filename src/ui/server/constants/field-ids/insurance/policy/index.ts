@@ -70,6 +70,11 @@ export const POLICY = {
     IS_LOCATED_IN_UK: 'isLocatedInUk',
     IS_LOCATED_INTERNATIONALLY: 'isLocatedInternationally',
   },
+  BANK_DETAILS: {
+    SORT_CODE: 'sortCode',
+    ACCOUNT_NUMBER: 'accountNumber',
+  },
+  BANK_ADDRESS: 'bankAddress',
 };
 
 export default POLICY;

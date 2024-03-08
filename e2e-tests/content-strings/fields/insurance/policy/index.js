@@ -27,6 +27,7 @@ const {
       IS_LOCATED_IN_UK,
       IS_LOCATED_INTERNATIONALLY,
     },
+    BANK_DETAILS: { SORT_CODE, ACCOUNT_NUMBER },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -275,5 +276,19 @@ export const POLICY_FIELDS = {
         },
       },
     },
+  },
+  BANK_DETAILS: {
+    [SORT_CODE]: {
+      LABEL: 'Sort code',
+      HINT: 'Must be 6 digits long',
+    },
+    [ACCOUNT_NUMBER]: {
+      LABEL: 'Account number',
+      HINT: 'Must be between 6 and 8 digits long',
+    },
+  },
+  BANK_ADDRESS: {
+    LABEL: 'Bank address',
+    MAXIMUM: 300,
   },
 };

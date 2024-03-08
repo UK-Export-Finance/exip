@@ -1,0 +1,151 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      {{ govukHint({
+        text: CONTENT_STRINGS.HINT,
+        classes: "govuk-!-margin-bottom-5",
+        attributes: {
+          "data-cy": "bank-details-hint"
+        }
+      }) }}
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.SORT_CODE.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.SORT_CODE.ID + '-label',
+              'data-cy': FIELDS.SORT_CODE.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.SORT_CODE.HINT,
+            attributes: {
+              'data-cy': FIELDS.SORT_CODE.ID + '-hint'
+            }
+          },
+          classes: "govuk-input--width-10",
+          attributes: {
+            'data-cy': FIELDS.SORT_CODE.ID + '-input'
+          },
+          id: FIELDS.SORT_CODE.ID,
+          name: FIELDS.SORT_CODE.ID,
+          value: submittedValues[FIELDS.SORT_CODE.ID] or application.policy[FIELDS.SORT_CODE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.SORT_CODE.ID] and {
+            text: validationErrors.errorList[FIELDS.SORT_CODE.ID].text,
+            attributes: {
+              "data-cy": FIELDS.SORT_CODE.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukInput({
+          label: {
+            text: FIELDS.ACCOUNT_NUMBER.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
+            attributes: {
+              id: FIELDS.ACCOUNT_NUMBER.ID + '-label',
+              'data-cy': FIELDS.ACCOUNT_NUMBER.ID + '-label'
+            }
+          },
+          hint: {
+            text: FIELDS.ACCOUNT_NUMBER.HINT,
+            attributes: {
+              'data-cy': FIELDS.ACCOUNT_NUMBER.ID + '-hint'
+            }
+          },
+          classes: "govuk-input--width-10",
+          attributes: {
+            'data-cy': FIELDS.ACCOUNT_NUMBER.ID + '-input'
+          },
+          id: FIELDS.ACCOUNT_NUMBER.ID,
+          name: FIELDS.ACCOUNT_NUMBER.ID,
+          value: submittedValues[FIELDS.ACCOUNT_NUMBER.ID] or application.policy[FIELDS.ACCOUNT_NUMBER.ID],
+          errorMessage: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID] and {
+            text: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID].text,
+            attributes: {
+              "data-cy": FIELDS.ACCOUNT_NUMBER.ID + "-error-message"
+            }
+          }
+        }) }}
+
+        {{ govukCharacterCount({
+          name: FIELDS.BANK_ADDRESS.ID,
+          id: FIELDS.BANK_ADDRESS.ID,
+          label: {
+            text: FIELDS.BANK_ADDRESS.LABEL,
+            classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-5",
+            attributes: {
+              'data-cy': FIELDS.BANK_ADDRESS.ID + '-label',
+              id: FIELDS.BANK_ADDRESS.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.BANK_ADDRESS.ID
+          },
+          maxlength: FIELDS.BANK_ADDRESS.MAXIMUM,
+          classes: "govuk-input--width-20",
+          value: submittedValues[FIELDS.BANK_ADDRESS.ID] or application.policy[FIELDS.BANK_ADDRESS.ID],
+          errorMessage: validationErrors.errorList[FIELDS.BANK_ADDRESS.ID] and {
+            text: validationErrors.errorList[FIELDS.BANK_ADDRESS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.BANK_ADDRESS.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+
+  </form>
+
+{% endblock %}

@@ -45,6 +45,8 @@ const {
         EMAIL,
         FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
+      BANK_DETAILS: { ACCOUNT_NUMBER, SORT_CODE },
+      BANK_ADDRESS,
     },
     EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
@@ -136,6 +138,9 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+    [ACCOUNT_NUMBER]: '123456',
+    [SORT_CODE]: '123456',
+    [BANK_ADDRESS]: 'Mock address',
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [COMPANY_NAME]: 'Mock jointly insured company name',

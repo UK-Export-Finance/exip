@@ -6,6 +6,7 @@ const NAME_ON_POLICY_ROOT = `${ROOT}/contact`;
 const DIFFERENT_NAME_ON_POLICY_ROOT = `${ROOT}/contact-details`;
 const LOSS_PAYEE_ROOT = `${ROOT}/loss-payee`;
 const LOSS_PAYEE_DETAILS_ROOT = `${ROOT}/loss-payee-details`;
+const LOSS_PAYEE_BANK_DETAILS_ROOT = `${ROOT}/loss-payee-bank-details`;
 
 export const POLICY = {
   ROOT,
@@ -56,5 +57,9 @@ export const POLICY = {
   BROKER_CONFIRM_ADDRESS_ROOT,
   LOSS_PAYEE_ROOT,
   LOSS_PAYEE_DETAILS_ROOT,
+  LOSS_PAYEE_BANK_DETAILS_ROOT,
+  LOSS_PAYEE_BANK_DETAILS_ROOT_SAVE_AND_BACK: `${LOSS_PAYEE_BANK_DETAILS_ROOT}/save-and-back`,
+  LOSS_PAYEE_BANK_DETAILS_ROOT_CHANGE: `${LOSS_PAYEE_BANK_DETAILS_ROOT}/change`,
+  LOSS_PAYEE_BANK_DETAILS_ROOT_CHECK_AND_CHANGE: `${LOSS_PAYEE_BANK_DETAILS_ROOT}/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };
