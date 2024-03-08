@@ -81,13 +81,14 @@ const positionField = (answers: ApplicationPolicyContact, referenceNumber: numbe
  * @param {ApplicationPolicyContact} answers: submitted policyContact data
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @param {Boolean} shouldRenderChangeLink: if renders change link - provided by answer to IS_SAME_AS_OWNER - if IS_SAME_AS_OWNER - no change link
  * @returns {Object} fieldGroupItem for name on email
  */
-const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean) =>
+const emailField = (answers: ApplicationPolicyContact, referenceNumber: number, checkAndChange: boolean, shouldRenderChangeLink: boolean) =>
   fieldGroupItem(
     {
       field: getFieldById(FIELDS.DIFFERENT_NAME_ON_POLICY, EMAIL),
-      renderChangeLink: true,
+      renderChangeLink: shouldRenderChangeLink,
       href: generateChangeLink(DIFFERENT_NAME_ON_POLICY_CHANGE, DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE, `#${EMAIL}-label`, referenceNumber, checkAndChange),
     },
     answers[EMAIL],
@@ -104,12 +105,9 @@ const generatePolicyContactFields = (answers: ApplicationPolicyContact, referenc
   const fields = [nameOnPolicyField(answers, referenceNumber, checkAndChange)] as Array<SummaryListItemData>;
 
   /**
-   * If IS_SAME_AS_OWNER is false,
-   * add email field.
+   * if answers[IS_SAME_AS_OWNER], then change link should not be rendered so inverse passed
    */
-  if (!answers[IS_SAME_AS_OWNER]) {
-    fields.push(emailField(answers, referenceNumber, checkAndChange));
-  }
+  fields.push(emailField(answers, referenceNumber, checkAndChange, !answers[IS_SAME_AS_OWNER]));
 
   fields.push(positionField(answers, referenceNumber, checkAndChange, answers[IS_SAME_AS_OWNER]));
 

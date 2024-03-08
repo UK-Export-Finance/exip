@@ -104,7 +104,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
 
       it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
         fieldVariables.newValue = FIELD_VALUES.YES;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -113,7 +113,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
         fieldVariables = getFieldVariables(CONNECTION_WITH_BUYER_DESCRIPTION, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
         fieldVariables.newValue = BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
 
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -135,7 +135,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
       it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
         fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
         fieldVariables.newValue = FIELD_VALUES.NO;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });

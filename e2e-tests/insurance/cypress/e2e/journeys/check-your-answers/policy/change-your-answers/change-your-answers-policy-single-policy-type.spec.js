@@ -113,7 +113,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, contractCompletionDateYearChange));
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -157,7 +157,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -202,7 +202,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -241,7 +241,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it('should render the new answer and retain a `completed` status tag', () => {
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
 
           cy.checkTaskStatusCompleted(status());
         });
