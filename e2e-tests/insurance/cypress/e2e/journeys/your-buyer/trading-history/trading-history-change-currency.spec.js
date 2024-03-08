@@ -35,7 +35,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
   beforeEach(() => {
     cy.saveSession();
     cy.navigateToUrl(url);
-    // press outstanding payments radio
+    // click outstanding payments radio
     cy.clickYesRadioInput();
   });
 
@@ -53,9 +53,9 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
     before(() => {
       cy.saveSession();
       cy.navigateToUrl(url);
-      // press outstanding payments radio
+      // click outstanding payments radio
       cy.clickYesRadioInput();
-      // reset to GBP
+      // change to GBP
       cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: GBP_CURRENCY_CODE });
     });
 
