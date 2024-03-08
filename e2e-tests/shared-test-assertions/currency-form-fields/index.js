@@ -14,7 +14,7 @@ import prefixAssertions from './prefix';
  * @param {Function} legend: Legend selector
  * @param {Function} hint: Hint selector
  * @param {Object} errors: Error messages object
- * @param {String} fieldId: fieldId of input for prefix assertion
+ * @param {String} fieldId: Field ID of input for prefix assertion
  * @returns {Object} Rendering and form submission assertion functions
  */
 export const assertCurrencyFormFields = ({

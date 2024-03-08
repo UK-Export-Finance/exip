@@ -5,10 +5,7 @@ import {
 /**
  * prefixAssertions
  * Prefix assertions for currency form fields.
- * @param {Function} radios: Assert currency radios
- * @param {Function} hint: Assert currency hint
- * @param {Function} alternativeCurrencyInput: Assert the alternative currency input
- * @param {Function} doesNotRenderSupportedCurrencies: Assert that the alternative currency input does NOT render supported currencies.
+ * @param {String} fieldId: Field ID of input for prefix assertion
  * @returns {Function} Mocha describe block with assertions.
  */
 const prefixAssertions = ({ fieldId }) => {
