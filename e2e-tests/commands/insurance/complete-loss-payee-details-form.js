@@ -1,6 +1,7 @@
 import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 import field from '../../pages/shared/field';
+import { radios } from '../../pages/shared';
 
 const {
   LOSS_PAYEE_DETAILS: {
@@ -24,10 +25,10 @@ const completeLossPayeeDetailsForm = ({
 
   if (locatedInUK) {
     const fieldId = `${LOCATION}-${IS_LOCATED_IN_UK}`;
-    field(fieldId).label().click();
+    radios(fieldId).option.label().click();
   } else {
     const fieldId = `${LOCATION}-${IS_LOCATED_INTERNATIONALLY}`;
-    field(fieldId).label().click();
+    radios(fieldId).option.label().click();
   }
 };
 
