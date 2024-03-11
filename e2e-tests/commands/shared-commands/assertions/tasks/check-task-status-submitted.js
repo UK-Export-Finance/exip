@@ -1,5 +1,4 @@
-import { ATTRIBUTES } from '../../../../constants';
-import { APPLICATION } from '../../../../constants';
+import { ATTRIBUTES, APPLICATION } from '../../../../constants';
 
 const { CLASSES } = ATTRIBUTES;
 const { STATUS: { SUBMITTED } } = APPLICATION;
