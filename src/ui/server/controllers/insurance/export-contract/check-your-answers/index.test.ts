@@ -1,4 +1,4 @@
-import { pageVariables, get, post, TEMPLATE } from '.';
+import { get, post, TEMPLATE } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { PAGES } from '../../../../content-strings';
@@ -17,7 +17,6 @@ const { exportContract, referenceNumber } = mockApplication;
 describe('controllers/insurance/export-contract/check-your-answers', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
@@ -26,25 +25,12 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
     res = mockRes();
 
     req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
 
     api.keystone.countries.getAll = getCountriesSpy;
   });
 
   afterAll(() => {
     jest.resetAllMocks();
-  });
-
-  describe('pageVariables', () => {
-    it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
-
-      const expected = {
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`,
-      };
-
-      expect(result).toEqual(expected);
-    });
   });
 
   describe('TEMPLATE', () => {
@@ -70,7 +56,6 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.CHECK_YOUR_ANSWERS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
         SUMMARY_LIST: summaryList,
