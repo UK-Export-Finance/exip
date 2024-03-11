@@ -104,7 +104,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
       it('should render the new answer', () => {
         fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput, GBP_CURRENCY_CODE);
 
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });
@@ -143,7 +143,7 @@ context('Insurance - Check your answers - Turnover - Your business - Summary lis
 
       it('should render the new answer', () => {
         fieldVariables.newValue = `${fieldVariables.newValueInput}%`;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
   });

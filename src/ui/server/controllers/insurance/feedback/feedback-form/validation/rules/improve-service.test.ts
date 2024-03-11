@@ -1,8 +1,8 @@
 import improveService, { MAXIMUM } from './improve-service';
 import { FIELD_IDS } from '../../../../../../constants';
-import { RequestBody } from '../../../../../../../types';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
 const {
@@ -17,7 +17,7 @@ describe('controllers/insurance/feedback/feedback-form/validation/rules/improve-
   } as RequestBody;
 
   describe(`when the ${FIELD_ID} input is over ${MAXIMUM} characters`, () => {
-    it('should return the result of "inputValidation"', () => {
+    it('should return the result of "maxLengthValidation"', () => {
       const mockValue = Number(MAXIMUM) + 1;
 
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);

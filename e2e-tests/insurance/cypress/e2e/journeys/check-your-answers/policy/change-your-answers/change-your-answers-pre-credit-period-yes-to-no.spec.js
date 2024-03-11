@@ -102,9 +102,9 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -142,7 +142,7 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
       });
 
       it('should retain a `completed` status tag', () => {
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
 
       describe('when going back to the page', () => {

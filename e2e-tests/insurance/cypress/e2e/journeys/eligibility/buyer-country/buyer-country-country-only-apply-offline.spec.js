@@ -1,4 +1,4 @@
-import { backLink, countryInput } from '../../../../../../pages/shared';
+import { backLink, autoCompleteField } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { FIELD_IDS } from '../../../../../../constants';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../fixtures/countries';
@@ -35,9 +35,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     cy.navigateToUrl(buyerCountryUrl);
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME);
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 
-    const results = countryInput.field(FIELD_ID).results();
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
     cy.clickSubmitButton();
@@ -64,8 +64,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     const expectedValue = COUNTRY_NAME;
 
-    cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
+    cy.checkValue(autoCompleteField(FIELD_ID), expectedValue);
 
-    cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
+    cy.checkText(autoCompleteField(FIELD_ID).results(), expectedValue);
   });
 });

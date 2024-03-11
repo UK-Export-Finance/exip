@@ -46,6 +46,7 @@ export const YOUR_BUYER_FIELDS = {
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
       LABEL: 'Company registration number (optional)',
+      MAXIMUM: 100,
       SUMMARY: {
         TITLE: 'Registration number (optional)',
         FORM_TITLE: COMPANY_DETAILS,

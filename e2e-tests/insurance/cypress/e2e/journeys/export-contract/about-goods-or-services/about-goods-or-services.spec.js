@@ -2,7 +2,7 @@ import {
   headingCaption,
   yesRadio,
   noRadio,
-  countryInput,
+  autoCompleteField,
 } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
@@ -32,7 +32,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const finalDestinationField = countryInput.field(FINAL_DESTINATION);
+const finalDestinationField = autoCompleteField(FINAL_DESTINATION);
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -129,7 +129,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
     describe(`searchable autocomplete input (${FINAL_DESTINATION})`, () => {
       const fieldId = FINAL_DESTINATION;
-      const field = countryInput.field(fieldId);
+      const field = autoCompleteField(fieldId);
 
       it('should NOT be visible by default', () => {
         checkAutocompleteInput.isNotVisible(field);
@@ -186,7 +186,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
         cy.assertYesRadioOptionIsChecked();
 
         const country = COUNTRIES.find((c) => c.ISO_CODE === application.EXPORT_CONTRACT[FINAL_DESTINATION]);
-        cy.checkText(countryInput.field(FINAL_DESTINATION).results(), country.NAME);
+        cy.checkText(autoCompleteField(FINAL_DESTINATION).results(), country.NAME);
       });
 
       it(`should have a visible ${FINAL_DESTINATION}`, () => {

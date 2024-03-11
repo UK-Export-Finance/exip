@@ -1,5 +1,5 @@
 import dashboardPage from '../../../../pages/insurance/dashboard';
-import { countryInput, field } from '../../../../pages/shared';
+import { autoCompleteField, field } from '../../../../pages/shared';
 import partials from '../../../../partials';
 import { ROUTES, FIELD_IDS } from '../../../../constants';
 import { completeAndSubmitBuyerCountryForm } from '../../../../commands/forms';
@@ -66,7 +66,7 @@ context('Insurance - Eligibility - start and complete for a second time after cr
     cy.completeEligibilityCompanyDetailsForm();
 
     // buyer country question
-    cy.checkValue(countryInput.field(BUYER_COUNTRY), '');
+    cy.checkValue(autoCompleteField(BUYER_COUNTRY), '');
     completeAndSubmitBuyerCountryForm({});
 
     /**

@@ -1,4 +1,4 @@
-import { field as fieldSelector, countryInput } from '../../../../../../pages/shared';
+import { field as fieldSelector, autoCompleteField } from '../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -69,7 +69,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
 
     it('should not have fields populated on different name on policy page', () => {
       cy.checkValue(fieldSelector(COMPANY_NAME), '');
-      cy.checkValue(countryInput.field(COUNTRY_CODE), '');
+      cy.checkValue(autoCompleteField(COUNTRY_CODE), '');
       cy.checkValue(fieldSelector(COMPANY_NUMBER), '');
     });
   });

@@ -1,4 +1,4 @@
-import { TEMPLATES } from '../../../../constants';
+import { ATTRIBUTES, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
@@ -36,7 +36,6 @@ const {
   PARTIALS: {
     INSURANCE: { EXPORT_CONTRACT },
   },
-  ATTRIBUTES: { CLASSES },
 } = TEMPLATES;
 
 /**
@@ -73,7 +72,7 @@ export const HTML_FLAGS = {
   CONDITIONAL_YES_HTML: EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES.CONDITIONAL_YES_HTML,
   HORIZONTAL_RADIOS: true,
   NO_RADIO_AS_FIRST_OPTION: true,
-  LEGEND_CLASS: CLASSES.LEGEND.M,
+  LEGEND_CLASS: ATTRIBUTES.CLASSES.LEGEND.M,
 };
 
 export const TEMPLATE = ABOUT_GOODS_OR_SERVICES;

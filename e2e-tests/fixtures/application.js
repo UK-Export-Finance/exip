@@ -45,6 +45,9 @@ const {
         EMAIL,
         FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
+      LOSS_PAYEE_DETAILS: {
+        NAME: LOSS_PAYEE_NAME,
+      },
     },
     EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
@@ -136,6 +139,7 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+    [LOSS_PAYEE_NAME]: 'Mock name',
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [COMPANY_NAME]: 'Mock jointly insured company name',

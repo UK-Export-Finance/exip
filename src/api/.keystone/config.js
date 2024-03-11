@@ -1444,7 +1444,9 @@ var lists = {
         db: { nativeType: "VarChar(1000)" }
       }),
       country: (0, import_fields.relationship)({ ref: "Country" }),
-      registrationNumber: (0, import_fields.text)(),
+      registrationNumber: (0, import_fields.text)({
+        db: { nativeType: "VarChar(100)" }
+      }),
       website: (0, import_fields.text)(),
       buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
       contact: (0, import_fields.relationship)({ ref: "BuyerContact.buyer" }),
