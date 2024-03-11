@@ -18,6 +18,7 @@ const {
   POLICY: {
     LOSS_PAYEE_ROOT,
     LOSS_PAYEE_DETAILS_ROOT,
+    CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -28,6 +29,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Loss payee details page - As an exporter, I want to inform UKEF about whether I have a loss payee, So that the appropriate parties can be paid in the event of an insurance claim', () => {
   let referenceNumber;
   let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -46,6 +48,7 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -108,6 +111,16 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitLossPayeeDetailsForm({});
+
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 });
