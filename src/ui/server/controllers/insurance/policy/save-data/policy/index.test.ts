@@ -1,4 +1,4 @@
-import save, { nullOrEmptyStringFields } from '.';
+import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
@@ -28,9 +28,9 @@ describe('controllers/insurance/policy/save-data/policy', () => {
     api.keystone.application.update.policy = updateApplicationSpy;
   });
 
-  describe('nullOrEmptyStringFields', () => {
+  describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
     it('should have the relevant fieldIds', () => {
-      expect(nullOrEmptyStringFields).toEqual([CREDIT_PERIOD_WITH_BUYER]);
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([CREDIT_PERIOD_WITH_BUYER]);
     });
   });
 
@@ -42,7 +42,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody.invalid, mockErrorList));
+      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody.invalid, mockErrorList), NULL_OR_EMPTY_STRING_FIELDS);
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);

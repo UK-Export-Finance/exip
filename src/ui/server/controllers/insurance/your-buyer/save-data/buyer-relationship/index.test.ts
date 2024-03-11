@@ -1,4 +1,4 @@
-import save, { nullOrEmptyStringFields } from '.';
+import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
@@ -10,9 +10,9 @@ import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/y
 const { CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => {
-  describe('nullOrEmptyStringFields', () => {
+  describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
     it('should have the relevant fieldIds', () => {
-      expect(nullOrEmptyStringFields).toEqual([CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
     });
   });
 
@@ -35,7 +35,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
-        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), NULL_OR_EMPTY_STRING_FIELDS);
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.relationship.id, expectedSanitisedData);
       });
 
@@ -53,7 +53,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-relationship', () => 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
-        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), NULL_OR_EMPTY_STRING_FIELDS);
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.relationship.id, expectedSanitisedData);
       });
 

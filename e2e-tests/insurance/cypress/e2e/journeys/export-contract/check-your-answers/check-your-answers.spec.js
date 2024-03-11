@@ -47,6 +47,7 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
       submitButtonCopy: BUTTONS.SAVE_AND_BACK,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 

@@ -7,7 +7,11 @@ import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/polic
 
 const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
 
-export const nullOrEmptyStringFields = [CREDIT_PERIOD_WITH_BUYER];
+/**
+ * string fields which are exempt from being stripped by stripEmptyFormFields
+ * for example when a string field needs to be set to an empty string or null
+ */
+export const NULL_OR_EMPTY_STRING_FIELDS = [CREDIT_PERIOD_WITH_BUYER];
 
 /**
  * policy
@@ -20,7 +24,7 @@ export const nullOrEmptyStringFields = [CREDIT_PERIOD_WITH_BUYER];
  */
 const policy = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), nullOrEmptyStringFields);
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
