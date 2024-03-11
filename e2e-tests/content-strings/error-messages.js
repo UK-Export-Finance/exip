@@ -286,7 +286,7 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the name of the broker or company',
           ABOVE_MAXIMUM: 'The name of the broker or company cannot be more than 300 characters',
         },
-        [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.EMAIL]: {
+        [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           IS_EMPTY: 'Enter the email address of the broker or company',
           ABOVE_MAXIMUM: 'The broker or company email cannot be more than 300 characters',
           INCORRECT_FORMAT: 'Enter the broker or company email address in the correct format, like name@example.com',

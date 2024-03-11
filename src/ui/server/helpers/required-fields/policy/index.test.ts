@@ -20,7 +20,7 @@ const {
   NAME_ON_POLICY,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COUNTRY_CODE },
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   LOSS_PAYEE,
 } = POLICY_FIELD_IDS;
 
@@ -116,7 +116,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = getBrokerTasks(isUsingBrokerFlag);
 
-        const expected = [NAME, EMAIL, FULL_ADDRESS];
+        const expected = [NAME, BROKER_EMAIL, FULL_ADDRESS];
 
         expect(result).toEqual(expected);
       });

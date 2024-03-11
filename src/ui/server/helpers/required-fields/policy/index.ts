@@ -16,7 +16,7 @@ const {
   NAME_ON_POLICY,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COUNTRY_CODE },
   USING_BROKER,
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   LOSS_PAYEE,
 } = POLICY_FIELD_IDS;
 
@@ -71,7 +71,7 @@ export const getJointlyInsuredPartyTasks = (jointlyInsuredParty?: boolean) => {
  */
 export const getBrokerTasks = (isUsingBroker?: boolean) => {
   if (isUsingBroker) {
-    return [NAME, EMAIL, FULL_ADDRESS];
+    return [NAME, BROKER_EMAIL, FULL_ADDRESS];
   }
 
   return [];
