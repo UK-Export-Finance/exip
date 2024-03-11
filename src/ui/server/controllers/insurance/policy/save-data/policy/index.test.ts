@@ -1,11 +1,14 @@
-import save from '.';
+import save, { nullOrEmptyStringFields } from '.';
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import generateValidationErrors from '../../type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { FIELD_VALUES } from '../../../../../constants';
 import { mockApplication } from '../../../../../test-mocks';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+
+const { CREDIT_PERIOD_WITH_BUYER, POLICY_TYPE } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/save-data/policy', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -13,7 +16,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
   const mockFormBody = {
     valid: {
-      [FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+      [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
       otherField: true,
     },
     invalid: {
@@ -23,6 +26,12 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
   beforeEach(() => {
     api.keystone.application.update.policy = updateApplicationSpy;
+  });
+
+  describe('nullOrEmptyStringFields', () => {
+    it('should have the relevant fieldIds', () => {
+      expect(nullOrEmptyStringFields).toEqual([CREDIT_PERIOD_WITH_BUYER]);
+    });
   });
 
   describe('when errorList is provided', () => {
