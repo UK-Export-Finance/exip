@@ -77,6 +77,16 @@ insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSIN
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY}`, getTurnoverAlternativeCurrency);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY}`, postTurnoverAlternativeCurrency);
+insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`, getTurnoverAlternativeCurrency);
+insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`, postTurnoverAlternativeCurrency);
+insuranceBusinessRouter.get(
+  `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
+  getTurnoverAlternativeCurrency,
+);
+insuranceBusinessRouter.post(
+  `/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
+  postTurnoverAlternativeCurrency,
+);
 
 insuranceBusinessRouter.get(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL}`, getCreditControl);
 insuranceBusinessRouter.post(`/:referenceNumber${ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL}`, postCreditControl);

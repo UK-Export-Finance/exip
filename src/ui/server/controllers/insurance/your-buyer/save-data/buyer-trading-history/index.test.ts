@@ -1,4 +1,4 @@
-import save, { nullOrEmptyStringFields } from '.';
+import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
 import api from '../../../../../api';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
@@ -15,9 +15,9 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () => {
-  describe('nullOrEmptyStringFields', () => {
+  describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
     it('should have the relevant fieldIds', () => {
-      expect(nullOrEmptyStringFields).toEqual([TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE]);
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE]);
     });
   });
 
@@ -40,7 +40,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
-        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), NULL_OR_EMPTY_STRING_FIELDS);
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerTradingHistory.id, expectedSanitisedData);
       });
 
@@ -58,7 +58,7 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
         expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
         const dataToSave = getDataToSave(mockFormBody);
-        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), nullOrEmptyStringFields);
+        const expectedSanitisedData = stripEmptyFormFields(sanitiseData(dataToSave), NULL_OR_EMPTY_STRING_FIELDS);
         expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.buyer.buyerTradingHistory.id, expectedSanitisedData);
       });
 

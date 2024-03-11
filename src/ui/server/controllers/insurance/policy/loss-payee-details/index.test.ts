@@ -1,4 +1,4 @@
-import { FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, pageVariables, get } from '.';
+import { FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, pageVariables, get, post } from '.';
 import { PAGES } from '../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import { TEMPLATES } from '../../../../constants';
@@ -7,11 +7,17 @@ import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
+import { mockReq, mockRes, mockApplication, mockLossPayeeDetails } from '../../../../test-mocks';
 
 const { NAME, LOCATION } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  POLICY: { CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
 
@@ -93,6 +99,57 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = mockLossPayeeDetails;
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

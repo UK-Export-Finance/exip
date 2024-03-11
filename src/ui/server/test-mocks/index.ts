@@ -24,6 +24,7 @@ import { mockInsuranceFeedback } from './mock-feedback';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import mockNominatedLossPayee from './mock-nominated-loss-payee';
 import mockLossPayeeBankDetails from './mock-loss-payee-bank-details';
+import mockLossPayeeDetails from './mock-loss-payee-details';
 import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
@@ -131,6 +132,7 @@ export {
   mockNext,
   mockNominatedLossPayee,
   mockLossPayeeBankDetails,
+  mockLossPayeeDetails,
   mockUrlOrigin,
   mockSession,
   mockSicCodes,

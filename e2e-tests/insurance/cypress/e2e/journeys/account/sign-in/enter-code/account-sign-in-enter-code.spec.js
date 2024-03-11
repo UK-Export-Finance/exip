@@ -69,7 +69,10 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
         field.input().should('exist');
 
-        field.input().should('have.class', 'govuk-input--extra-letter-spacing');
+        cy.checkClassName(
+          field.input(),
+          'govuk-input govuk-input--width-4 govuk-input--extra-letter-spacing',
+        );
       });
 
       it('renders a `request new code` link', () => {

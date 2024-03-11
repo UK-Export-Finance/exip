@@ -133,6 +133,8 @@ context('Insurance - Policy - Single contract policy page - As an exporter, I wa
 
     rendering();
 
+    formSubmission().selectAltRadioButNoAltCurrency({ errorIndex: 2 });
+
     formSubmission().submitASupportedCurrency({
       url: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
       completeNonCurrencyFields: () => cy.completeSingleContractPolicyForm({ chooseCurrency: false }),

@@ -31,5 +31,10 @@ export const checkBuyerCountryFocusAfterSummaryErrorClick = () => {
 
   partials.errorSummaryListItemLinks().eq(0).click();
 
-  autoCompleteField(FIELD_ID).input().should('have.class', 'autocomplete__input--focused');
+  const expectedClass = 'autocomplete__input autocomplete__input--focused autocomplete__input--default';
+
+  cy.checkClassName(
+    autoCompleteField(FIELD_ID).input(),
+    expectedClass,
+  );
 };

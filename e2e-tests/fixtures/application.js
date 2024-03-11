@@ -47,6 +47,9 @@ const {
       },
       BANK_DETAILS: { ACCOUNT_NUMBER, SORT_CODE },
       BANK_ADDRESS,
+      LOSS_PAYEE_DETAILS: {
+        NAME: LOSS_PAYEE_NAME,
+      },
     },
     EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
@@ -141,6 +144,7 @@ const application = {
     [ACCOUNT_NUMBER]: '123456',
     [SORT_CODE]: '123456',
     [BANK_ADDRESS]: 'Mock address',
+    [LOSS_PAYEE_NAME]: 'Mock name',
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [COMPANY_NAME]: 'Mock jointly insured company name',

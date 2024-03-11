@@ -121,7 +121,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         cy.checkText(summaryList.field(fieldId).value(), expected);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -163,7 +163,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
         cy.checkText(summaryList.field(fieldId).value(), expectedFullAddress);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -203,9 +203,9 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -245,9 +245,9 @@ context('Insurance - Check your answers - Company details - Your business - Summ
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
