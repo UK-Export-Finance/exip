@@ -71,7 +71,7 @@ context('Insurance - Account - Sign in - I want to sign in into my UKEF digital 
 
         cy.checkClassName(
           field.input(),
-          'govuk-input--extra-letter-spacing',
+          'govuk-input govuk-input--width-4 govuk-input--extra-letter-spacing',
         );
       });
 

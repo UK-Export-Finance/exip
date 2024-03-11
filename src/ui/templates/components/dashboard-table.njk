@@ -2,11 +2,12 @@
 
 {% macro render(params) %}
 
-  {% set tableHeaders = params.tableHeaders%}
+  {% set tableHeaders = params.tableHeaders %}
   {% set applications = params.applications %}
   {% set insuranceRoute = params.insuranceRoute %}
   {% set allSectionsRoute = params.allSectionsRoute %}
   {% set submittedStatus = params.submittedStatus %}
+  {% set tagClasses = params.tagClasses %}
 
   <table class="govuk-table">
     <thead>
@@ -31,7 +32,8 @@
           <td class="govuk-table__cell">
             {{ statusTag.render({
               status: application.status,
-              dataCy: refString + refNumber + "-status"
+              dataCy: refString + refNumber + "-status",
+              tagClasses: tagClasses
             }) }}
           </td>
 

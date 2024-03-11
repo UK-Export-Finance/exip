@@ -110,7 +110,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
         fieldVariables.newValue = fieldVariables.newValueInput;
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -157,7 +157,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
 
         row.value().contains(mockNewAddress);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -199,7 +199,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
         // 1 as is the second email field on the page
         cy.checkChangeAnswerRendered({ fieldVariables, index: 1 });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -247,7 +247,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
         summaryList.field(FULL_ADDRESS).value().should('not.exist');
         summaryList.field(FULL_ADDRESS).changeLink().should('not.exist');
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
