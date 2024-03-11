@@ -6,6 +6,7 @@ const { CURRENCY: { ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
 
 import renderingAssertions from './rendering';
 import formSubmissionAssertions from './form-submission';
+import prefixAssertions from './prefix';
 
 /**
  * assertCurrencyFormFields
@@ -13,9 +14,12 @@ import formSubmissionAssertions from './form-submission';
  * @param {Function} legend: Legend selector
  * @param {Function} hint: Hint selector
  * @param {Object} errors: Error messages object
+ * @param {String} fieldId: Field ID of input for prefix assertion
  * @returns {Object} Rendering and form submission assertion functions
  */
-export const assertCurrencyFormFields = ({ legend, hint, errors }) => {
+export const assertCurrencyFormFields = ({
+  legend, hint, errors, fieldId,
+}) => {
   const assertions = fieldAssertions({
     legend,
     hint,
@@ -26,6 +30,7 @@ export const assertCurrencyFormFields = ({ legend, hint, errors }) => {
   return {
     rendering: () => renderingAssertions(assertions),
     formSubmission: () => formSubmissionAssertions(assertions),
+    prefixAssertions: () => prefixAssertions({ fieldId }),
   };
 };
 

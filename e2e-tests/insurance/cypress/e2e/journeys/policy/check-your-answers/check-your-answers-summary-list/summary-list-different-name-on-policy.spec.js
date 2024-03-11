@@ -60,7 +60,7 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
   });
 
   it(`should render a ${EMAIL} summary list row`, () => {
-    checkSummaryList[EMAIL]({ sameName: false });
+    checkSummaryList[EMAIL]({});
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {

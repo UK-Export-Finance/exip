@@ -10,7 +10,7 @@ const {
  * mapSubmittedData
  * if not IS_APPOINTED, wipe IS_APPOINTED data.
  * @param {Express.Request.body} Form data
- * @returns {Object} Page variables
+ * @returns {Object} populated data
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;

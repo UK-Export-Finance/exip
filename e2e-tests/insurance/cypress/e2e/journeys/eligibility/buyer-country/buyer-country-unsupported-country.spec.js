@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, cannotApplyPage,
+  backLink, autoCompleteField, cannotApplyPage,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
@@ -33,9 +33,9 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME);
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME);
 
-    const results = countryInput.field(FIELD_ID).results();
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
     cy.clickSubmitButton();
@@ -69,8 +69,8 @@ context('Insurance - Buyer country page - as an exporter, I want to check if UKE
 
     const expectedValue = COUNTRY_NAME;
 
-    cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
+    cy.checkValue(autoCompleteField(FIELD_ID), expectedValue);
 
-    cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
+    cy.checkText(autoCompleteField(FIELD_ID).results(), expectedValue);
   });
 });

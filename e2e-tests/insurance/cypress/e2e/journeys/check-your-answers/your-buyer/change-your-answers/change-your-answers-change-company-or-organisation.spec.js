@@ -111,7 +111,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -200,7 +200,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });
@@ -240,7 +240,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
       it('should render the new answer and retain a `completed` status tag', () => {
         fieldVariables.newValue = fieldVariables.newValueInput;
-        cy.checkChangeAnswerRendered(fieldVariables);
+        cy.checkChangeAnswerRendered({ fieldVariables });
 
         cy.checkTaskStatusCompleted(status());
       });

@@ -1,6 +1,5 @@
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { FIELDS } from '../../../../content-strings/fields/insurance';
-import { GBP_CURRENCY_CODE } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
@@ -22,7 +21,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER },
+  TURNOVER: { PERCENTAGE_TURNOVER, ESTIMATED_ANNUAL_TURNOVER, TURNOVER_CURRENCY_CODE },
 } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
@@ -38,7 +37,7 @@ describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
         href: generateChangeLink(TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE, `#${ESTIMATED_ANNUAL_TURNOVER}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
-      formatCurrency(mockAnswers[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE),
+      formatCurrency(mockAnswers[ESTIMATED_ANNUAL_TURNOVER], mockAnswers[TURNOVER_CURRENCY_CODE]),
     ),
     fieldGroupItem(
       {

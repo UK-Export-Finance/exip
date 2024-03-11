@@ -150,7 +150,7 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
       cy.checkAriaLabel(field(PHONE_NUMBER).input(), CONTENT_STRINGS.PHONE_NUMBER);
     });
 
-    it('should display save and go back button', () => {
+    it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
   });

@@ -1,4 +1,4 @@
-import { countryInput, summaryList } from '../../../../../../pages/shared';
+import { autoCompleteField, summaryList } from '../../../../../../pages/shared';
 import { yourQuotePage } from '../../../../../../pages/quote';
 import {
   LINKS,
@@ -327,7 +327,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       it('clears the session', () => {
         // buyer country auto complete stores the selected value in the first list item of the 'results' list.
         // Therefore, if it's not defined, nothing has been selected/submitted.
-        countryInput.field(BUYER_COUNTRY).results().should('not.exist');
+        autoCompleteField(BUYER_COUNTRY).results().should('not.exist');
       });
     });
   });

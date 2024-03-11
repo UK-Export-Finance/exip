@@ -1,5 +1,5 @@
 import {
-  countryInput,
+  autoCompleteField,
   field as fieldSelector,
   headingCaption,
   intro,
@@ -80,7 +80,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
 
     it('renders a buyer country section', () => {
       const fieldId = COUNTRY;
-      const field = countryInput.field(fieldId);
+      const field = autoCompleteField(fieldId);
 
       cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       cy.checkText(companyOrOrganisationPage[fieldId](), country.NAME);

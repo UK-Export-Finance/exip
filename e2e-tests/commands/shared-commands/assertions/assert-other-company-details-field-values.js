@@ -1,4 +1,4 @@
-import { field as fieldSelector, countryInput } from '../../../pages/shared';
+import { field as fieldSelector, autoCompleteField } from '../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 import mockApplication from '../../../fixtures/application';
 
@@ -21,7 +21,7 @@ const assertOtherCompanyDetailsFieldValues = ({
   expectedCompanyNumber = REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER],
 }) => {
   cy.checkValue(fieldSelector(COMPANY_NAME), expectedCompanyName);
-  cy.checkValue(countryInput.field(COUNTRY_CODE), expectedCountry);
+  cy.checkValue(autoCompleteField(COUNTRY_CODE), expectedCountry);
   cy.checkValue(fieldSelector(COMPANY_NUMBER), expectedCompanyNumber);
 };
 

@@ -104,7 +104,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       field.input().should('exist');
     });
 
-    it('should display save and go back button', () => {
+    it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
   });

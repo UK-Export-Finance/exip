@@ -12,11 +12,13 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/turnover';
+import isChangeRoute from '../../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORTER_BUSINESS: { TURNOVER_ROOT },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_CHANGE, TURNOVER_CHECK_AND_CHANGE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -129,6 +131,22 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    /**
+     * If is a change route
+     * redirect to TURNOVER_CHANGE
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}`);
+    }
+
+    /**
+     * If is a check-and-change route
+     * redirect to TURNOVER_CHECK_AND_CHANGE
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`);

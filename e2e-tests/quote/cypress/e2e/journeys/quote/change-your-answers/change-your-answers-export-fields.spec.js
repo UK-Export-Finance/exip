@@ -1,4 +1,4 @@
-import { backLink, countryInput, summaryList } from '../../../../../../pages/shared';
+import { backLink, autoCompleteField, summaryList } from '../../../../../../pages/shared';
 import { LINKS } from '../../../../../../content-strings';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { BRA } from '../../../../../../fixtures/countries';
@@ -71,7 +71,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('has originally submitted answer selected', () => {
       const expectedValue = submissionData[BUYER_COUNTRY];
 
-      cy.checkText(countryInput.field(BUYER_COUNTRY).results(), expectedValue);
+      cy.checkText(autoCompleteField(BUYER_COUNTRY).results(), expectedValue);
     });
 
     describe('when submitting a new answer', () => {
@@ -79,8 +79,8 @@ context('Change your answers (export fields) - as an exporter, I want to change 
         cy.navigateToUrl(url);
         row.changeLink().click();
 
-        cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), BRA.NAME);
-        const results = countryInput.field(BUYER_COUNTRY).results();
+        cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), BRA.NAME);
+        const results = autoCompleteField(BUYER_COUNTRY).results();
         results.first().click();
 
         cy.clickSubmitButton();

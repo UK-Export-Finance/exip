@@ -1,8 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import {
-  SYMBOLS, USD_CURRENCY_CODE, EUR_CURRENCY_CODE, JPY_CURRENCY_CODE,
-} from '../../../../../../fixtures/currencies';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
+import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
   ROOT,
@@ -36,7 +35,7 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
   beforeEach(() => {
     cy.saveSession();
     cy.navigateToUrl(url);
-    // press outstanding payments radio
+    // click outstanding payments radio
     cy.clickYesRadioInput();
   });
 
@@ -44,40 +43,24 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when not selecting a currency', () => {
-    it(`should display ${SYMBOLS.GBP} as the prefix`, () => {
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.GBP });
-      cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.GBP });
-    });
+  describe(`prefixes should be displayed based on currency chosen for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_AMOUNT_OVERDUE });
+
+    prefixAssertions();
   });
 
-  describe(`when selecting ${USD_CURRENCY_CODE} as the currency code`, () => {
-    it(`should display ${SYMBOLS.USD} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: USD_CURRENCY_CODE });
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.USD });
-      cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.USD });
+  describe(`prefixes should be displayed based on currency chosen for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+    before(() => {
+      cy.saveSession();
+      cy.navigateToUrl(url);
+      // click outstanding payments radio
+      cy.clickYesRadioInput();
+      // change to GBP
+      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: GBP_CURRENCY_CODE });
     });
-  });
 
-  describe(`when selecting ${JPY_CURRENCY_CODE} as the currency code`, () => {
-    it(`should display ${SYMBOLS.JPY} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: JPY_CURRENCY_CODE });
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.JPY });
-      cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.JPY });
-    });
-  });
+    const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_OUTSTANDING_PAYMENTS });
 
-  describe(`when selecting ${EUR_CURRENCY_CODE} as the currency code`, () => {
-    it(`should display ${SYMBOLS.EUR} as the prefix`, () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
-      cy.assertPrefix({ fieldId: TOTAL_OUTSTANDING_PAYMENTS, value: SYMBOLS.EUR });
-      cy.assertPrefix({ fieldId: TOTAL_AMOUNT_OVERDUE, value: SYMBOLS.EUR });
-    });
-  });
-
-  describe('when selecting an alternate currency as the currency code', () => {
-    it('should not display a prefix', () => {
-      cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
-    });
+    prefixAssertions();
   });
 });
