@@ -49,7 +49,7 @@ describe('routes/insurance/policy', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(40);
-    expect(post).toHaveBeenCalledTimes(51);
+    expect(post).toHaveBeenCalledTimes(52);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
