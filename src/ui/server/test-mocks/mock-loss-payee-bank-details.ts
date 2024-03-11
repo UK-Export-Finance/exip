@@ -1,6 +1,6 @@
 import POLICY_FIELD_IDS from '../constants/field-ids/insurance/policy';
 
-const { ACCOUNT_NUMBER, SORT_CODE } = POLICY_FIELD_IDS.BANK_DETAILS;
+const { ACCOUNT_NUMBER, SORT_CODE } = POLICY_FIELD_IDS.LOSS_PAYEE_UK_BANK_DETAILS;
 const { BANK_ADDRESS } = POLICY_FIELD_IDS;
 
 const mockLossPayeeBankDetails = {

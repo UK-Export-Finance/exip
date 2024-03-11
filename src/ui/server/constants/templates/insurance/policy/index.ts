@@ -13,6 +13,6 @@ export const POLICY_TEMPLATES = {
   BROKER_DETAILS: 'insurance/policy/broker-details.njk',
   BROKER_CONFIRM_ADDRESS: 'insurance/policy/broker-confirm-address.njk',
   LOSS_PAYEE_DETAILS: 'insurance/policy/loss-payee-details.njk',
-  BANK_DETAILS: 'insurance/policy/bank-details.njk',
+  LOSS_PAYEE_UK_BANK_DETAILS: 'insurance/policy/bank-details.njk',
   CHECK_YOUR_ANSWERS: 'insurance/policy/check-your-answers.njk',
 };

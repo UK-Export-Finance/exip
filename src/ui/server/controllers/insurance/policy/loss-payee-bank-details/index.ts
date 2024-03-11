@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
 
-const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.BANK_DETAILS;
+const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_UK_BANK_DETAILS;
 const { BANK_ADDRESS } = POLICY_FIELD_IDS;
 
 const {
@@ -16,13 +16,13 @@ const {
   POLICY: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const { BANK_DETAILS, BANK_ADDRESS: BANK_ADDRESS_FIELD } = POLICY_FIELDS;
+const { LOSS_PAYEE_UK_BANK_DETAILS, BANK_ADDRESS: BANK_ADDRESS_FIELD } = POLICY_FIELDS;
 
 export const FIELD_IDS = [SORT_CODE, ACCOUNT_NUMBER, BANK_ADDRESS];
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BANK_DETAILS;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_UK_BANK_DETAILS;
 
-export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.BANK_DETAILS;
+export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_UK_BANK_DETAILS;
 
 /**
  * pageVariables
@@ -34,11 +34,11 @@ export const pageVariables = (referenceNumber: number) => ({
   FIELDS: {
     SORT_CODE: {
       ID: SORT_CODE,
-      ...BANK_DETAILS[SORT_CODE],
+      ...LOSS_PAYEE_UK_BANK_DETAILS[SORT_CODE],
     },
     ACCOUNT_NUMBER: {
       ID: ACCOUNT_NUMBER,
-      ...BANK_DETAILS[ACCOUNT_NUMBER],
+      ...LOSS_PAYEE_UK_BANK_DETAILS[ACCOUNT_NUMBER],
     },
     BANK_ADDRESS: {
       ID: BANK_ADDRESS,
