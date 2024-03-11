@@ -35,7 +35,7 @@ describe('server/helpers/flatten-application-data', () => {
 
   describe('mapBroker', () => {
     it('should return mapped broker fields', () => {
-      const result = mapBroker(policyContact);
+      const result = mapBroker(broker);
 
       const expected = {
         id: broker.id,
