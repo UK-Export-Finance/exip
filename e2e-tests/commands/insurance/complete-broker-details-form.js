@@ -1,12 +1,15 @@
 import { field } from '../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
+import ACCOUNT_FIELD_IDS from '../../constants/field-ids/insurance/account';
 import mockApplication from '../../fixtures/application';
 
 const { BROKER } = mockApplication;
 
 const {
-  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+  BROKER_DETAILS: { NAME, FULL_ADDRESS },
 } = POLICY_FIELD_IDS;
+
+const { EMAIL } = ACCOUNT_FIELD_IDS;
 
 /**
  * completeBrokerDetailsForm

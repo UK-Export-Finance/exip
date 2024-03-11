@@ -218,7 +218,7 @@ var POLICY = {
   USING_BROKER: "isUsingBroker",
   BROKER_DETAILS: {
     NAME: "name",
-    EMAIL: "email",
+    BROKER_EMAIL: "broker.email",
     FULL_ADDRESS: "fullAddress"
   },
   LOSS_PAYEE: {

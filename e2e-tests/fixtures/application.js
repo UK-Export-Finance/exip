@@ -42,7 +42,6 @@ const {
       USING_BROKER,
       BROKER_DETAILS: {
         NAME,
-        EMAIL,
         FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
     },
@@ -157,7 +156,7 @@ const application = {
   BROKER: {
     [USING_BROKER]: true,
     [NAME]: 'Mock broker name',
-    [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
+    [ACCOUNT_EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
     [BROKER_FULL_ADDRESS]: 'Mock Address',
   },
   BUYER: {
