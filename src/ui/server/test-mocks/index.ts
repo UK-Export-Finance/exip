@@ -26,6 +26,7 @@ import mockNominatedLossPayee from './mock-nominated-loss-payee';
 import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
+import cookieParser from 'cookie-parser';
 
 const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
 
@@ -40,6 +41,7 @@ const mockReq = () => {
       origin: 'https://mock.com',
       host: 'mock-host.com',
     },
+    signedCookies: cookieParser('test'),
     hostname: 'mock.com',
     method: 'GET',
     originalUrl: 'mock?mockQueryParam',
