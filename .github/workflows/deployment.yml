@@ -73,7 +73,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             # Basic
@@ -81,13 +81,13 @@ jobs:
             az configure --defaults group=rg-${{ env.PRODUCT }}-${{ github.ref_name }}-${{ vars.VERSION }}
 
       - name: Extension ➕
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             az config set extension.use_dynamic_install=yes_without_prompt
 
       - name: Import ⬇
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             az mysql flexible-server execute \
@@ -115,7 +115,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             # Basic
@@ -152,7 +152,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Environment 🧱
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -175,7 +175,7 @@ jobs:
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             # Create new temporary slot
@@ -197,7 +197,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             az webapp restart \
@@ -221,7 +221,7 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
       - name: Defaults ✨
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             # Basic
@@ -256,7 +256,7 @@ jobs:
           docker push ${{ env.ACR }}/${{ env.NAME }}:${{ env.FROM }}
 
       - name: Environment 🧱
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             az webapp config appsettings set \
@@ -275,7 +275,7 @@ jobs:
             API_KEY='${{ secrets.API_KEY }}'
 
       - name: Slot 🔀
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             # Create new temporary slot
@@ -297,7 +297,7 @@ jobs:
             --name ${{ env.WEBAPP }}
 
       - name: Reboot ♻️
-        uses: azure/cli@v1.0.9
+        uses: azure/cli@v2.0.0
         with:
           inlineScript: |
             az webapp restart \
