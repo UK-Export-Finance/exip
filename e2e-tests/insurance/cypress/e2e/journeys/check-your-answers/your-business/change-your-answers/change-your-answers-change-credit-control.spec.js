@@ -95,7 +95,7 @@ context('Insurance - Check your answers - Company details - Credit control - Sum
     it('should render the new answer and retain a `completed` status tag', () => {
       cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.NO);
 
-      cy.checkTaskStatusCompleted(status());
+      cy.checkTaskStatusCompleted(status);
     });
   });
 });

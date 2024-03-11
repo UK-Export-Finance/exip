@@ -8,7 +8,10 @@ export const checkAutocompleteInput = {
     field.input().should('not.be.visible');
   },
   hasWorkingClientSideJS: (field) => {
-    field.input().should('have.class', 'autocomplete__input');
+    cy.checkClassName(
+      field.input(),
+      'autocomplete__input autocomplete__input--default',
+    );
   },
   rendersInput: (field) => {
     field.input().should('exist');

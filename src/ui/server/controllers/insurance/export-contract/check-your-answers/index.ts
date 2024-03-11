@@ -11,10 +11,6 @@ import { Request, Response } from '../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-export const pageVariables = (referenceNumber: number) => ({
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
-});
-
 export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.CHECK_YOUR_ANSWERS;
 
 /**
@@ -47,7 +43,6 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.EXPORT_CONTRACT.CHECK_YOUR_ANSWERS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(res.locals.application),
       SUMMARY_LIST: summaryList,

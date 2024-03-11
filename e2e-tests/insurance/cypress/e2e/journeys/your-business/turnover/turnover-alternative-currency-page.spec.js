@@ -79,7 +79,7 @@ context('Insurance - Your business - Turnover - Alternative currency page - As a
 
     rendering();
 
-    formSubmission().selectAltRadioButNoAltCurrency();
+    formSubmission().selectAltRadioButNoAltCurrency({});
 
     formSubmission().submitASupportedCurrency({ url: TURNOVER_ROOT });
     formSubmission().submitAlternativeCurrency({ url: TURNOVER_ROOT });

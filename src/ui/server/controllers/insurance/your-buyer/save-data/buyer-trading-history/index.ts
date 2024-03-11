@@ -7,7 +7,11 @@ import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/y
 
 const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
 
-export const nullOrEmptyStringFields = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
+/**
+ * string fields which are exempt from being stripped by stripEmptyFormFields
+ * for example when a string field needs to be set to an empty string or null
+ */
+export const NULL_OR_EMPTY_STRING_FIELDS = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
 
 /**
  * gets fields to add to the database and sanitises them
@@ -19,7 +23,7 @@ export const nullOrEmptyStringFields = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT
  */
 const buyerTradingHistory = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), nullOrEmptyStringFields);
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);

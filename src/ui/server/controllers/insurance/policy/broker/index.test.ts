@@ -1,6 +1,6 @@
 import { pageVariables, ERROR_MESSAGE, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get, post } from '.';
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
-import { TEMPLATES } from '../../../../constants';
+import { ATTRIBUTES, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -35,7 +35,6 @@ const {
   PARTIALS: {
     INSURANCE: { BROKER: BROKER_PARTIALS },
   },
-  ATTRIBUTES: { CLASSES },
 } = TEMPLATES;
 
 const { referenceNumber } = mockApplication;
@@ -100,7 +99,7 @@ describe('controllers/insurance/policy/broker', () => {
         HORIZONTAL_RADIOS: true,
         NO_RADIO_AS_FIRST_OPTION: true,
         CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
-        LEGEND_CLASS: CLASSES.LEGEND.XL,
+        LEGEND_CLASS: ATTRIBUTES.CLASSES.LEGEND.XL,
       };
 
       expect(HTML_FLAGS).toEqual(expected);

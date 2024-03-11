@@ -1,4 +1,4 @@
-import { headingCaption, saveAndBackButton } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -46,7 +46,8 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
-      submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
+      submitButtonCopy: BUTTONS.SAVE_AND_BACK,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
@@ -57,14 +58,6 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders a `save and back` button/link', () => {
-      cy.checkLink(
-        saveAndBackButton(),
-        allSectionsUrl,
-        BUTTONS.SAVE_AND_BACK,
-      );
     });
 
     describe('form submission', () => {

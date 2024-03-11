@@ -1,10 +1,14 @@
-import save from '.';
+import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
+import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import generateValidationErrors from '../../type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
-import { FIELD_IDS, FIELD_VALUES } from '../../../../../constants';
+import { FIELD_VALUES } from '../../../../../constants';
 import { mockApplication } from '../../../../../test-mocks';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+
+const { CREDIT_PERIOD_WITH_BUYER, POLICY_TYPE } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/save-data/policy', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -12,7 +16,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
   const mockFormBody = {
     valid: {
-      [FIELD_IDS.INSURANCE.POLICY.POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
+      [POLICY_TYPE]: FIELD_VALUES.POLICY_TYPE.SINGLE,
       otherField: true,
     },
     invalid: {
@@ -24,6 +28,12 @@ describe('controllers/insurance/policy/save-data/policy', () => {
     api.keystone.application.update.policy = updateApplicationSpy;
   });
 
+  describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
+    it('should have the relevant fieldIds', () => {
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([CREDIT_PERIOD_WITH_BUYER]);
+    });
+  });
+
   describe('when errorList is provided', () => {
     const mockErrorList = generateValidationErrors(mockFormBody.invalid)?.errorList;
 
@@ -32,7 +42,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = getDataToSave(mockFormBody.invalid, mockErrorList);
+      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody.invalid, mockErrorList), NULL_OR_EMPTY_STRING_FIELDS);
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);
@@ -51,7 +61,7 @@ describe('controllers/insurance/policy/save-data/policy', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = getDataToSave(mockFormBody.valid);
+      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody.valid));
       const expectedSanitisedData = sanitiseData(dataToSave);
 
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.policy.id, expectedSanitisedData);

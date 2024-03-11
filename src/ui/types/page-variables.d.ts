@@ -44,8 +44,9 @@ interface CorePageVariablesInput extends CorePageVariablesInitialInput {
 }
 
 interface CorePageVariables {
-  CONTENT_STRINGS: PageVariablesContentStrings;
+  ATTRIBUTES: object;
   BACK_LINK?: string;
+  CONTENT_STRINGS: PageVariablesContentStrings;
   START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
   DATA_CY: PageVariablesDataCy;

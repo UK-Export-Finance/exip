@@ -61,7 +61,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
     describe(`when going back to ${ALL_SECTIONS}`, () => {
       it('should retain a `completed` status tag', () => {
-        cy.clickSaveAndBackButton();
+        cy.clickSubmitButton();
 
         cy.checkTaskExportContractStatusIsComplete();
       });

@@ -7,7 +7,11 @@ import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/y
 
 const { CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
-export const nullOrEmptyStringFields = [CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
+/**
+ * string fields which are exempt from being stripped by stripEmptyFormFields
+ * for example when a string field needs to be set to an empty string or null
+ */
+export const NULL_OR_EMPTY_STRING_FIELDS = [CONNECTION_WITH_BUYER_DESCRIPTION, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
 /**
  * gets fields to add to the database and sanitises them
@@ -19,7 +23,7 @@ export const nullOrEmptyStringFields = [CONNECTION_WITH_BUYER_DESCRIPTION, PREVI
  */
 const buyerRelationship = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), nullOrEmptyStringFields);
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
