@@ -1,5 +1,5 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/export-contract';
-import { countryInput } from '../../../../../../../pages/shared';
+import { autoCompleteField } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -85,7 +85,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
     // final destination known
     cy.submitAndAssertFieldErrors(
-      countryInput.field(FINAL_DESTINATION_KNOWN),
+      autoCompleteField(FINAL_DESTINATION_KNOWN),
       null,
       1,
       expectedErrorsCount,
@@ -123,7 +123,7 @@ context('Insurance - Export contract - About goods or services page - form valid
       const expectedErrorsCount = 1;
 
       cy.submitAndAssertFieldErrors(
-        countryInput.field(FINAL_DESTINATION),
+        autoCompleteField(FINAL_DESTINATION),
         null,
         0,
         expectedErrorsCount,
@@ -146,7 +146,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       cy.assertYesRadioOptionIsChecked();
 
-      cy.checkText(countryInput.field(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
+      cy.checkText(autoCompleteField(FINAL_DESTINATION).results(), COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME);
     });
   });
 

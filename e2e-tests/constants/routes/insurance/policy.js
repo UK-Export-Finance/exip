@@ -1,7 +1,9 @@
-const ROOT = '/insurance-policy';
+const ROOT = '/policy';
 const BROKER_ROOT = `${ROOT}/broker`;
 const BROKER_DETAILS_ROOT = `${ROOT}/broker-details`;
 const BROKER_CONFIRM_ADDRESS_ROOT = `${ROOT}/broker-confirm-address`;
+const NAME_ON_POLICY_ROOT = `${ROOT}/contact`;
+const DIFFERENT_NAME_ON_POLICY_ROOT = `${ROOT}/contact-details`;
 const LOSS_PAYEE_ROOT = `${ROOT}/loss-payee`;
 const LOSS_PAYEE_DETAILS_ROOT = `${ROOT}/loss-payee-details`;
 
@@ -27,14 +29,14 @@ export const POLICY = {
   MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK: `${ROOT}/multiple-contract-policy/export-value/save-and-go-back`,
   MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE: `${ROOT}/multiple-contract-policy/export-value/change`,
   MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE: `${ROOT}/multiple-contract-policy/export-value/check-and-change`,
-  NAME_ON_POLICY: `${ROOT}/name-on-policy`,
-  NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/name-on-policy/save-and-go-back`,
-  NAME_ON_POLICY_CHANGE: `${ROOT}/name-on-policy/change`,
-  NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/name-on-policy/check-and-change`,
-  DIFFERENT_NAME_ON_POLICY: `${ROOT}/different-name-on-policy`,
-  DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/different-name-on-policy/save-and-go-back`,
-  DIFFERENT_NAME_ON_POLICY_CHANGE: `${ROOT}/different-name-on-policy/change`,
-  DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/different-name-on-policy/check-and-change`,
+  NAME_ON_POLICY: `${ROOT}/${NAME_ON_POLICY_ROOT}`,
+  NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/${NAME_ON_POLICY_ROOT}/save-and-go-back`,
+  NAME_ON_POLICY_CHANGE: `${ROOT}/${NAME_ON_POLICY_ROOT}/change`,
+  NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/${NAME_ON_POLICY_ROOT}/check-and-change`,
+  DIFFERENT_NAME_ON_POLICY: `${ROOT}/${DIFFERENT_NAME_ON_POLICY_ROOT}`,
+  DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK: `${ROOT}/${DIFFERENT_NAME_ON_POLICY_ROOT}/save-and-go-back`,
+  DIFFERENT_NAME_ON_POLICY_CHANGE: `${ROOT}/${DIFFERENT_NAME_ON_POLICY_ROOT}/change`,
+  DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE: `${ROOT}/${DIFFERENT_NAME_ON_POLICY_ROOT}/check-and-change`,
   PRE_CREDIT_PERIOD: `${ROOT}/pre-credit-period`,
   PRE_CREDIT_PERIOD_SAVE_AND_BACK: `${ROOT}/pre-credit-period/save-and-go-back`,
   PRE_CREDIT_PERIOD_CHANGE: `${ROOT}/pre-credit-period/change`,

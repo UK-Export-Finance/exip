@@ -1,4 +1,4 @@
-import { countryInput } from '../../../../pages/shared';
+import { autoCompleteField } from '../../../../pages/shared';
 import { insurance } from '../../../../pages';
 import { PAGES } from '../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -29,9 +29,9 @@ context('Insurance - apply offline exit page', () => {
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME);
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_APPLICATION_SUPPORT.OFFLINE.NAME);
 
-    const results = countryInput.field(FIELD_ID).results();
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
     cy.clickSubmitButton();

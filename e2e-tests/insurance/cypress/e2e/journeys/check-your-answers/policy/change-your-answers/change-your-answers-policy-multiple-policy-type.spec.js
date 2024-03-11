@@ -113,7 +113,7 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -151,7 +151,7 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it('should render the new answer', () => {
           fieldVariables.newValue = `${fieldVariables.newValueInput} months`;
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -189,7 +189,7 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -227,7 +227,7 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
 
         it('should render the new answer', () => {
           fieldVariables.newValue = formatCurrency(fieldVariables.newValueInput);
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });
@@ -267,7 +267,7 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
         });
 
         it('should render the new answer', () => {
-          cy.checkChangeAnswerRendered(fieldVariables);
+          cy.checkChangeAnswerRendered({ fieldVariables });
         });
       });
     });

@@ -1,4 +1,4 @@
-import { countryInput } from '../../pages/shared';
+import { autoCompleteField } from '../../pages/shared';
 
 export const checkAutocompleteInput = {
   isVisible: (field) => {
@@ -51,7 +51,7 @@ export const checkAutocompleteInput = {
     // enter the second country
     cy.autocompleteKeyboardInput(fieldId, country2);
 
-    cy.checkText(countryInput.field(fieldId).results(), expectedValue);
+    cy.checkText(autoCompleteField(fieldId).results(), expectedValue);
   },
   checkInput: (field, expectedValue) => {
     // checks input displays the correct text

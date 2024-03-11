@@ -1,5 +1,5 @@
 import actions from './actions';
-import countryInput from './countryInput';
+import autoCompleteField from './autoCompleteField';
 import cannotApplyPage from './cannotApply';
 import radios from './radios';
 import exporterLocationPage from './exporterLocation';
@@ -52,6 +52,7 @@ const singleInputField = (fieldId) => ({
 export {
   actions,
   allSectionsLink,
+  autoCompleteField,
   backLink,
   body,
   form,
@@ -76,7 +77,6 @@ export {
   startNowLink,
   status,
   singleInputField,
-  countryInput,
   cannotApplyPage,
   exporterLocationPage,
   field,

@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, cannotApplyPage,
+  backLink, autoCompleteField, cannotApplyPage,
 } from '../../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -30,9 +30,9 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     cy.navigateToUrl(url);
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), NEW_COUNTRY_INPUT);
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), NEW_COUNTRY_INPUT);
 
-    const results = countryInput.field(FIELD_ID).results();
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
     cy.clickSubmitButton();
@@ -63,8 +63,8 @@ context('Buyer country page - as an exporter, I want to check if UKEF issue cred
 
     const expectedValue = NEW_COUNTRY_INPUT;
 
-    cy.checkValue(countryInput.field(FIELD_ID), expectedValue);
+    cy.checkValue(autoCompleteField(FIELD_ID), expectedValue);
 
-    cy.checkText(countryInput.field(FIELD_ID).results(), expectedValue);
+    cy.checkText(autoCompleteField(FIELD_ID).results(), expectedValue);
   });
 });

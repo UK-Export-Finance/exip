@@ -30,7 +30,7 @@ describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
-  it(`should return relevant fields and values when ${IS_SAME_AS_OWNER} is true`, () => {
+  it(`should return relevant fields and values including ${EMAIL} field without a change link when ${IS_SAME_AS_OWNER} is true`, () => {
     const expectedFields = [
       fieldGroupItem(
         {
@@ -39,6 +39,20 @@ describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
           href: generateChangeLink(NAME_ON_POLICY_CHANGE, NAME_ON_POLICY_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
         },
         `${mockContact[FIRST_NAME]} ${mockContact[LAST_NAME]}`,
+      ),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.DIFFERENT_NAME_ON_POLICY, EMAIL),
+          renderChangeLink: false,
+          href: generateChangeLink(
+            DIFFERENT_NAME_ON_POLICY_CHANGE,
+            DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
+            `#${EMAIL}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+        },
+        mockContact[EMAIL],
       ),
       fieldGroupItem(
         {
@@ -62,7 +76,7 @@ describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
     expect(result).toEqual(expected);
   });
 
-  it(`should return the relevant fields and values when ${IS_SAME_AS_OWNER} is false`, () => {
+  it(`should return the relevant fields and values including ${EMAIL} field with a change link when ${IS_SAME_AS_OWNER} is false`, () => {
     mockAnswers[IS_SAME_AS_OWNER] = false;
 
     const expectedFields = [

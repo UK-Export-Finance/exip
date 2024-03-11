@@ -1,5 +1,5 @@
 import {
-  backLink, countryInput, field, summaryList,
+  backLink, autoCompleteField, field, summaryList,
 } from '../../../../../../pages/shared';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
@@ -150,8 +150,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
-      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), BRAZIL);
-      const results = countryInput.field(BUYER_COUNTRY).results();
+      cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), BRAZIL);
+      const results = autoCompleteField(BUYER_COUNTRY).results();
       results.first().click();
 
       cy.clickSubmitButton();
@@ -162,8 +162,8 @@ context('Your quote page - change answers (policy type and length from multiple 
     });
 
     it('renders the new answers in the quote', () => {
-      cy.keyboardInput(countryInput.field(BUYER_COUNTRY).input(), BRAZIL);
-      const results = countryInput.field(BUYER_COUNTRY).results();
+      cy.keyboardInput(autoCompleteField(BUYER_COUNTRY).input(), BRAZIL);
+      const results = autoCompleteField(BUYER_COUNTRY).results();
       results.first().click();
 
       // go through 2 get a quote forms.

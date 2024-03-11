@@ -1,4 +1,4 @@
-import { countryInput } from '../pages/shared';
+import { autoCompleteField } from '../pages/shared';
 
 /**
  * autocompleteKeyboardInput
@@ -8,7 +8,7 @@ import { countryInput } from '../pages/shared';
  * @param {String} text: Text to enter
  */
 const autocompleteKeyboardInput = (fieldId, text) => {
-  const autocompleteField = countryInput.field(fieldId);
+  const autocompleteField = autoCompleteField(fieldId);
 
   cy.keyboardInput(autocompleteField.input(), text);
 

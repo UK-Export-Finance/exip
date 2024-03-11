@@ -1,5 +1,6 @@
 import { field, summaryList } from '../../../../../../pages/shared';
 import { GBP_CURRENCY_CODE } from '../../../../../../constants';
+import { NON_STANDARD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import formatCurrency from '../../../../../../helpers/format-currency';
@@ -80,6 +81,45 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
       it('should render the new answer', () => {
         const expectedValue = formatCurrency(newAnswer, GBP_CURRENCY_CODE);
+
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
+      });
+    });
+  });
+
+  describe(`${ESTIMATED_ANNUAL_TURNOVER} change currency`, () => {
+    const fieldId = ESTIMATED_ANNUAL_TURNOVER;
+
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${TURNOVER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TURNOVER_CHANGE, fieldId: ESTIMATED_ANNUAL_TURNOVER });
+      });
+    });
+
+    describe('form submission with a new answer', () => {
+      const newAnswer = '455445';
+
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
+
+        cy.clickSubmitButton();
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS });
+      });
+
+      it('should render the new answer', () => {
+        const currency = NON_STANDARD_CURRENCY_CODE;
+        const expectedValue = formatCurrency(newAnswer, currency);
 
         cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
       });

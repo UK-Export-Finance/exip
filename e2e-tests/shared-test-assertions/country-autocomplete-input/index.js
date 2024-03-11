@@ -1,5 +1,5 @@
 import assertions from '../autocomplete-assertions';
-import { countryInput } from '../../pages/shared';
+import { autoCompleteField } from '../../pages/shared';
 import { XAD, DZA } from '../../fixtures/countries';
 
 const { NAME: ABU_DHABI } = XAD;
@@ -13,7 +13,7 @@ const { NAME: ALGERIA } = DZA;
 export const assertCountryAutocompleteInput = ({
   fieldId,
 }) => {
-  const field = countryInput.field(fieldId);
+  const field = autoCompleteField(fieldId);
 
   it('has working client side JS', () => {
     assertions.hasWorkingClientSideJS(field);
