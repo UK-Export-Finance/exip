@@ -1,7 +1,7 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import partials from '../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../content-strings';
-import { APPLICATION, DATE_FORMAT, ROUTES } from '../../../../../constants';
+import { DATE_FORMAT, ROUTES } from '../../../../../constants';
 import { formatDate } from '../../../../../helpers/date';
 
 const { table } = dashboardPage;
@@ -36,12 +36,10 @@ context('Insurance - Dashboard - submitted application', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should render 'status' cell with ${APPLICATION.STATUS.SUBMITTED}`, () => {
-    const cell = table.body.row(referenceNumber).status();
+  it('should render `status` cell with `submitted` status tag', () => {
+    const selector = table.body.row(referenceNumber).status;
 
-    const expected = APPLICATION.STATUS.SUBMITTED;
-
-    cy.checkText(cell, expected);
+    cy.checkTaskStatusSubmitted(selector);
   });
 
   it(`should render ${TABLE_HEADERS.SUBMITTED} cell '${BUTTONS.CONTINUE}' with formatted date`, () => {

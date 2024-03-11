@@ -113,7 +113,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         fieldVariables.newValue = fieldVariables.newValueInput;
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -162,7 +162,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         // as html, cannot use checkText so checking contains following fields
         row.value().contains(fieldVariables.newValueInput);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -202,7 +202,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         fieldVariables.newValue = fieldVariables.newValueInput;
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -242,7 +242,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         fieldVariables.newValue = fieldVariables.newValueInput;
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });

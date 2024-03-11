@@ -90,7 +90,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
       it(`should redirect to ${YOUR_BUSINESS} and retain a 'completed' status tag`, () => {
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -136,7 +136,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
 
         cy.checkText(summaryList.field(fieldId).value(), expectedFullAddress);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -174,7 +174,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
       it('should render the new answer and retain a `completed` status tag', () => {
         cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -211,7 +211,7 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
         const expected = FIELD_VALUES.NO;
         cy.assertSummaryListRowValue(summaryList, fieldId, expected);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });

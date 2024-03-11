@@ -152,4 +152,16 @@ context('Insurance - Dashboard - populated application', () => {
       cy.checkText(cell, expected);
     });
   });
+
+  describe('when going back to the dashboard', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it('should render `status` cell with an `in progress` status tag', () => {
+      const selector = table.body.row(referenceNumber).status;
+
+      cy.checkTaskStatusInProgress(selector);
+    });
+  });
 });

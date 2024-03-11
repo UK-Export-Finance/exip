@@ -4,6 +4,7 @@ Cypress.Commands.add('checkTaskStatusCannotStart', require('./tasks/check-task-s
 Cypress.Commands.add('checkTaskStatusNotStartedYet', require('./tasks/check-task-status-not-started-yet'));
 Cypress.Commands.add('checkTaskStatusInProgress', require('./tasks/check-task-status-in-progress'));
 Cypress.Commands.add('checkTaskStatusCompleted', require('./tasks/check-task-status-complete'));
+Cypress.Commands.add('checkTaskStatusSubmitted', require('./tasks/check-task-status-submitted'));
 
 Cypress.Commands.add('checkTaskEligibilityStatusIsComplete', require('./tasks/eligibility/is-complete'));
 

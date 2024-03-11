@@ -74,7 +74,7 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
     });
 
     it('renders a `completed` status tag', () => {
-      cy.checkTaskStatusCompleted(status());
+      cy.checkTaskStatusCompleted(status);
     });
 
     it('renders a `save and back` button', () => {

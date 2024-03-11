@@ -1,6 +1,6 @@
 import { get, post, pageVariables, TEMPLATE, FIELD_IDS, PAGE_CONTENT_STRINGS, HTML_FLAGS } from '.';
 import { PAGES } from '../../../../content-strings';
-import { FIELD_VALUES, TEMPLATES } from '../../../../constants';
+import { ATTRIBUTES, FIELD_VALUES, TEMPLATES } from '../../../../constants';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
@@ -43,10 +43,11 @@ const {
   PARTIALS: {
     INSURANCE: { BUYER },
   },
-  ATTRIBUTES: {
-    CLASSES: { LEGEND, FONT_WEIGHT },
-  },
 } = TEMPLATES;
+
+const {
+  CLASSES: { LEGEND, FONT_WEIGHT },
+} = ATTRIBUTES;
 
 const currencyValue = mockApplication.buyer.buyerTradingHistory[CURRENCY_CODE];
 
