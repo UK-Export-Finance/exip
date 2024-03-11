@@ -3,6 +3,7 @@
 {% macro render(params) %}
 
   {% set groups = params.groups %}
+  {% set tagClasses = params.tagClasses %}
 
   {% for group in groups %}
 
@@ -25,7 +26,8 @@
 
         {{ taskListRow.render({
           task: task,
-          groupTitle: group.title
+          groupTitle: group.title,
+          tagClasses: tagClasses
         }) }}
 
       {% endfor %}

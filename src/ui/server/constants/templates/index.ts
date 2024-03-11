@@ -14,16 +14,4 @@ export const TEMPLATES = {
   INSURANCE: INSURANCE_TEMPLATES,
   SHARED_PAGES,
   PARTIALS,
-  ATTRIBUTES: {
-    CLASSES: {
-      LEGEND: {
-        S: 'govuk-fieldset__legend--s',
-        M: 'govuk-fieldset__legend--m',
-        XL: 'govuk-fieldset__legend--xl',
-      },
-      FONT_WEIGHT: {
-        REGULAR: 'govuk-!-font-weight-regular',
-      },
-    },
-  },
 };

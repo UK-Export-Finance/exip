@@ -106,7 +106,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
         fieldVariables.newValue = FIELD_VALUES.YES;
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
 
       it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION} and retain a "completed" status tag`, () => {
@@ -115,7 +115,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
 
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
 
@@ -137,13 +137,13 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
         fieldVariables.newValue = FIELD_VALUES.NO;
         cy.checkChangeAnswerRendered({ fieldVariables });
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
 
       it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row and retain a "completed" status tag`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
 
-        cy.checkTaskStatusCompleted(status());
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });

@@ -19,7 +19,7 @@ const formSubmissionAssertions = ({
   submitAlternativeCurrencyAndAssertUrl,
   submitAlternativeCurrencyAndAssertInput,
 }) => {
-  const selectAltRadioButNoAltCurrency = (errorIndex = 0) => {
+  const selectAltRadioButNoAltCurrency = ({ errorIndex = 0 }) => {
     describe('when selecting the alternative currency radio and NOT entering an alternative currency via the autocomplete input', () => {
       it('should render validation errors', () => {
         rendersAlternativeCurrencyValidationError({ errorIndex });

@@ -10,7 +10,7 @@ import {
   LINKS,
   PRODUCT as PRODUCT_CONTENT_STRING,
 } from '../../../content-strings';
-import { ROUTES, TEMPLATES } from '../../../constants';
+import { ATTRIBUTES, ROUTES, TEMPLATES } from '../../../constants';
 
 const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
@@ -57,6 +57,7 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
@@ -92,6 +93,7 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
@@ -127,6 +129,7 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: quoteStart,
         FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
@@ -163,6 +166,7 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: quoteStart,
         FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',
@@ -198,6 +202,7 @@ describe('server/helpers/page-variables/core', () => {
         BACK_LINK: mock.BACK_LINK,
         START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
+        ATTRIBUTES,
         DATA_CY: {
           HEADING: 'heading',
           BACK_LINK: 'back-link',

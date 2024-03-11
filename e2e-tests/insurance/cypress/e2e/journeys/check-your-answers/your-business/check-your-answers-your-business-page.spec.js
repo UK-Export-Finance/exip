@@ -72,7 +72,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
     });
 
     it('renders a `completed` status tag', () => {
-      cy.checkTaskStatusCompleted(status());
+      cy.checkTaskStatusCompleted(status);
     });
 
     it('renders a `save and back` button', () => {

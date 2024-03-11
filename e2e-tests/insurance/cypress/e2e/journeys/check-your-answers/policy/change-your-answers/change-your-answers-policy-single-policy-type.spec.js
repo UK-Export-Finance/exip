@@ -243,7 +243,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         it('should render the new answer and retain a `completed` status tag', () => {
           cy.checkChangeAnswerRendered({ fieldVariables });
 
-          cy.checkTaskStatusCompleted(status());
+          cy.checkTaskStatusCompleted(status);
         });
       });
     });

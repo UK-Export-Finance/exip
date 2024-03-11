@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { TEMPLATES } from '../../../../constants';
+import { ATTRIBUTES, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import YOUR_BUYER_FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
@@ -36,10 +36,11 @@ const {
   PARTIALS: {
     INSURANCE: { BUYER },
   },
-  ATTRIBUTES: {
-    CLASSES: { LEGEND, FONT_WEIGHT },
-  },
 } = TEMPLATES;
+
+const {
+  CLASSES: { LEGEND, FONT_WEIGHT },
+} = ATTRIBUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE },

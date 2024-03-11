@@ -1,5 +1,5 @@
 import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
-import { TEMPLATES } from '../../../../constants';
+import { ATTRIBUTES, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -26,7 +26,6 @@ const {
   PARTIALS: {
     INSURANCE: { BROKER: BROKER_PARTIALS },
   },
-  ATTRIBUTES: { CLASSES },
 } = TEMPLATES;
 
 export const FIELD_ID = USING_BROKER;
@@ -56,7 +55,7 @@ export const HTML_FLAGS = {
   HORIZONTAL_RADIOS: true,
   NO_RADIO_AS_FIRST_OPTION: true,
   CUSTOM_CONTENT_HTML: BROKER_PARTIALS.CUSTOM_CONTENT_HTML,
-  LEGEND_CLASS: CLASSES.LEGEND.XL,
+  LEGEND_CLASS: ATTRIBUTES.CLASSES.LEGEND.XL,
 };
 
 /**

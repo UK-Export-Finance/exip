@@ -1,6 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
@@ -17,6 +18,17 @@
       "data-cy": DATA_CY.BACK_LINK
     }
   }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
 
   <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
@@ -44,7 +56,14 @@
               "data-cy": FIELDS.NAME.ID + "-label"
             }
           },
-          classes: "govuk-input--width-20",
+          value: submittedValues[FIELDS.NAME.ID] or application.policy[FIELDS.NAME.ID],
+          classes: "govuk-input--width-20 govuk-!-margin-bottom-5",
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
+            text: validationErrors.errorList[FIELDS.NAME.ID].text,
+            attributes: {
+              "data-cy": FIELDS.NAME.ID + "-error-message"
+            }
+          },
           attributes: {
             "data-cy": FIELDS.NAME.ID + "-input"
           }
@@ -59,6 +78,12 @@
         legend: {
           text: FIELDS.LOCATION.LABEL,
           classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24"
+        }
+      },
+      errorMessage: validationErrors.errorList[FIELDS.LOCATION.ID] and {
+        text: validationErrors.errorList[FIELDS.LOCATION.ID].text,
+        attributes: {
+          "data-cy": FIELDS.LOCATION.ID + "-error-message"
         }
       },
       classes: "govuk-radios--inline",
