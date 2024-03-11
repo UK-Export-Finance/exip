@@ -10,7 +10,7 @@ import {
   PRODUCT as PRODUCT_CONTENT_STRINGS,
 } from '../../../content-strings';
 import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
-import { ROUTES } from '../../../constants';
+import { ATTRIBUTES, ROUTES } from '../../../constants';
 import isInsuranceRoute from '../../is-insurance-route';
 
 const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
@@ -28,7 +28,7 @@ const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
  */
 const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_GENERIC_HEADER, HTML_FLAGS }: CorePageVariablesInput): CorePageVariables => {
   /**
-   * checks if rhe ORIGINAL_URL is an insurance route or not
+   * checks if the ORIGINAL_URL is an insurance route or not
    * if insurance - either contains insurance or is undefined
    * if is not undefined and does not contain insurance, then is a quote route
    */
@@ -69,6 +69,7 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
     BACK_LINK,
     START_ROUTE,
     FEEDBACK_ROUTE,
+    ATTRIBUTES,
     DATA_CY: {
       HEADING: 'heading',
       BACK_LINK: 'back-link',

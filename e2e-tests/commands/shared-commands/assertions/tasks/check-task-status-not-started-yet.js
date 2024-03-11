@@ -1,5 +1,7 @@
+import { ATTRIBUTES } from '../../../../constants';
 import { TASKS } from '../../../../content-strings';
 
+const { CLASSES } = ATTRIBUTES;
 const { STATUS: { NOT_STARTED_YET } } = TASKS;
 
 /**
@@ -12,7 +14,7 @@ const checkNotStartedYetTaskStatus = (selector) => {
 
   cy.checkClassName(
     selector(),
-    'govuk-tag govuk-tag--grey',
+    `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREY}`,
   );
 };
 

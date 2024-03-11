@@ -1,5 +1,7 @@
+import { ATTRIBUTES } from '../../../../constants';
 import { APPLICATION } from '../../../../constants';
 
+const { CLASSES } = ATTRIBUTES;
 const { STATUS: { SUBMITTED } } = APPLICATION;
 
 /**
@@ -12,7 +14,7 @@ const checkSubmittedTaskStatus = (selector) => {
 
   cy.checkClassName(
     selector(),
-    'govuk-tag govuk-tag--green',
+    `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.GREEN}`,
   );
 };
 

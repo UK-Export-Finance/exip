@@ -1,5 +1,7 @@
+import { ATTRIBUTES } from '../../../../constants';
 import { TASKS } from '../../../../content-strings';
 
+const { CLASSES } = ATTRIBUTES;
 const { STATUS: { IN_PROGRESS } } = TASKS;
 
 /**
@@ -12,7 +14,7 @@ const checkInProgressTaskStatus = (selector) => {
 
   cy.checkClassName(
     selector(),
-    'govuk-tag govuk-tag--blue',
+    `${CLASSES.TAGS.ROOT} ${CLASSES.TAGS.BLUE}`,
   );
 };
 
