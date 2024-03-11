@@ -1,4 +1,4 @@
-import { summaryList, countryInput } from '../../../../../../pages/shared';
+import { summaryList, autoCompleteField } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
 import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
@@ -104,7 +104,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(countryInput.field(fieldId).input(), NEW_COUNTRY_INPUT);
+        cy.keyboardInput(autoCompleteField(fieldId).input(), NEW_COUNTRY_INPUT);
 
         cy.clickSubmitButton();
       });

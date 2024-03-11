@@ -1,5 +1,6 @@
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -13,6 +14,8 @@ const {
   NAME_ON_POLICY: { NAME },
   USING_BROKER,
 } = POLICY_FIELD_IDS;
+
+const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -54,6 +57,10 @@ context('Insurance - Policy - Check your answers - Summary list - single contrac
 
   it(`should render a ${NAME} summary list row`, () => {
     checkSummaryList[NAME]({});
+  });
+
+  it(`should render a ${EMAIL} summary list row without a change link`, () => {
+    checkSummaryList[EMAIL]({ renderChangeLink: false });
   });
 
   it(`should render a ${USING_BROKER} summary list row`, () => {

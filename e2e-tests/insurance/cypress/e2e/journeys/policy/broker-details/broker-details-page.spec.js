@@ -108,7 +108,7 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
       field.textarea().should('exist');
     });
 
-    it('should display save and go back button', () => {
+    it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
   });

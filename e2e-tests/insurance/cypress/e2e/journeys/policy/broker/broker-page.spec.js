@@ -133,7 +133,7 @@ context('Insurance - Policy - Broker page - As an Exporter I want to confirm if 
       });
     });
 
-    it('should display save and go back button', () => {
+    it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
   });

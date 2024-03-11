@@ -174,14 +174,18 @@ const checkPolicySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [EMAIL]: () => {
+  [EMAIL]: ({ renderChangeLink = true }) => {
     const fieldId = EMAIL;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, DIFFERENT_NAME_ON_POLICY);
 
     const expectedValue = POLICY_CONTACT[EMAIL];
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    if (renderChangeLink) {
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
+    }
   },
   [POSITION]: () => {
     const fieldId = POSITION;

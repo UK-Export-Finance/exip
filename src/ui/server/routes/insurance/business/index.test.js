@@ -38,8 +38,8 @@ describe('routes/insurance/your-business', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(25);
-    expect(post).toHaveBeenCalledTimes(29);
+    expect(get).toHaveBeenCalledTimes(27);
+    expect(post).toHaveBeenCalledTimes(31);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS, getCompanyDetails);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.COMPANY_DETAILS_SAVE_AND_BACK, postCompanyDetailsSaveAndBack);
@@ -78,6 +78,10 @@ describe('routes/insurance/your-business', () => {
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY, getAlternativeTurnoverCurrency);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY, postAlternativeTurnoverCurrency);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHANGE, getAlternativeTurnoverCurrency);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHANGE, postAlternativeTurnoverCurrency);
+    expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE, getAlternativeTurnoverCurrency);
+    expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE, postAlternativeTurnoverCurrency);
 
     expect(get).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL, getCreditControl);
     expect(post).toHaveBeenCalledWith(ROUTES.INSURANCE.EXPORTER_BUSINESS.CREDIT_CONTROL, postCreditControl);

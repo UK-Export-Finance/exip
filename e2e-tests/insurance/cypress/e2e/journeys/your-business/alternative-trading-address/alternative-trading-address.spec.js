@@ -110,7 +110,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
       cy.checkText(field.label(), LABEL);
     });
 
-    it('should display save and go back button', () => {
+    it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
   });

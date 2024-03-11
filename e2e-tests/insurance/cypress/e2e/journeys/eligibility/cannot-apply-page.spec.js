@@ -1,6 +1,6 @@
 import {
   actions,
-  countryInput,
+  autoCompleteField,
   cannotApplyPage,
 } from '../../../../../pages/shared';
 import { PAGES, LINKS } from '../../../../../content-strings';
@@ -32,8 +32,8 @@ context('Insurance Eligibility - Cannot apply exit page', () => {
     cy.completeAndSubmitCompaniesHouseSearchForm({});
     cy.completeEligibilityCompanyDetailsForm();
 
-    cy.keyboardInput(countryInput.field(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
-    const results = countryInput.field(FIELD_ID).results();
+    cy.keyboardInput(autoCompleteField(FIELD_ID).input(), COUNTRY_NAME_UNSUPPORTED);
+    const results = autoCompleteField(FIELD_ID).results();
     results.first().click();
 
     cy.clickSubmitButton();

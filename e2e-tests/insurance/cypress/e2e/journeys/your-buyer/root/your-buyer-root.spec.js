@@ -66,10 +66,6 @@ context('Insurance - Your buyer - Start page - As an exporter, I want to provide
       assertSectionStartContent.intro(CONTENT_STRINGS.INTRO);
     });
 
-    it('renders a list intro', () => {
-      assertSectionStartContent.list.intro(CONTENT_STRINGS.LIST.INTRO);
-    });
-
     it('renders list items', () => {
       assertSectionStartContent.list.items(CONTENT_STRINGS.LIST.ITEMS);
     });
