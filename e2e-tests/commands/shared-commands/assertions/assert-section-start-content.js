@@ -1,4 +1,5 @@
 import {
+  listIntro,
   listItem,
   listOutro,
   outro,
@@ -14,6 +15,7 @@ import { BUTTONS } from '../../../content-strings';
 const assertSectionStartContent = {
   intro: (expectedText) => cy.checkIntroText(expectedText),
   list: {
+    intro: (expectedText) => cy.checkText(listIntro(), expectedText),
     items: (expectedItems) => {
       expectedItems.forEach((expectedText, index) => {
         cy.checkText(listItem(index + 1), expectedText);
