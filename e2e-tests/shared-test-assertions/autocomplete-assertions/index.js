@@ -9,7 +9,7 @@ export const checkAutocompleteInput = {
   },
   hasWorkingClientSideJS: (field) => {
     cy.checkClassName(
-      field.input,
+      field.input(),
       'autocomplete__input',
     );
   },

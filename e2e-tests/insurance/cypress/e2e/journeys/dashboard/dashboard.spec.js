@@ -1,7 +1,7 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import header from '../../../../../partials/header';
 import { DEFAULT, PAGES, BUTTONS } from '../../../../../content-strings';
-import { APPLICATION, ROUTES } from '../../../../../constants';
+import { ROUTES } from '../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
 import application from '../../../../../fixtures/application';
 
@@ -110,12 +110,10 @@ context('Insurance - Dashboard - new application - As an Exporter, I want to acc
         cy.navigateToUrl(dashboardUrl);
       });
 
-      it(`should render 'status' cell with ${APPLICATION.STATUS.IN_PROGRESS}`, () => {
-        const cell = table.body.row(referenceNumber).status();
+      it('should render `status` cell with `in progress` status tag', () => {
+        const selector = table.body.row(referenceNumber).status;
 
-        const expected = APPLICATION.STATUS.IN_PROGRESS;
-
-        cy.checkText(cell, expected);
+        cy.checkTaskStatusInProgress(selector);
       });
 
       it(`should render ${TABLE_HEADERS.BUYER_LOCATION} cell`, () => {

@@ -8,7 +8,12 @@ const { STATUS: { NOT_STARTED_YET } } = TASKS;
  * @param {Function} selector: Cypress selector
  */
 const checkNotStartedYetTaskStatus = (selector) => {
-  cy.checkText(selector, NOT_STARTED_YET);
+  cy.checkText(selector(), NOT_STARTED_YET);
+
+  cy.checkClassName(
+    selector(),
+    'govuk-tag govuk-tag--grey',
+  );
 };
 
 export default checkNotStartedYetTaskStatus;

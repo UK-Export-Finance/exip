@@ -8,7 +8,12 @@ const { STATUS: { CANNOT_START } } = TASKS;
  * @param {Function} selector: Cypress selector
  */
 const checkCannotStartTaskStatus = (selector) => {
-  cy.checkText(selector, CANNOT_START);
+  cy.checkText(selector(), CANNOT_START);
+
+  cy.checkClassName(
+    selector(),
+    'govuk-tag govuk-tag--grey',
+  );
 };
 
 export default checkCannotStartTaskStatus;
