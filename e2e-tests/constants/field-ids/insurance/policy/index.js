@@ -58,6 +58,7 @@ export const POLICY = {
   USING_BROKER: 'isUsingBroker',
   BROKER_DETAILS: {
     NAME: 'name',
+    EMAIL: SHARED.EMAIL,
     BROKER_EMAIL: 'broker.email',
     FULL_ADDRESS: 'fullAddress',
   },
