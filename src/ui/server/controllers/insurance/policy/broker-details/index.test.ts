@@ -3,7 +3,6 @@ import { PAGES } from '../../../../content-strings';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
-import ACCOUNT_FIELD_IDS from '../../../../constants/field-ids/insurance/account';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
@@ -15,8 +14,7 @@ import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { NAME, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
-const { EMAIL } = ACCOUNT_FIELD_IDS;
+const { NAME, EMAIL, FULL_ADDRESS } = POLICY_FIELD_IDS.BROKER_DETAILS;
 
 const {
   INSURANCE_ROOT,
