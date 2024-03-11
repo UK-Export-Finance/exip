@@ -101,7 +101,7 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
 
     it('renders a registered office address', () => {
-      const addressText = `${address.addressLine1}${address.addressLine2}${address.locality}${address.region}${address.postalCode}`;
+      const addressText = `${address.addressLine1}${address.locality}${address.region}${address.postalCode}`;
       cy.checkText(partials.html(COMPANY_ADDRESS), addressText);
     });
 
