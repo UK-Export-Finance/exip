@@ -58,7 +58,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 

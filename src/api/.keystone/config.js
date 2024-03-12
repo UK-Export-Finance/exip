@@ -100,7 +100,11 @@ var import_dotenv = __toESM(require("dotenv"));
 // constants/field-ids/shared/index.ts
 var SHARED = {
   POLICY_TYPE: "policyType",
-  NAME: "name"
+  SINGLE_POLICY_TYPE: "singlePolicyType",
+  MULTIPLE_POLICY_TYPE: "multiplePolicyType",
+  POLICY_LENGTH: "policyLength",
+  NAME: "name",
+  EMAIL: "email"
 };
 var shared_default = SHARED;
 
@@ -218,7 +222,8 @@ var POLICY = {
   USING_BROKER: "isUsingBroker",
   BROKER_DETAILS: {
     NAME: "name",
-    EMAIL: "email",
+    EMAIL: shared_default.EMAIL,
+    BROKER_EMAIL: "broker.email",
     FULL_ADDRESS: "fullAddress"
   },
   LOSS_PAYEE: {

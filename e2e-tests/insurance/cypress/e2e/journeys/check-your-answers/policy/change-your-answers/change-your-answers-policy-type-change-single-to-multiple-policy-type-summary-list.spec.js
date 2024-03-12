@@ -85,69 +85,61 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
   describe('after submitting a new policy type (multiple) and completing (now required) fields for a multiple policy', () => {
     beforeEach(() => {
+      cy.saveSession();
+
       cy.navigateToUrl(checkYourAnswersUrl);
       cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
     });
 
-    it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE} with heading anchor`, () => {
-      const expectedUrl = `${exportValueUrl}#heading`;
+    it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY} with heading anchor`, () => {
+      // assert the URL is MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE
+      cy.assertUrl(`${exportValueUrl}#heading`);
 
-      cy.assertUrl(expectedUrl);
+      // complete the now required "export value" form.
+      cy.completeAndSubmitExportValueForm();
+
+      // assert the URL is CHECK_YOUR_ANSWERS.TYPE_OF_POLICY
+      cy.assertUrl(`${checkYourAnswersUrl}#heading`);
+    });
+  });
+
+  describe('render new answers and change links for new multiple policy fields', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(checkYourAnswersUrl);
     });
 
-    describe(`after completing (now required) ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE} fields for a multiple policy`, () => {
-      beforeEach(() => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-        cy.changePolicyTypeToMultipleAndSubmitContractPolicyForm();
-
-        cy.completeAndSubmitExportValueForm();
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`, () => {
-        const expectedUrl = `${checkYourAnswersUrl}#heading`;
-
-        cy.assertUrl(expectedUrl);
-      });
+    it(POLICY_TYPE, () => {
+      cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
     });
 
-    describe('render new answers and change links for new multiple policy fields', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(checkYourAnswersUrl);
-      });
+    it(TOTAL_MONTHS_OF_COVER, () => {
+      fieldId = TOTAL_MONTHS_OF_COVER;
 
-      it(POLICY_TYPE, () => {
-        cy.assertSummaryListRowValue(summaryList, POLICY_TYPE, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
-      });
+      const expectedValue = `${application.POLICY[fieldId]} months`;
 
-      it(TOTAL_MONTHS_OF_COVER, () => {
-        fieldId = TOTAL_MONTHS_OF_COVER;
+      cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
+    });
 
-        const expectedValue = `${application.POLICY[fieldId]} months`;
+    it(TOTAL_SALES_TO_BUYER, () => {
+      fieldId = TOTAL_SALES_TO_BUYER;
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
-      });
+      const expectedValue = formatCurrency(application.POLICY[fieldId]);
 
-      it(TOTAL_SALES_TO_BUYER, () => {
-        fieldId = TOTAL_SALES_TO_BUYER;
+      cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
+    });
 
-        const expectedValue = formatCurrency(application.POLICY[fieldId]);
+    it(MAXIMUM_BUYER_WILL_OWE, () => {
+      fieldId = MAXIMUM_BUYER_WILL_OWE;
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
-      });
+      const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
 
-      it(MAXIMUM_BUYER_WILL_OWE, () => {
-        fieldId = MAXIMUM_BUYER_WILL_OWE;
+      cy.assertSummaryListRowValue(summaryList, fieldId, expectedMaximumBuyerWillOwe);
 
-        const expectedMaximumBuyerWillOwe = formatCurrency(application.POLICY[fieldId]);
+      // check the change link
+      summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, expectedMaximumBuyerWillOwe);
-
-        // check the change link
-        summaryList.field(MAXIMUM_BUYER_WILL_OWE).changeLink().click();
-
-        cy.assertChangeAnswersPageUrl({
-          referenceNumber, route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
-        });
+      cy.assertChangeAnswersPageUrl({
+        referenceNumber, route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE, fieldId: MAXIMUM_BUYER_WILL_OWE, fragmentSuffix: 'label',
       });
     });
   });

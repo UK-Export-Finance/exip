@@ -1,7 +1,17 @@
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
+import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+
+const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
+
+/**
+ * string fields which are exempt from being stripped by stripEmptyFormFields
+ * for example when a string field needs to be set to an empty string or null
+ */
+export const NULL_OR_EMPTY_STRING_FIELDS = [CREDIT_PERIOD_WITH_BUYER];
 
 /**
  * policy
@@ -13,7 +23,8 @@ import { Application, RequestBody } from '../../../../../../types';
  * @returns {Object} Saved data
  */
 const policy = async (application: Application, formBody: RequestBody, errorList?: object) => {
-  const dataToSave = getDataToSave(formBody, errorList);
+  // determines which fields to save
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
