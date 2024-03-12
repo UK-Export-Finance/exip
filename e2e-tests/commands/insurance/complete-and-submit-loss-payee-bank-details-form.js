@@ -13,9 +13,9 @@ const { POLICY } = application;
  * @param {String} bankAddress: bankAddress value - defaults to application fixture bank address.
  */
 const completeAndSubmitLossPayeeBankDetailsForm = ({
-  sortCode = POLICY[ACCOUNT_NUMBER],
-  accountNumber = POLICY[SORT_CODE],
-  bankAddress = POLICY[BANK_ADDRESS],
+  sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
+  accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
+  bankAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[BANK_ADDRESS],
 }) => {
   cy.completeLossPayeeBankDetailsForm({ sortCode, accountNumber, bankAddress });
   cy.clickSubmitButton();

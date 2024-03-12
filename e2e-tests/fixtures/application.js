@@ -141,9 +141,11 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
-    [ACCOUNT_NUMBER]: '123456',
-    [SORT_CODE]: '123456',
-    [BANK_ADDRESS]: 'Mock address',
+    LOSS_PAYEE_FINANCIAL_UK: {
+      [ACCOUNT_NUMBER]: '123456',
+      [SORT_CODE]: '123456',
+      [BANK_ADDRESS]: 'Mock UK bank address',
+    },
     [LOSS_PAYEE_NAME]: 'Mock name',
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
