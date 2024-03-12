@@ -41,13 +41,6 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
       cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
         referenceNumber = refNumber;
 
-        // cy.startInsuranceYourBuyerSection({});
-
-        // cy.completeAndSubmitCompanyOrOrganisationForm({});
-        // cy.completeAndSubmitConnectionToTheBuyerForm({});
-        // cy.completeAndSubmitTradedWithBuyerForm({});
-        // cy.completeAndSubmitBuyerFinancialInformationForm({});
-
         cy.completeBuyerSection({
           hasConnectionToBuyer: true,
           exporterHasTradedWithBuyer: true,
