@@ -35,7 +35,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Your buyer page - Summary list - application below total contract value threshold, all optional buyer fields', () => {
+context('Insurance - Check your answers - Your buyer page - Summary list - application over total contract value threshold, all optional buyer fields', () => {
   let referenceNumber;
   let url;
 

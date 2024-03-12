@@ -30,7 +30,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Check your answers - Summary list - your buyer - application below total contract value threshold', () => {
+context('Insurance - Your buyer - Check your answers - Summary list - your buyer - application below total contract value threshold, no optional buyer fields', () => {
   let referenceNumber;
   let url;
 
@@ -82,80 +82,40 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
       checkSummaryList[CONNECTION_WITH_BUYER]({});
     });
 
-    it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
+    it(`should NOT render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
       checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: false });
     });
 
     it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-      checkSummaryList[TRADED_WITH_BUYER]({});
+      checkSummaryList[TRADED_WITH_BUYER]({ isYes: false });
     });
 
-    it(`should render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
-      checkSummaryList[OUTSTANDING_PAYMENTS]({});
+    it(`should NOT render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
+      checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: false });
     });
 
-    it(`should not render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
+    it(`should NOT render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
       checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: false });
     });
 
-    it(`should not render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
+    it(`should NOT render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
       checkSummaryList[TOTAL_OUTSTANDING_PAYMENTS]({ shouldRender: false });
     });
 
-    it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
-      checkSummaryList[FAILED_PAYMENTS]({});
+    it(`should NOT render a ${FAILED_PAYMENTS} summary list row`, () => {
+      checkSummaryList[FAILED_PAYMENTS]({ shouldRender: false });
     });
 
-    it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+    it(`should NOT render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
       checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
 
-    it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+    it(`should NOT render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
       checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     });
 
     it(`should render a ${HAS_BUYER_FINANCIAL_ACCOUNTS} summary list row`, () => {
-      checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]({});
-    });
-  });
-
-  describe(`${CONNECTION_WITH_BUYER}, ${TOTAL_OUTSTANDING_PAYMENTS} and ${TOTAL_AMOUNT_OVERDUE} as yes`, () => {
-    before(() => {
-      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-        referenceNumber = refNumber;
-
-        cy.startInsuranceYourBuyerSection({});
-
-        cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-        cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true, failedToPay: true });
-        cy.completeAndSubmitBuyerFinancialInformationForm({});
-
-        url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      });
-    });
-
-    beforeEach(() => {
-      cy.saveSession();
-
-      cy.navigateToUrl(url);
-    });
-
-    after(() => {
-      cy.deleteApplication(referenceNumber);
-    });
-
-    it(`should render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
-      checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({});
-    });
-
-    it(`should render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
-      checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: true });
-    });
-
-    it(`should render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
-      checkSummaryList[TOTAL_OUTSTANDING_PAYMENTS]({ shouldRender: true });
+      checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]({ isYes: false });
     });
   });
 });
