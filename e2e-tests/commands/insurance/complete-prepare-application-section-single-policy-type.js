@@ -9,7 +9,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
  * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
- * @param {Boolean} fullPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
+ * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
@@ -23,7 +23,7 @@ const completePrepareApplicationSinglePolicyType = ({
   differentTradingAddress = false,
   hasConnectionToBuyer,
   exporterHasTradedWithBuyer,
-  fullPopulatedBuyerTradingHistory,
+  fullyPopulatedBuyerTradingHistory,
   hasHadCreditInsuranceCover,
   exporterHasBuyerFinancialAccounts,
   usingBroker,
@@ -38,7 +38,7 @@ const completePrepareApplicationSinglePolicyType = ({
   cy.completeBuyerSection({
     hasConnectionToBuyer,
     exporterHasTradedWithBuyer,
-    fullPopulatedBuyerTradingHistory,
+    fullyPopulatedBuyerTradingHistory,
     hasHadCreditInsuranceCover,
     exporterHasBuyerFinancialAccounts,
     totalContractValueOverThreshold,

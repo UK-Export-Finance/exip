@@ -47,7 +47,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         referenceNumber,
         hasConnectionToBuyer: true,
         exporterHasTradedWithBuyer: true,
-        fullPopulatedBuyerTradingHistory: true,
+        fullyPopulatedBuyerTradingHistory: true,
         hasHadCreditInsuranceCover: true,
         exporterHasBuyerFinancialAccounts: true,
         totalContractValueOverThreshold: true,

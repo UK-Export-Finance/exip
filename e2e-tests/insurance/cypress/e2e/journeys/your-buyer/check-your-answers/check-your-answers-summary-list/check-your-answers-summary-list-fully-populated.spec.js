@@ -51,7 +51,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
         cy.completeBuyerSection({
           hasConnectionToBuyer: true,
           exporterHasTradedWithBuyer: true,
-          fullPopulatedBuyerTradingHistory: true,
+          fullyPopulatedBuyerTradingHistory: true,
           hasHadCreditInsuranceCover: true,
           exporterHasBuyerFinancialAccounts: true,
           totalContractValueOverThreshold: true,
