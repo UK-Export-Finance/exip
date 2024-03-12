@@ -40,7 +40,7 @@
         text: CONTENT_STRINGS.HINT,
         classes: "govuk-!-margin-bottom-5",
         attributes: {
-          "data-cy": "bank-details-hint"
+          "data-cy": "loss-payee-financial-uk-hint"
         }
       }) }}
     </div>
@@ -114,26 +114,26 @@
         }) }}
 
         {{ govukCharacterCount({
-          name: FIELDS.BANK_ADDRESS.ID,
-          id: FIELDS.BANK_ADDRESS.ID,
+          name: FIELDS.FINANCIAL_ADDRESS.ID,
+          id: FIELDS.FINANCIAL_ADDRESS.ID,
           label: {
-            text: FIELDS.BANK_ADDRESS.LABEL,
+            text: FIELDS.FINANCIAL_ADDRESS.LABEL,
             classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-5",
             attributes: {
-              'data-cy': FIELDS.BANK_ADDRESS.ID + '-label',
-              id: FIELDS.BANK_ADDRESS.ID + '-label'
+              'data-cy': FIELDS.FINANCIAL_ADDRESS.ID + '-label',
+              id: FIELDS.FINANCIAL_ADDRESS.ID + '-label'
             }
           },
           attributes: {
-            'data-cy': FIELDS.BANK_ADDRESS.ID
+            'data-cy': FIELDS.FINANCIAL_ADDRESS.ID
           },
-          maxlength: FIELDS.BANK_ADDRESS.MAXIMUM,
+          maxlength: FIELDS.FINANCIAL_ADDRESS.MAXIMUM,
           classes: "govuk-input--width-20",
-          value: submittedValues[FIELDS.BANK_ADDRESS.ID] or application.policy[FIELDS.BANK_ADDRESS.ID],
-          errorMessage: validationErrors.errorList[FIELDS.BANK_ADDRESS.ID] and {
-            text: validationErrors.errorList[FIELDS.BANK_ADDRESS.ID].text,
+          value: submittedValues[FIELDS.FINANCIAL_ADDRESS.ID] or application.policy[FIELDS.FINANCIAL_ADDRESS.ID],
+          errorMessage: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID] and {
+            text: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID].text,
             attributes: {
-              "data-cy": FIELDS.BANK_ADDRESS.ID + "-error-message"
+              "data-cy": FIELDS.FINANCIAL_ADDRESS.ID + "-error-message"
             }
           }
         }) }}

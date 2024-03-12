@@ -75,5 +75,5 @@ export const POLICY = {
     SORT_CODE: 'sortCode',
     ACCOUNT_NUMBER: 'accountNumber',
   },
-  BANK_ADDRESS: 'bankAddress',
+  FINANCIAL_ADDRESS: 'bankAddress',
 };

@@ -11,20 +11,20 @@ const {
   LOSS_PAYEE_FINANCIAL_UK: {
     ACCOUNT_NUMBER, SORT_CODE,
   },
-  BANK_ADDRESS,
+  FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
   POLICY: {
-    LOSS_PAYEE_BANK_DETAILS_ROOT,
+    LOSS_PAYEE_FINANCIAL_UK_ROOT,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Policy - Loss payee bank details page - As an exporter, I want to provide UKEF with my loss payee's bank details So that they can be paid in the event of a claim on the policy", () => {
+context("Insurance - Policy - Loss payee financial UK page - As an exporter, I want to provide UKEF with my loss payee's bank details So that they can be paid in the event of a claim on the policy", () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
@@ -45,7 +45,7 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_BANK_DETAILS_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       // TODO: EMS-2767 add redirect from previous page
@@ -66,8 +66,8 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_BANK_DETAILS_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_BANK_DETAILS_ROOT}#`,
+      currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`,
+      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}#`,
     });
   });
 
@@ -81,7 +81,7 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
     });
 
     it('renders a hint', () => {
-      const hintFieldId = 'bank-details';
+      const hintFieldId = 'loss-payee-financial-uk';
       cy.checkText(fieldSelector(hintFieldId).hint(), CONTENT_STRINGS.HINT);
     });
 
@@ -103,11 +103,11 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
       field.input().should('exist');
     });
 
-    it(`renders ${BANK_ADDRESS} label and textarea`, () => {
-      const fieldId = BANK_ADDRESS;
+    it(`renders ${FINANCIAL_ADDRESS} label and textarea`, () => {
+      const fieldId = FINANCIAL_ADDRESS;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS.BANK_ADDRESS.LABEL);
+      cy.checkText(field.label(), FIELD_STRINGS.FINANCIAL_ADDRESS.LABEL);
       field.textarea().should('exist');
     });
 
@@ -120,7 +120,7 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitLossPayeeBankDetailsForm({});
+      cy.completeAndSubmitLossPayeeFinancialUKForm({});
 
       cy.assertUrl(checkYourAnswersUrl);
     });

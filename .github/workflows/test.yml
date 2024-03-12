@@ -244,7 +244,7 @@ jobs:
             "policy/different-name-on-policy/**/*.spec.js",
             "policy/loss-payee/**/*.spec.js",
             "policy/loss-payee-details/**/*.spec.js",
-            "policy/loss-payee-bank-details/**/*.spec.js",
+            "policy/loss-payee-financial-uk/**/*.spec.js",
             "policy/multiple-contract-policy/**/*.spec.js",
             "policy/name-on-policy/**/*.spec.js",
             "policy/other-company-details/**/*.spec.js",

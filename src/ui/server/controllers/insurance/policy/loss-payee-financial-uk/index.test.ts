@@ -10,7 +10,7 @@ import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialUK } from '../../../../test-mocks';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
-const { BANK_ADDRESS } = POLICY_FIELD_IDS;
+const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -18,11 +18,11 @@ const {
   POLICY: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const { LOSS_PAYEE_FINANCIAL_UK, BANK_ADDRESS: BANK_ADDRESS_FIELD } = POLICY_FIELDS;
+const { LOSS_PAYEE_FINANCIAL_UK, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
 
 const { referenceNumber } = mockApplication;
 
-describe('controllers/insurance/policy/loss-payee-bank-details', () => {
+describe('controllers/insurance/policy/loss-payee-financial-uk', () => {
   let req: Request;
   let res: Response;
 
@@ -37,7 +37,7 @@ describe('controllers/insurance/policy/loss-payee-bank-details', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [SORT_CODE, ACCOUNT_NUMBER, BANK_ADDRESS];
+      const expected = [SORT_CODE, ACCOUNT_NUMBER, FINANCIAL_ADDRESS];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -69,9 +69,9 @@ describe('controllers/insurance/policy/loss-payee-bank-details', () => {
             ID: ACCOUNT_NUMBER,
             ...LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
           },
-          BANK_ADDRESS: {
-            ID: BANK_ADDRESS,
-            ...BANK_ADDRESS_FIELD,
+          FINANCIAL_ADDRESS: {
+            ID: FINANCIAL_ADDRESS,
+            ...FINANCIAL_ADDRESS_FIELD,
           },
         },
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,

@@ -278,7 +278,7 @@ export const POLICY_FIELDS = {
       HINT: 'Must be between 6 and 8 digits long',
     },
   },
-  BANK_ADDRESS: {
+  FINANCIAL_ADDRESS: {
     LABEL: 'Bank address',
     MAXIMUM: 300,
   },

@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { Request, Response } from '../../../../../types';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
-const { BANK_ADDRESS } = POLICY_FIELD_IDS;
+const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
@@ -16,9 +16,9 @@ const {
   POLICY: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const { LOSS_PAYEE_FINANCIAL_UK, BANK_ADDRESS: BANK_ADDRESS_FIELD } = POLICY_FIELDS;
+const { LOSS_PAYEE_FINANCIAL_UK, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
 
-export const FIELD_IDS = [SORT_CODE, ACCOUNT_NUMBER, BANK_ADDRESS];
+export const FIELD_IDS = [SORT_CODE, ACCOUNT_NUMBER, FINANCIAL_ADDRESS];
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK;
 
@@ -40,19 +40,19 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: ACCOUNT_NUMBER,
       ...LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
     },
-    BANK_ADDRESS: {
-      ID: BANK_ADDRESS,
-      ...BANK_ADDRESS_FIELD,
+    FINANCIAL_ADDRESS: {
+      ID: FINANCIAL_ADDRESS,
+      ...FINANCIAL_ADDRESS_FIELD,
     },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
 });
 
 /**
- * Render the Loss payee bank details page
+ * Render the Loss payee financial uk page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Loss payee bank details page
+ * @returns {Express.Response.render} Loss payee financial uk page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -90,7 +90,7 @@ export const post = async (req: Request, res: Response) => {
   try {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - policy - loss payee bank details %O', err);
+    console.error('Error updating application - policy - loss payee financial uk %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };

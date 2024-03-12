@@ -46,7 +46,7 @@ const {
         FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
       LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
-      BANK_ADDRESS,
+      FINANCIAL_ADDRESS,
       LOSS_PAYEE_DETAILS: {
         NAME: LOSS_PAYEE_NAME,
       },
@@ -144,7 +144,7 @@ const application = {
     LOSS_PAYEE_FINANCIAL_UK: {
       [ACCOUNT_NUMBER]: '12345678',
       [SORT_CODE]: '123456',
-      [BANK_ADDRESS]: 'Mock UK bank address',
+      [FINANCIAL_ADDRESS]: 'Mock UK bank address',
     },
     [LOSS_PAYEE_NAME]: 'Mock name',
   },
