@@ -35,7 +35,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Your buyer page - Summary list - application below total contract value threshold', () => {
+context('Insurance - Check your answers - Your buyer page - Summary list - application below total contract value threshold, no optional buyer fields', () => {
   let referenceNumber;
   let url;
 
@@ -86,50 +86,42 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
   });
 
   it(`should render a ${CONNECTION_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[CONNECTION_WITH_BUYER]();
+    checkSummaryList[CONNECTION_WITH_BUYER]({});
   });
 
-  it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
+  it(`should NOT render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
     checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: false });
   });
 
   it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[TRADED_WITH_BUYER]();
+    checkSummaryList[TRADED_WITH_BUYER]({ isYes: false });
   });
 
-  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[TRADED_WITH_BUYER]();
+  it(`should NOT render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
+    checkSummaryList[OUTSTANDING_PAYMENTS]({ shouldRender: false });
   });
 
-  it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[TRADED_WITH_BUYER]();
-  });
-
-  it(`should render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
-    checkSummaryList[OUTSTANDING_PAYMENTS]();
-  });
-
-  it(`should not render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
+  it(`should NOT render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
     checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: false });
   });
 
-  it(`should not render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
+  it(`should NOT render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
     checkSummaryList[TOTAL_OUTSTANDING_PAYMENTS]({ shouldRender: false });
   });
 
-  it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
-    checkSummaryList[FAILED_PAYMENTS]();
+  it(`should NOT render a ${FAILED_PAYMENTS} summary list row`, () => {
+    checkSummaryList[FAILED_PAYMENTS]({ shouldRender: false });
   });
 
-  it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+  it(`should NOT render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
     checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
   });
 
-  it(`should not render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
+  it(`should NOT render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
     checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
   });
 
   it(`should render a ${HAS_BUYER_FINANCIAL_ACCOUNTS} summary list row`, () => {
-    checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]();
+    checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]({ isYes: false });
   });
 });
