@@ -79,7 +79,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
     });
 
     it(`should render a ${CONNECTION_WITH_BUYER} summary list row`, () => {
-      checkSummaryList[CONNECTION_WITH_BUYER]();
+      checkSummaryList[CONNECTION_WITH_BUYER]({});
     });
 
     it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} summary list row`, () => {
@@ -87,19 +87,11 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
     });
 
     it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-      checkSummaryList[TRADED_WITH_BUYER]();
-    });
-
-    it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-      checkSummaryList[TRADED_WITH_BUYER]();
-    });
-
-    it(`should render a ${TRADED_WITH_BUYER} summary list row`, () => {
-      checkSummaryList[TRADED_WITH_BUYER]();
+      checkSummaryList[TRADED_WITH_BUYER]({});
     });
 
     it(`should render a ${OUTSTANDING_PAYMENTS} summary list row`, () => {
-      checkSummaryList[OUTSTANDING_PAYMENTS]();
+      checkSummaryList[OUTSTANDING_PAYMENTS]({});
     });
 
     it(`should not render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
@@ -111,7 +103,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
     });
 
     it(`should render a ${FAILED_PAYMENTS} summary list row`, () => {
-      checkSummaryList[FAILED_PAYMENTS]();
+      checkSummaryList[FAILED_PAYMENTS]({});
     });
 
     it(`should not render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
@@ -123,7 +115,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
     });
 
     it(`should render a ${HAS_BUYER_FINANCIAL_ACCOUNTS} summary list row`, () => {
-      checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]();
+      checkSummaryList[HAS_BUYER_FINANCIAL_ACCOUNTS]({});
     });
   });
 
@@ -159,11 +151,11 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
     });
 
     it(`should render a ${TOTAL_AMOUNT_OVERDUE} summary list row`, () => {
-      checkSummaryList[TOTAL_AMOUNT_OVERDUE]({});
+      checkSummaryList[TOTAL_AMOUNT_OVERDUE]({ shouldRender: true });
     });
 
     it(`should render a ${TOTAL_OUTSTANDING_PAYMENTS} summary list row`, () => {
-      checkSummaryList[TOTAL_OUTSTANDING_PAYMENTS]({});
+      checkSummaryList[TOTAL_OUTSTANDING_PAYMENTS]({ shouldRender: true });
     });
   });
 });
