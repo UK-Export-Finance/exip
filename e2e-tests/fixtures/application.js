@@ -142,7 +142,7 @@ const application = {
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
     LOSS_PAYEE_FINANCIAL_UK: {
-      [ACCOUNT_NUMBER]: '123456',
+      [ACCOUNT_NUMBER]: '12345678',
       [SORT_CODE]: '123456',
       [BANK_ADDRESS]: 'Mock UK bank address',
     },
