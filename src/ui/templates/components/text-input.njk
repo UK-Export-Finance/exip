@@ -1,0 +1,72 @@
+{% from "govuk/components/input/macro.njk" import govukInput %}
+
+{% macro render(params) %}
+
+  {% set id = params.id %}
+  {% set labelText = params.labelText %}
+  {% set labelClasses = params.labelClasses %}
+  {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
+  {% set inputClasses = params.inputClasses %}
+  {% set value = params.value %}
+  {% set suffixText = params.suffixText %}
+  {% set inputmode = params.inputmode %}
+  {% set pattern = params.pattern %}
+  {% set spellcheck = params.spellcheck %}
+  {% set type = params.type %}
+  {% set autocomplete = params.autocomplete %}
+  {% set errorMessage = params.errorMessage %}
+  {% set errorMessage = params.errorMessage %}
+
+
+  {# TODO: make sure spellcheck works when passed (its only passed in as false) #}
+
+  {{ govukInput({
+    label: {
+      text: labelText,
+      classes: labelClasses,
+      attributes: {
+        id: id + '-label',
+        'data-cy': id + '-label'
+      }
+    },
+    attributes: {
+      'data-cy': id + '-input'
+    },
+    id: id,
+    name: id,
+    type: type or "text",
+    autocomplete: autocomplete,
+    inputmode: inputmode,
+    pattern: pattern,
+    spellcheck: spellcheck,
+    hint: hintHtml or hintText and {
+      html: hintHtml,
+      text: hintText,
+      attributes: {
+        "data-cy": id + "-hint"
+      }
+    },
+    classes: inputClasses,
+    prefix: prefixText and {
+      text: prefixText,
+      attributes: {
+        'data-cy': id + '-prefix'
+      }
+    },
+    suffix: suffixText and {
+      text: suffixText,
+      attributes: {
+        "data-cy": id + "-suffix"
+      }
+    },
+    value: value,
+    errorMessage: errorMessage and {
+      text: errorMessage.text,
+      attributes: {
+        "data-cy": id + "-error-message"
+      }
+    }
+  }) }}
+
+{% endmacro %}

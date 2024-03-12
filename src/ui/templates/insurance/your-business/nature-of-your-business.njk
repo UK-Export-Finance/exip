@@ -1,8 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -73,67 +73,26 @@
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukInput({
+        {{ textInput.render({
           id: FIELDS.YEARS_EXPORTING.ID,
-          name: FIELDS.YEARS_EXPORTING.ID,
+          labelText: FIELDS.YEARS_EXPORTING.ID,
+          labelClasses: "govuk-label--m",
+          inputClasses: "govuk-input--width-5",
+          hintText: FIELDS.YEARS_EXPORTING.HINT,
+          suffixText: FIELDS.YEARS_EXPORTING.SUFFIX,
           value: submittedValues[FIELDS.YEARS_EXPORTING.ID] or application.business[FIELDS.YEARS_EXPORTING.ID],
-          label: {
-            text: FIELDS.YEARS_EXPORTING.LABEL,
-            classes: "govuk-label--m",
-             attributes: {
-              id: FIELDS.YEARS_EXPORTING.ID + '-label',
-              "data-cy": FIELDS.YEARS_EXPORTING.ID + "-label"
-            }
-          },
-          suffix: {
-            text: FIELDS.YEARS_EXPORTING.SUFFIX,
-            attributes: {
-              "data-cy": FIELDS.YEARS_EXPORTING.ID + "-suffix"
-            }
-          },
-          hint: {
-            text: FIELDS.YEARS_EXPORTING.HINT,
-            attributes: {
-              "data-cy": FIELDS.YEARS_EXPORTING.ID + "-hint"
-            }
-          },
-          classes: "govuk-input--width-5",
-          attributes: {
-            "data-cy": FIELDS.YEARS_EXPORTING.ID + "-input"
-          },
-          errorMessage: validationErrors.errorList[FIELDS.YEARS_EXPORTING.ID] and {
-            text: validationErrors.errorList[FIELDS.YEARS_EXPORTING.ID].text,
-              attributes: {
-                "data-cy": FIELDS.YEARS_EXPORTING.ID + "-error-message"
-              }
-            }
-          }) }}
+          errorMessage: validationErrors.errorList[FIELDS.YEARS_EXPORTING.ID]
+        }) }}
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-
-        {{ govukInput({
+        {{ textInput.render({
           id: FIELDS.EMPLOYEES_UK.ID,
-          name: FIELDS.EMPLOYEES_UK.ID,
+          labelText: FIELDS.EMPLOYEES_UK.LEGEND,
+          labelClasses: "govuk-label--m",
+          inputClasses: "govuk-input--width-10",
           value: submittedValues[FIELDS.EMPLOYEES_UK.ID] or application.business[FIELDS.EMPLOYEES_UK.ID],
-          label: {
-            text: FIELDS.EMPLOYEES_UK.LEGEND,
-            classes: "govuk-label--m",
-            attributes: {
-              id: FIELDS.EMPLOYEES_UK.ID + '-label',
-              "data-cy": FIELDS.EMPLOYEES_UK.ID + "-label"
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            "data-cy": FIELDS.EMPLOYEES_UK.ID + "-input"
-          },
-          errorMessage: validationErrors.errorList[FIELDS.EMPLOYEES_UK.ID] and {
-            text: validationErrors.errorList[FIELDS.EMPLOYEES_UK.ID].text,
-            attributes: {
-              "data-cy": FIELDS.EMPLOYEES_UK.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.EMPLOYEES_UK.ID]
         }) }}
 
         {{ formButtons.render({

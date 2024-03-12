@@ -2,8 +2,8 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/error-message/macro.njk" import govukErrorMessage %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -46,30 +46,15 @@
 
         <p class="govuk-body-l" data-cy="{{FIELDS.COUNTRY.ID}}">{{ application.eligibility.buyerCountry.name }}</p>
 
-        {{ govukInput({
-          label: {
-            text:  FIELDS.NAME.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
-            attributes: {
-              id: FIELDS.NAME.ID + '-label',
-              'data-cy': FIELDS.NAME.ID + '-label'
-            }
-          },
-          classes: "govuk-!-width-one-half",
-          attributes: {
-            'data-cy': FIELDS.NAME.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.NAME.ID,
-          name: FIELDS.NAME.ID,
+          labelText: FIELDS.NAME.ID,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-19",
+          inputClasses: "govuk-!-width-one-half",
+          hintText: FIELDS.NAME.HINT,
           value: submittedValues[FIELDS.NAME.ID] or application.buyer[FIELDS.NAME.ID],
-          errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
-            text: validationErrors.errorList[FIELDS.NAME.ID].text,
-            attributes: {
-              "data-cy": FIELDS.NAME.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID]
         }) }}
-
 
         {{ govukCharacterCount({
           name: FIELDS.ADDRESS.ID,
@@ -96,52 +81,24 @@
           }
         }) }}
 
-        {{ govukInput({
-          label: {
-            text:  FIELDS.REGISTRATION_NUMBER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
-            attributes: {
-              id: FIELDS.REGISTRATION_NUMBER.ID + '-label',
-              'data-cy': FIELDS.REGISTRATION_NUMBER.ID + '-label'
-            }
-          },
-          classes: "govuk-!-width-one-half",
-          attributes: {
-            'data-cy': FIELDS.REGISTRATION_NUMBER.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.REGISTRATION_NUMBER.ID,
-          name: FIELDS.REGISTRATION_NUMBER.ID,
+          labelText: FIELDS.REGISTRATION_NUMBER.ID,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-19",
+          inputClasses: "govuk-!-width-one-half",
+          hintText: FIELDS.REGISTRATION_NUMBER.HINT,
           value: submittedValues[FIELDS.REGISTRATION_NUMBER.ID] or application.buyer[FIELDS.REGISTRATION_NUMBER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID] and {
-            text: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.REGISTRATION_NUMBER.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.REGISTRATION_NUMBER.ID]
         }) }}
 
-        {{ govukInput({
-          label: {
-            text:  FIELDS.WEBSITE.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-19",
-            attributes: {
-              id: FIELDS.WEBSITE.ID + '-label',
-              'data-cy': FIELDS.WEBSITE.ID + '-label'
-            }
-          },
-          classes: "govuk-!-width-one-half",
-          attributes: {
-            'data-cy': FIELDS.WEBSITE.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.WEBSITE.ID,
-          name: FIELDS.WEBSITE.ID,
+          labelText: FIELDS.WEBSITE.ID,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-19",
+          inputClasses: "govuk-!-width-one-half",
+          hintText: FIELDS.WEBSITE.HINT,
           value: submittedValues[FIELDS.WEBSITE.ID] or application.buyer[FIELDS.WEBSITE.ID],
-          errorMessage: validationErrors.errorList[FIELDS.WEBSITE.ID] and {
-            text: validationErrors.errorList[FIELDS.WEBSITE.ID].text,
-            attributes: {
-              "data-cy": FIELDS.WEBSITE.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.WEBSITE.ID]
         }) }}
       </div>
 

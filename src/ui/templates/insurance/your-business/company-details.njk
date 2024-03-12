@@ -1,9 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
@@ -53,34 +52,13 @@
         }) }}
 
         {% set conditionalYesHtml %}
-          {{ govukInput({
+          {{ textInput.render({
             id: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME,
-            name: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME,
+            labelText: CONTENT_STRINGS.DIFFERENT_TRADING_NAME,
+            labelClasses: "govuk-label--m",
+            inputClasses: "govuk-input--width-20",
             value: submittedValues[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME],
-            label: {
-              text: CONTENT_STRINGS.DIFFERENT_TRADING_NAME,
-              classes: "govuk-label--m",
-              attributes: {
-                id: FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + '-label',
-                "data-cy": FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + "-label"
-              }
-            },
-            hint: {
-            text: CONTENT_STRINGS.DIFFERENT_TRADING_NAME_HINT,
-            attributes: {
-              'data-cy': FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + '-hint'
-              }
-            },
-            classes: "govuk-input--width-20",
-            attributes: {
-              "data-cy": FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME] and {
-              text: validationErrors.errorList[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME].text,
-              attributes: {
-                "data-cy": FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME + "-error-message"
-              }
-            }
+            errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]
           }) }}
         {% endset %}
 
@@ -109,64 +87,29 @@
           noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: CONTENT_STRINGS.WEBSITE,
-            classes: "govuk-label--m",
-            attributes: {
-              id: FIELDS.YOUR_COMPANY.WEBSITE.ID + '-label',
-              'data-cy': FIELDS.YOUR_COMPANY.WEBSITE + '-label'
-            }
-          },
+        {#  TODO:  #}
+        {# 'aria-label': CONTENT_STRINGS.WEBSITE #}
+
+        {{ textInput.render({
           id: FIELDS.YOUR_COMPANY.WEBSITE,
-          name: FIELDS.YOUR_COMPANY.WEBSITE,
-          classes: "companies-house-input-width",
-          attributes: {
-            'data-cy': FIELDS.YOUR_COMPANY.WEBSITE + '-input',
-            'aria-label': CONTENT_STRINGS.WEBSITE
-          },
-          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE],
-          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE] and {
-            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE].text,
-            attributes: {
-              "data-cy": FIELDS.YOUR_COMPANY.WEBSITE + "-error-message"
-            }
-          }
+          labelText: CONTENT_STRINGS.WEBSITE,
+          labelClasses: "companies-house-input-width",
+          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE]
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE]
         }) }}
       </div>
 
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukInput({
-          label: {
-            text: CONTENT_STRINGS.PHONE_NUMBER,
-            classes: "govuk-label--m",
-            attributes: {
-              id: FIELDS.YOUR_COMPANY.PHONE_NUMBER.ID + '-label',
-            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-label'
-            }
-          },
-          hint: {
-            text: CONTENT_STRINGS.PHONE_NUMBER_HINT,
-            attributes: {
-              'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-hint'
-            }
-          },
+        {{ textInput.render({
           id: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
-          name: FIELDS.YOUR_COMPANY.PHONE_NUMBER,
+          labelText: CONTENT_STRINGS.PHONE_NUMBER,
+          labelClasses: "govuk-label--m",
+          inputClasses: "companies-house-input-width",
+          hintText: CONTENT_STRINGS.PHONE_NUMBER_HINT,
           type: "tel",
           autocomplete: "tel",
           value: submittedValues[FIELDS.YOUR_COMPANY.PHONE_NUMBER],
-          classes: "companies-house-input-width",
-          attributes: {
-            'data-cy': FIELDS.YOUR_COMPANY.PHONE_NUMBER + '-input',
-            'aria-label': CONTENT_STRINGS.PHONE_NUMBER
-          },
-           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER] and {
-            text: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER].text,
-            attributes: {
-              "data-cy": FIELDS.YOUR_COMPANY.PHONE_NUMBER + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER]
         }) }}
 
         {{ formButtons.render({
