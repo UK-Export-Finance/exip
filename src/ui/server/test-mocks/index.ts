@@ -42,7 +42,7 @@ const mockReq = () => {
       origin: 'https://mock.com',
       host: 'mock-host.com',
     },
-    signedCookies: cookieParser('test'),
+    signedCookies: cookieParser('mockCookieName'),
     hostname: 'mock.com',
     method: 'GET',
     originalUrl: 'mock?mockQueryParam',
