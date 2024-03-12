@@ -85,7 +85,7 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
   });
 
   describe('when all fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and change the "insurance policy" task status to "Completed"`, () => {
+    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
       cy.navigateToUrl(url);
 
       cy.completeBrokerDetailsForm({});
@@ -94,7 +94,7 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
 
       cy.assertUrl(allSectionsUrl);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {

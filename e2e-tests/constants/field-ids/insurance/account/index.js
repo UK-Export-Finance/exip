@@ -13,3 +13,5 @@ export const ACCOUNT = {
   REACTIVATION_HASH: 'reactivationHash',
   REACTIVATION_EXPIRY: 'reactivationExpiry',
 };
+
+export default ACCOUNT;
