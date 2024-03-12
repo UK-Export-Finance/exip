@@ -40,7 +40,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completePrepareApplicationSinglePolicyType({
@@ -48,7 +48,9 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         hasConnectionToBuyer: true,
         exporterHasTradedWithBuyer: true,
         fullPopulatedBuyerTradingHistory: true,
+        hasHadCreditInsuranceCover: true,
         exporterHasBuyerFinancialAccounts: true,
+        totalContractValueOverThreshold: true,
       });
 
       task.link().click();
@@ -119,20 +121,12 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
     checkSummaryList[FAILED_PAYMENTS]({ shouldRender: true, isYes: true });
   });
 
-  // it(`should render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
-  //   checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: true, isYes: true });
-  // });
-
-  // it(`should render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
-  //   checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: true });
-  // });
-
   it(`should render a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+    checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: true, isYes: true });
   });
 
   it(`should render a ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} summary list row`, () => {
-    checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+    checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: true });
   });
 
   it(`should render a ${HAS_BUYER_FINANCIAL_ACCOUNTS} summary list row`, () => {
