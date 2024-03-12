@@ -23,7 +23,7 @@ import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import mockNominatedLossPayee from './mock-nominated-loss-payee';
-import mockLossPayeeBankDetails from './mock-loss-payee-bank-details';
+import mockLossPayeeFinancialUK from './mock-loss-payee-financial-uk';
 import mockLossPayeeDetails from './mock-loss-payee-details';
 import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
@@ -133,7 +133,7 @@ export {
   mockJointlyInsuredParty,
   mockNext,
   mockNominatedLossPayee,
-  mockLossPayeeBankDetails,
+  mockLossPayeeFinancialUK,
   mockLossPayeeDetails,
   mockUrlOrigin,
   mockSession,

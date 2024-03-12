@@ -71,7 +71,7 @@ export const POLICY = {
     IS_LOCATED_IN_UK: 'isLocatedInUk',
     IS_LOCATED_INTERNATIONALLY: 'isLocatedInternationally',
   },
-  LOSS_PAYEE_UK_BANK_DETAILS: {
+  LOSS_PAYEE_FINANCIAL_UK: {
     SORT_CODE: 'sortCode',
     ACCOUNT_NUMBER: 'accountNumber',
   },

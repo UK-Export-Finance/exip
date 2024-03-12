@@ -7,9 +7,9 @@ import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeBankDetails } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialUK } from '../../../../test-mocks';
 
-const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_UK_BANK_DETAILS;
+const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 const { BANK_ADDRESS } = POLICY_FIELD_IDS;
 
 const {
@@ -18,7 +18,7 @@ const {
   POLICY: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const { LOSS_PAYEE_UK_BANK_DETAILS, BANK_ADDRESS: BANK_ADDRESS_FIELD } = POLICY_FIELDS;
+const { LOSS_PAYEE_FINANCIAL_UK, BANK_ADDRESS: BANK_ADDRESS_FIELD } = POLICY_FIELDS;
 
 const { referenceNumber } = mockApplication;
 
@@ -45,13 +45,13 @@ describe('controllers/insurance/policy/loss-payee-bank-details', () => {
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.POLICY.LOSS_PAYEE_UK_BANK_DETAILS);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK);
     });
   });
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_UK_BANK_DETAILS);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK);
     });
   });
 
@@ -63,11 +63,11 @@ describe('controllers/insurance/policy/loss-payee-bank-details', () => {
         FIELDS: {
           SORT_CODE: {
             ID: SORT_CODE,
-            ...LOSS_PAYEE_UK_BANK_DETAILS[SORT_CODE],
+            ...LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
           },
           ACCOUNT_NUMBER: {
             ID: ACCOUNT_NUMBER,
-            ...LOSS_PAYEE_UK_BANK_DETAILS[ACCOUNT_NUMBER],
+            ...LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
           },
           BANK_ADDRESS: {
             ID: BANK_ADDRESS,
@@ -109,7 +109,7 @@ describe('controllers/insurance/policy/loss-payee-bank-details', () => {
   });
 
   describe('post', () => {
-    const validBody = mockLossPayeeBankDetails;
+    const validBody = mockLossPayeeFinancialUK;
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {

@@ -27,7 +27,7 @@ const {
       IS_LOCATED_IN_UK,
       IS_LOCATED_INTERNATIONALLY,
     },
-    LOSS_PAYEE_UK_BANK_DETAILS: { SORT_CODE, ACCOUNT_NUMBER },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -277,7 +277,7 @@ export const POLICY_FIELDS = {
       },
     },
   },
-  LOSS_PAYEE_UK_BANK_DETAILS: {
+  LOSS_PAYEE_FINANCIAL_UK: {
     [SORT_CODE]: {
       LABEL: 'Sort code',
       HINT: 'Must be 6 digits long',

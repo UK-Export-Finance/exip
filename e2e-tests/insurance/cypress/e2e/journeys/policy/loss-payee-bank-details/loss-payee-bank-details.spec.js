@@ -5,10 +5,10 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/policy';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_UK_BANK_DETAILS;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK;
 
 const {
-  LOSS_PAYEE_UK_BANK_DETAILS: {
+  LOSS_PAYEE_FINANCIAL_UK: {
     ACCOUNT_NUMBER, SORT_CODE,
   },
   BANK_ADDRESS,
@@ -89,8 +89,8 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
       const fieldId = SORT_CODE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_UK_BANK_DETAILS[fieldId].LABEL);
-      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_UK_BANK_DETAILS[fieldId].HINT);
+      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].LABEL);
+      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].HINT);
       field.input().should('exist');
     });
 
@@ -98,8 +98,8 @@ context("Insurance - Policy - Loss payee bank details page - As an exporter, I w
       const fieldId = ACCOUNT_NUMBER;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_UK_BANK_DETAILS[fieldId].LABEL);
-      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_UK_BANK_DETAILS[fieldId].HINT);
+      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].LABEL);
+      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].HINT);
       field.input().should('exist');
     });
 
