@@ -37,24 +37,24 @@ const optionalFields = (
 /**
  * generateFields
  * Create all fields for the insurance - Your buyer govukSummaryList
- * @param {ApplicationBuyer} answersBuyer: Buyer answers
+ * @param {ApplicationBuyer} answers: Buyer answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} All your buyer values in an object structure for GOVUK summary list structure
  */
 const generateFields = (
-  answersBuyer: ApplicationBuyer,
+  answers: ApplicationBuyer,
   referenceNumber: number,
   totalContractValueOverThreshold?: boolean,
   checkAndChange?: boolean,
 ): Array<SummaryListGroupData> => {
   const fields = [
-    generateCompanyOrOrganisationFields(answersBuyer, referenceNumber, checkAndChange),
-    connectionWithBuyerFields(answersBuyer.relationship, referenceNumber, checkAndChange),
-    tradingHistoryFields(answersBuyer.buyerTradingHistory, referenceNumber, checkAndChange),
-    ...optionalFields(answersBuyer, referenceNumber, totalContractValueOverThreshold, checkAndChange),
-    financialAccountsFields(answersBuyer.relationship, referenceNumber, checkAndChange),
+    generateCompanyOrOrganisationFields(answers, referenceNumber, checkAndChange),
+    connectionWithBuyerFields(answers.relationship, referenceNumber, checkAndChange),
+    tradingHistoryFields(answers.buyerTradingHistory, referenceNumber, checkAndChange),
+    ...optionalFields(answers, referenceNumber, totalContractValueOverThreshold, checkAndChange),
+    financialAccountsFields(answers.relationship, referenceNumber, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;
@@ -63,14 +63,14 @@ const generateFields = (
 /**
  * yourBuyerSummaryList
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationBuyer} answersCompany: Application buyer object
+ * @param {ApplicationBuyer} answers: Buyer answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} totalContractValueOverThreshold: if total contract value in application is above threshold
  * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const yourBuyerSummaryList = (answersBuyer: ApplicationBuyer, referenceNumber: number, totalContractValueOverThreshold?: boolean, checkAndChange = false) => {
-  const fields = generateFields(answersBuyer, referenceNumber, totalContractValueOverThreshold, checkAndChange);
+const yourBuyerSummaryList = (answers: ApplicationBuyer, referenceNumber: number, totalContractValueOverThreshold?: boolean, checkAndChange = false) => {
+  const fields = generateFields(answers, referenceNumber, totalContractValueOverThreshold, checkAndChange);
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 
