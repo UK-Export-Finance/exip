@@ -57,6 +57,7 @@
             labelText: CONTENT_STRINGS.DIFFERENT_TRADING_NAME,
             labelClasses: "govuk-label--m",
             inputClasses: "govuk-input--width-20",
+            hintText: CONTENT_STRINGS.DIFFERENT_TRADING_NAME_HINT,
             value: submittedValues[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME],
             errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]
           }) }}
@@ -87,14 +88,13 @@
           noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION
         }) }}
 
-        {#  TODO:  #}
-        {# 'aria-label': CONTENT_STRINGS.WEBSITE #}
-
         {{ textInput.render({
           id: FIELDS.YOUR_COMPANY.WEBSITE,
           labelText: CONTENT_STRINGS.WEBSITE,
-          labelClasses: "companies-house-input-width",
-          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE]
+          labelClasses: "govuk-label--m",
+          inputClasses: "companies-house-input-width",
+          ariaLabel: CONTENT_STRINGS.WEBSITE,
+          value: submittedValues[FIELDS.YOUR_COMPANY.WEBSITE],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.WEBSITE]
         }) }}
       </div>
@@ -108,6 +108,7 @@
           hintText: CONTENT_STRINGS.PHONE_NUMBER_HINT,
           type: "tel",
           autocomplete: "tel",
+          ariaLabel: CONTENT_STRINGS.PHONE_NUMBER,
           value: submittedValues[FIELDS.YOUR_COMPANY.PHONE_NUMBER],
           errorMessage: validationErrors.errorList[FIELDS.YOUR_COMPANY.PHONE_NUMBER]
         }) }}

@@ -2,26 +2,67 @@
 
 {% macro render(params) %}
 
-  {% set id = params.id %}
-  {% set labelText = params.labelText %}
-  {% set labelClasses = params.labelClasses %}
-  {% set hintText = params.hintText %}
-  {% set hintHtml = params.hintHtml %}
-  {% set inputClasses = params.inputClasses %}
-  {% set value = params.value %}
-  {% set suffixText = params.suffixText %}
-  {% set inputmode = params.inputmode %}
-  {% set pattern = params.pattern %}
-  {% set spellcheck = params.spellcheck %}
-  {% set type = params.type %}
+  {% set ariaLabel = params.ariaLabel %}
   {% set autocomplete = params.autocomplete %}
   {% set errorMessage = params.errorMessage %}
-  {% set errorMessage = params.errorMessage %}
-
+  {% set hintText = params.hintText %}
+  {% set hintHtml = params.hintHtml %}
+  {% set id = params.id %}
+  {% set inputmode = params.inputmode %}
+  {% set inputClasses = params.inputClasses %}
+  {% set labelText = params.labelText %}
+  {% set labelClasses = params.labelClasses %}
+  {% set prefixText = params.prefixText %}
+  {% set pattern = params.pattern %}
+  {% set spellcheck = params.spellcheck %}
+  {% set suffixText = params.suffixText %}
+  {% set type = params.type %}
+  {% set value = params.value %}
 
   {# TODO: make sure spellcheck works when passed (its only passed in as false) #}
 
+  {% set inputAttributes = {
+    'data-cy': id + '-input'
+  } %}
+
+  {% if ariaLabel %}
+    {% set inputAttributes = {
+      'data-cy': id + '-input',
+      'aria-label': ariaLabel
+    } %}
+  {% endif %}
+
+  {% if hintHtml %}
+    {% set hint = {
+      html: hintHtml,
+      attributes: {
+        "data-cy": id + "-hint"
+      }
+    } %}
+  {% endif %}
+
+  {% if hintText %}
+    {% set hint = {
+      text: hintText,
+      attributes: {
+        "data-cy": id + "-hint"
+      }
+    } %}
+  {% endif %}
+
   {{ govukInput({
+    attributes: inputAttributes,
+    autocomplete: autocomplete,
+    classes: inputClasses,
+    errorMessage: errorMessage and {
+      text: errorMessage.text,
+      attributes: {
+        "data-cy": id + "-error-message"
+      }
+    },
+    hint: hint,
+    id: id,
+    inputmode: inputmode,
     label: {
       text: labelText,
       classes: labelClasses,
@@ -30,43 +71,23 @@
         'data-cy': id + '-label'
       }
     },
-    attributes: {
-      'data-cy': id + '-input'
-    },
-    id: id,
     name: id,
-    type: type or "text",
-    autocomplete: autocomplete,
-    inputmode: inputmode,
     pattern: pattern,
-    spellcheck: spellcheck,
-    hint: hintHtml or hintText and {
-      html: hintHtml,
-      text: hintText,
-      attributes: {
-        "data-cy": id + "-hint"
-      }
-    },
-    classes: inputClasses,
     prefix: prefixText and {
       text: prefixText,
       attributes: {
         'data-cy': id + '-prefix'
       }
     },
+    spellcheck: spellcheck,
     suffix: suffixText and {
       text: suffixText,
       attributes: {
         "data-cy": id + "-suffix"
       }
     },
-    value: value,
-    errorMessage: errorMessage and {
-      text: errorMessage.text,
-      attributes: {
-        "data-cy": id + "-error-message"
-      }
-    }
+    type: type or "text",
+    value: value
   }) }}
 
 {% endmacro %}

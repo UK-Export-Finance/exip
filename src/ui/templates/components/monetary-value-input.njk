@@ -11,24 +11,6 @@
   {% set validationError = params.validationError %}
   {% set legendClass = params.legendClass %}
 
- {#
-  Default the prefix to be empty.
-  If there is no currencyPrefixSymbol provided,
-  The currency is a non-standard supported currency.
-  Therefore, we do not want to display currency prefix.
-  Otherwise, generate a prefix object as per govukInput structure.
- #}
-  {% set prefix = {} %}
-
-  {% if currencyPrefixSymbol %}
-    {% set prefix = {
-      text: currencyPrefixSymbol,
-      attributes: {
-        'data-cy': fieldId + '-prefix'
-      }
-    } %}
-  {% endif %}
-
   {% if legendClass %}
     {% set labelClass = legendClass %}
   {% else %}
