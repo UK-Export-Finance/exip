@@ -13,7 +13,6 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * @param {String} fieldId: Field ID
  * @param {String} errorMessage: Error message message
  * @param {Object} errors: Object from previous validation errors
- * @param {Integer} maxLength: Maximum length of characters
  * @returns {Object} Validation errors
  */
 const providedAndMaxLength = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object, maxLength: number) => {

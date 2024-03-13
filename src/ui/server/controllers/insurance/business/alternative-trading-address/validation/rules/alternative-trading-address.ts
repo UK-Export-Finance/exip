@@ -1,32 +1,20 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
+import fullAddress from '../../../../../../shared-validation/full-address';
 import { RequestBody } from '../../../../../../../types';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
 const { FULL_ADDRESS: FIELD_ID } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
 
 const {
-  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE;
 
-export const MAXIMUM = 1000;
-
 /**
- * validates alternative trading address input
- * errors if empty or more than 1000 characters
- * @param {RequestBody} formBody
- * @param {Object} errors
- * @returns {Object} errors
+ * validate the "alternative address" in the "business" request body
+ * @param {Express.Request.body} responseBody: containing an object with broker form submission data
+ * @param {Object} errors: errorList
+ * @returns {Object} fullAddress
  */
-const alternativeTradingAddress = (formBody: RequestBody, errors: object) => {
-  // if body is empty
-  if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
-  }
-
-  return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
-};
+const alternativeTradingAddress = (responseBody: RequestBody, errors: object) => fullAddress(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default alternativeTradingAddress;

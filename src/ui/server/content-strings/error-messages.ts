@@ -1,4 +1,4 @@
-import { APPLICATION, FIELD_IDS, GBP_CURRENCY_CODE, ELIGIBILITY, TOTAL_CONTRACT_VALUE } from '../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, GBP_CURRENCY_CODE, MAXIMUM_CHARACTERS, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 const {
@@ -100,7 +100,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]: {
         IS_EMPTY: 'Enter your alternative trading address',
-        ABOVE_MAXIMUM: 'The alternative address cannot be more than a 1000 characters',
+        ABOVE_MAXIMUM: `The alternative address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the information about your business and the products or services you distribute',
@@ -292,7 +292,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.FULL_ADDRESS]: {
           IS_EMPTY: "Enter the broker's address",
-          ABOVE_MAXIMUM: "The broker's address cannot be more than 1000 characters",
+          ABOVE_MAXIMUM: `The broker's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE.IS_APPOINTED]: {
@@ -300,7 +300,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.NAME]: {
         IS_EMPTY: 'Enter the name of the loss payee',
-        ABOVE_MAXIMUM: 'The name of the loss payee cannot be more than 100  characters',
+        ABOVE_MAXIMUM: 'The name of the loss payee cannot be more than 100 characters',
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.LOCATION]: {
         IS_EMPTY: 'Select where your loss payee is located',
@@ -313,7 +313,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
           IS_EMPTY: "Enter the buyer's address",
-          ABOVE_MAXIMUM: 'Buyer address cannot be more than 1000 characters',
+          ABOVE_MAXIMUM: `Buyer address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.WEBSITE]: {
           INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",

@@ -61,7 +61,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       TITLE: 'Different trading address',
       FORM_TITLE: COMPANY_DETAILS,
     },
-    MAXIMUM: 1000,
+    MAXIMUM: 500,
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {

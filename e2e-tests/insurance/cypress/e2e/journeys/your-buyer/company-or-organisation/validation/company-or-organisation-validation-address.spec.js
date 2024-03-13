@@ -2,6 +2,7 @@ import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -40,9 +41,6 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     });
   });
 
-  const field = fieldSelector(ADDRESS);
-  const submittedValue = 'a'.repeat(1001);
-
   beforeEach(() => {
     cy.saveSession();
 
@@ -53,7 +51,10 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should render a validation error and retain the submitted value when address is above the maximum', () => {
+  it(`should render a validation error and retain the submitted value when ${ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
+    const field = fieldSelector(ADDRESS);
+    const submittedValue = 'a'.repeat(1001);
+
     const expectedErrorsCount = 2;
     const errorIndex = 1;
 
