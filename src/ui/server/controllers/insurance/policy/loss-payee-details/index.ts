@@ -69,10 +69,6 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  /**
-   * maps application
-   * maps nominated loss payee LOCATION to IS_LOCATED_IN_UK or IS_LOCATED_INTERNATIONALLY
-   */
   const mappedApplication = mapApplicationToFormFields(application) as Application;
 
   return res.render(TEMPLATE, {

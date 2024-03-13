@@ -121,42 +121,37 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
     describe(IS_LOCATED_IN_UK, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+        cy.completeAndSubmitLossPayeeDetailsForm({});
       });
 
       it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
-        cy.completeAndSubmitLossPayeeDetailsForm({});
-
         cy.assertUrl(lossPayeeFinancialUKUrl);
       });
 
-      describe('when going back to the page', () => {
-        it('should have the submitted values', () => {
-          cy.checkValue(fieldSelector(NAME), POLICY[NAME]);
+      it('should have the submitted values when going back to the page', () => {
+        cy.navigateToUrl(url);
+        cy.checkValue(fieldSelector(NAME), POLICY[NAME]);
 
-          const radioFieldId = `location-${IS_LOCATED_IN_UK}`;
-          cy.assertRadioOptionIsChecked(fieldSelector(radioFieldId).input());
-        });
+        const radioFieldId = `location-${IS_LOCATED_IN_UK}`;
+        cy.assertRadioOptionIsChecked(fieldSelector(radioFieldId).input());
       });
     });
 
     describe(IS_LOCATED_INTERNATIONALLY, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
       });
 
       it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
-        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
-
         cy.assertUrl(lossPayeeFinancialUKUrl);
       });
 
-      describe('when going back to the page', () => {
-        it('should have the submitted values', () => {
-          cy.checkValue(fieldSelector(NAME), POLICY[NAME]);
+      it('should have the submitted values when going back to the page', () => {
+        cy.navigateToUrl(url);
 
-          const radioFieldId = `location-${IS_LOCATED_INTERNATIONALLY}`;
-          cy.assertRadioOptionIsChecked(fieldSelector(radioFieldId).input());
-        });
+        const radioFieldId = `location-${IS_LOCATED_INTERNATIONALLY}`;
+        cy.assertRadioOptionIsChecked(fieldSelector(radioFieldId).input());
       });
     });
   });

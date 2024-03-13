@@ -24,14 +24,14 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     if (populatedData[LOCATION] === IS_LOCATED_IN_UK) {
       populatedData[IS_LOCATED_IN_UK] = true;
       populatedData[IS_LOCATED_INTERNATIONALLY] = false;
-      delete populatedData[LOCATION];
     }
 
     if (populatedData[LOCATION] === IS_LOCATED_INTERNATIONALLY) {
       populatedData[IS_LOCATED_INTERNATIONALLY] = true;
       populatedData[IS_LOCATED_IN_UK] = false;
-      delete populatedData[LOCATION];
     }
+
+    delete populatedData[LOCATION];
   }
 
   return populatedData;

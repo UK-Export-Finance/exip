@@ -18,7 +18,7 @@ const {
       SINGLE: { CONTRACT_COMPLETION_DATE },
       POLICY_CURRENCY_CODE,
     },
-    LOSS_PAYEE_DETAILS: { LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
+    LOSS_PAYEE_DETAILS: { LOCATION },
   },
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
@@ -85,7 +85,7 @@ const mapApplicationToFormFields = (application?: Application): Application | ob
       };
     }
 
-    if (application?.nominatedLossPayee?.[IS_LOCATED_INTERNATIONALLY] || application?.nominatedLossPayee?.[IS_LOCATED_IN_UK]) {
+    if (objectHasKeysAndValues(application?.nominatedLossPayee)) {
       mapped.nominatedLossPayee = {
         ...mapped.nominatedLossPayee,
         [LOCATION]: mapNominatedLossPayeeLocation(application.nominatedLossPayee),
