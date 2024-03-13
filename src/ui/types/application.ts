@@ -240,6 +240,7 @@ export {
   ApplicationPolicy,
   ApplicationPolicyContact,
   ApplicationJointlyInsuredParty,
+  ApplicationNominatedLossPayee,
   ApplicationExporterIndustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
