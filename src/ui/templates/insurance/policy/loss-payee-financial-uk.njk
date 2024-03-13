@@ -1,9 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -53,64 +53,24 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.SORT_CODE.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.SORT_CODE.ID + '-label',
-              'data-cy': FIELDS.SORT_CODE.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.SORT_CODE.HINT,
-            attributes: {
-              'data-cy': FIELDS.SORT_CODE.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            'data-cy': FIELDS.SORT_CODE.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.SORT_CODE.ID,
-          name: FIELDS.SORT_CODE.ID,
+          labelText: FIELDS.SORT_CODE.LABEL,
+          hintText: FIELDS.SORT_CODE.HINT,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          inputClasses: "govuk-input--width-10",
           value: submittedValues[FIELDS.SORT_CODE.ID] or application.policy[FIELDS.SORT_CODE.ID],
-          errorMessage: validationErrors.errorList[FIELDS.SORT_CODE.ID] and {
-            text: validationErrors.errorList[FIELDS.SORT_CODE.ID].text,
-            attributes: {
-              "data-cy": FIELDS.SORT_CODE.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.SORT_CODE.ID]
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.ACCOUNT_NUMBER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.ACCOUNT_NUMBER.ID + '-label',
-              'data-cy': FIELDS.ACCOUNT_NUMBER.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.ACCOUNT_NUMBER.HINT,
-            attributes: {
-              'data-cy': FIELDS.ACCOUNT_NUMBER.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-10",
-          attributes: {
-            'data-cy': FIELDS.ACCOUNT_NUMBER.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.ACCOUNT_NUMBER.ID,
-          name: FIELDS.ACCOUNT_NUMBER.ID,
+          labelText: FIELDS.ACCOUNT_NUMBER.LABEL,
+          hintText: FIELDS.ACCOUNT_NUMBER.HINT,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          inputClasses: "govuk-input--width-10",
           value: submittedValues[FIELDS.ACCOUNT_NUMBER.ID] or application.policy[FIELDS.ACCOUNT_NUMBER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID] and {
-            text: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.ACCOUNT_NUMBER.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID]
         }) }}
 
         {{ govukCharacterCount({
