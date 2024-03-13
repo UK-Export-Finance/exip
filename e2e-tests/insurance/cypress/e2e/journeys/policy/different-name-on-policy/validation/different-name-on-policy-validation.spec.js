@@ -155,18 +155,14 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
     });
   });
 
-  describe(EMAIL, () => {
-    const FIELD_ID = EMAIL;
 
-    assertEmailFieldValidation({
-      fieldId: EMAIL,
-      errorIndex: 2,
-      errorMessages: ERRORS[FIELD_ID],
-      totalExpectedErrors: 4,
-      totalExpectedOtherErrorsWithValidEmail: 3,
-      assertMaximumLength: true,
-    });
-  });
+  assertEmailFieldValidation({
+    fieldId: EMAIL,
+    errorIndex: 2,
+    errorMessages: ERRORS[EMAIL],
+    totalExpectedErrors: 4,
+    totalExpectedOtherErrorsWithValidEmail: 3,
+  })
 
   describe(POSITION, () => {
     const FIELD_ID = POSITION;

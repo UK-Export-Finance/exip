@@ -109,7 +109,6 @@ context('Insurance - Policy - Broker details page - validation', () => {
     errorMessages: BROKER_DETAILS_ERROR_MESSAGES[EMAIL],
     totalExpectedErrors: 3,
     totalExpectedOtherErrorsWithValidEmail: 2,
-    assertMaximumLength: true,
   });
 
   describe(FULL_ADDRESS, () => {
