@@ -1,9 +1,9 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% import '../../components/date-input.njk' as dateInput %}
 {% import '../../components/currency-radio-inputs.njk' as currencyRadios %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -53,36 +53,16 @@
           submittedAnswers: submittedValues or application.policy
         }) }}
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label',
-              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.TOTAL_MONTHS_OF_COVER.HINT,
-            attributes: {
-              'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-4 govuk-!-margin-bottom-4",
-          attributes: {
-            'data-cy': FIELDS.TOTAL_MONTHS_OF_COVER.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
-          name: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
+          labelText: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
+          hintText: FIELDS.TOTAL_MONTHS_OF_COVER.HINT,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          inputClasses: "govuk-input--width-4 govuk-!-margin-bottom-4",
           inputmode: "numeric",
           pattern: "[0-9]*",
           value: submittedValues[FIELDS.TOTAL_MONTHS_OF_COVER.ID] or application.policy[FIELDS.TOTAL_MONTHS_OF_COVER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID] and {
-            text: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.TOTAL_MONTHS_OF_COVER.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID]
         }) }}
 
         {{ currencyRadios.render({

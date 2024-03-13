@@ -2,7 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from "govuk/components/label/macro.njk" import govukLabel %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/accessible-autocomplete-select.njk' as accessibleAutoCompleteSelect %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
@@ -45,34 +45,13 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.COMPANY_NAME.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.COMPANY_NAME.ID + '-label',
-              'data-cy': FIELDS.COMPANY_NAME.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.COMPANY_NAME.HINT,
-            attributes: {
-              'data-cy': FIELDS.COMPANY_NAME.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-20",
-          attributes: {
-            'data-cy': FIELDS.COMPANY_NAME.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.COMPANY_NAME.ID,
-          name: FIELDS.COMPANY_NAME.ID,
+          labelText: FIELDS.COMPANY_NAME.LABEL,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          inputClasses: "govuk-input--width-20",
           value: submittedValues[FIELDS.COMPANY_NAME.ID] or application.policy.jointlyInsuredParty[FIELDS.COMPANY_NAME.ID],
-          errorMessage: validationErrors.errorList[FIELDS.COMPANY_NAME.ID] and {
-            text: validationErrors.errorList[FIELDS.COMPANY_NAME.ID].text,
-            attributes: {
-              "data-cy": FIELDS.COMPANY_NAME.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.COMPANY_NAME.ID]
         }) }}
 
         <div class="govuk-form-group">
@@ -96,34 +75,13 @@
           </div>
         </div>
 
-        {{ govukInput({
-          label: {
-            text: FIELDS.COMPANY_NUMBER.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.COMPANY_NUMBER.ID + '-label',
-              'data-cy': FIELDS.COMPANY_NUMBER.ID + '-label'
-            }
-          },
-          hint: {
-            text: FIELDS.COMPANY_NUMBER.HINT,
-            attributes: {
-              'data-cy': FIELDS.COMPANY_NUMBER.ID + '-hint'
-            }
-          },
-          classes: "govuk-input--width-20",
-          attributes: {
-            'data-cy': FIELDS.COMPANY_NUMBER.ID + '-input'
-          },
+        {{ textInput.render({
           id: FIELDS.COMPANY_NUMBER.ID,
-          name: FIELDS.COMPANY_NUMBER.ID,
+          labelText: FIELDS.COMPANY_NUMBER.LABEL,
+          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          inputClasses: "govuk-input--width-20",
           value: submittedValues[FIELDS.COMPANY_NUMBER.ID] or application.policy.jointlyInsuredParty[FIELDS.COMPANY_NUMBER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID] and {
-            text: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID].text,
-            attributes: {
-              "data-cy": FIELDS.COMPANY_NUMBER.ID + "-error-message"
-            }
-          }
+          errorMessage: validationErrors.errorList[FIELDS.COMPANY_NUMBER.ID]
         }) }}
 
       </div>

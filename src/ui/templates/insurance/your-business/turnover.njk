@@ -1,10 +1,10 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
 {% import '../../components/monetary-value-input.njk' as monetaryValueInput %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 {% import '../../components/fieldset-legend.njk' as fieldsetLegend %}
 
@@ -79,35 +79,17 @@
             <a class="govuk-link" data-cy="provide-alternative-currency-link" href="{{ PROVIDE_ALTERNATIVE_CURRENCY_URL }}">{{ CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY }}</a>
           </p>
 
-          {{ govukInput({
+          {{ textInput.render({
             id: FIELDS.PERCENTAGE_TURNOVER.ID,
-            name: FIELDS.PERCENTAGE_TURNOVER.ID,
+            labelText: FIELDS.PERCENTAGE_TURNOVER.LABEL,
+            inputClasses: "govuk-input--width-5",
+            labelClasses: "govuk-body",
+            hintText: FIELDS.PERCENTAGE_TURNOVER.HINT,
+            suffixText: FIELDS.PERCENTAGE_TURNOVER.SUFFIX,
             value: submittedValues[FIELDS.PERCENTAGE_TURNOVER.ID] or application.business[FIELDS.PERCENTAGE_TURNOVER.ID],
-            label: {
-              text: FIELDS.PERCENTAGE_TURNOVER.LABEL,
-              classes: "govuk-body",
-              attributes: {
-                id: FIELDS.PERCENTAGE_TURNOVER.ID + '-label',
-                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-label"
-              }
-            },
-            suffix: {
-              text: FIELDS.PERCENTAGE_TURNOVER.SUFFIX,
-              attributes: {
-                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-suffix"
-              }
-            },
-            classes: "govuk-input--width-5",
-            attributes: {
-              "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-input"
-            },
-            errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID] and {
-              text: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID].text,
-              attributes: {
-                "data-cy": FIELDS.PERCENTAGE_TURNOVER.ID + "-error-message"
-              }
-            }
+            errorMessage: validationErrors.errorList[FIELDS.PERCENTAGE_TURNOVER.ID]
           }) }}
+
         {% endcall %}
 
         {{ formButtons.render({
