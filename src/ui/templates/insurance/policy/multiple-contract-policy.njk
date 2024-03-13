@@ -56,12 +56,13 @@
         {{ textInput.render({
           id: FIELDS.TOTAL_MONTHS_OF_COVER.ID,
           labelText: FIELDS.TOTAL_MONTHS_OF_COVER.LABEL,
+          hintText: FIELDS.TOTAL_MONTHS_OF_COVER.HINT,
           labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
           inputClasses: "govuk-input--width-4 govuk-!-margin-bottom-4",
           inputmode: "numeric",
           pattern: "[0-9]*",
           value: submittedValues[FIELDS.TOTAL_MONTHS_OF_COVER.ID] or application.policy[FIELDS.TOTAL_MONTHS_OF_COVER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER]
+          errorMessage: validationErrors.errorList[FIELDS.TOTAL_MONTHS_OF_COVER.ID]
         }) }}
 
         {{ currencyRadios.render({
