@@ -24,7 +24,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Policy - Loss payee financial UK page - As an exporter, I want to provide UKEF with my loss payee's bank details So that they can be paid in the event of a claim on the policy", () => {
+context("Insurance - Policy - Loss payee financial UK page - As an exporter, I want to provide UKEF with my loss payee's financial UK details So that they can be paid in the event of a claim on the policy", () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
