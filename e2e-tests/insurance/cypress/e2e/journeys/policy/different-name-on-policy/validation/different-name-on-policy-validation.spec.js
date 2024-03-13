@@ -155,14 +155,13 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
     });
   });
 
-
   assertEmailFieldValidation({
     fieldId: EMAIL,
     errorIndex: 2,
     errorMessages: ERRORS[EMAIL],
     totalExpectedErrors: 4,
     totalExpectedOtherErrorsWithValidEmail: 3,
-  })
+  });
 
   describe(POSITION, () => {
     const FIELD_ID = POSITION;
