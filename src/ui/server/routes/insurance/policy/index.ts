@@ -174,6 +174,10 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYE
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_ROOT}`, getLossPayeeDetails);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_ROOT}`, postLossPayeeDetails);
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHANGE}`, getLossPayeeDetails);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHANGE}`, postLossPayeeDetails);
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, getLossPayeeDetails);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, postLossPayeeDetails);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, getLossPayeeFinancialUK);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, postLossPayeeFinancialUK);

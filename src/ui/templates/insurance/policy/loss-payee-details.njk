@@ -50,7 +50,7 @@
           labelText: FIELDS.NAME.LABEL,
           labelClasses: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
           inputClasses: "govuk-input--width-20 govuk-!-margin-bottom-5",
-          value: submittedValues[FIELDS.NAME.ID] or application.policy[FIELDS.NAME.ID],
+          value: submittedValues[FIELDS.NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.NAME.ID]
         }) }}
       </div>
@@ -71,7 +71,6 @@
           "data-cy": FIELDS.LOCATION.ID + "-error-message"
         }
       },
-      classes: "govuk-radios--inline",
       items: [
         {
           label: {
@@ -82,7 +81,7 @@
           },
           value: FIELDS.LOCATION.OPTIONS.UK.VALUE,
           text: FIELDS.LOCATION.OPTIONS.UK.TEXT,
-          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.LOCATION.OPTIONS.UK.ID,
+          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.IS_LOCATED_IN_UK.ID,
           attributes: {
             "data-cy": FIELDS.LOCATION.ID + '-' + FIELDS.LOCATION.OPTIONS.UK.ID + "-input"
           }
@@ -96,7 +95,7 @@
           },
           value: FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.VALUE,
           text: FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.TEXT,
-          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.ID,
+          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.IS_LOCATED_INTERNATIONALLY.ID,
           attributes: {
             "data-cy": FIELDS.LOCATION.ID + '-' + FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.ID + "-input"
           }

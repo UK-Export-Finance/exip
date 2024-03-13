@@ -7,14 +7,19 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import { Request, Response } from '../../../../../types';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save/nominated-loss-payee';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
+import { Application, Request, Response } from '../../../../../types';
 
-const { NAME, LOCATION } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
+const { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS },
+  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_UK_ROOT },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
@@ -41,6 +46,12 @@ export const pageVariables = (referenceNumber: number) => ({
       ID: LOCATION,
       ...LOSS_PAYEE_DETAILS[LOCATION],
     },
+    IS_LOCATED_IN_UK: {
+      ID: IS_LOCATED_IN_UK,
+    },
+    IS_LOCATED_INTERNATIONALLY: {
+      ID: IS_LOCATED_INTERNATIONALLY,
+    },
   },
   SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
 });
@@ -58,6 +69,8 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const mappedApplication = mapApplicationToFormFields(application) as Application;
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
@@ -65,6 +78,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    submittedValues: mappedApplication?.nominatedLossPayee,
   });
 };
 
@@ -102,7 +116,21 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    const saveResponse = await mapAndSave.nominatedLossPayee(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`);
   } catch (err) {
     console.error('Error updating application - policy - loss payee details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

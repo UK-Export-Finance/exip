@@ -8,7 +8,7 @@ const { POLICY } = application;
 
 /**
  * completeLossPayeeFinancialUKForm
- * Complete "loss payee bank details" form
+ * Complete "loss payee financial uk" form
  * @param {String} sortCode: sortCode value - defaults to application fixture sort code.
  * @param {String} accountNumber: accountNumber value - defaults to application fixture account number.
  * @param {String} financialAddress: financialAddress value - defaults to application fixture financial address.

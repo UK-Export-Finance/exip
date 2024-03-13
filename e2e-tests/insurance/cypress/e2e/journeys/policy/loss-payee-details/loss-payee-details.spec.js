@@ -4,6 +4,7 @@ import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_DETAILS;
 
@@ -18,7 +19,7 @@ const {
   POLICY: {
     LOSS_PAYEE_ROOT,
     LOSS_PAYEE_DETAILS_ROOT,
-    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_FINANCIAL_UK_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -26,10 +27,12 @@ const { LOSS_PAYEE_DETAILS: FIELD_STRINGS } = FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
+const { POLICY } = application;
+
 context('Insurance - Policy - Loss payee details page - As an exporter, I want to inform UKEF about whether I have a loss payee, So that the appropriate parties can be paid in the event of an insurance claim', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let lossPayeeFinancialUKUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -48,7 +51,7 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeFinancialUKUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -115,12 +118,41 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.navigateToUrl(url);
+    describe(IS_LOCATED_IN_UK, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+        cy.completeAndSubmitLossPayeeDetailsForm({});
+      });
 
-      cy.completeAndSubmitLossPayeeDetailsForm({});
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
+        cy.assertUrl(lossPayeeFinancialUKUrl);
+      });
 
-      cy.assertUrl(checkYourAnswersUrl);
+      it('should have the submitted values when going back to the page', () => {
+        cy.navigateToUrl(url);
+        cy.checkValue(fieldSelector(NAME), POLICY[NAME]);
+
+        const radioFieldId = `location-${IS_LOCATED_IN_UK}`;
+        cy.assertRadioOptionIsChecked(fieldSelector(radioFieldId).input());
+      });
+    });
+
+    describe(IS_LOCATED_INTERNATIONALLY, () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
+      });
+
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
+        cy.assertUrl(lossPayeeFinancialUKUrl);
+      });
+
+      it('should have the submitted values when going back to the page', () => {
+        cy.navigateToUrl(url);
+
+        const radioFieldId = `location-${IS_LOCATED_INTERNATIONALLY}`;
+        cy.assertRadioOptionIsChecked(fieldSelector(radioFieldId).input());
+      });
     });
   });
 });
