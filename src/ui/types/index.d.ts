@@ -16,6 +16,7 @@ import {
   ApplicationJointlyInsuredParty,
   ApplicationPolicy,
   ApplicationPolicyContact,
+  ApplicationNominatedLossPayee,
   ApplicationVersion,
   ApplicationOwner,
 } from './application';
@@ -86,6 +87,7 @@ export {
   ApplicationJointlyInsuredParty,
   ApplicationPolicy,
   ApplicationPolicyContact,
+  ApplicationNominatedLossPayee,
   ApplicationVersion,
   ApolloResponse,
   ApplicationOwner,

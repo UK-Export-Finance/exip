@@ -4,6 +4,7 @@ import { objectHasProperty } from '../../../../../helpers/object';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
+  LOSS_PAYEE_DETAILS: { LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
 } = POLICY_FIELD_IDS;
 
 /**
@@ -17,6 +18,20 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   if (!objectHasProperty(populatedData, IS_APPOINTED)) {
     delete populatedData[IS_APPOINTED];
+  }
+
+  if (objectHasProperty(populatedData, LOCATION)) {
+    if (populatedData[LOCATION] === IS_LOCATED_IN_UK) {
+      populatedData[IS_LOCATED_IN_UK] = true;
+      populatedData[IS_LOCATED_INTERNATIONALLY] = false;
+      delete populatedData[LOCATION];
+    }
+
+    if (populatedData[LOCATION] === IS_LOCATED_INTERNATIONALLY) {
+      populatedData[IS_LOCATED_INTERNATIONALLY] = true;
+      populatedData[IS_LOCATED_IN_UK] = false;
+      delete populatedData[LOCATION];
+    }
   }
 
   return populatedData;

@@ -3,6 +3,7 @@ import mapSubmittedData from '.';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
+  LOSS_PAYEE_DETAILS: { LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
@@ -41,6 +42,40 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
       const result = mapSubmittedData(mockBody);
 
       expect(result).toEqual(mockBody);
+    });
+  });
+
+  describe(`when form body ${LOCATION} is ${IS_LOCATED_IN_UK}`, () => {
+    it(`should wipe ${LOCATION} and set ${IS_LOCATED_IN_UK} as true and ${IS_LOCATED_INTERNATIONALLY} as false`, () => {
+      const mockBody = {
+        [LOCATION]: IS_LOCATED_IN_UK,
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      const expected = {
+        [IS_LOCATED_IN_UK]: true,
+        [IS_LOCATED_INTERNATIONALLY]: false,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when form body ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY}`, () => {
+    it(`should wipe ${LOCATION} and set ${IS_LOCATED_INTERNATIONALLY} as true and ${IS_LOCATED_IN_UK} as false`, () => {
+      const mockBody = {
+        [LOCATION]: IS_LOCATED_INTERNATIONALLY,
+      };
+
+      const result = mapSubmittedData(mockBody);
+
+      const expected = {
+        [IS_LOCATED_IN_UK]: false,
+        [IS_LOCATED_INTERNATIONALLY]: true,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 });
