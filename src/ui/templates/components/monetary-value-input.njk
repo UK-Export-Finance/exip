@@ -1,4 +1,4 @@
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import './text-input.njk' as textInput %}
 
 {% macro render(params) %}
 
@@ -11,64 +11,25 @@
   {% set validationError = params.validationError %}
   {% set legendClass = params.legendClass %}
 
- {#
-  Default the prefix to be empty.
-  If there is no currencyPrefixSymbol provided,
-  The currency is a non-standard supported currency.
-  Therefore, we do not want to display currency prefix.
-  Otherwise, generate a prefix object as per govukInput structure.
- #}
-  {% set prefix = {} %}
-
-  {% if currencyPrefixSymbol %}
-    {% set prefix = {
-      text: currencyPrefixSymbol,
-      attributes: {
-        'data-cy': fieldId + '-prefix'
-      }
-    } %}
-  {% endif %}
-
   {% if legendClass %}
     {% set labelClass = legendClass %}
   {% else %}
     {% set labelClass = "govuk-!-font-weight-bold govuk-!-font-size-24" %}
   {% endif %}
 
-  {{ govukInput({
-    label: {
-      text: label,
-      classes: labelClass,
-      attributes: {
-        id: fieldId + '-label',
-        'data-cy': fieldId + '-label'
-      }
-    },
-    hint: {
-      text: hintText,
-      html: hintHtml,
-      attributes: {
-        'data-cy': fieldId + '-hint'
-      }
-    },
-    classes: "govuk-input--width-10 govuk-!-margin-bottom-4",
-    attributes: {
-      'data-cy': fieldId + '-input'
-    },
+  {{ textInput.render({
     id: fieldId,
-    name: fieldId,
+    labelText: label,
+    labelClasses: labelClass,
+    inputClasses: "govuk-input--width-10 govuk-!-margin-bottom-4",
+    hintText: hintText,
+    hintHtml: hintHtml,
+    prefixText: currencyPrefixSymbol,
     inputmode: "numeric",
     pattern: "[0-9]*",
-    prefix: prefix,
     spellcheck: false,
     value: submittedValue,
-    errorMessage: validationError and {
-      text: validationError.text,
-      attributes: {
-        "data-cy": fieldId + "-error-message"
-      }
-    }
+    errorMessage: validationError
   }) }}
-
 
 {% endmacro %}

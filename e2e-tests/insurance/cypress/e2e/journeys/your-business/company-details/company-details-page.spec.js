@@ -134,14 +134,14 @@ context('Insurance - Your business - Company details page - As an Exporter I wan
       cy.checkAriaLabel(noRadioInput().eq(1), `${CONTENT_STRINGS.TRADING_ADDRESS} No`);
     });
 
-    it('should display the company website text area', () => {
+    it('should display the company website text input', () => {
       cy.checkText(field(WEBSITE).label(), CONTENT_STRINGS.WEBSITE);
 
       field(WEBSITE).input().should('exist');
       cy.checkAriaLabel(field(WEBSITE).input(), CONTENT_STRINGS.WEBSITE);
     });
 
-    it('should display the phone number text area', () => {
+    it('should display the phone number text input', () => {
       cy.checkText(field(PHONE_NUMBER).label(), CONTENT_STRINGS.PHONE_NUMBER);
 
       cy.checkText(field(PHONE_NUMBER).hint(), CONTENT_STRINGS.PHONE_NUMBER_HINT);
