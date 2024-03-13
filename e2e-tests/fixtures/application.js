@@ -45,6 +45,8 @@ const {
         EMAIL,
         FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
+      LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
+      FINANCIAL_ADDRESS,
       LOSS_PAYEE_DETAILS: {
         NAME: LOSS_PAYEE_NAME,
       },
@@ -139,6 +141,11 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+    LOSS_PAYEE_FINANCIAL_UK: {
+      [ACCOUNT_NUMBER]: '12345678',
+      [SORT_CODE]: '123456',
+      [FINANCIAL_ADDRESS]: 'Mock UK bank address',
+    },
     [LOSS_PAYEE_NAME]: 'Mock name',
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
