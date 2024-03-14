@@ -46,7 +46,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should display validation errors if trading address question is not answered', () => {
+  it(`should display validation errors if ${TRADING_ADDRESS} is left empty`, () => {
     const field = companyDetails[TRADING_ADDRESS];
 
     const radioField = {

@@ -206,7 +206,7 @@ CREATE TABLE `Buyer` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `companyOrOrganisationName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `address` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registrationNumber` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `website` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -700,7 +700,7 @@ DROP TABLE IF EXISTS `CompanyDifferentTradingAddress`;
 CREATE TABLE `CompanyDifferentTradingAddress` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `company` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fullAddress` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `fullAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `CompanyDifferentTradingAddress_company_idx` (`company`),
   CONSTRAINT `CompanyDifferentTradingAddress_company_fkey` FOREIGN KEY (`company`) REFERENCES `Company` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
@@ -767,7 +767,7 @@ CREATE TABLE `Broker` (
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `county` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `postcode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `fullAddress` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `fullAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   KEY `Broker_application_idx` (`application`),
