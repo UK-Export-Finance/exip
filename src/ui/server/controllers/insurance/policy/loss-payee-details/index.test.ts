@@ -18,7 +18,7 @@ const { NAME, LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_UK_ROOT, LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_CHECK_AND_CHANGE },
+  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_UK_ROOT, LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT, LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_CHECK_AND_CHANGE },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -124,17 +124,30 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
       mapAndSave.nominatedLossPayee = jest.fn(() => Promise.resolve(true));
     });
 
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
-      });
-
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
@@ -171,26 +184,32 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
-    });
 
-    describe('when there are validation errors', () => {
-      it('should render template with validation errors', async () => {
-        await post(req, res);
+      describe(`when ${LOCATION} is ${IS_LOCATED_IN_UK}`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, async () => {
+          req.body = {
+            ...validBody,
+            [LOCATION]: IS_LOCATED_IN_UK,
+          };
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          await post(req, res);
 
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(mockApplication.referenceNumber),
-          userName: getUserNameFromSession(req.session.user),
-          submittedValues: payload,
-          validationErrors: generateValidationErrors(payload),
-        };
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY}`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, async () => {
+          req.body[LOCATION] = IS_LOCATED_INTERNATIONALLY;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

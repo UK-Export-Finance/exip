@@ -46,6 +46,7 @@ const {
         FULL_ADDRESS: BROKER_FULL_ADDRESS,
       },
       LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
+      LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
       FINANCIAL_ADDRESS,
       LOSS_PAYEE_DETAILS: {
         NAME: LOSS_PAYEE_NAME,
@@ -142,9 +143,14 @@ const application = {
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
     LOSS_PAYEE_FINANCIAL_UK: {
+      [SORT_CODE]: '102030',
       [ACCOUNT_NUMBER]: '12345678',
-      [SORT_CODE]: '123456',
       [FINANCIAL_ADDRESS]: 'Mock UK bank address',
+    },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+      [BIC_SWIFT_CODE]: '12345678',
+      [IBAN]: '1234567890123456',
+      [FINANCIAL_ADDRESS]: 'Mock international bank address',
     },
     [LOSS_PAYEE_NAME]: 'Mock name',
   },

@@ -18,7 +18,7 @@ const { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY } = POLICY_
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_UK_ROOT },
+  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_UK_ROOT, LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -116,6 +116,8 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
+    const locationAnswer = payload[LOCATION];
+
     const saveResponse = await mapAndSave.nominatedLossPayee(payload, application);
 
     if (!saveResponse) {
@@ -130,7 +132,21 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`);
+    /**
+     * if LOCATION has been submitted as IS_LOCATED_IN_UK,
+     * redirect to LOSS_PAYEE_FINANCIAL_UK_ROOT
+     */
+    if (locationAnswer === IS_LOCATED_IN_UK) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`);
+    }
+
+    /**
+     * if LOCATION has been submitted as IS_LOCATED_INTERNATIONALLY,
+     * redirect to LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT
+     */
+    if (locationAnswer === IS_LOCATED_INTERNATIONALLY) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`);
+    }
   } catch (err) {
     console.error('Error updating application - policy - loss payee details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

@@ -35,6 +35,10 @@ import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from
 import { get as getLossPayee, post as postLossPayee } from '../../../controllers/insurance/policy/loss-payee';
 import { post as postLossPayeeSaveAndBack } from '../../../controllers/insurance/policy/loss-payee/save-and-back';
 import { get as getLossPayeeFinancialUK, post as postLossPayeeFinancialUK } from '../../../controllers/insurance/policy/loss-payee-financial-uk';
+import {
+  get as getLossPayeeFinancialInternational,
+  post as postLossPayeeFinancialInternational,
+} from '../../../controllers/insurance/policy/loss-payee-financial-international';
 import { get as getLossPayeeDetails, post as postLossPayeeDetails } from '../../../controllers/insurance/policy/loss-payee-details';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
 
@@ -48,8 +52,8 @@ describe('routes/insurance/policy', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(42);
-    expect(post).toHaveBeenCalledTimes(54);
+    expect(get).toHaveBeenCalledTimes(43);
+    expect(post).toHaveBeenCalledTimes(55);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -209,6 +213,12 @@ describe('routes/insurance/policy', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, getLossPayeeFinancialUK);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, postLossPayeeFinancialUK);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, getLossPayeeFinancialInternational);
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`,
+      postLossPayeeFinancialInternational,
+    );
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

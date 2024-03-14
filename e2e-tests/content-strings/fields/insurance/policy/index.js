@@ -28,6 +28,7 @@ const {
       IS_LOCATED_INTERNATIONALLY,
     },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -284,6 +285,16 @@ export const POLICY_FIELDS = {
     [ACCOUNT_NUMBER]: {
       LABEL: 'Account number',
       HINT: 'Must be between 6 and 8 digits long',
+    },
+  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    [BIC_SWIFT_CODE]: {
+      LABEL: 'BIC or SWIFT code',
+      HINT: 'Must be between 8 and 11 characters long',
+    },
+    [IBAN]: {
+      LABEL: 'IBAN',
+      HINT: 'Must be between 16 and 34 characters long',
     },
   },
   FINANCIAL_ADDRESS: {
