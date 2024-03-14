@@ -53,7 +53,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
   it(`should render a validation error and retain the submitted value when ${ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
     const field = fieldSelector(ADDRESS);
-    const submittedValue = 'a'.repeat(1001);
+    const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
 
     const expectedErrorsCount = 2;
     const errorIndex = 1;
