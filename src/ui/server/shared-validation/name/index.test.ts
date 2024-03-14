@@ -17,7 +17,7 @@ describe('shared-validation/name', () => {
     [FIELD_ID]: 'Mock name',
   } as RequestBody;
 
-  it('should return the result of alphaCharactersOnlyValidation', () => {
+  it('should return the result of alphaCharactersAndMaxLengthValidation', () => {
     const response = nameValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors);
 
     const expected = alphaCharactersAndMaxLengthValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MAX_CHARACTERS);
