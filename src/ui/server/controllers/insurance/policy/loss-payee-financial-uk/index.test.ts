@@ -6,6 +6,8 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialUK } from '../../../../test-mocks';
 
@@ -122,6 +124,27 @@ describe('controllers/insurance/policy/loss-payee-financial-uk', () => {
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 

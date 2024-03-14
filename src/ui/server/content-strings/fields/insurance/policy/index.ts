@@ -271,14 +271,18 @@ export const POLICY_FIELDS = {
     [SORT_CODE]: {
       LABEL: 'Sort code',
       HINT: 'Must be 6 digits long',
+      MINIMUM: 6,
+      MAXIMUM: 6,
     },
     [ACCOUNT_NUMBER]: {
       LABEL: 'Account number',
       HINT: 'Must be between 6 and 8 digits long',
+      MINIMUM: 6,
+      MAXIMUM: 8,
     },
   },
   FINANCIAL_ADDRESS: {
     LABEL: 'Bank address',
-    MAXIMUM: 300,
+    MAXIMUM: 500,
   },
 };

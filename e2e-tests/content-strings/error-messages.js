@@ -307,6 +307,22 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.LOCATION]: {
         IS_EMPTY: 'Select where your loss payee is located',
       },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK.ACCOUNT_NUMBER]: {
+        IS_EMPTY: 'Enter an account number',
+        INCORRECT_FORMAT: 'Enter a valid account number like 00733445',
+        BELOW_MINIMUM: 'Account number must be between 6 and 8 digits',
+        ABOVE_MAXIMUM: 'Account number must be between 6 and 8 digits',
+      },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK.SORT_CODE]: {
+        IS_EMPTY: 'Enter a sort code',
+        INCORRECT_FORMAT: 'Enter a valid sort code like 309430',
+        BELOW_MINIMUM: 'Sort code must be 6 digits',
+        ABOVE_MAXIMUM: 'Sort code must be 6 digits',
+      },
+      [FIELD_IDS.INSURANCE.POLICY.FINANCIAL_ADDRESS]: {
+        IS_EMPTY: 'Enter the banks address',
+        ABOVE_MAXIMUM: "The bank's address cannot be more than 500 characters",
+      },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {

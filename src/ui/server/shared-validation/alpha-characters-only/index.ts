@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { REGEX } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
 
 /**
@@ -18,7 +19,7 @@ const alphaCharactersOnlyValidation = (fieldValue: string, fieldId: string, erro
    * - a-z or A-Z characters.
    * - an empty space.
    */
-  const regex = /^[a-zA-Z ]*$/;
+  const regex = REGEX.ALPHA_CHARACTERS;
 
   const schema = () => joiString.regex(regex).required();
 
