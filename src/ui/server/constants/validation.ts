@@ -1,3 +1,3 @@
 export const MAXIMUM_CHARACTERS = {
-  FULL_ADDRESS: 300,
+  FULL_ADDRESS: 500,
 };
