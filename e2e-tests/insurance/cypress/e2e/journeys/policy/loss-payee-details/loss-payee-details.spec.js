@@ -20,6 +20,7 @@ const {
     LOSS_PAYEE_ROOT,
     LOSS_PAYEE_DETAILS_ROOT,
     LOSS_PAYEE_FINANCIAL_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -32,7 +33,8 @@ const { POLICY } = application;
 context('Insurance - Policy - Loss payee details page - As an exporter, I want to inform UKEF about whether I have a loss payee, So that the appropriate parties can be paid in the event of an insurance claim', () => {
   let referenceNumber;
   let url;
-  let lossPayeeFinancialUKUrl;
+  let lossPayeeFinancialUkUrl;
+  let lossPayeeFinancialInternationalUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -51,7 +53,8 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
-      lossPayeeFinancialUKUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+      lossPayeeFinancialInternationalUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -125,7 +128,7 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
       });
 
       it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
-        cy.assertUrl(lossPayeeFinancialUKUrl);
+        cy.assertUrl(lossPayeeFinancialUkUrl);
       });
 
       it('should have the submitted values when going back to the page', () => {
@@ -143,8 +146,8 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
       });
 
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
-        cy.assertUrl(lossPayeeFinancialUKUrl);
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, () => {
+        cy.assertUrl(lossPayeeFinancialInternationalUrl);
       });
 
       it('should have the submitted values when going back to the page', () => {
