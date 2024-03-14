@@ -8,10 +8,10 @@ const { POLICY } = application;
 
 /**
  * completeLossPayeeFinancialUKForm
- * Complete "loss payee financial uk" form
- * @param {String} sortCode: sortCode value - defaults to application fixture sort code.
- * @param {String} accountNumber: accountNumber value - defaults to application fixture account number.
- * @param {String} financialAddress: financialAddress value - defaults to application fixture financial address.
+ * Complete "loss payee financial details (UK)" form
+ * @param {String} sortCode: sortCode value - defaults to application fixture.
+ * @param {String} accountNumber: accountNumber value - defaults to application fixture.
+ * @param {String} financialAddress: financialAddress value - defaults to application fixture.
  */
 const completeLossPayeeFinancialUKForm = ({
   accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],

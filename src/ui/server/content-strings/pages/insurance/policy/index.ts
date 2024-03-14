@@ -103,7 +103,7 @@ const LOSS_PAYEE_DETAILS = {
   PAGE_TITLE: 'Tell us about the nominated loss payee',
 };
 
-const LOSS_PAYEE_FINANCIAL_UK = {
+const LOSS_PAYEE_FINANCIAL_DETAILS = {
   ...SHARED,
   PAGE_TITLE: "What are your loss payee's bank details?",
   HINT: "We'll use these bank details to pay the loss payee in the event of a valid claim. If you're unsure, ask your bank or lender. You can also check your bank statement.",
@@ -131,6 +131,6 @@ export default {
   BROKER_CONFIRM_ADDRESS,
   LOSS_PAYEE,
   LOSS_PAYEE_DETAILS,
-  LOSS_PAYEE_FINANCIAL_UK,
+  LOSS_PAYEE_FINANCIAL_DETAILS,
   CHECK_YOUR_ANSWERS,
 };
