@@ -1,14 +1,14 @@
 import POLICY_ROOT from './root';
 
-const LOSS_PAYEE_ROOT = `${POLICY_ROOT}/loss-payee`;
+const ROOT = `${POLICY_ROOT}/loss-payee`;
 const LOSS_PAYEE_DETAILS_ROOT = `${POLICY_ROOT}/loss-payee-details`;
 const LOSS_PAYEE_FINANCIAL_UK_ROOT = `${POLICY_ROOT}/loss-payee-bank-details`;
 
 const LOSS_PAYEE_ROUTES = {
-  LOSS_PAYEE_ROOT,
-  LOSS_PAYEE_SAVE_AND_BACK: `${LOSS_PAYEE_ROOT}/save-and-back`,
-  LOSS_PAYEE_CHANGE: `${LOSS_PAYEE_ROOT}/change`,
-  LOSS_PAYEE_CHECK_AND_CHANGE: `${LOSS_PAYEE_ROOT}/check-and-change`,
+  LOSS_PAYEE_ROOT: ROOT,
+  LOSS_PAYEE_SAVE_AND_BACK: `${ROOT}/save-and-back`,
+  LOSS_PAYEE_CHANGE: `${ROOT}/change`,
+  LOSS_PAYEE_CHECK_AND_CHANGE: `${ROOT}/check-and-change`,
   LOSS_PAYEE_DETAILS_ROOT,
   LOSS_PAYEE_DETAILS_CHANGE: `${LOSS_PAYEE_DETAILS_ROOT}/change`,
   LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE: `${LOSS_PAYEE_DETAILS_ROOT}/check-and-change`,
