@@ -26,8 +26,8 @@ Cypress.Commands.add('completeAndSubmitBrokerForm', require('../../../../../comm
 Cypress.Commands.add('completeBrokerDetailsForm', require('../../../../../commands/insurance/complete-broker-details-form'));
 Cypress.Commands.add('completeAndSubmitBrokerDetailsForm', require('../../../../../commands/insurance/complete-and-submit-broker-details-form'));
 Cypress.Commands.add('completeAndSubmitLossPayeeForm', require('../../../../../commands/insurance/complete-and-submit-loss-payee-form'));
-Cypress.Commands.add('completeLossPayeeFinancialUKForm', require('../../../../../commands/insurance/complete-loss-payee-financial-uk-form'));
-Cypress.Commands.add('completeAndSubmitLossPayeeFinancialUKForm', require('../../../../../commands/insurance/complete-and-submit-loss-payee-financial-uk-form'));
+Cypress.Commands.add('completeLossPayeeFinancialUkForm', require('../../../../../commands/insurance/complete-loss-payee-financial-uk-form'));
+Cypress.Commands.add('completeAndSubmitLossPayeeFinancialUkForm', require('../../../../../commands/insurance/complete-and-submit-loss-payee-financial-uk-form'));
 Cypress.Commands.add('completeLossPayeeFinancialInternationalForm', require('../../../../../commands/insurance/complete-loss-payee-financial-international-form'));
 Cypress.Commands.add('completeAndSubmitLossPayeeFinancialInternationalForm', require('../../../../../commands/insurance/complete-and-submit-loss-payee-financial-international-form'));
 Cypress.Commands.add('completeLossPayeeDetailsForm', require('../../../../../commands/insurance/complete-loss-payee-details-form'));

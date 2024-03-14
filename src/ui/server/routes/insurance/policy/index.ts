@@ -34,7 +34,7 @@ import { post as postBrokerDetailsSaveAndBack } from '../../../controllers/insur
 import { get as getBrokerConfirmAddress, post as postBrokerConfirmAddress } from '../../../controllers/insurance/policy/broker-confirm-address';
 import { get as getLossPayee, post as postLossPayee } from '../../../controllers/insurance/policy/loss-payee';
 import { post as postLossPayeeSaveAndBack } from '../../../controllers/insurance/policy/loss-payee/save-and-back';
-import { get as getLossPayeeFinancialUK, post as postLossPayeeFinancialUK } from '../../../controllers/insurance/policy/loss-payee-financial-uk';
+import { get as getLossPayeeFinancialUk, post as postLossPayeeFinancialUk } from '../../../controllers/insurance/policy/loss-payee-financial-uk';
 import {
   get as getLossPayeeFinancialInternational,
   post as postLossPayeeFinancialInternational,
@@ -183,8 +183,8 @@ insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYE
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, getLossPayeeDetails);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, postLossPayeeDetails);
 
-insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, getLossPayeeFinancialUK);
-insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, postLossPayeeFinancialUK);
+insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, getLossPayeeFinancialUk);
+insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, postLossPayeeFinancialUk);
 
 insurancePolicyRouter.get(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, getLossPayeeFinancialInternational);
 insurancePolicyRouter.post(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, postLossPayeeFinancialInternational);
