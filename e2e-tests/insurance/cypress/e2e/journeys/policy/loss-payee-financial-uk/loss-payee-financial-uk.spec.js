@@ -17,6 +17,7 @@ const {
 const {
   ROOT,
   POLICY: {
+    LOSS_PAYEE_DETAILS_ROOT,
     LOSS_PAYEE_FINANCIAL_UK_ROOT,
     CHECK_YOUR_ANSWERS,
   },
@@ -65,7 +66,7 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}#`,
+      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`,
     });
   });
 

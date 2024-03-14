@@ -16,6 +16,7 @@ const completeAndSubmitLossPayeeFormDetailsForm = ({
   locatedInUK = true,
 }) => {
   cy.completeLossPayeeDetailsForm({ name, locatedInUK });
+
   cy.clickSubmitButton();
 };
 

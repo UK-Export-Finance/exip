@@ -14,9 +14,9 @@ const { POLICY } = application;
  * @param {String} financialAddress: financialAddress value - defaults to application fixture.
  */
 const completeLossPayeeFinancialInternationalForm = ({
-  bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INERTNATIONAL[BIC_SWIFT_CODE],
-  iban = POLICY.LOSS_PAYEE_FINANCIAL_INERTNATIONAL[IBAN],
-  financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_INERTNATIONAL[FINANCIAL_ADDRESS],
+  bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
+  iban = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[IBAN],
+  financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[FINANCIAL_ADDRESS],
 }) => {
   cy.keyboardInput(field(BIC_SWIFT_CODE).input(), bicSwiftCode);
   cy.keyboardInput(field(IBAN).input(), iban);

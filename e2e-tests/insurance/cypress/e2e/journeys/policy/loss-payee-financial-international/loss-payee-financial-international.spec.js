@@ -17,6 +17,7 @@ const {
 const {
   ROOT,
   POLICY: {
+    LOSS_PAYEE_DETAILS_ROOT,
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT,
     CHECK_YOUR_ANSWERS,
   },
@@ -44,7 +45,7 @@ context("Insurance - Policy - Loss payee financial International page - As an ex
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
-      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
+      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -65,7 +66,7 @@ context("Insurance - Policy - Loss payee financial International page - As an ex
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}#`,
+      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`,
     });
   });
 
