@@ -57,7 +57,7 @@
           id: FIELDS.SORT_CODE.ID,
           labelText: FIELDS.SORT_CODE.LABEL,
           hintText: FIELDS.SORT_CODE.HINT,
-          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
           value: submittedValues[FIELDS.SORT_CODE.ID] or application.policy[FIELDS.SORT_CODE.ID],
           errorMessage: validationErrors.errorList[FIELDS.SORT_CODE.ID]
@@ -67,7 +67,7 @@
           id: FIELDS.ACCOUNT_NUMBER.ID,
           labelText: FIELDS.ACCOUNT_NUMBER.LABEL,
           hintText: FIELDS.ACCOUNT_NUMBER.HINT,
-          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
           value: submittedValues[FIELDS.ACCOUNT_NUMBER.ID] or application.policy[FIELDS.ACCOUNT_NUMBER.ID],
           errorMessage: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID]
@@ -78,7 +78,7 @@
           id: FIELDS.FINANCIAL_ADDRESS.ID,
           label: {
             text: FIELDS.FINANCIAL_ADDRESS.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-5",
+            classes: "govuk-label--s govuk-!-margin-top-5",
             attributes: {
               'data-cy': FIELDS.FINANCIAL_ADDRESS.ID + '-label',
               id: FIELDS.FINANCIAL_ADDRESS.ID + '-label'

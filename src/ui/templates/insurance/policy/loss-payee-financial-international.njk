@@ -57,7 +57,7 @@
           id: FIELDS.BIC_SWIFT_CODE.ID,
           labelText: FIELDS.BIC_SWIFT_CODE.LABEL,
           hintText: FIELDS.BIC_SWIFT_CODE.HINT,
-          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
           value: submittedValues[FIELDS.BIC_SWIFT_CODE.ID] or application.policy[FIELDS.BIC_SWIFT_CODE.ID],
           errorMessage: validationErrors.errorList[FIELDS.BIC_SWIFT_CODE.ID]
@@ -67,7 +67,8 @@
           id: FIELDS.IBAN.ID,
           labelText: FIELDS.IBAN.LABEL,
           hintText: FIELDS.IBAN.HINT,
-          labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+          labelClasses: "govuk-label--s",
+          inputClasses: "govuk-input--width-20",
           value: submittedValues[FIELDS.IBAN.ID] or application.policy[FIELDS.IBAN.ID],
           errorMessage: validationErrors.errorList[FIELDS.IBAN.ID]
         }) }}
@@ -77,7 +78,7 @@
           id: FIELDS.FINANCIAL_ADDRESS.ID,
           label: {
             text: FIELDS.FINANCIAL_ADDRESS.LABEL,
-            classes: "govuk-!-font-weight-bold govuk-!-font-size-24 govuk-!-margin-top-5",
+            classes: "govuk-label--s govuk-!-margin-top-5",
             attributes: {
               'data-cy': FIELDS.FINANCIAL_ADDRESS.ID + '-label',
               id: FIELDS.FINANCIAL_ADDRESS.ID + '-label'
