@@ -1,7 +1,7 @@
 import { field } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants/validation';
 import application from '../../../../../../fixtures/application';
 
 const {
@@ -17,8 +17,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const { MAXIMUM } = FIELDS[FULL_ADDRESS];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -75,7 +73,7 @@ context('Insurance - Your business - Alternative trading address - Save and go b
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      field(FULL_ADDRESS).textarea().type('a'.repeat(MAXIMUM + 1));
+      field(FULL_ADDRESS).textarea().type('a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1));
 
       cy.clickSaveAndBackButton();
 

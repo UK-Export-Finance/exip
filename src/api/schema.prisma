@@ -275,7 +275,7 @@ model Broker {
   town                    String        @default("")
   county                  String        @default("")
   postcode                String        @default("")
-  fullAddress             String        @default("") @mysql.VarChar(300)
+  fullAddress             String        @default("") @mysql.VarChar(500)
   email                   String        @default("") @mysql.VarChar(300)
   from_Application_broker Application[] @relation("Application_broker")
 
@@ -321,7 +321,7 @@ model Company {
 model CompanyDifferentTradingAddress {
   id          String   @id @default(cuid())
   company     Company? @relation("Company_differentTradingAddress")
-  fullAddress String   @default("") @mysql.VarChar(1000)
+  fullAddress String   @default("") @mysql.VarChar(500)
 }
 
 model CompanySicCode {
@@ -339,7 +339,7 @@ model Buyer {
   application               Application?         @relation("Buyer_application", fields: [applicationId], references: [id])
   applicationId             String?              @map("application")
   companyOrOrganisationName String               @default("")
-  address                   String               @default("") @mysql.VarChar(1000)
+  address                   String               @default("") @mysql.VarChar(500)
   country                   Country?             @relation("Buyer_country", fields: [countryId], references: [id])
   countryId                 String?              @map("country")
   registrationNumber        String               @default("") @mysql.VarChar(100)

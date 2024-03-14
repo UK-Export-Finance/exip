@@ -1367,7 +1367,7 @@ var lists = {
       county: (0, import_fields.text)(),
       postcode: (0, import_fields.text)(),
       fullAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: "VarChar(500)" }
       }),
       email: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
@@ -1428,7 +1428,7 @@ var lists = {
     fields: {
       company: (0, import_fields.relationship)({ ref: "Company.differentTradingAddress" }),
       fullAddress: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(500)" }
       })
     },
     access: import_access.allowAll
@@ -1446,7 +1446,7 @@ var lists = {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       companyOrOrganisationName: (0, import_fields.text)(),
       address: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
+        db: { nativeType: "VarChar(500)" }
       }),
       country: (0, import_fields.relationship)({ ref: "Country" }),
       registrationNumber: (0, import_fields.text)({
