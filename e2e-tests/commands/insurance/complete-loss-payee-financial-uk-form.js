@@ -14,8 +14,8 @@ const { POLICY } = application;
  * @param {String} financialAddress: financialAddress value - defaults to application fixture financial address.
  */
 const completeLossPayeeFinancialUKForm = ({
-  sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
-  accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
+  accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
+  sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
   financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[FINANCIAL_ADDRESS],
 }) => {
   cy.keyboardInput(field(ACCOUNT_NUMBER).input(), accountNumber);

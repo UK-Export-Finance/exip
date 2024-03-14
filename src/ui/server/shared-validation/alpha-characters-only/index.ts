@@ -19,7 +19,7 @@ const alphaCharactersOnlyValidation = (fieldValue: string, fieldId: string, erro
    * - a-z or A-Z characters.
    * - an empty space.
    */
-  const regex = REGEX.ALPHA_CHARACTERS;
+  const regex = REGEX.ALPHA_CHARACTERS_AND_SPACE;
 
   const schema = () => joiString.regex(regex).required();
 

@@ -1,16 +1,16 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import numberHyphenSpacesOnlyValidation from '../../../../../../shared-validation/number-hyphen-and-spaces-only';
-import { POLICY_FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
 import { RequestBody } from '../../../../../../../types';
 
 const { SORT_CODE: FIELD_ID } = FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 
 const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-export const MAXIMUM = Number(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK[FIELD_ID].MAXIMUM);
+export const MAXIMUM = Number(MAXIMUM_CHARACTERS.SORT_CODE);
 
-export const MINIMUM = Number(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK[FIELD_ID].MINIMUM);
+export const MINIMUM = Number(MINIMUM_CHARACTERS.SORT_CODE);
 
 /**
  * sortCodeRules
@@ -18,7 +18,7 @@ export const MINIMUM = Number(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK[FIELD_ID].MI
  * Returns wholeNumberAboveMinimumValidation if there are any errors.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {Object} numberHyphenSpacesOnlyValidation errors
  */
 const sortCodeRules = (formBody: RequestBody, errors: object) =>
   numberHyphenSpacesOnlyValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM, MAXIMUM);

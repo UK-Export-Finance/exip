@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../../constants';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -20,11 +20,12 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
-const { [ACCOUNT_NUMBER]: { MINIMUM, MAXIMUM } } = POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK;
-
 const baseUrl = Cypress.config('baseUrl');
 
 const FIELD_ID = ACCOUNT_NUMBER;
+
+const MINIMUM = MINIMUM_CHARACTERS.ACCOUNT_NUMBER;
+const MAXIMUM = MAXIMUM_CHARACTERS.ACCOUNT_NUMBER;
 
 context('Insurance - Policy - Loss Payee Financial UK - Account number - Validation', () => {
   let referenceNumber;

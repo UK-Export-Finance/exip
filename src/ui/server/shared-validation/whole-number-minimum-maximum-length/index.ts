@@ -3,6 +3,7 @@ import { objectHasProperty } from '../../helpers/object';
 import { stripCommas } from '../../helpers/string';
 import generateValidationErrors from '../../helpers/validation';
 import wholeNumberValidation from '../../helpers/whole-number-validation';
+import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number';
 
 /**
  * wholeNumberMinimumMaximumLength
@@ -20,8 +21,8 @@ const wholeNumberMinimumMaximumLength = (
   fieldId: string,
   errorMessage: ErrorMessageObject,
   errors: object,
-  minimum?: number,
-  maximum?: number,
+  minimum: number,
+  maximum: number,
 ) => {
   let updatedErrors = errors;
 
@@ -35,13 +36,13 @@ const wholeNumberMinimumMaximumLength = (
   // check if the field is a whole number.
   updatedErrors = wholeNumberValidation(formBody, updatedErrors, errorMessage.INCORRECT_FORMAT, fieldId);
 
-  // check if the field is below the minimum length
-  if (minimum && numberWithoutCommas.length < minimum) {
+  // check if the field is below the minimum
+  if (minimum && isNumberBelowMinimum(numberWithoutCommas.length, minimum)) {
     return generateValidationErrors(fieldId, errorMessage.BELOW_MINIMUM, errors);
   }
 
-  // check if the field is above the maximum length
-  if (maximum && numberWithoutCommas.length > maximum) {
+  // check if the field is above the maximum
+  if (maximum && isNumberAboveMaximum(numberWithoutCommas.length, maximum)) {
     return generateValidationErrors(fieldId, errorMessage.ABOVE_MAXIMUM, errors);
   }
 

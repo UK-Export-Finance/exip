@@ -3,7 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../../constants';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -20,11 +20,12 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
-const { [SORT_CODE]: { MINIMUM, MAXIMUM } } = POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK;
-
 const baseUrl = Cypress.config('baseUrl');
 
 const FIELD_ID = SORT_CODE;
+
+const MINIMUM = MINIMUM_CHARACTERS.SORT_CODE;
+const MAXIMUM = MAXIMUM_CHARACTERS.SORT_CODE;
 
 context('Insurance - Policy - Loss Payee Financial UK - Sort code - Validation', () => {
   let referenceNumber;
@@ -96,6 +97,12 @@ context('Insurance - Policy - Loss Payee Financial UK - Sort code - Validation',
 
   it(`should render validation errors when ${FIELD_ID} has a special character`, () => {
     const value = '11-22-3!';
+
+    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+  });
+
+  it(`should render validation errors when ${FIELD_ID} has a letter and a special character`, () => {
+    const value = '11-22-!E';
 
     cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
   });
