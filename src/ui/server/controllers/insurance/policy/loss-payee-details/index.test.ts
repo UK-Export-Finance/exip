@@ -117,7 +117,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
     });
   });
 
-  describe.only('post', () => {
+  describe('post', () => {
     const validBody = mockLossPayeeDetails;
 
     beforeEach(() => {
