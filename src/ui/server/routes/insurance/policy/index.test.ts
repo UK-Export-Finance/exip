@@ -40,6 +40,8 @@ import {
   post as postLossPayeeFinancialInternational,
 } from '../../../controllers/insurance/policy/loss-payee-financial-international';
 import { get as getLossPayeeDetails, post as postLossPayeeDetails } from '../../../controllers/insurance/policy/loss-payee-details';
+import { post as postLossPayeeDetailsSaveAndBack } from '../../../controllers/insurance/policy/loss-payee-details/save-and-back';
+
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/policy/check-your-answers';
 
 describe('routes/insurance/policy', () => {
@@ -53,7 +55,7 @@ describe('routes/insurance/policy', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(43);
-    expect(post).toHaveBeenCalledTimes(55);
+    expect(post).toHaveBeenCalledTimes(56);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.ROOT}`, policyRootGet);
 
@@ -210,6 +212,7 @@ describe('routes/insurance/policy', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHANGE}`, postLossPayeeDetails);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, getLossPayeeDetails);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, postLossPayeeDetails);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_DETAILS_SAVE_AND_BACK}`, postLossPayeeDetailsSaveAndBack);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, getLossPayeeFinancialUK);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${INSURANCE_ROUTES.POLICY.LOSS_PAYEE_FINANCIAL_UK_ROOT}`, postLossPayeeFinancialUK);
