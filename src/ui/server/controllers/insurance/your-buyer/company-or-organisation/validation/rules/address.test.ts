@@ -1,7 +1,7 @@
 import addressRules from './address';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import fullAddress from '../../../../../../shared-validation/full-address';
+import fullAddressValidation from '../../../../../../shared-validation/full-address';
 import { mockErrors } from '../../../../../../test-mocks';
 
 const {
@@ -19,14 +19,14 @@ const {
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/address', () => {
-  it('should return the result of fullAddress', () => {
+  it('should return the result of fullAddressValidation', () => {
     const mockBody = {
       [FIELD_ID]: '',
     };
 
     const result = addressRules(mockBody, mockErrors);
 
-    const expected = fullAddress(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
+    const expected = fullAddressValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
 
     expect(result).toEqual(expected);
   });
