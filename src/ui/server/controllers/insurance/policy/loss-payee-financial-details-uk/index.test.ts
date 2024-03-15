@@ -113,20 +113,6 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
   describe('post', () => {
     const validBody = mockLossPayeeFinancialDetailsUk;
 
-    describe('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-    });
-
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
@@ -145,6 +131,20 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });
 

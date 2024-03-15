@@ -1,9 +1,7 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import application from '../../../../../../../fixtures/application';
 import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
@@ -11,7 +9,7 @@ const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    LOSS_PAYEE_FINANCIAL_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -23,11 +21,9 @@ const baseUrl = Cypress.config('baseUrl');
 
 const FIELD_ID = FINANCIAL_ADDRESS;
 
-const { POLICY } = application;
-
 const MAXIMUM = MAXIMUM_CHARACTERS.FULL_ADDRESS;
 
-context('Insurance - Policy - Loss Payee Financial UK - Financial address - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial details International - Financial address - Validation', () => {
   let referenceNumber;
   let url;
 
@@ -45,9 +41,9 @@ context('Insurance - Policy - Loss Payee Financial UK - Financial address - Vali
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
-      cy.completeAndSubmitLossPayeeDetailsForm({});
+      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -66,8 +62,8 @@ context('Insurance - Policy - Loss Payee Financial UK - Financial address - Vali
   const ERROR = ERRORS[FIELD_ID];
 
   const { numberOfExpectedErrors, errorIndex } = {
-    numberOfExpectedErrors: 3,
-    errorIndex: 2,
+    numberOfExpectedErrors: 1,
+    errorIndex: 0,
   };
 
   const financialAddressField = fieldSelector(FIELD_ID);
@@ -87,15 +83,5 @@ context('Insurance - Policy - Loss Payee Financial UK - Financial address - Vali
     const value = '1'.repeat(MAXIMUM + 1);
 
     cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
-  });
-
-  describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it('should not render validation errors', () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).textarea(), POLICY.LOSS_PAYEE_FINANCIAL_UK[FIELD_ID]);
-
-      cy.clickSubmitButton();
-
-      partials.errorSummaryListItems().should('have.length', 2);
-    });
   });
 });

@@ -1,9 +1,8 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../../constants';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -15,19 +14,16 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  LOSS_PAYEE_FINANCIAL_UK: {
-    ACCOUNT_NUMBER,
-  },
+  FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const FIELD_ID = ACCOUNT_NUMBER;
+const FIELD_ID = FINANCIAL_ADDRESS;
 
-const MINIMUM = MINIMUM_CHARACTERS.ACCOUNT_NUMBER;
-const MAXIMUM = MAXIMUM_CHARACTERS.ACCOUNT_NUMBER;
+const MAXIMUM = MAXIMUM_CHARACTERS.FULL_ADDRESS;
 
-context('Insurance - Policy - Loss Payee Financial UK - Account number - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial details UK - Financial address - Validation', () => {
   let referenceNumber;
   let url;
 
@@ -65,49 +61,27 @@ context('Insurance - Policy - Loss Payee Financial UK - Account number - Validat
 
   const ERROR = ERRORS[FIELD_ID];
 
-  const { field, numberOfExpectedErrors, errorIndex } = {
-    field: fieldSelector(FIELD_ID),
+  const { numberOfExpectedErrors, errorIndex } = {
     numberOfExpectedErrors: 3,
-    errorIndex: 1,
+    errorIndex: 2,
+  };
+
+  const financialAddressField = fieldSelector(FIELD_ID);
+
+  const textareaField = {
+    ...financialAddressField,
+    input: financialAddressField.textarea,
   };
 
   it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
     const value = '';
 
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+    cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
   });
 
   it(`should render validation errors when ${FIELD_ID} is over ${MAXIMUM} characters`, () => {
     const value = '1'.repeat(MAXIMUM + 1);
 
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
-  });
-
-  it(`should render validation errors when ${FIELD_ID} is below ${MINIMUM} characters`, () => {
-    const value = '1'.repeat(MINIMUM - 1);
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.BELOW_MINIMUM);
-  });
-
-  it(`should render validation errors when ${FIELD_ID} has a letter`, () => {
-    const value = `${'1'.repeat(MINIMUM)}E`;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
-  });
-
-  it(`should render validation errors when ${FIELD_ID} has a special character`, () => {
-    const value = `${'1'.repeat(MINIMUM)}!`;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
-  });
-
-  describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it('should not render validation errors', () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), '1234567');
-
-      cy.clickSubmitButton();
-
-      partials.errorSummaryListItems().should('have.length', 2);
-    });
+    cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
   });
 });
