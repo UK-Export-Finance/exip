@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialUK } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsUk } from '../../../../test-mocks';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -111,7 +111,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
   });
 
   describe('post', () => {
-    const validBody = mockLossPayeeFinancialUK;
+    const validBody = mockLossPayeeFinancialDetailsUk;
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {

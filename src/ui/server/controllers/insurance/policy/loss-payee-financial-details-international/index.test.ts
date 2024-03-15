@@ -7,7 +7,7 @@ import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialInternational } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsInternational } from '../../../../test-mocks';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -109,7 +109,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
   });
 
   describe('post', () => {
-    const validBody = mockLossPayeeFinancialInternational;
+    const validBody = mockLossPayeeFinancialDetailsInternational;
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
