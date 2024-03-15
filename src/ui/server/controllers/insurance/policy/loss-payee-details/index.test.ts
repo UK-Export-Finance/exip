@@ -6,17 +6,27 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import { Request, Response } from '../../../../../types';
+import { Application, Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save/nominated-loss-payee';
 import { mockReq, mockRes, mockApplication, mockLossPayeeDetails } from '../../../../test-mocks';
 
-const { NAME, LOCATION } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
+const { NAME, LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS },
+  POLICY: {
+    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_FINANCIAL_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT,
+    LOSS_PAYEE_DETAILS_CHANGE,
+    LOSS_PAYEE_CHECK_AND_CHANGE,
+    LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
+  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
@@ -70,8 +80,14 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
             ID: LOCATION,
             ...LOSS_PAYEE_DETAILS[LOCATION],
           },
+          IS_LOCATED_IN_UK: {
+            ID: IS_LOCATED_IN_UK,
+          },
+          IS_LOCATED_INTERNATIONALLY: {
+            ID: IS_LOCATED_INTERNATIONALLY,
+          },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -82,6 +98,8 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
     it('should render template', () => {
       get(req, res);
 
+      const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;
+
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -89,6 +107,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        submittedValues: mappedApplication?.nominatedLossPayee,
       });
     });
 
@@ -108,18 +127,8 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
   describe('post', () => {
     const validBody = mockLossPayeeDetails;
 
-    describe('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
+    beforeEach(() => {
+      mapAndSave.nominatedLossPayee = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are validation errors', () => {
@@ -140,6 +149,74 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = LOSS_PAYEE_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${LOCATION} is ${IS_LOCATED_IN_UK}`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, async () => {
+          req.body = {
+            ...validBody,
+            [LOCATION]: IS_LOCATED_IN_UK,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY}`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, async () => {
+          req.body[LOCATION] = IS_LOCATED_INTERNATIONALLY;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

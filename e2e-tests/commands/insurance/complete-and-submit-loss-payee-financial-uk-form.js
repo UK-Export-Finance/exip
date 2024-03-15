@@ -6,19 +6,19 @@ const { LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE }, FINANCIAL_ADDRES
 const { POLICY } = application;
 
 /**
- * completeAndSubmitLossPayeeFinancialUKForm
- * Complete and submit "loss payee bank details" form
+ * completeAndSubmitLossPayeeFinancialUkForm
+ * Complete and submit "loss payee financial details (UK)" form
  * @param {String} sortCode: sortCode value - defaults to application fixture sort code.
  * @param {String} accountNumber: accountNumber value - defaults to application fixture account number.
  * @param {String} financialAddress: financialAddress value - defaults to application fixture financial address.
  */
-const completeAndSubmitLossPayeeFinancialUKForm = ({
-  sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
-  accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
+const completeAndSubmitLossPayeeFinancialUkForm = ({
+  accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
+  sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
   financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[FINANCIAL_ADDRESS],
 }) => {
-  cy.completeLossPayeeFinancialUKForm({ sortCode, accountNumber, financialAddress });
+  cy.completeLossPayeeFinancialUkForm({ sortCode, accountNumber, financialAddress });
   cy.clickSubmitButton();
 };
 
-export default completeAndSubmitLossPayeeFinancialUKForm;
+export default completeAndSubmitLossPayeeFinancialUkForm;

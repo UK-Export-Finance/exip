@@ -4,7 +4,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/hint/macro.njk" import govukHint %}
 {% from "govuk/components/fieldset/macro.njk" import govukFieldset %}
-{% import '../../components/personal-details-input.njk' as personalDetailsInput %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -53,40 +53,40 @@
         {% call govukFieldset({
         }) %}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-!-width-one-half",
-            fieldId: FIELDS.FIRST_NAME.ID,
-            label: FIELDS.FIRST_NAME.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.FIRST_NAME.ID,
+            labelText: FIELDS.FIRST_NAME.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.FIRST_NAME.ID],
+            value: submittedValues[FIELDS.FIRST_NAME.ID]
           }) }}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-!-width-one-half",
-            fieldId: FIELDS.LAST_NAME.ID,
-            label: FIELDS.LAST_NAME.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.LAST_NAME.ID,
+            labelText: FIELDS.LAST_NAME.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.LAST_NAME.ID],
+            value: submittedValues[FIELDS.LAST_NAME.ID]
           }) }}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-!-width-one-half",
-            fieldId: FIELDS.EMAIL_ADDRESS.ID,
-            label: FIELDS.EMAIL_ADDRESS.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.EMAIL_ADDRESS.ID,
+            labelText: FIELDS.EMAIL_ADDRESS.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.EMAIL_ADDRESS.ID],
+            value: submittedValues[FIELDS.EMAIL_ADDRESS.ID]
           }) }}
 
-          {{ personalDetailsInput.render({
-            class: "govuk-!-width-one-half",
-            fieldId: FIELDS.POSITION.ID,
-            label: FIELDS.POSITION.LABEL,
-            labelClass: "govuk-label--s",
-            validationErrors: validationErrors,
-            submittedValues: submittedValues
+          {{ textInput.render({
+            inputClasses: "govuk-!-width-one-half",
+            id: FIELDS.POSITION.ID,
+            labelText: FIELDS.POSITION.LABEL,
+            labelClasses: "govuk-label--s",
+            errorMessage: validationErrors.errorList[FIELDS.POSITION.ID],
+            value: submittedValues[FIELDS.POSITION.ID]
           }) }}
         {% endcall %}
       </div>

@@ -2,7 +2,7 @@
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/submit-button.njk' as submitButton %}
 
 {% block pageTitle %}
@@ -40,26 +40,13 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="companies-house-search">
 
-          {{ govukInput({
-            hint: {
-              html: FIELD.HINT,
-              attributes: {
-                "data-cy": FIELD.ID + "-hint"
-              }
-            },
-            attributes: {
-              "data-cy": FIELD.ID + "-input"
-            },
+          {{ textInput.render({
             id: FIELD.ID,
-            name: FIELD.ID,
+            hintHtml: FIELD.HINT,
             value: submittedValues[FIELD.ID],
-            errorMessage: validationErrors.errorList[FIELD.ID] and {
-              text: validationErrors.errorList[FIELD.ID].text,
-              attributes: {
-                "data-cy": FIELD.ID + "-error-message"
-              }
-            }
+            errorMessage: validationErrors.errorList[FIELD.ID]
           }) }}
+          
         </div>
       </div>
     </div>

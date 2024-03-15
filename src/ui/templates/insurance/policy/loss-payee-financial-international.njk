@@ -1,0 +1,111 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/hint/macro.njk" import govukHint %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/text-input.njk' as textInput %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary,
+      attributes: {
+        'data-cy': 'error-summary'
+      }
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-xl" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+      {{ govukHint({
+        text: CONTENT_STRINGS.HINT,
+        classes: "govuk-!-margin-bottom-5",
+        attributes: {
+          "data-cy": "loss-payee-financial-uk-hint"
+        }
+      }) }}
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+
+        {{ textInput.render({
+          id: FIELDS.BIC_SWIFT_CODE.ID,
+          labelText: FIELDS.BIC_SWIFT_CODE.LABEL,
+          hintText: FIELDS.BIC_SWIFT_CODE.HINT,
+          labelClasses: "govuk-label--s",
+          inputClasses: "govuk-input--width-10",
+          value: submittedValues[FIELDS.BIC_SWIFT_CODE.ID] or application.policy[FIELDS.BIC_SWIFT_CODE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.BIC_SWIFT_CODE.ID]
+        }) }}
+
+        {{ textInput.render({
+          id: FIELDS.IBAN.ID,
+          labelText: FIELDS.IBAN.LABEL,
+          hintText: FIELDS.IBAN.HINT,
+          labelClasses: "govuk-label--s",
+          inputClasses: "govuk-input--width-20",
+          value: submittedValues[FIELDS.IBAN.ID] or application.policy[FIELDS.IBAN.ID],
+          errorMessage: validationErrors.errorList[FIELDS.IBAN.ID]
+        }) }}
+
+        {{ govukCharacterCount({
+          name: FIELDS.FINANCIAL_ADDRESS.ID,
+          id: FIELDS.FINANCIAL_ADDRESS.ID,
+          label: {
+            text: FIELDS.FINANCIAL_ADDRESS.LABEL,
+            classes: "govuk-label--s govuk-!-margin-top-5",
+            attributes: {
+              'data-cy': FIELDS.FINANCIAL_ADDRESS.ID + '-label',
+              id: FIELDS.FINANCIAL_ADDRESS.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.FINANCIAL_ADDRESS.ID
+          },
+          maxlength: FIELDS.FINANCIAL_ADDRESS.MAXIMUM,
+          classes: "govuk-input--width-20",
+          value: submittedValues[FIELDS.FINANCIAL_ADDRESS.ID] or application.policy[FIELDS.FINANCIAL_ADDRESS.ID],
+          errorMessage: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID] and {
+            text: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID].text,
+            attributes: {
+              "data-cy": FIELDS.FINANCIAL_ADDRESS.ID + "-error-message"
+            }
+          }
+        }) }}
+
+      </div>
+    </div>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+
+  </form>
+
+{% endblock %}

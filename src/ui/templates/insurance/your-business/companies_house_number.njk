@@ -1,7 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -42,25 +42,11 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
         <div class="companies-house-search">
 
-          {{ govukInput({
-            hint: {
-              html: FIELDS.COMPANIES_HOUSE_NUMBER.HINT,
-              attributes: {
-                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-hint"
-              }
-            },
-            attributes: {
-              "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-input"
-            },
+          {{ textInput.render({
             id: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
-            name: FIELDS.COMPANIES_HOUSE_NUMBER.ID,
+            labelText: FIELDS.COMPANIES_HOUSE_NUMBER.LABEL,
             value: submittedValues[FIELDS.COMPANIES_HOUSE_NUMBER.ID],
-            errorMessage: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID] and {
-              text: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID].text,
-              attributes: {
-                "data-cy": FIELDS.COMPANIES_HOUSE_NUMBER.ID + "-error-message"
-              }
-            }
+            errorMessage: validationErrors.errorList[FIELDS.COMPANIES_HOUSE_NUMBER.ID]
           }) }}
         </div>
 

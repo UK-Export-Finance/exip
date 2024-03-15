@@ -1,7 +1,6 @@
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
-import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
+import fullAddress from '../../../../../../../shared-validation/full-address';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
@@ -12,14 +11,12 @@ const {
   BROKER_DETAILS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-export const MAXIMUM = Number(POLICY_FIELDS.BROKER_DETAILS[FIELD_ID].MAXIMUM);
-
 /**
- * validate the "full address" in broker details request body
+ * validate the "full address" in the "broker details" request body
  * @param {Express.Request.body} responseBody: containing an object with broker form submission data
  * @param {Object} errors: errorList
- * @returns {Object} Object containing errors or blank object
+ * @returns {Object} fullAddress
  */
-const fullAddress = (responseBody: RequestBody, errors: object) => providedAndMaxLength(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
+const fullBrokerAddress = (responseBody: RequestBody, errors: object) => fullAddress(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
-export default fullAddress;
+export default fullBrokerAddress;

@@ -4,6 +4,7 @@ import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants/validation';
 import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADING_ADDRESS;
@@ -38,7 +39,7 @@ const textareaField = { ...field, input: field.textarea };
 const expectedErrorsCount = 1;
 
 const {
-  MAXIMUM, LABEL, REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
+  LABEL, REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
 } = FIELDS[FULL_ADDRESS];
 
 const address = application.COMPANY[COMPANY_ADDRESS];
@@ -133,10 +134,10 @@ context('Insurance - Your business - Alternative trading address page - I want t
       );
     });
 
-    it(`should display validation errors if ${FULL_ADDRESS} is over ${MAXIMUM} characters`, () => {
+    it(`should display validation errors if ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
       const errorMessage = ERRORS[FULL_ADDRESS].ABOVE_MAXIMUM;
 
-      const submittedValue = 'a'.repeat(MAXIMUM + 1);
+      const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
 
       cy.submitAndAssertFieldErrors(
         textareaField,

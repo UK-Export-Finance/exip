@@ -1,7 +1,7 @@
-import addressRules, { MAXIMUM } from './address';
+import addressRules from './address';
 import { FIELD_IDS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import fullAddress from '../../../../../../shared-validation/full-address';
 import { mockErrors } from '../../../../../../test-mocks';
 
 const {
@@ -13,35 +13,21 @@ const {
 const {
   INSURANCE: {
     YOUR_BUYER: {
-      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGE },
+      COMPANY_OR_ORGANISATION: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
     },
   },
 } = ERROR_MESSAGES;
 
 describe('controllers/insurance/your-buyer/validation/address', () => {
-  describe('when the field is not provided', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {};
+  it('should return the result of fullAddress', () => {
+    const mockBody = {
+      [FIELD_ID]: '',
+    };
 
-      const result = addressRules(mockSubmittedData, mockErrors);
+    const result = addressRules(mockBody, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = fullAddress(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
 
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when the field is above the maximum', () => {
-    it('should return validation error', () => {
-      const mockSubmittedData = {
-        [FIELD_ID]: 'a'.repeat(MAXIMUM + 1),
-      };
-
-      const result = addressRules(mockSubmittedData, mockErrors);
-
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 });

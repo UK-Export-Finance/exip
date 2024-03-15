@@ -6,6 +6,7 @@ import formatDate from '../../date/format-date';
 import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestamp';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
+import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
 import { Application } from '../../../../types';
 
 const {
@@ -17,6 +18,7 @@ const {
       SINGLE: { CONTRACT_COMPLETION_DATE },
       POLICY_CURRENCY_CODE,
     },
+    LOSS_PAYEE_DETAILS: { LOCATION },
   },
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
@@ -80,6 +82,13 @@ const mapApplicationToFormFields = (application?: Application): Application | ob
       mapped.policy = {
         ...mapped.policy,
         [CURRENCY_CODE]: application.policy[POLICY_CURRENCY_CODE],
+      };
+    }
+
+    if (objectHasKeysAndValues(application?.nominatedLossPayee)) {
+      mapped.nominatedLossPayee = {
+        ...mapped.nominatedLossPayee,
+        [LOCATION]: mapNominatedLossPayeeLocation(application.nominatedLossPayee),
       };
     }
 

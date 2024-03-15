@@ -7,6 +7,7 @@ import getDateFieldsFromTimestamp from '../../date/get-date-fields-from-timestam
 import { mockApplication } from '../../../test-mocks';
 import mapFinancialYearEndDate from '../map-financial-year-end-date';
 import transformNumberToString from '../../transform-number-to-string';
+import mapNominatedLossPayeeLocation from '../map-nominated-loss-payee-location';
 import { Application } from '../../../../types';
 
 const {
@@ -18,6 +19,7 @@ const {
       SINGLE: { CONTRACT_COMPLETION_DATE },
       POLICY_CURRENCY_CODE,
     },
+    LOSS_PAYEE_DETAILS: { LOCATION },
   },
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
@@ -108,6 +110,17 @@ describe('server/helpers/mappings/map-application-to-form-fields', () => {
     };
 
     expect(result.policy).toEqual(expected);
+  });
+
+  it(`should return mapped nominatedLossPayee data with ${LOCATION} populated from mapNominatedLossPayeeLocation`, () => {
+    const result = mapApplicationToFormFields(mockApplication) as Application;
+
+    const expected = {
+      ...mockApplication.nominatedLossPayee,
+      [LOCATION]: mapNominatedLossPayeeLocation(mockApplication.nominatedLossPayee),
+    };
+
+    expect(result.nominatedLossPayee).toEqual(expected);
   });
 
   describe('when an empty application is passed', () => {

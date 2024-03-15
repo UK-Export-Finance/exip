@@ -35,7 +35,6 @@ export const YOUR_BUYER_FIELDS = {
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
       LABEL: 'Company address',
-      MAXIMUM: 1000,
       SUMMARY: {
         TITLE: 'Buyer address',
         FORM_TITLE: COMPANY_DETAILS,

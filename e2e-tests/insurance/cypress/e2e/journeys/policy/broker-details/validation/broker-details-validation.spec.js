@@ -3,6 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import { assertEmailFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
@@ -112,8 +113,6 @@ context('Insurance - Policy - Broker details page - validation', () => {
   });
 
   describe(FULL_ADDRESS, () => {
-    const { MAXIMUM } = FIELD_STRINGS[FULL_ADDRESS];
-
     const field = fieldSelector(FULL_ADDRESS);
 
     const textareaField = {
@@ -126,7 +125,7 @@ context('Insurance - Policy - Broker details page - validation', () => {
 
     const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[FULL_ADDRESS];
 
-    it(`should render validation errors when ${NAME} is left empty`, () => {
+    it(`should render validation errors when ${FULL_ADDRESS} is left empty`, () => {
       cy.navigateToUrl(url);
 
       const value = '';
@@ -140,10 +139,10 @@ context('Insurance - Policy - Broker details page - validation', () => {
       );
     });
 
-    it(`should render validation errors when ${FULL_ADDRESS} is over ${MAXIMUM} characters`, () => {
+    it(`should render validation errors when ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
       cy.navigateToUrl(url);
 
-      const value = 'a'.repeat(MAXIMUM + 1);
+      const value = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
 
       cy.submitAndAssertFieldErrors(
         textareaField,

@@ -1,0 +1,10 @@
+export const MAXIMUM_CHARACTERS = {
+  FULL_ADDRESS: 500,
+  SORT_CODE: 6,
+  ACCOUNT_NUMBER: 8,
+};
+
+export const MINIMUM_CHARACTERS = {
+  SORT_CODE: 6,
+  ACCOUNT_NUMBER: 6,
+};

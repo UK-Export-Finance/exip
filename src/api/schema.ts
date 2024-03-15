@@ -521,7 +521,7 @@ export const lists = {
       county: text(),
       postcode: text(),
       fullAddress: text({
-        db: { nativeType: 'VarChar(300)' },
+        db: { nativeType: 'VarChar(500)' },
       }),
       email: text({
         db: { nativeType: 'VarChar(300)' },
@@ -582,7 +582,7 @@ export const lists = {
     fields: {
       company: relationship({ ref: 'Company.differentTradingAddress' }),
       fullAddress: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(500)' },
       }),
     },
     access: allowAll,
@@ -600,7 +600,7 @@ export const lists = {
       application: relationship({ ref: 'Application' }),
       companyOrOrganisationName: text(),
       address: text({
-        db: { nativeType: 'VarChar(1000)' },
+        db: { nativeType: 'VarChar(500)' },
       }),
       country: relationship({ ref: 'Country' }),
       registrationNumber: text({

@@ -1,7 +1,18 @@
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { Application, RequestBody } from '../../../../../../types';
+
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+
+const { NAME } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
+
+/**
+ * string fields which are exempt from being stripped by stripEmptyFormFields
+ * for example when a string field needs to be set to an empty string or null
+ */
+export const NULL_OR_EMPTY_STRING_FIELDS = [NAME];
 
 /**
  * nominatedLossPayee
@@ -13,7 +24,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @returns {Object} Saved data
  */
 const nominatedLossPayee = async (application: Application, formBody: RequestBody, errorList?: object) => {
-  const dataToSave = getDataToSave(formBody, errorList);
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
   // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);

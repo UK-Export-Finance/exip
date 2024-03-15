@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/policy';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK;
+const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_DETAILS;
 
 const {
   LOSS_PAYEE_FINANCIAL_UK: {
@@ -17,6 +17,7 @@ const {
 const {
   ROOT,
   POLICY: {
+    LOSS_PAYEE_DETAILS_ROOT,
     LOSS_PAYEE_FINANCIAL_UK_ROOT,
     CHECK_YOUR_ANSWERS,
   },
@@ -24,7 +25,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Policy - Loss payee financial UK page - As an exporter, I want to provide UKEF with my loss payee's bank details So that they can be paid in the event of a claim on the policy", () => {
+context("Insurance - Policy - Loss payee financial UK page - As an exporter, I want to provide UKEF with my loss payee's financial UK details So that they can be paid in the event of a claim on the policy", () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
@@ -44,12 +45,10 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-      // TODO: EMS-2767 add redirect from previous page
-      cy.visit(url);
 
       cy.assertUrl(url);
     });
@@ -67,7 +66,7 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`,
-      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}#`,
+      backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`,
     });
   });
 
@@ -120,7 +119,7 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitLossPayeeFinancialUKForm({});
+      cy.completeAndSubmitLossPayeeFinancialUkForm({});
 
       cy.assertUrl(checkYourAnswersUrl);
     });

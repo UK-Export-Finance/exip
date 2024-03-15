@@ -9,7 +9,7 @@ const {
 /**
  * completeCreditInsuranceCoverForm
  * completes credit insurance cover form
- * if hasHadCreditInsuranceCover, then selects yes radio and fills in conditional text area
+ * if hasHadCreditInsuranceCover, then selects yes radio and fills in conditional textarea
  * if not hasHadCreditInsuranceCover then selects no radio
  * @param {Boolean} hasHadCreditInsuranceCover - should select yes or no radio
  */

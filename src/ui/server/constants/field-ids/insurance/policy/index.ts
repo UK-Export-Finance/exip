@@ -75,6 +75,10 @@ export const POLICY = {
     SORT_CODE: 'sortCode',
     ACCOUNT_NUMBER: 'accountNumber',
   },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    BIC_SWIFT_CODE: 'bicSwiftCode',
+    IBAN: 'iban',
+  },
   FINANCIAL_ADDRESS: 'bankAddress',
 };
 

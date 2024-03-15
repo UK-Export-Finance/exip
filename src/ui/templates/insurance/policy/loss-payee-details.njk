@@ -1,8 +1,8 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
 {% from 'govuk/components/radios/macro.njk' import govukRadios %}
+{% import '../../components/text-input.njk' as textInput %}
 {% import '../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
@@ -45,28 +45,13 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-three-quarters-from-desktop">
-        {{ govukInput({
+        {{ textInput.render({
           id: FIELDS.NAME.ID,
-          name: FIELDS.NAME.ID,
-          label: {
-            text: FIELDS.NAME.LABEL,
-            classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
-            attributes: {
-              id: FIELDS.NAME.ID + '-label',
-              "data-cy": FIELDS.NAME.ID + "-label"
-            }
-          },
-          value: submittedValues[FIELDS.NAME.ID] or application.policy[FIELDS.NAME.ID],
-          classes: "govuk-input--width-20 govuk-!-margin-bottom-5",
-          errorMessage: validationErrors.errorList[FIELDS.NAME.ID] and {
-            text: validationErrors.errorList[FIELDS.NAME.ID].text,
-            attributes: {
-              "data-cy": FIELDS.NAME.ID + "-error-message"
-            }
-          },
-          attributes: {
-            "data-cy": FIELDS.NAME.ID + "-input"
-          }
+          labelText: FIELDS.NAME.LABEL,
+          labelClasses: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
+          inputClasses: "govuk-input--width-20 govuk-!-margin-bottom-5",
+          value: submittedValues[FIELDS.NAME.ID],
+          errorMessage: validationErrors.errorList[FIELDS.NAME.ID]
         }) }}
       </div>
     </div>
@@ -86,7 +71,6 @@
           "data-cy": FIELDS.LOCATION.ID + "-error-message"
         }
       },
-      classes: "govuk-radios--inline",
       items: [
         {
           label: {
@@ -97,7 +81,7 @@
           },
           value: FIELDS.LOCATION.OPTIONS.UK.VALUE,
           text: FIELDS.LOCATION.OPTIONS.UK.TEXT,
-          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.LOCATION.OPTIONS.UK.ID,
+          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.IS_LOCATED_IN_UK.ID,
           attributes: {
             "data-cy": FIELDS.LOCATION.ID + '-' + FIELDS.LOCATION.OPTIONS.UK.ID + "-input"
           }
@@ -111,7 +95,7 @@
           },
           value: FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.VALUE,
           text: FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.TEXT,
-          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.ID,
+          checked: submittedValues[FIELDS.LOCATION.ID] === FIELDS.IS_LOCATED_INTERNATIONALLY.ID,
           attributes: {
             "data-cy": FIELDS.LOCATION.ID + '-' + FIELDS.LOCATION.OPTIONS.INTERNATIONALLY.ID + "-input"
           }

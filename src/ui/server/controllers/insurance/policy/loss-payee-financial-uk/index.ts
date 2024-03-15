@@ -5,6 +5,8 @@ import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
@@ -20,7 +22,7 @@ const { LOSS_PAYEE_FINANCIAL_UK, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = 
 
 export const FIELD_IDS = [SORT_CODE, ACCOUNT_NUMBER, FINANCIAL_ADDRESS];
 
-export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK;
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_DETAILS;
 
 export const TEMPLATE = TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK;
 
@@ -49,10 +51,10 @@ export const pageVariables = (referenceNumber: number) => ({
 });
 
 /**
- * Render the Loss payee financial uk page
+ * Render the "Loss payee financial details (UK)" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} Loss payee financial uk page
+ * @returns {Express.Response.render} "Loss payee financial details (UK)" page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
@@ -87,10 +89,27 @@ export const post = async (req: Request, res: Response) => {
 
   const { referenceNumber } = application;
 
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      submittedValues: payload,
+      validationErrors,
+    });
+  }
+
   try {
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
-    console.error('Error updating application - policy - loss payee financial uk %O', err);
+    console.error('Error updating application - policy - loss payee financial details (uk) %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
