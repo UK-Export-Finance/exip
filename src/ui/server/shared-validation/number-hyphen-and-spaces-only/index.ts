@@ -33,12 +33,6 @@ const numberHyphenSpacesOnlyValidation = (
 
   const joiString = Joi.string();
 
-  /**
-   * Regex that allows only
-   * - numbers
-   * - hyphens
-   * - spaces
-   */
   const regex = REGEX.NUMBER_HYPHEN_SPACE;
 
   const schema = () => joiString.regex(regex).required();
@@ -53,12 +47,12 @@ const numberHyphenSpacesOnlyValidation = (
   const replaced = fieldValue.replaceAll(REGEX.SPACE_AND_HYPHEN, '');
 
   // check if the field is below the minimum
-  if (minimum && isNumberBelowMinimum(replaced.length, minimum)) {
+  if (isNumberBelowMinimum(replaced.length, minimum)) {
     return generateValidationErrors(fieldId, errorMessage.BELOW_MINIMUM, errors);
   }
 
   // check if the field is above the maximum
-  if (maximum && isNumberAboveMaximum(replaced.length, maximum)) {
+  if (isNumberAboveMaximum(replaced.length, maximum)) {
     return generateValidationErrors(fieldId, errorMessage.ABOVE_MAXIMUM, errors);
   }
 
