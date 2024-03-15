@@ -26,8 +26,8 @@ describe('routes/insurance/policy/loss-payee', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(7);
-    expect(post).toHaveBeenCalledTimes(8);
+    expect(get).toHaveBeenCalledTimes(8);
+    expect(post).toHaveBeenCalledTimes(9);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_ROOT}`, getLossPayee);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_ROOT}`, postLossPayee);
