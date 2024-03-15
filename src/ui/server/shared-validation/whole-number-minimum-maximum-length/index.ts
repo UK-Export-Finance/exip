@@ -37,12 +37,12 @@ const wholeNumberMinimumMaximumLength = (
   updatedErrors = wholeNumberValidation(formBody, updatedErrors, errorMessage.INCORRECT_FORMAT, fieldId);
 
   // check if the field is below the minimum
-  if (minimum && isNumberBelowMinimum(numberWithoutCommas.length, minimum)) {
+  if (isNumberBelowMinimum(numberWithoutCommas.length, minimum)) {
     return generateValidationErrors(fieldId, errorMessage.BELOW_MINIMUM, errors);
   }
 
   // check if the field is above the maximum
-  if (maximum && isNumberAboveMaximum(numberWithoutCommas.length, maximum)) {
+  if (isNumberAboveMaximum(numberWithoutCommas.length, maximum)) {
     return generateValidationErrors(fieldId, errorMessage.ABOVE_MAXIMUM, errors);
   }
 
