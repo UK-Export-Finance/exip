@@ -80,7 +80,7 @@ context("Insurance - Policy - Loss payee financial details - International page 
     });
 
     it('renders a hint', () => {
-      const hintFieldId = 'loss-payee-financial-details-uk';
+      const hintFieldId = 'loss-payee-financial-details-international';
       cy.checkText(fieldSelector(hintFieldId).hint(), CONTENT_STRINGS.HINT);
     });
 
