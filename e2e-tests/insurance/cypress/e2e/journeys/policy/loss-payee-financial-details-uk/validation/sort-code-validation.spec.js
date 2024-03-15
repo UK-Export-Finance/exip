@@ -27,7 +27,7 @@ const FIELD_ID = SORT_CODE;
 const MINIMUM = MINIMUM_CHARACTERS.SORT_CODE;
 const MAXIMUM = MAXIMUM_CHARACTERS.SORT_CODE;
 
-context('Insurance - Policy - Loss Payee Financial details UK - Sort code - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Validation', () => {
   let referenceNumber;
   let url;
 

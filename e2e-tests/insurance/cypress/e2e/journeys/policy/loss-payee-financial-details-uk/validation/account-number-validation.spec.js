@@ -27,7 +27,7 @@ const FIELD_ID = ACCOUNT_NUMBER;
 const MINIMUM = MINIMUM_CHARACTERS.ACCOUNT_NUMBER;
 const MAXIMUM = MAXIMUM_CHARACTERS.ACCOUNT_NUMBER;
 
-context('Insurance - Policy - Loss Payee Financial details UK - Account number - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial Details UK - Account number - Validation', () => {
   let referenceNumber;
   let url;
 

@@ -10,7 +10,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Loss Payee Financial details International - Financial address - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial Details International - Financial address - Validation', () => {
   let referenceNumber;
   let url;
 
