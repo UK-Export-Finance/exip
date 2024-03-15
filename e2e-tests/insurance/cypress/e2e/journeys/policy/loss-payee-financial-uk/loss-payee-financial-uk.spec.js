@@ -119,7 +119,7 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitLossPayeeFinancialUKForm({});
+      cy.completeAndSubmitLossPayeeFinancialUkForm({});
 
       cy.assertUrl(checkYourAnswersUrl);
     });
