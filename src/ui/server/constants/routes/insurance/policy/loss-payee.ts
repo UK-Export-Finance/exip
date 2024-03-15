@@ -11,6 +11,7 @@ const LOSS_PAYEE_ROUTES = {
   LOSS_PAYEE_CHANGE: `${ROOT}/change`,
   LOSS_PAYEE_CHECK_AND_CHANGE: `${ROOT}/check-and-change`,
   LOSS_PAYEE_DETAILS_ROOT,
+  LOSS_PAYEE_DETAILS_SAVE_AND_BACK: `${LOSS_PAYEE_DETAILS_ROOT}/save-and-back`,
   LOSS_PAYEE_DETAILS_CHANGE: `${LOSS_PAYEE_DETAILS_ROOT}/change`,
   LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE: `${LOSS_PAYEE_DETAILS_ROOT}/check-and-change`,
   // TODO: remove ROOT from everything apart from the the root
