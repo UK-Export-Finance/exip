@@ -2,7 +2,10 @@ import express from 'express';
 import { POLICY } from '../../../../constants/routes/insurance/policy';
 import { get as getLossPayee, post as postLossPayee } from '../../../../controllers/insurance/policy/loss-payee';
 import { post as postLossPayeeSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee/save-and-back';
-import { get as getLossPayeeFinancialDetailsUk, post as postLossPayeeFinancialDetailsUk } from '../../../../controllers/insurance/policy/loss-payee-financial-details-uk';
+import {
+  get as getLossPayeeFinancialDetailsUk,
+  post as postLossPayeeFinancialDetailsUk,
+} from '../../../../controllers/insurance/policy/loss-payee-financial-details-uk';
 import { get as getLossPayeeDetails, post as postLossPayeeDetails } from '../../../../controllers/insurance/policy/loss-payee-details';
 import { post as postLossPayeeDetailsSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee-details/save-and-back';
 import {
