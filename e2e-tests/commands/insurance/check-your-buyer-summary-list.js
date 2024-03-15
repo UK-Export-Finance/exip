@@ -14,6 +14,7 @@ const {
     COMPANY_OR_ORGANISATION: {
       NAME,
       ADDRESS,
+      COUNTRY,
       REGISTRATION_NUMBER,
       WEBSITE,
     },
@@ -28,6 +29,7 @@ const {
     HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
     HAS_BUYER_FINANCIAL_ACCOUNTS,
   },
+  ELIGIBILITY: { BUYER_COUNTRY },
 } = INSURANCE_FIELD_IDS;
 
 const checkYourBusinessSummaryList = ({
@@ -54,6 +56,14 @@ const checkYourBusinessSummaryList = ({
     row.value().contains(application.BUYER[fieldId]);
 
     row.changeLink().should('exist');
+  },
+  [COUNTRY]: () => {
+    const fieldId = COUNTRY;
+    const expectedKey = FIELDS.COMPANY_OR_ORGANISATION[fieldId].SUMMARY.TITLE;
+
+    const expectedValue = application[BUYER_COUNTRY];
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue);
   },
   [REGISTRATION_NUMBER]: () => {
     const fieldId = REGISTRATION_NUMBER;

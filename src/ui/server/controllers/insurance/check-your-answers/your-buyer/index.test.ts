@@ -77,6 +77,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
       const checkAndChange = true;
       const summaryList = yourBuyerSummaryList(
         mockApplication.buyer,
+        mockApplication.eligibility,
         mockApplication.referenceNumber,
         mockApplication.totalContractValueOverThreshold,
         checkAndChange,

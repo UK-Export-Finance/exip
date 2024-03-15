@@ -42,6 +42,9 @@ export const YOUR_BUYER_FIELDS = {
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
       LABEL: 'Buyer country',
+      SUMMARY: {
+        TITLE: 'Buyer country',
+      },
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
       LABEL: 'Company registration number (optional)',
