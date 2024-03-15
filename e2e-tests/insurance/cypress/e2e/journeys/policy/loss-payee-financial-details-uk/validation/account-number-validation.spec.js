@@ -10,7 +10,7 @@ const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    LOSS_PAYEE_FINANCIAL_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -47,7 +47,7 @@ context('Insurance - Policy - Loss Payee Financial details UK - Account number -
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
       cy.completeAndSubmitLossPayeeDetailsForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
 
       cy.assertUrl(url);
     });
