@@ -13,7 +13,7 @@ export const POLICY_TEMPLATES = {
   BROKER_DETAILS: 'insurance/policy/broker-details.njk',
   BROKER_CONFIRM_ADDRESS: 'insurance/policy/broker-confirm-address.njk',
   LOSS_PAYEE_DETAILS: 'insurance/policy/loss-payee-details.njk',
-  LOSS_PAYEE_FINANCIAL_UK: 'insurance/policy/loss-payee-financial-uk.njk',
-  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: 'insurance/policy/loss-payee-financial-international.njk',
+  LOSS_PAYEE_FINANCIAL_UK: 'insurance/policy/loss-payee-financial-details-uk.njk',
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: 'insurance/policy/loss-payee-financial-details-international.njk',
   CHECK_YOUR_ANSWERS: 'insurance/policy/check-your-answers.njk',
 };

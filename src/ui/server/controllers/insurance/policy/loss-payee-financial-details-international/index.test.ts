@@ -7,7 +7,7 @@ import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialUk } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialInternational } from '../../../../test-mocks';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -22,7 +22,7 @@ const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS
 
 const { referenceNumber } = mockApplication;
 
-describe('controllers/insurance/policy/loss-payee-financial-international', () => {
+describe('controllers/insurance/policy/loss-payee-financial-details-international', () => {
   let req: Request;
   let res: Response;
 
@@ -109,7 +109,7 @@ describe('controllers/insurance/policy/loss-payee-financial-international', () =
   });
 
   describe('post', () => {
-    const validBody = mockLossPayeeFinancialUk;
+    const validBody = mockLossPayeeFinancialInternational;
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {

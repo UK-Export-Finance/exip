@@ -8,8 +8,8 @@ import { POLICY_FIELDS as FIELD_STRINGS } from '../../../../../../content-string
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_DETAILS;
 
 const {
-  LOSS_PAYEE_FINANCIAL_UK: {
-    ACCOUNT_NUMBER, SORT_CODE,
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    BIC_SWIFT_CODE, IBAN,
   },
   FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
@@ -18,14 +18,14 @@ const {
   ROOT,
   POLICY: {
     LOSS_PAYEE_DETAILS_ROOT,
-    LOSS_PAYEE_FINANCIAL_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Policy - Loss payee financial UK page - As an exporter, I want to provide UKEF with my loss payee's financial UK details So that they can be paid in the event of a claim on the policy", () => {
+context("Insurance - Policy - Loss payee financial details - International page - As an exporter, I want to provide UKEF with my loss payee's financial International details So that they can be paid in the event of a claim on the policy", () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
@@ -45,9 +45,9 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
-      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
+      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
@@ -65,7 +65,7 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`,
+      currentHref: `${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`,
       backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`,
     });
   });
@@ -80,25 +80,26 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
     });
 
     it('renders a hint', () => {
-      const hintFieldId = 'loss-payee-financial-uk';
+      // TODO: why is this hardcoded?
+      const hintFieldId = 'loss-payee-financial-details-uk';
       cy.checkText(fieldSelector(hintFieldId).hint(), CONTENT_STRINGS.HINT);
     });
 
-    it(`renders ${SORT_CODE} label and input and hint`, () => {
-      const fieldId = SORT_CODE;
+    it(`renders ${BIC_SWIFT_CODE} label and input and hint`, () => {
+      const fieldId = BIC_SWIFT_CODE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].LABEL);
-      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].HINT);
+      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].LABEL);
+      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].HINT);
       field.input().should('exist');
     });
 
-    it(`renders ${ACCOUNT_NUMBER} label and input and hint`, () => {
-      const fieldId = ACCOUNT_NUMBER;
+    it(`renders ${IBAN} label and input and hint`, () => {
+      const fieldId = IBAN;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].LABEL);
-      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_UK[fieldId].HINT);
+      cy.checkText(field.label(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].LABEL);
+      cy.checkText(field.hint(), FIELD_STRINGS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].HINT);
       field.input().should('exist');
     });
 
@@ -119,7 +120,7 @@ context("Insurance - Policy - Loss payee financial UK page - As an exporter, I w
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitLossPayeeFinancialUkForm({});
+      cy.completeAndSubmitLossPayeeFinancialInternationalForm({});
 
       cy.assertUrl(checkYourAnswersUrl);
     });
