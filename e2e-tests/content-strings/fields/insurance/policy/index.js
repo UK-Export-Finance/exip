@@ -299,6 +299,5 @@ export const POLICY_FIELDS = {
   },
   FINANCIAL_ADDRESS: {
     LABEL: 'Bank address',
-    MAXIMUM: 300,
   },
 };

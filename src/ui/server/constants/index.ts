@@ -16,6 +16,7 @@ export * from './integrity';
 export * from './pagination';
 export * from './percentages-of-cover';
 export * from './phone-number-countries';
+export * from './regex';
 export * from './routes';
 export * from './supported-currencies';
 export * from './task-ids';
