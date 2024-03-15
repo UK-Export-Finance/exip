@@ -119,7 +119,7 @@ context("Insurance - Policy - Loss payee financial details - UK page - As an exp
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitLossPayeeFinancialUkForm({});
+      cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({});
 
       cy.assertUrl(checkYourAnswersUrl);
     });
