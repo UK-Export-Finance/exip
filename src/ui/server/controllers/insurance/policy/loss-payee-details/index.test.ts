@@ -20,11 +20,11 @@ const {
   PROBLEM_WITH_SERVICE,
   POLICY: {
     CHECK_YOUR_ANSWERS,
-    LOSS_PAYEE_FINANCIAL_UK_ROOT,
-    LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
     LOSS_PAYEE_DETAILS_CHANGE,
-    LOSS_PAYEE_CHECK_AND_CHANGE,
     LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
+    LOSS_PAYEE_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
@@ -193,7 +193,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
       });
 
       describe(`when ${LOCATION} is ${IS_LOCATED_IN_UK}`, () => {
-        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, async () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, async () => {
           req.body = {
             ...validBody,
             [LOCATION]: IS_LOCATED_IN_UK,
@@ -201,19 +201,19 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
 
       describe(`when ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY}`, () => {
-        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, async () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, async () => {
           req.body[LOCATION] = IS_LOCATED_INTERNATIONALLY;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

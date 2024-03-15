@@ -7,13 +7,13 @@ const { LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE }, FINANCIAL_ADDRES
 const { POLICY } = application;
 
 /**
- * completeLossPayeeFinancialUkForm
+ * completeLossPayeeFinancialDetailsUkForm
  * Complete "loss payee financial details (UK)" form
  * @param {String} sortCode: sortCode value - defaults to application fixture.
  * @param {String} accountNumber: accountNumber value - defaults to application fixture.
  * @param {String} financialAddress: financialAddress value - defaults to application fixture.
  */
-const completeLossPayeeFinancialUkForm = ({
+const completeLossPayeeFinancialDetailsUkForm = ({
   accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
   sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
   financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[FINANCIAL_ADDRESS],
@@ -23,4 +23,4 @@ const completeLossPayeeFinancialUkForm = ({
   cy.keyboardInput(field(FINANCIAL_ADDRESS).textarea(), financialAddress);
 };
 
-export default completeLossPayeeFinancialUkForm;
+export default completeLossPayeeFinancialDetailsUkForm;

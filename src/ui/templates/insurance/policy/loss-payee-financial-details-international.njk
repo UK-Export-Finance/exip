@@ -40,7 +40,7 @@
         text: CONTENT_STRINGS.HINT,
         classes: "govuk-!-margin-bottom-5",
         attributes: {
-          "data-cy": "loss-payee-financial-uk-hint"
+          "data-cy": "loss-payee-financial-details-international-hint"
         }
       }) }}
     </div>
@@ -54,23 +54,23 @@
       <div class="govuk-grid-column-three-quarters-from-desktop">
 
         {{ textInput.render({
-          id: FIELDS.SORT_CODE.ID,
-          labelText: FIELDS.SORT_CODE.LABEL,
-          hintText: FIELDS.SORT_CODE.HINT,
+          id: FIELDS.BIC_SWIFT_CODE.ID,
+          labelText: FIELDS.BIC_SWIFT_CODE.LABEL,
+          hintText: FIELDS.BIC_SWIFT_CODE.HINT,
           labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
-          value: submittedValues[FIELDS.SORT_CODE.ID] or application.policy[FIELDS.SORT_CODE.ID],
-          errorMessage: validationErrors.errorList[FIELDS.SORT_CODE.ID]
+          value: submittedValues[FIELDS.BIC_SWIFT_CODE.ID] or application.policy[FIELDS.BIC_SWIFT_CODE.ID],
+          errorMessage: validationErrors.errorList[FIELDS.BIC_SWIFT_CODE.ID]
         }) }}
 
         {{ textInput.render({
-          id: FIELDS.ACCOUNT_NUMBER.ID,
-          labelText: FIELDS.ACCOUNT_NUMBER.LABEL,
-          hintText: FIELDS.ACCOUNT_NUMBER.HINT,
+          id: FIELDS.IBAN.ID,
+          labelText: FIELDS.IBAN.LABEL,
+          hintText: FIELDS.IBAN.HINT,
           labelClasses: "govuk-label--s",
-          inputClasses: "govuk-input--width-10",
-          value: submittedValues[FIELDS.ACCOUNT_NUMBER.ID] or application.policy[FIELDS.ACCOUNT_NUMBER.ID],
-          errorMessage: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID]
+          inputClasses: "govuk-input--width-20",
+          value: submittedValues[FIELDS.IBAN.ID] or application.policy[FIELDS.IBAN.ID],
+          errorMessage: validationErrors.errorList[FIELDS.IBAN.ID]
         }) }}
 
         {{ govukCharacterCount({

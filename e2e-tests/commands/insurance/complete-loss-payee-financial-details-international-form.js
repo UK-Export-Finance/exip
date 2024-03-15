@@ -7,13 +7,13 @@ const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN }, FINANCIAL_
 const { POLICY } = application;
 
 /**
- * completeLossPayeeFinancialInternationalForm
+ * completeLossPayeeFinancialDetailsInternationalForm
  * Complete the "loss payee financial details (international)" form
  * @param {String} bicSwiftCode: BIC/Swift value - defaults to application fixture.
  * @param {String} iban: IBAN value - defaults to application fixture.
  * @param {String} financialAddress: financialAddress value - defaults to application fixture.
  */
-const completeLossPayeeFinancialInternationalForm = ({
+const completeLossPayeeFinancialDetailsInternationalForm = ({
   bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
   iban = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[IBAN],
   financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[FINANCIAL_ADDRESS],
@@ -23,4 +23,4 @@ const completeLossPayeeFinancialInternationalForm = ({
   cy.keyboardInput(field(FINANCIAL_ADDRESS).textarea(), financialAddress);
 };
 
-export default completeLossPayeeFinancialInternationalForm;
+export default completeLossPayeeFinancialDetailsInternationalForm;

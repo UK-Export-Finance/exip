@@ -9,7 +9,7 @@ const { FINANCIAL_ADDRESS: FIELD_ID } = FIELD_IDS;
 
 const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-describe('controllers/insurance/policy/loss-payee-financial-uk/validation/rules/financial-address', () => {
+describe('controllers/insurance/policy/loss-payee-financial-details-uk/validation/rules/financial-address', () => {
   const mockBody = {
     [FIELD_ID]: '',
   } as RequestBody;
