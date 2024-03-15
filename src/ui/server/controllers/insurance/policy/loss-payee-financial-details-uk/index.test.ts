@@ -6,10 +6,12 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialUk } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsUk } from '../../../../test-mocks';
 
-const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
+const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 
 const {
@@ -18,11 +20,11 @@ const {
   POLICY: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
+const { LOSS_PAYEE_FINANCIAL_UK, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
 
 const { referenceNumber } = mockApplication;
 
-describe('controllers/insurance/policy/loss-payee-financial-international', () => {
+describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
   let req: Request;
   let res: Response;
 
@@ -37,7 +39,7 @@ describe('controllers/insurance/policy/loss-payee-financial-international', () =
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [BIC_SWIFT_CODE, IBAN, FINANCIAL_ADDRESS];
+      const expected = [SORT_CODE, ACCOUNT_NUMBER, FINANCIAL_ADDRESS];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -51,7 +53,7 @@ describe('controllers/insurance/policy/loss-payee-financial-international', () =
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL);
+      expect(TEMPLATE).toEqual(TEMPLATES.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK);
     });
   });
 
@@ -61,13 +63,13 @@ describe('controllers/insurance/policy/loss-payee-financial-international', () =
 
       const expected = {
         FIELDS: {
-          BIC_SWIFT_CODE: {
-            ID: BIC_SWIFT_CODE,
-            ...LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
+          SORT_CODE: {
+            ID: SORT_CODE,
+            ...LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
           },
-          IBAN: {
-            ID: IBAN,
-            ...LOSS_PAYEE_FINANCIAL_INTERNATIONAL[IBAN],
+          ACCOUNT_NUMBER: {
+            ID: ACCOUNT_NUMBER,
+            ...LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
           },
           FINANCIAL_ADDRESS: {
             ID: FINANCIAL_ADDRESS,
@@ -109,7 +111,7 @@ describe('controllers/insurance/policy/loss-payee-financial-international', () =
   });
 
   describe('post', () => {
-    const validBody = mockLossPayeeFinancialUk;
+    const validBody = mockLossPayeeFinancialDetailsUk;
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
@@ -122,6 +124,27 @@ describe('controllers/insurance/policy/loss-payee-financial-international', () =
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const expectedVariables = {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(mockApplication.referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 

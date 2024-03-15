@@ -7,7 +7,7 @@ const {
   LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER },
 } = FIELD_IDS;
 
-describe('controllers/insurance/policy/loss-payee-financial-uk/validation', () => {
+describe('controllers/insurance/policy/loss-payee-financial-details-uk/validation', () => {
   it('should return an array of results from rule functions', () => {
     const mockFormBody = {
       [ACCOUNT_NUMBER]: '',
