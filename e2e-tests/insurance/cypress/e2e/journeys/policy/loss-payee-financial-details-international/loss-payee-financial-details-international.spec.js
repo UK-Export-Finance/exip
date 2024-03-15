@@ -80,7 +80,6 @@ context("Insurance - Policy - Loss payee financial details - International page 
     });
 
     it('renders a hint', () => {
-      // TODO: why is this hardcoded?
       const hintFieldId = 'loss-payee-financial-details-uk';
       cy.checkText(fieldSelector(hintFieldId).hint(), CONTENT_STRINGS.HINT);
     });
