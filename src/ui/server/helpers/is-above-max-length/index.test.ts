@@ -1,10 +1,11 @@
 import isAboveMaxLength from '.';
 
+const maxLength = 191;
+
 describe('server/helpers/is-above-max-length', () => {
   describe('string is above maximum provided length', () => {
     it('should return true', () => {
-      const string = 'a'.repeat(200);
-      const maxLength = 191;
+      const string = 'a'.repeat(maxLength + 1);
 
       const response = isAboveMaxLength(string, maxLength);
 
@@ -14,8 +15,7 @@ describe('server/helpers/is-above-max-length', () => {
 
   describe('string is the same as maximum provided length', () => {
     it('should return false', () => {
-      const string = 'a'.repeat(190);
-      const maxLength = 191;
+      const string = 'a'.repeat(maxLength);
 
       const response = isAboveMaxLength(string, maxLength);
 
@@ -25,8 +25,7 @@ describe('server/helpers/is-above-max-length', () => {
 
   describe('string is the below the maximum provided length', () => {
     it('should return false', () => {
-      const string = 'a'.repeat(5);
-      const maxLength = 191;
+      const string = 'a';
 
       const response = isAboveMaxLength(string, maxLength);
 
