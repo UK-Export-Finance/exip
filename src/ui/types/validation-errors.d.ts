@@ -43,10 +43,4 @@ interface ValidationMinAndMaxLengthParams extends ValidationMinAndMaxLengthCore 
   value: string;
 }
 
-export {
-  DateValidationRulesParams,
-  DateValidationFormatRulesParams,
-  DateValidationFormatRules,
-  ValidationErrors,
-  ValidationMinAndMaxLengthParams,
-};
+export { DateValidationRulesParams, DateValidationFormatRulesParams, DateValidationFormatRules, ValidationErrors, ValidationMinAndMaxLengthParams };
