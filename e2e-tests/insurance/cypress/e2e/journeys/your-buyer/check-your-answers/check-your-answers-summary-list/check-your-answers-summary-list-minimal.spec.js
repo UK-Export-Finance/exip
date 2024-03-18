@@ -13,6 +13,7 @@ const {
   COMPANY_OR_ORGANISATION: {
     NAME,
     ADDRESS,
+    COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
   },
@@ -68,6 +69,10 @@ context('Insurance - Your buyer - Check your answers - Summary list - your buyer
 
     it(`should render a ${ADDRESS} summary list row`, () => {
       checkSummaryList[ADDRESS]();
+    });
+
+    it(`should render a ${COUNTRY} summary list row`, () => {
+      checkSummaryList[COUNTRY]();
     });
 
     it(`should render a ${REGISTRATION_NUMBER} summary list row`, () => {
