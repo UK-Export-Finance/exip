@@ -8,7 +8,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TRADED_WITH_BUYER, FAILED_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-history', () => {
   let mockFormBody: RequestBody;
@@ -95,6 +95,26 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
 
       const expected = {
         ...expectedBody,
+        [TOTAL_AMOUNT_OVERDUE]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${TRADED_WITH_BUYER} is set to false`, () => {
+    it('should return mockFormBody without _csrf and relevant fields set to "null"', () => {
+      mockFormBody[TRADED_WITH_BUYER] = 'false';
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
+
+      const expected = {
+        ...expectedBody,
+        [OUTSTANDING_PAYMENTS]: null,
+        [FAILED_PAYMENTS]: null,
+        [TOTAL_OUTSTANDING_PAYMENTS]: null,
         [TOTAL_AMOUNT_OVERDUE]: null,
       };
 

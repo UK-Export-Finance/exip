@@ -206,4 +206,42 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
       });
     });
   });
+
+  describe(`changing ${TRADED_WITH_BUYER} from yes to no`, () => {
+    const fieldId = TRADED_WITH_BUYER;
+
+    describe('when clicking the `change` link', () => {
+      it(`should redirect to ${TRADED_WITH_BUYER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(OUTSTANDING_PAYMENTS).changeLink().click();
+        cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true, failedToPay: true });
+
+        summaryList.field(fieldId).changeLink().click();
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADED_WITH_BUYER_CHANGE, fieldId });
+      });
+    });
+
+    describe('form submission with a new answer', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(url);
+
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.completeAndSubmitTradedWithBuyerForm({});
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      });
+
+      it('should render the new answer and not render option rows', () => {
+        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
+        cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_OUTSTANDING_PAYMENTS);
+        cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
+        cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
+        cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
+      });
+    });
+  });
 });

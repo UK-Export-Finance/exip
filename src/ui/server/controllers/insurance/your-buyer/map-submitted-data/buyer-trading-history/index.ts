@@ -8,7 +8,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TRADED_WITH_BUYER, FAILED_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 /**
  * maps buyer trading history fields in correct format
@@ -20,6 +20,19 @@ const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE }
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
   const { _csrf, ...populatedData } = formBody;
+
+  /**
+   * if TRADED_WITH_BUYER is false
+   * all trading history fields should be wiped/set to null
+   */
+  if (objectHasProperty(populatedData, TRADED_WITH_BUYER)) {
+    if (populatedData[TRADED_WITH_BUYER] === 'false') {
+      populatedData[OUTSTANDING_PAYMENTS] = null;
+      populatedData[FAILED_PAYMENTS] = null;
+      populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
+      populatedData[TOTAL_AMOUNT_OVERDUE] = null;
+    }
+  }
 
   if (objectHasProperty(populatedData, CURRENCY_CODE)) {
     /**
