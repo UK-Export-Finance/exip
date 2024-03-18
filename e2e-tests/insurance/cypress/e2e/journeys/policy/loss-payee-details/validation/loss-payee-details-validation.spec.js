@@ -3,6 +3,7 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import partials from '../../../../../../../partials';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -86,6 +87,14 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
       const value = 'a'.repeat(MAX_NAME_CHARACTERS + 1);
 
       cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+    });
+
+    it(`should not render validation errors when ${FIELD_ID} contains numbers and special characters`, () => {
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), 'Name 123!');
+
+      cy.clickSubmitButton();
+
+      partials.errorSummaryListItems().should('have.length', 1);
     });
   });
 

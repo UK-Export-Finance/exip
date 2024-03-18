@@ -1,7 +1,7 @@
-import firstName from './name';
+import name, { MAXIMUM } from './name';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
-import nameValidation from '../../../../../../shared-validation/name';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
@@ -16,10 +16,10 @@ describe('controllers/insurance/policy/loss-payee-details/validation/rules/name'
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return the result of nameValidation', () => {
-    const result = firstName(mockBody, mockErrors);
+  it('should return the result of providedAndMaxLength', () => {
+    const result = name(mockBody, mockErrors);
 
-    const expected = nameValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
+    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM);
 
     expect(result).toEqual(expected);
   });
