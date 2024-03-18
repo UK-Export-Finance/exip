@@ -10,24 +10,24 @@ const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
-    LOSS_PAYEE_FINANCIAL_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   },
 } = INSURANCE_ROUTES;
 
 const {
   LOSS_PAYEE_FINANCIAL_UK: {
-    SORT_CODE,
+    ACCOUNT_NUMBER,
   },
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const FIELD_ID = SORT_CODE;
+const FIELD_ID = ACCOUNT_NUMBER;
 
-const MINIMUM = MINIMUM_CHARACTERS.SORT_CODE;
-const MAXIMUM = MAXIMUM_CHARACTERS.SORT_CODE;
+const MINIMUM = MINIMUM_CHARACTERS.ACCOUNT_NUMBER;
+const MAXIMUM = MAXIMUM_CHARACTERS.ACCOUNT_NUMBER;
 
-context('Insurance - Policy - Loss Payee Financial UK - Sort code - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial Details UK - Account number - Validation', () => {
   let referenceNumber;
   let url;
 
@@ -47,7 +47,7 @@ context('Insurance - Policy - Loss Payee Financial UK - Sort code - Validation',
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
       cy.completeAndSubmitLossPayeeDetailsForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -68,7 +68,7 @@ context('Insurance - Policy - Loss Payee Financial UK - Sort code - Validation',
   const { field, numberOfExpectedErrors, errorIndex } = {
     field: fieldSelector(FIELD_ID),
     numberOfExpectedErrors: 3,
-    errorIndex: 0,
+    errorIndex: 1,
   };
 
   it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
@@ -90,50 +90,20 @@ context('Insurance - Policy - Loss Payee Financial UK - Sort code - Validation',
   });
 
   it(`should render validation errors when ${FIELD_ID} has a letter`, () => {
-    const value = '11-22-3E';
+    const value = `${'1'.repeat(MINIMUM)}E`;
 
     cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
   });
 
   it(`should render validation errors when ${FIELD_ID} has a special character`, () => {
-    const value = '11-22-3!';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
-  });
-
-  it(`should render validation errors when ${FIELD_ID} has a letter and a special character`, () => {
-    const value = '11-22-!E';
+    const value = `${'1'.repeat(MINIMUM)}!`;
 
     cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
   });
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it(`should not render validation errors when ${FIELD_ID} does not have spaces and is only numbers`, () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), '112233');
-
-      cy.clickSubmitButton();
-
-      partials.errorSummaryListItems().should('have.length', 2);
-    });
-
-    it(`should not render validation errors when ${FIELD_ID} is only numbers and dashes`, () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), '11-22-33');
-
-      cy.clickSubmitButton();
-
-      partials.errorSummaryListItems().should('have.length', 2);
-    });
-
-    it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces`, () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), '11 22 33');
-
-      cy.clickSubmitButton();
-
-      partials.errorSummaryListItems().should('have.length', 2);
-    });
-
-    it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces and dashes`, () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), '11-22 33');
+    it('should not render validation errors', () => {
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), '1234567');
 
       cy.clickSubmitButton();
 

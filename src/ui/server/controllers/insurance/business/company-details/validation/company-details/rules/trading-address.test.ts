@@ -1,7 +1,7 @@
 import tradingAddress from './trading-address';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import fullAddress from '../../../../../../../shared-validation/full-address';
+import fullAddressValidation from '../../../../../../../shared-validation/full-address';
 import { RequestBody } from '../../../../../../../../types';
 import { mockErrors } from '../../../../../../../test-mocks';
 
@@ -20,10 +20,10 @@ describe('controllers/insurance/business/company-details/validation/company-deta
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it('should return the result of fullAddress', () => {
+  it('should return the result of fullAddressValidation', () => {
     const result = tradingAddress(mockBody, mockErrors);
 
-    const expected = fullAddress(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
+    const expected = fullAddressValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
 
     expect(result).toEqual(expected);
   });

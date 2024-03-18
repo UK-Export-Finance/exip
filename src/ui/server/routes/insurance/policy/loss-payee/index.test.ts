@@ -2,7 +2,10 @@ import { get, post } from '../../../../test-mocks/mock-router';
 import { POLICY } from '../../../../constants/routes/insurance/policy';
 import { get as getLossPayee, post as postLossPayee } from '../../../../controllers/insurance/policy/loss-payee';
 import { post as postLossPayeeSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee/save-and-back';
-import { get as getLossPayeeFinancialUk, post as postLossPayeeFinancialUk } from '../../../../controllers/insurance/policy/loss-payee-financial-details-uk';
+import {
+  get as getLossPayeeFinancialDetailsUk,
+  post as postLossPayeeFinancialDetailsUk,
+} from '../../../../controllers/insurance/policy/loss-payee-financial-details-uk';
 import { get as getLossPayeeDetails, post as postLossPayeeDetails } from '../../../../controllers/insurance/policy/loss-payee-details';
 import { post as postLossPayeeDetailsSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee-details/save-and-back';
 
@@ -47,7 +50,7 @@ describe('routes/insurance/policy/loss-payee', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, getLossPayeeDetails);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, postLossPayeeDetails);
 
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, getLossPayeeFinancialUk);
-    expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, postLossPayeeFinancialUk);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, getLossPayeeFinancialDetailsUk);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, postLossPayeeFinancialDetailsUk);
   });
 });

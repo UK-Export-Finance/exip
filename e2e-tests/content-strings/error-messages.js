@@ -321,7 +321,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.FINANCIAL_ADDRESS]: {
         IS_EMPTY: 'Enter the banks address',
-        ABOVE_MAXIMUM: "The bank's address cannot be more than 500 characters",
+        ABOVE_MAXIMUM: `The bank's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
       },
     },
     YOUR_BUYER: {
