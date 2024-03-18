@@ -1,5 +1,5 @@
 import generateValidationErrors from '../../helpers/validation';
-import isBelowMinLength from '../../helpers/is-below-min-length';
+import { isBelowMinLength } from '../../helpers/string';
 
 /**
  * Validates a field value is not below a minimum length

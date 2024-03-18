@@ -1,5 +1,5 @@
 import generateValidationErrors from '../../helpers/validation';
-import isAboveMaxLength from '../../helpers/is-above-max-length';
+import { isAboveMaxLength } from '../../helpers/string';
 
 /**
  * Validates a field value is not above a maximum length

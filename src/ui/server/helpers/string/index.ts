@@ -4,7 +4,7 @@
  * @param {String}
  * @returns {Boolean}
  */
-const isAString = (value: any) => typeof value === 'string';
+export const isAString = (value: any) => typeof value === 'string';
 
 /**
  * isEmptyString
@@ -12,7 +12,7 @@ const isAString = (value: any) => typeof value === 'string';
  * @param {String}
  * @returns {Boolean}
  */
-const isEmptyString = (str: string) => str === '';
+export const isEmptyString = (str: string) => str === '';
 
 /**
  * isPopulatedString
@@ -20,7 +20,7 @@ const isEmptyString = (str: string) => str === '';
  * @param {String} str
  * @returns {Boolean}
  */
-const isPopulatedString = (str?: string) => Boolean(str && str.length > 0);
+export const isPopulatedString = (str?: string) => Boolean(str && str.length > 0);
 
 /**
  * stripCommas
@@ -28,7 +28,7 @@ const isPopulatedString = (str?: string) => Boolean(str && str.length > 0);
  * @param {String}
  * @returns {String} String without commas
  */
-const stripCommas = (str: string) => str.replace(/,/g, '');
+export const stripCommas = (str: string) => str.replace(/,/g, '');
 
 /**
  * stringsAreDefined
@@ -37,7 +37,7 @@ const stripCommas = (str: string) => str.replace(/,/g, '');
  * @param {String} str2
  * @returns {Boolean}
  */
-const stringsAreDefined = (str1?: string, str2?: string) => isPopulatedString(str1) && isPopulatedString(str2);
+export const stringsAreDefined = (str1?: string, str2?: string) => isPopulatedString(str1) && isPopulatedString(str2);
 
 /**
  * stringsAreEqual
@@ -46,6 +46,20 @@ const stringsAreDefined = (str1?: string, str2?: string) => isPopulatedString(st
  * @param {String} str2
  * @returns {Boolean}
  */
-const stringsAreEqual = (str1: string, str2: string) => str1 === str2;
+export const stringsAreEqual = (str1: string, str2: string) => str1 === str2;
 
-export { isAString, isEmptyString, stripCommas, isPopulatedString, stringsAreDefined, stringsAreEqual };
+/**
+ * checks that string is not below a minimum length
+ * @param {String}: string: String to check
+ * @param {Integer} minimum: Minimum length
+ * @returns {Boolean}
+ */
+export const isBelowMinLength = (string: string, minimum: number) => string.length < minimum;
+
+/**
+ * checks that string is not over a maximum length
+ * @param {String}: string: String to check
+ * @param {Integer} maximum: Maximum length
+ * @returns {Boolean}
+ */
+export const isAboveMaxLength = (string: string, maximum: number) => string.length > maximum;
