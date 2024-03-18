@@ -1,19 +1,19 @@
 import generateValidationErrors from '../../helpers/validation';
-import isAboveMaxLength from '../../helpers/is-above-max-length';
+import isBelowMinLength from '../../helpers/is-below-min-length';
 
 /**
- * Validates a field value is not above a maximum length
+ * Validates a field value is not below a minimum length
  * @param {String} fieldValue: Field value to validate
  * @param {String} fieldId: Field ID
  * @param {String} errorMessage: Error message
  * @param {Object} errors: Errors object from previous validation errors
- * @param {Integer} maximum: Maximum allowed length
+ * @param {Integer} minimum: Minimum allowed length
  * @returns {Object} errors
  */
-const maxLengthValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object, maximum: number) => {
+const minLengthValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object, minimum: number) => {
   let updatedErrors = errors;
 
-  if (isAboveMaxLength(fieldValue, maximum)) {
+  if (isBelowMinLength(fieldValue, minimum)) {
     updatedErrors = generateValidationErrors(fieldId, errorMessage, updatedErrors);
 
     return updatedErrors;
@@ -22,4 +22,4 @@ const maxLengthValidation = (fieldValue: string, fieldId: string, errorMessage: 
   return updatedErrors;
 };
 
-export default maxLengthValidation;
+export default minLengthValidation;
