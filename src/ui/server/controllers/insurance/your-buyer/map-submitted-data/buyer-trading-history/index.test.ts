@@ -102,6 +102,40 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
     });
   });
 
+  describe(`when ${OUTSTANDING_PAYMENTS} is set to an empty string`, () => {
+    it(`should return mockFormBody without _csrf and ${OUTSTANDING_PAYMENTS} set to "null"`, () => {
+      mockFormBody[OUTSTANDING_PAYMENTS] = '';
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
+
+      const expected = {
+        ...expectedBody,
+        [OUTSTANDING_PAYMENTS]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${FAILED_PAYMENTS} is set to an empty string`, () => {
+    it(`should return mockFormBody without _csrf and ${FAILED_PAYMENTS} set to "null"`, () => {
+      mockFormBody[FAILED_PAYMENTS] = '';
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
+
+      const expected = {
+        ...expectedBody,
+        [FAILED_PAYMENTS]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe(`when ${TRADED_WITH_BUYER} is set to false`, () => {
     it('should return mockFormBody without _csrf and relevant fields set to "null"', () => {
       mockFormBody[TRADED_WITH_BUYER] = 'false';

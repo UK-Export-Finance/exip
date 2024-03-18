@@ -59,12 +59,24 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     }
   }
 
+  /**
+   * if the following radio inputs are empty strings
+   * they should be set to null
+   */
   if (isEmptyString(populatedData[TOTAL_OUTSTANDING_PAYMENTS])) {
     populatedData[TOTAL_OUTSTANDING_PAYMENTS] = null;
   }
 
   if (isEmptyString(populatedData[TOTAL_AMOUNT_OVERDUE])) {
     populatedData[TOTAL_AMOUNT_OVERDUE] = null;
+  }
+
+  if (isEmptyString(populatedData[OUTSTANDING_PAYMENTS])) {
+    populatedData[OUTSTANDING_PAYMENTS] = null;
+  }
+
+  if (isEmptyString(populatedData[FAILED_PAYMENTS])) {
+    populatedData[FAILED_PAYMENTS] = null;
   }
 
   return populatedData;
