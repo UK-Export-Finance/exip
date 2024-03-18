@@ -1,5 +1,6 @@
 import generateValidationErrors from '../../helpers/validation';
 import { isBelowMinLength } from '../../helpers/string';
+import { ValidationErrors } from '../../../types';
 
 /**
  * Validates a field value is not below a minimum length
@@ -10,7 +11,7 @@ import { isBelowMinLength } from '../../helpers/string';
  * @param {Integer} minimum: Minimum allowed length
  * @returns {Object} errors
  */
-const minLengthValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object, minimum: number) => {
+const minLengthValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object, minimum: number): ValidationErrors => {
   let updatedErrors = errors;
 
   if (isBelowMinLength(fieldValue, minimum)) {
