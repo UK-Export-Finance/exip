@@ -26,14 +26,16 @@ const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: str
 
   /**
    * If the string contains alpha and numerical characters, generate a total length of these valid characters.
+   * NOTE: Such characters can be positioned differently, for example, alpha characters in "AB7CD" would return an array with 2x items.
+   * We therefore need to use .join('') to create a single item for the appropriate characters.
    * If this length does NOT match the total fieldValue length,
    * an invalid character has been provided, e.g an empty space or special character.
    * Anything other than an alpha or numerical character is invalid.
    */
   if (alphaCharacters && numericalCharacters) {
-    const validCharactersLength = [...alphaCharacters[0], ...numericalCharacters[0]].length;
+    const validCharacters = [...alphaCharacters.join(''), ...numericalCharacters.join('')];
 
-    if (validCharactersLength === fieldValue.length) {
+    if (validCharacters.length === fieldValue.length) {
       return false;
     }
   }

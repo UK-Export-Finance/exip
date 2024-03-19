@@ -5,7 +5,7 @@ export const REGEX = {
    * - a-z or A-Z characters.
    * - an empty space.
    */
-  ALPHA_CHARACTERS_AND_SPACE: /^[A-Z]*$/i,
+  ALPHA_CHARACTERS_AND_SPACE: /^[A-Z ]*$/i,
 
   /**
    * INCLUDES_NUMERICAL_CHARACTERS:

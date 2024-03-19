@@ -127,5 +127,15 @@ describe('shared-validation/alpha-numerical-characters-only', () => {
         expect(result).toEqual(false);
       });
     });
+
+    describe('when a string contains only letters and numbers (multiple places)', () => {
+      it('should return false', () => {
+        const mockValidFieldValue = 'ABC123DEF456';
+
+        const result = alphaNumericalCharactersOnlyValidation(mockValidFieldValue, mockFieldId, mockErrorMessage, mockErrors);
+
+        expect(result).toEqual(false);
+      });
+    });
   });
 });
