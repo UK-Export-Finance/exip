@@ -11,7 +11,7 @@ const { BIC_SWIFT_CODE: FIELD_ID } = FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONA
 
 const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-describe('shared-validation/bic-or-swift-code', () => {
+describe('controllers/insurance/policy/loss-payee-financial-details-international/validation/rules/bic-or-swift-code', () => {
   describe('when a value is not provided', () => {
     it('should return generateValidationErrors', () => {
       const mockBody = {};
