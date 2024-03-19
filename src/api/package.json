@@ -32,7 +32,6 @@
     "@keystone-6/fields-document": "^8.0.2",
     "@types/express": "^4.17.21",
     "@types/overload-protection": "^1.2.4",
-    "@uk-export-finance/exip": "file:../..",
     "apollo-server-express": "^3.13.0",
     "axios": "^1.6.8",
     "axios-mock-adapter": "^1.22.0",
