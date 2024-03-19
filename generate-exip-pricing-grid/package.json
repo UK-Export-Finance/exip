@@ -11,6 +11,7 @@
   "license": "MIT",
   "author": "UK Export Finance",
   "dependencies": {
+    "@uk-export-finance/exip": "file:..",
     "minimist": "^1.2.8",
     "node-xlsx": "^0.23.0"
   },
