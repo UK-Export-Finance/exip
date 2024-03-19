@@ -14,12 +14,11 @@ import generateValidationErrors from '../../helpers/validation';
  */
 const postCodeValidation = (fieldId: string, postcode: string, errorMessageEmpty: string, errorMessageFormat: string, errors: object) => {
   try {
-    // if empty
     if (!postcode) {
       return generateValidationErrors(fieldId, errorMessageEmpty, errors);
     }
 
-    // checks if postcode is valid for the UK
+    // check if the postcode is a valid UK postcode.
     if (!postcodeValidator(postcode, 'GB')) {
       return generateValidationErrors(fieldId, errorMessageFormat, errors);
     }

@@ -20,7 +20,6 @@ const MAXIMUM = 100;
 const percentageNumberValidation = (formBody: RequestBody, field: string, errors: object, errorMessages: ErrorMessageObject) => {
   const { IS_EMPTY, INCORRECT_FORMAT, BELOW_MINIMUM, ABOVE_MAXIMUM } = errorMessages;
 
-  // if empty then return validation error
   if (!objectHasProperty(formBody, field)) {
     return generateValidationErrors(field, IS_EMPTY, errors);
   }

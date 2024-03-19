@@ -39,7 +39,6 @@ const companiesHouseNumber = (formBody: RequestBody, errors: ValidationErrors) =
 
   const validation = schema().validate(formBody[FIELD_ID]);
 
-  // if error, then has failed schema check
   if (validation.error) {
     const errorMessage = ELIGIBILITY[FIELD_ID].INCORRECT_FORMAT;
     updatedErrors = generateValidationErrors(FIELD_ID, errorMessage, errors);
