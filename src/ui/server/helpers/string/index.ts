@@ -49,6 +49,7 @@ export const stringsAreDefined = (str1?: string, str2?: string) => isPopulatedSt
 export const stringsAreEqual = (str1: string, str2: string) => str1 === str2;
 
 /**
+ * isBelowMinLength
  * checks that string is not below a minimum length
  * @param {String}: string: String to check
  * @param {Integer} minimum: Minimum length
@@ -57,6 +58,7 @@ export const stringsAreEqual = (str1: string, str2: string) => str1 === str2;
 export const isBelowMinLength = (string: string, minimum: number) => string.length < minimum;
 
 /**
+ * isAboveMaxLength
  * checks that string is not over a maximum length
  * @param {String}: string: String to check
  * @param {Integer} maximum: Maximum length
