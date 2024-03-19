@@ -12,7 +12,7 @@ const { BIC_SWIFT_CODE: FIELD_ID } = FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONA
 const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 /**
- * Validate a BIC/Swift code is not:
+ * Validate a BIC/SWIFT code is not:
  * 1) Empty
  * 2) Contains anything other than alpha numerical characters
  * 3) Below the minimum length
