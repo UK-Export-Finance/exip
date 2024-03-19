@@ -6,12 +6,12 @@ const { LOSS_PAYEE_DETAILS: { NAME } } = POLICY_FIELD_IDS;
 const { POLICY } = application;
 
 /**
- * completeAndSubmitLossPayeeFormDetailsForm
+ * completeAndSubmitLossPayeeDetailsForm
  * Complete and submit "loss payee details" form
  * @param {Boolean} name: loss payee name
  * @param {Boolean} locatedInUK: if located in UK radio should be selected
  */
-const completeAndSubmitLossPayeeFormDetailsForm = ({
+const completeAndSubmitLossPayeeDetailsForm = ({
   name = POLICY[NAME],
   locatedInUK = true,
 }) => {
@@ -20,4 +20,4 @@ const completeAndSubmitLossPayeeFormDetailsForm = ({
   cy.clickSubmitButton();
 };
 
-export default completeAndSubmitLossPayeeFormDetailsForm;
+export default completeAndSubmitLossPayeeDetailsForm;

@@ -4,6 +4,7 @@ import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insu
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import partials from '../../../../../../../partials';
+import mockNameWithSpecialCharacters from '../../../../../../../fixtures/name-with-special-characters';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -90,7 +91,8 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     });
 
     it(`should not render validation errors when ${FIELD_ID} contains numbers and special characters`, () => {
-      cy.keyboardInput(fieldSelector(FIELD_ID).input(), 'Name 123!');
+      const nameValue = mockNameWithSpecialCharacters('name');
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), nameValue);
 
       cy.clickSubmitButton();
 

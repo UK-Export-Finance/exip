@@ -17,7 +17,7 @@ export const MAXIMUM = Number(POLICY_FIELDS.LOSS_PAYEE_DETAILS[FIELD_ID].MAXIMUM
  * checks if response has been provided
  * @param {RequestBody} formBody
  * @param {Object} errors
- * @returns {Object} providedAndMaxLength errors
+ * @returns {Function} providedAndMaxLength
  */
 const name = (formBody: RequestBody, errors: object) => providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);
 
