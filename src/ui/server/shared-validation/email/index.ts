@@ -1,9 +1,8 @@
 import Joi from 'joi';
+import { MAXIMUM_CHARACTERS } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
 import maxLengthValidation from '../max-length';
 import { ErrorMessageObject } from '../../../types';
-
-export const MAXIMUM = 300;
 
 /**
  * emailValidation
@@ -25,7 +24,7 @@ const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMes
 
     /**
      * Ignore the length in Joi validation,
-     * Joi maximum length is below our MAXIMUM definition.
+     * Joi maximum length is handled below, using the MAXIMUM_CHARACTERS.EMAIL definition.
      */
     const schema = Joi.string().email({
       ignoreLength: true,
@@ -37,7 +36,7 @@ const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMes
       return generateValidationErrors(fieldId, errorMessages.INCORRECT_FORMAT, errors);
     }
 
-    return maxLengthValidation(email, fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAXIMUM);
+    return maxLengthValidation(email, fieldId, errorMessages.ABOVE_MAXIMUM, errors, MAXIMUM_CHARACTERS.EMAIL);
   } catch (err) {
     return errors;
   }

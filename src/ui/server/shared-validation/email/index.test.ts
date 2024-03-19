@@ -1,4 +1,5 @@
-import emailValidation, { MAXIMUM } from '.';
+import emailValidation from '.';
+import { MAXIMUM_CHARACTERS } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
 import maxLengthValidation from '../max-length';
 import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
@@ -68,17 +69,17 @@ describe('shared-validation/email', () => {
     });
   });
 
-  describe(`when email is over ${MAXIMUM} characters`, () => {
+  describe(`when email is over ${MAXIMUM_CHARACTERS.EMAIL} characters`, () => {
     it('should return the results of maxLengthValidation', () => {
       const suffix = '@email.com';
 
-      const extraCharactersLength = MAXIMUM - suffix.length + 1;
+      const extraCharactersLength = MAXIMUM_CHARACTERS.EMAIL - suffix.length + 1;
 
       const mockValue = `${'a'.repeat(extraCharactersLength)}${suffix}`;
 
       const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
 
-      const expected = maxLengthValidation(mockValue, mockFieldId, mockErrorMessagesObject.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockValue, mockFieldId, mockErrorMessagesObject.ABOVE_MAXIMUM, mockErrors, MAXIMUM_CHARACTERS.EMAIL);
 
       expect(result).toEqual(expected);
     });

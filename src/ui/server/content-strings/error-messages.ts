@@ -247,7 +247,7 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           IS_EMPTY: 'Enter the email address of the person you want named on the policy',
           INCORRECT_FORMAT: "Enter the policy holder's email address in the correct format, like name@example.com",
-          ABOVE_MAXIMUM: "The policy holder's email cannot be more than 300 characters",
+          ABOVE_MAXIMUM: `The policy holder's email cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
         },
         [FIELD_IDS.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY.POSITION]: {
           IS_EMPTY: "Enter the policy holder's position at the company",
@@ -287,7 +287,7 @@ export const ERROR_MESSAGES = {
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.EMAIL]: {
           IS_EMPTY: 'Enter the email address of the broker or company',
-          ABOVE_MAXIMUM: 'The broker or company email cannot be more than 300 characters',
+          ABOVE_MAXIMUM: `The broker or company email cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
           INCORRECT_FORMAT: 'Enter the broker or company email address in the correct format, like name@example.com',
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.FULL_ADDRESS]: {
