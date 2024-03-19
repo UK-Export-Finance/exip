@@ -11,7 +11,7 @@ import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number
  * @param {RequestBody} formBody
  * @param {String} fieldId
  * @param {String} errorMessage
- * @param {Object} errors object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {Number} minimum minimum length to check against
  * @param {Number} maximum maximum length to check against
  * @returns {Object} Validation errors or null

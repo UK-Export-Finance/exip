@@ -22,7 +22,7 @@ const {
 /**
  * validate the "full address" in "company or organisation" request body
  * @param {Express.Request.body} responseBody: containing an object with broker form submission data
- * @param {Object} errors: errorList
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Function} fullAddressValidation
  */
 const addressRules = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);

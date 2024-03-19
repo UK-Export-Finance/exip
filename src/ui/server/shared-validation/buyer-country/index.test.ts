@@ -44,7 +44,7 @@ describe('shared-validation/buyer-country', () => {
 
   describe('validation', () => {
     describe('when no values are provided', () => {
-      it('should return validation errors', () => {
+      it('should return a validation errors', () => {
         const result = validation({});
 
         const expected = generateValidationErrors(BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES.ELIGIBILITY[BUYER_COUNTRY]);
@@ -54,7 +54,7 @@ describe('shared-validation/buyer-country', () => {
     });
 
     describe(`when ${BUYER_COUNTRY} is not provided`, () => {
-      it('should return validation errors', () => {
+      it('should return a validation errors', () => {
         const result = validation({});
 
         const expected = generateValidationErrors(BUYER_COUNTRY, CONTENT_STRINGS.ERROR_MESSAGES.ELIGIBILITY[BUYER_COUNTRY]);

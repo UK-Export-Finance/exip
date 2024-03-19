@@ -6,7 +6,7 @@ import isAboveMaxLength from '../../helpers/is-above-max-length';
  * @param {string} fieldBody
  * @param {string} fieldId
  * @param {string} errorMessage
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {number} maximum
  * @returns {Object} errors
  */

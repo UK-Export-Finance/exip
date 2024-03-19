@@ -17,7 +17,7 @@ const {
  * validates years exporting input
  * only allows number without decimal
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const yearsExporting = (formBody: RequestBody, errors: object) => {

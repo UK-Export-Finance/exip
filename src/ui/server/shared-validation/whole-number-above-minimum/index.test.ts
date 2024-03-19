@@ -13,7 +13,7 @@ describe('shared-validation/whole-number-above-minimum', () => {
   } as RequestBody;
 
   describe('when a number is not provided', () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       const mockEmptyBody = {};
 
       const result = wholeNumberAboveMinimumValidation(mockEmptyBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM);
@@ -25,7 +25,7 @@ describe('shared-validation/whole-number-above-minimum', () => {
   });
 
   describe('when the provided number is below minimum', () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       const result = wholeNumberAboveMinimumValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM);
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessagesObject.BELOW_MINIMUM, mockErrors);

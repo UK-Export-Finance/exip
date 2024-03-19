@@ -12,7 +12,7 @@ export const MAXIMUM = 300;
  * @param {String} fieldId: Field ID
  * @param {String} email: Email
  * @param {Object} errorMessages: Error messages
- * @param {Object} errors: Errors object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} Validation errors
  */
 const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMessageObject, errors: object) => {

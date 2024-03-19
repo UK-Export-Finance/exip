@@ -35,7 +35,7 @@ const phoneNumberPatternValidation = (phoneNumber: string) => {
  * @param {string} phoneNumber
  * @param {string} fieldId
  * @param {string} errorMessage
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} updatedErrors
  */
 const validatePhoneNumber = (phoneNumber: string, fieldId: string, errorMessage: string, errors: object) => {
