@@ -8,7 +8,7 @@ import { mockApplication, mockBuyerTradingHistory } from '../../../../../test-mo
 import generateValidationErrors from '../../../../../helpers/validation';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 
-const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS, OUTSTANDING_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -17,7 +17,7 @@ const {
 describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () => {
   describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
     it('should have the relevant fieldIds', () => {
-      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE]);
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([FAILED_PAYMENTS, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE]);
     });
   });
 

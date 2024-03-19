@@ -8,7 +8,7 @@ const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
 
-const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+const { OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, TRADED_WITH_BUYER, FAILED_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-history', () => {
   let mockFormBody: RequestBody;
@@ -69,7 +69,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
   });
 
   describe(`when ${TOTAL_OUTSTANDING_PAYMENTS} is set to an empty string`, () => {
-    it(`should return mockFormBody without _csrf and ${TOTAL_OUTSTANDING_PAYMENTS} set to "null"`, () => {
+    it(`should return the body with ${TOTAL_OUTSTANDING_PAYMENTS} set to null`, () => {
       mockFormBody[TOTAL_OUTSTANDING_PAYMENTS] = '';
 
       const result = mapSubmittedData(mockFormBody);
@@ -86,7 +86,7 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
   });
 
   describe(`when ${TOTAL_AMOUNT_OVERDUE} is set to an empty string`, () => {
-    it(`should return mockFormBody without _csrf and ${TOTAL_AMOUNT_OVERDUE} set to "null"`, () => {
+    it(`should return the body with ${TOTAL_AMOUNT_OVERDUE} set to null`, () => {
       mockFormBody[TOTAL_AMOUNT_OVERDUE] = '';
 
       const result = mapSubmittedData(mockFormBody);
@@ -95,6 +95,60 @@ describe('controllers/insurance/your-buyer/map-submitted-data/buyer-trading-hist
 
       const expected = {
         ...expectedBody,
+        [TOTAL_AMOUNT_OVERDUE]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${OUTSTANDING_PAYMENTS} is set to an empty string`, () => {
+    it(`should return the body with ${OUTSTANDING_PAYMENTS} set to null`, () => {
+      mockFormBody[OUTSTANDING_PAYMENTS] = '';
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
+
+      const expected = {
+        ...expectedBody,
+        [OUTSTANDING_PAYMENTS]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${FAILED_PAYMENTS} is set to an empty string`, () => {
+    it(`should return the body with ${FAILED_PAYMENTS} set to null`, () => {
+      mockFormBody[FAILED_PAYMENTS] = '';
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
+
+      const expected = {
+        ...expectedBody,
+        [FAILED_PAYMENTS]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${TRADED_WITH_BUYER} is set to false`, () => {
+    it('should return the relevant TRADED_WITH_BUYER fields set to null', () => {
+      mockFormBody[TRADED_WITH_BUYER] = 'false';
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const { _csrf, alternativeCurrencyCode, ...expectedBody } = mockFormBody;
+
+      const expected = {
+        ...expectedBody,
+        [OUTSTANDING_PAYMENTS]: null,
+        [FAILED_PAYMENTS]: null,
+        [TOTAL_OUTSTANDING_PAYMENTS]: null,
         [TOTAL_AMOUNT_OVERDUE]: null,
       };
 
