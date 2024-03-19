@@ -4,7 +4,7 @@ import isPopulatedArray from '../../helpers/is-populated-array';
 import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../types';
 
 /**
- * validates field character count input is not:
+ * Validate an input is not:
  * 1) Below a minimum length
  * 2) Above a maximum length
  * @param {String} value: Field value to validate

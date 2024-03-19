@@ -1,6 +1,6 @@
 import sortCodeRules, { MINIMUM, MAXIMUM } from './sort-code';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import numberHyphenSpacesOnlyValidation from '../../../../../../shared-validation/number-hyphen-and-spaces-only';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
