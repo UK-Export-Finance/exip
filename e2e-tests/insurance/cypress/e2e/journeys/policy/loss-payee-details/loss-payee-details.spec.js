@@ -19,8 +19,8 @@ const {
   POLICY: {
     LOSS_PAYEE_ROOT,
     LOSS_PAYEE_DETAILS_ROOT,
-    LOSS_PAYEE_FINANCIAL_UK_ROOT,
-    LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -53,8 +53,8 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
-      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_UK_ROOT}`;
-      lossPayeeFinancialInternationalUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`;
+      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
+      lossPayeeFinancialInternationalUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -127,7 +127,7 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
         cy.completeAndSubmitLossPayeeDetailsForm({});
       });
 
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_UK_ROOT}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
         cy.assertUrl(lossPayeeFinancialUkUrl);
       });
 
@@ -146,7 +146,7 @@ context('Insurance - Policy - Loss payee details page - As an exporter, I want t
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
       });
 
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_INTERNATIONAL_ROOT}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, () => {
         cy.assertUrl(lossPayeeFinancialInternationalUrl);
       });
 

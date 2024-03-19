@@ -22,9 +22,10 @@ import mockBuyer, { mockBuyerTradingHistory, mockBuyerRelationship, mockBuyerCon
 import mockDeclarations from './mock-declarations';
 import { mockInsuranceFeedback } from './mock-feedback';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
-import mockNominatedLossPayee from './mock-nominated-loss-payee';
-import mockLossPayeeFinancialUk from './mock-loss-payee-financial-uk';
 import mockLossPayeeDetails from './mock-loss-payee-details';
+import mockLossPayeeFinancialDetailsInternational from './mock-loss-payee-financial-details-international';
+import mockLossPayeeFinancialDetailsUk from './mock-loss-payee-financial-details-uk';
+import mockNominatedLossPayee from './mock-nominated-loss-payee';
 import mockContact from './mock-contact';
 import { PRODUCT } from '../content-strings';
 import { INTEGRITY } from '../constants';
@@ -132,9 +133,10 @@ export {
   mockInsuranceFeedback,
   mockJointlyInsuredParty,
   mockNext,
-  mockNominatedLossPayee,
-  mockLossPayeeFinancialUk,
   mockLossPayeeDetails,
+  mockLossPayeeFinancialDetailsInternational,
+  mockLossPayeeFinancialDetailsUk,
+  mockNominatedLossPayee,
   mockUrlOrigin,
   mockSession,
   mockSicCodes,

@@ -10,7 +10,10 @@ import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateChangeLink from '../../../generate-change-link';
 import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
 
-const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
+const {
+  YOUR_BUYER: FIELD_IDS,
+  ELIGIBILITY: { BUYER_COUNTRY },
+} = INSURANCE_FIELD_IDS;
 
 const {
   YOUR_BUYER: { COMPANY_DETAILS: FORM_TITLE },
@@ -23,7 +26,7 @@ const {
 } = ROUTES;
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE },
 } = FIELD_IDS;
 
 const checkAndChange = false;
@@ -59,6 +62,14 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
         },
         generateMultipleFieldHtml(addressObject),
       ),
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, COUNTRY),
+          data: mockAnswers,
+          renderChangeLink: false,
+        },
+        mockApplication.eligibility[BUYER_COUNTRY].name,
+      ),
       fieldGroupItem({
         field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, REGISTRATION_NUMBER),
         data: mockAnswers,
@@ -86,7 +97,7 @@ describe('server/helpers/summary-lists/your-buyer/company-or-organisation-fields
     ];
 
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateCompanyOrOrganisationFields(mockAnswers, referenceNumber, checkAndChange);
+      const result = generateCompanyOrOrganisationFields(mockAnswers, mockApplication.eligibility, referenceNumber, checkAndChange);
 
       const expected = {
         title: FORM_TITLE,

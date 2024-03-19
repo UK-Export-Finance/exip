@@ -31,10 +31,10 @@ describe('server/helpers/summary-lists/your-buyer', () => {
 
   describe('generateFields', () => {
     it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockApplicationBuyer, referenceNumber, totalContractValueOverThreshold, checkAndChange);
+      const result = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, totalContractValueOverThreshold, checkAndChange);
 
       const expected = [
-        generateCompanyOrOrganisationFields(buyer, referenceNumber, checkAndChange),
+        generateCompanyOrOrganisationFields(buyer, mockApplication.eligibility, referenceNumber, checkAndChange),
         connectionWithBuyerFields(buyer.relationship, referenceNumber, checkAndChange),
         tradingHistoryFields(buyer.buyerTradingHistory, referenceNumber, checkAndChange),
         ...optionalFields(buyer, referenceNumber, totalContractValueOverThreshold, checkAndChange),
@@ -47,9 +47,9 @@ describe('server/helpers/summary-lists/your-buyer', () => {
 
   describe('yourBuyerSummaryList', () => {
     it('should return an array of summary list rows', () => {
-      const result = yourBuyerSummaryList(mockApplicationBuyer, referenceNumber);
+      const result = yourBuyerSummaryList(mockApplicationBuyer, mockApplication.eligibility, referenceNumber);
 
-      const fields = generateFields(mockApplicationBuyer, referenceNumber, checkAndChange);
+      const fields = generateFields(mockApplicationBuyer, mockApplication.eligibility, referenceNumber, checkAndChange);
 
       const expected = generateGroupsOfSummaryLists(fields);
 

@@ -1,6 +1,6 @@
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import fullAddress from '../../../../../../../shared-validation/full-address';
+import fullAddressValidation from '../../../../../../../shared-validation/full-address';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
@@ -18,8 +18,8 @@ const {
  * throws validation errors if there is no tradingAddress property
  * @param {Express.Request.body} formBody: containing an object with the company details response
  * @param {Object} errors: errorList
- * @returns {Object} fullAddress
+ * @returns {Function} fullAddressValidation
  */
-const tradingAddress = (responseBody: RequestBody, errors: object) => fullAddress(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
+const tradingAddress = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
 export default tradingAddress;

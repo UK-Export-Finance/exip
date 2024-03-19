@@ -1,7 +1,7 @@
 import fullBrokerAddress from '.';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import fullAddress from '../../../../../../../shared-validation/full-address';
+import fullAddressValidation from '../../../../../../../shared-validation/full-address';
 import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
@@ -17,10 +17,10 @@ describe('controllers/insurance/policy/broker-details/validation/rules/full-addr
     [FIELD_ID]: '',
   };
 
-  it('should return the result of fullAddress', () => {
+  it('should return the result of fullAddressValidation', () => {
     const result = fullBrokerAddress(mockBody, mockErrors);
 
-    const expected = fullAddress(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
+    const expected = fullAddressValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
 
     expect(result).toEqual(expected);
   });

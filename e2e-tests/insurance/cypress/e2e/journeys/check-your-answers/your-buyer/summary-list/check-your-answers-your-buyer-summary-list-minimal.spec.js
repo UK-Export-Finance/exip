@@ -14,6 +14,7 @@ const {
   COMPANY_OR_ORGANISATION: {
     NAME,
     ADDRESS,
+    COUNTRY,
     REGISTRATION_NUMBER,
     WEBSITE,
   },
@@ -75,6 +76,10 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
 
   it(`should render a ${ADDRESS} summary list row`, () => {
     checkSummaryList[ADDRESS]();
+  });
+
+  it(`should render a ${COUNTRY} summary list row`, () => {
+    checkSummaryList[COUNTRY]();
   });
 
   it(`should render a ${REGISTRATION_NUMBER} summary list row`, () => {

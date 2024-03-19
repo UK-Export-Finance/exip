@@ -8,6 +8,9 @@ const {
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME: BUYER_NAME },
   },
+  POLICY: {
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+  },
 } = INSURANCE_FIELD_IDS;
 
 const characterCodes = '&lt;&gt;&quot;&#x27;&#x2F;&#42;&amp';
@@ -25,6 +28,10 @@ const mockApplicationWithCharacterCodes = {
     [FIRST_NAME]: mockStringWithCharacterCodes,
     [LAST_NAME]: mockStringWithCharacterCodes,
   },
+  nominatedLossPayee: {
+    ...mockApplication.nominatedLossPayee,
+    [LOSS_PAYEE_NAME]: mockStringWithCharacterCodes,
+  },
 };
 
 describe('server/helpers/mappings/map-name-fields', () => {
@@ -36,5 +43,15 @@ describe('server/helpers/mappings/map-name-fields', () => {
     const expected = replaceCharacterCodesWithCharacters(fieldValue);
 
     expect(result.buyer[BUYER_NAME]).toEqual(expected);
+  });
+
+  it(`should replace character codes in nominatedLossPayee.${LOSS_PAYEE_NAME}`, () => {
+    const result = mapNameFields(mockApplicationWithCharacterCodes);
+
+    const fieldValue = mockApplicationWithCharacterCodes.nominatedLossPayee[LOSS_PAYEE_NAME];
+
+    const expected = replaceCharacterCodesWithCharacters(fieldValue);
+
+    expect(result.nominatedLossPayee[LOSS_PAYEE_NAME]).toEqual(expected);
   });
 });

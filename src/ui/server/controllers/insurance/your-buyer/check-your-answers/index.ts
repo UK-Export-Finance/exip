@@ -29,7 +29,7 @@ const get = (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryLists = yourBuyerSummaryList(application.buyer, refNumber, application.totalContractValueOverThreshold);
+    const summaryLists = yourBuyerSummaryList(application.buyer, application.eligibility, refNumber, application.totalContractValueOverThreshold);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

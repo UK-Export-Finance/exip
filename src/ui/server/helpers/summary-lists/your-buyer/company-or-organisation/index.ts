@@ -7,9 +7,12 @@ import getFieldById from '../../../get-field-by-id';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
 import generateChangeLink from '../../../generate-change-link';
 import generateAddressObject from '../../generate-address-object';
-import { ApplicationBuyer, SummaryListGroupData, SummaryListItemData } from '../../../../../types';
+import { ApplicationBuyer, SummaryListGroupData, SummaryListItemData, InsuranceEligibility } from '../../../../../types';
 
-const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
+const {
+  YOUR_BUYER: FIELD_IDS,
+  ELIGIBILITY: { BUYER_COUNTRY },
+} = INSURANCE_FIELD_IDS;
 
 const {
   YOUR_BUYER: { COMPANY_DETAILS: FORM_TITLE },
@@ -22,17 +25,23 @@ const {
 } = ROUTES;
 
 const {
-  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
+  COMPANY_OR_ORGANISATION: { NAME, COUNTRY, ADDRESS, REGISTRATION_NUMBER, WEBSITE },
 } = FIELD_IDS;
 
 /**
  * generateCompanyOrOrganisationFields
  * Create all company or organisation fields and values for the Insurance - Your buyer govukSummaryList
  * @param {ApplicationBuyer} answers: buyer data
+ * @param {InsuranceEligibility} answersEligibility: Eligibility data
  * @param {Number} referenceNumber: Application reference number
  * @returns {SummaryListGroupData} All company fields and values in an SummaryListGroupData structure for GOVUK summary list structure
  */
-const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenceNumber: number, checkAndChange?: boolean): SummaryListGroupData => {
+const generateCompanyOrOrganisationFields = (
+  answers: ApplicationBuyer,
+  answersEligibility: InsuranceEligibility,
+  referenceNumber: number,
+  checkAndChange?: boolean,
+): SummaryListGroupData => {
   const addressObject = generateAddressObject(answers[ADDRESS]);
 
   const fields = [
@@ -56,6 +65,14 @@ const generateCompanyOrOrganisationFields = (answers: ApplicationBuyer, referenc
         renderChangeLink: true,
       },
       generateMultipleFieldHtml(addressObject),
+    ),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, COUNTRY),
+        data: answers,
+        renderChangeLink: false,
+      },
+      answersEligibility[BUYER_COUNTRY].name,
     ),
     fieldGroupItem({
       field: getFieldById(FIELDS.COMPANY_OR_ORGANISATION, REGISTRATION_NUMBER),
