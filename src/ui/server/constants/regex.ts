@@ -10,8 +10,9 @@ export const REGEX = {
   /**
    * INCLUDES_NUMERICAL_CHARACTERS:
    * Regex that checks a string includes 0-9 characters.
+   * Note: \d is exactly the same as [0-9]
    */
-  INCLUDES_NUMERICAL_CHARACTERS: /[0-9]+/g,
+  INCLUDES_NUMERICAL_CHARACTERS: /\d+/g,
 
   /**
    * INCLUDES_UPPERCASE_ALPHA_CHARACTERS:
@@ -25,8 +26,9 @@ export const REGEX = {
    * - numbers.
    * - an empty space.
    * - a hyphen.
+   * Note: \d is exactly the same as [0-9]
    */
-  NUMBER_HYPHEN_SPACE: /^[- 0-9]+$/,
+  NUMBER_HYPHEN_SPACE: /^[- \d]+$/,
 
   /**
    * SPACE_AND_HYPHEN:

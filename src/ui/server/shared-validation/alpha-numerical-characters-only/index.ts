@@ -20,8 +20,11 @@ const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: str
    * 1) Uppercase alpha characters
    * 2) numerical characters
    */
-  const alphaCharacters = fieldValue.match(REGEX.INCLUDES_UPPERCASE_ALPHA_CHARACTERS);
-  const numericalCharacters = fieldValue.match(REGEX.INCLUDES_NUMERICAL_CHARACTERS);
+  const alphaCharactersRegex = RegExp(REGEX.INCLUDES_UPPERCASE_ALPHA_CHARACTERS);
+  const numericalCharactersRegex = RegExp(REGEX.INCLUDES_NUMERICAL_CHARACTERS);
+
+  const alphaCharacters = alphaCharactersRegex.exec(fieldValue);
+  const numericalCharacters = numericalCharactersRegex.exec(fieldValue);
 
   /**
    * If the string contains alpha and numerical characters, generate a total length of these valid characters.
