@@ -14,7 +14,6 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {Object} Validation errors
  * @returns {Object | Boolean} Validation errors
  */
-// TODO: object structure?
 const alphaNumericalCharactersOnlyValidation = (fieldValue: string, fieldId: string, errorMessage: string, errors: object) => {
   /**
    * Check the string contains:
