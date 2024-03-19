@@ -5,13 +5,13 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 import YOUR_BUYER_FIELD_IDS from '../../../../../constants/field-ids/insurance/your-buyer';
 
-const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE } = YOUR_BUYER_FIELD_IDS;
+const { TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE, FAILED_PAYMENTS, OUTSTANDING_PAYMENTS } = YOUR_BUYER_FIELD_IDS;
 
 /**
  * string fields which are exempt from being stripped by stripEmptyFormFields
  * for example when a string field needs to be set to an empty string or null
  */
-export const NULL_OR_EMPTY_STRING_FIELDS = [TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
+export const NULL_OR_EMPTY_STRING_FIELDS = [FAILED_PAYMENTS, OUTSTANDING_PAYMENTS, TOTAL_OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE];
 
 /**
  * gets fields to add to the database and sanitises them
