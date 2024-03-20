@@ -2,18 +2,18 @@ import maxLengthValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
 import { mockErrors, mockErrorMessagesObject } from '../../test-mocks';
 
-describe('shared-validation/max-length', () => {
+describe('shared-validation/min-length', () => {
   const mockFieldId = 'Mock field';
-  const mockErrorMessage = mockErrorMessagesObject.ABOVE_MAXIMUM;
-  const maximum = 10;
+  const mockErrorMessage = mockErrorMessagesObject.BELOW_MINIMUM;
+  const minimum = 10;
 
-  describe('when the field over the maximum number of characters', () => {
+  describe('when the field below the minimum number of characters', () => {
     it('should return validation error', () => {
       const mockFormBody = {
-        [mockFieldId]: 'a'.repeat(maximum + 1),
+        [mockFieldId]: 'a'.repeat(minimum - 1),
       };
 
-      const result = maxLengthValidation(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, maximum);
+      const result = maxLengthValidation(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, minimum);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);
 
@@ -24,10 +24,10 @@ describe('shared-validation/max-length', () => {
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
       const mockFormBody = {
-        [mockFieldId]: 'a',
+        [mockFieldId]: 'a'.repeat(minimum),
       };
 
-      const result = maxLengthValidation(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, maximum);
+      const result = maxLengthValidation(mockFormBody[mockFieldId], mockFieldId, mockErrorMessage, mockErrors, minimum);
 
       expect(result).toEqual(mockErrors);
     });

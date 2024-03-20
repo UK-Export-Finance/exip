@@ -1,5 +1,5 @@
 import isUrl from 'is-url';
-import isAboveMaxLength from '../is-above-max-length';
+import { isAboveMaxLength } from '../string';
 
 /**
  * isValidWebsiteAddress
