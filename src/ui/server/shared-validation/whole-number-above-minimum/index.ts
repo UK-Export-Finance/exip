@@ -10,7 +10,7 @@ import wholeNumberValidation from '../../helpers/whole-number-validation';
  * @param {RequestBody} formBody
  * @param {String} fieldId
  * @param {String} errorMessage
- * @param {Object} errors object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {Number} minimum minimum value to check against
  * @returns {Object} Validation errors or null
  */

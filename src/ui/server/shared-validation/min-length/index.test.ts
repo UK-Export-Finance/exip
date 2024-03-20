@@ -7,7 +7,7 @@ describe('shared-validation/min-length', () => {
   const mockErrorMessage = mockErrorMessagesObject.BELOW_MINIMUM;
   const minimum = 10;
 
-  describe('when the field below the minimum number of characters', () => {
+  describe('when the field is below the minimum number of characters', () => {
     it('should return a validation error', () => {
       const mockFormBody = {
         [mockFieldId]: 'a'.repeat(minimum - 1),

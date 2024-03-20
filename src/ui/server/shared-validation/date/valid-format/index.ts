@@ -8,7 +8,7 @@ import { DateValidationFormatRulesParams, DateValidationFormatRules } from '../.
  * @param {String} dayString: Day string
  * @param {String} monthString: Month string
  * @param {String} yearString: Year string
- * @param {Object} errors: Errors object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {Object} errorMessages: All possible error messages for the date field.
  * @param {String} fieldId: Date field ID
  * @returns {ValidationErrors}

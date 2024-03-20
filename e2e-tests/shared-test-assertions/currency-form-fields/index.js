@@ -13,7 +13,7 @@ import prefixAssertions from './prefix';
  * Assert currency form fields
  * @param {Function} legend: Legend selector
  * @param {Function} hint: Hint selector
- * @param {Object} errors: Error messages object
+ * @param {Object} errors: Other validation errors for the same form
  * @param {String} fieldId: Field ID of input for prefix assertion
  * @returns {Object} Rendering and form submission assertion functions
  */
