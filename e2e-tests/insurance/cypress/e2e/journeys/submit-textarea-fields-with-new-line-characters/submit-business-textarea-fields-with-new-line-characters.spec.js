@@ -1,6 +1,9 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../constants/field-ids/insurance/business';
-import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with-special-characters';
+import {
+  MULTI_LINE_STRING,
+  EXPECTED_MULTI_LINE_STRING,
+} from '../../../../../constants';
 
 const {
   ROOT,
@@ -17,7 +20,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Textarea fields - `Business` textarea fields should render special characters without character codes after submission', () => {
+context('Insurance - Textarea fields - `Business` textarea fields should render new lines without character codes after submission', () => {
   let referenceNumber;
   let alternativeTradingAddressUrl;
 
@@ -38,23 +41,23 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
   });
 
   describe(FULL_ADDRESS, () => {
-    describe('when submitting the textarea field with special characters and going back to the page', () => {
+    describe('when submitting the textarea field with new lines va the `enter` key and going back to the page', () => {
       beforeEach(() => {
         cy.saveSession();
 
         cy.navigateToUrl(alternativeTradingAddressUrl);
 
         cy.completeAndSubmitAlternativeTradingAddressForm({
-          address: mockStringWithSpecialCharacters,
+          address: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
       });
 
-      it('should render special characters exactly as they were submitted', () => {
+      it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: FULL_ADDRESS,
-          expectedValue: mockStringWithSpecialCharacters,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });

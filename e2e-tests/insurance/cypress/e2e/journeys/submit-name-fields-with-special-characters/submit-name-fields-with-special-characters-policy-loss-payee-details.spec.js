@@ -1,6 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../constants/field-ids/insurance';
-import { field, backLink } from '../../../../../pages/shared';
+import { field } from '../../../../../pages/shared';
 import mockNameWithSpecialCharacters from '../../../../../fixtures/name-with-special-characters';
 import application from '../../../../../fixtures/application';
 
@@ -69,7 +69,7 @@ context('Insurance - Name fields - Loss payee details - Name field should render
 
         cy.completeAndSubmitLossPayeeDetailsForm({ name: nameValue });
 
-        backLink().click();
+        cy.clickBackLink();
 
         cy.assertUrl(url);
       });

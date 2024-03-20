@@ -1,4 +1,3 @@
-import { backLink } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -58,7 +57,7 @@ context('Insurance - Declarations - Anti-bribery - Code of conduct page - As an 
   });
 
   it('should have the originally submitted answer selected when going back to the page after submission', () => {
-    backLink().click();
+    cy.clickBackLink();
 
     cy.assertNoRadioOptionIsChecked();
   });

@@ -1,6 +1,5 @@
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
-import replaceNewLineWithLineBreak from '../../replace-new-line-with-line-break';
 import { Application } from '../../../../types';
 
 const {
@@ -31,7 +30,7 @@ const {
 const mapTextareaFields = (application: Application): Application => {
   const { broker, business, buyer, company, exportContract, policy } = application;
 
-  broker[BROKER_ADDRESS] = replaceNewLineWithLineBreak(broker[BROKER_ADDRESS]);
+  broker[BROKER_ADDRESS] = replaceCharacterCodesWithCharacters(broker[BROKER_ADDRESS]);
 
   business[GOODS_OR_SERVICES] = replaceCharacterCodesWithCharacters(business[GOODS_OR_SERVICES]);
 

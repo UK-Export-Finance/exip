@@ -1,6 +1,5 @@
 import { ACCOUNT } from '../../../constants/account';
 import completeAndSubmitPasswordResetForm from './complete-and-submit-password-reset-form';
-import { backLink } from '../../../pages/shared';
 
 const attemptsToMake = [...Array(ACCOUNT.MAX_AUTH_RETRIES)];
 
@@ -16,7 +15,7 @@ const completeAndSubmitPasswordResetFormMaximumRetries = () => {
     const isLastAttempt = index + 1 === attemptsToMake.length;
 
     if (!isLastAttempt) {
-      backLink().click();
+      cy.clickBackLink();
     }
   });
 };

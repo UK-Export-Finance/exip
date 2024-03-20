@@ -62,7 +62,7 @@
           maxlength: FIELDS.ADDRESS.MAXIMUM,
           classes: "govuk-!-width-one-half",
           attributes: {
-            'data-cy': FIELDS.ADDRESS.ID + '-input'
+            'data-cy': FIELDS.ADDRESS.ID
           },
           value: submittedValues[FIELDS.ADDRESS.ID] or application.buyer[FIELDS.ADDRESS.ID],
           errorMessage: validationErrors.errorList[FIELDS.ADDRESS.ID] and {

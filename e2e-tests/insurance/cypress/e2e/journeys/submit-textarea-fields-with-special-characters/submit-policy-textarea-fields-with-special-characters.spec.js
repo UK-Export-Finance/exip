@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
-import { field, backLink } from '../../../../../pages/shared';
 import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with-special-characters';
 
 const {
@@ -48,20 +47,14 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render sp
           description: mockStringWithSpecialCharacters,
         });
 
-        backLink().click();
-
-        cy.assertUrl(preCreditPeriodUrl);
+        cy.clickBackLink();
       });
 
       it('should render special characters exactly as they were submitted', () => {
-        const descriptionField = field(CREDIT_PERIOD_WITH_BUYER);
-
-        const textareaField = {
-          ...descriptionField,
-          input: descriptionField.textarea,
-        };
-
-        cy.checkValue(textareaField, mockStringWithSpecialCharacters);
+        cy.checkTextareaValue({
+          fieldId: CREDIT_PERIOD_WITH_BUYER,
+          expectedValue: mockStringWithSpecialCharacters,
+        });
       });
     });
   });
