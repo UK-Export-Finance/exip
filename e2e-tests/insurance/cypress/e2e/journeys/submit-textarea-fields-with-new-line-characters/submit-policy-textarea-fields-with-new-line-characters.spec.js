@@ -47,8 +47,6 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
     cy.deleteApplication(referenceNumber);
   });
 
-  // TODO: rename MULTI_LINE_STRING to not be address specific.
-
   describe(CREDIT_PERIOD_WITH_BUYER, () => {
     describe('when submitting the textarea field with new lines va the `enter` key and going back to the page', () => {
       beforeEach(() => {
