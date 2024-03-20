@@ -86,12 +86,18 @@ export const pageVariables = (
 
   let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
-  // if changeRoute, then URL should be ALTERNATIVE_CURRENCY_CHANGE
+  /**
+   * If changeRoute,
+   * URL should be ALTERNATIVE_CURRENCY_CHANGE
+   */
   if (changeRoute) {
     alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`;
   }
 
-  // if checkAndChangeRoute, then URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+  /**
+   * If checkAndChangeRoute,
+   * URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+   */
   if (checkAndChangeRoute) {
     alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
   }
@@ -248,7 +254,6 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call
     const saveResponse = await mapAndSave.buyerTradingHistory(payload, application);
 
     if (!saveResponse) {

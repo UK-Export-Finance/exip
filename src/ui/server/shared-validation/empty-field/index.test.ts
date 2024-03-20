@@ -9,7 +9,7 @@ describe('shared-validation/empty-field', () => {
   const mockErrorMessage = 'Enter mock field';
 
   describe('when the field is not provided', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const result = emptyFieldValidation(mockFormBody, mockFieldId, mockErrorMessage, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessage, mockErrors);

@@ -23,7 +23,7 @@ export const MAXIMUM = Number(FIELDS.COMPANY_OR_ORGANISATION[FIELD_ID].MAXIMUM);
  * validate the REGISTRATION_NUMBER field
  * check if answer has been provided and if so, check it is not over a maximum length.
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const registrationNumber = (formBody: RequestBody, errors: object) => {

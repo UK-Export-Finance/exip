@@ -70,7 +70,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
     });
 
     describe(`when ${CONTRACT_COMPLETION_DATE} is the same as ${REQUESTED_START_DATE}`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           ...requestedStartDateFields,
           [`${CONTRACT_COMPLETION_DATE}-day`]: futureDate.getDate(),
@@ -94,7 +94,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       let nextYear1week = new Date(nextYear);
       nextYear1week = new Date(nextYear1week.setDate(day + 1 * 7));
 
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [`${REQUESTED_START_DATE}-day`]: nextYear1week.getDate(),
           [`${REQUESTED_START_DATE}-month`]: nextYear1week.getMonth() + 1,
@@ -121,7 +121,7 @@ describe('controllers/insurance/policy/single-contract-policy/validation/rules/c
       const futureYear = new Date(futureDate.setFullYear(futureDateYear + ELIGIBILITY.MAX_COVER_PERIOD_YEARS));
       const completionDate = new Date(futureYear.setDate(day + 1));
 
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         const mockSubmittedData = {
           [`${REQUESTED_START_DATE}-day`]: day,
           [`${REQUESTED_START_DATE}-month`]: month,

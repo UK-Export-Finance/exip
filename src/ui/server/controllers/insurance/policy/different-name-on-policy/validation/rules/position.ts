@@ -20,7 +20,7 @@ export const MAXIMUM = Number(DIFFERENT_NAME_ON_POLICY[FIELD_ID].MAXIMUM);
  * validates position field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const position = (formBody: RequestBody, errors: object) => alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);

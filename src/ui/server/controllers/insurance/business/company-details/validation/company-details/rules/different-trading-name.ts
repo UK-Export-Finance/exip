@@ -15,11 +15,10 @@ const {
  * validates alternative trading name field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const differentTradingName = (formBody: RequestBody, errors: object) => {
-  // if HAS_DIFFERENT_TRADING_NAME radio is yes then check validation
   if (formBody[HAS_DIFFERENT_TRADING_NAME] === 'true') {
     return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
   }

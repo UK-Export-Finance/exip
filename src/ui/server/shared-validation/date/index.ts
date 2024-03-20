@@ -10,7 +10,7 @@ import { DateValidationRulesParams, ValidationErrors } from '../../../types';
  * Check submitted form data for errors with a date field
  * Returns generateValidationErrors if there are any errors.
  * @param {Express.Response.body} formBody: Express response body
- * @param {Object} errors: Errors object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {String} fieldId: Date field ID
  * @param {Object} errorMessages: All possible error messages for the date field.
  * @returns {ValidationErrors}

@@ -17,7 +17,7 @@ const {
  * validate the "tradingAddress" in "company details" request body
  * throws validation errors if there is no tradingAddress property
  * @param {Express.Request.body} formBody: containing an object with the company details response
- * @param {Object} errors: errorList
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Function} fullAddressValidation
  */
 const tradingAddress = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);

@@ -14,7 +14,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
 
   describe('invalid field values', () => {
     describe('when a value is not provided', () => {
-      it('should return validation errors', () => {
+      it('should return a validation errors', () => {
         const mockEmptyBody = {};
 
         const result = numberHyphenSpacesOnlyValidation(mockEmptyBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
@@ -26,7 +26,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     });
 
     describe('when the provided value has a letter', () => {
-      it('should return validation errors"', () => {
+      it('should return a validation errors"', () => {
         mockBody[FIELD_ID] = '11-22-3E';
 
         const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
@@ -38,7 +38,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     });
 
     describe('when the provided value has a special character', () => {
-      it('should return validation errors"', () => {
+      it('should return a validation errors"', () => {
         mockBody[FIELD_ID] = '11-22-3!';
 
         const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
@@ -50,7 +50,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     });
 
     describe('when the provided value is below minimum length', () => {
-      it('should return validation errors', () => {
+      it('should return a validation errors', () => {
         mockBody[FIELD_ID] = '11-22';
 
         const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
@@ -62,7 +62,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     });
 
     describe('when the provided value is above maximum length', () => {
-      it('should return validation errors', () => {
+      it('should return a validation errors', () => {
         mockBody[FIELD_ID] = '11-22-33-44';
 
         const result = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);

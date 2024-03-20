@@ -16,13 +16,11 @@ export const MAXIMUM = 1200;
  * validates other comments field
  * checks if answer has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const otherComments = (formBody: RequestBody, errors: object) => {
-  // if field has a value
   if (objectHasProperty(formBody, FIELD_ID)) {
-    // checks field is not over maximum characters
     return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
   }
 
