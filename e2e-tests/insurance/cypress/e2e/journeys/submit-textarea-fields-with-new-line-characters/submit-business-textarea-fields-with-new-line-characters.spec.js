@@ -1,7 +1,10 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../constants/field-ids/insurance/business';
-import { field, backLink } from '../../../../../pages/shared';
-import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with-special-characters';
+import { backLink } from '../../../../../pages/shared';
+import {
+  FULL_ADDRESS_MULTI_LINE_STRING,
+  FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+} from '../../../../../constants';
 
 const {
   ROOT,
@@ -18,7 +21,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Textarea fields - `Business` textarea fields should render special characters without character codes after submission', () => {
+context('Insurance - Textarea fields - `Business` textarea fields should render new lines without character codes after submission', () => {
   let referenceNumber;
   let alternativeTradingAddressUrl;
 
@@ -39,28 +42,24 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
   });
 
   describe(FULL_ADDRESS, () => {
-    describe('when submitting the textarea field with special characters and going back to the page', () => {
+    describe('when submitting the textarea field with new lines va the `enter` key and going back to the page', () => {
       beforeEach(() => {
         cy.saveSession();
 
         cy.navigateToUrl(alternativeTradingAddressUrl);
 
         cy.completeAndSubmitAlternativeTradingAddressForm({
-          address: mockStringWithSpecialCharacters,
+          address: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
         backLink().click();
       });
 
-      it('should render special characters exactly as they were submitted', () => {
-        const descriptionField = field(FULL_ADDRESS);
-
-        const textareaField = {
-          ...descriptionField,
-          input: descriptionField.textarea,
-        };
-
-        cy.checkValue(textareaField, mockStringWithSpecialCharacters);
+      it('should render new line characters exactly as they were submitted', () => {
+        cy.checkTextareaValue({
+          fieldId: FULL_ADDRESS,
+          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+        });
       });
     });
   });

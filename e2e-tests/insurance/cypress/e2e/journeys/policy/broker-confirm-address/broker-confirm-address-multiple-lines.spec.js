@@ -52,7 +52,7 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`renders ${FULL_ADDRESS}`, () => {
+  it(`renders ${FULL_ADDRESS} exactly as they were submitted`, () => {
     cy.checkText(insetTextHtml(), FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING);
   });
 });

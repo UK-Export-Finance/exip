@@ -9,12 +9,12 @@ import { field as fieldSelector } from '../../../pages/shared';
 const checkTextareaValue = ({ fieldId, expectedValue }) => {
   const field = fieldSelector(fieldId);
 
-  const selector = {
+  const textareaField = {
     ...field,
     input: field.textarea,
   };
 
-  cy.checkValue(selector, expectedValue);
+  cy.checkValue(textareaField, expectedValue);
 };
 
 export default checkTextareaValue;

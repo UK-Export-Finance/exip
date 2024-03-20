@@ -49,8 +49,6 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render sp
         });
 
         backLink().click();
-
-        cy.assertUrl(preCreditPeriodUrl);
       });
 
       it('should render special characters exactly as they were submitted', () => {

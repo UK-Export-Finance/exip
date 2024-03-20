@@ -1,5 +1,5 @@
 import { FIELD_IDS } from '../../../constants';
-import { field } from '../../../pages/shared';
+import { field as fieldSelector } from '../../../pages/shared';
 import mockApplication from '../../../fixtures/application';
 
 const {
@@ -25,10 +25,17 @@ const completeAndSubmitCompanyOrOrganisationForm = ({
   buyerName = BUYER[NAME],
   buyerAddress = BUYER[ADDRESS],
 }) => {
-  cy.keyboardInput(field(NAME).input(), buyerName);
-  cy.keyboardInput(field(ADDRESS).input(), buyerAddress);
-  cy.keyboardInput(field(REGISTRATION_NUMBER).input(), BUYER[REGISTRATION_NUMBER]);
-  cy.keyboardInput(field(WEBSITE).input(), BUYER[WEBSITE]);
+  cy.keyboardInput(fieldSelector(NAME).input(), buyerName);
+
+  const textareaField = {
+    ...fieldSelector(ADDRESS),
+    input: fieldSelector(ADDRESS).textarea,
+  };
+
+  cy.keyboardInput(textareaField.input(), buyerAddress);
+
+  cy.keyboardInput(fieldSelector(REGISTRATION_NUMBER).input(), BUYER[REGISTRATION_NUMBER]);
+  cy.keyboardInput(fieldSelector(WEBSITE).input(), BUYER[WEBSITE]);
 
   cy.clickSubmitButton();
 };

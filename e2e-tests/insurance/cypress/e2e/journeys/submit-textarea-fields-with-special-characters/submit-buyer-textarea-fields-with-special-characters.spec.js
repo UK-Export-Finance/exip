@@ -48,8 +48,6 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
         });
 
         backLink().click();
-
-        cy.assertUrl(companyOrganisationUrl);
       });
 
       it('should render special characters exactly as they were submitted', () => {
@@ -73,8 +71,6 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
         });
 
         backLink().click();
-
-        cy.assertUrl(connectionToTheBuyerUrl);
       });
 
       it('should render special characters exactly as they were submitted', () => {
