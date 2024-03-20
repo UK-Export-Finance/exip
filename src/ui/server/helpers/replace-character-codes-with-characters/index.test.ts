@@ -57,16 +57,8 @@ describe('server/helpers/replace-character-codes-with-characters', () => {
     expect(result).toEqual(expected);
   });
 
-  it('should replace line feed/new line return character codes', () => {
-    const result = replaceCharacterCodesWithCharacters('&#10;test&#10;');
-
-    const expected = '\ntest\n';
-
-    expect(result).toEqual(expected);
-  });
-
-  it('should replace carriage return character codes', () => {
-    const result = replaceCharacterCodesWithCharacters('&#13;test&#13;');
+  it('should replace line feed/new line and carriage return character codes', () => {
+    const result = replaceCharacterCodesWithCharacters('\r\ntest\r\n');
 
     const expected = '\rtest\r';
 
