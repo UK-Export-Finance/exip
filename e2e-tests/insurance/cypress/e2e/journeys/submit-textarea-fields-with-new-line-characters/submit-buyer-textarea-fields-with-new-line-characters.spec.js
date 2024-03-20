@@ -114,7 +114,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
   });
 
   // TODO:
-  // 
+  //
 
   // cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 });
