@@ -57,6 +57,22 @@ describe('server/helpers/replace-character-codes-with-characters', () => {
     expect(result).toEqual(expected);
   });
 
+  it('should replace line feed/new line return character codes', () => {
+    const result = replaceCharacterCodesWithCharacters('&#10;test&#10;');
+
+    const expected = '\ntest\n';
+
+    expect(result).toEqual(expected);
+  });
+
+  it('should replace carriage return character codes', () => {
+    const result = replaceCharacterCodesWithCharacters('&#13;test&#13;');
+
+    const expected = '\rtest\r';
+
+    expect(result).toEqual(expected);
+  });
+
   describe('when no value is provided', () => {
     it('should return null', () => {
       const result = replaceCharacterCodesWithCharacters();

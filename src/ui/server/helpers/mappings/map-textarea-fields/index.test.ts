@@ -1,7 +1,6 @@
 import mapTextareaFields from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import replaceCharacterCodesWithCharacters from '../../replace-character-codes-with-characters';
-import replaceNewLineWithLineBreak from '../../replace-new-line-with-line-break';
 import { mockApplication } from '../../../test-mocks';
 
 const {
@@ -33,7 +32,7 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
       ...mockApplication,
       broker: {
         ...broker,
-        [BROKER_ADDRESS]: replaceNewLineWithLineBreak(broker[BROKER_ADDRESS]),
+        [BROKER_ADDRESS]: replaceCharacterCodesWithCharacters(broker[BROKER_ADDRESS]),
       },
       business: {
         ...business,
