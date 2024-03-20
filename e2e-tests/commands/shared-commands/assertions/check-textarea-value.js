@@ -2,7 +2,7 @@ import { field as fieldSelector } from '../../../pages/shared';
 
 /**
  * checkTextareaValue
- * Check an text area's value
+ * Check a textarea's value
  * @param {Integer} fieldId: Field ID
  * @param {String} expectedValue: Expected value
  */

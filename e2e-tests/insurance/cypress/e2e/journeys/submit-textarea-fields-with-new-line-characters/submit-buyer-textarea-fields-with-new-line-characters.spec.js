@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { YOUR_BUYER as BUYER_FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
-import { backLink } from '../../../../../pages/shared';
 import {
   FULL_ADDRESS_MULTI_LINE_STRING,
   FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
@@ -53,7 +52,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
           buyerAddress: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {
@@ -77,7 +76,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
           description: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {
@@ -101,7 +100,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
           creditInsuranceCoverDescription: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {

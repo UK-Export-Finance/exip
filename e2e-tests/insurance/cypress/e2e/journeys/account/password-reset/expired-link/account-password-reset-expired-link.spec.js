@@ -1,4 +1,4 @@
-import { backLink, submitButton } from '../../../../../../../pages/shared';
+import { submitButton } from '../../../../../../../pages/shared';
 import { yourDetailsPage } from '../../../../../../../pages/insurance/account/create';
 import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
 import { linkExpiredPage } from '../../../../../../../pages/insurance/account/password-reset';
@@ -35,7 +35,7 @@ context('Insurance - Account - Password reset - expired link page', () => {
     cy.completeAndSubmitCreateAccountForm();
 
     // go back to create account page
-    backLink().click();
+    cy.clickBackLink();
 
     // navigate to sign in page
     yourDetailsPage.signInButtonLink().click();

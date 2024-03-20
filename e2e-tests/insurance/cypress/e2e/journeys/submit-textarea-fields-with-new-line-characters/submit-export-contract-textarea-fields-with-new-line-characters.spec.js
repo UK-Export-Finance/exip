@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../../constants/field-ids/insurance/export-contract';
-import { backLink } from '../../../../../pages/shared';
 import {
   FULL_ADDRESS_MULTI_LINE_STRING,
   FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
@@ -49,7 +48,7 @@ context('Insurance - Textarea fields - `Export contract` textarea fields should 
           description: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {

@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../constants/field-ids/insurance/business';
-import { backLink } from '../../../../../pages/shared';
 import {
   FULL_ADDRESS_MULTI_LINE_STRING,
   FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
@@ -52,7 +51,7 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
           address: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {

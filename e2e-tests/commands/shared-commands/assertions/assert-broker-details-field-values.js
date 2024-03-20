@@ -25,14 +25,10 @@ const assertBrokerDetailsFieldValues = ({
   cy.checkValue(fieldSelector(NAME), expectedName);
   cy.checkValue(fieldSelector(EMAIL), expectedEmail);
 
-  const addressField = fieldSelector(FULL_ADDRESS);
-
-  const textareaField = {
-    ...addressField,
-    input: addressField.textarea,
-  };
-
-  cy.checkValue(textareaField, expectedFullAddress);
+  cy.checkTextareaValue({
+    fieldId: FULL_ADDRESS,
+    expectedValue: expectedFullAddress,
+  });
 };
 
 export default assertBrokerDetailsFieldValues;

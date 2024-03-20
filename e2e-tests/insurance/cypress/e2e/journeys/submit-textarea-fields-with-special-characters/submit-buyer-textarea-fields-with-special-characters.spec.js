@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { YOUR_BUYER as BUYER_FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
-import { field, backLink } from '../../../../../pages/shared';
 import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with-special-characters';
 
 const {
@@ -47,13 +46,14 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
           buyerAddress: mockStringWithSpecialCharacters,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render special characters exactly as they were submitted', () => {
-        const descriptionField = field(ADDRESS);
-
-        cy.checkValue(descriptionField, mockStringWithSpecialCharacters);
+        cy.checkTextareaValue({
+          fieldId: ADDRESS,
+          expectedValue: mockStringWithSpecialCharacters,
+        });
       });
     });
   });
@@ -70,18 +70,14 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
           description: mockStringWithSpecialCharacters,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render special characters exactly as they were submitted', () => {
-        const descriptionField = field(CONNECTION_WITH_BUYER_DESCRIPTION);
-
-        const textareaField = {
-          ...descriptionField,
-          input: descriptionField.textarea,
-        };
-
-        cy.checkValue(textareaField, mockStringWithSpecialCharacters);
+        cy.checkTextareaValue({
+          fieldId: CONNECTION_WITH_BUYER_DESCRIPTION,
+          expectedValue: mockStringWithSpecialCharacters,
+        });
       });
     });
   });

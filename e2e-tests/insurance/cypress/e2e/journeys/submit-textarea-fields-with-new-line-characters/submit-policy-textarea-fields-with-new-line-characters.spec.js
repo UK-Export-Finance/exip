@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
-import { backLink } from '../../../../../pages/shared';
 import {
   FULL_ADDRESS_MULTI_LINE_STRING,
   FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
@@ -62,7 +61,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
           description: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {
@@ -85,7 +84,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
           fullAddress: FULL_ADDRESS_MULTI_LINE_STRING,
         });
 
-        backLink().click();
+        cy.clickBackLink();
       });
 
       it('should render new line characters exactly as they were submitted', () => {

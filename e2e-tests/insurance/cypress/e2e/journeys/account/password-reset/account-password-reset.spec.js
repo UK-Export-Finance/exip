@@ -1,4 +1,4 @@
-import { backLink, field as fieldSelector } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -32,7 +32,7 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
     cy.completeAndSubmitCreateAccountForm({ navigateToAccountCreationPage: true });
 
     // go back to create account page
-    backLink().click();
+    cy.clickBackLink();
 
     // navigate to sign in page
     yourDetailsPage.signInButtonLink().click();
