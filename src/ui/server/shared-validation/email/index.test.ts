@@ -9,7 +9,7 @@ describe('shared-validation/email', () => {
   const mockFieldId = 'email';
 
   describe('when the email is empty', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = '';
 
       const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
@@ -21,7 +21,7 @@ describe('shared-validation/email', () => {
   });
 
   describe('when email does not contain an @ symbol', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'mockemail.com';
 
       const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
@@ -33,7 +33,7 @@ describe('shared-validation/email', () => {
   });
 
   describe('when email does not contain at least one dot', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'mock@emailcom';
 
       const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
@@ -45,7 +45,7 @@ describe('shared-validation/email', () => {
   });
 
   describe('when email contains a space', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'mock @email.com';
 
       const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
@@ -57,7 +57,7 @@ describe('shared-validation/email', () => {
   });
 
   describe('when email does not contain a domain', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'mock@email';
 
       const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);

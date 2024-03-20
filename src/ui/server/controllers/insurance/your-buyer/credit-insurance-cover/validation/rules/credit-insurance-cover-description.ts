@@ -25,7 +25,6 @@ const MAXIMUM = 1000;
  * @returns {Object} Validation errors
  */
 const creditInsuranceCoverDescriptionRule = (formBody: RequestBody, errors: object) => {
-  // if HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER radio is yes then check validation
   if (formBody[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] === 'true') {
     if (objectHasProperty(formBody, FIELD_ID)) {
       return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);

@@ -27,12 +27,10 @@ export const MAXIMUM = 1000;
  */
 const creditPeriodWithBuyerRule = (formBody: RequestBody, errors: object) => {
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'true') {
-    // if body is empty
     if (!objectHasProperty(formBody, FIELD_ID)) {
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
     }
 
-    // check if the field is above the maximum
     return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
   }
 

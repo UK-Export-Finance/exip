@@ -114,10 +114,8 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, FIELD_IDS);
 
-    // run validation on inputs
     const validationErrors = generateValidationErrors(payload);
 
-    // if any errors then render template with errors
     if (validationErrors) {
       const { company } = application;
 

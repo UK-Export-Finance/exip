@@ -108,7 +108,6 @@ export const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call
     const saveResponse = await mapAndSave.yourBuyer(payload, application);
 
     if (!saveResponse) {

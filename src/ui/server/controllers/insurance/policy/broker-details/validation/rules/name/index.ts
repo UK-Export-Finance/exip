@@ -17,7 +17,7 @@ export const MAXIMUM = Number(POLICY_FIELDS.BROKER_DETAILS[FIELD_ID].MAXIMUM);
 /**
  * validate the "broker name" in broker details request body
  * @param {Express.Request.body} responseBody: containing an object with broker form submission data
- * @param {Object} errors: errorList
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} Object containing errors or blank object
  */
 const brokerName = (responseBody: RequestBody, errors: object) => providedAndMaxLength(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM);

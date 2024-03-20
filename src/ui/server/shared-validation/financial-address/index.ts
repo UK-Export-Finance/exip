@@ -11,7 +11,7 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
  * financialAddressRule
  * Validate a "financial address" field
  * @param {RequestBody} formBody: Form body
- * @param {Object} errors: Object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Function} fullAddressValidation
  */
 const financialAddress = (formBody: RequestBody, errors: object) => {

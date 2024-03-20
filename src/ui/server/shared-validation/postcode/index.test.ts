@@ -8,7 +8,7 @@ describe('shared-validation/postcode', () => {
   const mockErrorMessageFormat = 'Incorrect format';
 
   describe('when the postcode is empty', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = '';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
@@ -20,7 +20,7 @@ describe('shared-validation/postcode', () => {
   });
 
   describe('when the postcode has 1 letter in the first part', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'S 2AA';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
@@ -32,7 +32,7 @@ describe('shared-validation/postcode', () => {
   });
 
   describe('when the postcode has no letters in the first part', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = '22 2AA';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
@@ -44,7 +44,7 @@ describe('shared-validation/postcode', () => {
   });
 
   describe('when the postcode has 2 digits in the second part', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'SW1 22A';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
@@ -56,7 +56,7 @@ describe('shared-validation/postcode', () => {
   });
 
   describe('when the postcode has 3 digits in the second part', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'SW1 222';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
@@ -68,7 +68,7 @@ describe('shared-validation/postcode', () => {
   });
 
   describe('when the postcode has all letters in the second part', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'SW1 AAA';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);
@@ -80,7 +80,7 @@ describe('shared-validation/postcode', () => {
   });
 
   describe('when the postcode has more than 7 characters', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockValue = 'SW1A 2HQA';
 
       const result = postCodeValidation(mockFieldId, mockValue, mockErrorMessageEmpty, mockErrorMessageFormat, mockErrors);

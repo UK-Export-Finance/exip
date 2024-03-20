@@ -17,7 +17,7 @@ const {
  * validates number of estimated annual turnover input
  * only allows number without decimal
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const estimatedAnnualTurnover = (formBody: RequestBody, errors: object) => {

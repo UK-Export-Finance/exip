@@ -20,7 +20,7 @@ export const MAXIMUM = Number(POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY[FIEL
 /**
  * validate the "company number" in other company details response body
  * @param {Express.Request.body} formBody: containing an object with the company details response
- * @param {Object} errors: errorList
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} Errors or empty object
  */
 const companyNumber = (formBody: RequestBody, errors: object) => {
