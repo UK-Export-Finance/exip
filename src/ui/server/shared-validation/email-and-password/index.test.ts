@@ -13,7 +13,7 @@ describe('shared-validation/email-and-password', () => {
   const mockErrorMessage = 'Mock error';
 
   describe(`when ${EMAIL} is not provided`, () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       mockFormBody = {
         [EMAIL]: '',
         [PASSWORD]: mockAccount.password,
@@ -28,7 +28,7 @@ describe('shared-validation/email-and-password', () => {
   });
 
   describe(`when ${PASSWORD} is not provided`, () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       mockFormBody = {
         [EMAIL]: mockAccount.email,
         [PASSWORD]: '',

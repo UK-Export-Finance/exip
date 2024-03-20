@@ -24,7 +24,7 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
  */
 const runAssertion = ({ value, errorMessage = errorMessages.INCORRECT_FORMAT }) => {
   const errorIndex = 0;
-  const numberOfExpectedErrors = 2;
+  const numberOfExpectedErrors = 3;
 
   const field = fieldSelector(FIELD_ID);
   cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);

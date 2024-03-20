@@ -19,7 +19,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
     });
 
     describe(`when ${FIELD_ID} is not provided`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         mockBody[FIELD_ID] = '';
 
         const result = rule(mockBody, mockErrors);
@@ -31,7 +31,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
     });
 
     describe(`when ${FIELD_ID} has a decimal`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         mockBody[FIELD_ID] = '1.2';
 
         const result = rule(mockBody, mockErrors);
@@ -43,7 +43,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
     });
 
     describe(`when ${FIELD_ID} is not a number`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         mockBody[FIELD_ID] = 'invalid';
 
         const result = rule(mockBody, mockErrors);
@@ -55,7 +55,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
     });
 
     describe(`when ${FIELD_ID} is below the minimum`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         mockBody[FIELD_ID] = '0';
 
         const result = rule(mockBody, mockErrors);
@@ -67,7 +67,7 @@ describe('controllers/quote/tell-us-about-your-policy/validation/rules/policy-le
     });
 
     describe(`when ${FIELD_ID} is above the maximum`, () => {
-      it('should return validation error', () => {
+      it('should return a validation error', () => {
         mockBody[FIELD_ID] = '25';
 
         const result = rule(mockBody, mockErrors);

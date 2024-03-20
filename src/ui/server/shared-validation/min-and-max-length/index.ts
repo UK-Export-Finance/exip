@@ -1,6 +1,5 @@
 import minLengthValidation from '../min-length';
 import maxLengthValidation from '../max-length';
-import isPopulatedArray from '../../helpers/is-populated-array';
 import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../types';
 
 /**
@@ -18,7 +17,13 @@ import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../type
 const minAndMaxLengthValidation = ({ fieldId, value, errorMessages, errors, minimum, maximum }: ValidationMinAndMaxLengthParams): ValidationErrors => {
   const minValidation = minLengthValidation(value, fieldId, errorMessages.BELOW_MINIMUM, errors, minimum);
 
-  if (isPopulatedArray(minValidation.summary)) {
+  /**
+   * This condition is required to ensure that "minimum" validation errors are returned,
+   * but only if the validation errors has a matching field ID.
+   * Without this, this would return "minimum" validation errors for a different field,
+   * that is unrelated to the provided field ID>
+   */
+  if (minValidation?.errorList && minValidation?.errorList[fieldId]) {
     return minValidation;
   }
 

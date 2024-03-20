@@ -8,7 +8,7 @@ describe('shared-validation/max-length', () => {
   const maximum = 10;
 
   describe('when the field over the maximum number of characters', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockFormBody = {
         [mockFieldId]: 'a'.repeat(maximum + 1),
       };

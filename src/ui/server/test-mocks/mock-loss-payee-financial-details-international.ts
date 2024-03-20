@@ -5,8 +5,8 @@ const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 
 const mockLossPayeeFinancialDetailsInternational = {
   [BIC_SWIFT_CODE]: 'BKENGB2L123',
-  [IBAN]: '1234567890123456',
-  [FINANCIAL_ADDRESS]: 'mock address',
+  [IBAN]: 'GB33BUKB20201555555555',
+  [FINANCIAL_ADDRESS]: 'Mock international financial address',
 };
 
 export default mockLossPayeeFinancialDetailsInternational;
