@@ -22,7 +22,7 @@
     "test-watch": "jest --watchAll --notify --coverage --verbose --config=jest.config.js --detectOpenHandles"
   },
   "dependencies": {
-    "@babel/core": "^7.24.1",
+    "@babel/core": "^7.24.3",
     "@babel/plugin-transform-runtime": "^7.24.1",
     "@babel/preset-env": "^7.24.1",
     "@ministryofjustice/frontend": "^2.1.2",
