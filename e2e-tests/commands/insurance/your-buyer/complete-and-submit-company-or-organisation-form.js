@@ -15,8 +15,6 @@ const { BUYER } = mockApplication;
  * Complete and submit the "company or organisation" form.
  * @param {String} buyerName: Buyer name
  * @param {String} buyerAddress: Buyer address
- * @param {String} firstName: Buyer first name
- * @param {String} lastName: Buyer last name
  */
 const completeAndSubmitCompanyOrOrganisationForm = ({
   buyerName = BUYER[NAME],
