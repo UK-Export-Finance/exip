@@ -6,7 +6,7 @@ const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 const mockLossPayeeFinancialDetailsUk = {
   [ACCOUNT_NUMBER]: '123456',
   [SORT_CODE]: '123456',
-  [FINANCIAL_ADDRESS]: 'mock address',
+  [FINANCIAL_ADDRESS]: 'Mock UK financial address',
 };
 
 export default mockLossPayeeFinancialDetailsUk;

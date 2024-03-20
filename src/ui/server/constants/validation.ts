@@ -2,6 +2,7 @@ export const MINIMUM_CHARACTERS = {
   SORT_CODE: 6,
   ACCOUNT_NUMBER: 6,
   BIC_SWIFT_CODE: 8,
+  IBAN: 16,
 };
 
 export const MAXIMUM_CHARACTERS = {
@@ -9,4 +10,5 @@ export const MAXIMUM_CHARACTERS = {
   SORT_CODE: 6,
   ACCOUNT_NUMBER: 8,
   BIC_SWIFT_CODE: 11,
+  IBAN: 34,
 };
