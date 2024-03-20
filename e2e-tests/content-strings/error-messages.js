@@ -319,6 +319,12 @@ export const ERROR_MESSAGES = {
         BELOW_MINIMUM: 'Sort code must be 6 digits',
         ABOVE_MAXIMUM: 'Sort code must be 6 digits',
       },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL.BIC_SWIFT_CODE]: {
+        IS_EMPTY: 'Enter a BIC or SWIFT code',
+        INCORRECT_FORMAT: 'Enter a valid BIC or SWIFT code like BKENGB2L123',
+        BELOW_MINIMUM: 'BIC or SWIFT code must be between 8 and 11 digits',
+        ABOVE_MAXIMUM: 'BIC or SWIFT code must be between 8 and 11 digits',
+      },
       [FIELD_IDS.INSURANCE.POLICY.FINANCIAL_ADDRESS]: {
         IS_EMPTY: 'Enter the banks address',
         ABOVE_MAXIMUM: `The bank's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,

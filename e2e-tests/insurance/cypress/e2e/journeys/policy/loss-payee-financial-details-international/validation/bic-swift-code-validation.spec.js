@@ -1,5 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { financialAddressFieldValidation } from '../../../../../../../shared-test-assertions';
+import { bicSwiftCodeFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -10,7 +10,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Loss Payee Financial Details International - Financial address - Validation', () => {
+context('Insurance - Policy - Loss Payee Financial Details International - BIC/SWIFT code - Validation', () => {
   let referenceNumber;
   let url;
 
@@ -46,8 +46,5 @@ context('Insurance - Policy - Loss Payee Financial Details International - Finan
     cy.deleteApplication(referenceNumber);
   });
 
-  financialAddressFieldValidation({
-    errorIndex: 1,
-    numberOfExpectedErrors: 2,
-  });
+  bicSwiftCodeFieldValidation();
 });

@@ -2,7 +2,7 @@ import Joi from 'joi';
 import { PhoneNumberUtil } from 'google-libphonenumber';
 import generateValidationErrors from '../../helpers/validation';
 import { DEFAULT_COUNTRY_UK } from '../../constants';
-import isAboveMaxLength from '../../helpers/is-above-max-length';
+import { isAboveMaxLength } from '../../helpers/string';
 
 const phoneUtil = PhoneNumberUtil.getInstance();
 

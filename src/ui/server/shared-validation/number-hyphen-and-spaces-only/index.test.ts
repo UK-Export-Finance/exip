@@ -12,7 +12,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     [FIELD_ID]: '11-22-33',
   } as RequestBody;
 
-  describe('invalid field value', () => {
+  describe('invalid field values', () => {
     describe('when a value is not provided', () => {
       it('should return a validation errors', () => {
         const mockEmptyBody = {};
@@ -74,7 +74,7 @@ describe('shared-validation/number-hyphen-and-spaces-only', () => {
     });
   });
 
-  describe('valid field value', () => {
+  describe('valid field values', () => {
     describe('when the provided value is at minimum/maximum', () => {
       it('should return provided errors object', () => {
         mockBody[FIELD_ID] = '11-22-33';
