@@ -1,8 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import {
-  FULL_ADDRESS_MULTI_LINE_STRING,
-  FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+  MULTI_LINE_STRING,
+  EXPECTED_MULTI_LINE_STRING,
 } from '../../../../../constants';
 
 const {
@@ -47,7 +47,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
     cy.deleteApplication(referenceNumber);
   });
 
-  // TODO: rename FULL_ADDRESS_MULTI_LINE_STRING to not be address specific.
+  // TODO: rename MULTI_LINE_STRING to not be address specific.
 
   describe(CREDIT_PERIOD_WITH_BUYER, () => {
     describe('when submitting the textarea field with new lines va the `enter` key and going back to the page', () => {
@@ -58,7 +58,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
 
         cy.completeAndSubmitPreCreditPeriodForm({
           needPreCreditPeriod: true,
-          description: FULL_ADDRESS_MULTI_LINE_STRING,
+          description: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -67,7 +67,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: CREDIT_PERIOD_WITH_BUYER,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });
@@ -81,7 +81,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
         cy.navigateToUrl(brokerDetailsUrl);
 
         cy.completeAndSubmitBrokerDetailsForm({
-          fullAddress: FULL_ADDRESS_MULTI_LINE_STRING,
+          fullAddress: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -90,7 +90,7 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: FULL_ADDRESS,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });

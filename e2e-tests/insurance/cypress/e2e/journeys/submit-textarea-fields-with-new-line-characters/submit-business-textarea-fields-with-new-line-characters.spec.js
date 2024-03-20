@@ -1,8 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../constants/field-ids/insurance/business';
 import {
-  FULL_ADDRESS_MULTI_LINE_STRING,
-  FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+  MULTI_LINE_STRING,
+  EXPECTED_MULTI_LINE_STRING,
 } from '../../../../../constants';
 
 const {
@@ -48,7 +48,7 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
         cy.navigateToUrl(alternativeTradingAddressUrl);
 
         cy.completeAndSubmitAlternativeTradingAddressForm({
-          address: FULL_ADDRESS_MULTI_LINE_STRING,
+          address: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -57,7 +57,7 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: FULL_ADDRESS,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });

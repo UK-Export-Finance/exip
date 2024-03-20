@@ -1,8 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT as EXPORT_CONTRACT_FIELD_IDS } from '../../../../../constants/field-ids/insurance/export-contract';
 import {
-  FULL_ADDRESS_MULTI_LINE_STRING,
-  FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+  MULTI_LINE_STRING,
+  EXPECTED_MULTI_LINE_STRING,
 } from '../../../../../constants';
 
 const {
@@ -45,7 +45,7 @@ context('Insurance - Textarea fields - `Export contract` textarea fields should 
         cy.navigateToUrl(aboutGoodsOrServicesUrl);
 
         cy.completeAndSubmitAboutGoodsOrServicesForm({
-          description: FULL_ADDRESS_MULTI_LINE_STRING,
+          description: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -54,7 +54,7 @@ context('Insurance - Textarea fields - `Export contract` textarea fields should 
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: DESCRIPTION,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });

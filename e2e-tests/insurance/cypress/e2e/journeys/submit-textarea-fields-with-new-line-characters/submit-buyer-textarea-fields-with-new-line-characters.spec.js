@@ -1,8 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { YOUR_BUYER as BUYER_FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
 import {
-  FULL_ADDRESS_MULTI_LINE_STRING,
-  FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+  MULTI_LINE_STRING,
+  EXPECTED_MULTI_LINE_STRING,
 } from '../../../../../constants';
 
 const {
@@ -49,7 +49,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
         cy.navigateToUrl(companyOrganisationUrl);
 
         cy.completeAndSubmitCompanyOrOrganisationForm({
-          buyerAddress: FULL_ADDRESS_MULTI_LINE_STRING,
+          buyerAddress: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -58,7 +58,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: ADDRESS,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });
@@ -73,7 +73,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
 
         cy.completeAndSubmitConnectionToTheBuyerForm({
           hasConnectionToBuyer: true,
-          description: FULL_ADDRESS_MULTI_LINE_STRING,
+          description: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -82,7 +82,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: CONNECTION_WITH_BUYER_DESCRIPTION,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });
@@ -97,7 +97,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
 
         cy.completeCreditInsuranceCoverForm({
           hasHadCreditInsuranceCover: true,
-          creditInsuranceCoverDescription: FULL_ADDRESS_MULTI_LINE_STRING,
+          creditInsuranceCoverDescription: MULTI_LINE_STRING,
         });
 
         cy.clickBackLink();
@@ -106,14 +106,9 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
       it('should render new line characters exactly as they were submitted', () => {
         cy.checkTextareaValue({
           fieldId: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-          expectedValue: FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });
   });
-
-  // TODO:
-  //
-
-  // cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 });

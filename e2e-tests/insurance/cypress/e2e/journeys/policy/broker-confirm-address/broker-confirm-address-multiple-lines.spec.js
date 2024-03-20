@@ -1,7 +1,7 @@
 import { insetTextHtml } from '../../../../../../pages/shared';
 import {
-  FULL_ADDRESS_MULTI_LINE_STRING,
-  FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING,
+  MULTI_LINE_STRING,
+  EXPECTED_MULTI_LINE_STRING,
 } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -36,7 +36,7 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
       cy.completeAndSubmitBrokerDetailsForm({
-        fullAddress: FULL_ADDRESS_MULTI_LINE_STRING,
+        fullAddress: MULTI_LINE_STRING,
       });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
@@ -53,6 +53,6 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
   });
 
   it(`renders ${FULL_ADDRESS} exactly as they were submitted`, () => {
-    cy.checkText(insetTextHtml(), FULL_ADDRESS_EXPECTED_MULTI_LINE_STRING);
+    cy.checkText(insetTextHtml(), EXPECTED_MULTI_LINE_STRING);
   });
 });
