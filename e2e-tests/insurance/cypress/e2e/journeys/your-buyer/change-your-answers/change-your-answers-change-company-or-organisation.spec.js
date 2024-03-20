@@ -1,7 +1,7 @@
 import { WEBSITE_EXAMPLES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { field, summaryList } from '../../../../../../pages/shared';
+import { field as fieldSelector, summaryList } from '../../../../../../pages/shared';
 import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
@@ -71,7 +71,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
       });
@@ -107,7 +107,9 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        const field = fieldSelector(fieldId);
+
+        cy.keyboardInput(field.textarea(), newAnswer);
 
         cy.clickSubmitButton();
       });
@@ -153,7 +155,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
       });
@@ -189,7 +191,7 @@ context('Insurance - Your buyer - Change your answers - Company or organisation 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
       });

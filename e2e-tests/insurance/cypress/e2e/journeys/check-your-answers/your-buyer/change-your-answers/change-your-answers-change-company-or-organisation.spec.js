@@ -1,5 +1,5 @@
 import {
-  field,
+  field as fieldSelector,
   status,
   summaryList,
 } from '../../../../../../../pages/shared';
@@ -102,7 +102,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = 'Test name 2';
-        cy.changeAnswerField(fieldVariables, field(fieldId).input());
+        cy.changeAnswerField(fieldVariables, fieldSelector(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -141,8 +141,11 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
 
         summaryList.field(fieldId).changeLink().click();
 
+        const field = fieldSelector(fieldId);
+        const textareaField = { ...field, input: field.textarea };
+
         fieldVariables.newValueInput = 'Address test 2';
-        cy.changeAnswerField(fieldVariables, field(fieldId).input());
+        cy.changeAnswerField(fieldVariables, textareaField.input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -191,7 +194,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = '99999';
-        cy.changeAnswerField(fieldVariables, field(fieldId).input());
+        cy.changeAnswerField(fieldVariables, fieldSelector(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -231,7 +234,7 @@ context('Insurance - Check your answers - Company or organisation - Your buyer p
         summaryList.field(fieldId).changeLink().click();
 
         fieldVariables.newValueInput = WEBSITE_EXAMPLES.VALID_UKEF;
-        cy.changeAnswerField(fieldVariables, field(fieldId).input());
+        cy.changeAnswerField(fieldVariables, fieldSelector(fieldId).input());
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {

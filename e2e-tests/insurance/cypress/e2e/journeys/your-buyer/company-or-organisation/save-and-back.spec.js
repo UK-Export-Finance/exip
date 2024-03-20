@@ -86,7 +86,12 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.startInsuranceYourBuyerSection({});
 
       cy.checkValue(field(NAME), BUYER[NAME]);
-      cy.checkValue(field(ADDRESS), '');
+
+      cy.checkTextareaValue({
+        fieldId: ADDRESS,
+        expectedValue: '',
+      });
+
       cy.checkValue(field(REGISTRATION_NUMBER), '');
       cy.checkValue(field(WEBSITE), '');
     });
@@ -96,10 +101,7 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.keyboardInput(field(NAME).input(), BUYER[NAME]);
-      cy.keyboardInput(field(ADDRESS).input(), BUYER[ADDRESS]);
-      cy.keyboardInput(field(REGISTRATION_NUMBER).input(), BUYER[REGISTRATION_NUMBER]);
-      cy.keyboardInput(field(WEBSITE).input(), BUYER[WEBSITE]);
+      cy.completeCompanyOrOrganisationForm({});
 
       cy.clickSaveAndBackButton();
     });
@@ -115,7 +117,11 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
     it('should retain all inputs on the page', () => {
       cy.startInsuranceYourBuyerSection({});
 
-      cy.checkValue(field(ADDRESS), BUYER[ADDRESS]);
+      cy.checkTextareaValue({
+        fieldId: ADDRESS,
+        expectedValue: BUYER[ADDRESS],
+      });
+
       cy.checkValue(field(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
       cy.checkValue(field(WEBSITE), BUYER[WEBSITE]);
     });
