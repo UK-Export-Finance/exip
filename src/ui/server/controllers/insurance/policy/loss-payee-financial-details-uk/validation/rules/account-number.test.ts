@@ -1,6 +1,6 @@
 import accountNumberRules, { MINIMUM, MAXIMUM } from './account-number';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import wholeNumberMinimumMaximumLength from '../../../../../../shared-validation/whole-number-minimum-maximum-length';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';

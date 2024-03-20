@@ -1,5 +1,5 @@
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../constants';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import numberHyphenSpacesOnlyValidation from '../../../../../../shared-validation/number-hyphen-and-spaces-only';
 import { RequestBody } from '../../../../../../../types';
