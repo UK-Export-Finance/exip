@@ -1,4 +1,4 @@
-import { APPLICATION, ELIGIBILITY, FIELD_VALUES } from '../../../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 
@@ -183,12 +183,12 @@ export const POLICY_FIELDS = {
     },
   },
   [CREDIT_PERIOD_WITH_BUYER]: {
-    MAXIMUM: 1000,
     LABEL: 'What period of pre-credit cover do you require?',
     SUMMARY: {
       TITLE: 'Period of pre-credit cover',
       FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY,
     },
+    MAXIMUM: MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER,
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [REQUESTED]: {
@@ -237,6 +237,7 @@ export const POLICY_FIELDS = {
         TITLE: "Broker's address",
         FORM_TITLE: POLICY_FORM_TITLES.BROKER,
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
   },
   LOSS_PAYEE: {
@@ -291,5 +292,6 @@ export const POLICY_FIELDS = {
   },
   FINANCIAL_ADDRESS: {
     LABEL: 'Bank address',
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
   },
 };

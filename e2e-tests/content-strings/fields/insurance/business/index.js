@@ -1,3 +1,4 @@
+import { MAXIMUM_CHARACTERS } from '../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { SYMBOLS } from '../../../../fixtures/currencies';
 import { FORM_TITLES } from '../../../form-titles';
@@ -39,6 +40,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
         TITLE: 'Different trading address',
         FORM_TITLE: COMPANY_DETAILS,
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
     [WEBSITE]: {
       SUMMARY: {
@@ -61,6 +63,7 @@ export const EXPORTER_BUSINESS_FIELDS = {
       TITLE: 'Different trading address',
       FORM_TITLE: COMPANY_DETAILS,
     },
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
   },
   NATURE_OF_YOUR_BUSINESS: {
     [GOODS_OR_SERVICES]: {

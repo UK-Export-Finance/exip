@@ -5,7 +5,7 @@ import { PAGES } from '../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
@@ -102,7 +102,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
           field(fieldId).label().should('not.be.visible');
         });
 
-        it('should not render a visible input', () => {
+        it('should not render a visible textarea', () => {
           field(fieldId).textarea().should('not.be.visible');
         });
       });
@@ -112,12 +112,14 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
           cy.clickYesRadioInput();
         });
 
-        it('renders a label', () => {
-          cy.checkText(field(fieldId).label(), FIELDS[fieldId].LABEL);
-        });
+        it('renders a textarea', () => {
+          const fieldStrings = FIELD_STRINGS[fieldId];
 
-        it('renders a visible input', () => {
-          field(fieldId).textarea().should('be.visible');
+          cy.assertTextareaRendering({
+            fieldId,
+            expectedLabel: fieldStrings.LABEL,
+            maximumCharacters: fieldStrings.MAXIMUM,
+          });
         });
       });
     });

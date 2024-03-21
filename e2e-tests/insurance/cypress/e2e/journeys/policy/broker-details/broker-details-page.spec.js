@@ -100,12 +100,15 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
       field.input().should('exist');
     });
 
-    it(`renders ${FULL_ADDRESS} label and textarea`, () => {
+    it(`renders ${FULL_ADDRESS} textarea`, () => {
       const fieldId = FULL_ADDRESS;
-      const field = fieldSelector(fieldId);
+      const fieldStrings = FIELD_STRINGS[fieldId];
 
-      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
-      field.textarea().should('exist');
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
     it('renders a `save and back` button', () => {

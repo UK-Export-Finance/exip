@@ -20,6 +20,8 @@ Cypress.Commands.add('assertNoRadioOptionIsNotChecked', require('./assert-no-rad
 
 Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
+Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rendering'));
+Cypress.Commands.add('assertDynamicCharacterCount', require('./assert-dynamic-character-count'));
 
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
 Cypress.Commands.add('checkLink', require('./check-link'));
