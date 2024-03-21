@@ -103,27 +103,25 @@ model CoverPeriod {
 }
 
 model LossPayeeFinancialInternational {
-  id               String              @id @default(cuid())
-  lossPayee        NominatedLossPayee? @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
-  lossPayeeId      String?             @unique @map("lossPayee")
-  bankAddressSalt  String              @default("")
-  bankAddressHash  String              @default("")
-  bicSwiftCodeSalt String              @default("")
-  bicSwiftCodeHash String              @default("")
-  ibanSalt         String              @default("")
-  ibanHash         String              @default("")
+  id                 String              @id @default(cuid())
+  lossPayee          NominatedLossPayee? @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId        String?             @unique @map("lossPayee")
+  bankAddress        String              @default("") @mysql.VarChar(500)
+  bicSwiftCode       String              @default("")
+  bicSwiftCodeVector String              @default("")
+  iban               String              @default("")
+  ibanVector         String              @default("")
 }
 
 model LossPayeeFinancialUk {
-  id                String              @id @default(cuid())
-  lossPayee         NominatedLossPayee? @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
-  lossPayeeId       String?             @unique @map("lossPayee")
-  accountNumberSalt String              @default("")
-  accountNumberHash String              @default("")
-  bankAddressSalt   String              @default("")
-  bankAddressHash   String              @default("")
-  sortCodeSalt      String              @default("")
-  sortCodeHash      String              @default("")
+  id                  String              @id @default(cuid())
+  lossPayee           NominatedLossPayee? @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId         String?             @unique @map("lossPayee")
+  accountNumber       String              @default("")
+  accountNumberVector String              @default("")
+  bankAddress         String              @default("") @mysql.VarChar(500)
+  sortCode            String              @default("")
+  sortCodeVector      String              @default("")
 }
 
 model NominatedLossPayee {

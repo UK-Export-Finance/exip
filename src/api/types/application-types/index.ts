@@ -88,22 +88,20 @@ export interface ApplicationNominatedLossPayee extends Relationship {
 
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
   lossPayeeId?: string;
-  bankAddressSalt?: string;
-  bankAddressHash?: string;
-  bicSwiftCodeSalt?: string;
-  bicSwiftCodeHash?: string;
-  ibanSalt?: string;
-  ibanHash?: string;
+  bankAddress?: string;
+  bicSwiftCode?: string;
+  bicSwiftCodeVector?: string;
+  iban?: string;
+  ibanVector?: string;
 }
 
 export interface ApplicationLossPayeeFinancialUk extends Relationship {
   lossPayeeId?: string;
-  accountNumberSalt?: string;
-  accountNumberHash?: string;
-  bankAddressSalt?: string;
-  bankAddressHash?: string;
-  sortCodeSalt?: string;
-  sortCodeHash?: string;
+  accountNumber?: string;
+  accountNumberVector?: string;
+  bankAddress?: string;
+  sortCode?: string;
+  sortCodeVector?: string;
 }
 
 export interface TotalContractValue extends Relationship {

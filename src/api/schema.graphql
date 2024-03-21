@@ -487,12 +487,11 @@ input CoverPeriodCreateInput {
 type LossPayeeFinancialInternational {
   id: ID!
   lossPayee: NominatedLossPayee
-  bankAddressSalt: String
-  bankAddressHash: String
-  bicSwiftCodeSalt: String
-  bicSwiftCodeHash: String
-  ibanSalt: String
-  ibanHash: String
+  bankAddress: String
+  bicSwiftCode: String
+  bicSwiftCodeVector: String
+  iban: String
+  ibanVector: String
 }
 
 input LossPayeeFinancialInternationalWhereUniqueInput {
@@ -505,32 +504,29 @@ input LossPayeeFinancialInternationalWhereInput {
   NOT: [LossPayeeFinancialInternationalWhereInput!]
   id: IDFilter
   lossPayee: NominatedLossPayeeWhereInput
-  bankAddressSalt: StringFilter
-  bankAddressHash: StringFilter
-  bicSwiftCodeSalt: StringFilter
-  bicSwiftCodeHash: StringFilter
-  ibanSalt: StringFilter
-  ibanHash: StringFilter
+  bankAddress: StringFilter
+  bicSwiftCode: StringFilter
+  bicSwiftCodeVector: StringFilter
+  iban: StringFilter
+  ibanVector: StringFilter
 }
 
 input LossPayeeFinancialInternationalOrderByInput {
   id: OrderDirection
-  bankAddressSalt: OrderDirection
-  bankAddressHash: OrderDirection
-  bicSwiftCodeSalt: OrderDirection
-  bicSwiftCodeHash: OrderDirection
-  ibanSalt: OrderDirection
-  ibanHash: OrderDirection
+  bankAddress: OrderDirection
+  bicSwiftCode: OrderDirection
+  bicSwiftCodeVector: OrderDirection
+  iban: OrderDirection
+  ibanVector: OrderDirection
 }
 
 input LossPayeeFinancialInternationalUpdateInput {
   lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
-  bankAddressSalt: String
-  bankAddressHash: String
-  bicSwiftCodeSalt: String
-  bicSwiftCodeHash: String
-  ibanSalt: String
-  ibanHash: String
+  bankAddress: String
+  bicSwiftCode: String
+  bicSwiftCodeVector: String
+  iban: String
+  ibanVector: String
 }
 
 input LossPayeeFinancialInternationalUpdateArgs {
@@ -540,23 +536,21 @@ input LossPayeeFinancialInternationalUpdateArgs {
 
 input LossPayeeFinancialInternationalCreateInput {
   lossPayee: NominatedLossPayeeRelateToOneForCreateInput
-  bankAddressSalt: String
-  bankAddressHash: String
-  bicSwiftCodeSalt: String
-  bicSwiftCodeHash: String
-  ibanSalt: String
-  ibanHash: String
+  bankAddress: String
+  bicSwiftCode: String
+  bicSwiftCodeVector: String
+  iban: String
+  ibanVector: String
 }
 
 type LossPayeeFinancialUk {
   id: ID!
   lossPayee: NominatedLossPayee
-  accountNumberSalt: String
-  accountNumberHash: String
-  bankAddressSalt: String
-  bankAddressHash: String
-  sortCodeSalt: String
-  sortCodeHash: String
+  accountNumber: String
+  accountNumberVector: String
+  bankAddress: String
+  sortCode: String
+  sortCodeVector: String
 }
 
 input LossPayeeFinancialUkWhereUniqueInput {
@@ -569,32 +563,29 @@ input LossPayeeFinancialUkWhereInput {
   NOT: [LossPayeeFinancialUkWhereInput!]
   id: IDFilter
   lossPayee: NominatedLossPayeeWhereInput
-  accountNumberSalt: StringFilter
-  accountNumberHash: StringFilter
-  bankAddressSalt: StringFilter
-  bankAddressHash: StringFilter
-  sortCodeSalt: StringFilter
-  sortCodeHash: StringFilter
+  accountNumber: StringFilter
+  accountNumberVector: StringFilter
+  bankAddress: StringFilter
+  sortCode: StringFilter
+  sortCodeVector: StringFilter
 }
 
 input LossPayeeFinancialUkOrderByInput {
   id: OrderDirection
-  accountNumberSalt: OrderDirection
-  accountNumberHash: OrderDirection
-  bankAddressSalt: OrderDirection
-  bankAddressHash: OrderDirection
-  sortCodeSalt: OrderDirection
-  sortCodeHash: OrderDirection
+  accountNumber: OrderDirection
+  accountNumberVector: OrderDirection
+  bankAddress: OrderDirection
+  sortCode: OrderDirection
+  sortCodeVector: OrderDirection
 }
 
 input LossPayeeFinancialUkUpdateInput {
   lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
-  accountNumberSalt: String
-  accountNumberHash: String
-  bankAddressSalt: String
-  bankAddressHash: String
-  sortCodeSalt: String
-  sortCodeHash: String
+  accountNumber: String
+  accountNumberVector: String
+  bankAddress: String
+  sortCode: String
+  sortCodeVector: String
 }
 
 input LossPayeeFinancialUkUpdateArgs {
@@ -604,12 +595,11 @@ input LossPayeeFinancialUkUpdateArgs {
 
 input LossPayeeFinancialUkCreateInput {
   lossPayee: NominatedLossPayeeRelateToOneForCreateInput
-  accountNumberSalt: String
-  accountNumberHash: String
-  bankAddressSalt: String
-  bankAddressHash: String
-  sortCodeSalt: String
-  sortCodeHash: String
+  accountNumber: String
+  accountNumberVector: String
+  bankAddress: String
+  sortCode: String
+  sortCodeVector: String
 }
 
 type NominatedLossPayee {

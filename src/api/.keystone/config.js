@@ -1106,24 +1106,26 @@ var lists = {
   LossPayeeFinancialInternational: {
     fields: {
       lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialInternational" }),
-      bankAddressSalt: (0, import_fields.text)(),
-      bankAddressHash: (0, import_fields.text)(),
-      bicSwiftCodeSalt: (0, import_fields.text)(),
-      bicSwiftCodeHash: (0, import_fields.text)(),
-      ibanSalt: (0, import_fields.text)(),
-      ibanHash: (0, import_fields.text)()
+      bankAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      bicSwiftCode: (0, import_fields.text)(),
+      bicSwiftCodeVector: (0, import_fields.text)(),
+      iban: (0, import_fields.text)(),
+      ibanVector: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },
   LossPayeeFinancialUk: {
     fields: {
       lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialUk" }),
-      accountNumberSalt: (0, import_fields.text)(),
-      accountNumberHash: (0, import_fields.text)(),
-      bankAddressSalt: (0, import_fields.text)(),
-      bankAddressHash: (0, import_fields.text)(),
-      sortCodeSalt: (0, import_fields.text)(),
-      sortCodeHash: (0, import_fields.text)()
+      accountNumber: (0, import_fields.text)(),
+      accountNumberVector: (0, import_fields.text)(),
+      bankAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      sortCode: (0, import_fields.text)(),
+      sortCodeVector: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },

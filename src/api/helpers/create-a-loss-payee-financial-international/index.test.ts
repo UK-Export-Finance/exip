@@ -36,12 +36,11 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
     const lossPayeeFinancialUk = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
     expect(lossPayeeFinancialUk.lossPayeeId).toEqual(nominatedLossPayee.id);
-    expect(lossPayeeFinancialUk.bicSwiftCodeSalt).toEqual('');
-    expect(lossPayeeFinancialUk.bicSwiftCodeHash).toEqual('');
-    expect(lossPayeeFinancialUk.ibanSalt).toEqual('');
-    expect(lossPayeeFinancialUk.ibanHash).toEqual('');
-    expect(lossPayeeFinancialUk.bankAddressSalt).toEqual('');
-    expect(lossPayeeFinancialUk.bankAddressHash).toEqual('');
+    expect(lossPayeeFinancialUk.bicSwiftCode).toEqual('');
+    expect(lossPayeeFinancialUk.bicSwiftCodeVector).toEqual('');
+    expect(lossPayeeFinancialUk.iban).toEqual('');
+    expect(lossPayeeFinancialUk.ibanVector).toEqual('');
+    expect(lossPayeeFinancialUk.bankAddress).toEqual('');
   });
 
   describe('when an invalid nominated loss payee ID is passed', () => {

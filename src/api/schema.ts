@@ -248,24 +248,26 @@ export const lists = {
   LossPayeeFinancialInternational: {
     fields: {
       lossPayee: relationship({ ref: 'NominatedLossPayee.financialInternational' }),
-      bankAddressSalt: text(),
-      bankAddressHash: text(),
-      bicSwiftCodeSalt: text(),
-      bicSwiftCodeHash: text(),
-      ibanSalt: text(),
-      ibanHash: text(),
+      bankAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      bicSwiftCode: text(),
+      bicSwiftCodeVector: text(),
+      iban: text(),
+      ibanVector: text(),
     },
     access: allowAll,
   },
   LossPayeeFinancialUk: {
     fields: {
       lossPayee: relationship({ ref: 'NominatedLossPayee.financialUk' }),
-      accountNumberSalt: text(),
-      accountNumberHash: text(),
-      bankAddressSalt: text(),
-      bankAddressHash: text(),
-      sortCodeSalt: text(),
-      sortCodeHash: text(),
+      accountNumber: text(),
+      accountNumberVector: text(),
+      bankAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      sortCode: text(),
+      sortCodeVector: text(),
     },
     access: allowAll,
   },
