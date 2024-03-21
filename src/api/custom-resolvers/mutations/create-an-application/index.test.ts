@@ -55,7 +55,7 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.referenceNumber).toEqual(expected);
   });
 
-  test('it should application relationships', async () => {
+  test('it should return application relationships', async () => {
     result = await createAnApplication({}, variables, context);
 
     const application = await applications.get({ context, applicationId: result.id });
