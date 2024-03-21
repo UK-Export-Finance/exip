@@ -112,7 +112,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
           cy.clickYesRadioInput();
         });
 
-        it('renders a textarea', () => {
+        it('should render a textarea', () => {
           const fieldStrings = FIELD_STRINGS[fieldId];
 
           cy.assertTextareaRendering({
