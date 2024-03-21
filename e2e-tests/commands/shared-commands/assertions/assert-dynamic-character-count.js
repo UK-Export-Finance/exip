@@ -1,3 +1,5 @@
+import { CHARACTER_COUNT } from '../../../content-strings';
+
 /**
  * assertDynamicCharacterCount
  * Assert a dynamic character count.
@@ -6,32 +8,22 @@
  * @param {String} field: Field selector
  * @param {Integer} maximum: Maximum characters allowed
  */
-
-// TODO: content strings
-// TODO: can we use check-text or something better here?
-// TODO:
-// TODO:
 const assertDynamicCharacterCount = ({ field, maximum }) => {
-  // let expectedMaximum = maximum;
-
-  // if (maximum > 999) {
-  //   expectedMaximum = maximum.toLocaleString();
-  // }
   const expectedMaximum = maximum.toLocaleString();
 
-  field.characterCount('text').should('have.text', `You have ${expectedMaximum} characters remaining`);
+  field.characterCount('text').should('have.text', CHARACTER_COUNT(expectedMaximum));
 
   cy.keyboardInput(
     field.textarea(),
     'a',
   );
 
-  // const expectedMaximumAfterEdit = Number(expectedMaximum) - 1;
-  const minusOne = maximum - 1;
+  // const minusOne = maximum - 1;
 
-  const expectedMaximumAfterEdit = minusOne.toLocaleString();
+  // const expectedMaximumAfterEdit = minusOne.toLocaleString();
+  const expectedMaximumAfterEdit = Number(maximum - 1).toLocaleString();
 
-  field.characterCount('text').should('have.text', `You have ${expectedMaximumAfterEdit} characters remaining`);
+  field.characterCount('text').should('have.text', CHARACTER_COUNT(expectedMaximumAfterEdit));
 };
 
 export default assertDynamicCharacterCount;
