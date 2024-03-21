@@ -33,10 +33,10 @@ describe('helpers/create-a-nominated-loss-payee', () => {
     const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
 
     expect(nominatedLossPayee.applicationId).toEqual(application.id);
-    expect(nominatedLossPayee.isAppointed).toEqual(null);
+    expect(nominatedLossPayee.isAppointed).toBeNull();
     expect(nominatedLossPayee.name).toEqual('');
-    expect(nominatedLossPayee.isLocatedInUk).toEqual(null);
-    expect(nominatedLossPayee.isLocatedInternationally).toEqual(null);
+    expect(nominatedLossPayee.isLocatedInUk).toBeNull();
+    expect(nominatedLossPayee.isLocatedInternationally).toBeNull();
   });
 
   describe('when an invalid application ID is passed', () => {

@@ -106,7 +106,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   test(`should nullify ${REACTIVATION_EXPIRY} from the account`, () => {
-    expect(account[REACTIVATION_EXPIRY]).toEqual(null);
+    expect(account[REACTIVATION_EXPIRY]).toBeNull();
   });
 
   test('should remove all entries for the account in the AuthenticationRetry table', async () => {

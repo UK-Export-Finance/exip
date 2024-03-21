@@ -45,7 +45,7 @@ describe('helpers/create-an-export-contract', () => {
   test('it should return empty privateMarket fields', async () => {
     const { privateMarket } = await createAnExportContract(context, application.id);
 
-    expect(privateMarket.attempted).toEqual(null);
+    expect(privateMarket.attempted).toBeNull();
     expect(privateMarket.declinedDescription).toEqual('');
   });
 

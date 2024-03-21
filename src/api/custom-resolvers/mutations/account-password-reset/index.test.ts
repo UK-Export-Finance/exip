@@ -99,7 +99,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   test("it should nullify the account's password reset hash and expiry", async () => {
     expect(account.passwordResetHash).toEqual('');
-    expect(account.passwordResetExpiry).toEqual(null);
+    expect(account.passwordResetExpiry).toBeNull();
   });
 
   describe('when the account is blocked', () => {

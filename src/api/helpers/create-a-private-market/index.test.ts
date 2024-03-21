@@ -39,7 +39,7 @@ describe('helpers/create-a-private-market', () => {
   test('it should return empty privateMarket fields and default finalDestinationKnown', async () => {
     const result = await createAPrivateMarket(context, applicationExportContract.id);
 
-    expect(result.attempted).toEqual(null);
+    expect(result.attempted).toBeNull();
     expect(result.declinedDescription).toEqual('');
   });
 

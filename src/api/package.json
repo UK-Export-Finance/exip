@@ -19,13 +19,13 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "start": "keystone start --no-ui",
-    "test": "jest --runInBand --verbose --coverage --config=jest.config.js"
+    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
   },
   "dependencies": {
-    "@babel/core": "^7.24.3",
-    "@babel/plugin-transform-runtime": "^7.24.3",
-    "@babel/preset-env": "^7.24.3",
-    "@babel/preset-typescript": "^7.24.1",
+    "@babel/core": "^7.24.1",
+    "@babel/plugin-transform-runtime": "^7.24.1",
+    "@babel/preset-env": "^7.24.1",
+    "@babel/preset-typescript": "^7.23.3",
     "@graphql-tools/schema": "^10.0.2",
     "@keystone-6/auth": "^7.0.2",
     "@keystone-6/core": "^5.7.2",
