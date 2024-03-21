@@ -14,7 +14,7 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
   } as RequestBody;
 
   describe('when a number is not provided', () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       const mockEmptyBody = {};
 
       const result = wholeNumberMinimumMaximumLength(mockEmptyBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
@@ -26,7 +26,7 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
   });
 
   describe('when the provided number is below minimum length', () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       mockBody[FIELD_ID] = '1';
 
       const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);
@@ -38,7 +38,7 @@ describe('shared-validation/whole-number-minimum-maximum-length', () => {
   });
 
   describe('when the provided number is above maximum length', () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       mockBody[FIELD_ID] = '123456789';
 
       const result = wholeNumberMinimumMaximumLength(mockBody, FIELD_ID, mockErrorMessagesObject, mockErrors, MINIMUM, MAXIMUM);

@@ -28,6 +28,9 @@ const {
   YOUR_BUYER: { CONNECTION_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
 
+const addressField = fieldSelector(ADDRESS);
+const addressTextareaField = { ...addressField, input: addressField.textarea };
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
@@ -95,11 +98,8 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
     });
 
     it(`renders an ${ADDRESS} label, and input`, () => {
-      const fieldId = ADDRESS;
-      const field = fieldSelector(fieldId);
-
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
-      field.input().should('exist');
+      cy.checkText(addressTextareaField.label(), FIELDS.COMPANY_OR_ORGANISATION[ADDRESS].LABEL);
+      addressTextareaField.textarea().should('exist');
     });
 
     it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
@@ -142,7 +142,11 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.checkValue(fieldSelector(ADDRESS), BUYER[ADDRESS]);
+        cy.checkTextareaValue({
+          fieldId: ADDRESS,
+          expectedValue: BUYER[ADDRESS],
+        });
+
         cy.checkValue(fieldSelector(REGISTRATION_NUMBER), BUYER[REGISTRATION_NUMBER]);
         cy.checkValue(fieldSelector(WEBSITE), BUYER[WEBSITE]);
       });

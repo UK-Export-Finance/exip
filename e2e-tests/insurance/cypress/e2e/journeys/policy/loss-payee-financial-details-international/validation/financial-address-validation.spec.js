@@ -47,7 +47,7 @@ context('Insurance - Policy - Loss Payee Financial Details International - Finan
   });
 
   financialAddressFieldValidation({
-    errorIndex: 0,
-    numberOfExpectedErrors: 1,
+    errorIndex: 2,
+    numberOfExpectedErrors: 3,
   });
 });

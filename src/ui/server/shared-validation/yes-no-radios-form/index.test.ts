@@ -7,7 +7,7 @@ describe('shared-validation/yes-no-radios-form', () => {
   const mockErrorMessage = 'mock';
 
   describe('when no values are provided in the formBody', () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       const result = validation({}, FIELD_ID, mockErrorMessage);
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessage);
@@ -17,7 +17,7 @@ describe('shared-validation/yes-no-radios-form', () => {
   });
 
   describe(`when ${FIELD_ID} is not provided`, () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       const result = validation({ incorrectField: true }, FIELD_ID, mockErrorMessage);
 
       const expected = generateValidationErrors(FIELD_ID, mockErrorMessage);

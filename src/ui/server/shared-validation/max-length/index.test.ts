@@ -1,17 +1,15 @@
 import maxLengthValidation from '.';
 import generateValidationErrors from '../../helpers/validation';
-import { mockErrors } from '../../test-mocks';
+import { mockErrors, mockErrorMessagesObject } from '../../test-mocks';
 
-describe('shared-validation/feedback', () => {
-  let mockFormBody = {};
-
+describe('shared-validation/max-length', () => {
   const mockFieldId = 'Mock field';
-  const mockErrorMessage = 'Enter mock field';
+  const mockErrorMessage = mockErrorMessagesObject.ABOVE_MAXIMUM;
   const maximum = 10;
 
-  describe('when the field over maximum number of characters', () => {
-    it('should return validation error', () => {
-      mockFormBody = {
+  describe('when the field is over the maximum number of characters', () => {
+    it('should return a validation error', () => {
+      const mockFormBody = {
         [mockFieldId]: 'a'.repeat(maximum + 1),
       };
 
@@ -25,7 +23,7 @@ describe('shared-validation/feedback', () => {
 
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
-      mockFormBody = {
+      const mockFormBody = {
         [mockFieldId]: 'a',
       };
 

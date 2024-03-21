@@ -14,7 +14,7 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * @param {RequestBody} formBody: Form body
  * @param {String} fieldId: Field ID
  * @param {String} errorMessage: Error message message
- * @param {Object} errors: Object from previous validation errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {Integer} maxLength: Maximum length of characters
  * @returns {Object} Validation errors
  */

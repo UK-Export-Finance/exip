@@ -132,10 +132,8 @@ const post = async (req: Request, res: Response) => {
       [DIFFERENT_TRADING_NAME]: payload[DIFFERENT_TRADING_NAME],
     };
 
-    // run validation on other fields on page
     const validationErrors = companyDetailsValidation(payload);
 
-    // if any errors then render template with errors
     if (isPopulatedArray(Object.keys(validationErrors))) {
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
@@ -151,7 +149,6 @@ const post = async (req: Request, res: Response) => {
       });
     }
 
-    // if no errors, then runs save api call to db
     const saveResponse = await mapAndSave.companyDetails(payload, application);
 
     if (!saveResponse) {

@@ -1,6 +1,5 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as EXPORTER_BUSINESS_FIELD_IDS } from '../../../../../constants/field-ids/insurance/business';
-import { field, backLink } from '../../../../../pages/shared';
 import mockStringWithSpecialCharacters from '../../../../../fixtures/string-with-special-characters';
 
 const {
@@ -49,20 +48,14 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
           address: mockStringWithSpecialCharacters,
         });
 
-        backLink().click();
-
-        cy.assertUrl(alternativeTradingAddressUrl);
+        cy.clickBackLink();
       });
 
       it('should render special characters exactly as they were submitted', () => {
-        const descriptionField = field(FULL_ADDRESS);
-
-        const textareaField = {
-          ...descriptionField,
-          input: descriptionField.textarea,
-        };
-
-        cy.checkValue(textareaField, mockStringWithSpecialCharacters);
+        cy.checkTextareaValue({
+          fieldId: FULL_ADDRESS,
+          expectedValue: mockStringWithSpecialCharacters,
+        });
       });
     });
   });

@@ -13,7 +13,7 @@ const {
  * validates email field
  * checks if response has been provided
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const email = (formBody: RequestBody, errors: object) => emailValidation(FIELD_ID, formBody[FIELD_ID], ERROR_MESSAGES_OBJECT, errors);

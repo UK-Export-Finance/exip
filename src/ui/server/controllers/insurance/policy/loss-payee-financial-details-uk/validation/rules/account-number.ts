@@ -1,6 +1,6 @@
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import wholeNumberMinimumMaximumLength from '../../../../../../shared-validation/whole-number-minimum-maximum-length';
 import { RequestBody } from '../../../../../../../types';
 

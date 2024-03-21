@@ -13,7 +13,7 @@ const { EXPORTER_BUSINESS } = ERROR_MESSAGES.INSURANCE;
 /**
  * validates phone number input is the correct format
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
 const phoneNumber = (formBody: RequestBody, errors: object) => {

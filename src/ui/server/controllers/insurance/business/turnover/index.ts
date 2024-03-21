@@ -60,12 +60,18 @@ const pageVariables = (referenceNumber: number, currencies: Array<Currency>, cur
 
   let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
 
-  // if changeRoute, then URL should be ALTERNATIVE_CURRENCY_CHANGE
+  /**
+   * If changeRoute,
+   * URL should be ALTERNATIVE_CURRENCY_CHANGE
+   */
   if (changeRoute) {
     alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`;
   }
 
-  // if checkAndChangeRoute, then URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+  /**
+   * If checkAndChangeRoute,
+   * URL should be ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE
+   */
   if (checkAndChangeRoute) {
     alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
   }
@@ -189,10 +195,8 @@ const post = async (req: Request, res: Response) => {
 
     const payload = constructPayload(body, FIELD_IDS);
 
-    // run validation on inputs
     const validationErrors = generateValidationErrors(payload);
 
-    // if any errors then render template with errors
     if (validationErrors) {
       const { referenceNumber: applicationReferenceNumber, business } = application;
 

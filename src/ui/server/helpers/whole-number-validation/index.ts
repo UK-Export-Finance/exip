@@ -8,7 +8,7 @@ import { stripCommas } from '../string';
  * if allowNegativeNumbers is set to true, then will return validation error if number below 0.
  * returns validation error if is not a number, has a decimal place or special characters.
  * @param {RequestBody} formBody
- * @param {Object} errors
+ * @param {Object} errors: Other validation errors for the same form
  * @param {string} errorMessage
  * @param {string} field fieldId of the field being checked
  * @param {Boolean} allowNegativeValue false as default, if true then allows for negative numbers below 0.

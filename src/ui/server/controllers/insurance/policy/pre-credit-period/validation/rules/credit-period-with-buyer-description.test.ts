@@ -17,7 +17,7 @@ const {
 
 describe('controllers/insurance/policy/pre-credit-period/validation/rules/credit-period-with-buyer-description', () => {
   describe(`when ${NEED_PRE_CREDIT_PERIOD} is true and ${FIELD_ID} is not provided`, () => {
-    it('should return validation errors', () => {
+    it('should return a validation errors', () => {
       const mockFormBody = {
         [NEED_PRE_CREDIT_PERIOD]: 'true',
         [FIELD_ID]: '',

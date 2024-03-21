@@ -15,7 +15,8 @@ const replaceCharacterCodesWithCharacters = (str?: string): string | null => {
       .replace(/&#x27;/g, "'")
       .replace(/&#x2F;/g, '/')
       .replace(/&#42;/g, '*')
-      .replace(/&amp;/g, '&');
+      .replace(/&amp;/g, '&')
+      .replace(/\r\n/g, '\r');
   }
 
   return null;

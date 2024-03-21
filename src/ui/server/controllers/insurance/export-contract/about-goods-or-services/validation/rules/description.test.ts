@@ -20,7 +20,7 @@ const {
 
 describe('controllers/insurance/export-contract/about-goods-or-services/validation/rules/goods-or-services-description', () => {
   describe('when the field is not provided', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockSubmittedData = {};
 
       const result = goodsOrServicesDescriptionRules(mockSubmittedData, mockErrors);
@@ -32,7 +32,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/validati
   });
 
   describe('when total contract is above the maximum', () => {
-    it('should return validation error', () => {
+    it('should return a validation error', () => {
       const mockSubmittedData = {
         [FIELD_ID]: 'a'.repeat(MAXIMUM + 1),
       };

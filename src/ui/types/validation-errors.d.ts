@@ -1,5 +1,5 @@
 import { RequestBody } from './express';
-import { DateErrorMessage } from './errors';
+import { DateErrorMessage, ErrorMessageObject } from './errors';
 
 interface DateValidationRulesParams {
   formBody: RequestBody;
@@ -30,4 +30,17 @@ interface DateValidationFormatRules {
   errors: ValidationErrors;
 }
 
-export { DateValidationRulesParams, DateValidationFormatRulesParams, DateValidationFormatRules, ValidationErrors };
+interface ValidationMinAndMaxLengthCore {
+  errorMessages: ErrorMessageObject;
+  errors: object;
+  fieldId: string;
+  minimum: number;
+  maximum: number;
+  value: string;
+}
+
+interface ValidationMinAndMaxLengthParams extends ValidationMinAndMaxLengthCore {
+  value: string;
+}
+
+export { DateValidationRulesParams, DateValidationFormatRulesParams, DateValidationFormatRules, ValidationErrors, ValidationMinAndMaxLengthParams };

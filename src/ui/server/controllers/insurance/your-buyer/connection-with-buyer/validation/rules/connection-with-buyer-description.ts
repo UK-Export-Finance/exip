@@ -29,7 +29,6 @@ const MAXIMUM = 1000;
  * @returns {Object} Validation errors
  */
 const connectionWithBuyerDescriptionRule = (formBody: RequestBody, errors: object) => {
-  // if HAS_DIFFERENT_TRADING_NAME radio is yes then check validation
   if (formBody[CONNECTION_WITH_BUYER] === 'true') {
     if (!objectHasProperty(formBody, FIELD_ID)) {
       return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);

@@ -254,6 +254,7 @@ jobs:
             "policy/single-contract-policy/**/*.spec.js",
             "policy/type-of-policy/**/*.spec.js",
             "submit-name-fields-with-special-characters/**/*.spec.js",
+            "submit-textarea-fields-with-new-line-characters/**/*.spec.js",
             "submit-textarea-fields-with-special-characters/**/*.spec.js",
             "task-list/**/*.spec.js",
             "your-business/alternative-trading-address/**/*.spec.js",

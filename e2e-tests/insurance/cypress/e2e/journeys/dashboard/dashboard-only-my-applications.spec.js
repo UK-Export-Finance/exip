@@ -1,5 +1,4 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
-import { backLink } from '../../../../../pages/shared';
 import header from '../../../../../partials/header';
 import { ROUTES } from '../../../../../constants';
 
@@ -75,7 +74,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF c
         secondReferenceNumber = refNumber;
 
         // go back to the dashboard
-        backLink().click();
+        cy.clickBackLink();
       });
     });
 

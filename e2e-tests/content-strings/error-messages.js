@@ -2,6 +2,7 @@ import {
   APPLICATION,
   ELIGIBILITY,
   FIELD_IDS,
+  MINIMUM_CHARACTERS,
   MAXIMUM_CHARACTERS,
   TOTAL_CONTRACT_VALUE,
 } from '../constants';
@@ -310,14 +311,25 @@ export const ERROR_MESSAGES = {
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK.ACCOUNT_NUMBER]: {
         IS_EMPTY: 'Enter an account number',
         INCORRECT_FORMAT: 'Enter a valid account number like 00733445',
-        BELOW_MINIMUM: 'Account number must be between 6 and 8 digits',
-        ABOVE_MAXIMUM: 'Account number must be between 6 and 8 digits',
+        BELOW_MINIMUM: `Account number must be between ${MINIMUM_CHARACTERS.ACCOUNT_NUMBER} and ${MAXIMUM_CHARACTERS.ACCOUNT_NUMBER} digits`,
+        ABOVE_MAXIMUM: `Account number must be between ${MINIMUM_CHARACTERS.ACCOUNT_NUMBER} and ${MAXIMUM_CHARACTERS.ACCOUNT_NUMBER} digits`,
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_UK.SORT_CODE]: {
         IS_EMPTY: 'Enter a sort code',
         INCORRECT_FORMAT: 'Enter a valid sort code like 309430',
-        BELOW_MINIMUM: 'Sort code must be 6 digits',
-        ABOVE_MAXIMUM: 'Sort code must be 6 digits',
+        BELOW_MINIMUM: `Sort code must be ${MINIMUM_CHARACTERS.SORT_CODE} digits`,
+        ABOVE_MAXIMUM: `Sort code must be ${MAXIMUM_CHARACTERS.SORT_CODE} digits`,
+      },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL.BIC_SWIFT_CODE]: {
+        IS_EMPTY: 'Enter a BIC or SWIFT code',
+        INCORRECT_FORMAT: 'Enter a valid BIC or SWIFT code like BKENGB2L123',
+        BELOW_MINIMUM: `BIC or SWIFT code must be between ${MINIMUM_CHARACTERS.BIC_SWIFT_CODE} and ${MAXIMUM_CHARACTERS.BIC_SWIFT_CODE} digits`,
+        ABOVE_MAXIMUM: `BIC or SWIFT code must be between ${MINIMUM_CHARACTERS.BIC_SWIFT_CODE} and ${MAXIMUM_CHARACTERS.BIC_SWIFT_CODE} digits`,
+      },
+      [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL.IBAN]: {
+        IS_EMPTY: 'Enter an IBAN number',
+        BELOW_MINIMUM: `IBAN must be between ${MINIMUM_CHARACTERS.IBAN} and ${MAXIMUM_CHARACTERS.IBAN} characters`,
+        ABOVE_MAXIMUM: `IBAN must be between ${MINIMUM_CHARACTERS.IBAN} and ${MAXIMUM_CHARACTERS.IBAN} characters`,
       },
       [FIELD_IDS.INSURANCE.POLICY.FINANCIAL_ADDRESS]: {
         IS_EMPTY: 'Enter the banks address',
