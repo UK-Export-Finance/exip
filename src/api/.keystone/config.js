@@ -3843,6 +3843,49 @@ var createACompany = async (context, applicationId, companyData) => {
 };
 var create_a_company_default = createACompany;
 
+// helpers/create-a-private-market/index.ts
+var createAPrivateMarket = async (context, exportContractId) => {
+  console.info("Creating a private market for ", exportContractId);
+  try {
+    const privateMarket = await context.db.PrivateMarket.createOne({
+      data: {
+        exportContract: {
+          connect: { id: exportContractId }
+        }
+      }
+    });
+    return privateMarket;
+  } catch (err) {
+    console.error("Error creating a private market %O", err);
+    throw new Error(`Creating a private market ${err}`);
+  }
+};
+var create_a_private_market_default = createAPrivateMarket;
+
+// helpers/create-an-export-contract/index.ts
+var createAnExportContract = async (context, applicationId) => {
+  console.info("Creating an export contract for ", applicationId);
+  try {
+    const exportContract = await context.db.ExportContract.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
+      }
+    });
+    const privateMarket = await create_a_private_market_default(context, exportContract.id);
+    return {
+      exportContract,
+      privateMarket
+    };
+  } catch (err) {
+    console.error("Error creating an export contract %O", err);
+    throw new Error(`Creating an export contract ${err}`);
+  }
+};
+var create_an_export_contract_default = createAnExportContract;
+
 // helpers/create-a-section-review/index.ts
 var createASectionReview = async (context, applicationId, sectionReviewData) => {
   console.info("Creating a section review for ", applicationId);
@@ -3888,6 +3931,7 @@ var createAnApplication = async (root, variables, context) => {
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
+    const { exportContract } = await create_an_export_contract_default(context, applicationId);
     const { policy } = await create_a_policy_default(context, applicationId);
     const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
     const company = await create_a_company_default(context, applicationId, companyData);
@@ -3905,6 +3949,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         eligibility: {
           connect: { id: eligibility.id }
+        },
+        exportContract: {
+          connect: { id: exportContract.id }
         },
         nominatedLossPayee: {
           connect: { id: nominatedLossPayee.id }

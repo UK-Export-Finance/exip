@@ -64,6 +64,7 @@ describe('custom-resolvers/create-an-application', () => {
       buyerId: application.buyer.id,
       companyId: application.company.id,
       eligibilityId: application.eligibility.id,
+      exportContractId: application.exportContract.id,
       nominatedLossPayeeId: application.nominatedLossPayee.id,
       policyId: application.policy.id,
       sectionReviewId: application.sectionReview.id,
@@ -72,6 +73,7 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.buyerId).toEqual(expected.buyerId);
     expect(result.companyId).toEqual(expected.companyId);
     expect(result.eligibilityId).toEqual(expected.eligibilityId);
+    expect(result.exportContractId).toEqual(expected.exportContractId);
     expect(result.nominatedLossPayeeId).toEqual(expected.nominatedLossPayeeId);
     expect(result.policyId).toEqual(expected.policyId);
     expect(result.sectionReviewId).toEqual(expected.sectionReviewId);
