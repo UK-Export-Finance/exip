@@ -18,9 +18,6 @@ const assertDynamicCharacterCount = ({ field, maximum }) => {
     'a',
   );
 
-  // const minusOne = maximum - 1;
-
-  // const expectedMaximumAfterEdit = minusOne.toLocaleString();
   const expectedMaximumAfterEdit = Number(maximum - 1).toLocaleString();
 
   field.characterCount('text').should('have.text', CHARACTER_COUNT(expectedMaximumAfterEdit));
