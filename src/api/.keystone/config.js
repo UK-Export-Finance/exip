@@ -11,9 +11,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    for (let key2 of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key2) && key2 !== except)
+        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
@@ -415,6 +415,8 @@ var CUSTOM_RESOLVERS = [
   "submitApplication",
   // feedback
   "createFeedbackAndSendEmail",
+  // loss payee financial details
+  "updateLossPayeeFinancialDetailsUk",
   "getApimCisCountries",
   "getApimCurrencies"
 ];
@@ -752,6 +754,23 @@ var ACCOUNT2 = {
    * To be safe, we use time rather than subtracting a day.
    */
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
+};
+var FINANCIAL_DETAILS = {
+  ENCRYPTION: {
+    KEY_LENGTH: 128,
+    ENCODING: "hex",
+    STRING_ENCODING: "base64",
+    ALGORITHM: "sha512",
+    ENCRYPTION_METHOD: "aes-256-cbc",
+    OUTPUT_ENCODING: "utf-8",
+    KEY: {
+      SIGNATURE: String(process.env.ENCRYPTION_KEY)
+    },
+    IV: {
+      BYTES: 12,
+      ENCODING: "base64"
+    }
+  }
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -1891,6 +1910,15 @@ var typeDefs = `
     eligibility: Boolean!
   }
 
+  input LossPayeeFinancialDetailsUkInput {
+    id: String
+    accountNumber: String
+    accountNumberVector: String
+    sortCode: String
+    sortCodeVector: String
+    bankAddress: String
+  }
+
    type OrdnanceSurveyResponse {
     success: Boolean
     addresses: [OrdnanceSurveyAddress]
@@ -2108,6 +2136,14 @@ var typeDefs = `
       referralUrl: String
       product: String
       service: String
+    ): SuccessResponse
+
+    """ update loss payee financial details uk """
+    updateLossPayeeFinancialDetailsUk(
+      id: String
+      bankAddress: String
+      accountNumber: String
+      sortCode: String
     ): SuccessResponse
   }
 
@@ -5309,6 +5345,53 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
+// helpers/encrypt/index.ts
+var import_crypto9 = __toESM(require("crypto"));
+var { KEY: KEY3, IV, ALGORITHM: ALGORITHM2, ENCRYPTION_METHOD, ENCODING: ENCODING2, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
+var key = import_crypto9.default.createHash(ALGORITHM2).update(KEY3.SIGNATURE).digest("hex").substring(0, 32);
+var iv = import_crypto9.default.randomBytes(IV.BYTES).toString(IV.ENCODING);
+var encrypt = (dataToEncrypt) => {
+  const cipher = import_crypto9.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
+  return {
+    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING2) + cipher.final(ENCODING2)).toString(STRING_ENCODING2),
+    iv
+  };
+};
+var encrypt_default = encrypt;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
+var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial details UK %s", variables.id);
+    const { id, accountNumber, sortCode, bankAddress } = variables;
+    const updateData = {
+      accountNumber: encrypt_default(accountNumber).value,
+      accountNumberVector: encrypt_default(accountNumber).iv,
+      sortCode: encrypt_default(sortCode).value,
+      sortCodeVector: encrypt_default(sortCode).iv,
+      bankAddress
+    };
+    const response = await context.db.LossPayeeFinancialUk.updateOne({
+      where: {
+        id
+      },
+      data: updateData
+    });
+    if (response) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error updating loss payee financial details UK %O", err);
+    throw new Error(`Updating loss payee financial details UK ${err}`);
+  }
+};
+var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
+
 // custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
@@ -5960,7 +6043,8 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
-    verifyAccountReactivationToken: verify_account_reactivation_token_default
+    verifyAccountReactivationToken: verify_account_reactivation_token_default,
+    updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,

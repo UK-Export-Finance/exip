@@ -14,6 +14,7 @@ const {
   },
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME },
+    LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, WEBSITE },
@@ -36,6 +37,8 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         NAME,
         REGISTRATION_NUMBER,
         ADDRESS,
+        ACCOUNT_NUMBER,
+        SORT_CODE,
       ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);
