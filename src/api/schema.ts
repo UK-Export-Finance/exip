@@ -81,17 +81,6 @@ export const lists = {
 
             modifiedData.referenceNumber = newReferenceNumber;
 
-            // generate and attach a new 'export contract' relationship
-            const { id: exportContractId } = await context.db.ExportContract.createOne({
-              data: {},
-            });
-
-            modifiedData.exportContract = {
-              connect: {
-                id: exportContractId,
-              },
-            };
-
             // generate and attach a new 'business' relationship
             const { id: businessId } = await context.db.Business.createOne({
               data: {},
@@ -167,7 +156,7 @@ export const lists = {
 
             const { referenceNumber } = item;
 
-            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, businessId, brokerId, declarationId } = item;
 
             // add the application ID to the reference number entry.
             await context.db.ReferenceNumber.updateOne({
@@ -190,19 +179,6 @@ export const lists = {
                     id: applicationId,
                   },
                 },
-              },
-            });
-
-            // add the application ID to the export contract entry.
-            await context.db.ExportContract.updateOne({
-              where: { id: exportContractId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId,
-                  },
-                },
-                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN,
               },
             });
 
@@ -272,24 +248,26 @@ export const lists = {
   LossPayeeFinancialInternational: {
     fields: {
       lossPayee: relationship({ ref: 'NominatedLossPayee.financialInternational' }),
-      bankAddressSalt: text(),
-      bankAddressHash: text(),
-      bicSwiftCodeSalt: text(),
-      bicSwiftCodeHash: text(),
-      ibanSalt: text(),
-      ibanHash: text(),
+      bankAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      bicSwiftCode: text(),
+      bicSwiftCodeVector: text(),
+      iban: text(),
+      ibanVector: text(),
     },
     access: allowAll,
   },
   LossPayeeFinancialUk: {
     fields: {
       lossPayee: relationship({ ref: 'NominatedLossPayee.financialUk' }),
-      accountNumberSalt: text(),
-      accountNumberHash: text(),
-      bankAddressSalt: text(),
-      bankAddressHash: text(),
-      sortCodeSalt: text(),
-      sortCodeHash: text(),
+      accountNumber: text(),
+      accountNumberVector: text(),
+      bankAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      sortCode: text(),
+      sortCodeVector: text(),
     },
     access: allowAll,
   },
@@ -347,10 +325,10 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       firstName: text({
-        db: { nativeType: 'VarChar(300)' },
+        db: { nativeType: 'VarChar(400)' },
       }),
       lastName: text({
-        db: { nativeType: 'VarChar(300)' },
+        db: { nativeType: 'VarChar(400)' },
       }),
       email: text({
         db: { nativeType: 'VarChar(300)' },
@@ -381,12 +359,16 @@ export const lists = {
   ExportContract: {
     fields: {
       application: relationship({ ref: 'Application' }),
-      goodsOrServicesDescription: text({
-        db: { nativeType: 'VarChar(1000)' },
-      }),
+      privateMarket: relationship({ ref: 'PrivateMarket.exportContract' }),
       finalDestinationKnown: nullableCheckbox(),
       finalDestinationCountryCode: text({
         db: { nativeType: 'VarChar(3)' },
+      }),
+      goodsOrServicesDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+      paymentTermsDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
       }),
     },
     hooks: {
@@ -398,12 +380,35 @@ export const lists = {
     },
     access: allowAll,
   },
+  PrivateMarket: list({
+    fields: {
+      exportContract: relationship({ ref: 'ExportContract.privateMarket' }),
+      attempted: nullableCheckbox(),
+      declinedDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await updateApplication.timestamp(context, item.applicationId);
+        }
+      },
+    },
+    access: allowAll,
+  }),
   Account: list({
     fields: {
       createdAt: timestamp(),
       updatedAt: timestamp(),
-      firstName: text({ validation: { isRequired: true } }),
-      lastName: text({ validation: { isRequired: true } }),
+      firstName: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(400)' },
+      }),
+      lastName: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(400)' },
+      }),
       email: text({
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(300)' },
@@ -559,11 +564,15 @@ export const lists = {
         ref: 'CompanySicCode.company',
         many: true,
       }),
-      companyName: text(),
+      companyName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       companyNumber: text(),
       dateOfCreation: timestamp(),
       hasDifferentTradingAddress: nullableCheckbox(),
-      differentTradingName: text(),
+      differentTradingName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       hasDifferentTradingName: nullableCheckbox(),
       companyWebsite: text(),
       phoneNumber: text(),
@@ -598,7 +607,9 @@ export const lists = {
   Buyer: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      companyOrOrganisationName: text(),
+      companyOrOrganisationName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       address: text({
         db: { nativeType: 'VarChar(500)' },
       }),
@@ -624,8 +635,12 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       buyer: relationship({ ref: 'Buyer.contact' }),
-      contactFirstName: text(),
-      contactLastName: text(),
+      contactFirstName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+      contactLastName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       contactPosition: text(),
       contactEmail: text({
         db: { nativeType: 'VarChar(300)' },

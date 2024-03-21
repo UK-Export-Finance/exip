@@ -36,12 +36,11 @@ describe('helpers/create-a-loss-payee-financial-uk', () => {
     const lossPayeeFinancialUk = await createALossPayeeFinancialUk(context, nominatedLossPayee.id);
 
     expect(lossPayeeFinancialUk.lossPayeeId).toEqual(nominatedLossPayee.id);
-    expect(lossPayeeFinancialUk.sortCodeSalt).toEqual('');
-    expect(lossPayeeFinancialUk.sortCodeHash).toEqual('');
-    expect(lossPayeeFinancialUk.accountNumberSalt).toEqual('');
-    expect(lossPayeeFinancialUk.accountNumberHash).toEqual('');
-    expect(lossPayeeFinancialUk.bankAddressSalt).toEqual('');
-    expect(lossPayeeFinancialUk.bankAddressHash).toEqual('');
+    expect(lossPayeeFinancialUk.sortCode).toEqual('');
+    expect(lossPayeeFinancialUk.sortCodeVector).toEqual('');
+    expect(lossPayeeFinancialUk.accountNumber).toEqual('');
+    expect(lossPayeeFinancialUk.accountNumberVector).toEqual('');
+    expect(lossPayeeFinancialUk.bankAddress).toEqual('');
   });
 
   describe('when an invalid nominated loss payee ID is passed', () => {

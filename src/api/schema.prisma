@@ -103,27 +103,25 @@ model CoverPeriod {
 }
 
 model LossPayeeFinancialInternational {
-  id               String              @id @default(cuid())
-  lossPayee        NominatedLossPayee? @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
-  lossPayeeId      String?             @unique @map("lossPayee")
-  bankAddressSalt  String              @default("")
-  bankAddressHash  String              @default("")
-  bicSwiftCodeSalt String              @default("")
-  bicSwiftCodeHash String              @default("")
-  ibanSalt         String              @default("")
-  ibanHash         String              @default("")
+  id                 String              @id @default(cuid())
+  lossPayee          NominatedLossPayee? @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId        String?             @unique @map("lossPayee")
+  bankAddress        String              @default("") @mysql.VarChar(500)
+  bicSwiftCode       String              @default("")
+  bicSwiftCodeVector String              @default("")
+  iban               String              @default("")
+  ibanVector         String              @default("")
 }
 
 model LossPayeeFinancialUk {
-  id                String              @id @default(cuid())
-  lossPayee         NominatedLossPayee? @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
-  lossPayeeId       String?             @unique @map("lossPayee")
-  accountNumberSalt String              @default("")
-  accountNumberHash String              @default("")
-  bankAddressSalt   String              @default("")
-  bankAddressHash   String              @default("")
-  sortCodeSalt      String              @default("")
-  sortCodeHash      String              @default("")
+  id                  String              @id @default(cuid())
+  lossPayee           NominatedLossPayee? @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId         String?             @unique @map("lossPayee")
+  accountNumber       String              @default("")
+  accountNumberVector String              @default("")
+  bankAddress         String              @default("") @mysql.VarChar(500)
+  sortCode            String              @default("")
+  sortCodeVector      String              @default("")
 }
 
 model NominatedLossPayee {
@@ -165,8 +163,8 @@ model PolicyContact {
   id                             String        @id @default(cuid())
   application                    Application?  @relation("PolicyContact_application", fields: [applicationId], references: [id])
   applicationId                  String?       @map("application")
-  firstName                      String        @default("") @mysql.VarChar(300)
-  lastName                       String        @default("") @mysql.VarChar(300)
+  firstName                      String        @default("") @mysql.VarChar(400)
+  lastName                       String        @default("") @mysql.VarChar(400)
   email                          String        @default("") @mysql.VarChar(300)
   position                       String        @default("") @mysql.VarChar(50)
   isSameAsOwner                  Boolean?
@@ -186,23 +184,33 @@ model JointlyInsuredParty {
 }
 
 model ExportContract {
-  id                              String        @id @default(cuid())
-  application                     Application?  @relation("ExportContract_application", fields: [applicationId], references: [id])
-  applicationId                   String?       @map("application")
-  goodsOrServicesDescription      String        @default("") @mysql.VarChar(1000)
+  id                              String         @id @default(cuid())
+  application                     Application?   @relation("ExportContract_application", fields: [applicationId], references: [id])
+  applicationId                   String?        @map("application")
+  privateMarket                   PrivateMarket? @relation("ExportContract_privateMarket", fields: [privateMarketId], references: [id])
+  privateMarketId                 String?        @unique @map("privateMarket")
   finalDestinationKnown           Boolean?
-  finalDestinationCountryCode     String        @default("") @mysql.VarChar(3)
-  from_Application_exportContract Application[] @relation("Application_exportContract")
+  finalDestinationCountryCode     String         @default("") @mysql.VarChar(3)
+  goodsOrServicesDescription      String         @default("") @mysql.VarChar(1000)
+  paymentTermsDescription         String         @default("") @mysql.VarChar(1000)
+  from_Application_exportContract Application[]  @relation("Application_exportContract")
 
   @@index([applicationId])
+}
+
+model PrivateMarket {
+  id                  String          @id @default(cuid())
+  exportContract      ExportContract? @relation("ExportContract_privateMarket")
+  attempted           Boolean?
+  declinedDescription String          @default("") @mysql.VarChar(1000)
 }
 
 model Account {
   id                               String                @id @default(cuid())
   createdAt                        DateTime?
   updatedAt                        DateTime?
-  firstName                        String                @default("")
-  lastName                         String                @default("")
+  firstName                        String                @default("") @mysql.VarChar(400)
+  lastName                         String                @default("") @mysql.VarChar(400)
   email                            String                @default("") @mysql.VarChar(300)
   salt                             String                @default("")
   hash                             String                @default("")
@@ -304,11 +312,11 @@ model Company {
   differentTradingAddress    CompanyDifferentTradingAddress? @relation("Company_differentTradingAddress", fields: [differentTradingAddressId], references: [id])
   differentTradingAddressId  String?                         @unique @map("differentTradingAddress")
   sicCodes                   CompanySicCode[]                @relation("CompanySicCode_company")
-  companyName                String                          @default("")
+  companyName                String                          @default("") @mysql.VarChar(200)
   companyNumber              String                          @default("")
   dateOfCreation             DateTime?
   hasDifferentTradingAddress Boolean?
-  differentTradingName       String                          @default("")
+  differentTradingName       String                          @default("") @mysql.VarChar(200)
   hasDifferentTradingName    Boolean?
   companyWebsite             String                          @default("")
   phoneNumber                String                          @default("")
@@ -338,7 +346,7 @@ model Buyer {
   id                        String               @id @default(cuid())
   application               Application?         @relation("Buyer_application", fields: [applicationId], references: [id])
   applicationId             String?              @map("application")
-  companyOrOrganisationName String               @default("")
+  companyOrOrganisationName String               @default("") @mysql.VarChar(200)
   address                   String               @default("") @mysql.VarChar(500)
   country                   Country?             @relation("Buyer_country", fields: [countryId], references: [id])
   countryId                 String?              @map("country")
@@ -361,8 +369,8 @@ model BuyerContact {
   application      Application? @relation("BuyerContact_application", fields: [applicationId], references: [id])
   applicationId    String?      @map("application")
   buyer            Buyer?       @relation("Buyer_contact")
-  contactFirstName String       @default("")
-  contactLastName  String       @default("")
+  contactFirstName String       @default("") @mysql.VarChar(200)
+  contactLastName  String       @default("") @mysql.VarChar(200)
   contactPosition  String       @default("")
   contactEmail     String       @default("") @mysql.VarChar(300)
   canContactBuyer  Boolean?
