@@ -3,7 +3,7 @@
 # Version 0.3
 #
 # Database: exip
-# Generation Time: 2024-03-21 10:36:50 +0000
+# Generation Time: 2024-03-21 10:47:50 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -78,8 +78,8 @@ CREATE TABLE `Account` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdAt` datetime(3) DEFAULT NULL,
   `updatedAt` datetime(3) DEFAULT NULL,
-  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `firstName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -205,7 +205,7 @@ DROP TABLE IF EXISTS `Buyer`;
 CREATE TABLE `Buyer` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `companyOrOrganisationName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `companyOrOrganisationName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registrationNumber` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -234,8 +234,8 @@ DROP TABLE IF EXISTS `BuyerContact`;
 
 CREATE TABLE `BuyerContact` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contactFirstName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `contactLastName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactFirstName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactLastName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactPosition` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactEmail` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` tinyint(1) DEFAULT NULL,
@@ -815,12 +815,12 @@ CREATE TABLE IF NOT EXISTS `Company` (
   `business` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sicCodes` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `differentTradingAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `companyName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `companyName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `dateOfCreation` datetime(3) DEFAULT NULL,
   `hasDifferentTradingAddress` tinyint(1) DEFAULT NULL,
   `hasDifferentTradingName` tinyint(1) DEFAULT NULL,
-  `differentTradingName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `differentTradingName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1011,8 +1011,8 @@ DROP TABLE IF EXISTS `PolicyContact`;
 
 CREATE TABLE `PolicyContact` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `firstName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `position` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `isSameAsOwner` tinyint(1) DEFAULT NULL,

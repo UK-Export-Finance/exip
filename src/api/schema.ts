@@ -325,10 +325,10 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       firstName: text({
-        db: { nativeType: 'VarChar(300)' },
+        db: { nativeType: 'VarChar(400)' },
       }),
       lastName: text({
-        db: { nativeType: 'VarChar(300)' },
+        db: { nativeType: 'VarChar(400)' },
       }),
       email: text({
         db: { nativeType: 'VarChar(300)' },
@@ -401,8 +401,14 @@ export const lists = {
     fields: {
       createdAt: timestamp(),
       updatedAt: timestamp(),
-      firstName: text({ validation: { isRequired: true } }),
-      lastName: text({ validation: { isRequired: true } }),
+      firstName: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(400)' },
+      }),
+      lastName: text({
+        validation: { isRequired: true },
+        db: { nativeType: 'VarChar(400)' },
+      }),
       email: text({
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(300)' },
@@ -558,11 +564,15 @@ export const lists = {
         ref: 'CompanySicCode.company',
         many: true,
       }),
-      companyName: text(),
+      companyName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       companyNumber: text(),
       dateOfCreation: timestamp(),
       hasDifferentTradingAddress: nullableCheckbox(),
-      differentTradingName: text(),
+      differentTradingName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       hasDifferentTradingName: nullableCheckbox(),
       companyWebsite: text(),
       phoneNumber: text(),
@@ -597,7 +607,9 @@ export const lists = {
   Buyer: list({
     fields: {
       application: relationship({ ref: 'Application' }),
-      companyOrOrganisationName: text(),
+      companyOrOrganisationName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       address: text({
         db: { nativeType: 'VarChar(500)' },
       }),
@@ -623,8 +635,12 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       buyer: relationship({ ref: 'Buyer.contact' }),
-      contactFirstName: text(),
-      contactLastName: text(),
+      contactFirstName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
+      contactLastName: text({
+        db: { nativeType: 'VarChar(200)' },
+      }),
       contactPosition: text(),
       contactEmail: text({
         db: { nativeType: 'VarChar(300)' },

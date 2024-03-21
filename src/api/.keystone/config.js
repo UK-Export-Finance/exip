@@ -1183,10 +1183,10 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       firstName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: "VarChar(400)" }
       }),
       lastName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: "VarChar(400)" }
       }),
       email: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
@@ -1259,8 +1259,14 @@ var lists = {
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
-      firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
-      lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
+      firstName: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(400)" }
+      }),
+      lastName: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(400)" }
+      }),
       email: (0, import_fields.text)({
         validation: { isRequired: true },
         db: { nativeType: "VarChar(300)" }
@@ -1409,11 +1415,15 @@ var lists = {
         ref: "CompanySicCode.company",
         many: true
       }),
-      companyName: (0, import_fields.text)(),
+      companyName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
       hasDifferentTradingAddress: nullable_checkbox_default(),
-      differentTradingName: (0, import_fields.text)(),
+      differentTradingName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
@@ -1448,7 +1458,9 @@ var lists = {
   Buyer: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      companyOrOrganisationName: (0, import_fields.text)(),
+      companyOrOrganisationName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       address: (0, import_fields.text)({
         db: { nativeType: "VarChar(500)" }
       }),
@@ -1474,8 +1486,12 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer.contact" }),
-      contactFirstName: (0, import_fields.text)(),
-      contactLastName: (0, import_fields.text)(),
+      contactFirstName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
+      contactLastName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       contactPosition: (0, import_fields.text)(),
       contactEmail: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
