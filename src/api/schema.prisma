@@ -186,15 +186,25 @@ model JointlyInsuredParty {
 }
 
 model ExportContract {
-  id                              String        @id @default(cuid())
-  application                     Application?  @relation("ExportContract_application", fields: [applicationId], references: [id])
-  applicationId                   String?       @map("application")
-  goodsOrServicesDescription      String        @default("") @mysql.VarChar(1000)
+  id                              String         @id @default(cuid())
+  application                     Application?   @relation("ExportContract_application", fields: [applicationId], references: [id])
+  applicationId                   String?        @map("application")
+  privateMarket                   PrivateMarket? @relation("ExportContract_privateMarket", fields: [privateMarketId], references: [id])
+  privateMarketId                 String?        @unique @map("privateMarket")
   finalDestinationKnown           Boolean?
-  finalDestinationCountryCode     String        @default("") @mysql.VarChar(3)
-  from_Application_exportContract Application[] @relation("Application_exportContract")
+  finalDestinationCountryCode     String         @default("") @mysql.VarChar(3)
+  goodsOrServicesDescription      String         @default("") @mysql.VarChar(1000)
+  paymentTermsDescription         String         @default("") @mysql.VarChar(1000)
+  from_Application_exportContract Application[]  @relation("Application_exportContract")
 
   @@index([applicationId])
+}
+
+model PrivateMarket {
+  id                  String          @id @default(cuid())
+  exportContract      ExportContract? @relation("ExportContract_privateMarket")
+  attempted           Boolean?
+  declinedDescription String          @default("") @mysql.VarChar(1000)
 }
 
 model Account {

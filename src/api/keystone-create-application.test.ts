@@ -156,11 +156,6 @@ describe('Keystone - Create an Application', () => {
     expect(typeof application.referenceNumber).toEqual('number');
   });
 
-  test('it should have a exportContract id', () => {
-    expect(application.exportContract).toBeDefined();
-    expect(typeof application.exportContract.id).toEqual('string');
-  });
-
   test('it should have a business id', () => {
     expect(application.business).toBeDefined();
     expect(typeof application.business.id).toEqual('string');
@@ -210,18 +205,6 @@ describe('Keystone - Create an Application', () => {
     test('it should have a default business.turnoverCurrencyCode', async () => {
       expect(business.turnoverCurrencyCode).toEqual(APPLICATION.DEFAULT_CURRENCY);
     });
-  });
-
-  test('it should add an application ID and default finalDestinationKnown field to the exportContract entry', async () => {
-    const exportContract = await context.query.ExportContract.findOne({
-      where: {
-        id: application.exportContract.id,
-      },
-      query: 'id application { id } finalDestinationKnown',
-    });
-
-    expect(exportContract.application.id).toEqual(application.id);
-    expect(exportContract.finalDestinationKnown).toEqual(null);
   });
 
   test('it should add the application ID to the broker entry', async () => {

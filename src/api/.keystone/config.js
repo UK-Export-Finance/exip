@@ -973,14 +973,6 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: exportContractId } = await context.db.ExportContract.createOne({
-              data: {}
-            });
-            modifiedData.exportContract = {
-              connect: {
-                id: exportContractId
-              }
-            };
             const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
@@ -1033,7 +1025,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, businessId, brokerId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1052,17 +1044,6 @@ var lists = {
                     id: applicationId
                   }
                 }
-              }
-            });
-            await context.db.ExportContract.updateOne({
-              where: { id: exportContractId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                },
-                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
               }
             });
             await context.db.Business.updateOne({
@@ -1234,12 +1215,16 @@ var lists = {
   ExportContract: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      goodsOrServicesDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
-      }),
+      privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
+      }),
+      goodsOrServicesDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      paymentTermsDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
       })
     },
     hooks: {
@@ -1251,6 +1236,23 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  PrivateMarket: (0, import_core2.list)({
+    fields: {
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
+      attempted: nullable_checkbox_default(),
+      declinedDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
   Account: (0, import_core2.list)({
     fields: {
       createdAt: (0, import_fields.timestamp)(),

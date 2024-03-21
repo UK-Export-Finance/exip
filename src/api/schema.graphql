@@ -899,9 +899,11 @@ input JointlyInsuredPartyCreateInput {
 type ExportContract {
   id: ID!
   application: Application
-  goodsOrServicesDescription: String
+  privateMarket: PrivateMarket
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
+  goodsOrServicesDescription: String
+  paymentTermsDescription: String
 }
 
 input ExportContractWhereUniqueInput {
@@ -914,21 +916,32 @@ input ExportContractWhereInput {
   NOT: [ExportContractWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
-  goodsOrServicesDescription: StringFilter
+  privateMarket: PrivateMarketWhereInput
   finalDestinationCountryCode: StringFilter
+  goodsOrServicesDescription: StringFilter
+  paymentTermsDescription: StringFilter
 }
 
 input ExportContractOrderByInput {
   id: OrderDirection
-  goodsOrServicesDescription: OrderDirection
   finalDestinationCountryCode: OrderDirection
+  goodsOrServicesDescription: OrderDirection
+  paymentTermsDescription: OrderDirection
 }
 
 input ExportContractUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
-  goodsOrServicesDescription: String
+  privateMarket: PrivateMarketRelateToOneForUpdateInput
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
+  goodsOrServicesDescription: String
+  paymentTermsDescription: String
+}
+
+input PrivateMarketRelateToOneForUpdateInput {
+  create: PrivateMarketCreateInput
+  connect: PrivateMarketWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ExportContractUpdateArgs {
@@ -938,9 +951,58 @@ input ExportContractUpdateArgs {
 
 input ExportContractCreateInput {
   application: ApplicationRelateToOneForCreateInput
-  goodsOrServicesDescription: String
+  privateMarket: PrivateMarketRelateToOneForCreateInput
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
+  goodsOrServicesDescription: String
+  paymentTermsDescription: String
+}
+
+input PrivateMarketRelateToOneForCreateInput {
+  create: PrivateMarketCreateInput
+  connect: PrivateMarketWhereUniqueInput
+}
+
+type PrivateMarket {
+  id: ID!
+  exportContract: ExportContract
+  attempted: Boolean
+  declinedDescription: String
+}
+
+input PrivateMarketWhereUniqueInput {
+  id: ID
+}
+
+input PrivateMarketWhereInput {
+  AND: [PrivateMarketWhereInput!]
+  OR: [PrivateMarketWhereInput!]
+  NOT: [PrivateMarketWhereInput!]
+  id: IDFilter
+  exportContract: ExportContractWhereInput
+  declinedDescription: StringFilter
+}
+
+input PrivateMarketOrderByInput {
+  id: OrderDirection
+  declinedDescription: OrderDirection
+}
+
+input PrivateMarketUpdateInput {
+  exportContract: ExportContractRelateToOneForUpdateInput
+  attempted: Boolean
+  declinedDescription: String
+}
+
+input PrivateMarketUpdateArgs {
+  where: PrivateMarketWhereUniqueInput!
+  data: PrivateMarketUpdateInput!
+}
+
+input PrivateMarketCreateInput {
+  exportContract: ExportContractRelateToOneForCreateInput
+  attempted: Boolean
+  declinedDescription: String
 }
 
 type Account {
@@ -2612,6 +2674,12 @@ type Mutation {
   updateExportContracts(data: [ExportContractUpdateArgs!]!): [ExportContract]
   deleteExportContract(where: ExportContractWhereUniqueInput!): ExportContract
   deleteExportContracts(where: [ExportContractWhereUniqueInput!]!): [ExportContract]
+  createPrivateMarket(data: PrivateMarketCreateInput!): PrivateMarket
+  createPrivateMarkets(data: [PrivateMarketCreateInput!]!): [PrivateMarket]
+  updatePrivateMarket(where: PrivateMarketWhereUniqueInput!, data: PrivateMarketUpdateInput!): PrivateMarket
+  updatePrivateMarkets(data: [PrivateMarketUpdateArgs!]!): [PrivateMarket]
+  deletePrivateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
+  deletePrivateMarkets(where: [PrivateMarketWhereUniqueInput!]!): [PrivateMarket]
   createAccount(data: AccountCreateInput!): Account
   createAccounts(data: [AccountCreateInput!]!): [Account]
   updateAccount(where: AccountWhereUniqueInput!, data: AccountUpdateInput!): Account
@@ -2854,6 +2922,9 @@ type Query {
   exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContract(where: ExportContractWhereUniqueInput!): ExportContract
   exportContractsCount(where: ExportContractWhereInput! = {}): Int
+  privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
+  privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
+  privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int

@@ -86,6 +86,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const company = await createACompany(context, applicationId, companyData);
 
+    // TODO - create export contract here.
+    // Then, create private market.
+
     const sectionReview = await createASectionReview(context, applicationId, sectionReviewData);
 
     /**
@@ -95,7 +98,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 3) Eligibility
      * 4) Nominated loss payee
      * 5) Policy
-     * 4) Section review
+     * 6) Section review
      */
     const updatedApplication = await context.db.Application.updateOne({
       where: {
