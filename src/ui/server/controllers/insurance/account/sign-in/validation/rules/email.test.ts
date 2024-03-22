@@ -16,9 +16,7 @@ describe('controllers/insurance/account/sign-in/validation/rules/email', () => {
   // it('should return the result of emailAndPasswordValidation', () => {
   //   const mockFormBody = {};
   //   const result = emailRules(mockFormBody, mockErrors);
-
   //   const expected = emailAndPasswordValidation(mockFormBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors);
-
   //   expect(result).toEqual(expected);
   // });
 });

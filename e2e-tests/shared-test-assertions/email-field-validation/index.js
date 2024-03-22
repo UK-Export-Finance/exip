@@ -63,7 +63,7 @@ export const assertEmailFieldValidation = ({
 
       cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, totalExpectedErrors, errorMessages.ABOVE_MAXIMUM);
     });
-    
+
     if (assertErrorWhenCorrectlyFormatted) {
       it(`should NOT render a validation error when ${fieldId} is correctly formatted`, () => {
         cy.keyboardInput(fieldSelector(fieldId).input(), VALID_EMAIL);
