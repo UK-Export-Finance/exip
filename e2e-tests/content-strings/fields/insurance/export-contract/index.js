@@ -1,3 +1,4 @@
+import { MAXIMUM_CHARACTERS } from '../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 
 const {
@@ -17,7 +18,7 @@ export const EXPORT_CONTRACT_FIELDS = {
         ],
         OUTRO: "We may contact you to get more information if you're exporting goods or services that might have an impact on the environment.",
       },
-      MAXIMUM: 1000,
+      MAXIMUM: MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION,
       SUMMARY: {
         TITLE: "Goods or services you're exporting",
       },

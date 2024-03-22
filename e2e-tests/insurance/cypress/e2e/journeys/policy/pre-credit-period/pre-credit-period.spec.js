@@ -13,7 +13,7 @@ import {
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
+import { POLICY_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/policy';
 import mockApplication from '../../../../../../fixtures/application';
 
 const { creditPeriodWithBuyer } = partials;
@@ -89,7 +89,7 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
 
     describe(`renders ${NEED_PRE_CREDIT_PERIOD} label and inputs`, () => {
       it('renders a hint', () => {
-        cy.checkText(yesNoRadioHint(), FIELDS[NEED_PRE_CREDIT_PERIOD].HINT);
+        cy.checkText(yesNoRadioHint(), FIELD_STRINGS[NEED_PRE_CREDIT_PERIOD].HINT);
       });
 
       it('renders `yes` and `no` radio buttons in the correct order', () => {
@@ -120,12 +120,16 @@ context(`Insurance - Policy - Pre-credit period page - ${story}`, () => {
       });
 
       describe(`when clicking ${NEED_PRE_CREDIT_PERIOD} 'yes' radio`, () => {
-        it(`should render ${fieldId} label and input`, () => {
+        it(`should render ${fieldId} textarea`, () => {
           cy.clickYesRadioInput();
 
-          field.textarea().should('be.visible');
+          const fieldStrings = FIELD_STRINGS[fieldId];
 
-          cy.checkText(field.label(), FIELDS[fieldId].LABEL);
+          cy.assertTextareaRendering({
+            fieldId,
+            expectedLabel: fieldStrings.LABEL,
+            maximumCharacters: fieldStrings.MAXIMUM,
+          });
         });
       });
     });
