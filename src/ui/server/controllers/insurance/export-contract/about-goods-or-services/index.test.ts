@@ -18,7 +18,7 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE: CHECK_AND_CHANGE_ROUTE, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -261,16 +261,16 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, expectedValidationErrors, mockCountries);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      it(`should redirect to ${HOW_WILL_YOU_GET_PAID}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
       describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+        it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`, async () => {
           req.originalUrl = INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES_CHANGE;
 
           await post(req, res);
@@ -282,12 +282,12 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+        it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`, async () => {
           req.originalUrl = INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${refNumber}${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
