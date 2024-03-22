@@ -95,7 +95,7 @@ context('Insurance - Account - Sign in - Validation', () => {
 
     cy.clickSubmitButton();
 
-    assertAllFieldErrors(`incorrect-${account[EMAIL]}`, account[PASSWORD]);
+    assertAllFieldErrors();
   });
 
   it('should render a validation error for both fields when email and password are provided, but password is incorrect', () => {
