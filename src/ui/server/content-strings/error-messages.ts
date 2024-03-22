@@ -404,6 +404,7 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
             IS_EMPTY: 'Enter an email address in the correct format, like name@example.com',
             INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
+            ABOVE_MAXIMUM: `Your email address cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
             ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
@@ -415,6 +416,7 @@ export const ERROR_MESSAGES = {
       SIGN_IN: {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           INCORRECT: "Email address - either the email address or password you've entered is incorrect",
+          ABOVE_MAXIMUM: `Your email address cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
           INCORRECT: "Password - either the email address or password you've entered is incorrect",
@@ -427,6 +429,7 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
           IS_EMPTY: 'Enter an email address in the correct format, like name@example.com',
           INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
+          ABOVE_MAXIMUM: `Your email address cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
           ACCOUNT_DOES_NOT_EXIST: 'Enter the email address used when creating your account',
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {

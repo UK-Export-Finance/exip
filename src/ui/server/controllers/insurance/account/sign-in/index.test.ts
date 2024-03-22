@@ -7,6 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import emailAndPasswordIncorrectValidationErrors from '../../../../shared-validation/email-and-password-incorrect';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
@@ -255,7 +256,7 @@ describe('controllers/insurance/account/sign-in', () => {
             renderBackLink: true,
             userName: getUserNameFromSession(req.session.user),
             submittedValues: payload,
-            validationErrors: generateValidationErrors({}),
+            validationErrors: emailAndPasswordIncorrectValidationErrors(payload),
           });
         });
       });

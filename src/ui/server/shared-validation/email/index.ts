@@ -22,6 +22,7 @@ const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMes
       return generateValidationErrors(fieldId, errorMessage, errors);
     }
 
+    // TODO - DRY
     /**
      * Ignore the length in Joi validation,
      * Joi maximum length is handled below, using the MAXIMUM_CHARACTERS.EMAIL definition.

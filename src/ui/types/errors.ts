@@ -16,6 +16,7 @@ interface DateErrorMessage {
 
 interface ErrorMessageObject {
   IS_EMPTY: string;
+  INCORRECT?: string;
   INCORRECT_FORMAT: string;
   BELOW_MINIMUM: string;
   ABOVE_MAXIMUM: string;
