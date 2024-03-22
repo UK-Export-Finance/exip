@@ -133,6 +133,6 @@ context('Insurance - Account - Sign in - Validation', () => {
     totalExpectedErrors: 2,
     totalExpectedOtherErrorsWithValidEmail: 1,
     isGenericErrorMessage: true,
-    assertErrorWhenEmailIsCorrectlyFormatted: false,
+    assertErrorWhenCorrectlyFormatted: false,
   });
 });
