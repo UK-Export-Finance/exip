@@ -1,9 +1,9 @@
-import Joi from 'joi';
 import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password-incorrect';
+import isValidEmail from '../../../../../../helpers/is-valid-email';
 import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { RequestBody } from '../../../../../../../types';
 
@@ -15,14 +15,16 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE;
 
-// TODO: update documentation
-// TODO: update unit test
 /**
  * emailRules
- * Returns emailAndPasswordValidation
+ * Execute email validation rules for account sign in:
+ * 1) Check if an email is provided. If not, return emailAndPasswordValidation.
+ * 2) Check if an email is formatted correctly. if not, return emailAndPasswordValidation.
+ * 3) Check if an email is below the minimum length via maxLengthValidation.
+ * If all of the conditions are met, empty errors are returned (via maxLengthValidation).
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
- * @returns {Function} emailAndPasswordValidation
+ * @returns {Function} emailAndPasswordValidation | maxLengthValidation
  */
 const emailRules = (formBody: RequestBody, errors: object) => {
   if (!objectHasProperty(formBody, FIELD_ID)) {
@@ -31,17 +33,7 @@ const emailRules = (formBody: RequestBody, errors: object) => {
 
   const emailValue = formBody[FIELD_ID];
 
-  /**
-   * Ignore the length in Joi validation,
-   * Joi maximum length is handled below, using the MAXIMUM_CHARACTERS.EMAIL definition.
-   */
-  const schema = Joi.string().email({
-    ignoreLength: true,
-  });
-
-  const validation = schema.validate(emailValue);
-
-  if (validation.error) {
+  if (!isValidEmail(emailValue)) {
     return emailAndPasswordValidation(errors);
   }
 

@@ -2,9 +2,7 @@ import emailValidation from '.';
 import { MAXIMUM_CHARACTERS } from '../../constants';
 import generateValidationErrors from '../../helpers/validation';
 import maxLengthValidation from '../max-length';
-import { mockErrorMessagesObject, mockErrors } from '../../test-mocks';
-
-const validEmail = 'mock@email.com';
+import { mockErrorMessagesObject, mockErrors, mockValidEmail } from '../../test-mocks';
 
 describe('shared-validation/email', () => {
   const mockFieldId = 'email';
@@ -21,47 +19,11 @@ describe('shared-validation/email', () => {
     });
   });
 
-  describe('when email does not contain an @ symbol', () => {
+  describe('when the email is invalid', () => {
     it('should return a validation error', () => {
-      const mockValue = 'mockemail.com';
+      const mockInvalidEmail = 'mockemail.com';
 
-      const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
-
-      const expected = generateValidationErrors(mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when email does not contain at least one dot', () => {
-    it('should return a validation error', () => {
-      const mockValue = 'mock@emailcom';
-
-      const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
-
-      const expected = generateValidationErrors(mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when email contains a space', () => {
-    it('should return a validation error', () => {
-      const mockValue = 'mock @email.com';
-
-      const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
-
-      const expected = generateValidationErrors(mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('when email does not contain a domain', () => {
-    it('should return a validation error', () => {
-      const mockValue = 'mock@email';
-
-      const result = emailValidation(mockFieldId, mockValue, mockErrorMessagesObject, mockErrors);
+      const result = emailValidation(mockFieldId, mockInvalidEmail, mockErrorMessagesObject, mockErrors);
 
       const expected = generateValidationErrors(mockFieldId, mockErrorMessagesObject.INCORRECT_FORMAT, mockErrors);
 
@@ -87,7 +49,7 @@ describe('shared-validation/email', () => {
 
   describe('when there are no validation errors', () => {
     it('should return the provided errors object', () => {
-      const result = emailValidation(mockFieldId, validEmail, mockErrorMessagesObject, mockErrors);
+      const result = emailValidation(mockFieldId, mockValidEmail, mockErrorMessagesObject, mockErrors);
 
       expect(result).toEqual(mockErrors);
     });
