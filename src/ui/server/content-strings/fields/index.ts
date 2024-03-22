@@ -1,4 +1,4 @@
-import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES } from '../../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../constants';
 import { LINKS } from '../links';
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
@@ -207,9 +207,11 @@ export const FIELDS = {
   [FIELD_IDS.FEEDBACK.IMPROVEMENT]: {
     LABEL: 'How could we improve this service?',
     HINT: 'Do not include any personal or financial information, for example your National Insurance or credit card numbers',
+    MAXIMUM: MAXIMUM_CHARACTERS.FEEDBACK.IMPROVEMENT,
   },
   [FIELD_IDS.FEEDBACK.OTHER_COMMENTS]: {
     LABEL: 'Is there anything else you would like to tell us about your experience?',
     HINT: 'Do not include any personal or financial information, for example your National Insurance or credit card numbers',
+    MAXIMUM: MAXIMUM_CHARACTERS.FEEDBACK.OTHER_COMMENTS,
   },
 };

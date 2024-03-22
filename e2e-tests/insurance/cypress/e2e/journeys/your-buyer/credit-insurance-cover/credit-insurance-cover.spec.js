@@ -2,7 +2,7 @@ import {
   headingCaption, yesRadio, noRadio, field as fieldSelector,
 } from '../../../../../../pages/shared';
 import { PAGES } from '../../../../../../content-strings';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -82,7 +82,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
       it('renders `no` radio button', () => {
         cy.checkText(noRadio().label(), FIELD_VALUES.NO);
 
-        cy.checkRadioInputNoAriaLabel(FIELDS[fieldId].LABEL);
+        cy.checkRadioInputNoAriaLabel(FIELD_STRINGS[fieldId].LABEL);
       });
 
       it('renders `yes` radio button', () => {
@@ -90,7 +90,7 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
 
         cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
 
-        cy.checkRadioInputYesAriaLabel(FIELDS[fieldId].LABEL);
+        cy.checkRadioInputYesAriaLabel(FIELD_STRINGS[fieldId].LABEL);
       });
 
       it('renders a `save and back` button', () => {
@@ -107,13 +107,16 @@ context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, 
       });
 
       describe(`when clicking ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} 'yes' radio`, () => {
-        it(`should render ${fieldId} label, hint and input`, () => {
+        it(`should render ${fieldId} textarea`, () => {
           cy.clickYesRadioInput();
 
-          field.textarea().should('be.visible');
+          const fieldStrings = FIELD_STRINGS[fieldId];
 
-          cy.checkText(field.label(), FIELDS[fieldId].LABEL);
-          cy.checkText(field.hint(), FIELDS[fieldId].HINT);
+          cy.assertTextareaRendering({
+            fieldId,
+            expectedLabel: fieldStrings.LABEL,
+            maximumCharacters: fieldStrings.MAXIMUM,
+          });
         });
       });
     });

@@ -2,6 +2,7 @@ import PAGE_STRINGS from './pages';
 
 export * from './actions';
 export * from './buttons';
+export * from './character-count';
 export * from './contact';
 export * from './cookies-consent';
 export * from './default';

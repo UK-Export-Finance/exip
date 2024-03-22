@@ -102,12 +102,15 @@ context("Insurance - Policy - Loss Payee Financial Details - UK page - As an exp
       field.input().should('exist');
     });
 
-    it(`renders ${FINANCIAL_ADDRESS} label and textarea`, () => {
+    it(`renders ${FINANCIAL_ADDRESS} textarea`, () => {
       const fieldId = FINANCIAL_ADDRESS;
-      const field = fieldSelector(fieldId);
+      const fieldStrings = FIELD_STRINGS.FINANCIAL_ADDRESS;
 
-      cy.checkText(field.label(), FIELD_STRINGS.FINANCIAL_ADDRESS.LABEL);
-      field.textarea().should('exist');
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
     it('renders a `save and back` button', () => {

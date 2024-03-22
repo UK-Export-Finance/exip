@@ -1,4 +1,4 @@
-import { FIELD_IDS } from '../../../../constants';
+import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../constants';
 import { FORM_TITLES } from '../../../form-titles';
 
 const {
@@ -39,6 +39,7 @@ export const YOUR_BUYER_FIELDS = {
         TITLE: 'Buyer address',
         FORM_TITLE: COMPANY_DETAILS,
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
       LABEL: 'Buyer country',
@@ -113,11 +114,11 @@ export const YOUR_BUYER_FIELDS = {
   [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
     LABEL: 'Tell us about the credit insurance cover you had on the buyer',
     HINT: 'Include the name of the insurer(s) and the credit limit.',
-    MAXIMUM: 1000,
     SUMMARY: {
       TITLE: 'Details of credit insurance',
       FORM_TITLE: CREDIT_INSURANCE_HISTORY,
     },
+    MAXIMUM: MAXIMUM_CHARACTERS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',

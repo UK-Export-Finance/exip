@@ -8,7 +8,7 @@ import { companyOrOrganisationPage } from '../../../../../../pages/insurance/you
 import { PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
+import { YOUR_BUYER_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/your-buyer';
 import application, { country } from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION;
@@ -27,9 +27,6 @@ const {
   ROOT,
   YOUR_BUYER: { CONNECTION_WITH_BUYER, COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
-
-const addressField = fieldSelector(ADDRESS);
-const addressTextareaField = { ...addressField, input: addressField.textarea };
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -85,7 +82,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = COUNTRY;
       const field = autoCompleteField(fieldId);
 
-      cy.checkText(field.heading(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      cy.checkText(field.heading(), FIELD_STRINGS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       cy.checkText(companyOrOrganisationPage[fieldId](), country.NAME);
     });
 
@@ -93,20 +90,26 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = NAME;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      cy.checkText(field.label(), FIELD_STRINGS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
       field.input().should('exist');
     });
 
-    it(`renders an ${ADDRESS} label, and input`, () => {
-      cy.checkText(addressTextareaField.label(), FIELDS.COMPANY_OR_ORGANISATION[ADDRESS].LABEL);
-      addressTextareaField.textarea().should('exist');
+    it(`renders an ${ADDRESS} textarea`, () => {
+      const fieldId = ADDRESS;
+      const fieldStrings = FIELD_STRINGS.COMPANY_OR_ORGANISATION[fieldId];
+
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
     it(`renders ${REGISTRATION_NUMBER} label and input`, () => {
       const fieldId = REGISTRATION_NUMBER;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      cy.checkText(field.label(), FIELD_STRINGS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
     });
@@ -115,7 +118,7 @@ context('Insurance - Your Buyer - Company or organisation page - As an exporter,
       const fieldId = WEBSITE;
       const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELDS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
+      cy.checkText(field.label(), FIELD_STRINGS.COMPANY_OR_ORGANISATION[fieldId].LABEL);
 
       field.input().should('exist');
     });
