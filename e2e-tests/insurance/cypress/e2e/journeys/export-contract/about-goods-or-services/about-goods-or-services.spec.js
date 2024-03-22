@@ -86,9 +86,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
 
       cy.checkText(field.hint.list.item1(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
-
       cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
-
       cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
 
       cy.checkText(field.hint.outro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.OUTRO);

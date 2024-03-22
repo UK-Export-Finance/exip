@@ -23,6 +23,11 @@ const ABOUT_GOODS_OR_SERVICES = {
   PAGE_TITLE: 'About the goods or services',
 };
 
+const HOW_WILL_YOU_GET_PAID = {
+  ...SHARED,
+  PAGE_TITLE: 'How will you get paid for your export?',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -31,5 +36,6 @@ const CHECK_YOUR_ANSWERS = {
 export default {
   ROOT,
   ABOUT_GOODS_OR_SERVICES,
+  HOW_WILL_YOU_GET_PAID,
   CHECK_YOUR_ANSWERS,
 };

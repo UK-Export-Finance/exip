@@ -4,8 +4,8 @@ import { field as fieldSelector } from '../../../pages/shared';
  * assertTextareaRendering
  * Assert the rendering of a textarea.
  * @param {String} fieldId: Field ID
- * @param {String} expectedLabel: Expected label
- * @param {String} expectedHint: Expected label hint
+ * @param {String} expectedLabel: Expected label (optional)
+ * @param {String} expectedHint: Expected label hint (optional)
  * @param {Integer} maximumCharacters: Maximum characters allowed
  */
 const assertTextareaRendering = ({
@@ -16,7 +16,9 @@ const assertTextareaRendering = ({
 }) => {
   const field = fieldSelector(fieldId);
 
-  cy.checkText(field.label(), expectedLabel);
+  if (expectedLabel) {
+    cy.checkText(field.label(), expectedLabel);
+  }
 
   if (expectedHint) {
     cy.checkText(field.hint(), expectedHint);

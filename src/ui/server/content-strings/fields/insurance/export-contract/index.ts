@@ -1,13 +1,14 @@
 import { MAXIMUM_CHARACTERS } from '../../../../constants';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 
 const {
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
-} = INSURANCE_FIELD_IDS;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+} = FIELD_IDS;
 
 export const EXPORT_CONTRACT_FIELDS = {
   ABOUT_GOODS_OR_SERVICES: {
-    [ABOUT_GOODS_OR_SERVICES.DESCRIPTION]: {
+    [DESCRIPTION]: {
       LABEL: "Describe the goods or services you're exporting and explain how they'll be used by the buyer",
       HINT: {
         INTRO: 'For example:',
@@ -23,14 +24,24 @@ export const EXPORT_CONTRACT_FIELDS = {
         TITLE: "Goods or services you're exporting",
       },
     },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN]: {
+    [FINAL_DESTINATION_KNOWN]: {
       LABEL: 'Do you know the final destination of the goods or services?',
     },
-    [ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION]: {
+    [FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
       SUMMARY: {
         TITLE: 'Final destination of export',
       },
+    },
+  },
+  HOW_WILL_YOU_GET_PAID: {
+    [PAYMENT_TERMS_DESCRIPTION]: {
+      HINT: {
+        INTRO: 'Types of payment terms include:',
+        LIST: ['payments that are due within 60 days from date of invoice', 'payments collected by a letter of credit', 'staged payments'],
+        OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else.",
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION,
     },
   },
 };
