@@ -97,7 +97,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   test(`should nullify ${VERIFICATION_EXPIRY} from the account`, () => {
-    expect(account[VERIFICATION_EXPIRY]).toEqual(null);
+    expect(account[VERIFICATION_EXPIRY]).toBeNull();
   });
 
   test('should remove all entries for the account in the AuthenticationRetry table', async () => {

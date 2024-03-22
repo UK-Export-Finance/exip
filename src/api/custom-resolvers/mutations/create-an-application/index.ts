@@ -7,6 +7,7 @@ import createABuyer from '../../../helpers/create-a-buyer';
 import createAPolicy from '../../../helpers/create-a-policy';
 import createANominatedLossPayee from '../../../helpers/create-a-nominated-loss-payee';
 import createACompany from '../../../helpers/create-a-company';
+import createAnExportContract from '../../../helpers/create-an-export-contract';
 import createASectionReview from '../../../helpers/create-a-section-review';
 import { CreateAnApplicationVariables, Context } from '../../../types';
 
@@ -80,6 +81,8 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     const eligibility = await createAnEligibility(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
 
+    const { exportContract } = await createAnExportContract(context, applicationId);
+
     const { policy } = await createAPolicy(context, applicationId);
 
     const nominatedLossPayee = await createANominatedLossPayee(context, applicationId);
@@ -93,9 +96,10 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
      * 1) Buyer
      * 2) Company
      * 3) Eligibility
-     * 4) Nominated loss payee
-     * 5) Policy
-     * 4) Section review
+     * 4) Export contract
+     * 5) Nominated loss payee
+     * 6) Policy
+     * 7) Section review
      */
     const updatedApplication = await context.db.Application.updateOne({
       where: {
@@ -110,6 +114,9 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
         },
         eligibility: {
           connect: { id: eligibility.id },
+        },
+        exportContract: {
+          connect: { id: exportContract.id },
         },
         nominatedLossPayee: {
           connect: { id: nominatedLossPayee.id },

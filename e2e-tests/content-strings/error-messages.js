@@ -332,7 +332,7 @@ export const ERROR_MESSAGES = {
         ABOVE_MAXIMUM: `IBAN must be between ${MINIMUM_CHARACTERS.IBAN} and ${MAXIMUM_CHARACTERS.IBAN} characters`,
       },
       [FIELD_IDS.INSURANCE.POLICY.FINANCIAL_ADDRESS]: {
-        IS_EMPTY: 'Enter the banks address',
+        IS_EMPTY: "Enter the bank's address",
         ABOVE_MAXIMUM: `The bank's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
       },
     },

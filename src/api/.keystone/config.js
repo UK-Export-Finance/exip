@@ -973,14 +973,6 @@ var lists = {
               data: {}
             });
             modifiedData.referenceNumber = newReferenceNumber;
-            const { id: exportContractId } = await context.db.ExportContract.createOne({
-              data: {}
-            });
-            modifiedData.exportContract = {
-              connect: {
-                id: exportContractId
-              }
-            };
             const { id: businessId } = await context.db.Business.createOne({
               data: {}
             });
@@ -1033,7 +1025,7 @@ var lists = {
             console.info("Adding application ID to relationships");
             const applicationId = item.id;
             const { referenceNumber } = item;
-            const { policyContactId, exportContractId, businessId, brokerId, declarationId } = item;
+            const { policyContactId, businessId, brokerId, declarationId } = item;
             await context.db.ReferenceNumber.updateOne({
               where: { id: String(referenceNumber) },
               data: {
@@ -1052,17 +1044,6 @@ var lists = {
                     id: applicationId
                   }
                 }
-              }
-            });
-            await context.db.ExportContract.updateOne({
-              where: { id: exportContractId },
-              data: {
-                application: {
-                  connect: {
-                    id: applicationId
-                  }
-                },
-                finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
               }
             });
             await context.db.Business.updateOne({
@@ -1125,24 +1106,26 @@ var lists = {
   LossPayeeFinancialInternational: {
     fields: {
       lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialInternational" }),
-      bankAddressSalt: (0, import_fields.text)(),
-      bankAddressHash: (0, import_fields.text)(),
-      bicSwiftCodeSalt: (0, import_fields.text)(),
-      bicSwiftCodeHash: (0, import_fields.text)(),
-      ibanSalt: (0, import_fields.text)(),
-      ibanHash: (0, import_fields.text)()
+      bankAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      bicSwiftCode: (0, import_fields.text)(),
+      bicSwiftCodeVector: (0, import_fields.text)(),
+      iban: (0, import_fields.text)(),
+      ibanVector: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },
   LossPayeeFinancialUk: {
     fields: {
       lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialUk" }),
-      accountNumberSalt: (0, import_fields.text)(),
-      accountNumberHash: (0, import_fields.text)(),
-      bankAddressSalt: (0, import_fields.text)(),
-      bankAddressHash: (0, import_fields.text)(),
-      sortCodeSalt: (0, import_fields.text)(),
-      sortCodeHash: (0, import_fields.text)()
+      accountNumber: (0, import_fields.text)(),
+      accountNumberVector: (0, import_fields.text)(),
+      bankAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      sortCode: (0, import_fields.text)(),
+      sortCodeVector: (0, import_fields.text)()
     },
     access: import_access.allowAll
   },
@@ -1200,10 +1183,10 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       firstName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: "VarChar(400)" }
       }),
       lastName: (0, import_fields.text)({
-        db: { nativeType: "VarChar(300)" }
+        db: { nativeType: "VarChar(400)" }
       }),
       email: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
@@ -1234,12 +1217,16 @@ var lists = {
   ExportContract: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      goodsOrServicesDescription: (0, import_fields.text)({
-        db: { nativeType: "VarChar(1000)" }
-      }),
+      privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" }
+      }),
+      goodsOrServicesDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      }),
+      paymentTermsDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
       })
     },
     hooks: {
@@ -1251,12 +1238,35 @@ var lists = {
     },
     access: import_access.allowAll
   },
+  PrivateMarket: (0, import_core2.list)({
+    fields: {
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.privateMarket" }),
+      attempted: nullable_checkbox_default(),
+      declinedDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
+    },
+    hooks: {
+      afterOperation: async ({ item, context }) => {
+        if (item?.applicationId) {
+          await update_application_default.timestamp(context, item.applicationId);
+        }
+      }
+    },
+    access: import_access.allowAll
+  }),
   Account: (0, import_core2.list)({
     fields: {
       createdAt: (0, import_fields.timestamp)(),
       updatedAt: (0, import_fields.timestamp)(),
-      firstName: (0, import_fields.text)({ validation: { isRequired: true } }),
-      lastName: (0, import_fields.text)({ validation: { isRequired: true } }),
+      firstName: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(400)" }
+      }),
+      lastName: (0, import_fields.text)({
+        validation: { isRequired: true },
+        db: { nativeType: "VarChar(400)" }
+      }),
       email: (0, import_fields.text)({
         validation: { isRequired: true },
         db: { nativeType: "VarChar(300)" }
@@ -1405,11 +1415,15 @@ var lists = {
         ref: "CompanySicCode.company",
         many: true
       }),
-      companyName: (0, import_fields.text)(),
+      companyName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       companyNumber: (0, import_fields.text)(),
       dateOfCreation: (0, import_fields.timestamp)(),
       hasDifferentTradingAddress: nullable_checkbox_default(),
-      differentTradingName: (0, import_fields.text)(),
+      differentTradingName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       hasDifferentTradingName: nullable_checkbox_default(),
       companyWebsite: (0, import_fields.text)(),
       phoneNumber: (0, import_fields.text)(),
@@ -1444,7 +1458,9 @@ var lists = {
   Buyer: (0, import_core2.list)({
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
-      companyOrOrganisationName: (0, import_fields.text)(),
+      companyOrOrganisationName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       address: (0, import_fields.text)({
         db: { nativeType: "VarChar(500)" }
       }),
@@ -1470,8 +1486,12 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       buyer: (0, import_fields.relationship)({ ref: "Buyer.contact" }),
-      contactFirstName: (0, import_fields.text)(),
-      contactLastName: (0, import_fields.text)(),
+      contactFirstName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
+      contactLastName: (0, import_fields.text)({
+        db: { nativeType: "VarChar(200)" }
+      }),
       contactPosition: (0, import_fields.text)(),
       contactEmail: (0, import_fields.text)({
         db: { nativeType: "VarChar(300)" }
@@ -3823,6 +3843,49 @@ var createACompany = async (context, applicationId, companyData) => {
 };
 var create_a_company_default = createACompany;
 
+// helpers/create-a-private-market/index.ts
+var createAPrivateMarket = async (context, exportContractId) => {
+  console.info("Creating a private market for ", exportContractId);
+  try {
+    const privateMarket = await context.db.PrivateMarket.createOne({
+      data: {
+        exportContract: {
+          connect: { id: exportContractId }
+        }
+      }
+    });
+    return privateMarket;
+  } catch (err) {
+    console.error("Error creating a private market %O", err);
+    throw new Error(`Creating a private market ${err}`);
+  }
+};
+var create_a_private_market_default = createAPrivateMarket;
+
+// helpers/create-an-export-contract/index.ts
+var createAnExportContract = async (context, applicationId) => {
+  console.info("Creating an export contract for ", applicationId);
+  try {
+    const exportContract = await context.db.ExportContract.createOne({
+      data: {
+        application: {
+          connect: { id: applicationId }
+        },
+        finalDestinationKnown: APPLICATION.DEFAULT_FINAL_DESTINATION_KNOWN
+      }
+    });
+    const privateMarket = await create_a_private_market_default(context, exportContract.id);
+    return {
+      exportContract,
+      privateMarket
+    };
+  } catch (err) {
+    console.error("Error creating an export contract %O", err);
+    throw new Error(`Creating an export contract ${err}`);
+  }
+};
+var create_an_export_contract_default = createAnExportContract;
+
 // helpers/create-a-section-review/index.ts
 var createASectionReview = async (context, applicationId, sectionReviewData) => {
   console.info("Creating a section review for ", applicationId);
@@ -3868,6 +3931,7 @@ var createAnApplication = async (root, variables, context) => {
     const totalContractValue = await get_total_contract_value_by_field_default(context, "valueId", totalContractValueId);
     const coverPeriod = await get_cover_period_value_by_field_default(context, "valueId", coverPeriodId);
     const eligibility = await create_an_eligibility_default(context, country.id, applicationId, coverPeriod.id, totalContractValue.id, otherEligibilityAnswers);
+    const { exportContract } = await create_an_export_contract_default(context, applicationId);
     const { policy } = await create_a_policy_default(context, applicationId);
     const nominatedLossPayee = await create_a_nominated_loss_payee_default(context, applicationId);
     const company = await create_a_company_default(context, applicationId, companyData);
@@ -3885,6 +3949,9 @@ var createAnApplication = async (root, variables, context) => {
         },
         eligibility: {
           connect: { id: eligibility.id }
+        },
+        exportContract: {
+          connect: { id: exportContract.id }
         },
         nominatedLossPayee: {
           connect: { id: nominatedLossPayee.id }

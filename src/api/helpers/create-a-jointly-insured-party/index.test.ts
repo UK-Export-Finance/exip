@@ -40,7 +40,7 @@ describe('helpers/create-a-jointly-insured-party', () => {
     const result = await createAJointlyInsuredParty(context, applicationPolicy.id);
 
     expect(result.policyId).toEqual(applicationPolicy.id);
-    expect(result.requested).toEqual(null);
+    expect(result.requested).toBeNull();
     expect(result.companyName).toEqual('');
     expect(result.companyNumber).toEqual('');
     expect(result.country).toBeUndefined();

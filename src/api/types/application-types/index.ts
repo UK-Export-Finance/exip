@@ -88,22 +88,20 @@ export interface ApplicationNominatedLossPayee extends Relationship {
 
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
   lossPayeeId?: string;
-  bankAddressSalt?: string;
-  bankAddressHash?: string;
-  bicSwiftCodeSalt?: string;
-  bicSwiftCodeHash?: string;
-  ibanSalt?: string;
-  ibanHash?: string;
+  bankAddress?: string;
+  bicSwiftCode?: string;
+  bicSwiftCodeVector?: string;
+  iban?: string;
+  ibanVector?: string;
 }
 
 export interface ApplicationLossPayeeFinancialUk extends Relationship {
   lossPayeeId?: string;
-  accountNumberSalt?: string;
-  accountNumberHash?: string;
-  bankAddressSalt?: string;
-  bankAddressHash?: string;
-  sortCodeSalt?: string;
-  sortCodeHash?: string;
+  accountNumber?: string;
+  accountNumberVector?: string;
+  bankAddress?: string;
+  sortCode?: string;
+  sortCodeVector?: string;
 }
 
 export interface TotalContractValue extends Relationship {
@@ -126,9 +124,12 @@ export interface ApplicationEligibility extends Relationship {
 }
 
 export interface ApplicationExportContract extends Relationship {
-  goodsOrServicesDescription?: string;
+  applicationId: string;
   finalDestinationCountryCode?: string;
   finalDestinationCountry?: Country;
+  finalDestinationKnown: boolean;
+  goodsOrServicesDescription?: string;
+  paymentTermsDescription?: string;
 }
 
 export interface ApplicationOwner extends Relationship {
@@ -147,6 +148,12 @@ export interface ApplicationPolicyContact extends Relationship {
   email: string;
   position: string;
   isSameAsOwner: boolean;
+}
+
+export interface ApplicationPrivateMarket extends Relationship {
+  exportContractId: string;
+  attempted?: boolean;
+  declinedDescription?: string;
 }
 
 export interface ApplicationJointlyInsuredParty extends Relationship {
@@ -221,6 +228,11 @@ export interface CreateAnApplicationVariables {
   eligibilityAnswers: ApplicationEligibility;
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
+}
+
+export interface CreateExportContractResponse {
+  exportContract: ApplicationExportContract;
+  privateMarket: ApplicationPrivateMarket;
 }
 
 export interface CreatePolicyResponse {

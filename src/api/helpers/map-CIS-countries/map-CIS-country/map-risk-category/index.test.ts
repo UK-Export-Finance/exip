@@ -41,6 +41,6 @@ describe('helpers/map-cis-countries/map-cis-country/map-risk-category', () => {
 
     const result = mapRiskCategory(str);
 
-    expect(result).toEqual(null);
+    expect(result).toBeNull();
   });
 });

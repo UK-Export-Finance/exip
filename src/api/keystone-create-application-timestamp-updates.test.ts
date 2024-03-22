@@ -43,6 +43,15 @@ describe('Keystone - Application timestamp updates', () => {
       },
     });
 
+    // create company and associate with the application.
+    const company = await context.query.Company.createOne({
+      data: {
+        application: {
+          connect: { id: application.id },
+        },
+      },
+    });
+
     // create policy and associate with the application.
     const policy = await policies.create({
       context,
@@ -53,8 +62,9 @@ describe('Keystone - Application timestamp updates', () => {
       },
     });
 
-    // create company and associate with the application.
-    const company = await context.query.Company.createOne({
+    // create exportContract and associate with the application.
+    const exportContract = await context.query.ExportContract.createOne({
+      context,
       data: {
         application: {
           connect: { id: application.id },
@@ -78,6 +88,9 @@ describe('Keystone - Application timestamp updates', () => {
       },
       company: {
         id: company.id,
+      },
+      exportContract: {
+        id: exportContract.id,
       },
       policy: {
         id: policy.id,

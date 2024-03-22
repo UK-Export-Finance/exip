@@ -5,6 +5,7 @@ import createAnEligibility from '../helpers/create-an-eligibility';
 import createABuyer from '../helpers/create-a-buyer';
 import createAPolicy from '../helpers/create-a-policy';
 import createACompany from '../helpers/create-a-company';
+import createAnExportContract from '../helpers/create-an-export-contract';
 import { FIELD_VALUES } from '../constants';
 import {
   mockApplicationEligibility,
@@ -90,26 +91,34 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create company and associate with the application.
   const company = await createACompany(context, application.id, mockCompany);
 
+  // create exportContract and associate with the application.
+  const { exportContract } = await createAnExportContract(context, application.id);
+
   /**
    * update the application with:
-   * 1) Eligibility relationship ID
-   * 2) Buyer relationship ID
-   * 3) Policy relationship ID
+   * 1) Buyer relationship ID
+   * 2) Company relationship ID
+   * 3) Eligibility relationship ID
+   * 4) ExportContract relationship ID
+   * 5) Policy relationship ID
    */
   await context.db.Application.updateOne({
     where: { id: application.id },
     data: {
-      eligibility: {
-        connect: { id: eligibility.id },
-      },
       buyer: {
         connect: { id: buyer.id },
       },
-      policy: {
-        connect: { id: policy.id },
-      },
       company: {
         connect: { id: company.id },
+      },
+      eligibility: {
+        connect: { id: eligibility.id },
+      },
+      exportContract: {
+        connect: { id: exportContract.id },
+      },
+      policy: {
+        connect: { id: policy.id },
       },
     },
   });
@@ -141,7 +150,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
    */
   (await context.query.ExportContract.updateOne({
     where: {
-      id: application.exportContract.id,
+      id: exportContract.id,
     },
     data: mockExportContract,
     query: 'id',
@@ -175,12 +184,13 @@ export const createFullApplication = async (context: Context, policyType?: strin
     ...application,
     owner: account,
     business,
-    policy,
-    policyContact,
     buyer,
     company,
     declaration,
+    exportContract,
     eligibility,
+    policy,
+    policyContact,
   };
 };
 

@@ -3,7 +3,7 @@
 # Version 0.3
 #
 # Database: exip
-# Generation Time: 2022-12-29 11:57:50 +0000
+# Generation Time: 2024-03-21 10:47:50 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -78,8 +78,8 @@ CREATE TABLE `Account` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `createdAt` datetime(3) DEFAULT NULL,
   `updatedAt` datetime(3) DEFAULT NULL,
-  `firstName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `firstName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -205,7 +205,7 @@ DROP TABLE IF EXISTS `Buyer`;
 CREATE TABLE `Buyer` (
   `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `companyOrOrganisationName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `companyOrOrganisationName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `address` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `registrationNumber` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -234,8 +234,8 @@ DROP TABLE IF EXISTS `BuyerContact`;
 
 CREATE TABLE `BuyerContact` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contactFirstName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `contactLastName` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactFirstName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `contactLastName` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactPosition` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `contactEmail` varchar(300) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `canContactBuyer` tinyint(1) DEFAULT NULL,
@@ -740,15 +740,23 @@ CREATE TABLE IF NOT EXISTS `Eligibility` (
 DROP TABLE IF EXISTS `ExportContract`;
 
 CREATE TABLE `ExportContract` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `goodsOrServicesDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `application` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `goodsOrServicesDescription` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `finalDestinationCountryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `finalDestinationKnown` tinyint(1) DEFAULT NULL,
+  `paymentTermsDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `privateMarket` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `ExportContract_privateMarket_key` (`privateMarket`),
   KEY `ExportContract_application_idx` (`application`),
-  CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `ExportContract_privateMarket_fkey` FOREIGN KEY (`privateMarket`) REFERENCES `PrivateMarket` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 
@@ -807,12 +815,12 @@ CREATE TABLE IF NOT EXISTS `Company` (
   `business` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sicCodes` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `differentTradingAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `companyName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `companyName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `dateOfCreation` datetime(3) DEFAULT NULL,
   `hasDifferentTradingAddress` tinyint(1) DEFAULT NULL,
   `hasDifferentTradingName` tinyint(1) DEFAULT NULL,
-  `differentTradingName` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `differentTradingName` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `companyWebsite` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `phoneNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
 	`registeredOfficeAddress` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -908,12 +916,11 @@ DROP TABLE IF EXISTS `LossPayeeFinancialInternational`;
 CREATE TABLE `LossPayeeFinancialInternational` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bicSwiftCodeSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bicSwiftCodeHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `ibanSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `ibanHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bankAddressSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bankAddressHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bicSwiftCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bicSwiftCodeVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `iban` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ibanVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `LossPayeeFinancialInternational_lossPayee_key` (`lossPayee`),
   CONSTRAINT `LossPayeeFinancialInternational_lossPayee_fkey` FOREIGN KEY (`lossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE
@@ -930,12 +937,11 @@ DROP TABLE IF EXISTS `LossPayeeFinancialUk`;
 CREATE TABLE `LossPayeeFinancialUk` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sortCodeSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `sortCodeHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `accountNumberSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `accountNumberHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bankAddressSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bankAddressHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accountNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accountNumberVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sortCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sortCodeVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `LossPayeeFinancialUk_lossPayee_key` (`lossPayee`),
   CONSTRAINT `LossPayeeFinancialUk_lossPayee_fkey` FOREIGN KEY (`lossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE
@@ -1005,8 +1011,8 @@ DROP TABLE IF EXISTS `PolicyContact`;
 
 CREATE TABLE `PolicyContact` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `lastName` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `firstName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `lastName` varchar(400) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `position` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `isSameAsOwner` tinyint(1) DEFAULT NULL,
@@ -1015,6 +1021,18 @@ CREATE TABLE `PolicyContact` (
   KEY `PolicyContact_application_idx` (`application`),
   CONSTRAINT `PolicyContact_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+# Dump of table PrivateMarket
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `PrivateMarket`;
+
+CREATE TABLE `PrivateMarket` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `attempted` tinyint(1) DEFAULT NULL,
+  `declinedDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
 # Dump of table ReferenceNumber
