@@ -4395,12 +4395,8 @@ var EXPORT_CONTRACT_FIELDS = {
     [PAYMENT_TERMS_DESCRIPTION]: {
       HINT: {
         INTRO: "Types of payment terms include:",
-        LIST: [
-          "payments that are due within 60 days from date of invoice",
-          "payments collected by a letter of credit",
-          "staged payments"
-        ],
-        OUTRO: "If you use staged payments, explain their structure and whether they\u2019re monthly, in advance or something else."
+        LIST: ["payments that are due within 60 days from date of invoice", "payments collected by a letter of credit", "staged payments"],
+        OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else."
       }
     }
   }

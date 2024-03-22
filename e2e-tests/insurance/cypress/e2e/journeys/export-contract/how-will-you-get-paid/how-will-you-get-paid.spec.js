@@ -1,5 +1,5 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
+import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
@@ -9,10 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES,
-    HOW_WILL_YOU_GET_PAID,
-  },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID },
 } = INSURANCE_ROUTES;
 
 const {
@@ -49,7 +46,7 @@ context('Insurance - Export contract - How will you get paid page - As an export
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}#`,
     });
   });
 
@@ -62,22 +59,24 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`renders ${PAYMENT_TERMS_DESCRIPTION} label, hint and input`, () => {
+    it(`renders ${PAYMENT_TERMS_DESCRIPTION} hint and textarea`, () => {
       const fieldId = PAYMENT_TERMS_DESCRIPTION;
-      const field = aboutGoodsOrServicesPage[fieldId];
+      const fieldStrings = FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId];
 
-      cy.checkText(field.label(), FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId].LABEL);
+      const field = howWillYouGetPaidPage[fieldId];
 
-      cy.checkText(field.hint.intro(), FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId].HINT.INTRO);
+      cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
 
-      cy.checkText(field.hint.list.item1(), FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId].HINT.LIST[0]);
-      cy.checkText(field.hint.list.item2(), FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId].HINT.LIST[1]);
-      cy.checkText(field.hint.list.item3(), FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId].HINT.LIST[2]);
+      cy.checkText(field.hint.list.item1(), fieldStrings.HINT.LIST[0]);
+      cy.checkText(field.hint.list.item2(), fieldStrings.HINT.LIST[1]);
+      cy.checkText(field.hint.list.item3(), fieldStrings.HINT.LIST[2]);
 
-      cy.checkText(field.hint.outro(), FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId].HINT.OUTRO);
+      cy.checkText(field.hint.outro(), fieldStrings.HINT.OUTRO);
 
-      // field.textarea().should('exist');
-      // TODO - assert textarea
+      cy.assertTextareaRendering({
+        fieldId,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
     it('renders a `save and back` button', () => {

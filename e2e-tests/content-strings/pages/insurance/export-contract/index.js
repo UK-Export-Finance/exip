@@ -25,7 +25,7 @@ const ABOUT_GOODS_OR_SERVICES = {
 
 const HOW_WILL_YOU_GET_PAID = {
   ...SHARED,
-  PAGE_TITLE: 'How will you get paid for your export? ',
+  PAGE_TITLE: 'How will you get paid for your export?',
 };
 
 const CHECK_YOUR_ANSWERS = {
