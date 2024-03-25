@@ -59,7 +59,7 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
 
     cy.assertLineBreakElements(
       insetTextHtmlLineBreak(),
-      expectedLineBreaks
+      expectedLineBreaks,
     );
   });
 });
