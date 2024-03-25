@@ -57,7 +57,7 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
 
     const expectedLineBreaks = 3;
 
-    cy.assertLineBreakElements(
+    cy.assertLength(
       insetTextHtmlLineBreak(),
       expectedLineBreaks,
     );
