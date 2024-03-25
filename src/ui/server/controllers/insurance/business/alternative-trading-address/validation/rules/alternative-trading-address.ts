@@ -11,7 +11,7 @@ const {
 
 /**
  * validate the "alternative address" field
- * @param {Express.Response.body} Express response body
+ * @param {Express.Request.body} Express response body
  * @param {Object} errors: Other validation errors for the same form
  * @returns {Function} fullAddressValidation
  */
