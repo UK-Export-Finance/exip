@@ -16,7 +16,7 @@ const {
  * Returns emailAndPasswordValidation
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors} emailAndPasswordValidation
  */
 const emailRules = (formBody: RequestBody, errors: object) => emailAndPasswordValidation(formBody, FIELD_ID, ERROR_MESSAGE.INCORRECT, errors);
 

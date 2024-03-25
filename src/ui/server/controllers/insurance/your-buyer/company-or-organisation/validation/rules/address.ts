@@ -23,7 +23,7 @@ const {
  * validate the "full address" field
  * @param {Express.Request.body} Express response body
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Function} fullAddressValidation
+ * @returns {ValidationErrors} fullAddressValidation
  */
 const addressRules = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
