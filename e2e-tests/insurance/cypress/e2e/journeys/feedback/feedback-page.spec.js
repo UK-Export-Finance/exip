@@ -1,6 +1,6 @@
 import partials from '../../../../../partials';
 import { field as fieldSelector } from '../../../../../pages/shared';
-import { BUTTONS, PAGES, FIELDS } from '../../../../../content-strings';
+import { BUTTONS, PAGES, FIELDS as FIELD_STRINGS } from '../../../../../content-strings';
 import { ROUTES } from '../../../../../constants';
 import { FIELD_IDS } from '../../../../../constants/field-ids';
 
@@ -55,14 +55,14 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
     it(`should render the ${SATISFACTION} radios`, () => {
       const field = fieldSelector(SATISFACTION);
 
-      cy.checkText(field.heading(), FIELDS[SATISFACTION].TITLE);
-      cy.checkText(field.label(), FIELDS[SATISFACTION].LABEL);
+      cy.checkText(field.heading(), FIELD_STRINGS[SATISFACTION].TITLE);
+      cy.checkText(field.label(), FIELD_STRINGS[SATISFACTION].LABEL);
 
-      cy.checkText(fieldSelector(VERY_SATISFIED).label(), FIELDS[SATISFACTION].VERY_SATISFIED);
-      cy.checkText(fieldSelector(SATISFIED).label(), FIELDS[SATISFACTION].SATISFIED);
-      cy.checkText(fieldSelector(NEITHER).label(), FIELDS[SATISFACTION].NEITHER);
-      cy.checkText(fieldSelector(DISSATISFIED).label(), FIELDS[SATISFACTION].DISSATISFIED);
-      cy.checkText(fieldSelector(VERY_DISSATISIFED).label(), FIELDS[SATISFACTION].VERY_DISSATISIFED);
+      cy.checkText(fieldSelector(VERY_SATISFIED).label(), FIELD_STRINGS[SATISFACTION].VERY_SATISFIED);
+      cy.checkText(fieldSelector(SATISFIED).label(), FIELD_STRINGS[SATISFACTION].SATISFIED);
+      cy.checkText(fieldSelector(NEITHER).label(), FIELD_STRINGS[SATISFACTION].NEITHER);
+      cy.checkText(fieldSelector(DISSATISFIED).label(), FIELD_STRINGS[SATISFACTION].DISSATISFIED);
+      cy.checkText(fieldSelector(VERY_DISSATISIFED).label(), FIELD_STRINGS[SATISFACTION].VERY_DISSATISIFED);
 
       fieldSelector(VERY_SATISFIED).input().should('exist');
       fieldSelector(SATISFIED).input().should('exist');
@@ -71,20 +71,28 @@ context('Insurance - Feedback - As an exporter I want to give feedback on the UK
       fieldSelector(VERY_DISSATISIFED).input().should('exist');
     });
 
-    it(`should render the ${IMPROVEMENT} section`, () => {
-      const field = fieldSelector(IMPROVEMENT);
+    it(`should render the ${IMPROVEMENT} textarea`, () => {
+      const fieldId = IMPROVEMENT;
+      const fieldStrings = FIELD_STRINGS[fieldId];
 
-      cy.checkText(field.label(), FIELDS[IMPROVEMENT].LABEL);
-      cy.checkText(field.hint(), FIELDS[IMPROVEMENT].HINT);
-      field.textarea().should('exist');
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        expectedHint: fieldStrings.HINT,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
-    it(`should render the ${OTHER_COMMENTS} section`, () => {
-      const field = fieldSelector(OTHER_COMMENTS);
+    it(`should render the ${OTHER_COMMENTS} textarea`, () => {
+      const fieldId = OTHER_COMMENTS;
+      const fieldStrings = FIELD_STRINGS[fieldId];
 
-      cy.checkText(field.label(), FIELDS[OTHER_COMMENTS].LABEL);
-      cy.checkText(field.hint(), FIELDS[OTHER_COMMENTS].HINT);
-      field.textarea().should('exist');
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        expectedHint: fieldStrings.HINT,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
   });
 });

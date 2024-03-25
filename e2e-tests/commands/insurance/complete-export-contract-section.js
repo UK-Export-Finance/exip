@@ -8,6 +8,7 @@ const completeExportContractSection = ({ viaTaskList, submitCheckYourAnswers = f
   cy.startInsuranceExportContractSection({ viaTaskList });
 
   cy.completeAndSubmitAboutGoodsOrServicesForm({});
+  cy.completeAndSubmitHowYouWillGetPaidForm({});
 
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();

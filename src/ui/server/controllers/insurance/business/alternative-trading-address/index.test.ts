@@ -1,5 +1,5 @@
 import { PAGES } from '../../../../content-strings';
-import { pageVariables, get, TEMPLATE, post, FIELD_IDS, MAXIMUM } from '.';
+import { pageVariables, get, TEMPLATE, post, FIELD_IDS } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import BUSINESS_FIELD_IDS from '../../../../constants/field-ids/insurance/business';
@@ -58,7 +58,6 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
           ALTERNATIVE_TRADING_ADDRESS: {
             ID: FULL_ADDRESS,
             ...FIELDS[FULL_ADDRESS],
-            MAXIMUM,
           },
           REGISTERED_OFFICE_ADDRESS: {
             ID: COMPANY_ADDRESS,

@@ -22,7 +22,7 @@ const {
   EXPORT_CONTRACT: {
     ROOT: EXPORT_CONTRACT_ROOT,
     ABOUT_GOODS_OR_SERVICES,
-    CHECK_YOUR_ANSWERS,
+    HOW_WILL_YOU_GET_PAID,
   },
 } = INSURANCE_ROUTES;
 
@@ -86,9 +86,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
 
       cy.checkText(field.hint.list.item1(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
-
       cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
-
       cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
 
       cy.checkText(field.hint.outro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.OUTRO);
@@ -152,12 +150,12 @@ context('Insurance - Export contract - About goods or services page - Final dest
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${HOW_WILL_YOU_GET_PAID}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       cy.assertUrl(expectedUrl);
     });
 

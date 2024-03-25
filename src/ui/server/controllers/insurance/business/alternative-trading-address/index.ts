@@ -34,8 +34,6 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORTER_BUSINESS.ALTERNATIVE_TRADIN
 
 export const FIELD_IDS = [FULL_ADDRESS];
 
-export const MAXIMUM = 1000;
-
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -46,7 +44,6 @@ const pageVariables = {
     ALTERNATIVE_TRADING_ADDRESS: {
       ID: FULL_ADDRESS,
       ...FIELDS[FULL_ADDRESS],
-      MAXIMUM,
     },
     REGISTERED_OFFICE_ADDRESS: {
       ID: COMPANY_ADDRESS,

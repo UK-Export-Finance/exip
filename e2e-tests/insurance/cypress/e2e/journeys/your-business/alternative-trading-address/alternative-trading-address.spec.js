@@ -1,7 +1,7 @@
 import partials from '../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
+import { EXPORTER_BUSINESS_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { MAXIMUM_CHARACTERS } from '../../../../../../constants/validation';
@@ -39,8 +39,8 @@ const textareaField = { ...field, input: field.textarea };
 const expectedErrorsCount = 1;
 
 const {
-  LABEL, REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
-} = FIELDS[FULL_ADDRESS];
+  REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
+} = FIELD_STRINGS[FULL_ADDRESS];
 
 const address = application.COMPANY[COMPANY_ADDRESS];
 const { DIFFERENT_TRADING_ADDRESS } = application;
@@ -106,9 +106,14 @@ context('Insurance - Your business - Alternative trading address page - I want t
       cy.checkText(partials.html(COMPANY_ADDRESS), addressText);
     });
 
-    it(`should display ${FULL_ADDRESS} label and input`, () => {
-      field.textarea().should('exist');
-      cy.checkText(field.label(), LABEL);
+    it(`should display ${FULL_ADDRESS} textarea`, () => {
+      const fieldStrings = FIELD_STRINGS[fieldId];
+
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
     it('renders a `save and back` button', () => {
