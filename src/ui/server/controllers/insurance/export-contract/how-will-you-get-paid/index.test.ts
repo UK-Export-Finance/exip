@@ -7,6 +7,8 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fi
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -106,7 +108,9 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   });
 
   describe('post', () => {
-    const validBody = {};
+    const validBody = {
+      [FIELD_ID]: mockApplication.exportContract.paymentTermsDescription,
+    };
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
@@ -119,6 +123,24 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', () => {
+        post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const expectedVariables = {
+          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: mapApplicationToFormFields(mockApplication),
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 

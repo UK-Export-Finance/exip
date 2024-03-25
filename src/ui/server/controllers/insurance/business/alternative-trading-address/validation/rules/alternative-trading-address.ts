@@ -10,8 +10,8 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 /**
- * validate the "alternative address" in the "business" request body
- * @param {Express.Request.body} responseBody: containing an object with broker form submission data
+ * validate the "alternative address" field
+ * @param {Express.Response.body} Express response body
  * @param {Object} errors: Other validation errors for the same form
  * @returns {Function} fullAddressValidation
  */

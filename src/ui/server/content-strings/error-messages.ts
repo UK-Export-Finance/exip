@@ -149,6 +149,12 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the final destination of the goods or services',
         },
       },
+      HOW_WILL_YOU_GET_PAID: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID.PAYMENT_TERMS_DESCRIPTION]: {
+          IS_EMPTY: 'Enter how you will get paid for your export',
+          ABOVE_MAXIMUM: `The description of how you will get paid for your export cannot be more than a ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`,
+        },
+      },
     },
     POLICY: {
       TYPE_OF_POLICY: {

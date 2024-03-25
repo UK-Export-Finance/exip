@@ -12,7 +12,7 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * @param {String} fieldId: Field ID
  * @param {String} errorMessage: Error message message
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} providedAndMaxLength
+ * @returns {Function} providedAndMaxLength
  */
 const fullAddress = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) => {
   return providedAndMaxLength(formBody, fieldId, errorMessages, errors, MAXIMUM_CHARACTERS.FULL_ADDRESS);
