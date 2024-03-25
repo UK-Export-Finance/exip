@@ -88,7 +88,7 @@ context('Insurance - Dashboard - no applications', () => {
       header.navigation.applications().click();
 
       // check that the dashboard is now populated
-      dashboardPage.table.body.rows().should('have.length', 1);
+      cy.assertLength(dashboardPage.table.body.rows(), 1);
     });
   });
 });

@@ -38,7 +38,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 3 pagination list items with links', () => {
-      pagination.listItems().should('have.length', 3);
+      cy.assertLength(pagination.listItems(), 3);
 
       cy.assertPaginationItemLink({ index: 0 });
       cy.assertPaginationItemLink({ index: 1 });

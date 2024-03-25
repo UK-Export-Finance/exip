@@ -107,7 +107,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Account number -
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 2);
+      cy.assertLength(partials.errorSummaryListItems(), 2);
     });
   });
 });

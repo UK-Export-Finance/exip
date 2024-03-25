@@ -80,7 +80,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 2);
+      cy.assertLength(partials.errorSummaryListItems(), 2);
     });
   });
 });

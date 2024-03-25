@@ -5,7 +5,7 @@ import pagination from '../../partials/pagination';
  * Check that there are no pagination elements visible.
  */
 const assertPaginationDoesNotExist = () => {
-  pagination.listItems().should('have.length', 0);
+  cy.assertLength(pagination.listItems(), 0);
   pagination.previousLink().should('not.exist');
   pagination.nextLink().should('not.exist');
 };

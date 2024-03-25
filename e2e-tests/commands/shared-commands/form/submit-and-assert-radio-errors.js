@@ -12,7 +12,7 @@ const submitAndAssertRadioErrors = (field, errorIndex, errorSummaryLength, error
 
   cy.checkErrorSummaryListHeading();
 
-  partials.errorSummaryListItems().should('have.length', errorSummaryLength);
+  cy.assertLength(partials.errorSummaryListItems(), errorSummaryLength);
 
   cy.checkText(
     partials.errorSummaryListItems().eq(errorIndex),

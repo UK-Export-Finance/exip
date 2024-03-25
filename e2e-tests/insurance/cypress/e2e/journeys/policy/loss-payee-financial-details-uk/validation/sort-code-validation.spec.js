@@ -113,7 +113,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 2);
+      cy.assertLength(partials.errorSummaryListItems(), 2);
     });
 
     it(`should not render validation errors when ${FIELD_ID} is only numbers and dashes`, () => {
@@ -121,7 +121,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 2);
+      cy.assertLength(partials.errorSummaryListItems(), 2);
     });
 
     it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces`, () => {
@@ -129,7 +129,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 2);
+      cy.assertLength(partials.errorSummaryListItems(), 2);
     });
 
     it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces and dashes`, () => {
@@ -137,7 +137,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 2);
+      cy.assertLength(partials.errorSummaryListItems(), 2);
     });
   });
 });

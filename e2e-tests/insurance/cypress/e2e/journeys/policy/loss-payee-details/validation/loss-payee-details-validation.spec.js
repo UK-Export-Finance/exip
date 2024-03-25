@@ -96,7 +96,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 1);
+      cy.assertLength(partials.errorSummaryListItems(), 1);
     });
   });
 

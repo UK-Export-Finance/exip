@@ -141,7 +141,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '5');
         cy.clickSubmitButton();
-        partials.errorSummaryListItems().should('have.length', 2);
+        cy.assertLength(partials.errorSummaryListItems(), 2);
       });
     });
 
@@ -154,7 +154,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '5,000');
         cy.clickSubmitButton();
-        partials.errorSummaryListItems().should('have.length', 2);
+        cy.assertLength(partials.errorSummaryListItems(), 2);
       });
     });
   });

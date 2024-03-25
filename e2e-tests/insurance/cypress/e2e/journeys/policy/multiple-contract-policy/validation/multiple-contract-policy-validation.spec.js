@@ -64,7 +64,7 @@ context('Insurance - Policy - Multiple contract policy page - form validation', 
     cy.checkErrorSummaryListHeading();
 
     const TOTAL_REQUIRED_FIELDS = 3;
-    partials.errorSummaryListItems().should('have.length', TOTAL_REQUIRED_FIELDS);
+    cy.assertLength(partials.errorSummaryListItems(), TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),

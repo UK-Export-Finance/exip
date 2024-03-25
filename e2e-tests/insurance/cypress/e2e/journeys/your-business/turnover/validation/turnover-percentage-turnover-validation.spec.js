@@ -112,7 +112,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.clickSubmitButton();
 
-    partials.errorSummaryListItems().should('have.length', 1);
+    cy.assertLength(partials.errorSummaryListItems(), 1);
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
@@ -122,6 +122,6 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.clickSubmitButton();
 
-    partials.errorSummaryListItems().should('have.length', 1);
+    cy.assertLength(partials.errorSummaryListItems(), 1);
   });
 });
