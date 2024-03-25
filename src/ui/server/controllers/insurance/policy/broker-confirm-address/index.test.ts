@@ -5,12 +5,12 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import replaceNewLineWithLineBreak from '../../../../helpers/replace-new-line-with-line-break';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
-  BROKER_DETAILS: { FULL_ADDRESS },
+  BROKER_DETAILS: { FULL_ADDRESS: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -50,7 +50,6 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
       const result = pageVariables(mockApplication.referenceNumber);
 
       const expected = {
-        FIELD_ID: FULL_ADDRESS,
         USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_DETAILS_ROOT}`,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
       };
@@ -70,7 +69,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
         }),
         ...pageVariables(mockApplication.referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplication),
+        submittedAnswer: replaceNewLineWithLineBreak(mockApplication.broker[FIELD_ID]),
       });
     });
 

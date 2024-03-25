@@ -1,4 +1,4 @@
-import { insetTextHtml } from '../../../../../../pages/shared';
+import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
 import {
   MULTI_LINE_STRING,
   EXPECTED_MULTI_LINE_STRING,
@@ -52,7 +52,14 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`renders ${FULL_ADDRESS} exactly as they were submitted`, () => {
+  it(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {
     cy.checkText(insetTextHtml(), EXPECTED_MULTI_LINE_STRING);
+
+    const expectedLineBreaks = 3;
+
+    cy.assertLineBreakElements(
+      insetTextHtmlLineBreak(),
+      expectedLineBreaks
+    );
   });
 });
