@@ -70,7 +70,11 @@ export const assertEmailFieldValidation = ({
 
         cy.clickSubmitButton();
 
-        cy.assertLength(partials.errorSummaryListItems(), totalExpectedOtherErrorsWithValidEmail);
+        if (totalExpectedOtherErrorsWithValidEmail) {
+          cy.assertLength(partials.errorSummaryListItems(), totalExpectedOtherErrorsWithValidEmail);
+        } else {
+          partials.errorSummaryListItems().should('not.exist');
+        }
       });
     }
   });
