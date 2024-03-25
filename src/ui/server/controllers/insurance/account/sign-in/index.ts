@@ -6,6 +6,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import constructPayload from '../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
+import emailAndPasswordIncorrectValidationErrors from '../../../../shared-validation/email-and-password-incorrect';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
@@ -93,6 +94,11 @@ export const get = (req: Request, res: Response) => {
 export const post = async (req: Request, res: Response) => {
   const payload = constructPayload(req.body, FIELD_IDS);
 
+  /**
+   * Check if the credentials meet validation rules. I.e:
+   * - Email provided and is below a maximum length.
+   * - Password provided
+   */
   let validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
@@ -136,8 +142,11 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${SUSPENDED_ROOT}?id=${accountId}`);
     }
 
-    // invalid credentials - force validation errors by mimicking empty form submission
-    validationErrors = generateValidationErrors({});
+    /**
+     * Invalid credentials provided.
+     * Force generic "invalid credentials" validation errors for all fields.
+     */
+    validationErrors = emailAndPasswordIncorrectValidationErrors(payload);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

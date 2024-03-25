@@ -1,6 +1,7 @@
-const MAXIMUM = 300;
+import { MAXIMUM_CHARACTERS } from '../validation';
+
 const suffix = '@email.com';
-const extraCharactersLength = MAXIMUM - suffix.length + 1;
+const extraCharactersLength = MAXIMUM_CHARACTERS.EMAIL - suffix.length + 1;
 
 const ABOVE_MAXIMUM = `${'a'.repeat(extraCharactersLength)}${suffix}`;
 
