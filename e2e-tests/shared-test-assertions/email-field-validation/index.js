@@ -10,8 +10,8 @@ import partials from '../../partials';
  * @param {Object} errorMessages: Email error messages
  * @param {Integer} totalExpectedErrors: Total expected errors in the form
  * @param {Integer} totalExpectedOtherErrorsWithValidEmail: Total expected errors in the form when an email is valid.
- * @param {Integer} isGenericErrorMessage: Email has a generic error message for incorrect formatting errors.
- * @param {Integer} assertErrorWhenCorrectlyFormatted: Assert a validation error if the email is valid, but is an incorrect credential. E.g, account sign in.
+ * @param {Boolean} isGenericErrorMessage: Email has a generic error message for incorrect formatting errors.
+ * @param {Boolean} assertErrorWhenCorrectlyFormatted: Assert a validation error if the email is valid, but is an incorrect credential. E.g, account sign in.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const assertEmailFieldValidation = ({
