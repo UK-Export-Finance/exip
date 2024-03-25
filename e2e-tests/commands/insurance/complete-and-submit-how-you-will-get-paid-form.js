@@ -4,7 +4,7 @@ import application from '../../fixtures/application';
 
 const {
   EXPORT_CONTRACT: {
-    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID }
+    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID },
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -14,7 +14,7 @@ const {
  * @param {String} paymentTermsDescription: Description value
  */
 const completeAndSubmitHowYouWillGetPaidForm = ({
-  paymentTermsDescription = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID]
+  paymentTermsDescription = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID],
 }) => {
   cy.keyboardInput(field(FIELD_ID).textarea(), paymentTermsDescription);
 
