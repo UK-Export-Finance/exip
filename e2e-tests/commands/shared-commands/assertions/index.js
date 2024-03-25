@@ -17,6 +17,7 @@ Cypress.Commands.add('assertYesRadioOptionIsChecked', require('./assert-yes-radi
 Cypress.Commands.add('assertYesRadioOptionIsNotChecked', require('./assert-yes-radio-option-is-not-checked'));
 Cypress.Commands.add('assertNoRadioOptionIsChecked', require('./assert-no-radio-option-is-checked'));
 Cypress.Commands.add('assertNoRadioOptionIsNotChecked', require('./assert-no-radio-option-is-not-checked'));
+Cypress.Commands.add('assertLength', require('./assert-length'));
 
 Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
