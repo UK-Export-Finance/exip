@@ -99,7 +99,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should not display validation errors', () => {
-      cy.assertLength(partials.errorSummaryListItems(), 0);
+      partials.errorSummaryListItems().should('not.exist');
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {
@@ -118,7 +118,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should not display validation errors', () => {
-      cy.assertLength(partials.errorSummaryListItems(), 0);
+      partials.errorSummaryListItems().should('not.exist');
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {
