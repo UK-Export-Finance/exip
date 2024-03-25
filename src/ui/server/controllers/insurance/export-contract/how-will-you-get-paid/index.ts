@@ -11,7 +11,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -84,6 +84,15 @@ export const post = (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
+
+  /**
+   * if totalContractValue is over the threshold
+   * redirect to PRIVATE_MARKET
+   * otherwise it should redirect to the CHECK_YOUR_ANSWERS page
+   */
+  if (application.totalContractValueOverThreshold) {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
+  }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

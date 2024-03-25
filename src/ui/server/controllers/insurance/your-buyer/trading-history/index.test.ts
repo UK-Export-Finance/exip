@@ -264,13 +264,6 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         req.body = validBody;
       });
 
-      it('should redirect to the next page', async () => {
-        await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-
       it('should call mapAndSave.buyerTradingHistory once with data from constructPayload function and application', async () => {
         await post(req, res);
 
@@ -281,7 +274,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         expect(mapAndSave.buyerTradingHistory).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe('when the totalContractValueOverThreshold is true', () => {
+      describe('when application.totalContractValueOverThreshold is true', () => {
         it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
           res.locals.application = {
             ...mockApplication,
@@ -291,6 +284,20 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_INSURANCE_COVER}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when application.totalContractValueOverThreshold is NOT true', () => {
+        it('should redirect to the next page', async () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: false,
+          };
+
+          await post(req, res);
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

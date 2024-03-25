@@ -1,6 +1,7 @@
 const ROOT = '/export-contract';
 const ABOUT_GOODS_OR_SERVICES_ROOT = `${ROOT}/about-goods-or-services`;
 const HOW_WILL_YOU_GET_PAID_ROOT = `${ROOT}/how-will-you-get-paid`;
+const PRIVATE_MARKET_ROOT = `${ROOT}/private-market`;
 
 export const EXPORT_CONTRACT = {
   ROOT,
@@ -12,5 +13,9 @@ export const EXPORT_CONTRACT = {
   HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK: `${HOW_WILL_YOU_GET_PAID_ROOT}/save-and-go-back`,
   HOW_WILL_YOU_GET_PAID_CHANGE: `${HOW_WILL_YOU_GET_PAID_ROOT}/change`,
   HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE: `${HOW_WILL_YOU_GET_PAID_ROOT}/check-and-change`,
+  PRIVATE_MARKET: PRIVATE_MARKET_ROOT,
+  PRIVATE_MARKET_SAVE_AND_BACK: `${PRIVATE_MARKET_ROOT}/save-and-go-back`,
+  PRIVATE_MARKET_CHANGE: `${PRIVATE_MARKET_ROOT}/change`,
+  PRIVATE_MARKET_CHECK_AND_CHANGE: `${PRIVATE_MARKET_ROOT}/check-and-change`,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };

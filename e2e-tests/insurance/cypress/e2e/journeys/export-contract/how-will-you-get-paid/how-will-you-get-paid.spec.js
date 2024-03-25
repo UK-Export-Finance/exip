@@ -90,7 +90,7 @@ context('Insurance - Export contract - How will you get paid page - As an export
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitHowYouWillGetPaidForm();
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
