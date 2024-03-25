@@ -17,7 +17,7 @@ const {
  * completeAboutGoodsOrServicesForm
  * Complete the "About goods or services" form
  * @param {Boolean} description: description value
- * @param {Boolean} finalDestinationKnown: flag for if the final destination is known
+ * @param {String} finalDestinationKnown: flag for if the final destination is known
  * @param {Boolean} includeFinalDestination: flag for if the final destination should be included.
  */
 const completeAboutGoodsOrServicesForm = ({

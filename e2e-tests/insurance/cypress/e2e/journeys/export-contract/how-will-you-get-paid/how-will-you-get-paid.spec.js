@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -28,9 +28,11 @@ context('Insurance - Export contract - How will you get paid page - As an export
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      cy.navigateToUrl(url);
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
     });
   });
 
@@ -46,7 +48,7 @@ context('Insurance - Export contract - How will you get paid page - As an export
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}#`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
     });
   });
 
@@ -81,6 +83,17 @@ context('Insurance - Export contract - How will you get paid page - As an export
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitHowYouWillGetPaidForm();
+
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.assertUrl(expectedUrl);
     });
   });
 });

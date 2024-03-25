@@ -8,7 +8,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   ROOT,
   ALL_SECTIONS,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.CHECK_YOUR_ANSWERS;
@@ -45,7 +45,7 @@ context('Insurance - Export contract - Check your answers - As an exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
-      backLink: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      backLink: `${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
       submitButtonCopy: BUTTONS.SAVE_AND_BACK,
       assertSaveAndBackButtonDoesNotExist: true,
     });
