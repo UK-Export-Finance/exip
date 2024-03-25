@@ -1,7 +1,7 @@
 import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
 import {
   MULTI_LINE_STRING,
-  EXPECTED_MULTI_LINE_STRING,
+  EXPECTED_SINGLE_LINE_STRING,
 } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
@@ -53,7 +53,12 @@ context('Insurance - Policy - Broker confirm address - Address with multiple lin
   });
 
   it(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {
-    cy.checkText(insetTextHtml(), EXPECTED_MULTI_LINE_STRING);
+    /**
+     * Cypress text assertion does not pick up HTML characters such as <br/>.
+     * Therefore, we have to assert the text without line breaks
+     * and instead, assert the line breaks separately.
+     */
+    cy.checkText(insetTextHtml(), EXPECTED_SINGLE_LINE_STRING);
 
     const expectedLineBreaks = 3;
 
