@@ -10,7 +10,7 @@ const {
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES,
-    CHECK_YOUR_ANSWERS,
+    HOW_WILL_YOU_GET_PAID,
   },
 } = INSURANCE_ROUTES;
 
@@ -51,10 +51,10 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${HOW_WILL_YOU_GET_PAID}`, () => {
       cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown: false });
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       cy.assertUrl(expectedUrl);
     });
 
