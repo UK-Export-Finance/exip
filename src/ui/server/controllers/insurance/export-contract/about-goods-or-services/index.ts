@@ -151,6 +151,7 @@ export const post = async (req: Request, res: Response) => {
   const validationErrors = generateValidationErrors(payload);
 
   let countries;
+
   try {
     countries = await api.keystone.countries.getAll();
 

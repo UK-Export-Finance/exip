@@ -20,10 +20,10 @@ const {
 } = ERROR_MESSAGES;
 
 /**
- * validate the "full address" in "company or organisation" request body
- * @param {Express.Request.body} responseBody: containing an object with broker form submission data
+ * validate the "full address" field
+ * @param {Express.Request.body} Express response body
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Function} fullAddressValidation
+ * @returns {ValidationErrors} fullAddressValidation
  */
 const addressRules = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
