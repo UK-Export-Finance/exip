@@ -6,6 +6,8 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fi
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -84,6 +86,21 @@ export const post = (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = req.params;
+  const refNumber = Number(referenceNumber);
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+      ...pageVariables(refNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application: mapApplicationToFormFields(application),
+      validationErrors,
+    });
+  }
 
   /**
    * if totalContractValue is over the threshold

@@ -21,7 +21,7 @@ context('Insurance - Dashboard - new application', () => {
 
       cy.assertUrl(url);
 
-      table.body.rows().should('have.length', 1);
+      cy.assertLength(table.body.rows(), 1);
     });
   });
 
@@ -62,7 +62,7 @@ context('Insurance - Dashboard - new application', () => {
     });
 
     it('should render the newly created application and the previously created application', () => {
-      table.body.rows().should('have.length', 2);
+      cy.assertLength(table.body.rows(), 2);
     });
 
     it('should order the applications in descending order', () => {

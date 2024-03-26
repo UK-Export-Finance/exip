@@ -1,6 +1,7 @@
 import { headingCaption } from '../../../../../../pages/shared';
 import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-contract';
-import { PAGES } from '../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -14,9 +15,20 @@ const {
 
 const {
   EXPORT_CONTRACT: {
-    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID },
   },
 } = INSURANCE_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    EXPORT_CONTRACT: {
+      HOW_WILL_YOU_GET_PAID: ERRORS,
+    },
+  },
+} = ERROR_MESSAGES;
+
+const field = howWillYouGetPaidPage[FIELD_ID];
+const expectedErrorsCount = 1;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -61,11 +73,8 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`renders ${PAYMENT_TERMS_DESCRIPTION} hint and textarea`, () => {
-      const fieldId = PAYMENT_TERMS_DESCRIPTION;
-      const fieldStrings = FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[fieldId];
-
-      const field = howWillYouGetPaidPage[fieldId];
+    it(`renders ${FIELD_ID} hint and textarea`, () => {
+      const fieldStrings = FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[FIELD_ID];
 
       cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
 
@@ -76,13 +85,47 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.checkText(field.hint.outro(), fieldStrings.HINT.OUTRO);
 
       cy.assertTextareaRendering({
-        fieldId,
+        fieldId: FIELD_ID,
         maximumCharacters: fieldStrings.MAXIMUM,
       });
     });
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form validation', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
+      const errorMessage = ERRORS[FIELD_ID].IS_EMPTY;
+
+      cy.submitAndAssertFieldErrors(
+        field,
+        null,
+        0,
+        expectedErrorsCount,
+        errorMessage,
+        true,
+      );
+    });
+
+    it(`should display validation errors if ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`, () => {
+      const errorMessage = ERRORS[FIELD_ID].ABOVE_MAXIMUM;
+
+      const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION + 1);
+
+      cy.submitAndAssertFieldErrors(
+        field,
+        submittedValue,
+        0,
+        expectedErrorsCount,
+        errorMessage,
+        true,
+      );
     });
   });
 

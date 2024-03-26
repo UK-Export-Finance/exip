@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
@@ -91,7 +90,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.keyboardInput(field.input(), '5');
     cy.clickSubmitButton();
-    partials.errorSummaryListItems().should('have.length', 1);
+    cy.assertErrorSummaryListLength(1);
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered with a comma`, () => {
@@ -100,7 +99,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.keyboardInput(field.input(), '5,00');
     cy.clickSubmitButton();
-    partials.errorSummaryListItems().should('have.length', 1);
+    cy.assertErrorSummaryListLength(1);
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
@@ -109,7 +108,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.keyboardInput(field.input(), '0');
     cy.clickSubmitButton();
-    partials.errorSummaryListItems().should('have.length', 1);
+    cy.assertErrorSummaryListLength(1);
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a negative number`, () => {
@@ -118,6 +117,6 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.keyboardInput(field.input(), '-256');
     cy.clickSubmitButton();
-    partials.errorSummaryListItems().should('have.length', 1);
+    cy.assertErrorSummaryListLength(1);
   });
 });

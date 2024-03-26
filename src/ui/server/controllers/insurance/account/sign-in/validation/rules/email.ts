@@ -24,7 +24,7 @@ const {
  * If all of the conditions are met, empty errors are returned (via maxLengthValidation).
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
- * @returns {Function} emailAndPasswordValidation | maxLengthValidation
+ * @returns {ValidationErrors} emailAndPasswordValidation | maxLengthValidation
  */
 const emailRules = (formBody: RequestBody, errors: object) => {
   if (!objectHasProperty(formBody, FIELD_ID)) {

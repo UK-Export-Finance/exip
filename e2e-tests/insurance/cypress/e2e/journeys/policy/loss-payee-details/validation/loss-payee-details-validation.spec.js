@@ -3,7 +3,6 @@ import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import partials from '../../../../../../../partials';
 import mockNameWithSpecialCharacters from '../../../../../../../fixtures/name-with-special-characters';
 
 const ERRORS = ERROR_MESSAGES.INSURANCE.POLICY;
@@ -96,7 +95,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().should('have.length', 1);
+      cy.assertErrorSummaryListLength(1);
     });
   });
 

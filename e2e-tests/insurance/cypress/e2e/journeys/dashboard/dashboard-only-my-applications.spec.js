@@ -47,7 +47,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF c
   });
 
   it('should have only one application', () => {
-    table.body.rows().should('have.length', 1);
+    cy.assertLength(table.body.rows(), 1);
   });
 
   it('should have the correct reference number', () => {
@@ -86,7 +86,7 @@ context("Insurance - Dashboard - As an Exporter, I want to access only my UKEF c
       });
 
       it('should have only one application', () => {
-        table.body.rows().should('have.length', 1);
+        cy.assertLength(table.body.rows(), 1);
       });
 
       it('should NOT have a reference number that equals the first application/reference number, created by a different exporter', () => {
