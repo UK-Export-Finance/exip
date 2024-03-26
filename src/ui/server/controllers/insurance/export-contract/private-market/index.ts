@@ -7,7 +7,11 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   PRIVATE_MARKET: { ATTEMPTED },
@@ -73,4 +77,23 @@ export const get = (req: Request, res: Response) => {
     application: mapApplicationToFormFields(application),
     FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
   });
+};
+
+/**
+ * post
+ * Redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = req.params;
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

@@ -64,41 +64,6 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid/save-and-b
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
     });
-
-    describe(`when the form does NOT have ${FIELD_ID}`, () => {
-      beforeEach(() => {
-        jest.resetAllMocks();
-
-        mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
-        mapAndSave.exportContract = mapAndSaveSpy;
-
-        req.body = {
-          _csrf: '1234',
-          [FIELD_ID]: 'Mock description',
-        };
-      });
-
-      it('should call mapAndSave.exportContract with data from constructPayload function, application and validationErrors', async () => {
-        await post(req, res);
-
-        const payload = constructPayload(req.body, [FIELD_ID]);
-
-        const validationErrors = generateValidationErrors(payload);
-
-        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
-        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
-      });
-
-      it(`should redirect to ${ALL_SECTIONS}`, async () => {
-        mapAndSave.exportContract = mapAndSaveSpy;
-
-        await post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
-    });
   });
 
   describe('when the form does not have any data', () => {
