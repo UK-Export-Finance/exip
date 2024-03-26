@@ -4,7 +4,7 @@ import { get as exportContractRootGet } from '../../../controllers/insurance/exp
 import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../../controllers/insurance/export-contract/about-goods-or-services';
 import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controllers/insurance/export-contract/about-goods-or-services/save-and-back';
 import { get as howWillYouGetPaidGet, post as howWillYouGetPaidPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid';
-import { get as privateMarketGet } from '../../../controllers/insurance/export-contract/private-market';
+import { get as privateMarketGet, post as privateMarketPost } from '../../../controllers/insurance/export-contract/private-market';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const { ROOT, ABOUT_GOODS_OR_SERVICES, ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, HOW_WILL_YOU_GET_PAID, PRIVATE_MARKET } = EXPORT_CONTRACT;
@@ -27,6 +27,7 @@ exportContractRoute.get(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouG
 exportContractRoute.post(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidPost);
 
 exportContractRoute.get(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketGet);
+exportContractRoute.post(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketPost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -117,12 +117,34 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        post(req, res);
+      describe('when application.totalContractValueOverThreshold is true', () => {
+        it(`should redirect to ${PRIVATE_MARKET}`, () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: true,
+          };
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${PRIVATE_MARKET}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when application.totalContractValueOverThreshold is NOT true', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: false,
+          };
+
+          post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

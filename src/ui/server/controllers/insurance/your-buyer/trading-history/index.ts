@@ -278,7 +278,7 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * if totalContractValue is over the threshold
-     * then should redirect to CREDIT_INSURANCE_COVER
+     * redirect to CREDIT_INSURANCE_COVER
      * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
      */
     if (application.totalContractValueOverThreshold) {
