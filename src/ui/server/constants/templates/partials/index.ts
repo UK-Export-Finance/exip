@@ -42,6 +42,9 @@ export const PARTIALS = {
       ABOUT_GOODS_OR_SERVICES: {
         CONDITIONAL_YES_HTML: 'partials/insurance/about-goods-or-services-conditional-yes-html.njk',
       },
+      PRIVATE_MARKET: {
+        CUSTOM_CONTENT_HTML: 'partials/insurance/private-market-why-description.njk',
+      },
     },
   },
   QUOTE: {

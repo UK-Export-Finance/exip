@@ -28,6 +28,12 @@ const HOW_WILL_YOU_GET_PAID = {
   PAGE_TITLE: 'How will you get paid for your export?',
 };
 
+const PRIVATE_MARKET = {
+  ...SHARED,
+  PAGE_TITLE: 'Have you tried to insure this export through the private insurance market?',
+  HINT: 'We may ask for proof that you have been unable to insure the export through an alternative provider.',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -37,5 +43,6 @@ export default {
   ROOT,
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID,
+  PRIVATE_MARKET,
   CHECK_YOUR_ANSWERS,
 };
