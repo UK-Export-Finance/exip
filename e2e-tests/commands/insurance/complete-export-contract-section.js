@@ -8,7 +8,7 @@
 const completeExportContractSection = ({
   viaTaskList,
   totalContractValueOverThreshold,
-  submitCheckYourAnswers = false
+  submitCheckYourAnswers = false,
 }) => {
   cy.startInsuranceExportContractSection({ viaTaskList });
 

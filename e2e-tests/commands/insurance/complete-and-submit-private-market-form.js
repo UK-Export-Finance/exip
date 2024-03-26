@@ -6,4 +6,4 @@ const completeAndSubmitPrivateMarketForm = () => {
   cy.clickSubmitButton();
 };
 
-export default completeAndSubmitPrivateMarketForm
+export default completeAndSubmitPrivateMarketForm;
