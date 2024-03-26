@@ -139,8 +139,6 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
 
     describe('when submitting an empty form', () => {
       it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
-        // cy.navigateToUrl(url);
-
         const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
 
         const radioField = {
