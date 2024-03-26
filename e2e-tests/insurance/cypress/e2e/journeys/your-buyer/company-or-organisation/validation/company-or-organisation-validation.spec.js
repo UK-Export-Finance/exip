@@ -50,7 +50,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.checkErrorSummaryListHeading();
 
     const TOTAL_REQUIRED_FIELDS = 2;
-    cy.assertLength(partials.errorSummaryListItems(), TOTAL_REQUIRED_FIELDS);
+    cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
     cy.checkText(
       partials.errorSummaryListItems().eq(0),

@@ -2,7 +2,6 @@ import { field } from '../../../../../../../pages/shared';
 import {
   ROUTES, FIELD_IDS, VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
-import partials from '../../../../../../../partials';
 
 const {
   EXPORTER_BUSINESS: {
@@ -70,7 +69,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should not display validation errors', () => {
-      cy.assertLength(partials.errorSummaryListItems(), 0);
+      cy.assertErrorSummaryListDoesNotExist();
     });
 
     it('should redirect to next page', () => {
@@ -87,7 +86,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -103,7 +102,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -119,7 +118,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -135,7 +134,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -151,7 +150,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -167,7 +166,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -183,7 +182,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -199,7 +198,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {
@@ -215,7 +214,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should not display validation errors', () => {
-        cy.assertLength(partials.errorSummaryListItems(), 0);
+        cy.assertErrorSummaryListDoesNotExist();
       });
 
       it('should redirect to next page', () => {

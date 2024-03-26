@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
@@ -112,7 +111,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.clickSubmitButton();
 
-    cy.assertLength(partials.errorSummaryListItems(), 1);
+    cy.assertErrorSummaryListLength(1);
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
@@ -122,6 +121,6 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
 
     cy.clickSubmitButton();
 
-    cy.assertLength(partials.errorSummaryListItems(), 1);
+    cy.assertErrorSummaryListLength(1);
   });
 });

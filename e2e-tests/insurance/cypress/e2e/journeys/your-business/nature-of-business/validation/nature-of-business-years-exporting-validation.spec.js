@@ -122,7 +122,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 
@@ -134,7 +134,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 });

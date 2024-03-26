@@ -1,5 +1,4 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -80,7 +79,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
 
       cy.clickSubmitButton();
 
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 });

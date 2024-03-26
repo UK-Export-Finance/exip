@@ -48,7 +48,7 @@ context('Tell us about the policy you need page - form validation', () => {
       cy.checkErrorSummaryListHeading();
 
       const TOTAL_REQUIRED_FIELDS = 4;
-      cy.assertLength(partials.errorSummaryListItems(), TOTAL_REQUIRED_FIELDS);
+      cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
       // policy length
       cy.checkText(

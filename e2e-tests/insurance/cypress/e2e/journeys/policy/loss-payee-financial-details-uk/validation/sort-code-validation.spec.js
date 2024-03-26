@@ -1,6 +1,5 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { MAXIMUM_CHARACTERS, MINIMUM_CHARACTERS } from '../../../../../../../constants';
@@ -113,7 +112,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
 
     it(`should not render validation errors when ${FIELD_ID} is only numbers and dashes`, () => {
@@ -121,7 +120,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
 
     it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces`, () => {
@@ -129,7 +128,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
 
     it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces and dashes`, () => {
@@ -137,7 +136,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
 
       cy.clickSubmitButton();
 
-      cy.assertLength(partials.errorSummaryListItems(), 2);
+      cy.assertErrorSummaryListLength(2);
     });
   });
 });

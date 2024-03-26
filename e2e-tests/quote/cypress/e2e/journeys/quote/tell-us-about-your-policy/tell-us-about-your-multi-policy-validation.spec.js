@@ -49,7 +49,7 @@ context('Tell us about the multiple policy you need - form validation', () => {
       cy.checkErrorSummaryListHeading();
 
       const TOTAL_REQUIRED_FIELDS = 4;
-      cy.assertLength(partials.errorSummaryListItems(), TOTAL_REQUIRED_FIELDS);
+      cy.assertErrorSummaryListLength(TOTAL_REQUIRED_FIELDS);
 
       // currency
       cy.checkText(

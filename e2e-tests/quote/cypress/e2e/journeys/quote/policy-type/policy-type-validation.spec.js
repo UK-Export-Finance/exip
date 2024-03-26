@@ -40,7 +40,7 @@ context('Policy type page - policy type & length validation - single policy type
       cy.clickSubmitButton();
 
       cy.checkErrorSummaryListHeading();
-      cy.assertLength(partials.errorSummaryListItems(), 1);
+      cy.assertErrorSummaryListLength(1);
 
       const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[POLICY_TYPE];
 

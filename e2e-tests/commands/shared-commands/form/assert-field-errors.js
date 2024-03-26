@@ -18,7 +18,7 @@ const assertFieldErrors = ({
 }) => {
   cy.checkErrorSummaryListHeading();
 
-  cy.assertLength(partials.errorSummaryListItems(), errorSummaryLength);
+  cy.assertErrorSummaryListLength(errorSummaryLength);
 
   cy.checkText(
     partials.errorSummaryListItems().eq(errorIndex),

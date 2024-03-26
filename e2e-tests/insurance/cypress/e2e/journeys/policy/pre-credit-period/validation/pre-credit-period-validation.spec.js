@@ -1,5 +1,4 @@
 import { noRadio, field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
@@ -71,7 +70,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
       cy.navigateToUrl(url);
       cy.clickNoRadioInput();
 
-      partials.errorSummaryListItems().should('not.exist');
+      cy.assertErrorSummaryListDoesNotExist();
     });
   });
 
@@ -119,7 +118,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
     it(`should not render any validation errors when ${CREDIT_PERIOD_WITH_BUYER} is below the minimum`, () => {
       cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
 
-      partials.errorSummaryListItems().should('not.exist');
+      cy.assertErrorSummaryListDoesNotExist();
     });
   });
 });
