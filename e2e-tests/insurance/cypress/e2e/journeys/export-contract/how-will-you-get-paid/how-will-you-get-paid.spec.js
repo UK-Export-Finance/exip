@@ -3,7 +3,7 @@ import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-
 import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/export-contract';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
@@ -15,10 +15,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  EXPORT_CONTRACT: {
-    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID },
-  },
-} = INSURANCE_FIELD_IDS;
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID },
+} = FIELD_IDS;
 
 const {
   INSURANCE: {

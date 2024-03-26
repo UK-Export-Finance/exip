@@ -1,4 +1,4 @@
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
+import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-contract';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -6,18 +6,18 @@ import application from '../../../../../../fixtures/application';
 const {
   ROOT: INSURANCE_ROOT,
   ALL_SECTIONS,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID },
 } = INSURANCE_ROUTES;
 
 const {
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: FIELD_ID },
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: FIELD_ID },
 } = FIELD_IDS;
 
-const field = aboutGoodsOrServicesPage[FIELD_ID];
+const field = howWillYouGetPaidPage[FIELD_ID];
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - About goods or services page - Save and go back', () => {
+context('Insurance - Export contract - How will you get paid page - Save and go back', () => {
   let referenceNumber;
   let url;
 
@@ -25,9 +25,11 @@ context('Insurance - Export contract - About goods or services page - Save and g
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       cy.assertUrl(url);
     });
   });
@@ -52,10 +54,6 @@ context('Insurance - Export contract - About goods or services page - Save and g
 
       cy.assertUrl(expected);
     });
-
-    it('should retain the `export contract` task status as `not started`', () => {
-      cy.checkTaskExportContractStatusIsNotStartedYet();
-    });
   });
 
   describe('when submitting an answer and submitting the form via `save and go back` button', () => {
@@ -63,7 +61,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(field.textarea(), application.EXPORT_CONTRACT[FIELD_ID]);
+      cy.completeHowYouWillGetPaidForm({});
       cy.clickSaveAndBackButton();
     });
 
@@ -73,25 +71,28 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertUrl(expected);
     });
 
-    it('should update the `export contract` task status to `in progress`', () => {
-      cy.checkTaskExportContractStatusIsInProgress();
-    });
-
-    it('should have the originally submitted answer selected when going back to the page after submission', () => {
+    it('should have the originally submitted answer when going back to the page after submission', () => {
       cy.navigateToUrl(url);
 
+      const value = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID];
+
       // submit the form via 'save and go back' button
-      cy.keyboardInput(field.textarea(), application.EXPORT_CONTRACT[FIELD_ID]);
+      cy.keyboardInput(field.textarea(), value);
       cy.clickSaveAndBackButton();
 
-      // go back to the page via the task list
+      /**
+       * go back to the page via the task list by:
+       * - clicking the task list item
+       * - submitting the first form.
+       */
       cy.startInsuranceExportContractSection({});
+      cy.clickSubmitButton();
 
-      field.textarea().should('have.value', application.EXPORT_CONTRACT[FIELD_ID]);
+      field.textarea().should('have.value', value);
     });
   });
 
-  describe(`when removing a previously submitted '${FIELD_ID}' value`, () => {
+  describe(`when removing a previously submitted '${FIELD_ID} value`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -112,12 +113,9 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.assertUrl(expected);
     });
 
-    it('should update the `export contract` task status to `not started`', () => {
-      cy.checkTaskExportContractStatusIsNotStartedYet();
-    });
-
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
+      cy.clickSubmitButton();
 
       field.textarea().should('have.value', '');
     });

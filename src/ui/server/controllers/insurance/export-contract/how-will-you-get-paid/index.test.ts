@@ -16,7 +16,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -66,7 +66,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
           ID: FIELD_ID,
           ...FIELDS.HOW_WILL_YOU_GET_PAID[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
