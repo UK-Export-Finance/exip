@@ -71,7 +71,7 @@ context('Insurance - Account - When answering eligibility answers, creating an a
 
       cy.assertUrl(dashboardUrl);
 
-      table.body.rows().should('have.length', 1);
+      cy.assertLength(table.body.rows(), 1);
 
       table.body.firstRow.submittedLink().invoke('text').then((refNumber) => {
         referenceNumber = refNumber;

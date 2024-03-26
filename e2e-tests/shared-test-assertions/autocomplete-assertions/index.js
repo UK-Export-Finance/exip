@@ -34,7 +34,7 @@ export const checkAutocompleteInput = {
 
     const results = field.results();
 
-    results.should('have.length', 1);
+    cy.assertLength(results, 1);
   },
   rendersMultipleResults: (field) => {
     cy.keyboardInput(field.input(), 'A');

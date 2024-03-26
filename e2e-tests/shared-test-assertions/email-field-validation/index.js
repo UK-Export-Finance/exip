@@ -1,6 +1,5 @@
 import { INVALID_EMAILS, VALID_EMAIL } from '../../constants';
 import { field as fieldSelector } from '../../pages/shared';
-import partials from '../../partials';
 
 /**
  * assertEmailFieldValidation
@@ -70,7 +69,11 @@ export const assertEmailFieldValidation = ({
 
         cy.clickSubmitButton();
 
-        partials.errorSummaryListItems().should('have.length', totalExpectedOtherErrorsWithValidEmail);
+        if (totalExpectedOtherErrorsWithValidEmail) {
+          cy.assertErrorSummaryListLength(totalExpectedOtherErrorsWithValidEmail);
+        } else {
+          cy.assertErrorSummaryListDoesNotExist();
+        }
       });
     }
   });
