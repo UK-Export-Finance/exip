@@ -8,12 +8,13 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -43,7 +44,7 @@ export const pageVariables = (referenceNumber: number) => ({
     ID: FIELD_ID,
     ...FIELDS.HOW_WILL_YOU_GET_PAID[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`,
 });
 
 /**
@@ -73,12 +74,12 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Redirect to the next part of the flow.
+ * Checkvalidation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -98,18 +99,32 @@ export const post = (req: Request, res: Response) => {
       ...pageVariables(refNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      submittedValues: payload,
       validationErrors,
     });
   }
 
-  /**
-   * if totalContractValue is over the threshold
-   * redirect to PRIVATE_MARKET
-   * otherwise it should redirect to the CHECK_YOUR_ANSWERS page
-   */
-  if (application.totalContractValueOverThreshold) {
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
-  }
+  try {
+    // save the application
+    const saveResponse = await mapAndSave.exportContract(payload, application);
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    /**
+     * if totalContractValue is over the threshold
+     * redirect to PRIVATE_MARKET
+     * otherwise it should redirect to the CHECK_YOUR_ANSWERS page
+     */
+    if (application.totalContractValueOverThreshold) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - how will you get paid %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

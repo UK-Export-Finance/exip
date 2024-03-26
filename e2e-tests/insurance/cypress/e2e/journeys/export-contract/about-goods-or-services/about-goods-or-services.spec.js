@@ -8,7 +8,7 @@ import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/expo
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { FIELD_VALUES } from '../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import COUNTRIES from '../../../../../../fixtures/countries';
@@ -27,10 +27,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
-  },
-} = INSURANCE_FIELD_IDS;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
+} = FIELD_IDS;
 
 const finalDestinationField = autoCompleteField(FINAL_DESTINATION);
 
@@ -173,10 +171,6 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
     describe('when going back to the page', () => {
       it('should have the submitted values', () => {
-        cy.navigateToUrl(url);
-
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-
         cy.navigateToUrl(url);
 
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
