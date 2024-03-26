@@ -38,7 +38,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 4 pagination list items - 3 links, 1 ellipsis item', () => {
-      pagination.listItems().should('have.length', 4);
+      cy.assertLength(pagination.listItems(), 4);
 
       cy.assertPaginationItemLink({ index: 0 });
       cy.assertPaginationItemLink({ index: 1 });
@@ -67,7 +67,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 7 pagination list items - 6 links, 1 ellipsis item', () => {
-      pagination.listItems().should('have.length', 7);
+      cy.assertLength(pagination.listItems(), 7);
 
       cy.assertPaginationItemLink({ index: 1, pageNumber: 1 });
       cy.assertPaginationItemLink({ index: 2, pageNumber: 2 });
@@ -98,7 +98,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 7 pagination list items - 5 links, 2 ellipsis items', () => {
-      pagination.listItems().should('have.length', 7);
+      cy.assertLength(pagination.listItems(), 7);
 
       cy.assertPaginationItemLink({ index: 1, pageNumber: 1 });
       cy.assertPaginationItemEllipsis({ index: 1 });
@@ -132,7 +132,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
     });
 
     it('should render 7 pagination list items - 6 links, 1 ellipsis items', () => {
-      pagination.listItems().should('have.length', 7);
+      cy.assertLength(pagination.listItems(), 7);
 
       cy.assertPaginationItemLink({ index: 1, pageNumber: 1 });
       cy.assertPaginationItemEllipsis({ index: 1 });

@@ -292,6 +292,9 @@ var EXPORT_CONTRACT = {
   },
   HOW_WILL_YOU_GET_PAID: {
     PAYMENT_TERMS_DESCRIPTION: "paymentTermsDescription"
+  },
+  PRIVATE_MARKET: {
+    ATTEMPTED: "attempted"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;

@@ -1,6 +1,5 @@
 import { field } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import partials from '../../../../../../../partials';
 import {
   ROUTES, FIELD_IDS, WEBSITE_EXAMPLES,
 } from '../../../../../../../constants';
@@ -99,7 +98,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should not display validation errors', () => {
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.assertErrorSummaryListDoesNotExist();
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {
@@ -118,7 +117,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should not display validation errors', () => {
-      partials.errorSummaryListItems().should('have.length', 0);
+      cy.assertErrorSummaryListDoesNotExist();
     });
 
     it(`should redirect to ${natureOfBusinessUrl}`, () => {

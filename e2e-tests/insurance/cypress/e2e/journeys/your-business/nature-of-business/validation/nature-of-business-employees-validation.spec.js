@@ -1,4 +1,3 @@
-import partials from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -141,7 +140,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '5');
         cy.clickSubmitButton();
-        partials.errorSummaryListItems().should('have.length', 2);
+        cy.assertErrorSummaryListLength(2);
       });
     });
 
@@ -154,7 +153,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
 
         cy.keyboardInput(field.input(), '5,000');
         cy.clickSubmitButton();
-        partials.errorSummaryListItems().should('have.length', 2);
+        cy.assertErrorSummaryListLength(2);
       });
     });
   });
