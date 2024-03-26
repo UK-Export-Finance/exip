@@ -14,6 +14,7 @@ Cypress.Commands.add('completeExportValueForm', require('../../../../../commands
 Cypress.Commands.add('completeAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-about-goods-or-services-form'));
 Cypress.Commands.add('completeAndSubmitAboutGoodsOrServicesForm', require('../../../../../commands/insurance/complete-and-submit-about-goods-or-services-form'));
 Cypress.Commands.add('completeAndSubmitHowYouWillGetPaidForm', require('../../../../../commands/insurance/complete-and-submit-how-you-will-get-paid-form'));
+Cypress.Commands.add('completeAndSubmitPrivateMarketForm', require('../../../../../commands/insurance/complete-and-submit-private-market-form'));
 
 Cypress.Commands.add('completeNameOnPolicyForm', require('../../../../../commands/insurance/complete-name-on-policy-form'));
 Cypress.Commands.add('completeAndSubmitNameOnPolicyForm', require('../../../../../commands/insurance/complete-and-submit-name-on-policy-form'));

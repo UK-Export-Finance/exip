@@ -16,7 +16,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false.
- * @param {Boolean} totalContractValueOverThreshold: if total contract value in eligibility should be over threshold.
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  */
 const completePrepareApplicationSinglePolicyType = ({
@@ -54,7 +54,11 @@ const completePrepareApplicationSinglePolicyType = ({
     needPreCreditPeriod,
   });
 
-  cy.completeExportContractSection({ viaTaskList: false, submitCheckYourAnswers });
+  cy.completeExportContractSection({
+    viaTaskList: false,
+    totalContractValueOverThreshold,
+    submitCheckYourAnswers
+  });
 };
 
 export default completePrepareApplicationSinglePolicyType;
