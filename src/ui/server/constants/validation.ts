@@ -6,6 +6,7 @@ export const MINIMUM_CHARACTERS = {
 };
 
 export const MAXIMUM_CHARACTERS = {
+  EMAIL: 300,
   FULL_ADDRESS: 500,
   SORT_CODE: 6,
   ACCOUNT_NUMBER: 8,

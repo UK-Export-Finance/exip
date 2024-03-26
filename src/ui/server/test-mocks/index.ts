@@ -1,4 +1,6 @@
-import { Request, Response } from '../../types';
+import cookieParser from 'cookie-parser';
+import { PRODUCT } from '../content-strings';
+import { INTEGRITY } from '../constants';
 import mockAccount from './mock-account';
 import mockAnswers from './mock-answers';
 import mockSession from './mock-session';
@@ -27,9 +29,8 @@ import mockLossPayeeFinancialDetailsInternational from './mock-loss-payee-financ
 import mockLossPayeeFinancialDetailsUk from './mock-loss-payee-financial-details-uk';
 import mockNominatedLossPayee from './mock-nominated-loss-payee';
 import mockContact from './mock-contact';
-import { PRODUCT } from '../content-strings';
-import { INTEGRITY } from '../constants';
-import cookieParser from 'cookie-parser';
+import mockValidEmail from './mock-valid-email';
+import { Request, Response } from '../../types';
 
 const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
 
@@ -144,4 +145,5 @@ export {
   mockPhoneNumbers,
   mockReq,
   mockRes,
+  mockValidEmail,
 };

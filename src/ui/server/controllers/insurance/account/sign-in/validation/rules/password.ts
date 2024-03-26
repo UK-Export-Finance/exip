@@ -1,23 +1,26 @@
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/account';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password';
+import { objectHasProperty } from '../../../../../../helpers/object';
+import emailAndPasswordValidation from '../../../../../../shared-validation/email-and-password-incorrect';
 import { RequestBody } from '../../../../../../../types';
 
 const { PASSWORD: FIELD_ID } = FIELD_IDS;
 
-const {
-  ACCOUNT: {
-    SIGN_IN: { [FIELD_ID]: ERROR_MESSAGE },
-  },
-} = ERROR_MESSAGES.INSURANCE;
-
 /**
  * passwordRules
- * Returns emailAndPasswordValidation
+ * Validate the password.
+ * If the password is empty, return emailAndPasswordValidation.
+ * This ensures that a validation error is returned for both EMIL and PASSWORD,
+ * to indicate to a user that the credentials are invalid.
  * @param {Express.Response.body} Express response body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {Function} emailAndPasswordValidation
  */
-const passwordRules = (formBody: RequestBody, errors: object) => emailAndPasswordValidation(formBody, FIELD_ID, ERROR_MESSAGE.INCORRECT, errors);
+const passwordRules = (formBody: RequestBody, errors: object) => {
+  if (!objectHasProperty(formBody, FIELD_ID)) {
+    return emailAndPasswordValidation(errors);
+  }
+
+  return errors;
+};
 
 export default passwordRules;
