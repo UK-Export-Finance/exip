@@ -1,15 +1,17 @@
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
-import { PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../content-strings';
+import { ERROR_MESSAGES, PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../content-strings';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, DECLINED_BY_PRIVATE_MARKET },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -24,6 +26,8 @@ const {
 } = TEMPLATES;
 
 export const FIELD_ID = ATTEMPTED;
+
+export const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID].IS_EMPTY;
 
 export const PAGE_CONTENT_STRINGS = {
   ...PAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET,
@@ -93,7 +97,29 @@ export const post = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
+  const { referenceNumber } = application;
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+      ...pageVariables(referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application: mapApplicationToFormFields(application),
+      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+      submittedValues: payload,
+      validationErrors,
+    });
+  }
+
+  const answer = payload[FIELD_ID];
+
+  if (answer === 'true') {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`);
+  }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

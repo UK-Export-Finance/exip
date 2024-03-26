@@ -1,17 +1,19 @@
-import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get, post } from '.';
+import { pageVariables, FIELD_ID, ERROR_MESSAGE, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
-import { PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../content-strings';
+import { ERROR_MESSAGES, PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../content-strings';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, DECLINED_BY_PRIVATE_MARKET },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -43,6 +45,20 @@ describe('controllers/insurance/export-contract/private-market', () => {
     jest.resetAllMocks();
   });
 
+  describe('FIELD_ID', () => {
+    it('should have the correct FIELD_ID', () => {
+      expect(FIELD_ID).toEqual(ATTEMPTED);
+    });
+  });
+
+  describe('ERROR_MESSAGE', () => {
+    it('should have the correct error message', () => {
+      const expected = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID].IS_EMPTY;
+
+      expect(ERROR_MESSAGE).toEqual(expected);
+    });
+  });
+
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
       const expected = {
@@ -51,6 +67,12 @@ describe('controllers/insurance/export-contract/private-market', () => {
       };
 
       expect(PAGE_CONTENT_STRINGS).toEqual(expected);
+    });
+  });
+
+  describe('TEMPLATE', () => {
+    it('should have the correct template defined', () => {
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
     });
   });
 
@@ -76,18 +98,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
       };
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe('TEMPLATE', () => {
-    it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
-    });
-  });
-
-  describe('FIELD_ID', () => {
-    it('should have the correct FIELD_ID', () => {
-      expect(FIELD_ID).toEqual(ATTEMPTED);
     });
   });
 
@@ -120,19 +130,60 @@ describe('controllers/insurance/export-contract/private-market', () => {
   });
 
   describe('post', () => {
-    const validBody = {};
+    const validBody = mockApplication.privateMarket;
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors and submitted values', async () => {
+        req.body = {};
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: mapApplicationToFormFields(mockApplication),
+          FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+          submittedValues: payload,
+          validationErrors,
+        });
+      });
+    });
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        post(req, res);
+      describe('when the answer is false', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          await post(req, res);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the answer is true', () => {
+        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

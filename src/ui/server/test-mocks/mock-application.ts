@@ -47,6 +47,11 @@ export const mockExportContract = {
   paymentTermsDescription: 'Mock payment terms description',
 };
 
+export const mockPrivateMarket = {
+  id: 'clldfm6pt000noqa6fs6cj5xo',
+  attempted: false,
+};
+
 export const mockOwner = {
   id: mockAccount.id,
 };
@@ -144,6 +149,7 @@ const mockApplication = {
   policy: mockSinglePolicy,
   policyContact: mockContact,
   exportContract: mockExportContract,
+  privateMarket: mockPrivateMarket,
   company: mockCompany,
   business: mockBusiness,
   broker: mockBroker,
