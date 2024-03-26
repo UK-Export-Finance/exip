@@ -9,6 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -32,6 +33,10 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
+
+  jest.mock('../map-and-save');
+
+  mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -117,8 +122,18 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        post(req, res);
+      it('should call mapAndSave.exportContract with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -127,8 +142,8 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
     });
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors', () => {
-        post(req, res);
+      it('should render template with validation errors', async () => {
+        await post(req, res);
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -137,6 +152,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
+          submittedValues: payload,
           validationErrors: generateValidationErrors(payload),
         };
 
@@ -149,10 +165,46 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.exportContract call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.exportContract = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.exportContract = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

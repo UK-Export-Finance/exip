@@ -175,10 +175,6 @@ context('Insurance - Export contract - About goods or services page - Final dest
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.completeAndSubmitAboutGoodsOrServicesForm({});
-
-        cy.navigateToUrl(url);
-
         aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
 
         cy.assertYesRadioOptionIsChecked();

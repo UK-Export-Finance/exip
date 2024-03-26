@@ -5,6 +5,7 @@ import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 
@@ -113,19 +114,22 @@ context('Insurance - Export contract - How will you get paid page - As an export
       );
     });
 
-    it(`should display validation errors if ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`, () => {
-      const errorMessage = ERRORS[FIELD_ID].ABOVE_MAXIMUM;
+    describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`, () => {
+      it('should display validation errors and retain the submitted value', () => {
+        const errorMessage = ERRORS[FIELD_ID].ABOVE_MAXIMUM;
+        const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION + 1);
 
-      const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION + 1);
+        cy.submitAndAssertFieldErrors(
+          field,
+          submittedValue,
+          0,
+          expectedErrorsCount,
+          errorMessage,
+          true,
+        );
 
-      cy.submitAndAssertFieldErrors(
-        field,
-        submittedValue,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+        field.textarea().should('have.value', submittedValue);
+      });
     });
   });
 
@@ -137,6 +141,16 @@ context('Insurance - Export contract - How will you get paid page - As an export
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(expectedUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        const expectedValue = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID];
+
+        field.textarea().should('have.value', expectedValue);
+      });
     });
   });
 });

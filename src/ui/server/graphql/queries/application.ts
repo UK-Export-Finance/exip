@@ -78,6 +78,7 @@ const applicationQuery = gql`
           goodsOrServicesDescription
           finalDestinationKnown
           finalDestinationCountryCode
+          paymentTermsDescription
         }
         owner {
           id
