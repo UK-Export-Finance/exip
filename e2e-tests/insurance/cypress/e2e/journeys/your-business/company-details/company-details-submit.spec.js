@@ -30,8 +30,6 @@ const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const INVALID_PHONE_NUMBER = INVALID_PHONE_NUMBERS.LANDLINE.LONG;
 
-const expectedErrors = 4;
-
 const baseUrl = Cypress.config('baseUrl');
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section", () => {
@@ -78,7 +76,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         input: field.noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        expectedErrorsCount: 4,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY,
+      });
     });
 
     it('should display the validation error for trading address in radio error summary', () => {
@@ -89,11 +91,16 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         input: field.noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, 1, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        errorIndex: 1,
+        expectedErrorsCount: 4,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY,
+      });
     });
 
     it('should display the validation error for company website in company website section', () => {
-      cy.submitAndAssertFieldErrors(fieldSelector(WEBSITE), WEBSITE_EXAMPLES.INVALID, 2, expectedErrors, COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors(fieldSelector(WEBSITE), WEBSITE_EXAMPLES.INVALID, 2, 4, COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
     });
 
     it('should display the validation error for phone number in phone number section', () => {
@@ -101,7 +108,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         fieldSelector(PHONE_NUMBER),
         INVALID_PHONE_NUMBER,
         3,
-        expectedErrors,
+        4,
         COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT,
       );
     });

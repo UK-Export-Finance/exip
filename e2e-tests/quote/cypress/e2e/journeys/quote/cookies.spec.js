@@ -173,15 +173,10 @@ context('Cookies page - Quote', () => {
         });
 
         it('should render validation errors', () => {
-          const expectedErrorsCount = 1;
-          const errorMessage = ERROR_MESSAGES[FIELD_ID];
-
-          cy.submitAndAssertRadioErrors(
-            accept,
-            0,
-            expectedErrorsCount,
-            errorMessage,
-          );
+          cy.submitAndAssertRadioErrors({
+            field: accept,
+            expectedErrorMessage: ERROR_MESSAGES[FIELD_ID],
+          });
         });
       });
 

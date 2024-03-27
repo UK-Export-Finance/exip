@@ -54,8 +54,6 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
   });
 
   const expectedErrorsCount = 1;
-  const errorIndex = 0;
-  const errorMessage = ERRORS[CONNECTION_WITH_BUYER].IS_EMPTY;
 
   describe(`${CONNECTION_WITH_BUYER} not selected`, () => {
     it('should display validation errors', () => {
@@ -66,7 +64,11 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
         input: noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, errorIndex, expectedErrorsCount, errorMessage);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        expectedErrorsCount,
+        expectedErrorMessage: ERRORS[CONNECTION_WITH_BUYER].IS_EMPTY,
+      });
     });
   });
 

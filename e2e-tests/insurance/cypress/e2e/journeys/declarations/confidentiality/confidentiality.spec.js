@@ -130,13 +130,11 @@ context('Insurance - Declarations - Confidentiality page - As an Exporter, I wan
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
+        cy.submitAndAssertRadioErrors({
           field,
-          0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

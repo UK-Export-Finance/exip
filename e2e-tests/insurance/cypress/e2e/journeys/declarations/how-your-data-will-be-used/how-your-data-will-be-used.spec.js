@@ -129,13 +129,12 @@ context('Insurance - Declarations - How your data will be used page - As an Expo
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          singleInputField(FIELD_ID),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: singleInputField(FIELD_ID),
+          errorIndex: 0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

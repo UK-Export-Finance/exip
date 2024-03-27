@@ -31,11 +31,6 @@ const {
 
 const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID].IS_EMPTY;
 
-const ERROR_ASSERTIONS = {
-  numberOfExpectedErrors: 1,
-  errorIndex: 0,
-};
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Export contract - Private market page - As an exporter, I want to state whether I tried to get insurance through the private market previously, So that UKEF can ensure it is complementing rather than competing with the private market', () => {
@@ -143,14 +138,15 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
 
     describe('when submitting an empty form', () => {
       it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
         const radioField = {
           ...fieldSelector(FIELD_ID),
           input: noRadioInput,
         };
 
-        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
+          expectedErrorMessage: ERROR_MESSAGE,
+        });
       });
     });
 

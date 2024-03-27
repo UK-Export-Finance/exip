@@ -54,19 +54,18 @@ context('Insurance - Your Buyer - Trading history page - Validation', () => {
     it('should render validation errors', () => {
       const expectedErrorsCount = 2;
 
-      cy.submitAndAssertRadioErrors(
-        noRadio(OUTSTANDING_PAYMENTS),
-        0,
+      cy.submitAndAssertRadioErrors({
+        field: noRadio(OUTSTANDING_PAYMENTS),
         expectedErrorsCount,
-        ERRORS[OUTSTANDING_PAYMENTS].IS_EMPTY,
-      );
+        expectedErrorMessage: ERRORS[OUTSTANDING_PAYMENTS].IS_EMPTY,
+      });
 
-      cy.submitAndAssertRadioErrors(
-        noRadio(FAILED_PAYMENTS),
-        1,
+      cy.submitAndAssertRadioErrors({
+        field: noRadio(FAILED_PAYMENTS),
+        errorIndex: 1,
         expectedErrorsCount,
-        ERRORS[FAILED_PAYMENTS].IS_EMPTY,
-      );
+        expectedErrorMessage: ERRORS[FAILED_PAYMENTS].IS_EMPTY,
+      });
     });
   });
 });
