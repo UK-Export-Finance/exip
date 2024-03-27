@@ -48,6 +48,6 @@ context('Insurance - Policy - Loss Payee Financial Details International - Finan
 
   financialAddressFieldValidation({
     errorIndex: 2,
-    numberOfExpectedErrors: 3,
+    expectedErrorsCount: 3,
   });
 });
