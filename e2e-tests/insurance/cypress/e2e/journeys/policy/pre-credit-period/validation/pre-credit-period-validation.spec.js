@@ -57,12 +57,11 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
     const expectedErrorsCount = 1;
     const expectedErrorMessage = POLICY_ERROR_MESSAGES[fieldId].IS_EMPTY;
 
-    cy.submitAndAssertRadioErrors(
-      noRadio(fieldId),
-      0,
+    cy.submitAndAssertRadioErrors({
+      field: noRadio(fieldId),
       expectedErrorsCount,
       expectedErrorMessage,
-    );
+    });
   });
 
   describe(`when ${NEED_PRE_CREDIT_PERIOD} is 'no'`, () => {

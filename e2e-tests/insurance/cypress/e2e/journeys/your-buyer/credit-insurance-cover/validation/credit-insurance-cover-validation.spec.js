@@ -58,8 +58,6 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
   });
 
   const expectedErrorsCount = 1;
-  const errorIndex = 0;
-  const errorMessage = ERRORS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER].IS_EMPTY;
 
   describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} not selected`, () => {
     it('should display validation errors', () => {
@@ -70,7 +68,11 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
         input: noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, errorIndex, expectedErrorsCount, errorMessage);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        expectedErrorsCount,
+        expectedErrorMessage: ERRORS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER].IS_EMPTY,
+      });
     });
   });
 

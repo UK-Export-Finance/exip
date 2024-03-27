@@ -1,4 +1,4 @@
-import { field } from '../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../content-strings';
 import { TOTAL_CONTRACT_VALUE } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
@@ -63,23 +63,25 @@ context('Insurance - Total value insured page - I want to enter the value that I
     });
 
     it('renders a hint', () => {
-      cy.checkText(field(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
+      cy.checkText(fieldSelector(FIELD_ID).hint(), CONTENT_STRINGS.HINT);
     });
 
     it(`renders a '${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}' radio button`, () => {
       const fieldId = `${FIELD_ID}-${ABOVE.ID}`;
+      const field = fieldSelector(fieldId);
 
-      field(fieldId).input().should('exist');
+      field.input().should('exist');
 
-      cy.checkText(field(fieldId).label(), ABOVE.TEXT);
+      cy.checkText(field.label(), ABOVE.TEXT);
     });
 
     it(`renders a '${TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE}' radio button`, () => {
       const fieldId = `${FIELD_ID}-${BELOW.ID}`;
+      const field = fieldSelector(fieldId);
 
-      field(fieldId).input().should('exist');
+      field.input().should('exist');
 
-      cy.checkText(field(fieldId).label(), BELOW.TEXT);
+      cy.checkText(field.label(), BELOW.TEXT);
     });
   });
 
@@ -94,12 +96,11 @@ context('Insurance - Total value insured page - I want to enter the value that I
 
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          field(fieldId),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: fieldSelector(fieldId),
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

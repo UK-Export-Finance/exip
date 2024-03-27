@@ -154,7 +154,12 @@ context('Insurance - Policy - Broker page - As an Exporter I want to confirm if 
           input: noRadioInput,
         };
 
-        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
+          errorIndex,
+          numberOfExpectedErrors,
+          expectedErrorMessage: ERROR_MESSAGE,
+        });
       });
     });
 
