@@ -34,6 +34,11 @@ const PRIVATE_MARKET = {
   HINT: 'We may ask for proof that you have been unable to insure the export through an alternative provider.',
 };
 
+const DECLINED_BY_PRIVATE_MARKET = {
+  ...SHARED,
+  PAGE_TITLE: "Why couldn't you get cover through the private insurance market?",
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -44,5 +49,6 @@ module.exports = {
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID,
   PRIVATE_MARKET,
+  DECLINED_BY_PRIVATE_MARKET,
   CHECK_YOUR_ANSWERS,
 };

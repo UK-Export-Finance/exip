@@ -12,6 +12,7 @@ export const EXPORT_CONTRACT = {
   },
   PRIVATE_MARKET: {
     ATTEMPTED: 'attempted',
+    DECLINED_DESCRIPTION: 'declinedDescription',
   },
 };
 

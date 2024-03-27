@@ -129,8 +129,6 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
 
     describe('when submitting an empty form', () => {
       it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
-        cy.navigateToUrl(url);
-
         const radioField = {
           ...fieldSelector(FIELD_ID),
           input: noRadioInput,

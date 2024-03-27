@@ -3,6 +3,7 @@ import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+  PRIVATE_MARKET: { DECLINED_DESCRIPTION },
 } = FIELD_IDS;
 
 export const EXPORT_CONTRACT_FIELDS = {
@@ -40,6 +41,11 @@ export const EXPORT_CONTRACT_FIELDS = {
         LIST: ['payments that are due within 60 days from date of invoice', 'payments collected by a letter of credit', 'staged payments'],
         OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else.",
       },
+    },
+  },
+  PRIVATE_MARKET: {
+    [DECLINED_DESCRIPTION]: {
+      HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to.",
     },
   },
 };

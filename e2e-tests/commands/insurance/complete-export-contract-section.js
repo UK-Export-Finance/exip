@@ -16,7 +16,7 @@ const completeExportContractSection = ({
   cy.completeAndSubmitHowYouWillGetPaidForm({});
 
   if (totalContractValueOverThreshold) {
-    cy.completeAndSubmitPrivateMarketForm();
+    cy.completeAndSubmitPrivateMarketForm({});
   }
 
   if (submitCheckYourAnswers) {

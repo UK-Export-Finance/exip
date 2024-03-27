@@ -294,7 +294,8 @@ var EXPORT_CONTRACT = {
     PAYMENT_TERMS_DESCRIPTION: "paymentTermsDescription"
   },
   PRIVATE_MARKET: {
-    ATTEMPTED: "attempted"
+    ATTEMPTED: "attempted",
+    DECLINED_DESCRIPTION: "declinedDescription"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;
@@ -4364,7 +4365,8 @@ var FIELDS_ELIGIBILITY = {
 // content-strings/fields/insurance/export-contract/index.ts
 var {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
-  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION }
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+  PRIVATE_MARKET: { DECLINED_DESCRIPTION }
 } = export_contract_default;
 var EXPORT_CONTRACT_FIELDS = {
   ABOUT_GOODS_OR_SERVICES: {
@@ -4401,6 +4403,11 @@ var EXPORT_CONTRACT_FIELDS = {
         LIST: ["payments that are due within 60 days from date of invoice", "payments collected by a letter of credit", "staged payments"],
         OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else."
       }
+    }
+  },
+  PRIVATE_MARKET: {
+    [DECLINED_DESCRIPTION]: {
+      HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to."
     }
   }
 };
