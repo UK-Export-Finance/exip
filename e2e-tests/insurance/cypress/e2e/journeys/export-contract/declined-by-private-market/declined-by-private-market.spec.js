@@ -8,7 +8,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.DECLINED_BY_PRIVATE_MARK
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET },
+  EXPORT_CONTRACT: { PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
 const {
@@ -22,13 +22,16 @@ context('Insurance - Export contract - Declined by private market page - As an e
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitPrivateMarketForm({ attempted: true });
 
-      cy.visit(url);
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
     });
   });
 
@@ -44,7 +47,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}#`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
     });
   });
 
