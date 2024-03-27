@@ -1,10 +1,10 @@
 import partials from '../../../../../../partials';
-import { insetText } from '../../../../../../pages/shared';
+import { insetTextHtml, insetTextHtmlLineBreak } from '../../../../../../pages/shared';
 import { brokerConfirmAddressPage } from '../../../../../../pages/insurance/policy';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
+import { EXPECTED_SINGLE_LINE_STRING } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
-import mockApplication from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.BROKER_CONFIRM_ADDRESS;
 
@@ -82,10 +82,20 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
       cy.checkText(partials.headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it(`renders ${FULL_ADDRESS} inset text`, () => {
-      const expected = mockApplication.BROKER[FULL_ADDRESS];
+    it(`renders ${FULL_ADDRESS} exactly as they were submitted, with line break elements`, () => {
+      /**
+       * Cypress text assertion does not pick up HTML characters such as <br/>.
+       * Therefore, we have to assert the text without line breaks
+       * and instead, assert the line breaks separately.
+       */
+      cy.checkText(insetTextHtml(), EXPECTED_SINGLE_LINE_STRING);
 
-      cy.checkText(insetText(), expected);
+      const expectedLineBreaks = 3;
+
+      cy.assertLength(
+        insetTextHtmlLineBreak(),
+        expectedLineBreaks,
+      );
     });
 
     describe('`use a different address` link', () => {

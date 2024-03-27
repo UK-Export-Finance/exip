@@ -1,4 +1,5 @@
 import { field as fieldSelector } from '../../../pages/shared';
+import { EXPECTED_MULTI_LINE_STRING } from '../../../constants';
 import { POLICY as POLICY_FIELD_IDS } from '../../../constants/field-ids/insurance/policy';
 import mockApplication from '../../../fixtures/application';
 
@@ -20,7 +21,7 @@ const {
 const assertBrokerDetailsFieldValues = ({
   expectedName = mockApplication.BROKER[NAME],
   expectedEmail = mockApplication.BROKER[EMAIL],
-  expectedFullAddress = mockApplication.BROKER[FULL_ADDRESS],
+  expectedFullAddress = EXPECTED_MULTI_LINE_STRING,
 }) => {
   cy.checkValue(fieldSelector(NAME), expectedName);
   cy.checkValue(fieldSelector(EMAIL), expectedEmail);
