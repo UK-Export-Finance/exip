@@ -50,6 +50,7 @@ export const mockExportContract = {
 export const mockPrivateMarket = {
   id: 'clldfm6pt000noqa6fs6cj5xo',
   attempted: false,
+  declinedDescription: 'Mock declined description',
 };
 
 export const mockOwner = {

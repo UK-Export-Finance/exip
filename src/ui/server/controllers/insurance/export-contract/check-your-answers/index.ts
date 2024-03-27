@@ -56,7 +56,7 @@ export const get = async (req: Request, res: Response) => {
 
 /**
  * post
- * Redirect to the next part of the flow.
+ * Check for validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow
