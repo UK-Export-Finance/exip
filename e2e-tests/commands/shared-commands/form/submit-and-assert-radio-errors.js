@@ -27,7 +27,7 @@ const submitAndAssertRadioErrors = ({
 
   field.input().should('have.focus');
 
-  cy.checkText(field.errorMessage().eq(errorIndex), `Error: ${expectedErrorMessage}`);
+  cy.checkText(field.errorMessage(), `Error: ${expectedErrorMessage}`);
 };
 
 export default submitAndAssertRadioErrors;
