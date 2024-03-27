@@ -1,4 +1,4 @@
-import paymentTermsDescription from './declined-description';
+import declinedDescription from './declined-description';
 import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
@@ -18,9 +18,9 @@ describe('controllers/insurance/export-contract/declined-by-private-market/valid
   const mockBody = {};
 
   it('should return the result of providedAndMaxLength', () => {
-    const result = paymentTermsDescription(mockBody, mockErrors);
+    const result = declinedDescription(mockBody, mockErrors);
 
-    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION);
+    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION);
 
     expect(result).toEqual(expected);
   });

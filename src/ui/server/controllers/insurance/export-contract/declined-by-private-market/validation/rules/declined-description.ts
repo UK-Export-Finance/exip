@@ -18,9 +18,9 @@ const {
  * validate the "decline description" field
  * @param {RequestBody} formBody: Express response body
  * @param {Object} errors: Other validation errors for the same form
- * @returns {FuncValidationErrorsion} providedAndMaxLength
+ * @returns {ValidationErrors} providedAndMaxLength
  */
-const paymentTermsDescription = (formBody: RequestBody, errors: object) =>
-  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION);
+const declinedDescription = (formBody: RequestBody, errors: object) =>
+  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION);
 
-export default paymentTermsDescription;
+export default declinedDescription;
