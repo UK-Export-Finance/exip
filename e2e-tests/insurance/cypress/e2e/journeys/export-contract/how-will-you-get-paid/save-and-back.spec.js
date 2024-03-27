@@ -88,7 +88,10 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.startInsuranceExportContractSection({});
       cy.clickSubmitButton();
 
-      field.textarea().should('have.value', value);
+      cy.checkTextareaValue({
+        fieldId: FIELD_ID,
+        expectedValue: value,
+      });
     });
   });
 
@@ -117,7 +120,10 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.startInsuranceExportContractSection({});
       cy.clickSubmitButton();
 
-      field.textarea().should('have.value', '');
+      cy.checkTextareaValue({
+        fieldId: FIELD_ID,
+        expectedValue: '',
+      });
     });
   });
 });

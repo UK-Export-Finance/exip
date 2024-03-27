@@ -126,7 +126,10 @@ context('Insurance - Export contract - How will you get paid page - As an export
           true,
         );
 
-        field.textarea().should('have.value', submittedValue);
+        cy.checkTextareaValue({
+          fieldId: FIELD_ID,
+          expectedValue: submittedValue,
+        });
       });
     });
   });
@@ -147,7 +150,10 @@ context('Insurance - Export contract - How will you get paid page - As an export
 
         const expectedValue = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID];
 
-        field.textarea().should('have.value', expectedValue);
+        cy.checkTextareaValue({
+          fieldId: FIELD_ID,
+          expectedValue,
+        });
       });
     });
   });
