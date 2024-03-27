@@ -11,7 +11,7 @@ const {
 /**
  * completeAndSubmitDeclinedByPrivateMarketForm
  * Complete and submit the "Why were you declined by the private market" form
- * @param {Boolean} declinedDescription: Description value
+ * @param {String} declinedDescription: Description value
  */
 const completeAndSubmitDeclinedByPrivateMarketForm = ({
   declinedDescription = application.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID],
