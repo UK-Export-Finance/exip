@@ -17,7 +17,7 @@ const {
 
 /**
  * post
- * Save any valid About goods or services form fields and if successful, redirect to the all sections page
+ * Save any valid "About goods or services" form fields and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} All sections page or error page
@@ -60,7 +60,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application - policy - about goods or services (save and back) %O', err);
+    console.error('Error updating application - export contract - about goods or services (save and back) %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

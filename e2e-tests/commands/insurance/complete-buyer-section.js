@@ -8,7 +8,7 @@
  * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past"
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} submitCheckYourAnswers: Click buyer "check your answers" submit button.
- * @param {Boolean} totalContractValueOverThreshold: if total contract value in eligibility should be over threshold.
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  */
 const completeBuyerSection = ({
   viaTaskList = true,

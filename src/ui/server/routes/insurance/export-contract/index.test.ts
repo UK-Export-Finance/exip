@@ -4,10 +4,21 @@ import { get as exportContractRootGet } from '../../../controllers/insurance/exp
 import { get as aboutGoodsOrServicesGet, post as aboutGoodsOrServicesPost } from '../../../controllers/insurance/export-contract/about-goods-or-services';
 import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controllers/insurance/export-contract/about-goods-or-services/save-and-back';
 import { get as howWillYouGetPaidGet, post as howWillYouGetPaidPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid';
+import { post as howWillYouGetPaidSaveAndBackPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid/save-and-back';
+import { get as privateMarketGet, post as privateMarketPost } from '../../../controllers/insurance/export-contract/private-market';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
-const { ROOT, ABOUT_GOODS_OR_SERVICES, ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, HOW_WILL_YOU_GET_PAID } = EXPORT_CONTRACT;
-const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE, CHECK_YOUR_ANSWERS } = EXPORT_CONTRACT;
+const {
+  ROOT,
+  ABOUT_GOODS_OR_SERVICES,
+  ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK,
+  ABOUT_GOODS_OR_SERVICES_CHANGE,
+  ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+  HOW_WILL_YOU_GET_PAID,
+  HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
+  PRIVATE_MARKET,
+  CHECK_YOUR_ANSWERS,
+} = EXPORT_CONTRACT;
 
 describe('routes/insurance/export-contract', () => {
   beforeEach(() => {
@@ -19,8 +30,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(6);
-    expect(post).toHaveBeenCalledTimes(6);
+    expect(get).toHaveBeenCalledTimes(7);
+    expect(post).toHaveBeenCalledTimes(8);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -34,6 +45,10 @@ describe('routes/insurance/export-contract', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`, howWillYouGetPaidSaveAndBackPost);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

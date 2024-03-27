@@ -1,5 +1,4 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -149,7 +148,7 @@ context('Insurance - Policy - Name on policy - Validation', () => {
     it('should NOT display validation error, but redirect to the next page', () => {
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
-      partials.errorSummaryListItems().should('not.exist');
+      cy.assertErrorSummaryListDoesNotExist();
 
       const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
       cy.assertUrl(expectedUrl);

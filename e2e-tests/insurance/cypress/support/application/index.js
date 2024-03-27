@@ -1,6 +1,7 @@
 import './business';
 import './buyer';
 import './check-your-answers';
+import './export-contract';
 import './policy';
 
 Cypress.Commands.add('createAnApplication', require('../../../../commands/insurance/create-an-application'));

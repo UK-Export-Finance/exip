@@ -1,6 +1,6 @@
 import { autoCompleteField } from '../../../../../../pages/shared';
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 import { checkAutocompleteInput } from '../../../../../../shared-test-assertions';
@@ -15,10 +15,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-  },
-} = INSURANCE_FIELD_IDS;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
+} = FIELD_IDS;
 
 const finalDestinationField = autoCompleteField(FINAL_DESTINATION);
 

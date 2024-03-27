@@ -1,6 +1,6 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
-import { FIELD_VALUES } from '../../constants';
+import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES } from '../../constants';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../content-strings/fields/insurance/policy';
 import account from '../../fixtures/account';
@@ -230,7 +230,14 @@ const checkPolicySummaryList = ({
         expectedKey,
       );
 
-      row.value().contains(application.BROKER[fieldId]);
+      row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+
+      const expectedLineBreaks = 3;
+
+      cy.assertLength(
+        row.valueHtmlLineBreak(),
+        expectedLineBreaks,
+      );
     },
     [BROKER_DETAILS.EMAIL]: () => {
       const fieldId = BROKER_DETAILS.NAME;

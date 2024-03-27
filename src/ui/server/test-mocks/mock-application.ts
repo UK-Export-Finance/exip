@@ -44,6 +44,7 @@ export const mockExportContract = {
   goodsOrServicesDescription: 'Mock description',
   finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
+  paymentTermsDescription: 'Mock payment terms description',
 };
 
 export const mockOwner = {

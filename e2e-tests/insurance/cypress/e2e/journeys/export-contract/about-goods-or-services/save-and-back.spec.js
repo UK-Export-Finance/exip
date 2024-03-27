@@ -1,5 +1,5 @@
 import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import { FIELD_IDS } from '../../../../../../constants';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
@@ -10,12 +10,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  INSURANCE: {
-    EXPORT_CONTRACT: {
-      ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
-    },
-  },
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: FIELD_ID },
 } = FIELD_IDS;
+
+const field = aboutGoodsOrServicesPage[FIELD_ID];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -65,7 +63,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
+      cy.keyboardInput(field.textarea(), application.EXPORT_CONTRACT[FIELD_ID]);
       cy.clickSaveAndBackButton();
     });
 
@@ -83,19 +81,17 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.navigateToUrl(url);
 
       // submit the form via 'save and go back' button
-      cy.keyboardInput(aboutGoodsOrServicesPage[DESCRIPTION].textarea(), application.EXPORT_CONTRACT[DESCRIPTION]);
+      cy.keyboardInput(field.textarea(), application.EXPORT_CONTRACT[FIELD_ID]);
       cy.clickSaveAndBackButton();
 
       // go back to the page via the task list
       cy.startInsuranceExportContractSection({});
 
-      aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
+      field.textarea().should('have.value', application.EXPORT_CONTRACT[FIELD_ID]);
     });
   });
 
-  describe('when removing a previously submitted `description` value', () => {
-    const field = aboutGoodsOrServicesPage[DESCRIPTION];
-
+  describe(`when removing a previously submitted '${FIELD_ID}' value`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
@@ -120,7 +116,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.checkTaskExportContractStatusIsNotStartedYet();
     });
 
-    it('should have no value in `description` when going back to the page', () => {
+    it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
 
       field.textarea().should('have.value', '');

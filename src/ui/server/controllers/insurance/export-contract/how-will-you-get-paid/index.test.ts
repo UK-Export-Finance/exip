@@ -7,13 +7,16 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fi
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -30,6 +33,10 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
+
+  jest.mock('../map-and-save');
+
+  mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -59,7 +66,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
           ID: FIELD_ID,
           ...FIELDS.HOW_WILL_YOU_GET_PAID[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -106,19 +113,72 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   });
 
   describe('post', () => {
-    const validBody = {};
+    const validBody = {
+      [FIELD_ID]: mockApplication.exportContract.paymentTermsDescription,
+    };
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        post(req, res);
+      it('should call mapAndSave.exportContract with data from constructPayload function and application', async () => {
+        await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const payload = constructPayload(req.body, [FIELD_ID]);
 
-        expect(res.redirect).toHaveBeenCalledWith(expected);
+        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      describe('when application.totalContractValueOverThreshold is true', () => {
+        it(`should redirect to ${PRIVATE_MARKET}`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: true,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${PRIVATE_MARKET}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when application.totalContractValueOverThreshold is NOT true', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          res.locals.application = {
+            ...mockApplication,
+            totalContractValueOverThreshold: false,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+    });
+
+    describe('when there are validation errors', () => {
+      it('should render template with validation errors', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        const expectedVariables = {
+          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+          ...pageVariables(refNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: mapApplicationToFormFields(mockApplication),
+          submittedValues: payload,
+          validationErrors: generateValidationErrors(payload),
+        };
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
       });
     });
 
@@ -127,10 +187,46 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.exportContract call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.exportContract = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.exportContract = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

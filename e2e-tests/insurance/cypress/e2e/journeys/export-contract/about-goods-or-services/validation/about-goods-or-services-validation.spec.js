@@ -2,16 +2,14 @@ import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/e
 import { autoCompleteField } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/export-contract';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../../../../../../fixtures/countries';
 
 const {
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
-  },
-} = INSURANCE_FIELD_IDS;
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
+} = FIELD_IDS;
 
 const {
   ROOT: INSURANCE_ROOT,

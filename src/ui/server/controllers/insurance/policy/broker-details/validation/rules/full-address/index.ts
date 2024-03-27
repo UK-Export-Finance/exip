@@ -12,10 +12,10 @@ const {
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
 /**
- * validate the "full address" in the "broker details" request body
- * @param {Express.Request.body} responseBody: containing an object with broker form submission data
+ * validate the "full address" field
+ * @param {Express.Request.body} Express response body
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Function} fullAddressValidation
+ * @returns {ValidationErrors} fullAddressValidation
  */
 const fullBrokerAddress = (responseBody: RequestBody, errors: object) => fullAddressValidation(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors);
 
