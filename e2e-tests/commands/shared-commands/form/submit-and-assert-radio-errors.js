@@ -1,18 +1,16 @@
 import partials from '../../../partials';
 
 /**
- * @param {Object} field: Cypress selector
- * @param {Number} errorIndex: index of error in errorSummary
- * @param {Number} expectedErrorsCount: the number of expected errors in errorSummary
- * @param {Number} errorMessage: error message to assert
- * @param {Number} inlineErrorIndex: the index of radios to find error
+ * @param {Object} field: Cypress selector.
+ * @param {Number} errorIndex: Index of error. Defaults to 0.
+ * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary.
+ * @param {Number} expectedErrorMessage: Expected error message.
  */
 const submitAndAssertRadioErrors = ({
   field,
   errorIndex = 0,
   expectedErrorsCount,
   expectedErrorMessage,
-  inlineErrorIndex = 0,
 }) => {
   cy.clickSubmitButton();
 
@@ -29,7 +27,7 @@ const submitAndAssertRadioErrors = ({
 
   field.input().should('have.focus');
 
-  cy.checkText(field.errorMessage().eq(inlineErrorIndex), `Error: ${expectedErrorMessage}`);
+  cy.checkText(field.errorMessage().eq(errorIndex), `Error: ${expectedErrorMessage}`);
 };
 
 export default submitAndAssertRadioErrors;
