@@ -135,8 +135,6 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
-      const errorMessage = EXPECTED_ERROR_MESSAGE;
-
       it(`should render a validation error if ${FIELD_ID} radio is not selected`, () => {
         cy.navigateToUrl(url);
 
@@ -147,7 +145,12 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
           input: noRadioInput,
         };
 
-        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, errorMessage);
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
+          errorIndex,
+          expectedErrorsCount: numberOfExpectedErrors,
+          expectedErrorMessage: EXPECTED_ERROR_MESSAGE,
+        });
       });
     });
 

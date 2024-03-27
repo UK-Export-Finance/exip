@@ -66,12 +66,11 @@ context('Insurance - Exporter location page - as an exporter, I want to check if
       it('should render validation errors', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
           expectedErrorsCount,
-          ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
-        );
+          expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+        });
 
         cy.clickSubmitButton();
       });

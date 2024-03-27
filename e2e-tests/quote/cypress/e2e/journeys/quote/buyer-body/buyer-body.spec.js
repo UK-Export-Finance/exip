@@ -80,15 +80,11 @@ context('Buyer body page - as an exporter, I want to check if I can get an EXIP 
   describe('form submission', () => {
     describe('when submitting an empty form', () => {
       it('should render validation errors', () => {
-        const expectedErrorsCount = 1;
-        const expectedErrorMessage = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
-
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
-          expectedErrorsCount,
-          expectedErrorMessage,
-        );
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
+          expectedErrorsCount: 1,
+          expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+        });
       });
     });
 

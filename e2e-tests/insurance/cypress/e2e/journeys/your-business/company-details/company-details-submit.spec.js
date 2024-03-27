@@ -78,7 +78,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         input: field.noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, 0, expectedErrors, COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        expectedErrorsCount: expectedErrors,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY,
+      });
     });
 
     it('should display the validation error for trading address in radio error summary', () => {
@@ -89,7 +93,12 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
         input: field.noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, 1, expectedErrors, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        errorIndex: 1,
+        expectedErrorsCount: expectedErrors,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY,
+      });
     });
 
     it('should display the validation error for company website in company website section', () => {

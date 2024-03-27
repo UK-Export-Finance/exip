@@ -108,20 +108,17 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     const ERROR = ERRORS[FIELD_ID];
 
     it('should display validation error when radio is not selected', () => {
-      const expectedErrorsCount = 2;
-      const expectedErrorMessage = ERROR.IS_EMPTY;
-
       const radioField = {
         ...fieldSelector(FIELD_ID),
         input: fieldSelector(`${LOCATION}-${IS_LOCATED_IN_UK}`).input,
       };
 
-      cy.submitAndAssertRadioErrors(
-        radioField,
-        1,
-        expectedErrorsCount,
-        expectedErrorMessage,
-      );
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        errorIndex: 1,
+        expectedErrorsCount: 2,
+        expectedErrorMessage: ERROR.IS_EMPTY,
+      });
     });
   });
 });

@@ -179,12 +179,11 @@ context('Cookies page - Insurance', () => {
           const expectedErrorsCount = 1;
           const expectedErrorMessage = ERROR_MESSAGES[FIELD_ID];
 
-          cy.submitAndAssertRadioErrors(
-            cookiesPage[FIELD_ID].accept,
-            0,
+          cy.submitAndAssertRadioErrors({
+            field: cookiesPage[FIELD_ID].accept,
             expectedErrorsCount,
             expectedErrorMessage,
-          );
+          });
         });
       });
 

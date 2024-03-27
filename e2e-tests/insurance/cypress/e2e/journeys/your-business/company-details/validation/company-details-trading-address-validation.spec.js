@@ -54,6 +54,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       input: field.noRadioInput,
     };
 
-    cy.submitAndAssertRadioErrors(radioField, 0, 1, COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY);
+    cy.submitAndAssertRadioErrors({
+      field: radioField,
+      errorIndex: 0,
+      expectedErrorsCount: 1,
+      expectedErrorMessage: COMPANY_DETAILS_ERRORS[TRADING_ADDRESS].IS_EMPTY,
+    });
   });
 });

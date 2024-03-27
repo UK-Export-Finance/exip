@@ -143,7 +143,12 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
           input: noRadioInput,
         };
 
-        cy.submitAndAssertRadioErrors(radioField, errorIndex, numberOfExpectedErrors, ERROR_MESSAGE);
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
+          errorIndex,
+          expectedErrorsCount: numberOfExpectedErrors,
+          expectedErrorMessage: ERROR_MESSAGE,
+        });
       });
     });
 
