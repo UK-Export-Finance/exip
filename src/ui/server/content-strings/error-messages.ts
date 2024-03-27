@@ -155,6 +155,11 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: `The description of how you will get paid for your export cannot be more than a ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`,
         },
       },
+      PRIVATE_MARKET: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET.ATTEMPTED]: {
+          IS_EMPTY: 'Select if you have tried to insure this export through the private market',
+        },
+      },
     },
     POLICY: {
       TYPE_OF_POLICY: {
