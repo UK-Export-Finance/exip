@@ -15,7 +15,7 @@ const {
 } = ERROR_MESSAGES.INSURANCE;
 
 /**
- * validate the "decline description" field
+ * validate the "declined description" field
  * @param {RequestBody} formBody: Express response body
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
