@@ -6,7 +6,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fi
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
-import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 
@@ -91,7 +91,7 @@ export const post = (req: Request, res: Response) => {
 
   const payload = constructPayload(req.body, [FIELD_ID]);
 
-  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+  const validationErrors = generateValidationErrors(payload);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {

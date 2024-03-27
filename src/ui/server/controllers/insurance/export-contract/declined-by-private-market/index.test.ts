@@ -7,7 +7,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fi
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
-import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
+import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
@@ -128,7 +128,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+        const validationErrors = generateValidationErrors(payload);
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
