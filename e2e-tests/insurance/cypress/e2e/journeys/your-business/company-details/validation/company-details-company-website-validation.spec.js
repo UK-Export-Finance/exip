@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
   ROUTES, FIELD_IDS, WEBSITE_EXAMPLES,
@@ -14,17 +14,16 @@ const {
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
-const expectedErrors = 1;
-const errorIndex = 0;
-const errorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
+const expectedErrorMessage = COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT;
 
-let natureOfBusinessUrl;
-let url;
+const field = fieldSelector(WEBSITE);
 
 const baseUrl = Cypress.config('baseUrl');
 
 describe("Insurance - Your business - Company details page - As an Exporter I want to enter details about my business in 'your business' section - company website validation", () => {
   let referenceNumber;
+  let url;
+  let natureOfBusinessUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -58,13 +57,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(WEBSITE),
-          WEBSITE_EXAMPLES.INVALID,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: WEBSITE_EXAMPLES.INVALID,
+          expectedErrorMessage,
+        });
       });
     });
 
@@ -76,13 +73,11 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(WEBSITE),
-          WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
+          expectedErrorMessage,
+        });
       });
     });
   });

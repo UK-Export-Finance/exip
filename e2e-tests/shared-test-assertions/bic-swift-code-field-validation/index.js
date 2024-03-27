@@ -19,15 +19,16 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
  * This saves repeated instances of this command in each mocha describe block.
  * @param {String} value: Field value
  * @param {Integer} errorIndex: Index of the summary list error
- * @param {Integer} numberOfExpectedErrors: Number of expected errors
- * @param {String} errorMessage: Expected error message
+ * @param {Integer} expectedErrorsCount: Number of expected errors
+ * @param {String} expectedErrorMessage: Expected error message
  */
-const runAssertion = ({ value, errorMessage = errorMessages.INCORRECT_FORMAT }) => {
-  const errorIndex = 0;
-  const numberOfExpectedErrors = 3;
-
-  const field = fieldSelector(FIELD_ID);
-  cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+const runAssertion = ({ value, expectedErrorMessage = errorMessages.INCORRECT_FORMAT }) => {
+  cy.submitAndAssertFieldErrors({
+    field: fieldSelector(FIELD_ID),
+    value,
+    expectedErrorsCount: 3,
+    expectedErrorMessage,
+  });
 };
 
 /**

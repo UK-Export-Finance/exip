@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
 
@@ -47,12 +47,9 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
   });
 
   it('should display validation errors if trading name question is not answered', () => {
-    cy.submitAndAssertFieldErrors(
-      field(DIFFERENT_TRADING_NAME),
-      null,
-      0,
-      1,
-      COMPANY_DETAILS_ERRORS[DIFFERENT_TRADING_NAME].IS_EMPTY,
-    );
+    cy.submitAndAssertFieldErrors({
+      field: fieldSelector(DIFFERENT_TRADING_NAME),
+      expectedErrorMessage: COMPANY_DETAILS_ERRORS[DIFFERENT_TRADING_NAME].IS_EMPTY,
+    });
   });
 });

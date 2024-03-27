@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -21,21 +21,20 @@ const baseUrl = Cypress.config('baseUrl');
 const submitAndAssertBothFields = (value, errorTotalOutstanding, errorAmountOverdue) => {
   const expectedErrorsCount = 2;
 
-  cy.submitAndAssertFieldErrors(
-    field(TOTAL_OUTSTANDING_PAYMENTS),
+  cy.submitAndAssertFieldErrors({
+    field: fieldSelector(TOTAL_OUTSTANDING_PAYMENTS),
     value,
-    0,
     expectedErrorsCount,
-    errorTotalOutstanding,
-  );
+    expectedErrorMessage: errorTotalOutstanding,
+  });
 
-  cy.submitAndAssertFieldErrors(
-    field(TOTAL_AMOUNT_OVERDUE),
+  cy.submitAndAssertFieldErrors({
+    field: fieldSelector(TOTAL_AMOUNT_OVERDUE),
     value,
-    1,
+    errorIndex: 1,
     expectedErrorsCount,
-    errorAmountOverdue,
-  );
+    expectedErrorMessage: errorAmountOverdue,
+  });
 };
 
 context('Insurance - Your Buyer - Trading history page - Outstanding payments yes validation', () => {

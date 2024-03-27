@@ -10,16 +10,16 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER,
+  NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER: FIELD_ID,
 } = POLICY_FIELD_IDS;
 
 const {
-  [CREDIT_PERIOD_WITH_BUYER]: { MAXIMUM },
+  [FIELD_ID]: { MAXIMUM },
 } = FIELDS;
 
 const POLICY_ERROR_MESSAGES = ERROR_MESSAGES.INSURANCE.POLICY;
 
-const descriptionField = fieldSelector(CREDIT_PERIOD_WITH_BUYER);
+const descriptionField = fieldSelector(FIELD_ID);
 
 const textareaField = {
   ...descriptionField,
@@ -80,41 +80,22 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
       cy.clickYesRadioInput();
     });
 
-    it(`should render a validation error when ${CREDIT_PERIOD_WITH_BUYER} is not provided`, () => {
-      const fieldId = CREDIT_PERIOD_WITH_BUYER;
-      const submittedValue = '';
-
-      const errorIndex = 0;
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = POLICY_ERROR_MESSAGES[fieldId].IS_EMPTY;
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        errorIndex,
-        expectedErrorsCount,
-        expectedErrorMessage,
-      );
+    it(`should render a validation error when ${FIELD_ID} is not provided`, () => {
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        expectedErrorMessage: POLICY_ERROR_MESSAGES[FIELD_ID].IS_EMPTY,
+      });
     });
 
-    it(`should render a validation error when ${CREDIT_PERIOD_WITH_BUYER} is above the maximum`, () => {
-      const fieldId = CREDIT_PERIOD_WITH_BUYER;
-      const submittedValue = 'a'.repeat(MAXIMUM + 1);
-
-      const errorIndex = 0;
-      const expectedErrorsCount = 1;
-      const expectedErrorMessage = POLICY_ERROR_MESSAGES[fieldId].ABOVE_MAXIMUM;
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        errorIndex,
-        expectedErrorsCount,
-        expectedErrorMessage,
-      );
+    it(`should render a validation error when ${FIELD_ID} is above the maximum`, () => {
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(MAXIMUM + 1),
+        expectedErrorMessage: POLICY_ERROR_MESSAGES[FIELD_ID].ABOVE_MAXIMUM,
+      });
     });
 
-    it(`should not render any validation errors when ${CREDIT_PERIOD_WITH_BUYER} is below the minimum`, () => {
+    it(`should not render any validation errors when ${FIELD_ID} is below the minimum`, () => {
       cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
 
       cy.assertErrorSummaryListDoesNotExist();

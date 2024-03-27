@@ -12,15 +12,12 @@ export const checkBuyerCountryInputHint = () => {
 };
 
 export const checkBuyerCountryValidationErrors = () => {
-  const expectedErrorsCount = 1;
-
-  cy.submitAndAssertFieldErrors(
-    autoCompleteField(FIELD_ID),
-    null,
-    0,
-    expectedErrorsCount,
-    ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
-  );
+  cy.submitAndAssertFieldErrors({
+    field: autoCompleteField(FIELD_ID),
+    value: null,
+    expectedErrorsCount: 1,
+    expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
+  });
 };
 
 export const checkBuyerCountryFocusAfterSummaryErrorClick = () => {

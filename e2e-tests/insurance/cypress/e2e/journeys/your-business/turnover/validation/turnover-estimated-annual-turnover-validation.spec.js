@@ -12,11 +12,9 @@ const {
 const TURNOVER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const ERROR_MESSAGE = TURNOVER_ERRORS[FIELD_ID];
 
-// for error assertion - common fields
-const ERROR_ASSERTIONS = {
+const assertions = {
   field: fieldSelector(FIELD_ID),
-  numberOfExpectedErrors: 2,
-  errorIndex: 0,
+  expectedErrorsCount: 2,
 };
 
 const baseUrl = Cypress.config('baseUrl');
@@ -51,37 +49,31 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   it(`should display validation errors when ${FIELD_ID} is left empty`, () => {
-    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = null;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY });
   });
 
   it(`should display validation errors when ${FIELD_ID} is a decimal place number`, () => {
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '5.5';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '5.5',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '5O';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '50',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors when ${FIELD_ID} is negative but has a decimal place`, () => {
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '-256.123';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '-123.456',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a whole number`, () => {

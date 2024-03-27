@@ -169,14 +169,12 @@ context('Insurance - Declarations - Anti-bribery page - As an Exporter, I want t
       it('should render a validation error', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertFieldErrors(
+        cy.submitAndAssertFieldErrors({
           field,
-          null,
-          0,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
-          false,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY,
+          clearInput: false,
+        });
       });
     });
 

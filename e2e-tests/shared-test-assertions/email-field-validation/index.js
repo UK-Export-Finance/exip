@@ -22,7 +22,11 @@ export const assertEmailFieldValidation = ({
   isGenericErrorMessage = false,
   assertErrorWhenCorrectlyFormatted = true,
 }) => {
-  const field = fieldSelector(fieldId);
+  const assertions = {
+    field: fieldSelector(fieldId),
+    errorIndex,
+    expectedErrorsCount: totalExpectedErrors,
+  };
 
   const expectedIncorrectErrorMessage = isGenericErrorMessage ? errorMessages.INCORRECT : errorMessages.INCORRECT_FORMAT;
 
@@ -30,37 +34,47 @@ export const assertEmailFieldValidation = ({
     it(`should render a validation error when ${fieldId} is left empty`, () => {
       const expectedErrorMessage = isGenericErrorMessage ? errorMessages.INCORRECT : errorMessages.IS_EMPTY;
 
-      cy.submitAndAssertFieldErrors(field, null, errorIndex, totalExpectedErrors, expectedErrorMessage);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage });
     });
 
     it('should render a validation error when email does not contain an @ symbol', () => {
-      const invalidEmail = INVALID_EMAILS.NO_AT_SYMBOL;
-
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, totalExpectedErrors, expectedIncorrectErrorMessage);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: INVALID_EMAILS.NO_AT_SYMBOL,
+        expectedErrorMessage: expectedIncorrectErrorMessage,
+      });
     });
 
     it('should render a validation error when email does not contain at least one dot', () => {
-      const invalidEmail = INVALID_EMAILS.NO_DOTS;
-
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, totalExpectedErrors, expectedIncorrectErrorMessage);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: INVALID_EMAILS.NO_DOTS,
+        expectedErrorMessage: expectedIncorrectErrorMessage,
+      });
     });
 
     it('should render a validation error when email contains a space', () => {
-      const invalidEmail = INVALID_EMAILS.WITH_SPACE;
-
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, totalExpectedErrors, expectedIncorrectErrorMessage);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: INVALID_EMAILS.WITH_SPACE,
+        expectedErrorMessage: expectedIncorrectErrorMessage,
+      });
     });
 
     it('should render a validation error when email does not contain a domain', () => {
-      const invalidEmail = INVALID_EMAILS.NO_DOMAIN;
-
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, totalExpectedErrors, expectedIncorrectErrorMessage);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: INVALID_EMAILS.NO_DOMAIN,
+        expectedErrorMessage: expectedIncorrectErrorMessage,
+      });
     });
 
     it('should render a validation error when email is over maximum characters', () => {
-      const invalidEmail = INVALID_EMAILS.ABOVE_MAXIMUM;
-
-      cy.submitAndAssertFieldErrors(field, invalidEmail, errorIndex, totalExpectedErrors, errorMessages.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: INVALID_EMAILS.ABOVE_MAXIMUM,
+        expectedErrorMessage: errorMessages.ABOVE_MAXIMUM,
+      });
     });
 
     if (assertErrorWhenCorrectlyFormatted) {

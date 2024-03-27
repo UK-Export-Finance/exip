@@ -1,20 +1,27 @@
 /**
  * submitAndAssertFieldErrors
  * Submit and assert errors for a field
- * @param {String} field: Field selector
- * @param {String} fieldValue: The value to input - can be null
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Integer} errorSummaryLength: The number of expected errors in the summary list
- * @param {String} errorMessage: Expected error message
- * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true
+ * @param {Object} field: Cypress selector.
+ * @param {String} value: The value to input - can be null.
+ * @param {Number} errorIndex: Index of error. Defaults to 0.
+ * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
+ * @param {Number} expectedErrorMessage: Expected error message.
+ * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true.
  */
-const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryLength, errorMessage, clearInput = true) => {
+const submitAndAssertFieldErrors = ({
+  field,
+  value,
+  errorIndex = 0,
+  expectedErrorsCount = 1,
+  expectedErrorMessage,
+  clearInput = true,
+}) => {
   /**
-   * If a fieldValue is provided,
+   * If a value is provided,
    * Enter the value into the field's input.
    */
-  if (fieldValue) {
-    cy.keyboardInput(field.input(), fieldValue);
+  if (value) {
+    cy.keyboardInput(field.input(), value);
   } else if (clearInput) {
     field.input().clear();
   }
@@ -24,8 +31,8 @@ const submitAndAssertFieldErrors = (field, fieldValue, errorIndex, errorSummaryL
   cy.assertFieldErrors({
     field,
     errorIndex,
-    errorSummaryLength,
-    errorMessage,
+    errorSummaryLength: expectedErrorsCount,
+    errorMessage: expectedErrorMessage,
   });
 };
 

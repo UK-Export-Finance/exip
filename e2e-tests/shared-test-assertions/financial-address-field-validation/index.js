@@ -27,17 +27,24 @@ export const financialAddressFieldValidation = ({
     input: field.textarea,
   };
 
+  const assertions = {
+    field: textareaField,
+    errorIndex,
+    // TODO: rename
+    expectedErrorsCount: numberOfExpectedErrors,
+  };
+
   describe(`${FIELD_ID} form field validation`, () => {
     it(`should render a validation error when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, errorMessages.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: errorMessages.IS_EMPTY });
     });
 
     it(`should render a validation error when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
-      const value = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
-
-      cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, errorMessages.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
+        expectedErrorMessage: errorMessages.ABOVE_MAXIMUM,
+      });
     });
   });
 };
