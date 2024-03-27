@@ -7,6 +7,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
+import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
 import { ApplicationBroker, SummaryListItemData } from '../../../../../types';
 
 const {
@@ -54,7 +55,7 @@ export const optionalBrokerFields = (answers: ApplicationBroker, referenceNumber
           href: generateChangeLink(BROKER_DETAILS_CHANGE, BROKER_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
           renderChangeLink: true,
         },
-        answers[FULL_ADDRESS],
+        replaceNewLineWithLineBreak(answers[FULL_ADDRESS]),
       ),
       fieldGroupItem({
         field: getFieldById(POLICY_FIELDS.BROKER_DETAILS, EMAIL),
