@@ -2859,6 +2859,9 @@ type Mutation {
 
   """ create and send email for insurance feedback """
   createFeedbackAndSendEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
+
+  """ update loss payee financial details uk """
+  updateLossPayeeFinancialDetailsUk(id: String, bankAddress: String, accountNumber: String, sortCode: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -3202,6 +3205,15 @@ input CompanyInput {
 
 input SectionReviewInput {
   eligibility: Boolean!
+}
+
+input LossPayeeFinancialDetailsUkInput {
+  id: String
+  accountNumber: String
+  accountNumberVector: String
+  sortCode: String
+  sortCodeVector: String
+  bankAddress: String
 }
 
 type OrdnanceSurveyResponse {

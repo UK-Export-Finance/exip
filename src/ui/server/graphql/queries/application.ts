@@ -44,6 +44,9 @@ const applicationQuery = gql`
           isLocatedInUk
           isLocatedInternationally
           name
+          financialUk {
+            id
+          }
         }
         policy {
           id

@@ -67,6 +67,9 @@ const CUSTOM_RESOLVERS = [
   // feedback
   'createFeedbackAndSendEmail',
 
+  // loss payee financial details
+  'updateLossPayeeFinancialDetailsUk',
+
   'getApimCisCountries',
   'getApimCurrencies',
 ];

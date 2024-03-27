@@ -14,6 +14,7 @@ import deleteApplicationByReferenceNumber from './delete-application-by-referenc
 import submitApplication from './submit-application';
 import createFeedbackAndSendEmail from './create-feedback';
 import verifyAccountReactivationToken from './verify-account-reactivation-token';
+import updateLossPayeeFinancialDetailsUk from './update-loss-payee-financial-details-uk';
 
 export {
   createAnAccount,
@@ -32,4 +33,5 @@ export {
   submitApplication,
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
+  updateLossPayeeFinancialDetailsUk,
 };

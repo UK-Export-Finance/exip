@@ -74,7 +74,7 @@ describe('server/helpers/flatten-application-data', () => {
         ...contact,
         ...getTrueAndFalseAnswers(declaration),
         ...exportContract,
-        ...nominatedLossPayee,
+        // ...nominatedLossPayee,
         ...getTrueAndFalseAnswers(nominatedLossPayee),
         ...relationship,
         ...policy,
