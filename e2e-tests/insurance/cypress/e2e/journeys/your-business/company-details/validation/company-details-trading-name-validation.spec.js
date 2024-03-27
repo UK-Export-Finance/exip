@@ -56,7 +56,6 @@ describe("Insurance - Your business - Company details page- As an Exporter I wan
 
     cy.submitAndAssertRadioErrors({
       field: radioField,
-      expectedErrorsCount: 1,
       expectedErrorMessage: COMPANY_DETAILS_ERRORS[HAS_DIFFERENT_TRADING_NAME].IS_EMPTY,
     });
   });

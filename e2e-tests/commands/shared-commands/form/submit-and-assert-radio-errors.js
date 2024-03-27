@@ -3,13 +3,13 @@ import partials from '../../../partials';
 /**
  * @param {Object} field: Cypress selector.
  * @param {Number} errorIndex: Index of error. Defaults to 0.
- * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary.
+ * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
  * @param {Number} expectedErrorMessage: Expected error message.
  */
 const submitAndAssertRadioErrors = ({
   field,
   errorIndex = 0,
-  expectedErrorsCount,
+  expectedErrorsCount = 1,
   expectedErrorMessage,
 }) => {
   cy.clickSubmitButton();

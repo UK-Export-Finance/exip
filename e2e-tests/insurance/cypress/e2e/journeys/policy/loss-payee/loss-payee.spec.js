@@ -32,11 +32,6 @@ const { LOSS_PAYEE: FIELD_STRINGS } = FIELDS;
 
 const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID].IS_EMPTY;
 
-const ERROR_ASSERTIONS = {
-  numberOfExpectedErrors: 1,
-  errorIndex: 0,
-};
-
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Loss payee page - As an exporter, I want to inform UKEF about whether I have a loss payee, So that the appropriate parties can be paid in the event of an insurance claim', () => {
@@ -136,8 +131,6 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
       it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
         cy.navigateToUrl(url);
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
         const radioField = {
           ...fieldSelector(FIELD_ID),
           input: noRadioInput,
@@ -145,8 +138,6 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
 
         cy.submitAndAssertRadioErrors({
           field: radioField,
-          errorIndex,
-          expectedErrorsCount: numberOfExpectedErrors,
           expectedErrorMessage: ERROR_MESSAGE,
         });
       });

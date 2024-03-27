@@ -42,12 +42,6 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const ERROR_ASSERTIONS = {
-  field: fieldSelector(FIELD_ID),
-  numberOfExpectedErrors: 1,
-  errorIndex: 0,
-};
-
 const baseUrl = Cypress.config('baseUrl');
 
 const story = 'As an exporter, I want to inform UKEF of any other company I would like to include on my policy, So that cover is available for all appropriate parties';
@@ -138,8 +132,6 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
       it(`should render a validation error if ${FIELD_ID} radio is not selected`, () => {
         cy.navigateToUrl(url);
 
-        const { numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
         const radioField = {
           ...fieldSelector(FIELD_ID),
           input: noRadioInput,
@@ -147,8 +139,6 @@ context(`Insurance - Policy - Another company page - ${story}`, () => {
 
         cy.submitAndAssertRadioErrors({
           field: radioField,
-          errorIndex,
-          expectedErrorsCount: numberOfExpectedErrors,
           expectedErrorMessage: EXPECTED_ERROR_MESSAGE,
         });
       });

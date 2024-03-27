@@ -175,7 +175,6 @@ context('Cookies page - Quote', () => {
         it('should render validation errors', () => {
           cy.submitAndAssertRadioErrors({
             field: accept,
-            expectedErrorsCount: 1,
             expectedErrorMessage: ERROR_MESSAGES[FIELD_ID],
           });
         });

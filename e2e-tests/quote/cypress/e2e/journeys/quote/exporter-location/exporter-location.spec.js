@@ -67,7 +67,6 @@ context('Exporter location page - as an exporter, I want to check if my company 
       it('should render validation errors', () => {
         cy.submitAndAssertRadioErrors({
           field: yesRadio(FIELD_ID),
-          expectedErrorsCount: 1,
           expectedErrorMessage: ERROR_MESSAGES.ELIGIBILITY[FIELD_ID],
         });
       });
