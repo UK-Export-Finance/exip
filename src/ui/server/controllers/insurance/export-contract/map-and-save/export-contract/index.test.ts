@@ -1,9 +1,9 @@
 import mapAndSave from '.';
-import mapSubmittedData from '../map-submitted-data/about-goods-or-services';
-import save from '../save-data';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { mockApplication, mockCountries } from '../../../../test-mocks';
-import generateValidationErrors from '../../../../helpers/validation';
+import mapSubmittedData from '../../map-submitted-data/about-goods-or-services';
+import save from '../../save-data/export-contract';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import { mockApplication, mockCountries } from '../../../../../test-mocks';
+import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
   EXPORT_CONTRACT: {
@@ -11,8 +11,8 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-describe('controllers/insurance/export-contract/map-and-save', () => {
-  jest.mock('../save-data');
+describe('controllers/insurance/export-contract/map-and-save/export-contract', () => {
+  jest.mock('../../save-data/export-contract');
 
   describe('buyer', () => {
     let mockFormBody = {

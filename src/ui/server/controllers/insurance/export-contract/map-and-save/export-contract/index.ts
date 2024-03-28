@@ -1,7 +1,7 @@
-import hasFormData from '../../../../helpers/has-form-data';
-import mapSubmittedData from '../map-submitted-data/about-goods-or-services';
-import save from '../save-data';
-import { Application, Country, RequestBody, ValidationErrors } from '../../../../../types';
+import hasFormData from '../../../../../helpers/has-form-data';
+import mapSubmittedData from '../../map-submitted-data/about-goods-or-services';
+import save from '../../save-data/export-contract';
+import { Application, Country, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
  * mapAndSave
@@ -9,7 +9,6 @@ import { Application, Country, RequestBody, ValidationErrors } from '../../../..
  * @param {Express.Request.body} Express request body
  * @param {Application}
  * @param {Object} Validation errors
- * @param {Array} Countries
  * @returns {Boolean}
  */
 const exportContract = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors, countries?: Array<Country>) => {

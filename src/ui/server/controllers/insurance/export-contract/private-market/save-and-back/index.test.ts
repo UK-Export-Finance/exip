@@ -1,19 +1,19 @@
 import { post } from '.';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { FIELD_ID } from '..';
+import { FIELD_ID, ERROR_MESSAGE } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save/export-contract';
-import generateValidationErrors from '../validation';
+import mapAndSave from '../../map-and-save/private-market';
+import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../../types';
 import { mockApplication, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
-describe('controllers/insurance/export-contract/how-will-you-get-paid/save-and-back', () => {
+describe('controllers/insurance/export-contract/private-market/save-and-back', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save/export-contract');
+  jest.mock('../../map-and-save/private-market');
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
 
@@ -32,12 +32,12 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid/save-and-b
 
     req.body = mockFormBody;
 
-    mapAndSave.exportContract = mapAndSaveSpy;
+    mapAndSave.privateMarket = mapAndSaveSpy;
   });
 
   describe('when the form has data', () => {
     beforeEach(() => {
-      mapAndSave.exportContract = mapAndSaveSpy;
+      mapAndSave.privateMarket = mapAndSaveSpy;
     });
 
     describe(`when the form has ${FIELD_ID}`, () => {
@@ -45,15 +45,15 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid/save-and-b
         req.body[FIELD_ID] = mockCountries[0].isoCode;
       });
 
-      it('should call mapAndSave.exportContract with data from constructPayload function, application and validationErrors', async () => {
+      it('should call mapAndSave.privateMarket with data from constructPayload function, application and validationErrors', async () => {
         await post(req, res);
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
-        const validationErrors = generateValidationErrors(payload);
+        const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
 
-        expect(mapAndSave.exportContract).toHaveBeenCalledTimes(1);
-        expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
+        expect(mapAndSave.privateMarket).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.privateMarket).toHaveBeenCalledWith(payload, res.locals.application, validationErrors);
       });
 
       it(`should redirect to ${ALL_SECTIONS}`, async () => {
@@ -95,7 +95,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid/save-and-b
       beforeEach(() => {
         mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-        mapAndSave.exportContract = mapAndSaveSpy;
+        mapAndSave.privateMarket = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

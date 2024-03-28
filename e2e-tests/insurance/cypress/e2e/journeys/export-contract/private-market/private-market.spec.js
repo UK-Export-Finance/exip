@@ -156,6 +156,14 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
 
         cy.assertUrl(checkYourAnswersUrl);
       });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
+      });
     });
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
@@ -163,6 +171,14 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
         cy.completeAndSubmitPrivateMarketForm({ attempted: true });
 
         cy.assertUrl(declinedByPrivateMarketUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+        });
       });
     });
   });

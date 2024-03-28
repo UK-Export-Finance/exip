@@ -20,7 +20,7 @@ const {
 } = INSURANCE_ROUTES;
 
 describe('server/helpers/summary-lists/export-contract/about-goods-or-services-fields', () => {
-  const mockAnswers = mockApplication.policy;
+  const mockAnswers = mockApplication.exportContract;
   const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 

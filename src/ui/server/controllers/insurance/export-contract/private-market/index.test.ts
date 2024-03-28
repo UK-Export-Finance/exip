@@ -7,7 +7,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save/private-market';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -31,6 +31,10 @@ describe('controllers/insurance/export-contract/private-market', () => {
   let req: Request;
   let res: Response;
   let refNumber: number;
+
+  jest.mock('../map-and-save/private-market');
+
+  mapAndSave.privateMarket = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -109,8 +113,8 @@ describe('controllers/insurance/export-contract/private-market', () => {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplication),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+        applicationAnswer: mockApplication.exportContract.privateMarket[FIELD_ID],
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -130,6 +134,10 @@ describe('controllers/insurance/export-contract/private-market', () => {
   });
 
   describe('post', () => {
+    const validBody = {
+      [FIELD_ID]: 'false',
+    };
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
@@ -144,7 +152,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
           ...pageVariables(refNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
           FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
           submittedValues: payload,
           validationErrors,
@@ -155,9 +162,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
     describe('when there are no validation errors', () => {
       describe('when the answer is false', () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = {
-            [FIELD_ID]: 'false',
-          };
+          req.body = validBody;
 
           await post(req, res);
 
@@ -190,6 +195,42 @@ describe('controllers/insurance/export-contract/private-market', () => {
         post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.privateMarket call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.privateMarket = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.privateMarket = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });
