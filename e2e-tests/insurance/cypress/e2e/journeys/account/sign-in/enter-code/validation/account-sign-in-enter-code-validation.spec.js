@@ -20,10 +20,7 @@ const {
 } = ERROR_MESSAGES;
 
 const field = fieldSelector(ACCESS_CODE);
-let value = null;
-const fieldIndex = 0;
-const TOTAL_REQUIRED_FIELDS = 1;
-const expectedMessage = String(ACCESS_CODE_ERROR_MESSAGE.INCORRECT);
+const expectedErrorMessage = String(ACCESS_CODE_ERROR_MESSAGE.INCORRECT);
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -60,14 +57,17 @@ context('Insurance - Account - Sign in - Enter code - validation', () => {
   });
 
   it('should render a validation error when submitting an empty form', () => {
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({ field, expectedErrorMessage });
   });
 
   it('should render a validation error and retain the submitted value when submitting an invalid access code', () => {
     const invalidAccessCode = '123456';
-    value = invalidAccessCode;
 
-    cy.submitAndAssertFieldErrors(field, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+    cy.submitAndAssertFieldErrors({
+      field,
+      value: invalidAccessCode,
+      expectedErrorMessage,
+    });
 
     field.input().should('have.value', invalidAccessCode);
   });

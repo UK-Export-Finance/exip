@@ -19,8 +19,6 @@ const {
 const ERROR_MESSAGE_IMPROVEMENT = ERROR_MESSAGES[IMPROVEMENT];
 const ERROR_MESSAGE_OTHER_COMMENT = ERROR_MESSAGES[OTHER_COMMENTS];
 
-const TOTAL_REQUIRED_FIELDS = 1;
-
 context('Insurance - Feedback - form validation', () => {
   const startUrl = START;
   const url = FEEDBACK;
@@ -39,26 +37,26 @@ context('Insurance - Feedback - form validation', () => {
       cy.navigateToUrl(url);
     });
 
-    it('should display validation errors', () => {
+    it(`should render an ${IMPROVEMENT} validation error`, () => {
       const field = fieldSelector(IMPROVEMENT);
-      const value = 'a'.repeat(1201);
-      const fieldIndex = 0;
-      const expectedMessage = String(ERROR_MESSAGE_IMPROVEMENT);
-
       const textareaField = { ...field, input: field.textarea };
 
-      cy.submitAndAssertFieldErrors(textareaField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(1201),
+        expectedErrorMessage: String(ERROR_MESSAGE_IMPROVEMENT),
+      });
     });
 
-    it('should display validation errors', () => {
+    it(`should render an ${OTHER_COMMENTS} validation error`, () => {
       const field = fieldSelector(OTHER_COMMENTS);
-      const value = 'a'.repeat(1201);
-      const fieldIndex = 0;
-      const expectedMessage = String(ERROR_MESSAGE_OTHER_COMMENT);
-
       const textareaField = { ...field, input: field.textarea };
 
-      cy.submitAndAssertFieldErrors(textareaField, value, fieldIndex, TOTAL_REQUIRED_FIELDS, expectedMessage);
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(1201),
+        expectedErrorMessage: String(ERROR_MESSAGE_OTHER_COMMENT),
+      });
     });
   });
 });

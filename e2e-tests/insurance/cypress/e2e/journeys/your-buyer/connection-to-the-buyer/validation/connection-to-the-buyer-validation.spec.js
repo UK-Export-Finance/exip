@@ -41,8 +41,6 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
     });
   });
 
-  const submittedValue = 'a'.repeat(MAXIMUM + 1);
-
   beforeEach(() => {
     cy.saveSession();
 
@@ -52,8 +50,6 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
   after(() => {
     cy.deleteApplication(referenceNumber);
   });
-
-  const expectedErrorsCount = 1;
 
   describe(`${CONNECTION_WITH_BUYER} not selected`, () => {
     it('should display validation errors', () => {
@@ -66,7 +62,6 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
 
       cy.submitAndAssertRadioErrors({
         field: radioField,
-        expectedErrorsCount,
         expectedErrorMessage: ERRORS[CONNECTION_WITH_BUYER].IS_EMPTY,
       });
     });
@@ -76,28 +71,27 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
     const fieldId = CONNECTION_WITH_BUYER_DESCRIPTION;
     const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
 
+    const assertions = {
+      field: textareaField,
+    };
+
     beforeEach(() => {
       cy.clickYesRadioInput();
     });
 
     it(`should render a validation error and retain the submitted value when ${fieldId} is empty`, () => {
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        null,
-        0,
-        expectedErrorsCount,
-        ERRORS[fieldId].IS_EMPTY,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        expectedErrorMessage: ERRORS[fieldId].IS_EMPTY,
+      });
     });
 
     it(`should render a validation error and retain the submitted value when ${fieldId} is above the maximum`, () => {
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        0,
-        expectedErrorsCount,
-        ERRORS[fieldId].ABOVE_MAXIMUM,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAXIMUM + 1),
+        expectedErrorMessage: ERRORS[fieldId].ABOVE_MAXIMUM,
+      });
     });
   });
 });

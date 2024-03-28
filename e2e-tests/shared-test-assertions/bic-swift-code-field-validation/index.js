@@ -18,16 +18,15 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
  * Run the submitAndAssertFieldErrors command.
  * This saves repeated instances of this command in each mocha describe block.
  * @param {String} value: Field value
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Integer} numberOfExpectedErrors: Number of expected errors
- * @param {String} errorMessage: Expected error message
+ * @param {String} expectedErrorMessage: Expected error message
  */
-const runAssertion = ({ value, errorMessage = errorMessages.INCORRECT_FORMAT }) => {
-  const errorIndex = 0;
-  const numberOfExpectedErrors = 3;
-
-  const field = fieldSelector(FIELD_ID);
-  cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+const runAssertion = ({ value, expectedErrorMessage = errorMessages.INCORRECT_FORMAT }) => {
+  cy.submitAndAssertFieldErrors({
+    field: fieldSelector(FIELD_ID),
+    value,
+    expectedErrorsCount: 3,
+    expectedErrorMessage,
+  });
 };
 
 /**
@@ -38,7 +37,7 @@ const runAssertion = ({ value, errorMessage = errorMessages.INCORRECT_FORMAT }) 
 export const bicSwiftCodeFieldValidation = () => {
   describe(`${FIELD_ID} form field validation`, () => {
     it(`should render a validation error when ${FIELD_ID} is left empty`, () => {
-      runAssertion({ value: '', errorMessage: errorMessages.IS_EMPTY });
+      runAssertion({ value: '', expectedErrorMessage: errorMessages.IS_EMPTY });
     });
 
     it(`should render a validation error when ${FIELD_ID} contains only letters`, () => {
@@ -80,13 +79,13 @@ export const bicSwiftCodeFieldValidation = () => {
     it(`should render a validation error when ${FIELD_ID} is below ${MINIMUM_CHARACTERS.BIC_SWIFT_CODE} characters`, () => {
       const value = 'A1'.repeat(MINIMUM_CHARACTERS.BIC_SWIFT_CODE - 2);
 
-      runAssertion({ value, errorMessage: errorMessages.BELOW_MINIMUM });
+      runAssertion({ value, expectedErrorMessage: errorMessages.BELOW_MINIMUM });
     });
 
     it(`should render a validation error when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.BIC_SWIFT_CODE} characters`, () => {
       const value = 'A1'.repeat(MAXIMUM_CHARACTERS.BIC_SWIFT_CODE / 2 + 1);
 
-      runAssertion({ value, errorMessage: errorMessages.ABOVE_MAXIMUM });
+      runAssertion({ value, expectedErrorMessage: errorMessages.ABOVE_MAXIMUM });
     });
   });
 };

@@ -100,17 +100,23 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
 
     it('should display the validation error for company website in company website section', () => {
-      cy.submitAndAssertFieldErrors(fieldSelector(WEBSITE), WEBSITE_EXAMPLES.INVALID, 2, 4, COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        field: fieldSelector(WEBSITE),
+        value: WEBSITE_EXAMPLES.INVALID,
+        errorIndex: 2,
+        expectedErrorsCount: 4,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[WEBSITE].INCORRECT_FORMAT,
+      });
     });
 
     it('should display the validation error for phone number in phone number section', () => {
-      cy.submitAndAssertFieldErrors(
-        fieldSelector(PHONE_NUMBER),
-        INVALID_PHONE_NUMBER,
-        3,
-        4,
-        COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT,
-      );
+      cy.submitAndAssertFieldErrors({
+        field: fieldSelector(PHONE_NUMBER),
+        value: INVALID_PHONE_NUMBER,
+        errorIndex: 3,
+        expectedErrorsCount: 4,
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT,
+      });
     });
   });
 

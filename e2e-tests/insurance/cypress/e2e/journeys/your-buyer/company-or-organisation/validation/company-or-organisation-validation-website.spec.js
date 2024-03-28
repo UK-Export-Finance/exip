@@ -48,29 +48,26 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
     cy.deleteApplication(referenceNumber);
   });
 
-  // for error assertion - common fields
-  const ERROR_ASSERTIONS = {
+  const assertions = {
     field: fieldSelector(FIELD_ID),
-    numberOfExpectedErrors: 3,
     errorIndex: 2,
+    expectedErrorsCount: 3,
   };
 
   it(`should display validation errors if when ${FIELD_ID} is the incorrect format`, () => {
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = WEBSITE_EXAMPLES.INVALID;
-
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: WEBSITE_EXAMPLES.INVALID,
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors when ${FIELD_ID} is above 191 characters`, () => {
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH;
-
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: WEBSITE_EXAMPLES.ABOVE_MAX_LENGTH,
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {

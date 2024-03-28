@@ -12,13 +12,13 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
 /**
  * financialAddressFieldValidation
  * Assert financial address validation
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Object} errorMessages: Email error messages
+ * @param {Integer} errorIndex: Index of the summary list error. Defaults to 2
+ * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 3.
  * @returns {Function} Mocha describe block with assertions.
  */
 export const financialAddressFieldValidation = ({
   errorIndex = 2,
-  numberOfExpectedErrors = 3,
+  expectedErrorsCount = 3,
 }) => {
   const field = fieldSelector(FIELD_ID);
 
@@ -27,17 +27,23 @@ export const financialAddressFieldValidation = ({
     input: field.textarea,
   };
 
+  const assertions = {
+    field: textareaField,
+    errorIndex,
+    expectedErrorsCount,
+  };
+
   describe(`${FIELD_ID} form field validation`, () => {
     it(`should render a validation error when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, errorMessages.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: errorMessages.IS_EMPTY });
     });
 
     it(`should render a validation error when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
-      const value = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
-
-      cy.submitAndAssertFieldErrors(textareaField, value, errorIndex, numberOfExpectedErrors, errorMessages.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
+        expectedErrorMessage: errorMessages.ABOVE_MAXIMUM,
+      });
     });
   });
 };

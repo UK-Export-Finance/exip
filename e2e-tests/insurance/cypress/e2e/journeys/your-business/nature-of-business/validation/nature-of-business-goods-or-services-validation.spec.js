@@ -9,13 +9,13 @@ const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const {
   NATURE_OF_YOUR_BUSINESS: {
-    GOODS_OR_SERVICES,
+    GOODS_OR_SERVICES: FIELD_ID,
   },
 } = FIELD_IDS;
 
 const {
   NATURE_OF_YOUR_BUSINESS: {
-    [GOODS_OR_SERVICES]: { MAXIMUM },
+    [FIELD_ID]: { MAXIMUM },
   },
 } = FIELDS;
 
@@ -23,6 +23,14 @@ const {
   ROOT,
   EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
 } = INSURANCE_ROUTES;
+
+const field = fieldSelector(FIELD_ID);
+const textareaField = { ...field, input: field.textarea };
+
+const assertions = {
+  field: textareaField,
+  expectedErrorsCount: 3,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -54,27 +62,15 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.deleteApplication(referenceNumber);
   });
 
-  const fieldId = GOODS_OR_SERVICES;
-  const field = fieldSelector(fieldId);
-  const textareaField = { ...field, input: field.textarea };
-
-  const expectedErrorsCount = 3;
-
-  describe(`when ${GOODS_OR_SERVICES} is left empty`, () => {
+  describe(`when ${FIELD_ID} is left empty`, () => {
     it('should display validation errors', () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].IS_EMPTY;
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        null,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
+      });
     });
 
-    it(`should focus to the ${GOODS_OR_SERVICES} section when clicking the error`, () => {
+    it(`should focus to the ${FIELD_ID} section when clicking the error`, () => {
       cy.clickSubmitButton();
 
       partials.errorSummaryListItemLinks().first().click();
@@ -82,29 +78,22 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
   });
 
-  describe(`when ${GOODS_OR_SERVICES} has over ${MAXIMUM} characters`, () => {
+  describe(`when ${FIELD_ID} has over ${MAXIMUM} characters`, () => {
     beforeEach(() => {
       cy.keyboardInput(field.textarea(), 'a'.repeat(MAXIMUM + 1));
       cy.clickSubmitButton();
     });
 
-    const errorMessage = NATURE_OF_BUSINESS_ERRORS[GOODS_OR_SERVICES].ABOVE_MAXIMUM;
-
-    it(`should display validation errors if ${GOODS_OR_SERVICES} left empty`, () => {
-      const submittedValue = 'a'.repeat(MAXIMUM + 1);
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+    it('should display validation errors', () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAXIMUM + 1),
+        expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].ABOVE_MAXIMUM,
+      });
     });
   });
 
-  describe(`when ${GOODS_OR_SERVICES} is correctly entered`, () => {
+  describe(`when ${FIELD_ID} is correctly entered`, () => {
     it('should not display validation errors', () => {
       cy.navigateToUrl(url);
 
