@@ -23,14 +23,14 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 const get = (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
-    const { referenceNumber } = req.params;
-    const refNumber = Number(referenceNumber);
 
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryLists = yourBusinessSummaryLists(application.company, application.business, refNumber);
+    const { referenceNumber } = application;
+
+    const summaryLists = yourBusinessSummaryLists(application.company, application.business, referenceNumber);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

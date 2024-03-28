@@ -22,14 +22,17 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 const get = (req: Request, res: Response) => {
   try {
     const { application } = res.locals;
-    const { referenceNumber } = req.params;
-    const refNumber = Number(referenceNumber);
 
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const summaryLists = yourBuyerSummaryList(application.buyer, application.eligibility, refNumber, application.totalContractValueOverThreshold);
+    const summaryLists = yourBuyerSummaryList(
+      application.buyer,
+      application.eligibility,
+      application.referenceNumber,
+      application.totalContractValueOverThreshold,
+    );
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

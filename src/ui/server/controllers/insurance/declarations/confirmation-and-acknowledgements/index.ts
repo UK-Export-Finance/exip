@@ -49,9 +49,6 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   try {
     const declarationContent = await api.keystone.application.declarations.getLatestConfirmationAndAcknowledgement();
 
@@ -60,7 +57,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       documentContent: declarationContent.content.document,
       documentConfig: keystoneDocumentRendererConfig(),
@@ -89,8 +86,7 @@ export const post = async (req: Request, res: Response) => {
 
   const payload = constructPayload(req.body, [FIELD_ID]);
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
@@ -103,7 +99,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         documentContent: declarationContent.content.document,
         documentConfig: keystoneDocumentRendererConfig(),

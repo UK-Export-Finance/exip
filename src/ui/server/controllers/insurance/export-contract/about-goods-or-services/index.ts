@@ -93,9 +93,6 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   try {
     const countries = await api.keystone.countries.getAll();
 
@@ -117,7 +114,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
         HTML_FLAGS,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       countries: mappedCountries,
@@ -143,8 +140,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -178,7 +174,7 @@ export const post = async (req: Request, res: Response) => {
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application,
         submittedValues: sanitiseData(payload),
