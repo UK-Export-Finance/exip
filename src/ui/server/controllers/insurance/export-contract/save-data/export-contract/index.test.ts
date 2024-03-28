@@ -1,9 +1,9 @@
 import save from '.';
-import api from '../../../../api';
-import generateValidationErrors from '../../policy/type-of-policy/validation';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
-import INSURANCE_FIELD_IDS from '../../../../constants/field-ids/insurance';
-import { mockApplication } from '../../../../test-mocks';
+import api from '../../../../../api';
+import generateValidationErrors from '../../../policy/type-of-policy/validation';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import { mockApplication } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -11,7 +11,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-describe('controllers/insurance/export-contract/save-data', () => {
+describe('controllers/insurance/export-contract/save-data/export-contract', () => {
   const mockUpdateApplicationResponse = mockApplication;
   let updateApplicationSpy = jest.fn(() => Promise.resolve(mockUpdateApplicationResponse));
 

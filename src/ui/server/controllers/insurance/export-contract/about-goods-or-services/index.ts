@@ -14,7 +14,7 @@ import generateValidationErrors from './validation';
 import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/export-contract';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';

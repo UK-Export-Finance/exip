@@ -12,7 +12,7 @@ import api from '../../../../api';
 import generateValidationErrors from './validation';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/export-contract';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
@@ -40,7 +40,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../map-and-save');
+  jest.mock('../map-and-save/export-contract');
 
   mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));

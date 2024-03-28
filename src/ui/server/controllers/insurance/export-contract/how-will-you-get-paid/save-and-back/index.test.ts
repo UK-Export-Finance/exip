@@ -2,7 +2,7 @@ import { post } from '.';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { FIELD_ID } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/export-contract';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
 import { mockApplication, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
@@ -13,7 +13,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid/save-and-b
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save');
+  jest.mock('../../map-and-save/export-contract');
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
 

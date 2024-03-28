@@ -1,7 +1,7 @@
-import api from '../../../../api';
-import getDataToSave from '../../../../helpers/get-data-to-save';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
-import { Application, RequestBody } from '../../../../../types';
+import api from '../../../../../api';
+import getDataToSave from '../../../../../helpers/get-data-to-save';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import { Application, RequestBody } from '../../../../../../types';
 
 /**
  * exportContract
