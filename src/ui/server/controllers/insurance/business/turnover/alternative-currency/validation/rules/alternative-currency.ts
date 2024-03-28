@@ -16,7 +16,7 @@ const {
 /**
  * alternativeCurrencyRule
  * Returns alternativeCurrencyValidation for the ALTERNATIVE_CURRENCY_CODE field.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

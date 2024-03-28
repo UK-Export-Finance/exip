@@ -25,7 +25,6 @@ const buyerRelationship = async (application: Application, formBody: RequestBody
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const buyerRelationshipId = application.buyer.relationship?.id;

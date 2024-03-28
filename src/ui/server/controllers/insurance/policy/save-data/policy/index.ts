@@ -26,7 +26,6 @@ const policy = async (application: Application, formBody: RequestBody, errorList
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.

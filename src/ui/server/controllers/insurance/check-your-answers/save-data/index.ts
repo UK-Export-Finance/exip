@@ -11,7 +11,6 @@ import { Application, RequestBody } from '../../../../../types';
  * @returns {Object} Saved data
  */
 const sectionReview = async (application: Application, formBody: RequestBody) => {
-  // sanitise the form data.
   const sanitisedData = sanitiseData(formBody);
 
   // send the form data to the API for database update.

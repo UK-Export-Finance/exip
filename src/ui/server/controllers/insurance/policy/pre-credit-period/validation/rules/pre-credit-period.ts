@@ -16,7 +16,7 @@ const {
 /**
  * preCreditPeriodRule
  * Returns the result of emptyFieldValidation
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

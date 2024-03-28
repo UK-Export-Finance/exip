@@ -16,7 +16,6 @@ const companyDifferentTradingAddress = async (application: Application, formBody
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const differentTradingAddressId = application.company.differentTradingAddress?.id;

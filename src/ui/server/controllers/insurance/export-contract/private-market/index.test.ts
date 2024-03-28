@@ -27,10 +27,11 @@ const {
   },
 } = TEMPLATES;
 
+const { referenceNumber } = mockApplication;
+
 describe('controllers/insurance/export-contract/private-market', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/private-market');
 
@@ -41,8 +42,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
   });
 
   afterAll(() => {
@@ -94,7 +94,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD_ID,
@@ -111,7 +111,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         applicationAnswer: mockApplication.exportContract.privateMarket[FIELD_ID],
@@ -150,7 +150,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
           submittedValues: payload,

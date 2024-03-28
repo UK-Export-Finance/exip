@@ -26,7 +26,7 @@ const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
  * positionRule
  * Returns the result of emptyFieldValidation if SAME_NAME is selected
  * else returns provided errors object
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

@@ -90,10 +90,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = req.params;
-    const refNumber = Number(referenceNumber);
-
-    const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
+    const generatedPageVariables = pageVariables(application.referenceNumber, allCurrencies, String(policyCurrencyCode));
 
     const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -134,8 +131,7 @@ export const post = async (req: Request, res: Response) => {
     policy: { policyCurrencyCode },
   } = application;
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -149,7 +145,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 

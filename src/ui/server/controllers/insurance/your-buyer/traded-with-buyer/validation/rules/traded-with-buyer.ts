@@ -19,7 +19,7 @@ const {
  * tradedWithBuyerRule
  * Check submitted form data to see if traded with buyer field radio is selected
  * Returns generateValidationErrors if there are any errors.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

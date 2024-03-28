@@ -51,12 +51,9 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     applicationAnswer: application.declaration[FIELD_ID],
   });
@@ -76,17 +73,16 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const payload = constructPayload(req.body, [FIELD_ID]);
+  const { referenceNumber } = application;
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const payload = constructPayload(req.body, [FIELD_ID]);
 
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(refNumber),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       validationErrors,
     });

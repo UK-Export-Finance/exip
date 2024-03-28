@@ -9,7 +9,6 @@ import { RequestBody, Account } from '../../../../../../../types';
  * @returns {Object} Saved data
  */
 const account = async (urlOrigin: string, formBody: RequestBody) => {
-  // sanitise the form data.
   const sanitisedData = sanitiseData(formBody) as Account;
 
   try {

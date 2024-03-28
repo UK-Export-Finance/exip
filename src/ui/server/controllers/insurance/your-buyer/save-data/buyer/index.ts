@@ -15,7 +15,6 @@ const buyer = async (application: Application, formBody: RequestBody, errorList?
   // determines which fields to save
   const dataToSave = getDataToSave(formBody, errorList);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const buyerId = application.buyer?.id;

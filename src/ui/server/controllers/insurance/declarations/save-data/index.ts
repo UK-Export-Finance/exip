@@ -15,7 +15,6 @@ const declaration = async (application: Application, formBody: RequestBody) => {
   // strip empty form fields.
   const fieldsWithValues = stripEmptyFormFields(formBody);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(fieldsWithValues);
 
   // send the form data to the API for database update.
