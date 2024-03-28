@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/export-contract';
 import generateValidationErrors from '../validation';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
@@ -21,7 +21,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save');
+  jest.mock('../../map-and-save/export-contract');
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
   const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));

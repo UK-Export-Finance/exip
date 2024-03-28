@@ -22,6 +22,7 @@ const DEFAULT_RESOLVERS = [
   'updatePolicy',
   'updatePolicyContact',
   'updateExportContract',
+  'updatePrivateMarket',
   'updateSectionReview',
   'updateEligibility',
   'updateCompanyDifferentTradingAddress',

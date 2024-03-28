@@ -6,7 +6,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save/private-market';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -75,8 +75,8 @@ export const get = (req: Request, res: Response) => {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
-    application: mapApplicationToFormFields(application),
     FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+    applicationAnswer: application.exportContract.privateMarket[FIELD_ID],
   });
 };
 
@@ -87,7 +87,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -105,18 +105,28 @@ export const post = (req: Request, res: Response) => {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
       ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
-      application: mapApplicationToFormFields(application),
       FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
       submittedValues: payload,
       validationErrors,
     });
   }
 
-  const answer = payload[FIELD_ID];
+  try {
+    const saveResponse = await mapAndSave.privateMarket(payload, application);
 
-  if (answer === 'true') {
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`);
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const answer = payload[FIELD_ID];
+
+    if (answer === 'true') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - private market %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
-
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

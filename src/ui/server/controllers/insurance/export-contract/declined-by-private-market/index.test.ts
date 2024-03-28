@@ -117,7 +117,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
 
   describe('post', () => {
     const validBody = {
-      [FIELD_ID]: mockApplication.privateMarket[FIELD_ID],
+      [FIELD_ID]: mockApplication.exportContract.privateMarket[FIELD_ID],
     };
 
     describe('when there are validation errors', () => {
