@@ -18,7 +18,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { PRIVATE_MARKET, CHECK_YOUR_ANSWERS, DECLINED_BY_PRIVATE_MARKET },
+  EXPORT_CONTRACT: {
+    PRIVATE_MARKET, HOW_WILL_YOU_GET_PAID, DECLINED_BY_PRIVATE_MARKET, CHECK_YOUR_ANSWERS,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -38,7 +40,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
   let checkYourAnswersUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
@@ -46,7 +48,9 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
       declinedByPrivateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
       // go to the page we want to test.
-      cy.navigateToUrl(url);
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
     });
   });
 
@@ -62,7 +66,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
-      backLink: `${ROOT}/${referenceNumber}${PRIVATE_MARKET}#`,
+      backLink: `${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
     });
   });
 

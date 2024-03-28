@@ -87,7 +87,10 @@ context('Insurance - Export contract - About goods or services page - Save and g
       // go back to the page via the task list
       cy.startInsuranceExportContractSection({});
 
-      field.textarea().should('have.value', application.EXPORT_CONTRACT[FIELD_ID]);
+      cy.checkTextareaValue({
+        fieldId: FIELD_ID,
+        expectedValue: application.EXPORT_CONTRACT[FIELD_ID],
+      });
     });
   });
 
@@ -119,7 +122,10 @@ context('Insurance - Export contract - About goods or services page - Save and g
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {
       cy.startInsuranceExportContractSection({});
 
-      field.textarea().should('have.value', '');
+      cy.checkTextareaValue({
+        fieldId: FIELD_ID,
+        expectedValue: '',
+      });
     });
   });
 });

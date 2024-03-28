@@ -130,8 +130,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
   });
 
   describe('post', () => {
-    const validBody = mockApplication.privateMarket;
-
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
         req.body = {};
@@ -155,10 +153,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
     });
 
     describe('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
       describe('when the answer is false', () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {

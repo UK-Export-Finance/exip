@@ -162,6 +162,10 @@ export const ERROR_MESSAGES = {
         [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET.ATTEMPTED]: {
           IS_EMPTY: 'Select if you have tried to insure this export through the private market',
         },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET.DECLINED_DESCRIPTION]: {
+          IS_EMPTY: "Enter why you couldn't get cover through the private market",
+          ABOVE_MAXIMUM: `The description of why you couldn't get cover through the private market cannot be more than ${MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION} characters`,
+        },
       },
     },
     POLICY: {
