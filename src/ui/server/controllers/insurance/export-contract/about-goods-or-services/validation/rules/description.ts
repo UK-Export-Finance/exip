@@ -24,7 +24,7 @@ export const MAXIMUM = 1000;
  * descriptionRules
  * Check submitted form data for errors with the description field
  * Returns generateValidationErrors if there are any errors.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

@@ -16,7 +16,7 @@ const {
 
 /**
  * validate the "declined description" field
- * @param {RequestBody} formBody: Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */

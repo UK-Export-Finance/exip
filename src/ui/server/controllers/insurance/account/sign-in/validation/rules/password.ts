@@ -11,7 +11,7 @@ const { PASSWORD: FIELD_ID } = FIELD_IDS;
  * If the password is empty, return emailAndPasswordValidation.
  * This ensures that a validation error is returned for both EMIL and PASSWORD,
  * to indicate to a user that the credentials are invalid.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Function} emailAndPasswordValidation
  */
