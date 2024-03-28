@@ -9,7 +9,7 @@ import {
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { privateMarketWhyDescription } = partials;
@@ -24,10 +24,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  EXPORT_CONTRACT: {
-    PRIVATE_MARKET: { ATTEMPTED: FIELD_ID },
-  },
-} = INSURANCE_FIELD_IDS;
+  PRIVATE_MARKET: { ATTEMPTED: FIELD_ID },
+} = FIELD_IDS;
 
 const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID].IS_EMPTY;
 
