@@ -89,7 +89,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '-1',
-      expectedErrorMessage: ERROR_MESSAGE.BELOW_MINIMUMs,
+      expectedErrorMessage: ERROR_MESSAGE.BELOW_MINIMUM,
     });
   });
 

@@ -86,7 +86,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       it(`should display validation errors for ${FIELD_ID}`, () => {
         cy.submitAndAssertFieldErrors({
           ...assertions,
-          value: '35',
+          value: '35!',
           expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
         });
       });

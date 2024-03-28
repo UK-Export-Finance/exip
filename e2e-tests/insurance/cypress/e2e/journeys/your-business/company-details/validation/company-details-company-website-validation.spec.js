@@ -88,7 +88,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      field(WEBSITE).input().clear();
+      field.input().clear();
       cy.clickSubmitButton();
     });
 
@@ -107,7 +107,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
 
       cy.completeCompanyDetailsForm({});
 
-      field(WEBSITE).input().clear().type(WEBSITE_EXAMPLES.VALID);
+      field.input().clear().type(WEBSITE_EXAMPLES.VALID);
       cy.clickSubmitButton();
     });
 

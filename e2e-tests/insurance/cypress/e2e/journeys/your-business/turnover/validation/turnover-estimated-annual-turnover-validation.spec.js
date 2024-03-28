@@ -63,7 +63,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
-      value: '50',
+      value: '50!',
       expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
     });
   });

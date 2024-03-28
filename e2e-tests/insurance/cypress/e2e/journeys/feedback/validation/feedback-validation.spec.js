@@ -44,7 +44,6 @@ context('Insurance - Feedback - form validation', () => {
       cy.submitAndAssertFieldErrors({
         field: textareaField,
         value: 'a'.repeat(1201),
-        expectedErrorsCount: 2,
         expectedErrorMessage: String(ERROR_MESSAGE_IMPROVEMENT),
       });
     });
@@ -56,8 +55,6 @@ context('Insurance - Feedback - form validation', () => {
       cy.submitAndAssertFieldErrors({
         field: textareaField,
         value: 'a'.repeat(1201),
-        errorIndex: 1,
-        expectedErrorsCount: 2,
         expectedErrorMessage: String(ERROR_MESSAGE_OTHER_COMMENT),
       });
     });

@@ -18,8 +18,6 @@ const errorMessages = ERROR_MESSAGES.INSURANCE.POLICY[FIELD_ID];
  * Run the submitAndAssertFieldErrors command.
  * This saves repeated instances of this command in each mocha describe block.
  * @param {String} value: Field value
- * @param {Integer} errorIndex: Index of the summary list error
- * @param {Integer} expectedErrorsCount: Number of expected errors
  * @param {String} expectedErrorMessage: Expected error message
  */
 const runAssertion = ({ value, expectedErrorMessage = errorMessages.INCORRECT_FORMAT }) => {
@@ -39,7 +37,7 @@ const runAssertion = ({ value, expectedErrorMessage = errorMessages.INCORRECT_FO
 export const bicSwiftCodeFieldValidation = () => {
   describe(`${FIELD_ID} form field validation`, () => {
     it(`should render a validation error when ${FIELD_ID} is left empty`, () => {
-      runAssertion({ value: '', errorMessage: errorMessages.IS_EMPTY });
+      runAssertion({ value: '', expectedErrorMessage: errorMessages.IS_EMPTY });
     });
 
     it(`should render a validation error when ${FIELD_ID} contains only letters`, () => {
@@ -81,13 +79,13 @@ export const bicSwiftCodeFieldValidation = () => {
     it(`should render a validation error when ${FIELD_ID} is below ${MINIMUM_CHARACTERS.BIC_SWIFT_CODE} characters`, () => {
       const value = 'A1'.repeat(MINIMUM_CHARACTERS.BIC_SWIFT_CODE - 2);
 
-      runAssertion({ value, errorMessage: errorMessages.BELOW_MINIMUM });
+      runAssertion({ value, expectedErrorMessage: errorMessages.BELOW_MINIMUM });
     });
 
     it(`should render a validation error when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.BIC_SWIFT_CODE} characters`, () => {
       const value = 'A1'.repeat(MAXIMUM_CHARACTERS.BIC_SWIFT_CODE / 2 + 1);
 
-      runAssertion({ value, errorMessage: errorMessages.ABOVE_MAXIMUM });
+      runAssertion({ value, expectedErrorMessage: errorMessages.ABOVE_MAXIMUM });
     });
   });
 };
