@@ -14,7 +14,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { COMMISSIONING_AGENT },
+  EXPORT_CONTRACT: { AGENT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -28,18 +28,18 @@ const {
   },
 } = TEMPLATES;
 
+const { referenceNumber } = mockApplication;
+
 describe('controllers/insurance/export-contract/declined-by-private-market', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
   });
 
   afterAll(() => {
@@ -74,7 +74,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
@@ -94,7 +94,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
 
       const expectedVariables = {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
       };
@@ -132,7 +132,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
@@ -146,10 +146,10 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
         req.body = validBody;
       });
 
-      it(`should redirect to ${COMMISSIONING_AGENT}`, () => {
+      it(`should redirect to ${AGENT}`, () => {
         post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${COMMISSIONING_AGENT}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

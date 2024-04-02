@@ -25,8 +25,9 @@ interface PageVariablesHTMLFlags {
   CONDITIONAL_YES_HTML?: string;
   CONDITIONAL_NO_HTML?: string;
   HINT_HTML?: string;
-  LEGEND_CLASS?: string;
   HORIZONTAL_RADIOS?: boolean;
+  LEGEND_CLASS?: string;
+  NO_RADIO_AS_FIRST_OPTION?: boolean;
 }
 
 interface CorePageVariablesInitialInput {

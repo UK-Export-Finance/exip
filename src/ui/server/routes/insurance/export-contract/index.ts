@@ -11,6 +11,7 @@ import {
   get as declinedByPrivateMarketGet,
   post as declinedByPrivateMarketPost,
 } from '../../../controllers/insurance/export-contract/declined-by-private-market';
+import { get as agentGet } from '../../../controllers/insurance/export-contract/agent';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -24,6 +25,7 @@ const {
   PRIVATE_MARKET,
   PRIVATE_MARKET_SAVE_AND_BACK,
   DECLINED_BY_PRIVATE_MARKET,
+  AGENT,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -50,6 +52,8 @@ exportContractRoute.post(`/:referenceNumber${PRIVATE_MARKET_SAVE_AND_BACK}`, pri
 
 exportContractRoute.get(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
 exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);
+
+exportContractRoute.get(`/:referenceNumber${AGENT}`, agentGet);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

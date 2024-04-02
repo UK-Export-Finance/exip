@@ -14,6 +14,7 @@ export const EXPORT_CONTRACT = {
     ATTEMPTED: 'attempted',
     DECLINED_DESCRIPTION: 'declinedDescription',
   },
+  USING_AGENT: 'isUsingAgent',
 };
 
 export default EXPORT_CONTRACT;

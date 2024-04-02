@@ -16,7 +16,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -148,7 +148,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
       });
 
       describe('when application.totalContractValueOverThreshold is NOT true', () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${AGENT}`, async () => {
           res.locals.application = {
             ...mockApplication,
             totalContractValueOverThreshold: false,
@@ -156,7 +156,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

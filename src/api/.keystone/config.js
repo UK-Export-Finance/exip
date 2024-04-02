@@ -296,7 +296,8 @@ var EXPORT_CONTRACT = {
   PRIVATE_MARKET: {
     ATTEMPTED: "attempted",
     DECLINED_DESCRIPTION: "declinedDescription"
-  }
+  },
+  USING_AGENT: "isUsingAgent"
 };
 var export_contract_default = EXPORT_CONTRACT;
 

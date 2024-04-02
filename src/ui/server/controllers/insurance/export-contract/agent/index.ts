@@ -1,0 +1,64 @@
+import { TEMPLATES } from '../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
+import { PAGES } from '../../../../content-strings';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
+import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
+import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import { Request, Response } from '../../../../../types';
+
+const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+
+const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
+
+export const FIELD_ID = USING_AGENT;
+
+export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
+
+export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
+
+/**
+ * HTML_FLAGS
+ * Conditional flags for the nunjucks template to match design
+ */
+export const HTML_FLAGS = {
+  NO_RADIO_AS_FIRST_OPTION: true,
+};
+
+/**
+ * pageVariables
+ * Page fields and "save and go back" URL
+ * @param {Number} Application reference number
+ * @returns {Object} Page variables
+ */
+export const pageVariables = (referenceNumber: number) => ({
+  FIELD: {
+    ID: FIELD_ID,
+    ...FIELDS.PRIVATE_MARKET[FIELD_ID],
+  },
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+});
+
+/**
+ * get
+ * Get the application and render the "Agent" page
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.render} "Agent" page
+ */
+export const get = (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  return res.render(TEMPLATE, {
+    ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+    ...pageVariables(application.referenceNumber),
+    userName: getUserNameFromSession(req.session.user),
+    FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+    application: mapApplicationToFormFields(application),
+  });
+};

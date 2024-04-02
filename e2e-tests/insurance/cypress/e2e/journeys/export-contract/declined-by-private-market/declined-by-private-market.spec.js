@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.DECLINED_BY_PRIVATE_MARK
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET, COMMISSIONING_AGENT },
+  EXPORT_CONTRACT: { PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET, AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -34,7 +34,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Declined by private market page - As an exporter, I want to explain why I could not get insurance through the private market previously, So that UKEF can accurately assess the viability of my insurance application', () => {
   let referenceNumber;
   let url;
-  let commissioningAgentUrl;
+  let agentUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -47,7 +47,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
       cy.completeAndSubmitPrivateMarketForm({ attempted: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
-      commissioningAgentUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMMISSIONING_AGENT}`;
+      agentUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
     });
   });
 
@@ -120,10 +120,10 @@ context('Insurance - Export contract - Declined by private market page - As an e
       });
     });
 
-    it(`should redirect to ${COMMISSIONING_AGENT} page`, () => {
+    it(`should redirect to ${AGENT} page`, () => {
       cy.completeAndSubmitDeclinedByPrivateMarketForm({});
 
-      cy.assertUrl(commissioningAgentUrl);
+      cy.assertUrl(agentUrl);
     });
   });
 });

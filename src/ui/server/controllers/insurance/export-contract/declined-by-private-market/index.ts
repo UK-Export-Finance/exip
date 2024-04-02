@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { COMMISSIONING_AGENT },
+  EXPORT_CONTRACT: { AGENT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -101,5 +101,5 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMMISSIONING_AGENT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
 };
