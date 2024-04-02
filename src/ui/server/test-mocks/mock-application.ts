@@ -165,4 +165,20 @@ export const mockApplicationMultiplePolicy = {
   policy: mockMultiplePolicy,
 } as Application;
 
+export const mockApplicationSinglePolicyWithoutCurrencyCode = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    policyCurrencyCode: '',
+  },
+} as Application;
+
+export const mockApplicationMultiplePolicyWithoutCurrencyCode = {
+  ...mockApplicationMultiplePolicy,
+  policy: {
+    ...mockApplicationMultiplePolicy.policy,
+    policyCurrencyCode: '',
+  },
+} as Application;
+
 export default mockApplication;

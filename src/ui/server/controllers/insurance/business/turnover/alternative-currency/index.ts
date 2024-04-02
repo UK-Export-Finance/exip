@@ -7,7 +7,6 @@ import api from '../../../../../api';
 import { isPopulatedArray } from '../../../../../helpers/array';
 import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
@@ -119,7 +118,6 @@ export const post = async (req: Request, res: Response) => {
         userName: getUserNameFromSession(req.session.user),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
         validationErrors,
-        submittedValues: sanitiseData(payload),
       });
     }
 

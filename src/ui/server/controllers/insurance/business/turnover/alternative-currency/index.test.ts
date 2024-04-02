@@ -7,7 +7,6 @@ import { FIELDS } from '../../../../../content-strings/fields/insurance';
 import api from '../../../../../api';
 import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../../helpers/construct-payload';
-import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
@@ -186,7 +185,6 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
           userName: getUserNameFromSession(req.session.user),
           ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, ''),
           validationErrors,
-          submittedValues: sanitiseData(payload),
         });
       });
     });
