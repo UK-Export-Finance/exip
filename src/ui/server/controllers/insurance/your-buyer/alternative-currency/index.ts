@@ -11,7 +11,6 @@ import api from '../../../../api';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapRadioAndSelectOptions from '../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../helpers/construct-payload';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
@@ -118,7 +117,6 @@ export const post = async (req: Request, res: Response) => {
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
-        submittedValues: sanitiseData(payload),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[CURRENCY_CODE]),
       });
     }
