@@ -14,7 +14,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
-import { mockApplicationMultiplePolicy as mockApplication } from '../../../../test-mocks/mock-application';
+import { mockApplicationMultiplePolicy as mockApplication, mockApplicationMultiplePolicyWithoutCurrencyCode } from '../../../../test-mocks/mock-application';
 
 const {
   INSURANCE_ROOT,
@@ -68,7 +68,7 @@ const applicationWithoutTotalSalesAndMaximumWillOwe = {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-const currencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
+const applicationCurrencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
 
 describe('controllers/insurance/policy/multiple-contract-policy', () => {
   let req: Request;
@@ -171,7 +171,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, applicationCurrencyAnswer),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -320,30 +320,57 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
     describe('when there are validation errors', () => {
       it('should call api.keystone.APIM.getCurrencies', async () => {
-        await get(req, res);
+        await post(req, res);
 
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('should render template with validation errors and submitted values from constructPayload function', async () => {
-        await post(req, res);
+      describe(`when the application has a ${POLICY_CURRENCY_CODE} answer`, () => {
+        it('should render template with validation errors and submitted values from constructPayload function and application', async () => {
+          await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(refNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
-          submittedValues: payload,
-          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
-          validationErrors: generateValidationErrors(payload),
-        };
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            userName: getUserNameFromSession(req.session.user),
+            application: mapApplicationToFormFields(mockApplication),
+            submittedValues: payload,
+            ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, applicationCurrencyAnswer),
+            validationErrors: generateValidationErrors(payload),
+          };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
+      });
+
+      describe(`when the application does NOT have a ${POLICY_CURRENCY_CODE} answer`, () => {
+        it('should render template with validation errors and submitted values from constructPayload function', async () => {
+          res.locals.application = mockApplicationMultiplePolicyWithoutCurrencyCode;
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            userName: getUserNameFromSession(req.session.user),
+            application: mapApplicationToFormFields(mockApplicationMultiplePolicyWithoutCurrencyCode),
+            submittedValues: payload,
+            ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[POLICY_CURRENCY_CODE]),
+            validationErrors: generateValidationErrors(payload),
+          };
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
       });
     });
 

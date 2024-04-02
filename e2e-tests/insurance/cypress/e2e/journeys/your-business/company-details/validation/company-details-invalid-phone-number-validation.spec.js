@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INVALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -19,7 +19,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const COMPANY_DETAILS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-const errorMessage = COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT;
 
 const companyDetailsFormVariables = {
   [WEBSITE]: WEBSITE_EXAMPLES.VALID,
@@ -29,8 +28,10 @@ const completeAllFields = () => {
   cy.completeCompanyDetailsForm(companyDetailsFormVariables);
 };
 
-const expectedErrors = 1;
-const errorIndex = 0;
+const assertions = {
+  field: fieldSelector(PHONE_NUMBER),
+  expectedErrorMessage: COMPANY_DETAILS_ERRORS[PHONE_NUMBER].INCORRECT_FORMAT,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -67,13 +68,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.LANDLINE.LONG,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.LANDLINE.LONG,
+        });
       });
     });
 
@@ -85,13 +83,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.INTERNATIONAL,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.INTERNATIONAL,
+        });
       });
     });
 
@@ -103,13 +98,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.INTERNATIONAL_PLUS,
+        });
       });
     });
 
@@ -121,13 +113,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.MOBILE.LONG,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.MOBILE.LONG,
+        });
       });
     });
 
@@ -139,13 +128,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.LANDLINE.SHORT,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.LANDLINE.SHORT,
+        });
       });
     });
 
@@ -157,13 +143,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.LANDLINE.SPECIAL_CHAR,
+        });
       });
     });
 
@@ -175,13 +158,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.LANDLINE.LETTER,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.LANDLINE.LETTER,
+        });
       });
     });
 
@@ -193,13 +173,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.MOBILE.SPECIAL_CHAR,
+        });
       });
     });
 
@@ -211,13 +188,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.TOO_SHORT,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.TOO_SHORT,
+        });
       });
     });
 
@@ -229,13 +203,10 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
       });
 
       it('should display validation errors', () => {
-        cy.submitAndAssertFieldErrors(
-          field(PHONE_NUMBER),
-          INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS,
-          errorIndex,
-          expectedErrors,
-          errorMessage,
-        );
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: INVALID_PHONE_NUMBERS.ABOVE_MAX_CHARS,
+        });
       });
     });
   });

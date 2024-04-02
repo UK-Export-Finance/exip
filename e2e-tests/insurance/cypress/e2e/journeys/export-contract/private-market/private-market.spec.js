@@ -1,13 +1,15 @@
 import {
+  field as fieldSelector,
   headingCaption,
   yesNoRadioHint,
   noRadio,
+  noRadioInput,
   yesRadio,
 } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../constants';
-import { PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../../../content-strings';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES, PAGES, PRIVATE_MARKET_WHY_DESCRIPTION } from '../../../../../../content-strings';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { privateMarketWhyDescription } = partials;
@@ -15,30 +17,38 @@ const { privateMarketWhyDescription } = partials;
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET;
 
 const {
-  ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { PRIVATE_MARKET },
+  ROOT,
+  EXPORT_CONTRACT: {
+    PRIVATE_MARKET, HOW_WILL_YOU_GET_PAID, DECLINED_BY_PRIVATE_MARKET, CHECK_YOUR_ANSWERS,
+  },
 } = INSURANCE_ROUTES;
 
 const {
-  EXPORT_CONTRACT: {
-    PRIVATE_MARKET: { ATTEMPTED },
-  },
-} = INSURANCE_FIELD_IDS;
+  PRIVATE_MARKET: { ATTEMPTED: FIELD_ID },
+} = FIELD_IDS;
+
+const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID].IS_EMPTY;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Export contract - Private market page - As an exporter, I want to state whether I tried to get insurance through the private market previously, So that UKEF can ensure it is complementing rather than competing with the private market', () => {
   let referenceNumber;
   let url;
+  let declinedByPrivateMarketUrl;
+  let checkYourAnswersUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      declinedByPrivateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
       // go to the page we want to test.
-      cy.navigateToUrl(url);
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
     });
   });
 
@@ -53,8 +63,8 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}#`,
+      currentHref: `${ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
+      backLink: `${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
     });
   });
 
@@ -67,7 +77,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    describe(`renders ${ATTEMPTED} label and inputs`, () => {
+    describe(`renders ${FIELD_ID} label and inputs`, () => {
       it('renders a hint', () => {
         cy.checkText(yesNoRadioHint(), CONTENT_STRINGS.HINT);
       });
@@ -116,6 +126,58 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    describe('when submitting an empty form', () => {
+      it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        const radioField = {
+          ...fieldSelector(FIELD_ID),
+          input: noRadioInput,
+        };
+
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
+          expectedErrorMessage: ERROR_MESSAGE,
+        });
+      });
+    });
+
+    describe(`when selecting no for ${FIELD_ID}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.completeAndSubmitPrivateMarketForm({ attempted: false });
+
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
+      });
+    });
+
+    describe(`when selecting yes for ${FIELD_ID}`, () => {
+      it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET} page`, () => {
+        cy.completeAndSubmitPrivateMarketForm({ attempted: true });
+
+        cy.assertUrl(declinedByPrivateMarketUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+        });
+      });
     });
   });
 });

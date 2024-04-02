@@ -11,6 +11,8 @@ const {
   INSURANCE: { INSURANCE_ROOT, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
+const { referenceNumber } = mockApplication;
+
 describe('controllers/insurance/policy/type-of-policy/save-and-back', () => {
   let req: Request;
   let res: Response;
@@ -19,8 +21,6 @@ describe('controllers/insurance/policy/type-of-policy/save-and-back', () => {
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.policy = mockMapAndSave;
-
-  const refNumber = Number(mockApplication.referenceNumber);
 
   const mockFormBody = {
     _csrf: '1234',
@@ -31,7 +31,7 @@ describe('controllers/insurance/policy/type-of-policy/save-and-back', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
 
     req.body = mockFormBody;
   });
@@ -51,7 +51,7 @@ describe('controllers/insurance/policy/type-of-policy/save-and-back', () => {
     it(`should redirect to ${ROUTES.INSURANCE.ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -63,7 +63,7 @@ describe('controllers/insurance/policy/type-of-policy/save-and-back', () => {
 
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ROUTES.INSURANCE.ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

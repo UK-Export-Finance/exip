@@ -102,12 +102,11 @@ context('Insurance - Your business - Credit control page - answer `yes` - As an 
       it('should render validation errors', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

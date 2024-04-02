@@ -29,11 +29,18 @@ interface ApplicationEligibility extends InsuranceEligibilityCore {
   buyerCountry: Country;
 }
 
+interface ApplicationPrivateMarket {
+  id: string;
+  attempted?: boolean;
+  declinedDescription?: string;
+}
+
 interface ApplicationExportContract {
   id: string;
   goodsOrServicesDescription?: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
+  privateMarket: ApplicationPrivateMarket;
 }
 
 interface ApplicationDifferentTradingAddress {

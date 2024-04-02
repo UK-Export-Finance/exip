@@ -115,12 +115,11 @@ context('Insurance - Policy - Type of policy page - As an exporter, I want to en
           errorMessage,
         };
 
-        cy.submitAndAssertRadioErrors(
-          radioField,
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.POLICY.TYPE_OF_POLICY[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

@@ -6,6 +6,11 @@ import { post as aboutGoodsOrServicesSaveAndBackPost } from '../../../controller
 import { get as howWillYouGetPaidGet, post as howWillYouGetPaidPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid';
 import { post as howWillYouGetPaidSaveAndBackPost } from '../../../controllers/insurance/export-contract/how-will-you-get-paid/save-and-back';
 import { get as privateMarketGet, post as privateMarketPost } from '../../../controllers/insurance/export-contract/private-market';
+import { post as privateMarketSaveAndBackPost } from '../../../controllers/insurance/export-contract/private-market/save-and-back';
+import {
+  get as declinedByPrivateMarketGet,
+  post as declinedByPrivateMarketPost,
+} from '../../../controllers/insurance/export-contract/declined-by-private-market';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -17,6 +22,8 @@ const {
   HOW_WILL_YOU_GET_PAID,
   HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
   PRIVATE_MARKET,
+  PRIVATE_MARKET_SAVE_AND_BACK,
+  DECLINED_BY_PRIVATE_MARKET,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -30,8 +37,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(7);
-    expect(post).toHaveBeenCalledTimes(8);
+    expect(get).toHaveBeenCalledTimes(8);
+    expect(post).toHaveBeenCalledTimes(10);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -49,6 +56,10 @@ describe('routes/insurance/export-contract', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketPost);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_SAVE_AND_BACK}`, privateMarketSaveAndBackPost);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

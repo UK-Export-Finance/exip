@@ -70,7 +70,6 @@ context('Insurance - Policy - Broker details page - validation', () => {
     const { MAXIMUM } = FIELD_STRINGS[NAME];
 
     const field = fieldSelector(NAME);
-    const errorIndex = 0;
     const expectedErrorsCount = 3;
 
     const ERROR_MESSAGES_OBJECT = BROKER_DETAILS_ERROR_MESSAGES[NAME];
@@ -78,29 +77,22 @@ context('Insurance - Policy - Broker details page - validation', () => {
     it(`should render validation errors when ${NAME} is left empty`, () => {
       cy.navigateToUrl(url);
 
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(
+      cy.submitAndAssertFieldErrors({
         field,
-        value,
-        errorIndex,
         expectedErrorsCount,
-        ERROR_MESSAGES_OBJECT.IS_EMPTY,
-      );
+        expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY,
+      });
     });
 
     it(`should render validation errors when ${NAME} is over ${MAXIMUM} characters`, () => {
       cy.navigateToUrl(url);
 
-      const value = 'a'.repeat(MAXIMUM + 1);
-
-      cy.submitAndAssertFieldErrors(
+      cy.submitAndAssertFieldErrors({
         field,
-        value,
-        errorIndex,
+        value: 'a'.repeat(MAXIMUM + 1),
         expectedErrorsCount,
-        ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
-      );
+        expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
+      });
     });
   });
 
@@ -128,29 +120,24 @@ context('Insurance - Policy - Broker details page - validation', () => {
     it(`should render validation errors when ${FULL_ADDRESS} is left empty`, () => {
       cy.navigateToUrl(url);
 
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        value,
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
         errorIndex,
         expectedErrorsCount,
-        ERROR_MESSAGES_OBJECT.IS_EMPTY,
-      );
+        expectedErrorMessage: ERROR_MESSAGES_OBJECT.IS_EMPTY,
+      });
     });
 
     it(`should render validation errors when ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
       cy.navigateToUrl(url);
 
-      const value = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        value,
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
         errorIndex,
         expectedErrorsCount,
-        ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
-      );
+        expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
+      });
     });
   });
 });

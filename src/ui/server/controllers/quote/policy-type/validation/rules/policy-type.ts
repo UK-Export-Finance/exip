@@ -10,7 +10,7 @@ const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
 /**
  * policyTypeRules
  * Check if the policy type is a valid type and not empty
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

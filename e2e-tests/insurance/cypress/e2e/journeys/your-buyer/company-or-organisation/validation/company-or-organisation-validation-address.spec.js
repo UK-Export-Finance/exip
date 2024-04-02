@@ -57,17 +57,12 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
       input: fieldSelector(ADDRESS).textarea,
     };
 
-    const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
-
-    const expectedErrorsCount = 2;
-    const errorIndex = 1;
-
-    cy.submitAndAssertFieldErrors(
-      textareaField,
-      submittedValue,
-      errorIndex,
-      expectedErrorsCount,
-      COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
-    );
+    cy.submitAndAssertFieldErrors({
+      field: textareaField,
+      value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
+      errorIndex: 1,
+      expectedErrorsCount: 2,
+      expectedErrorMessage: COMPANY_OR_ORG_ERROR_MESSAGES[ADDRESS].ABOVE_MAXIMUM,
+    });
   });
 });

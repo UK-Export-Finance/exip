@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { PAGES, ERROR_MESSAGES } from '../../../../../../../content-strings';
 import {
   ROUTES,
@@ -27,6 +27,8 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const insuranceStartRoute = ROUTES.INSURANCE.START;
+
+const field = fieldSelector(FIELD_ID);
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -64,7 +66,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
     });
 
     it(`should render a ${FIELD_ID} input`, () => {
-      field(FIELD_ID).input().should('exist');
+      field.input().should('exist');
     });
   });
 
@@ -75,7 +77,11 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `is empty` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].IS_EMPTY);
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: companyNumber,
+          expectedErrorMessage: COMPANIES_HOUSE_ERRORS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -87,7 +93,11 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `is empty` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].IS_EMPTY);
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: companyNumber,
+          expectedErrorMessage: COMPANIES_HOUSE_ERRORS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
@@ -99,7 +109,11 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: companyNumber,
+          expectedErrorMessage: COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
       });
     });
 
@@ -113,7 +127,11 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `incorrect format` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT);
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: companyNumber,
+          expectedErrorMessage: COMPANIES_HOUSE_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
       });
     });
 
@@ -127,7 +145,11 @@ context('Insurance - Eligibility - Companies house search page - I want to check
       });
 
       it('should display the `not found` error', () => {
-        cy.submitAndAssertFieldErrors(field(FIELD_ID), companyNumber, 0, 1, COMPANIES_HOUSE_ERRORS[FIELD_ID].NOT_FOUND);
+        cy.submitAndAssertFieldErrors({
+          field,
+          value: companyNumber,
+          expectedErrorMessage: COMPANIES_HOUSE_ERRORS[FIELD_ID].NOT_FOUND,
+        });
       });
     });
 
@@ -138,7 +160,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber });
 
         cy.keyboardInput(
-          field(FIELD_ID).input(),
+          field.input(),
           VALID_COMPANIES_HOUSE_NUMBER,
         );
 
@@ -156,7 +178,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
           cy.clickBackLink();
 
           cy.checkValue(
-            field(FIELD_ID),
+            field,
             VALID_COMPANIES_HOUSE_NUMBER,
           );
         });
@@ -170,7 +192,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber: COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO });
 
         cy.keyboardInput(
-          field(FIELD_ID).input(),
+          field.input(),
           COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO,
         );
 
@@ -189,7 +211,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
           const expected = `0${COMPANIES_HOUSE_NUMBER_NO_LEADING_ZERO}`;
 
-          cy.checkValue(field(FIELD_ID), expected);
+          cy.checkValue(field, expected);
         });
       });
     });
@@ -201,7 +223,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber: COMPANIES_HOUSE_NUMBER_WITH_SPACES });
 
         cy.keyboardInput(
-          field(FIELD_ID).input(),
+          field.input(),
           COMPANIES_HOUSE_NUMBER_WITH_SPACES,
         );
 
@@ -220,7 +242,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
           const expected = `${COMPANIES_HOUSE_NUMBER_WITH_SPACES}`.replaceAll(' ', '');
 
-          cy.checkValue(field(FIELD_ID), expected);
+          cy.checkValue(field, expected);
         });
       });
     });
@@ -234,7 +256,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
         cy.interceptCompaniesHousePost({ companyNumber: lowerCaseCompaniesHouseNumber });
 
         cy.keyboardInput(
-          field(FIELD_ID).input(),
+          field.input(),
           lowerCaseCompaniesHouseNumber,
         );
 
@@ -253,7 +275,7 @@ context('Insurance - Eligibility - Companies house search page - I want to check
 
           const expected = lowerCaseCompaniesHouseNumber.toUpperCase();
 
-          cy.checkValue(field(FIELD_ID), expected);
+          cy.checkValue(field, expected);
         });
       });
     });

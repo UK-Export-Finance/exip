@@ -107,12 +107,11 @@ context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I wan
     it('should render validation errors', () => {
       const expectedErrorsCount = 1;
 
-      cy.submitAndAssertRadioErrors(
-        noRadio(FIELD_ID),
-        0,
+      cy.submitAndAssertRadioErrors({
+        field: noRadio(FIELD_ID),
         expectedErrorsCount,
-        ERROR_MESSAGE.IS_EMPTY,
-      );
+        expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY,
+      });
     });
   });
 

@@ -12,6 +12,7 @@ import nominatedLossPayee from './nominatedLossPayee';
 import lossPayeeFinancialDetailsUk from './lossPayeeFinancialDetailsUk';
 import policy from './policy';
 import policyContact from './policyContact';
+import privateMarket from './privateMarket';
 import sectionReview from './sectionReview';
 
 /**
@@ -34,6 +35,7 @@ const update = {
   nominatedLossPayee,
   policy,
   policyContact,
+  privateMarket,
   sectionReview,
 };
 

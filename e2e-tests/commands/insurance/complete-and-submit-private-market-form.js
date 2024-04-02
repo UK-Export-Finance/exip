@@ -1,8 +1,11 @@
 /**
  * completeAndSubmitPrivateMarketForm
- * Complete and submit the "Tried to get private market" form
+ * Complete and submit the "Tried to insure through the private market" form
+ * @param {Boolean} attempted: Has attempted to insure through the private market
  */
-const completeAndSubmitPrivateMarketForm = () => {
+const completeAndSubmitPrivateMarketForm = ({ attempted }) => {
+  cy.completePrivateMarketForm({ attempted });
+
   cy.clickSubmitButton();
 };
 

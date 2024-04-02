@@ -60,22 +60,21 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     const FIELD_ID = COMPANY_NAME;
     const ERROR = ERRORS[FIELD_ID];
 
-    const { field, numberOfExpectedErrors, errorIndex } = {
+    const assertions = {
       field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 2,
-      errorIndex: 0,
+      expectedErrorsCount: 2,
     };
 
     it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
     it(`should render validation errors when ${FIELD_ID} is over ${MAX_COMPANY_NAME_CHARACTERS} characters`, () => {
-      const value = 'a'.repeat(MAX_COMPANY_NAME_CHARACTERS + 1);
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAX_COMPANY_NAME_CHARACTERS + 1),
+        expectedErrorMessage: ERROR.ABOVE_MAXIMUM,
+      });
     });
   });
 
@@ -83,16 +82,14 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     const FIELD_ID = COUNTRY_CODE;
     const ERROR = ERRORS[FIELD_ID];
 
-    const { field, numberOfExpectedErrors, errorIndex } = {
+    const assertions = {
       field: autoCompleteField(FIELD_ID),
-      numberOfExpectedErrors: 2,
       errorIndex: 1,
+      expectedErrorsCount: 2,
     };
 
     it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
   });
 
@@ -100,16 +97,16 @@ context('Insurance - Policy - Other company details page - Validation', () => {
     const FIELD_ID = COMPANY_NUMBER;
     const ERROR = ERRORS[FIELD_ID];
 
-    const { field, numberOfExpectedErrors, errorIndex } = {
+    const assertions = {
       field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 3,
       errorIndex: 2,
+      expectedErrorsCount: 3,
     };
 
     it(`should render validation errors when ${FIELD_ID} is over ${MAX_COMPANY_NUMBER_CHARACTERS} characters`, () => {
       const value = 'a'.repeat(MAX_COMPANY_NUMBER_CHARACTERS + 1);
 
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });
   });
 });

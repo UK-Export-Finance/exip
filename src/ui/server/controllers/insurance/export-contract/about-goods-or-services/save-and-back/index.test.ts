@@ -3,7 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import { FIELD_IDS } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import mapAndSave from '../../map-and-save';
+import mapAndSave from '../../map-and-save/export-contract';
 import generateValidationErrors from '../validation';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
@@ -15,16 +15,16 @@ const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
+const { referenceNumber } = mockApplication;
+
 describe('controllers/insurance/export-contract/about-goods-or-services/save-and-back', () => {
   let req: Request;
   let res: Response;
 
-  jest.mock('../../map-and-save');
+  jest.mock('../../map-and-save/export-contract');
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
   const getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
-
-  const refNumber = Number(mockApplication.referenceNumber);
 
   const mockFormBody = {
     _csrf: '1234',
@@ -35,7 +35,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
 
     req.body = mockFormBody;
 
@@ -74,7 +74,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
       it(`should redirect to ${ALL_SECTIONS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -117,7 +117,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -130,7 +130,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
 
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

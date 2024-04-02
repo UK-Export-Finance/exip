@@ -1,7 +1,7 @@
-import api from '../../../../api';
-import getDataToSave from '../../../../helpers/get-data-to-save';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
-import { Application, RequestBody } from '../../../../../types';
+import api from '../../../../../api';
+import getDataToSave from '../../../../../helpers/get-data-to-save';
+import { sanitiseData } from '../../../../../helpers/sanitise-data';
+import { Application, RequestBody } from '../../../../../../types';
 
 /**
  * exportContract
@@ -15,7 +15,6 @@ import { Application, RequestBody } from '../../../../../types';
 const exportContract = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = getDataToSave(formBody, errorList);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.

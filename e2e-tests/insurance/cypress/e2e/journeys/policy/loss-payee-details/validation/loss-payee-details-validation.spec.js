@@ -71,22 +71,19 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     const FIELD_ID = NAME;
     const ERROR = ERRORS[FIELD_ID];
 
-    const { field, numberOfExpectedErrors, errorIndex } = {
+    const assertions = {
       field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 2,
-      errorIndex: 0,
+      expectedErrorsCount: 2,
     };
 
     it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
     it(`should render validation errors when ${FIELD_ID} is over ${MAX_NAME_CHARACTERS} characters`, () => {
       const value = 'a'.repeat(MAX_NAME_CHARACTERS + 1);
 
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });
 
     it(`should not render validation errors when ${FIELD_ID} contains numbers and special characters`, () => {
@@ -108,20 +105,17 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
     const ERROR = ERRORS[FIELD_ID];
 
     it('should display validation error when radio is not selected', () => {
-      const expectedErrorsCount = 2;
-      const expectedErrorMessage = ERROR.IS_EMPTY;
-
       const radioField = {
         ...fieldSelector(FIELD_ID),
         input: fieldSelector(`${LOCATION}-${IS_LOCATED_IN_UK}`).input,
       };
 
-      cy.submitAndAssertRadioErrors(
-        radioField,
-        1,
-        expectedErrorsCount,
-        expectedErrorMessage,
-      );
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        errorIndex: 1,
+        expectedErrorsCount: 2,
+        expectedErrorMessage: ERROR.IS_EMPTY,
+      });
     });
   });
 });

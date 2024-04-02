@@ -12,11 +12,10 @@ const {
 const TURNOVER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const ERROR_MESSAGE = TURNOVER_ERRORS[FIELD_ID];
 
-// for error assertion - common fields
-const ERROR_ASSERTIONS = {
+const assertions = {
   field: fieldSelector(FIELD_ID),
-  numberOfExpectedErrors: 2,
   errorIndex: 1,
+  expectedErrorsCount: 2,
 };
 
 const baseUrl = Cypress.config('baseUrl');
@@ -51,57 +50,47 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
   });
 
   it(`should display validation errors when ${FIELD_ID} left empty`, () => {
-    const errorMessage = ERROR_MESSAGE.IS_EMPTY;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = null;
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY });
   });
 
   it(`should display validation errors whe ${FIELD_ID} is a decimal place number`, () => {
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '5.5';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '5.5',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors whe ${FIELD_ID} has a comma`, () => {
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '4,4';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '4,4',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
-    const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '5O';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '50!',
+      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
+    });
   });
 
   it(`should display validation errors when ${FIELD_ID} is over 100`, () => {
-    const errorMessage = ERROR_MESSAGE.ABOVE_MAXIMUM;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '101';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '101',
+      expectedErrorMessage: ERROR_MESSAGE.ABOVE_MAXIMUM,
+    });
   });
 
   it(`should display validation errors whe ${FIELD_ID} is below 0`, () => {
-    const errorMessage = ERROR_MESSAGE.BELOW_MINIMUM;
-
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-    const value = '-1';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+    cy.submitAndAssertFieldErrors({
+      ...assertions,
+      value: '-1',
+      expectedErrorMessage: ERROR_MESSAGE.BELOW_MINIMUM,
+    });
   });
 
   it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a whole number`, () => {

@@ -77,40 +77,37 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
     const FIELD_ID = FIRST_NAME;
     const ERROR = ERRORS[FIELD_ID];
 
-    const { field, numberOfExpectedErrors, errorIndex } = {
+    const assertions = {
       field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 4,
-      errorIndex: 0,
+      expectedErrorsCount: 4,
     };
 
     it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
     it(`should render validation errors when ${FIELD_ID} is over ${MAX_NAME_CHARACTERS} characters`, () => {
       const value = 'a'.repeat(MAX_NAME_CHARACTERS + 1);
 
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a special character`, () => {
       const value = 'a!';
 
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a number`, () => {
       const value = 'a1';
 
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a number and special character`, () => {
       const value = 'a1!';
 
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
     });
   });
 
@@ -118,40 +115,46 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
     const FIELD_ID = LAST_NAME;
     const ERROR = ERRORS[FIELD_ID];
 
-    const { field, numberOfExpectedErrors, errorIndex } = {
+    const assertions = {
       field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 4,
       errorIndex: 1,
+      expectedErrorsCount: 4,
     };
 
     it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
     it(`should render validation errors when ${FIELD_ID} is over ${MAX_NAME_CHARACTERS} characters`, () => {
-      const value = 'a'.repeat(MAX_NAME_CHARACTERS + 1);
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAX_NAME_CHARACTERS + 1),
+        expectedErrorMessage: ERROR.ABOVE_MAXIMUM,
+      });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a special character`, () => {
-      const value = 'a!';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a!',
+        expectedErrorMessage: ERROR.INCORRECT_FORMAT,
+      });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a number`, () => {
-      const value = 'a1';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a2',
+        expectedErrorMessage: ERROR.INCORRECT_FORMAT,
+      });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a number and special character`, () => {
-      const value = 'a1!';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a1!',
+        expectedErrorMessage: ERROR.INCORRECT_FORMAT,
+      });
     });
   });
 
@@ -167,44 +170,46 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
     const FIELD_ID = POSITION;
     const ERROR = ERRORS[FIELD_ID];
 
-    const ERROR_ASSERTIONS = {
+    const assertions = {
       field: fieldSelector(FIELD_ID),
-      numberOfExpectedErrors: 4,
       errorIndex: 3,
+      expectedErrorsCount: 4,
     };
 
-    const { field, numberOfExpectedErrors, errorIndex } = ERROR_ASSERTIONS;
-
     it(`should render validation errors when ${FIELD_ID} left empty`, () => {
-      const errorMessage = ERROR.IS_EMPTY;
-
-      const value = '';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, errorMessage);
+      cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
     it(`should render validation errors when ${FIELD_ID} is over ${MAX_POSITION_CHARACTERS} characters`, () => {
-      const value = 'a'.repeat(MAX_POSITION_CHARACTERS + 1);
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAX_POSITION_CHARACTERS + 1),
+        expectedErrorMessage: ERROR.ABOVE_MAXIMUM,
+      });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a special character`, () => {
-      const value = 'a!';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a!',
+        expectedErrorMessage: ERROR.INCORRECT_FORMAT,
+      });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a number`, () => {
-      const value = 'a1';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a1',
+        expectedErrorMessage: ERROR.INCORRECT_FORMAT,
+      });
     });
 
     it(`should render validation errors when ${FIELD_ID} contains a number and special character`, () => {
-      const value = 'a1!';
-
-      cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a2!',
+        expectedErrorMessage: ERROR.INCORRECT_FORMAT,
+      });
     });
   });
 });

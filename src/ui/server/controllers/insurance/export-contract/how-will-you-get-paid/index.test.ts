@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/export-contract';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -34,7 +34,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   let res: Response;
   let refNumber: number;
 
-  jest.mock('../map-and-save');
+  jest.mock('../map-and-save/export-contract');
 
   mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
 

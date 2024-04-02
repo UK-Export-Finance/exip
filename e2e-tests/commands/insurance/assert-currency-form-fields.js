@@ -115,6 +115,10 @@ const assertCurrencyFormFields = ({
 
     cy.clickSubmitButton();
 
+    const option = currencyRadio({ fieldId: alternativeCurrencyFieldId });
+
+    cy.assertRadioOptionIsChecked(option.input());
+
     cy.checkText(
       partials.errorSummaryListItems().eq(errorIndex),
       errors[alternativeCurrencyFieldId].IS_EMPTY,

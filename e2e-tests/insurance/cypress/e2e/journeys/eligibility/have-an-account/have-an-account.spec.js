@@ -81,12 +81,11 @@ context('Insurance - Eligibility - Have an account page - I want to confirm that
       it('should render validation errors', () => {
         const expectedErrorsCount = 1;
 
-        cy.submitAndAssertRadioErrors(
-          yesRadio(FIELD_ID),
-          0,
+        cy.submitAndAssertRadioErrors({
+          field: yesRadio(FIELD_ID),
           expectedErrorsCount,
-          ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
-        );
+          expectedErrorMessage: ERROR_MESSAGES.INSURANCE.ELIGIBILITY[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 

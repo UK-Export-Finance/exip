@@ -36,7 +36,6 @@ const baseUrl = Cypress.config('baseUrl');
 const fieldId = FULL_ADDRESS;
 const field = fieldSelector(fieldId);
 const textareaField = { ...field, input: field.textarea };
-const expectedErrorsCount = 1;
 
 const {
   REGISTERED_OFFICE_ADDRESS_HINT, REGISTERED_OFFICE_ADDRESS_HEADING,
@@ -127,31 +126,18 @@ context('Insurance - Your business - Alternative trading address page - I want t
     });
 
     it(`should display validation errors if ${FULL_ADDRESS} is left empty`, () => {
-      const errorMessage = ERRORS[FULL_ADDRESS].IS_EMPTY;
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        null,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        expectedErrorMessage: ERRORS[FULL_ADDRESS].IS_EMPTY,
+      });
     });
 
     it(`should display validation errors if ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
-      const errorMessage = ERRORS[FULL_ADDRESS].ABOVE_MAXIMUM;
-
-      const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1);
-
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        0,
-        expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+      cy.submitAndAssertFieldErrors({
+        field: textareaField,
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
+        expectedErrorMessage: ERRORS[FULL_ADDRESS].ABOVE_MAXIMUM,
+      });
     });
   });
 

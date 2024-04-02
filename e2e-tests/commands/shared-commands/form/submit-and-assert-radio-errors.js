@@ -1,29 +1,33 @@
 import partials from '../../../partials';
 
 /**
- * @param {String} field
- * @param {Number} errorIndex - index of error in errorSummary
- * @param {Number} errorSummaryLength - the number of expected errors in errorSummary
- * @param {Number} errorMessage - error message to assert
- * @param {Number} inlineErrorIndex - the index of radios to find error
+ * @param {Object} field: Cypress selector.
+ * @param {Number} errorIndex: Index of error. Defaults to 0.
+ * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
+ * @param {Number} expectedErrorMessage: Expected error message.
  */
-const submitAndAssertRadioErrors = (field, errorIndex, errorSummaryLength, errorMessage, inlineErrorIndex = 0) => {
+const submitAndAssertRadioErrors = ({
+  field,
+  errorIndex = 0,
+  expectedErrorsCount = 1,
+  expectedErrorMessage,
+}) => {
   cy.clickSubmitButton();
 
   cy.checkErrorSummaryListHeading();
 
-  cy.assertErrorSummaryListLength(errorSummaryLength);
+  cy.assertErrorSummaryListLength(expectedErrorsCount);
 
   cy.checkText(
     partials.errorSummaryListItems().eq(errorIndex),
-    errorMessage,
+    expectedErrorMessage,
   );
 
   partials.errorSummaryListItemLinks().eq(errorIndex).click();
 
   field.input().should('have.focus');
 
-  cy.checkText(field.errorMessage().eq(inlineErrorIndex), `Error: ${errorMessage}`);
+  cy.checkText(field.errorMessage(), `Error: ${expectedErrorMessage}`);
 };
 
 export default submitAndAssertRadioErrors;

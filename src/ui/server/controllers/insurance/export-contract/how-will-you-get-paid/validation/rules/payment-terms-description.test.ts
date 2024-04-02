@@ -15,7 +15,7 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/business/alternative-trading-address/validation/rules/payment-terms-description', () => {
+describe('controllers/insurance/export-contract/how-will-you-get-paid/validation/rules/payment-terms-description', () => {
   const mockBody = {};
 
   it('should return the result of providedAndMaxLength', () => {

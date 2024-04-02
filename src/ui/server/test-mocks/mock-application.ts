@@ -39,12 +39,19 @@ export const mockMultiplePolicy = {
   maximumBuyerWillOwe: 1000,
 };
 
+export const mockPrivateMarket = {
+  id: 'clldfm6pt000noqa6fs6cj5xo',
+  attempted: false,
+  declinedDescription: 'Mock declined description',
+};
+
 export const mockExportContract = {
   id: 'clldfm6pt000noqa6fs6cj5xn',
   goodsOrServicesDescription: 'Mock description',
   finalDestinationKnown: false,
   finalDestinationCountryCode: mockCountries[0].isoCode,
   paymentTermsDescription: 'Mock payment terms description',
+  privateMarket: mockPrivateMarket,
 };
 
 export const mockOwner = {
@@ -156,6 +163,22 @@ const mockApplication = {
 export const mockApplicationMultiplePolicy = {
   ...mockApplication,
   policy: mockMultiplePolicy,
+} as Application;
+
+export const mockApplicationSinglePolicyWithoutCurrencyCode = {
+  ...mockApplication,
+  policy: {
+    ...mockApplication.policy,
+    policyCurrencyCode: '',
+  },
+} as Application;
+
+export const mockApplicationMultiplePolicyWithoutCurrencyCode = {
+  ...mockApplicationMultiplePolicy,
+  policy: {
+    ...mockApplicationMultiplePolicy.policy,
+    policyCurrencyCode: '',
+  },
 } as Application;
 
 export default mockApplication;

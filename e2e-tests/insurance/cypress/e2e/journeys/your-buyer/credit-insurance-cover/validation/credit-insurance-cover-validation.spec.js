@@ -1,4 +1,4 @@
-import { field, noRadioInput } from '../../../../../../../pages/shared';
+import { field as fieldSelector, noRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -45,8 +45,6 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
     });
   });
 
-  const submittedValue = 'a'.repeat(MAXIMUM + 1);
-
   beforeEach(() => {
     cy.saveSession();
 
@@ -57,49 +55,49 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
     cy.deleteApplication(referenceNumber);
   });
 
-  const expectedErrorsCount = 1;
-  const errorIndex = 0;
-  const errorMessage = ERRORS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER].IS_EMPTY;
-
   describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} not selected`, () => {
+    const FIELD_ID = HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+
     it('should display validation errors', () => {
       cy.navigateToUrl(url);
 
       const radioField = {
-        ...field(HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER),
+        ...fieldSelector(FIELD_ID),
         input: noRadioInput,
       };
 
-      cy.submitAndAssertRadioErrors(radioField, errorIndex, expectedErrorsCount, errorMessage);
+      cy.submitAndAssertRadioErrors({
+        field: radioField,
+        expectedErrorMessage: ERRORS[FIELD_ID].IS_EMPTY,
+      });
     });
   });
 
   describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} yes selected`, () => {
-    const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
-    const textareaField = { ...field(fieldId), input: field(fieldId).textarea };
+    const FIELD_ID = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
+
+    const field = fieldSelector(FIELD_ID);
+    const textareaField = { ...field, input: field.textarea };
+
+    const assertions = { field: textareaField };
 
     beforeEach(() => {
       cy.clickYesRadioInput();
     });
 
-    it(`should render a validation error when ${fieldId} is empty`, () => {
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        null,
-        0,
-        expectedErrorsCount,
-        ERRORS[fieldId].IS_EMPTY,
-      );
+    it(`should render a validation error when ${FIELD_ID} is empty`, () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        expectedErrorMessage: ERRORS[FIELD_ID].IS_EMPTY,
+      });
     });
 
-    it(`should render a validation error when ${fieldId} is above the maximum`, () => {
-      cy.submitAndAssertFieldErrors(
-        textareaField,
-        submittedValue,
-        0,
-        expectedErrorsCount,
-        ERRORS[fieldId].ABOVE_MAXIMUM,
-      );
+    it(`should render a validation error when ${FIELD_ID} is above the maximum`, () => {
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'a'.repeat(MAXIMUM + 1),
+        expectedErrorMessage: ERRORS[FIELD_ID].ABOVE_MAXIMUM,
+      });
     });
   });
 });

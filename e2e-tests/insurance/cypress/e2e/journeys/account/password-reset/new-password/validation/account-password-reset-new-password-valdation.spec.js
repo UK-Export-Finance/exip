@@ -31,12 +31,11 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const fieldErrorAssertions = (value) => ({
+const assertions = (value) => ({
   field: passwordField,
   value,
-  fieldIndex: 0,
-  errorSummaryLength: 1,
-  errorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
+  expectedErrorsCount: 1,
+  expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
 });
 
 const baseUrl = Cypress.config('baseUrl');
@@ -86,84 +85,37 @@ context('Insurance - Account - Password reset - new password page - form validat
       it('should render a validation error when password does not have the minimum amount of characters', () => {
         const submittedValue = INVALID_PASSWORDS.NOT_MINIMUM_CHARACTERS;
 
-        const {
-          field,
-          value,
-          fieldIndex,
-          errorSummaryLength,
-          errorMessage,
-        } = fieldErrorAssertions(submittedValue);
-
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
+        cy.submitAndAssertFieldErrors(assertions(submittedValue));
       });
 
       it('should render a validation error when password does not contain an uppercase letter', () => {
         const submittedValue = INVALID_PASSWORDS.NO_UPPERCASE_LETTER;
 
-        const {
-          field,
-          value,
-          fieldIndex,
-          errorSummaryLength,
-          errorMessage,
-        } = fieldErrorAssertions(submittedValue);
-
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
+        cy.submitAndAssertFieldErrors(assertions(submittedValue));
       });
 
       it('should render a validation error when password does not contain a lowercase letter', () => {
         const submittedValue = INVALID_PASSWORDS.NO_LOWERCASE_LETTER;
 
-        const {
-          field,
-          value,
-          fieldIndex,
-          errorSummaryLength,
-          errorMessage,
-        } = fieldErrorAssertions(submittedValue);
-
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
+        cy.submitAndAssertFieldErrors(assertions(submittedValue));
       });
 
       it('should render a validation error when password does not contain a number', () => {
         const submittedValue = INVALID_PASSWORDS.NO_NUMBER;
 
-        const {
-          field,
-          value,
-          fieldIndex,
-          errorSummaryLength,
-          errorMessage,
-        } = fieldErrorAssertions(submittedValue);
-
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
+        cy.submitAndAssertFieldErrors(assertions(submittedValue));
       });
 
       it('should render a validation error when password does not contain a special character', () => {
         const submittedValue = INVALID_PASSWORDS.NO_SPECIAL_CHARACTER;
 
-        const {
-          field,
-          value,
-          fieldIndex,
-          errorSummaryLength,
-          errorMessage,
-        } = fieldErrorAssertions(submittedValue);
-
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, errorMessage);
+        cy.submitAndAssertFieldErrors(assertions(submittedValue));
       });
 
       it('should render a validation error when password has been used before', () => {
         const submittedValue = mockAccount[PASSWORD];
 
-        const {
-          field,
-          value,
-          fieldIndex,
-          errorSummaryLength,
-        } = fieldErrorAssertions(submittedValue);
-
-        cy.submitAndAssertFieldErrors(field, value, fieldIndex, errorSummaryLength, CANNOT_USE_PREVIOUS_PASSWORD);
+        cy.submitAndAssertFieldErrors({ ...assertions(submittedValue), expectedErrorMessage: CANNOT_USE_PREVIOUS_PASSWORD });
       });
     });
   });

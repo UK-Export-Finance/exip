@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapAndSave from '../map-and-save';
+import mapAndSave from '../map-and-save/export-contract';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -61,12 +61,9 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
     ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(application),
   });
@@ -86,8 +83,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -96,7 +92,7 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-      ...pageVariables(refNumber),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       submittedValues: payload,

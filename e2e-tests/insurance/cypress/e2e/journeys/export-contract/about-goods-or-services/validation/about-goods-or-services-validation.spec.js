@@ -68,45 +68,33 @@ context('Insurance - Export contract - About goods or services page - form valid
   });
 
   it('should render validation errors for all required fields', () => {
-    const clearInput = false;
-    const expectedErrorsCount = 2;
-
     // description
-    cy.submitAndAssertFieldErrors(
-      textareaField,
-      null,
-      0,
-      expectedErrorsCount,
-      ABOUT_ERROR_MESSAGES[DESCRIPTION].IS_EMPTY,
-      clearInput,
-    );
+    cy.submitAndAssertFieldErrors({
+      field: textareaField,
+      expectedErrorsCount: 2,
+      expectedErrorMessage: ABOUT_ERROR_MESSAGES[DESCRIPTION].IS_EMPTY,
+      clearInput: false,
+    });
 
     // final destination known
-    cy.submitAndAssertFieldErrors(
-      autoCompleteField(FINAL_DESTINATION_KNOWN),
-      null,
-      1,
-      expectedErrorsCount,
-      ABOUT_ERROR_MESSAGES[FINAL_DESTINATION_KNOWN].IS_EMPTY,
-      clearInput,
-    );
+    cy.submitAndAssertFieldErrors({
+      field: autoCompleteField(FINAL_DESTINATION_KNOWN),
+      errorIndex: 1,
+      expectedErrorsCount: 2,
+      expectedErrorMessage: ABOUT_ERROR_MESSAGES[FINAL_DESTINATION_KNOWN].IS_EMPTY,
+      clearInput: false,
+    });
   });
 
   it(`should display validation errors if ${DESCRIPTION} is over ${MAXIMUM} characters`, () => {
     cy.navigateToUrl(url);
 
-    const errorIndex = 0;
-    const expectedErrorsCount = 2;
-
-    const errorMessage = ABOUT_ERROR_MESSAGES[DESCRIPTION].ABOVE_MAXIMUM;
-
-    cy.submitAndAssertFieldErrors(
-      textareaField,
-      descriptionOverMaximum,
-      errorIndex,
-      expectedErrorsCount,
-      errorMessage,
-    );
+    cy.submitAndAssertFieldErrors({
+      field: textareaField,
+      value: descriptionOverMaximum,
+      expectedErrorsCount: 2,
+      expectedErrorMessage: ABOUT_ERROR_MESSAGES[DESCRIPTION].ABOVE_MAXIMUM,
+    });
   });
 
   describe(`when ${FINAL_DESTINATION_KNOWN} is 'yes', but ${FINAL_DESTINATION} is not provided`, () => {
@@ -117,17 +105,12 @@ context('Insurance - Export contract - About goods or services page - form valid
         includeFinalDestination: false,
       });
 
-      const clearInput = false;
-      const expectedErrorsCount = 1;
-
-      cy.submitAndAssertFieldErrors(
-        autoCompleteField(FINAL_DESTINATION),
-        null,
-        0,
-        expectedErrorsCount,
-        ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
-        clearInput,
-      );
+      cy.submitAndAssertFieldErrors({
+        field: autoCompleteField(FINAL_DESTINATION),
+        expectedErrorsCount: 1,
+        expectedErrorMessage: ABOUT_ERROR_MESSAGES[FINAL_DESTINATION].IS_EMPTY,
+        clearInput: false,
+      });
     });
   });
 

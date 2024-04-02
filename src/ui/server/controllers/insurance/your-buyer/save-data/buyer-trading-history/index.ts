@@ -25,7 +25,6 @@ const buyerTradingHistory = async (application: Application, formBody: RequestBo
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const buyerTradingHistoryId = application.buyer.buyerTradingHistory?.id;

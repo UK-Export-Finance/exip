@@ -82,6 +82,11 @@ const applicationQuery = gql`
           finalDestinationKnown
           finalDestinationCountryCode
           paymentTermsDescription
+          privateMarket {
+            id
+            attempted
+            declinedDescription
+          }
         }
         owner {
           id

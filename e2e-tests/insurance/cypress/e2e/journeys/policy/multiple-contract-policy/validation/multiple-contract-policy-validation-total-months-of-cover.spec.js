@@ -32,10 +32,13 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const baseUrl = Cypress.config('baseUrl');
+const assertions = {
+  field: fieldSelector(TOTAL_MONTHS_OF_COVER),
+  errorIndex: 1,
+  expectedErrorsCount: 3,
+};
 
-const expectedErrors = 3;
-const errorIndex = 1;
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Multiple contract policy page - form validation - total months of cover', () => {
   let referenceNumber;
@@ -64,65 +67,52 @@ context('Insurance - Policy - Multiple contract policy page - form validation - 
     cy.deleteApplication(referenceNumber);
   });
 
-  const field = fieldSelector(TOTAL_MONTHS_OF_COVER);
-
   describe('when total months of cover is not provided', () => {
     it('should render a validation error', () => {
-      cy.submitAndAssertFieldErrors(
-        field,
-        '',
-        errorIndex,
-        expectedErrors,
-        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].IS_EMPTY,
+      });
     });
   });
 
   describe('when total months of cover is not a number', () => {
     it('should render a validation error', () => {
-      cy.submitAndAssertFieldErrors(
-        field,
-        'one',
-        errorIndex,
-        expectedErrors,
-        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: 'one',
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
+      });
     });
   });
 
   describe('when total months of cover contains a decimal', () => {
     it('should render a validation error', () => {
-      cy.submitAndAssertFieldErrors(
-        field,
-        '7.5',
-        errorIndex,
-        expectedErrors,
-        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: '7.5',
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].INCORRECT_FORMAT,
+      });
     });
   });
 
   describe('when total months of cover is below the minimum', () => {
     it('should render a validation error', () => {
-      cy.submitAndAssertFieldErrors(
-        field,
-        '0',
-        errorIndex,
-        expectedErrors,
-        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].BELOW_MINIMUM,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: '0',
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].BELOW_MINIMUM,
+      });
     });
   });
 
   describe('when total months of cover is above the maximum', () => {
     it('should render a validation error', () => {
-      cy.submitAndAssertFieldErrors(
-        field,
-        MAXIMUM_MONTHS_OF_COVER + 1,
-        errorIndex,
-        expectedErrors,
-        CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].ABOVE_MAXIMUM,
-      );
+      cy.submitAndAssertFieldErrors({
+        ...assertions,
+        value: MAXIMUM_MONTHS_OF_COVER + 1,
+        expectedErrorMessage: CONTRACT_ERROR_MESSAGES[TOTAL_MONTHS_OF_COVER].ABOVE_MAXIMUM,
+      });
     });
   });
 });

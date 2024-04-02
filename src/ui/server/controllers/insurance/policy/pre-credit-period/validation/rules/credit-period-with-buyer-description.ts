@@ -21,7 +21,7 @@ export const MAXIMUM = 1000;
  * creditPeriodWithBuyerRule
  * Returns the result of emptyFieldValidation if NEED_PRE_CREDIT_PERIOD is true
  * else returns provided errors object
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

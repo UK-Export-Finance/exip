@@ -8,7 +8,7 @@ const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 const {
   EXPORTER_BUSINESS: {
     NATURE_OF_YOUR_BUSINESS: {
-      EMPLOYEES_UK,
+      EMPLOYEES_UK: FIELD_ID,
     },
   },
 } = INSURANCE_FIELD_IDS;
@@ -17,6 +17,14 @@ const {
   ROOT,
   EXPORTER_BUSINESS: { NATURE_OF_BUSINESS_ROOT },
 } = INSURANCE_ROUTES;
+
+const field = fieldSelector(FIELD_ID);
+
+const assertions = {
+  field,
+  errorIndex: 2,
+  expectedErrorsCount: 3,
+};
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -50,93 +58,63 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`${EMPLOYEES_UK} validation`, () => {
-    // for error assertion - common fields
-    const ERROR_ASSERTIONS = {
-      expectedErrorsCount: 3,
-      errorIndex: 2,
-    };
-
+  describe(`${FIELD_ID} validation`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
 
-    describe(`when ${EMPLOYEES_UK} is left empty`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].IS_EMPTY;
-
-      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
-
-        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
-        const value = null;
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
+    describe(`when ${FIELD_ID} is left empty`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].IS_EMPTY,
+        });
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is a decimal place number`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].INCORRECT_FORMAT;
-
-      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
-
-        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
-        const value = '5.5';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
+    describe(`when ${FIELD_ID} is a decimal place number`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: '5.5',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} has special characters`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].INCORRECT_FORMAT;
-
-      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
-
-        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
-        const value = '3S';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
+    describe(`when ${FIELD_ID} has special characters`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: '35!',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].INCORRECT_FORMAT,
+        });
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is below 0`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].BELOW_MINIMUM;
-
-      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
-
-        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
-        const value = '-5';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
+    describe(`when ${FIELD_ID} is below 0`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: '-5',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].BELOW_MINIMUM,
+        });
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is entered as 0`, () => {
-      const errorMessage = NATURE_OF_BUSINESS_ERRORS[EMPLOYEES_UK].BELOW_MINIMUM;
-
-      it(`should display validation errors for ${EMPLOYEES_UK}`, () => {
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
-
-        const { expectedErrorsCount, errorIndex } = ERROR_ASSERTIONS;
-        const value = '0';
-
-        cy.submitAndAssertFieldErrors(field, value, errorIndex, expectedErrorsCount, errorMessage);
+    describe(`when ${FIELD_ID} is entered as 0`, () => {
+      it(`should display validation errors for ${FIELD_ID}`, () => {
+        cy.submitAndAssertFieldErrors({
+          ...assertions,
+          value: '0',
+          expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].BELOW_MINIMUM,
+        });
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is correctly entered as a whole number`, () => {
-      it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
+    describe(`when ${FIELD_ID} is correctly entered as a whole number`, () => {
+      it(`should not display  ${FIELD_ID} validation errors`, () => {
         cy.navigateToUrl(url);
-
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5');
         cy.clickSubmitButton();
@@ -144,12 +122,9 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
       });
     });
 
-    describe(`when ${EMPLOYEES_UK} is correctly entered with a comma`, () => {
-      it(`should not display  ${EMPLOYEES_UK} validation errors`, () => {
+    describe(`when ${FIELD_ID} is correctly entered with a comma`, () => {
+      it(`should not display  ${FIELD_ID} validation errors`, () => {
         cy.navigateToUrl(url);
-
-        const fieldId = EMPLOYEES_UK;
-        const field = fieldSelector(fieldId);
 
         cy.keyboardInput(field.input(), '5,000');
         cy.clickSubmitButton();

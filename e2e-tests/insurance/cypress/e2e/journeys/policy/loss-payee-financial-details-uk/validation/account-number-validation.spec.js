@@ -64,40 +64,38 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Account number -
 
   const ERROR = ERRORS[FIELD_ID];
 
-  const { field, numberOfExpectedErrors, errorIndex } = {
+  const assertions = {
     field: fieldSelector(FIELD_ID),
-    numberOfExpectedErrors: 3,
     errorIndex: 1,
+    expectedErrorsCount: 3,
   };
 
   it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
-    const value = '';
-
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.IS_EMPTY);
+    cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
   });
 
   it(`should render validation errors when ${FIELD_ID} is over ${MAXIMUM} characters`, () => {
     const value = '1'.repeat(MAXIMUM + 1);
 
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.ABOVE_MAXIMUM);
+    cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
   });
 
   it(`should render validation errors when ${FIELD_ID} is below ${MINIMUM} characters`, () => {
     const value = '1'.repeat(MINIMUM - 1);
 
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.BELOW_MINIMUM);
+    cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.BELOW_MINIMUM });
   });
 
   it(`should render validation errors when ${FIELD_ID} has a letter`, () => {
     const value = `${'1'.repeat(MINIMUM)}E`;
 
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+    cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
   });
 
   it(`should render validation errors when ${FIELD_ID} has a special character`, () => {
     const value = `${'1'.repeat(MINIMUM)}!`;
 
-    cy.submitAndAssertFieldErrors(field, value, errorIndex, numberOfExpectedErrors, ERROR.INCORRECT_FORMAT);
+    cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.INCORRECT_FORMAT });
   });
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {

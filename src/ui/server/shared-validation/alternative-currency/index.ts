@@ -11,7 +11,7 @@ const {
  * alternativeCurrencyRule
  * Check if CURRENCY_CODE is ALTERNATIVE_CURRENCY_CODE.
  * If so, return emptyFieldValidation for the ALTERNATIVE_CURRENCY_CODE field.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

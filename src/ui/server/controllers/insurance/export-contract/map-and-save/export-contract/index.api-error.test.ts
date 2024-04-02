@@ -1,9 +1,9 @@
 import mapAndSave from '.';
-import save from '../save-data';
-import { mockApplication } from '../../../../test-mocks';
+import save from '../../save-data/export-contract';
+import { mockApplication } from '../../../../../test-mocks';
 
-describe('controllers/insurance/export-contract/map-and-save - api errors', () => {
-  jest.mock('../save-data');
+describe('controllers/insurance/export-contract/map-and-save/export-contract - api errors', () => {
+  jest.mock('../../save-data/export-contract');
 
   const mockFormBody = {
     _csrf: '1234',

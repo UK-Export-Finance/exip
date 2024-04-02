@@ -19,7 +19,7 @@ const {
  * finalDestinationRules
  * If FINAL_DESTINATION_KNOWN is true, return emptyFieldValidation for the FINAL_DESTINATION field.
  * Otherwise, return FINAL_DESTINATION for the FINAL_DESTINATION_KNOWN field.
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {Object} Validation errors
  */

@@ -100,33 +100,28 @@ context('Insurance - Export contract - How will you get paid page - As an export
     });
 
     it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
-      const errorMessage = ERRORS[FIELD_ID].IS_EMPTY;
-
-      cy.submitAndAssertFieldErrors(
+      cy.submitAndAssertFieldErrors({
         field,
-        null,
-        0,
         expectedErrorsCount,
-        errorMessage,
-        true,
-      );
+        expectedErrorMessage: ERRORS[FIELD_ID].IS_EMPTY,
+      });
     });
 
     describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION} characters`, () => {
       it('should display validation errors and retain the submitted value', () => {
-        const errorMessage = ERRORS[FIELD_ID].ABOVE_MAXIMUM;
         const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION + 1);
 
-        cy.submitAndAssertFieldErrors(
+        cy.submitAndAssertFieldErrors({
           field,
-          submittedValue,
-          0,
+          value: submittedValue,
           expectedErrorsCount,
-          errorMessage,
-          true,
-        );
+          expectedErrorMessage: ERRORS[FIELD_ID].ABOVE_MAXIMUM,
+        });
 
-        field.textarea().should('have.value', submittedValue);
+        cy.checkTextareaValue({
+          fieldId: FIELD_ID,
+          expectedValue: submittedValue,
+        });
       });
     });
   });
@@ -147,7 +142,10 @@ context('Insurance - Export contract - How will you get paid page - As an export
 
         const expectedValue = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID];
 
-        field.textarea().should('have.value', expectedValue);
+        cy.checkTextareaValue({
+          fieldId: FIELD_ID,
+          expectedValue,
+        });
       });
     });
   });
