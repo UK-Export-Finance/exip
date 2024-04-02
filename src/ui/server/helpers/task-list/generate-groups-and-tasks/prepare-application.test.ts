@@ -22,12 +22,21 @@ const {
 const { PREPARE_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/prepare-application', () => {
-  const { referenceNumber, broker, company, policy, exportContract, buyer } = mockApplication;
-  const { isUsingBroker } = broker;
-  const { hasDifferentTradingName } = company;
-  const { policyType, jointlyInsuredParty } = policy;
-  const { finalDestinationKnown } = exportContract;
-  const { relationship, buyerTradingHistory } = buyer;
+  const {
+    broker: { isUsingBroker },
+    buyer: {
+      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments },
+    },
+    company: { hasDifferentTradingName },
+    exportContract: {
+      finalDestinationKnown,
+      privateMarket: { attempted: attemptedPrivateMarketCover },
+    },
+    policy: { policyType, jointlyInsuredParty },
+    referenceNumber,
+    totalContractValueOverThreshold,
+  } = mockApplication;
 
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
@@ -45,15 +54,16 @@ describe('server/helpers/task-list/prepare-application', () => {
         referenceNumber,
         previousGroups,
         policyType,
-        jointlyInsuredParty.requested,
         finalDestinationKnown,
+        jointlyInsuredParty.requested,
         isUsingBroker,
         hasDifferentTradingName,
-        relationship.exporterIsConnectedWithBuyer,
-        buyerTradingHistory.exporterHasTradedWithBuyer,
-        buyerTradingHistory.outstandingPayments,
-        relationship.exporterHasPreviousCreditInsuranceWithBuyer,
-        mockApplication.totalContractValueOverThreshold,
+        exporterIsConnectedWithBuyer,
+        exporterHasTradedWithBuyer,
+        outstandingPayments,
+        exporterHasPreviousCreditInsuranceWithBuyer,
+        totalContractValueOverThreshold,
+        attemptedPrivateMarketCover,
       );
 
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
@@ -71,11 +81,11 @@ describe('server/helpers/task-list/prepare-application', () => {
         title: PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
         fields: yourBuyerRequiredFields({
-          connectionWithBuyer: relationship.exporterIsConnectedWithBuyer,
-          tradedWithBuyer: buyerTradingHistory.exporterHasTradedWithBuyer,
-          outstandingPayments: buyerTradingHistory.outstandingPayments,
-          hasPreviousCreditInsuranceWithBuyer: relationship.exporterHasPreviousCreditInsuranceWithBuyer,
-          totalContractValueOverThreshold: mockApplication.totalContractValueOverThreshold,
+          connectionWithBuyer: exporterIsConnectedWithBuyer,
+          tradedWithBuyer: exporterHasTradedWithBuyer,
+          outstandingPayments,
+          hasPreviousCreditInsuranceWithBuyer: exporterHasPreviousCreditInsuranceWithBuyer,
+          totalContractValueOverThreshold,
         }),
         dependencies: expectedDependencies,
       };
@@ -96,7 +106,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
-        fields: exportContractRequiredFields({ finalDestinationKnown }),
+        fields: exportContractRequiredFields({ finalDestinationKnown, attemptedPrivateMarketCover }),
         dependencies: expectedDependencies,
       };
 

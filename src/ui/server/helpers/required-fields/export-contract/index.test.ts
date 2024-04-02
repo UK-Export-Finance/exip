@@ -1,12 +1,18 @@
-import requiredFields, { getAboutGoodsOrServicesTasks } from '.';
-import EXPORT_CONTRACT_FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
+import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks } from '.';
+import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { mockApplication } from '../../../test-mocks';
 
-const { ABOUT_GOODS_OR_SERVICES } = EXPORT_CONTRACT_FIELD_IDS;
+const {
+  ABOUT_GOODS_OR_SERVICES,
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+} = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
   const {
-    exportContract: { finalDestinationKnown },
+    exportContract: {
+      finalDestinationKnown,
+      privateMarket: { attempted: attemptedPrivateMarketCover },
+    },
   } = mockApplication;
 
   describe('getAboutGoodsOrServicesTasks', () => {
@@ -33,11 +39,35 @@ describe('server/helpers/required-fields/export-contract', () => {
     });
   });
 
+  describe('privateCoverTasks', () => {
+    describe('when attemptedPrivateMarketCover is true', () => {
+      it(`should return ${DECLINED_DESCRIPTION} field ID`, () => {
+        const attemptedPrivateMarketCoverFlag = true;
+
+        const result = privateCoverTasks(attemptedPrivateMarketCoverFlag);
+
+        const expected = DECLINED_DESCRIPTION;
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when attemptedPrivateMarketCover is undefined', () => {
+      it(`should return ${ATTEMPTED} field ID`, () => {
+        const result = privateCoverTasks();
+
+        const expected = ATTEMPTED;
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ finalDestinationKnown });
+      const result = requiredFields({ finalDestinationKnown, attemptedPrivateMarketCover });
 
-      const expected = getAboutGoodsOrServicesTasks(finalDestinationKnown);
+      const expected = [...getAboutGoodsOrServicesTasks(finalDestinationKnown), privateCoverTasks(attemptedPrivateMarketCover)];
 
       expect(result).toEqual(expected);
     });

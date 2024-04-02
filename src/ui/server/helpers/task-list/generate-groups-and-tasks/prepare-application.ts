@@ -24,6 +24,7 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {Array} Task list groups
  * @param {String} Application "Policy type"
  * @param {Boolean} Application "Is using broker" flag
+ * @param {Boolean} "Attempted cover via the private market" flag
  * @returns {Array} Prepare application tasks
  */
 const createPrepareApplicationTasks = (
@@ -39,6 +40,7 @@ const createPrepareApplicationTasks = (
   outstandingPayments?: boolean,
   hasPreviousCreditInsuranceWithBuyer?: boolean,
   totalContractValueOverThreshold?: boolean,
+  attemptedPrivateMarketCover?: boolean,
 ): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
@@ -80,7 +82,7 @@ const createPrepareApplicationTasks = (
     href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
     id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
-    fields: exportContractRequiredFields({ finalDestinationKnown }),
+    fields: exportContractRequiredFields({ finalDestinationKnown, attemptedPrivateMarketCover }),
     dependencies,
   };
 
