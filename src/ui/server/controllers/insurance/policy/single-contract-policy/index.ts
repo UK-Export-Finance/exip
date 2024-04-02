@@ -154,7 +154,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      const currencyAnswer = application.policy[POLICY_CURRENCY_CODE];
+      const currencyAnswer = application.policy[POLICY_CURRENCY_CODE] || payload[CURRENCY_CODE];
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({

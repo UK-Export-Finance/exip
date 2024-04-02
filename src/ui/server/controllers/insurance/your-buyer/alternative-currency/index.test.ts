@@ -235,7 +235,6 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
           }),
           userName: getUserNameFromSession(req.session.user),
           ...PAGE_VARIABLES,
-          submittedValues: payload,
           validationErrors,
           ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[ALTERNATIVE_CURRENCY_CODE]),
         };
