@@ -87,16 +87,13 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
       BACK_LINK: req.headers.referer,
       HTML_FLAGS,
     }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application: mapApplicationToFormFields(application),
     applicationAnswer: application.policy[NEED_PRE_CREDIT_PERIOD],
@@ -117,8 +114,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
   const sanitisedData = sanitiseData(payload);
@@ -132,7 +128,7 @@ export const post = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
         HTML_FLAGS,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
       submittedValues: sanitisedData,

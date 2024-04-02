@@ -16,7 +16,6 @@ const broker = async (application: Application, formBody: RequestBody, errorList
   // determines which fields to save
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
-  // sanitise the form data.
   const sanitisedData = sanitiseData(dataToSave);
 
   const brokerId = application.broker?.id;

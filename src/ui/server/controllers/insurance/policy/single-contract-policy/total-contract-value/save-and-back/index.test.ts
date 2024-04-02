@@ -9,6 +9,8 @@ import { mockApplication, mockReq, mockRes } from '../../../../../../test-mocks'
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
+const { referenceNumber } = mockApplication;
+
 describe('controllers/insurance/policy/single-contract-policy/total-contract-value/save-and-back', () => {
   let req: Request;
   let res: Response;
@@ -17,8 +19,6 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
   let mockMapAndSave = jest.fn(() => Promise.resolve(true));
   mapAndSave.policy = mockMapAndSave;
-
-  const refNumber = Number(mockApplication.referenceNumber);
 
   const mockFormBody = {
     _csrf: '1234',
@@ -29,7 +29,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
+    req.params.referenceNumber = String(referenceNumber);
 
     req.body = mockFormBody;
   });
@@ -49,7 +49,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });
@@ -61,7 +61,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

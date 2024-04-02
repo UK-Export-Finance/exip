@@ -52,15 +52,12 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     CONFIDENTIALITY_CONTENT,
     application: mapApplicationToFormFields(res.locals.application),
@@ -81,10 +78,9 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const payload = constructPayload(req.body, [FIELD_ID]);
+  const { referenceNumber } = application;
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const payload = constructPayload(req.body, [FIELD_ID]);
 
   const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGES.INSURANCE.DECLARATIONS[FIELD_ID].IS_EMPTY);
 
@@ -94,7 +90,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIDENTIALITY,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       CONFIDENTIALITY_CONTENT,
       validationErrors,

@@ -22,7 +22,7 @@ const {
  * 2) Check if an email is formatted correctly. if not, return emailAndPasswordValidation.
  * 3) Check if an email is below the minimum length via maxLengthValidation.
  * If all of the conditions are met, empty errors are returned (via maxLengthValidation).
- * @param {Express.Response.body} Express response body
+ * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
  * @returns {ValidationErrors} emailAndPasswordValidation | maxLengthValidation
  */

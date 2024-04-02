@@ -62,9 +62,6 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
-
   const submittedValues = getNameEmailPositionFromOwnerAndPolicy(application.owner, application.policyContact);
 
   return res.render(TEMPLATE, {
@@ -72,7 +69,7 @@ export const get = (req: Request, res: Response) => {
       PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
       BACK_LINK: req.headers.referer,
     }),
-    ...pageVariables(refNumber),
+    ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     application,
     submittedValues,
@@ -93,8 +90,7 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = req.params;
-  const refNumber = Number(referenceNumber);
+  const { referenceNumber } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -119,7 +115,7 @@ export const post = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.NAME_ON_POLICY,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(refNumber),
+      ...pageVariables(application.referenceNumber),
       userName: getUserNameFromSession(req.session.user),
       application,
       submittedValues,
