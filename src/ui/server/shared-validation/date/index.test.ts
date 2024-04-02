@@ -77,6 +77,7 @@ describe('shared-validation/date', () => {
     it('should a return validation error', () => {
       const mockSubmittedData = {
         ...mockValidBody,
+        [`${FIELD_ID}-month`]: month,
         [`${FIELD_ID}-day`]: invalidDay,
       };
 
