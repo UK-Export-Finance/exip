@@ -67,7 +67,6 @@ export const get = (req: Request, res: Response) => {
   });
 };
 
-
 /**
  * post
  * Redirect to the next part of the flow.
