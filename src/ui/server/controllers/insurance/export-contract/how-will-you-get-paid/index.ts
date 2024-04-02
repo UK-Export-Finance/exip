@@ -71,7 +71,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Checkvalidation errors and if successful, redirect to the next part of the flow.
+ * Check validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page

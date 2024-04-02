@@ -1,4 +1,4 @@
-import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get } from '.';
+import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -10,7 +10,11 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
@@ -98,6 +102,28 @@ describe('controllers/insurance/export-contract/agent', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
         get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      post(req, res);
+
+      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+      expect(res.redirect).toHaveBeenCalledWith(expected);
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
+        post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

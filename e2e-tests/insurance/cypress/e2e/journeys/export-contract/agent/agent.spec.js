@@ -13,7 +13,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID, AGENT },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID, AGENT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT: FIELD_ID } = FIELD_IDS;
@@ -88,6 +88,17 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAndSubmitAgentForm();
+
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.assertUrl(expectedUrl);
     });
   });
 });

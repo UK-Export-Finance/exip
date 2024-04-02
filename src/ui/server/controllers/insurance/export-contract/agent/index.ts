@@ -8,7 +8,11 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
@@ -61,4 +65,24 @@ export const get = (req: Request, res: Response) => {
     FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
     application: mapApplicationToFormFields(application),
   });
+};
+
+
+/**
+ * post
+ * Redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = application;
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };
