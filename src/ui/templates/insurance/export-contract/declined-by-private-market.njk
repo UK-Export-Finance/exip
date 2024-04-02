@@ -59,7 +59,7 @@
             'data-cy': FIELD.ID
           },
           maxlength: FIELD.MAXIMUM,
-          value: submittedValues[FIELD.ID] or application.exportContract[FIELD.ID],
+          value: submittedValues[FIELD.ID] or application.exportContract.privateMarket[FIELD.ID],
           errorMessage: validationErrors.errorList[FIELD.ID] and {
             text: validationErrors.errorList[FIELD.ID].text,
             attributes: {
