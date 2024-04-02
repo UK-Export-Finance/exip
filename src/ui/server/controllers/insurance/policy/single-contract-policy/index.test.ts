@@ -13,7 +13,8 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
+import mockApplication, { mockApplicationSinglePolicyWithoutCurrencyCode } from '../../../../test-mocks/mock-application';
 
 const {
   INSURANCE_ROOT,
@@ -62,7 +63,7 @@ const applicationWithoutTotalContractValue = {
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
-const currencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
+const applicationCurrencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
 
 describe('controllers/insurance/policy/single-contract-policy', () => {
   let req: Request;
@@ -160,7 +161,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         ...pageVariables(refNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, applicationCurrencyAnswer),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -324,25 +325,52 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('should render template with validation errors', async () => {
-        await post(req, res);
+      describe(`when the application has a ${POLICY_CURRENCY_CODE} answer`, () => {
+        it('should render template with validation errors and submitted values from constructPayload function and application', async () => {
+          await post(req, res);
 
-        const payload = constructPayload(req.body, FIELD_IDS);
+          const payload = constructPayload(req.body, FIELD_IDS);
 
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(refNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
-          submittedValues: payload,
-          ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, currencyAnswer),
-          validationErrors: generateValidationErrors(payload),
-        };
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            userName: getUserNameFromSession(req.session.user),
+            application: mapApplicationToFormFields(mockApplication),
+            submittedValues: payload,
+            ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, applicationCurrencyAnswer),
+            validationErrors: generateValidationErrors(payload),
+          };
 
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
+      });
+
+      describe(`when the application does NOT have a ${POLICY_CURRENCY_CODE} answer`, () => {
+        it('should render template with validation errors and submitted values from constructPayload function', async () => {
+          res.locals.application = mockApplicationSinglePolicyWithoutCurrencyCode;
+
+          await post(req, res);
+
+          const payload = constructPayload(req.body, FIELD_IDS);
+
+          const expectedVariables = {
+            ...insuranceCorePageVariables({
+              PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
+              BACK_LINK: req.headers.referer,
+            }),
+            ...pageVariables(refNumber),
+            userName: getUserNameFromSession(req.session.user),
+            application: mapApplicationToFormFields(mockApplicationSinglePolicyWithoutCurrencyCode),
+            submittedValues: payload,
+            ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, payload[POLICY_CURRENCY_CODE]),
+            validationErrors: generateValidationErrors(payload),
+          };
+
+          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
+        });
       });
     });
 
