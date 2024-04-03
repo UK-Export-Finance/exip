@@ -167,7 +167,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.checkTaskExportContractStatusIsInProgress();
+        cy.checkTaskExportContractStatusIsComplete();
       });
     });
 
