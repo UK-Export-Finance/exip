@@ -1,5 +1,6 @@
 import { APPLICATION } from '../../constants';
 import createAPrivateMarket from '../create-a-private-market';
+import createAnExportContractAgent from '../create-an-export-contract-agent';
 import { Context, CreateExportContractResponse } from '../../types';
 
 /**
@@ -23,10 +24,13 @@ const createAnExportContract = async (context: Context, applicationId: string): 
     });
 
     const privateMarket = await createAPrivateMarket(context, exportContract.id);
+    const { agent, agentService } = await createAnExportContractAgent(context, exportContract.id);
 
     return {
       exportContract,
       privateMarket,
+      agent,
+      agentService,
     };
   } catch (err) {
     console.error('Error creating an export contract %O', err);

@@ -889,6 +889,7 @@ input JointlyInsuredPartyCreateInput {
 type ExportContract {
   id: ID!
   application: Application
+  agent: ExportContractAgent
   privateMarket: PrivateMarket
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
@@ -906,6 +907,7 @@ input ExportContractWhereInput {
   NOT: [ExportContractWhereInput!]
   id: IDFilter
   application: ApplicationWhereInput
+  agent: ExportContractAgentWhereInput
   privateMarket: PrivateMarketWhereInput
   finalDestinationCountryCode: StringFilter
   goodsOrServicesDescription: StringFilter
@@ -921,11 +923,18 @@ input ExportContractOrderByInput {
 
 input ExportContractUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
+  agent: ExportContractAgentRelateToOneForUpdateInput
   privateMarket: PrivateMarketRelateToOneForUpdateInput
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
   goodsOrServicesDescription: String
   paymentTermsDescription: String
+}
+
+input ExportContractAgentRelateToOneForUpdateInput {
+  create: ExportContractAgentCreateInput
+  connect: ExportContractAgentWhereUniqueInput
+  disconnect: Boolean
 }
 
 input PrivateMarketRelateToOneForUpdateInput {
@@ -941,6 +950,7 @@ input ExportContractUpdateArgs {
 
 input ExportContractCreateInput {
   application: ApplicationRelateToOneForCreateInput
+  agent: ExportContractAgentRelateToOneForCreateInput
   privateMarket: PrivateMarketRelateToOneForCreateInput
   finalDestinationKnown: Boolean
   finalDestinationCountryCode: String
@@ -948,9 +958,123 @@ input ExportContractCreateInput {
   paymentTermsDescription: String
 }
 
+input ExportContractAgentRelateToOneForCreateInput {
+  create: ExportContractAgentCreateInput
+  connect: ExportContractAgentWhereUniqueInput
+}
+
 input PrivateMarketRelateToOneForCreateInput {
   create: PrivateMarketCreateInput
   connect: PrivateMarketWhereUniqueInput
+}
+
+type ExportContractAgent {
+  id: ID!
+  exportContract: ExportContract
+  service: ExportContractAgentService
+  countryCode: String
+  fullAddress: String
+  isUsingAgent: Boolean
+  name: String
+}
+
+input ExportContractAgentWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAgentWhereInput {
+  AND: [ExportContractAgentWhereInput!]
+  OR: [ExportContractAgentWhereInput!]
+  NOT: [ExportContractAgentWhereInput!]
+  id: IDFilter
+  exportContract: ExportContractWhereInput
+  service: ExportContractAgentServiceWhereInput
+  countryCode: StringFilter
+  fullAddress: StringFilter
+  name: StringFilter
+}
+
+input ExportContractAgentOrderByInput {
+  id: OrderDirection
+  countryCode: OrderDirection
+  fullAddress: OrderDirection
+  name: OrderDirection
+}
+
+input ExportContractAgentUpdateInput {
+  exportContract: ExportContractRelateToOneForUpdateInput
+  service: ExportContractAgentServiceRelateToOneForUpdateInput
+  countryCode: String
+  fullAddress: String
+  isUsingAgent: Boolean
+  name: String
+}
+
+input ExportContractAgentServiceRelateToOneForUpdateInput {
+  create: ExportContractAgentServiceCreateInput
+  connect: ExportContractAgentServiceWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ExportContractAgentUpdateArgs {
+  where: ExportContractAgentWhereUniqueInput!
+  data: ExportContractAgentUpdateInput!
+}
+
+input ExportContractAgentCreateInput {
+  exportContract: ExportContractRelateToOneForCreateInput
+  service: ExportContractAgentServiceRelateToOneForCreateInput
+  countryCode: String
+  fullAddress: String
+  isUsingAgent: Boolean
+  name: String
+}
+
+input ExportContractAgentServiceRelateToOneForCreateInput {
+  create: ExportContractAgentServiceCreateInput
+  connect: ExportContractAgentServiceWhereUniqueInput
+}
+
+type ExportContractAgentService {
+  id: ID!
+  agent: ExportContractAgent
+  agentIsCharging: Boolean
+  serviceDescription: String
+}
+
+input ExportContractAgentServiceWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAgentServiceWhereInput {
+  AND: [ExportContractAgentServiceWhereInput!]
+  OR: [ExportContractAgentServiceWhereInput!]
+  NOT: [ExportContractAgentServiceWhereInput!]
+  id: IDFilter
+  agent: ExportContractAgentWhereInput
+  serviceDescription: StringFilter
+}
+
+input ExportContractAgentServiceOrderByInput {
+  id: OrderDirection
+  serviceDescription: OrderDirection
+}
+
+input ExportContractAgentServiceUpdateInput {
+  agent: ExportContractAgentRelateToOneForUpdateInput
+  agentIsCharging: Boolean
+  serviceDescription: String
+}
+
+input ExportContractAgentServiceUpdateArgs {
+  where: ExportContractAgentServiceWhereUniqueInput!
+  data: ExportContractAgentServiceUpdateInput!
+}
+
+input ExportContractAgentServiceCreateInput {
+  agent: ExportContractAgentRelateToOneForCreateInput
+  agentIsCharging: Boolean
+  serviceDescription: String
 }
 
 type PrivateMarket {
@@ -2664,6 +2788,18 @@ type Mutation {
   updateExportContracts(data: [ExportContractUpdateArgs!]!): [ExportContract]
   deleteExportContract(where: ExportContractWhereUniqueInput!): ExportContract
   deleteExportContracts(where: [ExportContractWhereUniqueInput!]!): [ExportContract]
+  createExportContractAgent(data: ExportContractAgentCreateInput!): ExportContractAgent
+  createExportContractAgents(data: [ExportContractAgentCreateInput!]!): [ExportContractAgent]
+  updateExportContractAgent(where: ExportContractAgentWhereUniqueInput!, data: ExportContractAgentUpdateInput!): ExportContractAgent
+  updateExportContractAgents(data: [ExportContractAgentUpdateArgs!]!): [ExportContractAgent]
+  deleteExportContractAgent(where: ExportContractAgentWhereUniqueInput!): ExportContractAgent
+  deleteExportContractAgents(where: [ExportContractAgentWhereUniqueInput!]!): [ExportContractAgent]
+  createExportContractAgentService(data: ExportContractAgentServiceCreateInput!): ExportContractAgentService
+  createExportContractAgentServices(data: [ExportContractAgentServiceCreateInput!]!): [ExportContractAgentService]
+  updateExportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!, data: ExportContractAgentServiceUpdateInput!): ExportContractAgentService
+  updateExportContractAgentServices(data: [ExportContractAgentServiceUpdateArgs!]!): [ExportContractAgentService]
+  deleteExportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
+  deleteExportContractAgentServices(where: [ExportContractAgentServiceWhereUniqueInput!]!): [ExportContractAgentService]
   createPrivateMarket(data: PrivateMarketCreateInput!): PrivateMarket
   createPrivateMarkets(data: [PrivateMarketCreateInput!]!): [PrivateMarket]
   updatePrivateMarket(where: PrivateMarketWhereUniqueInput!, data: PrivateMarketUpdateInput!): PrivateMarket
@@ -2912,6 +3048,12 @@ type Query {
   exportContracts(where: ExportContractWhereInput! = {}, orderBy: [ExportContractOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractWhereUniqueInput): [ExportContract!]
   exportContract(where: ExportContractWhereUniqueInput!): ExportContract
   exportContractsCount(where: ExportContractWhereInput! = {}): Int
+  exportContractAgents(where: ExportContractAgentWhereInput! = {}, orderBy: [ExportContractAgentOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentWhereUniqueInput): [ExportContractAgent!]
+  exportContractAgent(where: ExportContractAgentWhereUniqueInput!): ExportContractAgent
+  exportContractAgentsCount(where: ExportContractAgentWhereInput! = {}): Int
+  exportContractAgentServices(where: ExportContractAgentServiceWhereInput! = {}, orderBy: [ExportContractAgentServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceWhereUniqueInput): [ExportContractAgentService!]
+  exportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
+  exportContractAgentServicesCount(where: ExportContractAgentServiceWhereInput! = {}): Int
   privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
   privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
   privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int

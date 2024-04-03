@@ -359,6 +359,7 @@ export const lists = {
   ExportContract: {
     fields: {
       application: relationship({ ref: 'Application' }),
+      agent: relationship({ ref: 'ExportContractAgent.exportContract' }),
       privateMarket: relationship({ ref: 'PrivateMarket.exportContract' }),
       finalDestinationKnown: nullableCheckbox(),
       finalDestinationCountryCode: text({
@@ -377,6 +378,34 @@ export const lists = {
           await updateApplication.timestamp(context, item.applicationId);
         }
       },
+    },
+    access: allowAll,
+  },
+  // TODO: should we add the ability for an application to have multiple agents?
+  ExportContractAgent: list({
+    fields: {
+      exportContract: relationship({ ref: 'ExportContract.agent' }),
+      service: relationship({ ref: 'ExportContractAgentService.agent' }),
+      countryCode: text({
+        db: { nativeType: 'VarChar(3)' },
+      }),
+      fullAddress: text({
+        db: { nativeType: 'VarChar(500)' },
+      }),
+      isUsingAgent: nullableCheckbox(),
+      name: text({
+        db: { nativeType: 'VarChar(800)' },
+      }),
+    },
+    access: allowAll,
+  }),
+  ExportContractAgentService: {
+    fields: {
+      agent: relationship({ ref: 'ExportContractAgent.service' }),
+      agentIsCharging: nullableCheckbox(),
+      serviceDescription: text({
+        db: { nativeType: 'VarChar(1000)' },
+      }),
     },
     access: allowAll,
   },

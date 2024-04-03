@@ -132,6 +132,20 @@ export interface ApplicationExportContract extends Relationship {
   paymentTermsDescription?: string;
 }
 
+export interface ApplicationExportContractAgent extends Relationship {
+  exportContractId: string;
+  countryCode?: string;
+  fullAddress?: string;
+  isUsingAgent?: boolean;
+  name?: string;
+}
+
+export interface ApplicationExportContractAgentService extends Relationship {
+  agentId: string;
+  agentIsCharging?: boolean;
+  serviceDescription?: string;
+}
+
 export interface ApplicationOwner extends Relationship {
   email: string;
   firstName: string;
@@ -230,9 +244,16 @@ export interface CreateAnApplicationVariables {
   sectionReview: SectionReview;
 }
 
+export interface CreateExportContractAgentResponse {
+  agent: ApplicationExportContractAgent;
+  agentService: ApplicationExportContractAgentService;
+}
+
 export interface CreateExportContractResponse {
   exportContract: ApplicationExportContract;
   privateMarket: ApplicationPrivateMarket;
+  agent: ApplicationExportContractAgent;
+  agentService: ApplicationExportContractAgentService;
 }
 
 export interface CreatePolicyResponse {
