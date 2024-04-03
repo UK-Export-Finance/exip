@@ -26,7 +26,10 @@ context('Insurance - Textarea fields - `Policy` textarea fields should render ne
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      // go to the page we want to test.
+      /**
+       * Set the default state of the policy section,
+       * so that all optional fields are required.
+       */
       cy.startInsurancePolicySection({});
 
       cy.completeAndSubmitPolicyTypeForm({});

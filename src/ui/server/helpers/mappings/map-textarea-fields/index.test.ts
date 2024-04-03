@@ -10,6 +10,7 @@ const {
   },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
+    PRIVATE_MARKET: { DECLINED_DESCRIPTION },
   },
   POLICY: {
     BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
@@ -57,6 +58,10 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
       exportContract: {
         ...exportContract,
         [DESCRIPTION]: replaceCharacterCodesWithCharacters(exportContract[DESCRIPTION]),
+        privateMarket: {
+          ...exportContract.privateMarket,
+          [DECLINED_DESCRIPTION]: replaceCharacterCodesWithCharacters(exportContract.privateMarket[DECLINED_DESCRIPTION]),
+        },
       },
       policy: {
         ...policy,
