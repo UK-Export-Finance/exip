@@ -62,7 +62,7 @@ This project utilizes various technologies and tools, including:
 
 To run the project locally, follow these steps:
 
-1. Execute `docker-compose up` from the root directory. Use `--build` for the first-time usage.
+1. Execute `docker compose up` from the root directory. Use `--build` for the first-time usage.
 2. Visit [https://localhost:5000](https://localhost:5000) in your web browser.
 3. If presented with the certificate not trusted error, then please accept and proceed with certificate is self-signed for domain `localhost`.
 
