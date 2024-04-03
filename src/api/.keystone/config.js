@@ -1257,7 +1257,6 @@ var lists = {
     },
     access: import_access.allowAll
   },
-  // TODO: should we add the ability for an application to have multiple agents?
   ExportContractAgent: (0, import_core2.list)({
     fields: {
       exportContract: (0, import_fields.relationship)({ ref: "ExportContract.agent" }),

@@ -381,7 +381,6 @@ export const lists = {
     },
     access: allowAll,
   },
-  // TODO: should we add the ability for an application to have multiple agents?
   ExportContractAgent: list({
     fields: {
       exportContract: relationship({ ref: 'ExportContract.agent' }),
