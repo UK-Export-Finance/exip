@@ -12,6 +12,7 @@ import {
   post as declinedByPrivateMarketPost,
 } from '../../../controllers/insurance/export-contract/declined-by-private-market';
 import { post as declinedByPrivateMarketSaveAndBackPost } from '../../../controllers/insurance/export-contract/declined-by-private-market/save-and-back';
+import { get as agentGet, post as agentPost } from '../../../controllers/insurance/export-contract/agent';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -26,6 +27,7 @@ const {
   PRIVATE_MARKET_SAVE_AND_BACK,
   DECLINED_BY_PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK,
+  AGENT,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -39,8 +41,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(8);
-    expect(post).toHaveBeenCalledTimes(11);
+    expect(get).toHaveBeenCalledTimes(9);
+    expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -63,6 +65,9 @@ describe('routes/insurance/export-contract', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`, declinedByPrivateMarketSaveAndBackPost);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT}`, agentGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT}`, agentPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
