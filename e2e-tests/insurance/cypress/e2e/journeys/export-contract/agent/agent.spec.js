@@ -1,11 +1,13 @@
 import {
+  field as fieldSelector,
   headingCaption,
   noRadio,
+  noRadioInput,
   yesNoRadioHint,
   yesRadio,
 } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
-import { PAGES } from '../../../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
@@ -13,16 +15,20 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID, AGENT, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID, AGENT, AGENT_SERVICES, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT: FIELD_ID } = FIELD_IDS;
+
+const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT[FIELD_ID].IS_EMPTY;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Export contract - Agent page - As an Exporter, I want to state whether another party helped me win my export contract, So that I can provide underwriters with all required pre-requisite information as part of my application', () => {
   let referenceNumber;
   let url;
+  let agentServicesUrl;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,6 +40,8 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
+      agentServicesUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICES}`;
+      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -92,13 +100,38 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
-      cy.completeAndSubmitAgentForm();
+    describe('when submitting an empty form', () => {
+      it(`should display validation errors if ${FIELD_ID} radio is not selected`, () => {
+        const radioField = {
+          ...fieldSelector(FIELD_ID),
+          input: noRadioInput,
+        };
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.assertUrl(expectedUrl);
+        cy.submitAndAssertRadioErrors({
+          field: radioField,
+          expectedErrorMessage: ERROR_MESSAGE,
+        });
+      });
+    });
+
+    describe(`when selecting no for ${FIELD_ID}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
+        cy.completeAndSubmitAgentForm({ usingAgent: false });
+
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+    });
+
+    describe(`when selecting yes for ${FIELD_ID}`, () => {
+      it(`should redirect to ${AGENT_SERVICES} page`, () => {
+        cy.completeAndSubmitAgentForm({ usingAgent: true });
+
+        cy.assertUrl(agentServicesUrl);
+      });
     });
   });
 });
