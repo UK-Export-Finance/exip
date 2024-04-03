@@ -3,7 +3,7 @@ import POLICY_ROOT from './root';
 const ROOT = `${POLICY_ROOT}/loss-payee`;
 const LOSS_PAYEE_DETAILS_ROOT = `${POLICY_ROOT}/loss-payee-details`;
 const LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT = `${POLICY_ROOT}/loss-payee-bank-details`;
-const LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT = `${ROOT}/loss-payee-international-bank-details`;
+const LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT = `${POLICY_ROOT}/loss-payee-international-bank-details`;
 
 const LOSS_PAYEE_ROUTES = {
   LOSS_PAYEE_ROOT: ROOT,
