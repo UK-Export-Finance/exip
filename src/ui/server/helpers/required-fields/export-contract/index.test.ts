@@ -4,6 +4,7 @@ import { mockApplication } from '../../../test-mocks';
 
 const {
   ABOUT_GOODS_OR_SERVICES,
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
 } = FIELD_IDS;
 
@@ -95,6 +96,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       const result = requiredFields({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover });
 
       const expected = [
+        PAYMENT_TERMS_DESCRIPTION,
         ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
         ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
       ];

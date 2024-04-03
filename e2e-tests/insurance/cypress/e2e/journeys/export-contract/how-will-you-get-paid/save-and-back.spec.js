@@ -31,7 +31,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -68,6 +68,10 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.assertUrl(allSectionsUrl);
+    });
+
+    it('should update the `export contract` task status to `completed`', () => {
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     it('should have the originally submitted answer when going back to the page after submission', () => {
@@ -111,6 +115,10 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.assertUrl(allSectionsUrl);
+    });
+
+    it('should update the `export contract` task status to `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {

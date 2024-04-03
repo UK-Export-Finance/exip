@@ -139,10 +139,10 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.assertUrl(expectedUrl);
     });
 
-    it('should retain the status of task `export contract` as `in progress`', () => {
+    it('should update the `export contract` task status to `completed`', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {

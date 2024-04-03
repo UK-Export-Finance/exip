@@ -2,6 +2,7 @@ import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 
 const {
   ABOUT_GOODS_OR_SERVICES,
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
 } = FIELD_IDS;
 
@@ -50,6 +51,7 @@ export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPr
  * @returns {Array} Required field IDs
  */
 const requiredFields = ({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover }: RequiredFields): Array<string> => [
+  PAYMENT_TERMS_DESCRIPTION,
   ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
   ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
 ];
