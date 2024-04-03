@@ -13,6 +13,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarketCover },
     },
+    totalContractValueOverThreshold,
   } = mockApplication;
 
   describe('getAboutGoodsOrServicesTasks', () => {
@@ -40,34 +41,63 @@ describe('server/helpers/required-fields/export-contract', () => {
   });
 
   describe('privateCoverTasks', () => {
-    describe('when attemptedPrivateMarketCover is true', () => {
-      it(`should return ${DECLINED_DESCRIPTION} field ID`, () => {
-        const attemptedPrivateMarketCoverFlag = true;
+    describe('when totalContractValueOverThreshold is true', () => {
+      describe('when attemptedPrivateMarketCover is true', () => {
+        it(`should return ${DECLINED_DESCRIPTION} field ID`, () => {
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
 
-        const result = privateCoverTasks(attemptedPrivateMarketCoverFlag);
+          const expected = [DECLINED_DESCRIPTION];
 
-        const expected = DECLINED_DESCRIPTION;
+          expect(result).toEqual(expected);
+        });
+      });
 
-        expect(result).toEqual(expected);
+      describe('when attemptedPrivateMarketCover is false', () => {
+        it(`should return an array with ${ATTEMPTED} field ID`, () => {
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: false });
+
+          const expected = [ATTEMPTED];
+
+          expect(result).toEqual(expected);
+        });
+      });
+
+      describe('when attemptedPrivateMarketCover is undefined', () => {
+        it(`should return an array with ${ATTEMPTED} field ID`, () => {
+          const result = privateCoverTasks({ totalContractValueOverThreshold: true });
+
+          const expected = [ATTEMPTED];
+
+          expect(result).toEqual(expected);
+        });
       });
     });
 
-    describe('when attemptedPrivateMarketCover is undefined', () => {
-      it(`should return ${ATTEMPTED} field ID`, () => {
-        const result = privateCoverTasks();
+    describe('when totalContractValueOverThreshold is false', () => {
+      it('should return an empty array', () => {
+        const result = privateCoverTasks({ totalContractValueOverThreshold: false });
 
-        const expected = ATTEMPTED;
+        expect(result).toEqual([]);
+      });
+    });
 
-        expect(result).toEqual(expected);
+    describe('when totalContractValueOverThreshold is undefined', () => {
+      it('should return an empty array', () => {
+        const result = privateCoverTasks({});
+
+        expect(result).toEqual([]);
       });
     });
   });
 
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ finalDestinationKnown, attemptedPrivateMarketCover });
+      const result = requiredFields({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover });
 
-      const expected = [...getAboutGoodsOrServicesTasks(finalDestinationKnown), privateCoverTasks(attemptedPrivateMarketCover)];
+      const expected = [
+        ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
+        ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
+      ];
 
       expect(result).toEqual(expected);
     });

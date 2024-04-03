@@ -151,7 +151,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
 
     describe(`when selecting no for ${FIELD_ID}`, () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.completeAndSubmitPrivateMarketForm({ attempted: false });
+        cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: false });
 
         cy.assertUrl(checkYourAnswersUrl);
       });
@@ -174,7 +174,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
       it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET} page`, () => {
-        cy.completeAndSubmitPrivateMarketForm({ attempted: true });
+        cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });
 
         cy.assertUrl(declinedByPrivateMarketUrl);
       });

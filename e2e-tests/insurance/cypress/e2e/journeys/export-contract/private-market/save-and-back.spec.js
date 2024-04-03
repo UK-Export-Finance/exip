@@ -60,7 +60,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completePrivateMarketForm({ attempted: false });
+      cy.completePrivateMarketForm({ attemptedPrivateMarketCover: false });
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
@@ -88,7 +88,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completePrivateMarketForm({ attempted: true });
+      cy.completePrivateMarketForm({ attemptedPrivateMarketCover: true });
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);

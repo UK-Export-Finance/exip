@@ -25,6 +25,7 @@ const {
 describe('server/helpers/required-fields/section-review', () => {
   it('should return array of required fields', () => {
     const flatApplicationData = flattenApplicationData(mockApplication);
+    const { totalContractValueOverThreshold } = flatApplicationData;
 
     const result = requiredFields(flatApplicationData);
 
@@ -36,6 +37,7 @@ describe('server/helpers/required-fields/section-review', () => {
       }),
       ...requiredExportContractFields({
         finalDestinationKnown: flatApplicationData[FINAL_DESTINATION_KNOWN],
+        totalContractValueOverThreshold,
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
       ...requiredYourBuyerFields({
@@ -43,7 +45,7 @@ describe('server/helpers/required-fields/section-review', () => {
         tradedWithBuyer: flatApplicationData[TRADED_WITH_BUYER],
         outstandingPayments: flatApplicationData[OUTSTANDING_PAYMENTS],
         hasPreviousCreditInsuranceWithBuyer: flatApplicationData[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
-        totalContractValueOverThreshold: flatApplicationData.totalContractValueOverThreshold,
+        totalContractValueOverThreshold,
       }),
     ];
 

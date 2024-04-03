@@ -106,7 +106,11 @@ describe('server/helpers/task-list/prepare-application', () => {
         href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.EXPORT_CONTRACT,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORT_CONTRACT,
-        fields: exportContractRequiredFields({ finalDestinationKnown, attemptedPrivateMarketCover }),
+        fields: exportContractRequiredFields({
+          finalDestinationKnown,
+          attemptedPrivateMarketCover,
+          totalContractValueOverThreshold,
+        }),
         dependencies: expectedDependencies,
       };
 

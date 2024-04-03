@@ -18,33 +18,40 @@ export const getAboutGoodsOrServicesTasks = (finalDestinationKnown?: boolean) =>
   return [ABOUT_GOODS_OR_SERVICES.DESCRIPTION, ABOUT_GOODS_OR_SERVICES.FINAL_DESTINATION_KNOWN];
 };
 
-/**
- * privateCoverTasks
- * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
- * @returns {Array} Array of tasks
- */
-export const privateCoverTasks = (attemptedPrivateMarketCover?: boolean) => {
-  if (attemptedPrivateMarketCover) {
-    return DECLINED_DESCRIPTION;
-  }
-
-  return ATTEMPTED;
-};
-
 interface RequiredFields {
+  totalContractValueOverThreshold?: boolean;
   finalDestinationKnown?: boolean;
   attemptedPrivateMarketCover?: boolean;
 }
 
 /**
+ * privateCoverTasks
+ * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @returns {String} Private cover task
+ */
+export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
+  if (totalContractValueOverThreshold) {
+    if (attemptedPrivateMarketCover) {
+      return [DECLINED_DESCRIPTION];
+    }
+
+    return [ATTEMPTED];
+  }
+
+  return [];
+};
+
+/**
  * Required fields for the insurance - export contract section
+ * * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @returns {Array} Required field IDs
  */
-const requiredFields = ({ finalDestinationKnown, attemptedPrivateMarketCover }: RequiredFields): Array<string> => [
+const requiredFields = ({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover }: RequiredFields): Array<string> => [
   ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
-  privateCoverTasks(attemptedPrivateMarketCover),
+  ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
 ];
 
 export default requiredFields;

@@ -1,10 +1,10 @@
 /**
  * completePrivateMarketForm
  * Complete the "Tried to insure through the private market" form
- * @param {Boolean} attempted: Has attempted to insure through the private market. Defaults to false.
+ * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market. Defaults to false.
  */
-const completePrivateMarketForm = ({ attempted = false }) => {
-  if (attempted) {
+const completePrivateMarketForm = ({ attemptedPrivateMarketCover = false }) => {
+  if (attemptedPrivateMarketCover) {
     cy.clickYesRadioInput();
   } else {
     cy.clickNoRadioInput();
