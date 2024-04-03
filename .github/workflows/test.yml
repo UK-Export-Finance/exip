@@ -164,7 +164,7 @@ jobs:
           MOCK_ACCOUNT_PASSWORD: ${{ secrets.MOCK_ACCOUNT_PASSWORD }}
           JWT_SIGNING_KEY: ${{ secrets.JWT_SIGNING_KEY }}
         run: |
-          docker-compose up --build -d
+          docker compose up --build -d
           npm run ci:all
           npm run test --prefix ./src/api
 
@@ -298,7 +298,7 @@ jobs:
         run: npm run ci:all
 
       - name: Docker
-        run: docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -361,7 +361,7 @@ jobs:
         run: npm run ci:all
 
       - name: Docker
-        run: docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
@@ -413,7 +413,7 @@ jobs:
         run: npm run ci:all
 
       - name: Docker
-        run: docker-compose up --build -d
+        run: docker compose up --build -d
 
       - name: Wait
         run: sleep 30s
