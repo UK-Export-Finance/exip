@@ -5,7 +5,7 @@ import { mockApplication } from '../../../test-mocks';
 const {
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+  PRIVATE_MARKET: { ATTEMPTED },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -44,12 +44,10 @@ describe('server/helpers/required-fields/export-contract', () => {
   describe('privateCoverTasks', () => {
     describe('when totalContractValueOverThreshold is true', () => {
       describe('when attemptedPrivateMarketCover is true', () => {
-        it(`should return ${DECLINED_DESCRIPTION} field ID`, () => {
+        it('should return an empty array', () => {
           const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
 
-          const expected = [DECLINED_DESCRIPTION];
-
-          expect(result).toEqual(expected);
+          expect(result).toEqual([]);
         });
       });
 

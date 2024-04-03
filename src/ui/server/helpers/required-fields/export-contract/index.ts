@@ -3,7 +3,7 @@ import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 const {
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+  PRIVATE_MARKET: { ATTEMPTED },
 } = FIELD_IDS;
 
 /**
@@ -34,7 +34,9 @@ interface RequiredFields {
 export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
   if (totalContractValueOverThreshold) {
     if (attemptedPrivateMarketCover) {
-      return [DECLINED_DESCRIPTION];
+      // TODO: EMS-2946
+      // return [DECLINED_DESCRIPTION];
+      return [];
     }
 
     return [ATTEMPTED];

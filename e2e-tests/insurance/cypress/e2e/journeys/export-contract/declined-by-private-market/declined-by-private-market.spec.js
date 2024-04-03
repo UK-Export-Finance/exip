@@ -125,11 +125,9 @@ context('Insurance - Export contract - Declined by private market page - As an e
   });
 
   describe('form submission', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
-    });
-
     it(`should redirect to ${AGENT} page`, () => {
+      cy.navigateToUrl(url);
+
       cy.completeAndSubmitDeclinedByPrivateMarketForm({});
 
       cy.assertUrl(agentUrl);
