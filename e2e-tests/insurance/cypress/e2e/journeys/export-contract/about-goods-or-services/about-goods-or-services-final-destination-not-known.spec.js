@@ -25,6 +25,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - About goods or services page - Final destination not known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -33,6 +34,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.startInsuranceExportContractSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -58,7 +60,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
     describe('after submitting the form', () => {
       it('should update the `export contract` task status to `completed`', () => {
-        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+        cy.navigateToUrl(allSectionsUrl);
 
         cy.checkTaskExportContractStatusIsComplete();
       });

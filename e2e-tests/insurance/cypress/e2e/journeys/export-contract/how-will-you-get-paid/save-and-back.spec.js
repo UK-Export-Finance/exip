@@ -20,6 +20,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - Save and go back', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -30,6 +31,8 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
       cy.assertUrl(url);
     });
   });
@@ -50,9 +53,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
   });
 
@@ -66,9 +67,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should have the originally submitted answer when going back to the page after submission', () => {
@@ -111,9 +110,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {

@@ -50,9 +50,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
   });
 

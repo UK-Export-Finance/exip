@@ -35,6 +35,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - As an exporter, I want to provide information on how I will be paid for my export, So that UKEF can have clarity on the payment terms I have with the buyer', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -45,6 +46,7 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -138,7 +140,7 @@ context('Insurance - Export contract - How will you get paid page - As an export
     });
 
     it('should retain the status of task `export contract` as `in progress`', () => {
-      cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      cy.navigateToUrl(allSectionsUrl);
 
       cy.checkTaskExportContractStatusIsInProgress();
     });

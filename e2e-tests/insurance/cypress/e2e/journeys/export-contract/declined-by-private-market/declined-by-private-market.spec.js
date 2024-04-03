@@ -36,6 +36,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
   let referenceNumber;
   let url;
   let commissioningAgentUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -49,6 +50,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
       commissioningAgentUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMMISSIONING_AGENT}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -139,8 +141,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
 
         cy.completeAndSubmitDeclinedByPrivateMarketForm({});
 
-        // TODO: url const
-        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+        cy.navigateToUrl(allSectionsUrl);
 
         cy.checkTaskExportContractStatusIsComplete();
       });

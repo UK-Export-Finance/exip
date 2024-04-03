@@ -37,6 +37,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
   let url;
   let declinedByPrivateMarketUrl;
   let checkYourAnswersUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -45,6 +46,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       declinedByPrivateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       // go to the page we want to test.
       cy.startInsuranceExportContractSection({});
@@ -157,8 +159,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
       });
 
       it('should retain the status of task `export contract` as `in progress`', () => {
-        // TODO: url const
-        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+        cy.navigateToUrl(allSectionsUrl);
 
         cy.checkTaskExportContractStatusIsInProgress();
       });
@@ -180,7 +181,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
       });
 
       it('should retain the status of task `export contract` as `in progress`', () => {
-        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+        cy.navigateToUrl(allSectionsUrl);
 
         cy.checkTaskExportContractStatusIsInProgress();
       });
