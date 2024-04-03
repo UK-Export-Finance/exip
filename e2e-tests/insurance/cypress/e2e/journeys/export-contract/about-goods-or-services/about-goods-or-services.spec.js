@@ -17,7 +17,7 @@ import { assertCountryAutocompleteInput, checkAutocompleteInput } from '../../..
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ROOT: EXPORT_CONTRACT_ROOT,
@@ -44,7 +44,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
       cy.startInsuranceExportContractSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
       cy.assertUrl(url);
     });
@@ -61,8 +61,8 @@ context('Insurance - Export contract - About goods or services page - Final dest
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
+      currentHref: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      backLink: `${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
     });
   });
 
@@ -153,19 +153,19 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       cy.assertUrl(expectedUrl);
     });
 
     describe('after submitting the form', () => {
-      it('should update the `export contract` task status to `completed`', () => {
+      it('should update the `export contract` task status to `in progress`', () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
     });
 

@@ -8,7 +8,8 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.DECLINED_BY_PRIVATE_MARKET;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
+  ALL_SECTIONS,
   EXPORT_CONTRACT: { PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET, COMMISSIONING_AGENT },
 } = INSURANCE_ROUTES;
 
@@ -46,8 +47,8 @@ context('Insurance - Export contract - Declined by private market page - As an e
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitPrivateMarketForm({ attempted: true });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
-      commissioningAgentUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${COMMISSIONING_AGENT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
+      commissioningAgentUrl = `${baseUrl}${ROOT}/${referenceNumber}${COMMISSIONING_AGENT}`;
     });
   });
 
@@ -62,8 +63,8 @@ context('Insurance - Export contract - Declined by private market page - As an e
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
+      currentHref: `${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`,
+      backLink: `${ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
     });
   });
 
@@ -91,7 +92,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
     });
   });
 
-  describe('form submission', () => {
+  describe('form validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -119,11 +120,34 @@ context('Insurance - Export contract - Declined by private market page - As an e
         });
       });
     });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
 
     it(`should redirect to ${COMMISSIONING_AGENT} page`, () => {
       cy.completeAndSubmitDeclinedByPrivateMarketForm({});
 
       cy.assertUrl(commissioningAgentUrl);
+    });
+
+    describe('after submitting the form', () => {
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitDeclinedByPrivateMarketForm({});
+
+        // TODO: url const
+        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
+      it('should retain the status of task `declarations` as `in progress`', () => {
+        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      });
     });
   });
 });

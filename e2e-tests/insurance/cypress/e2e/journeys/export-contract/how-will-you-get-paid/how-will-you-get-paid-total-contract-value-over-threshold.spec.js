@@ -1,7 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
+  ALL_SECTIONS,
   EXPORT_CONTRACT: { PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
@@ -19,7 +20,7 @@ context('Insurance - Export contract - How will you get paid page - Submission w
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      privateMarketUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      privateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
     });
   });
 
@@ -35,5 +36,11 @@ context('Insurance - Export contract - How will you get paid page - Submission w
     cy.completeAndSubmitHowYouWillGetPaidForm({});
 
     cy.assertUrl(privateMarketUrl);
+  });
+
+  it('should retain the status of task `export contract` as `in progress`', () => {
+    cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+
+    cy.checkTaskExportContractStatusIsInProgress();
   });
 });

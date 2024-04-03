@@ -68,6 +68,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
+      // TODO: url const
       const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);

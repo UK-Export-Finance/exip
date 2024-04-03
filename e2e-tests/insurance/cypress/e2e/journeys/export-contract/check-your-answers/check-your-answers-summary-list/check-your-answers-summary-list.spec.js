@@ -3,7 +3,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   EXPORT_CONTRACT,
 } = INSURANCE_ROUTES;
 
@@ -25,7 +25,7 @@ context('Insurance - Export contract - Check your answers - Summary list', () =>
 
       cy.completeExportContractSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
     });
   });
 

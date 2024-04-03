@@ -2,7 +2,7 @@ import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-co
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: { PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
@@ -27,8 +27,8 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -50,7 +50,7 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(expected);
     });
@@ -64,6 +64,10 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
+    });
+
+    it('should retain the status of task `export contract` as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -88,6 +92,10 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
+    });
+
+    it('should retain the status of task `export contract` as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

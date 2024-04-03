@@ -18,6 +18,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET;
 
 const {
   ROOT,
+  ALL_SECTIONS,
   EXPORT_CONTRACT: {
     PRIVATE_MARKET, HOW_WILL_YOU_GET_PAID, DECLINED_BY_PRIVATE_MARKET, CHECK_YOUR_ANSWERS,
   },
@@ -155,6 +156,13 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
         cy.assertUrl(checkYourAnswersUrl);
       });
 
+      it('should retain the status of task `export contract` as `in progress`', () => {
+        // TODO: url const
+        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+
+        cy.checkTaskExportContractStatusIsInProgress();
+      });
+
       describe('when going back to the page', () => {
         it('should have the submitted value', () => {
           cy.navigateToUrl(url);
@@ -169,6 +177,12 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
         cy.completeAndSubmitPrivateMarketForm({ attempted: true });
 
         cy.assertUrl(declinedByPrivateMarketUrl);
+      });
+
+      it('should retain the status of task `export contract` as `in progress`', () => {
+        cy.navigateToUrl(`${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+
+        cy.checkTaskExportContractStatusIsInProgress();
       });
 
       describe('when going back to the page', () => {
