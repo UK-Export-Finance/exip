@@ -27,8 +27,8 @@ interface RequiredFields {
 
 /**
  * privateCoverTasks
- * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @returns {String} Private cover task
  */
 export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
