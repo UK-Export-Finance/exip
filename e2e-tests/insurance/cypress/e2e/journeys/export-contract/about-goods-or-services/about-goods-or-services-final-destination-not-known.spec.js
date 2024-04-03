@@ -59,10 +59,10 @@ context('Insurance - Export contract - About goods or services page - Final dest
     });
 
     describe('after submitting the form', () => {
-      it('should update the `export contract` task status to `completed`', () => {
+      it('should retain the `export contract` task status as `in progress`', () => {
         cy.navigateToUrl(allSectionsUrl);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
     });
 
