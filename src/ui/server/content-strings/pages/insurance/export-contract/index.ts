@@ -39,6 +39,12 @@ const DECLINED_BY_PRIVATE_MARKET = {
   PAGE_TITLE: "Why couldn't you get cover through the private insurance market?",
 };
 
+const AGENT = {
+  ...SHARED,
+  PAGE_TITLE: 'Did anyone help you win your export contract?',
+  HINT: 'This is usually an agent who helped with tendering, connecting you to the buyer or setting up the contract.',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -50,5 +56,6 @@ export default {
   HOW_WILL_YOU_GET_PAID,
   PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET,
+  AGENT,
   CHECK_YOUR_ANSWERS,
 };

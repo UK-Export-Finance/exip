@@ -231,6 +231,7 @@ jobs:
             "export-contract/how-will-you-get-paid/**/*.spec.js",
             "export-contract/private-market/**/*.spec.js",
             "export-contract/declined-by-private-market/**/*.spec.js",
+            "export-contract/agent/**/*.spec.js",
             "export-contract/change-your-answers/**/*.spec.js",
             "export-contract/check-your-answers/**/*.spec.js",
             "export-contract/root/**/*.spec.js",

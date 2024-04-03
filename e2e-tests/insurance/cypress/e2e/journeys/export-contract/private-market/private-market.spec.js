@@ -20,7 +20,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
-    PRIVATE_MARKET, HOW_WILL_YOU_GET_PAID, DECLINED_BY_PRIVATE_MARKET, CHECK_YOUR_ANSWERS,
+    PRIVATE_MARKET, HOW_WILL_YOU_GET_PAID, DECLINED_BY_PRIVATE_MARKET, AGENT,
   },
 } = INSURANCE_ROUTES;
 
@@ -36,7 +36,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
   let referenceNumber;
   let url;
   let declinedByPrivateMarketUrl;
-  let checkYourAnswersUrl;
+  let agentUrl;
   let allSectionsUrl;
 
   before(() => {
@@ -44,7 +44,7 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      agentUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       declinedByPrivateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
@@ -152,10 +152,10 @@ context('Insurance - Export contract - Private market page - As an exporter, I w
     });
 
     describe(`when selecting no for ${FIELD_ID}`, () => {
-      it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: false });
+      it(`should redirect to ${AGENT} page`, () => {
+        cy.completeAndSubmitPrivateMarketForm({ attempted: false });
 
-        cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(agentUrl);
       });
 
       it('should update the `export contract` task status to `completed`', () => {

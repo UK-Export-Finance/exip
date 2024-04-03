@@ -12,7 +12,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 const {
   ROOT,
   ALL_SECTIONS,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID, AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -130,12 +130,12 @@ context('Insurance - Export contract - How will you get paid page - As an export
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${AGENT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
-      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       cy.assertUrl(expectedUrl);
     });
 

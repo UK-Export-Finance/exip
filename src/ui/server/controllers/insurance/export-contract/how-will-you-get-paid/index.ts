@@ -14,7 +14,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -71,7 +71,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Checkvalidation errors and if successful, redirect to the next part of the flow.
+ * Check validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -111,13 +111,13 @@ export const post = async (req: Request, res: Response) => {
     /**
      * if totalContractValue is over the threshold
      * redirect to PRIVATE_MARKET
-     * otherwise it should redirect to the CHECK_YOUR_ANSWERS page
+     * otherwise it should redirect to the AGENT page
      */
     if (application.totalContractValueOverThreshold) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
   } catch (err) {
     console.error('Error updating application - export contract - how will you get paid %O', err);
 

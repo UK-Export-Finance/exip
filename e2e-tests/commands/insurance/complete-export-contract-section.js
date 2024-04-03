@@ -25,6 +25,8 @@ const completeExportContractSection = ({
     }
   }
 
+  cy.completeAndSubmitAgentForm();
+
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();
   }

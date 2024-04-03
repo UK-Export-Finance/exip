@@ -1,36 +1,26 @@
-import { pageVariables, FIELD_ID, ERROR_MESSAGE, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
+import { pageVariables, FIELD_ID, PAGE_CONTENT_STRINGS, TEMPLATE, HTML_FLAGS, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
-import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
+import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import constructPayload from '../../../../helpers/construct-payload';
-import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT, DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
-const {
-  PRIVATE_MARKET: { DECLINED_DESCRIPTION },
-} = EXPORT_CONTRACT_FIELD_IDS;
-
-const {
-  INSURANCE: {
-    EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET },
-  },
-} = TEMPLATES;
+const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
 const { referenceNumber } = mockApplication;
 
-describe('controllers/insurance/export-contract/declined-by-private-market', () => {
+describe('controllers/insurance/export-contract/agent', () => {
   let req: Request;
   let res: Response;
 
@@ -48,27 +38,29 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
 
   describe('FIELD_ID', () => {
     it('should have the correct FIELD_ID', () => {
-      expect(FIELD_ID).toEqual(DECLINED_DESCRIPTION);
-    });
-  });
-
-  describe('ERROR_MESSAGE', () => {
-    it('should have the correct error message', () => {
-      const expected = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID].IS_EMPTY;
-
-      expect(ERROR_MESSAGE).toEqual(expected);
+      expect(FIELD_ID).toEqual(USING_AGENT);
     });
   });
 
   describe('PAGE_CONTENT_STRINGS', () => {
     it('should have the correct strings', () => {
-      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.DECLINED_BY_PRIVATE_MARKET);
+      expect(PAGE_CONTENT_STRINGS).toEqual(PAGES.INSURANCE.EXPORT_CONTRACT.AGENT);
     });
   });
 
   describe('TEMPLATE', () => {
     it('should have the correct template defined', () => {
-      expect(TEMPLATE).toEqual(DECLINED_BY_PRIVATE_MARKET);
+      expect(TEMPLATE).toEqual(TEMPLATES.SHARED_PAGES.SINGLE_RADIO);
+    });
+  });
+
+  describe('HTML_FLAGS', () => {
+    it('should have correct properties', () => {
+      const expected = {
+        NO_RADIO_AS_FIRST_OPTION: true,
+      };
+
+      expect(HTML_FLAGS).toEqual(expected);
     });
   });
 
@@ -81,7 +73,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
           ID: FIELD_ID,
           ...FIELDS.PRIVATE_MARKET[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}#`,
       };
 
       expect(result).toEqual(expected);
@@ -93,9 +85,10 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
       get(req, res);
 
       const expectedVariables = {
-        ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
+        ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
         application: mapApplicationToFormFields(mockApplication),
       };
 
@@ -116,43 +109,12 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
   });
 
   describe('post', () => {
-    const validBody = {
-      [FIELD_ID]: mockApplication.exportContract.privateMarket[FIELD_ID],
-    };
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      post(req, res);
 
-    describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
-        req.body = {};
+      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-        post(req, res);
-
-        const payload = constructPayload(req.body, [FIELD_ID]);
-
-        const validationErrors = generateValidationErrors(payload);
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
-          ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-          ...pageVariables(referenceNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplication),
-          submittedValues: payload,
-          validationErrors,
-        });
-      });
-    });
-
-    describe('when there are no validation errors', () => {
-      beforeEach(() => {
-        req.body = validBody;
-      });
-
-      it(`should redirect to ${AGENT}`, () => {
-        post(req, res);
-
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
-
-        expect(res.redirect).toHaveBeenCalledWith(expected);
-      });
+      expect(res.redirect).toHaveBeenCalledWith(expected);
     });
 
     describe('when there is no application', () => {
