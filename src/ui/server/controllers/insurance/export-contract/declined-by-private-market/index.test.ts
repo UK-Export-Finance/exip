@@ -120,7 +120,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
     });
   });
 
-  describe.only('post', () => {
+  describe('post', () => {
     const validBody = {
       [FIELD_ID]: mockApplication.exportContract.privateMarket[FIELD_ID],
     };
@@ -146,7 +146,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
       });
     });
 
-    describe.only('when there are no validation errors', () => {
+    describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
       });
