@@ -1,15 +1,15 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import hasFormData from '../../../../../helpers/has-form-data';
-import { ERROR_MESSAGE, FIELD_ID } from '..';
+import { FIELD_ID } from '..';
 import constructPayload from '../../../../../helpers/construct-payload';
-import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
+import generateValidationErrors from '../validation';
 import mapAndSave from '../../map-and-save/private-market';
 import { Request, Response } from '../../../../../../types';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 /**
  * post
- * Save any valid "Private market" form fields and if successful, redirect to the all sections page
+ * Save any valid "Declined by private market" form fields and if successful, redirect to the all sections page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} All sections page or error page
@@ -34,7 +34,7 @@ export const post = async (req: Request, res: Response) => {
     if (hasFormData(req.body)) {
       const payload = constructPayload(req.body, [FIELD_ID]);
 
-      const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+      const validationErrors = generateValidationErrors(payload);
 
       const saveResponse = await mapAndSave.privateMarket(payload, application, validationErrors);
 
@@ -45,7 +45,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
   } catch (err) {
-    console.error('Error updating application - export contract - private market (save and back) %O', err);
+    console.error('Error updating application - export contract - declined by private market (save and back) %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
