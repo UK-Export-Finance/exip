@@ -69,9 +69,13 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
     /**
      * 1) Create a new buyer with country and application relationship.
      * 2) Get a totalContractValue DB entry, for linking a relationship to eligibility.
-     * 3) Create a new eligibility with country and application relationship.
-     * 4) Create a new policy with application relationship.
-     * 5) Create a new sectionReview with application relationship
+     * 3) Create a cover period value from the DB.
+     * 4) Create a new eligibility with country and application relationship.
+     * 5) Create a new export contract with application relationship.
+     * 6) Create a new policy with application relationship.
+     * 7) Create a new nominated loss payee with application relationship.
+     * 8) Create a new company with application relationship.
+     * 9) Create a new sectionReview with application relationship
      */
     const { buyer } = await createABuyer(context, country.id, applicationId);
 
