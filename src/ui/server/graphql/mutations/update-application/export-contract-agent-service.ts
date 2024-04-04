@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const updateApplicationExportContractAgentServiceMutation = gql`
-  mutation updateExportContract($where: ExportContractAgentServiceWhereUniqueInput!, $data: ExportContractAgentServiceUpdateInput!) {
+  mutation updateExportContractAgentService($where: ExportContractAgentServiceWhereUniqueInput!, $data: ExportContractAgentServiceUpdateInput!) {
     updateExportContractAgentService(where: $where, data: $data) {
       id
     }
