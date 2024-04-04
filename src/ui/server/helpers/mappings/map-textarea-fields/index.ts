@@ -9,6 +9,7 @@ const {
   },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
+    PRIVATE_MARKET: { DECLINED_DESCRIPTION },
   },
   POLICY: {
     BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
@@ -43,6 +44,8 @@ const mapTextareaFields = (application: Application): Application => {
   company.differentTradingAddress[FULL_ADDRESS] = replaceCharacterCodesWithCharacters(company.differentTradingAddress[FULL_ADDRESS]);
 
   exportContract[DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract[DESCRIPTION]);
+
+  exportContract.privateMarket[DECLINED_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.privateMarket[DECLINED_DESCRIPTION]);
 
   policy[CREDIT_PERIOD_WITH_BUYER] = replaceCharacterCodesWithCharacters(policy[CREDIT_PERIOD_WITH_BUYER]);
 

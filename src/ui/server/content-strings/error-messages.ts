@@ -164,6 +164,9 @@ export const ERROR_MESSAGES = {
           ABOVE_MAXIMUM: `The description of why you couldn't get cover through the private market cannot be more than ${MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION} characters`,
         },
       },
+      [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.USING_AGENT]: {
+        IS_EMPTY: 'Select if you have tried to insure this export through the private market',
+      },
     },
     POLICY: {
       TYPE_OF_POLICY: {

@@ -26,7 +26,10 @@ export const get = (req: Request, res: Response) => {
 
   const { referenceNumber, policy, exportContract, broker, company, declaration, buyer, totalContractValueOverThreshold } = application;
   const { policyType, jointlyInsuredParty } = policy;
-  const { finalDestinationKnown } = exportContract;
+  const {
+    finalDestinationKnown,
+    privateMarket: { attempted: attemptedPrivateMarketCover },
+  } = exportContract;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
   const { hasAntiBriberyCodeOfConduct } = declaration;
@@ -49,6 +52,7 @@ export const get = (req: Request, res: Response) => {
     outstandingPayments,
     exporterHasPreviousCreditInsuranceWithBuyer,
     totalContractValueOverThreshold,
+    attemptedPrivateMarketCover,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);

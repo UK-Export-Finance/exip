@@ -13,7 +13,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, DECLINED_BY_PRIVATE_MARKET, PRIVATE_MARKET_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET, PRIVATE_MARKET_SAVE_AND_BACK, AGENT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -160,17 +160,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
     });
 
     describe('when there are no validation errors', () => {
-      describe('when the answer is false', () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.body = validBody;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
       describe('when the answer is true', () => {
         it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET}`, async () => {
           req.body = {
@@ -181,6 +170,19 @@ describe('controllers/insurance/export-contract/private-market', () => {
 
           const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the answer is false', () => {
+        it(`should redirect to ${AGENT}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

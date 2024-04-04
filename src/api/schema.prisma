@@ -184,18 +184,38 @@ model JointlyInsuredParty {
 }
 
 model ExportContract {
-  id                              String         @id @default(cuid())
-  application                     Application?   @relation("ExportContract_application", fields: [applicationId], references: [id])
-  applicationId                   String?        @map("application")
-  privateMarket                   PrivateMarket? @relation("ExportContract_privateMarket", fields: [privateMarketId], references: [id])
-  privateMarketId                 String?        @unique @map("privateMarket")
+  id                              String               @id @default(cuid())
+  application                     Application?         @relation("ExportContract_application", fields: [applicationId], references: [id])
+  applicationId                   String?              @map("application")
+  agent                           ExportContractAgent? @relation("ExportContract_agent", fields: [agentId], references: [id])
+  agentId                         String?              @unique @map("agent")
+  privateMarket                   PrivateMarket?       @relation("ExportContract_privateMarket", fields: [privateMarketId], references: [id])
+  privateMarketId                 String?              @unique @map("privateMarket")
   finalDestinationKnown           Boolean?
-  finalDestinationCountryCode     String         @default("") @mysql.VarChar(3)
-  goodsOrServicesDescription      String         @default("") @mysql.VarChar(1000)
-  paymentTermsDescription         String         @default("") @mysql.VarChar(1000)
-  from_Application_exportContract Application[]  @relation("Application_exportContract")
+  finalDestinationCountryCode     String               @default("") @mysql.VarChar(3)
+  goodsOrServicesDescription      String               @default("") @mysql.VarChar(1000)
+  paymentTermsDescription         String               @default("") @mysql.VarChar(1000)
+  from_Application_exportContract Application[]        @relation("Application_exportContract")
 
   @@index([applicationId])
+}
+
+model ExportContractAgent {
+  id             String                      @id @default(cuid())
+  exportContract ExportContract?             @relation("ExportContract_agent")
+  service        ExportContractAgentService? @relation("ExportContractAgent_service", fields: [serviceId], references: [id])
+  serviceId      String?                     @unique @map("service")
+  countryCode    String                      @default("") @mysql.VarChar(3)
+  fullAddress    String                      @default("") @mysql.VarChar(500)
+  isUsingAgent   Boolean?
+  name           String                      @default("") @mysql.VarChar(800)
+}
+
+model ExportContractAgentService {
+  id                 String               @id @default(cuid())
+  agent              ExportContractAgent? @relation("ExportContractAgent_service")
+  agentIsCharging    Boolean?
+  serviceDescription String               @default("") @mysql.VarChar(1000)
 }
 
 model PrivateMarket {

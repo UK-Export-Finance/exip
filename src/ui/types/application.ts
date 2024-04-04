@@ -222,7 +222,7 @@ interface Application extends ApplicationCore {
   nominatedLossPayee: ApplicationNominatedLossPayee;
   sectionReview: ApplicationSectionReview;
   declaration: ApplicationDeclaration;
-  totalContractValueOverThreshold?: boolean;
+  totalContractValueOverThreshold: boolean;
 }
 
 interface ApplicationFlatCore extends ApplicationCore, InsuranceEligibilityCore, ApplicationOwner {

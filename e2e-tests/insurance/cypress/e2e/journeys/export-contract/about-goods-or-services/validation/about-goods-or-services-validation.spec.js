@@ -12,7 +12,7 @@ const {
 } = FIELD_IDS;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES },
 } = INSURANCE_ROUTES;
 
@@ -53,7 +53,7 @@ context('Insurance - Export contract - About goods or services page - form valid
 
       cy.startInsuranceExportContractSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
 
       cy.assertUrl(url);
     });

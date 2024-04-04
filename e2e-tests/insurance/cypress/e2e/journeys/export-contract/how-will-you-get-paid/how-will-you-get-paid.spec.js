@@ -10,8 +10,9 @@ import application from '../../../../../../fixtures/application';
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 
 const {
-  ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
+  ROOT,
+  ALL_SECTIONS,
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID, AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -34,6 +35,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - As an exporter, I want to provide information on how I will be paid for my export, So that UKEF can have clarity on the payment terms I have with the buyer', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -43,7 +45,8 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -58,8 +61,8 @@ context('Insurance - Export contract - How will you get paid page - As an export
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      currentHref: `${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
+      backLink: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
     });
   });
 
@@ -127,13 +130,19 @@ context('Insurance - Export contract - How will you get paid page - As an export
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${AGENT}`, () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       cy.assertUrl(expectedUrl);
+    });
+
+    it('should update the `export contract` task status to `completed`', () => {
+      cy.navigateToUrl(allSectionsUrl);
+
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {

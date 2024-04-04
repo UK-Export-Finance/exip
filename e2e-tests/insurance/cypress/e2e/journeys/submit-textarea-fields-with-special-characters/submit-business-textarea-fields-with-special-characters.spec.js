@@ -25,7 +25,10 @@ context('Insurance - Textarea fields - `Business` textarea fields should render 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      // go to the page we want to test.
+      /**
+       * Set the default state of the business section,
+       * so that an alternative trading address is required.
+       */
       cy.startYourBusinessSection({});
       cy.completeCompanyDetailsForm({ differentTradingAddress: true });
 

@@ -12,7 +12,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { COMMISSIONING_AGENT },
+  EXPORT_CONTRACT: { AGENT, DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -45,7 +45,7 @@ export const pageVariables = (referenceNumber: number) => ({
     ID: FIELD_ID,
     ...FIELDS.PRIVATE_MARKET[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`,
 });
 
 /**
@@ -101,5 +101,5 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${COMMISSIONING_AGENT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
 };

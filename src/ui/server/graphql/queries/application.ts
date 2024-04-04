@@ -87,6 +87,16 @@ const applicationQuery = gql`
             attempted
             declinedDescription
           }
+          agent {
+            isUsingAgent
+            name
+            fullAddress
+            countryCode
+            service {
+              serviceDescription
+              agentIsCharging
+            }
+          }
         }
         owner {
           id

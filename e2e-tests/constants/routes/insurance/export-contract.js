@@ -3,7 +3,8 @@ const ABOUT_GOODS_OR_SERVICES_ROOT = `${ROOT}/about-goods-or-services`;
 const HOW_WILL_YOU_GET_PAID_ROOT = `${ROOT}/how-will-you-get-paid`;
 const PRIVATE_MARKET_ROOT = `${ROOT}/private-market`;
 const DECLINED_BY_PRIVATE_MARKET_ROOT = `${ROOT}/declined-by-private-market`;
-const COMMISSIONING_AGENT_ROOT = `${ROOT}/commissioning-agent`;
+const AGENT_ROOT = `${ROOT}/agent`;
+const AGENT_SERVICES_ROOT = `${ROOT}/agent-services`;
 
 export const EXPORT_CONTRACT = {
   ROOT,
@@ -20,6 +21,8 @@ export const EXPORT_CONTRACT = {
   PRIVATE_MARKET_CHANGE: `${PRIVATE_MARKET_ROOT}/change`,
   PRIVATE_MARKET_CHECK_AND_CHANGE: `${PRIVATE_MARKET_ROOT}/check-and-change`,
   DECLINED_BY_PRIVATE_MARKET: DECLINED_BY_PRIVATE_MARKET_ROOT,
-  COMMISSIONING_AGENT: COMMISSIONING_AGENT_ROOT,
+  DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK: `${DECLINED_BY_PRIVATE_MARKET_ROOT}/save-and-go-back`,
+  AGENT: AGENT_ROOT,
+  AGENT_SERVICES: AGENT_SERVICES_ROOT,
   CHECK_YOUR_ANSWERS: `${ROOT}/check-your-answers`,
 };

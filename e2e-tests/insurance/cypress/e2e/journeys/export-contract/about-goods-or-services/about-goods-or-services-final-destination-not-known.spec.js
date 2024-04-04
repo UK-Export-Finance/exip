@@ -6,7 +6,7 @@ import application from '../../../../../../fixtures/application';
 import { checkAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES,
@@ -25,6 +25,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - About goods or services page - Final destination not known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -32,7 +33,8 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
       cy.startInsuranceExportContractSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -52,15 +54,15 @@ context('Insurance - Export contract - About goods or services page - Final dest
     it(`should redirect to ${HOW_WILL_YOU_GET_PAID}`, () => {
       cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown: false });
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       cy.assertUrl(expectedUrl);
     });
 
     describe('after submitting the form', () => {
-      it('should update the `export contract` task status to `completed`', () => {
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+      it('should retain the `export contract` task status as `in progress`', () => {
+        cy.navigateToUrl(allSectionsUrl);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
     });
 

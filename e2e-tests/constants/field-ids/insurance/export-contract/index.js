@@ -14,6 +14,16 @@ export const EXPORT_CONTRACT = {
     ATTEMPTED: 'attempted',
     DECLINED_DESCRIPTION: 'declinedDescription',
   },
+  USING_AGENT: 'isUsingAgent',
+  AGENT: {
+    NAME: 'name',
+    FULL_ADDRESS: 'fullAddress',
+    COUNTRY_CODE: 'countryCode',
+  },
+  AGENT_SERVICE: {
+    SERVICE_DESCRIPTION: 'serviceDescription',
+    IS_CHARGING: 'agentIsCharging',
+  },
 };
 
 export default EXPORT_CONTRACT;
