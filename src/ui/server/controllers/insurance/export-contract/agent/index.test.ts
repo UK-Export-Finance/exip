@@ -123,7 +123,7 @@ describe('controllers/insurance/export-contract/agent', () => {
     });
   });
 
-  describe.only('post', () => {
+  describe('post', () => {
     const validBody = {
       [FIELD_ID]: 'false',
     };
