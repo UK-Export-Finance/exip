@@ -1,8 +1,8 @@
 export const INTEGRITY = {
   JS: 'sha512-BFOXngFJ+9msC1y5Q1LD6AG+LG635vp8Lfv/+HVCUU8w/N8VWH13wdTyZeLGvu4d7zoTz83nfz329ENYfe9x5Q==',
   ACCESSIBILITY: 'sha512-qY79CmgvsFLc+t+SzNpISz4CplB1ETS1NtbKBt1ulS4o8SE2eNWskePJ6p9Ve3zurbvrJZyBSrTB639kKYD27A==',
-  MOJ: 'sha512-zYh1qAhuygoZdhLW2OJo7smCM2NtloumUp56lFoV6dsqDrWIq2l03ABfyFQwWZxEwoxnUBq+talLuI/lHHSVLg==',
-  GOVUK: 'sha512-/L4XsKjvF/MqYwsaRmV6EPw4YUEEwAeeCVCj23B/qeHKwQLz31PddxUOmCXejRg2/mTmgfmE3PxMEf0yGSuvug==',
+  MOJ: 'sha512-22CV/XdUlNtp8y5eMr7TbzFtyMn37SUhOBta5uTF2sHduNOFbbAJlcWxznStDqiNJyrR3WmLfRD0FJ4T5EJFOQ==',
+  GOVUK: 'sha512-zLbpfwwFhmD5jzdttLTWUCn1hv4RCMbLQhllFP/n1oV+r8J1H+qnfjfd2sriBjOUXq9FwsL6URV/YD7gyW8Yhg==',
   FORM: 'sha512-iLw/Pa746ZmhA0V+1Vj107wkJKKnTwS5EggladAAm+onBFlgZBTRGA4xf3bVGU40qPKP6Fjn16JW6G+g3tnj7A==',
   COOKIES: 'sha512-mdioDv38Cx1nkVD8oPXoJxvie9wf/339EE8g8+jlsVaDrJeJiwUkYBwweF3fqQMZfZzO8ivTXAEyithgBzeEpw==',
   GA: 'sha512-GYc1xJpYfgNCIBH1NDfs7GhzBdepN1aPqueETCi5ZFIaompI6v++beAnZgbxpSyKr2GqO/oUpm86HZyoe3tD1Q==',
