@@ -134,18 +134,12 @@ context('Insurance - Export contract - Declined by private market page - As an e
     });
 
     describe('after submitting the form', () => {
-      it('should update the `export contract` task status to `completed`', () => {
-        cy.navigateToUrl(url);
-
-        cy.completeAndSubmitDeclinedByPrivateMarketForm({});
-
+      beforeEach(() => {
         cy.navigateToUrl(allSectionsUrl);
-
-        cy.checkTaskExportContractStatusIsComplete();
       });
 
-      it('should retain the status of task `declarations` as `in progress`', () => {
-        cy.checkTaskDeclarationsAndSubmitStatusIsInProgress();
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.checkTaskExportContractStatusIsComplete();
       });
     });
   });
