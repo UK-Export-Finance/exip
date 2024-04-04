@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID },
 } = INSURANCE_ROUTES;
@@ -20,6 +20,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - Save and go back', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -29,7 +30,9 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
       cy.assertUrl(url);
     });
   });
@@ -50,9 +53,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
   });
 
@@ -66,9 +67,11 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      cy.assertUrl(allSectionsUrl);
+    });
 
-      cy.assertUrl(expected);
+    it('should update the `export contract` task status to `completed`', () => {
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     it('should have the originally submitted answer when going back to the page after submission', () => {
@@ -111,9 +114,11 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      cy.assertUrl(allSectionsUrl);
+    });
 
-      cy.assertUrl(expected);
+    it('should update the `export contract` task status to `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     it(`should have no value in '${FIELD_ID}' when going back to the page`, () => {

@@ -17,7 +17,7 @@ import { assertCountryAutocompleteInput, checkAutocompleteInput } from '../../..
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ROOT: EXPORT_CONTRACT_ROOT,
@@ -37,6 +37,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -44,7 +45,8 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
       cy.startInsuranceExportContractSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -61,8 +63,8 @@ context('Insurance - Export contract - About goods or services page - Final dest
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
+      currentHref: `${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`,
+      backLink: `${ROOT}/${referenceNumber}${EXPORT_CONTRACT_ROOT}`,
     });
   });
 
@@ -153,19 +155,19 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+      const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
       cy.assertUrl(expectedUrl);
     });
 
     describe('after submitting the form', () => {
-      it('should update the `export contract` task status to `completed`', () => {
+      it('should retain the `export contract` task status as `in progress`', () => {
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-        cy.navigateToUrl(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+        cy.navigateToUrl(allSectionsUrl);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
     });
 

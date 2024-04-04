@@ -1,10 +1,14 @@
-import EXPORT_CONTRACT_FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 
-const { ABOUT_GOODS_OR_SERVICES } = EXPORT_CONTRACT_FIELD_IDS;
+const {
+  ABOUT_GOODS_OR_SERVICES,
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+  PRIVATE_MARKET: { ATTEMPTED },
+} = FIELD_IDS;
 
 /**
  * getAboutGoodsOrServicesTasks
- * @param {Boolean} finalDestinationKnown: Application "Final destination known"
+ * @param {Boolean} finalDestinationKnown: "Final destination known"
  * @returns {Array} Array of tasks
  */
 export const getAboutGoodsOrServicesTasks = (finalDestinationKnown?: boolean) => {
@@ -16,14 +20,42 @@ export const getAboutGoodsOrServicesTasks = (finalDestinationKnown?: boolean) =>
 };
 
 interface RequiredFields {
+  totalContractValueOverThreshold?: boolean;
   finalDestinationKnown?: boolean;
+  attemptedPrivateMarketCover?: boolean;
 }
 
 /**
+ * privateCoverTasks
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @returns {String} Private cover task
+ */
+export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPrivateMarketCover }: RequiredFields): Array<string> => {
+  if (totalContractValueOverThreshold) {
+    if (attemptedPrivateMarketCover) {
+      // TODO: EMS-2946
+      // return [DECLINED_DESCRIPTION];
+      return [];
+    }
+
+    return [ATTEMPTED];
+  }
+
+  return [];
+};
+
+/**
  * Required fields for the insurance - export contract section
- * @param {Boolean} finalDestinationKnown: Application "Final destination known"
+ * * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} finalDestinationKnown: "Final destination known"
+ * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @returns {Array} Required field IDs
  */
-const requiredFields = ({ finalDestinationKnown }: RequiredFields): Array<string> => getAboutGoodsOrServicesTasks(finalDestinationKnown);
+const requiredFields = ({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover }: RequiredFields): Array<string> => [
+  PAYMENT_TERMS_DESCRIPTION,
+  ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
+  ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
+];
 
 export default requiredFields;

@@ -20,6 +20,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - About goods or services page - Save and go back', () => {
   let referenceNumber;
   let url;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -28,6 +29,8 @@ context('Insurance - Export contract - About goods or services page - Save and g
       cy.startInsuranceExportContractSection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
+      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
       cy.assertUrl(url);
     });
   });
@@ -48,9 +51,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should retain the `export contract` task status as `not started`', () => {
@@ -68,9 +69,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should update the `export contract` task status to `in progress`', () => {
@@ -110,9 +109,7 @@ context('Insurance - Export contract - About goods or services page - Save and g
     });
 
     it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+      cy.assertUrl(allSectionsUrl);
     });
 
     it('should update the `export contract` task status to `not started`', () => {

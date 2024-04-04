@@ -34,7 +34,10 @@ describe('controllers/insurance/all-sections', () => {
       const { referenceNumber, policy, exportContract, broker, declaration, company, buyer, totalContractValueOverThreshold } = mockApplication;
 
       const { policyType, jointlyInsuredParty } = policy;
-      const { finalDestinationKnown } = exportContract;
+      const {
+        finalDestinationKnown,
+        privateMarket: { attempted: attemptedPrivateMarketCover },
+      } = exportContract;
       const { isUsingBroker } = broker;
       const { hasDifferentTradingName } = company;
       const { hasAntiBriberyCodeOfConduct } = declaration;
@@ -57,6 +60,7 @@ describe('controllers/insurance/all-sections', () => {
         outstandingPayments,
         exporterHasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
+        attemptedPrivateMarketCover,
       );
 
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);

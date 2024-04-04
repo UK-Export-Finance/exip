@@ -1,9 +1,4 @@
-import { autoCompleteField } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import application from '../../../../../../fixtures/application';
-import { checkAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const {
   ROOT,
@@ -14,21 +9,15 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const {
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-} = FIELD_IDS;
-
-const finalDestinationField = autoCompleteField(FINAL_DESTINATION);
-
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - About goods or services page - Final destination not known - As an exporter, I want to enter the details of the export contract', () => {
+context('Insurance - Export contract - About goods or services page - Final destination not known, Submission with total contract value over threshold', () => {
   let referenceNumber;
   let url;
   let allSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.startInsuranceExportContractSection({});
@@ -63,22 +52,6 @@ context('Insurance - Export contract - About goods or services page - Final dest
         cy.navigateToUrl(allSectionsUrl);
 
         cy.checkTaskExportContractStatusIsInProgress();
-      });
-    });
-
-    describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        cy.navigateToUrl(url);
-
-        aboutGoodsOrServicesPage[DESCRIPTION].textarea().should('have.value', application.EXPORT_CONTRACT[DESCRIPTION]);
-
-        cy.assertNoRadioOptionIsChecked();
-      });
-
-      it(`should NOT have a visible ${FINAL_DESTINATION}`, () => {
-        cy.navigateToUrl(url);
-
-        checkAutocompleteInput.isNotVisible(finalDestinationField);
       });
     });
   });

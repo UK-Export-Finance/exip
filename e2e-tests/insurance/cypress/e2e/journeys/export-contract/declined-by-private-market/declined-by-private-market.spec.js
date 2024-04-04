@@ -8,7 +8,8 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.DECLINED_BY_PRIVATE_MARKET;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
+  ALL_SECTIONS,
   EXPORT_CONTRACT: { PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET, AGENT },
 } = INSURANCE_ROUTES;
 
@@ -35,6 +36,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
   let referenceNumber;
   let url;
   let agentUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -44,10 +46,11 @@ context('Insurance - Export contract - Declined by private market page - As an e
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitPrivateMarketForm({ attempted: true });
+      cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
-      agentUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
+      agentUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -62,8 +65,8 @@ context('Insurance - Export contract - Declined by private market page - As an e
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
+      currentHref: `${ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`,
+      backLink: `${ROOT}/${referenceNumber}${PRIVATE_MARKET}`,
     });
   });
 
@@ -91,7 +94,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
     });
   });
 
-  describe('form submission', () => {
+  describe('form validation', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -119,11 +122,25 @@ context('Insurance - Export contract - Declined by private market page - As an e
         });
       });
     });
+  });
 
+  describe('form submission', () => {
     it(`should redirect to ${AGENT} page`, () => {
+      cy.navigateToUrl(url);
+
       cy.completeAndSubmitDeclinedByPrivateMarketForm({});
 
       cy.assertUrl(agentUrl);
+    });
+
+    describe('after submitting the form', () => {
+      beforeEach(() => {
+        cy.navigateToUrl(allSectionsUrl);
+      });
+
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.checkTaskExportContractStatusIsComplete();
+      });
     });
   });
 });

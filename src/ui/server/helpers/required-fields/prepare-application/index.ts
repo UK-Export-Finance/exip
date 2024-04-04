@@ -32,6 +32,7 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
   }),
   ...requiredExportContractFields({
     finalDestinationKnown: application[FINAL_DESTINATION_KNOWN],
+    totalContractValueOverThreshold: application.totalContractValueOverThreshold,
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
   ...requiredYourBuyerFields({
