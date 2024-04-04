@@ -1,8 +1,11 @@
 /**
  * completeAndSubmitAgentForm
- * Complete and submit the "Did anyone help you win your export contract?" form
+ * Complete and submit the "Using an agent" form
+ * @param {Boolean} usingAgent: Is using an agent. Defaults to false.
  */
-const completeAndSubmitAgentForm = () => {
+const completeAndSubmitAgentForm = ({ usingAgent }) => {
+  cy.completeAgentForm({ usingAgent });
+
   cy.clickSubmitButton();
 };
 

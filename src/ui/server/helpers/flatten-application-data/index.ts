@@ -72,8 +72,11 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     ...company,
     ...contact,
     ...exportContract,
+    ...getTrueAndFalseAnswers(exportContract),
+    ...exportContract.privateMarket,
+    ...getTrueAndFalseAnswers(exportContract.privateMarket),
     ...getTrueAndFalseAnswers(declaration),
-    // TODO: ticket number to be confirmed
+    // TODO: EMS-2772, EMS-2815
     // ...nominatedLossPayee,
     ...getTrueAndFalseAnswers(nominatedLossPayee),
     ...relationship,

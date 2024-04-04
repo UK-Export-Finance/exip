@@ -1,7 +1,8 @@
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
+  ALL_SECTIONS,
   EXPORT_CONTRACT: { PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
@@ -10,6 +11,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - Submission with total contract value over threshold', () => {
   let referenceNumber;
   let privateMarketUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -19,7 +21,8 @@ context('Insurance - Export contract - How will you get paid page - Submission w
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-      privateMarketUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      privateMarketUrl = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -35,5 +38,11 @@ context('Insurance - Export contract - How will you get paid page - Submission w
     cy.completeAndSubmitHowYouWillGetPaidForm({});
 
     cy.assertUrl(privateMarketUrl);
+  });
+
+  it('should retain the status of task `export contract` as `in progress`', () => {
+    cy.navigateToUrl(allSectionsUrl);
+
+    cy.checkTaskExportContractStatusIsInProgress();
   });
 });

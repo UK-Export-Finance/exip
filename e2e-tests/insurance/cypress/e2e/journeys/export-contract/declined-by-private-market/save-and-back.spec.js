@@ -27,7 +27,7 @@ context('Insurance - Export contract - Declined by private market - Save and go 
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitPrivateMarketForm({ attempted: true });
+      cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
       allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;

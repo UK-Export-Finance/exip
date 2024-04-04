@@ -66,6 +66,12 @@
  */
 
 /**
+ * Password input component
+ *
+ * @preserve
+ */
+
+/**
  * Radios component
  *
  * @preserve

@@ -9,23 +9,38 @@ import { mockApplication } from '../../../test-mocks';
 const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
 
 describe('server/helpers/task-list/generate-groups-and-tasks', () => {
-  const { referenceNumber, policy, exportContract, broker, declaration, company } = mockApplication;
-
-  const { policyType, jointlyInsuredParty } = policy;
-  const { finalDestinationKnown } = exportContract;
-  const { isUsingBroker } = broker;
-  const { hasDifferentTradingName } = company;
-  const { hasAntiBriberyCodeOfConduct } = declaration;
+  const {
+    broker: { isUsingBroker },
+    buyer: {
+      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments },
+    },
+    company: { hasDifferentTradingName },
+    declaration: { hasAntiBriberyCodeOfConduct },
+    exportContract: {
+      finalDestinationKnown,
+      privateMarket: { attempted: attemptedPrivateMarketCover },
+    },
+    policy: { policyType, jointlyInsuredParty },
+    referenceNumber,
+    totalContractValueOverThreshold,
+  } = mockApplication;
 
   it('should return EXIP groups and tasks', () => {
     const result = generateGroupsAndTasks(
       referenceNumber,
       policyType,
-      jointlyInsuredParty.requested,
       finalDestinationKnown,
+      jointlyInsuredParty.requested,
       isUsingBroker,
       hasDifferentTradingName,
       hasAntiBriberyCodeOfConduct,
+      exporterIsConnectedWithBuyer,
+      exporterHasTradedWithBuyer,
+      outstandingPayments,
+      exporterHasPreviousCreditInsuranceWithBuyer,
+      totalContractValueOverThreshold,
+      attemptedPrivateMarketCover,
     );
 
     const initialChecks = {
@@ -42,10 +57,16 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
         referenceNumber,
         [initialChecks],
         policyType,
-        jointlyInsuredParty.requested,
         finalDestinationKnown,
+        jointlyInsuredParty.requested,
         isUsingBroker,
         hasDifferentTradingName,
+        exporterIsConnectedWithBuyer,
+        exporterHasTradedWithBuyer,
+        outstandingPayments,
+        exporterHasPreviousCreditInsuranceWithBuyer,
+        totalContractValueOverThreshold,
+        attemptedPrivateMarketCover,
       ),
     };
 

@@ -1,22 +1,25 @@
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
-import { PAGES } from '../../../../content-strings';
+import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_SERVICES, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
 export const FIELD_ID = USING_AGENT;
+
+export const ERROR_MESSAGE = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT[FIELD_ID].IS_EMPTY;
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
 
@@ -27,6 +30,7 @@ export const TEMPLATE = TEMPLATES.SHARED_PAGES.SINGLE_RADIO;
  * Conditional flags for the nunjucks template to match design
  */
 export const HTML_FLAGS = {
+  HORIZONTAL_RADIOS: true,
   NO_RADIO_AS_FIRST_OPTION: true,
 };
 
@@ -63,13 +67,12 @@ export const get = (req: Request, res: Response) => {
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
     FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
-    application: mapApplicationToFormFields(application),
   });
 };
 
 /**
  * post
- * Redirect to the next part of the flow.
+ * Check for validation errors and if successful, redirect to the next part of the flow.
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
@@ -82,6 +85,26 @@ export const post = (req: Request, res: Response) => {
   }
 
   const { referenceNumber } = application;
+
+  const payload = constructPayload(req.body, [FIELD_ID]);
+
+  const validationErrors = generateValidationErrors(payload, FIELD_ID, ERROR_MESSAGE);
+
+  if (validationErrors) {
+    return res.render(TEMPLATE, {
+      ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer, HTML_FLAGS }),
+      ...pageVariables(referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
+      validationErrors,
+    });
+  }
+
+  const answer = payload[FIELD_ID];
+
+  if (answer === 'true') {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICES}`);
+  }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

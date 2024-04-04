@@ -196,6 +196,19 @@ describe('controllers/insurance/export-contract/private-market', () => {
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
+
+      describe('when the answer is false', () => {
+        it(`should redirect to ${AGENT}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
     });
 
     describe('when there is no application', () => {
