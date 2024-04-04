@@ -13,7 +13,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_SERVICES, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_SAVE_AND_BACK, AGENT_SERVICES, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
@@ -46,7 +46,7 @@ export const pageVariables = (referenceNumber: number) => ({
     ID: FIELD_ID,
     ...FIELDS.PRIVATE_MARKET[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_SAVE_AND_BACK}`,
 });
 
 /**
