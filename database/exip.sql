@@ -747,15 +747,53 @@ CREATE TABLE `ExportContract` (
   `finalDestinationKnown` tinyint(1) DEFAULT NULL,
   `paymentTermsDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `privateMarket` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `agent` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `ExportContract_privateMarket_key` (`privateMarket`),
+  UNIQUE KEY `ExportContract_agent_key` (`agent`),
   KEY `ExportContract_application_idx` (`application`),
-  CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
+  CONSTRAINT `ExportContract_agent_fkey` FOREIGN KEY (`agent`) REFERENCES `ExportContractAgent` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `ExportContract_application_fkey` FOREIGN KEY (`application`) REFERENCES `Application` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE,
     CONSTRAINT `ExportContract_privateMarket_fkey` FOREIGN KEY (`privateMarket`) REFERENCES `PrivateMarket` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
+# Dump of table ExportContractAgent
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `ExportContractAgent`;
+
+CREATE TABLE `ExportContractAgent` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `service` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `countryCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `fullAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `isUsingAgent` tinyint(1) DEFAULT NULL,
+  `name` varchar(800) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `ExportContractAgent_service_key` (`service`),
+  CONSTRAINT `ExportContractAgent_service_fkey` FOREIGN KEY (`service`) REFERENCES `ExportContractAgentService` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
+# Dump of table ExportContractAgentService
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `ExportContractAgentService`;
+
+CREATE TABLE `ExportContractAgentService` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `agentIsCharging` tinyint(1) DEFAULT NULL,
+  `serviceDescription` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 

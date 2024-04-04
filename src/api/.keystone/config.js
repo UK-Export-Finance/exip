@@ -297,7 +297,16 @@ var EXPORT_CONTRACT = {
     ATTEMPTED: "attempted",
     DECLINED_DESCRIPTION: "declinedDescription"
   },
-  USING_AGENT: "isUsingAgent"
+  USING_AGENT: "isUsingAgent",
+  AGENT: {
+    NAME: "name",
+    FULL_ADDRESS: "fullAddress",
+    COUNTRY_CODE: "countryCode"
+  },
+  AGENT_SERVICE: {
+    SERVICE_DESCRIPTION: "serviceDescription",
+    IS_CHARGING: "agentIsCharging"
+  }
 };
 var export_contract_default = EXPORT_CONTRACT;
 
@@ -1226,6 +1235,7 @@ var lists = {
   ExportContract: {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
+      agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.exportContract" }),
       privateMarket: (0, import_fields.relationship)({ ref: "PrivateMarket.exportContract" }),
       finalDestinationKnown: nullable_checkbox_default(),
       finalDestinationCountryCode: (0, import_fields.text)({
@@ -1244,6 +1254,33 @@ var lists = {
           await update_application_default.timestamp(context, item.applicationId);
         }
       }
+    },
+    access: import_access.allowAll
+  },
+  ExportContractAgent: (0, import_core2.list)({
+    fields: {
+      exportContract: (0, import_fields.relationship)({ ref: "ExportContract.agent" }),
+      service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.agent" }),
+      countryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
+      }),
+      fullAddress: (0, import_fields.text)({
+        db: { nativeType: "VarChar(500)" }
+      }),
+      isUsingAgent: nullable_checkbox_default(),
+      name: (0, import_fields.text)({
+        db: { nativeType: "VarChar(800)" }
+      })
+    },
+    access: import_access.allowAll
+  }),
+  ExportContractAgentService: {
+    fields: {
+      agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.service" }),
+      agentIsCharging: nullable_checkbox_default(),
+      serviceDescription: (0, import_fields.text)({
+        db: { nativeType: "VarChar(1000)" }
+      })
     },
     access: import_access.allowAll
   },
@@ -3871,6 +3908,48 @@ var createAPrivateMarket = async (context, exportContractId) => {
 };
 var create_a_private_market_default = createAPrivateMarket;
 
+// helpers/create-an-export-contract-agent-service/index.ts
+var createAnExportContractAgentService = async (context, agentId) => {
+  console.info("Creating an export contract agent service for ", agentId);
+  try {
+    const agentService = await context.db.ExportContractAgentService.createOne({
+      data: {
+        agent: {
+          connect: { id: agentId }
+        }
+      }
+    });
+    return agentService;
+  } catch (err) {
+    console.error("Error creating an export contract agent service %O", err);
+    throw new Error(`Creating an export contract agent service ${err}`);
+  }
+};
+var create_an_export_contract_agent_service_default = createAnExportContractAgentService;
+
+// helpers/create-an-export-contract-agent/index.ts
+var createAnExportContractAgent = async (context, exportContractId) => {
+  console.info("Creating an export contract agent for ", exportContractId);
+  try {
+    const agent = await context.db.ExportContractAgent.createOne({
+      data: {
+        exportContract: {
+          connect: { id: exportContractId }
+        }
+      }
+    });
+    const agentService = await create_an_export_contract_agent_service_default(context, agent.id);
+    return {
+      agent,
+      agentService
+    };
+  } catch (err) {
+    console.error("Error creating an export contract agent %O", err);
+    throw new Error(`Creating an export contract agent ${err}`);
+  }
+};
+var create_an_export_contract_agent_default = createAnExportContractAgent;
+
 // helpers/create-an-export-contract/index.ts
 var createAnExportContract = async (context, applicationId) => {
   console.info("Creating an export contract for ", applicationId);
@@ -3884,9 +3963,12 @@ var createAnExportContract = async (context, applicationId) => {
       }
     });
     const privateMarket = await create_a_private_market_default(context, exportContract.id);
+    const { agent, agentService } = await create_an_export_contract_agent_default(context, exportContract.id);
     return {
       exportContract,
-      privateMarket
+      privateMarket,
+      agent,
+      agentService
     };
   } catch (err) {
     console.error("Error creating an export contract %O", err);
