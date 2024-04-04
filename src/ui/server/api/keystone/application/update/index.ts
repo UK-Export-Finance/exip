@@ -7,6 +7,8 @@ import company from './company';
 import declarations from '../declarations';
 import companyDifferentTradingAddress from './companyDifferentTradingAddress';
 import exportContract from './exportContract';
+import exportContractAgent from './exportContractAgent';
+import exportContractAgentService from './exportContractAgentService';
 import jointlyInsuredParty from './jointlyInsuredParty';
 import nominatedLossPayee from './nominatedLossPayee';
 import policy from './policy';
@@ -29,6 +31,8 @@ const update = {
   declarations: declarations.update,
   companyDifferentTradingAddress,
   exportContract,
+  exportContractAgent,
+  exportContractAgentService,
   jointlyInsuredParty,
   nominatedLossPayee,
   policy,
