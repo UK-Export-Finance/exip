@@ -161,7 +161,6 @@ describe('controllers/insurance/export-contract/agent', () => {
         expect(mapAndSave.exportContractAgent).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-
       describe('when the answer is true', () => {
         it(`should redirect to ${AGENT_SERVICES}`, async () => {
           req.body = {
