@@ -66,21 +66,19 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent'
     });
   });
 
-  describe('api error handling', () => {
-    describe('when there is an error', () => {
-      beforeEach(() => {
-        updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-        api.keystone.application.update.exportContractAgent = updateApplicationSpy;
-      });
+  describe('when there is an error calling the API', () => {
+    beforeEach(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.exportContractAgent = updateApplicationSpy;
+    });
 
-      it('should throw an error', async () => {
-        try {
-          await save.exportContractAgent(mockApplication, mockFormBody.valid);
-        } catch (err) {
-          const expected = new Error("Updating application's exportContractAgent");
-          expect(err).toEqual(expected);
-        }
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.exportContractAgent(mockApplication, mockFormBody.valid);
+      } catch (err) {
+        const expected = new Error("Updating application's exportContractAgent");
+        expect(err).toEqual(expected);
+      }
     });
   });
 });
