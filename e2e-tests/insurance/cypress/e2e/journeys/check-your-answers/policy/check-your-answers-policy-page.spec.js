@@ -23,7 +23,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Check your answers - Policy - I want to confirm my selection for the policy section of my credit insurance application', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,8 +33,6 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
       task.link().click();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
-
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -88,7 +85,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
 
     describe('when going back to the all sections page', () => {
       beforeEach(() => {
-        cy.navigateToUrl(allSectionsUrl);
+        cy.navigateToAllSectionsUrl(referenceNumber);
       });
 
       it('should retain the status of task `check your answers` as `in progress`', () => {

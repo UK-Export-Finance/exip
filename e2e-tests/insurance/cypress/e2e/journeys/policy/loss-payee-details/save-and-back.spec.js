@@ -11,7 +11,6 @@ const {
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     LOSS_PAYEE_DETAILS_ROOT,
   },
@@ -24,7 +23,6 @@ const { POLICY } = application;
 context('Insurance - Policy - Loss payee details page - Save and back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -43,7 +41,6 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -58,32 +55,32 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
   });
 
   describe('when no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsComplete();
     });
   });
 
   describe(`when entering a value for ${NAME}`, () => {
-    it(`should redirect to ${ALL_SECTIONS} and keep the "insurance policy" task status to "in progress"`, () => {
+    it('should redirect to `all sections` and keep the `insurance policy` task status to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field(NAME).input(), POLICY[NAME]);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsComplete();
     });
 
     it('should retain all the relevant fields on the page', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.startInsurancePolicySection({});
 
@@ -101,20 +98,20 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
   });
 
   describe('when all fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeLossPayeeDetailsForm({});
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsComplete();
     });
 
     it('should retain all the relevant fields on the page', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.startInsurancePolicySection({});
 

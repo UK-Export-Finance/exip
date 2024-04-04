@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: { PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
@@ -16,7 +15,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Private market - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -28,7 +26,6 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -49,30 +46,30 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
   });
 
   describe(`when selecting no for ${FIELD_ID}`, () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.completePrivateMarketForm({ attemptedPrivateMarketCover: false });
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should update the `export contract` task status to `completed`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
       it('should have the submitted value', () => {
-        cy.navigateToUrl(allSectionsUrl);
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
         cy.startInsuranceExportContractSection({});
 
@@ -85,24 +82,24 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
   });
 
   describe(`when selecting yes for ${FIELD_ID}`, () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.completePrivateMarketForm({ attemptedPrivateMarketCover: true });
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should update the `export contract` task status to `completed`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
       it('should have the submitted value', () => {
-        cy.navigateToUrl(allSectionsUrl);
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
         cy.startInsuranceExportContractSection({});
 

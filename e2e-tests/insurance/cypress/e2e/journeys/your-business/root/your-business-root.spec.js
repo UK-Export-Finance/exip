@@ -101,7 +101,7 @@ context('Insurance - Your business - Start page - As an Exporter, I want to prov
   });
 
   describe('when clicking the `all sections` link', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       assertSectionStartContent.allSections.linkRedirection({
         currentUrl: yourBusinessRootUrl,
         expectedUrl: `${baseUrl}${allSectionsUrl}`,

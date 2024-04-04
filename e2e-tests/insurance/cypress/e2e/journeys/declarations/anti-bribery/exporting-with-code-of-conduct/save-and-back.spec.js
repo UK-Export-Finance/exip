@@ -6,7 +6,6 @@ const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   DECLARATIONS: {
     ANTI_BRIBERY: { EXPORTING_WITH_CODE_OF_CONDUCT },
   },
@@ -61,10 +60,8 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {
@@ -81,7 +78,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
@@ -105,7 +102,7 @@ context('Insurance - Declarations - Exporting with code of conduct page - Save a
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
