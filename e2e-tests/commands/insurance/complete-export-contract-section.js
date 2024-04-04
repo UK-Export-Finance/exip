@@ -19,7 +19,7 @@ const completeExportContractSection = ({
     cy.completeAndSubmitPrivateMarketForm({});
   }
 
-  cy.completeAndSubmitAgentForm();
+  cy.completeAndSubmitAgentForm({});
 
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();
