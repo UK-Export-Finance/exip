@@ -5,9 +5,10 @@ import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save/private-market';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -77,7 +78,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -101,5 +102,16 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
+  try {
+    const saveResponse = await mapAndSave.privateMarket(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - declined by private market %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

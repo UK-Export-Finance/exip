@@ -1,21 +1,35 @@
-import generateSummaryListRows from '../generate-summary-list-rows';
-import generateAboutGoodsOrServicesFields from './about-goods-or-services-fields';
-import { ApplicationExportContract, Country } from '../../../../types';
+import generateAboutTheExportFields from './about-the-export-fields';
+import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
+import { ApplicationExportContract, Country, SummaryListGroupData } from '../../../../types';
 
 /**
- * exportContractSummaryList
+ * generateFields
+ * Create all fields for the Insurance - "Export contract - about the export" govukSummaryList
+ * @param {ApplicationExportContract} answers: All submitted export contract data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array} countries: Countries
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
+ */
+export const generateFields = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
+  const fields = [generateAboutTheExportFields(answers, referenceNumber, countries, checkAndChange)] as Array<SummaryListGroupData>;
+
+  return fields;
+};
+
+/**
+ * exportContractSummaryLists
  * Create multiple groups with govukSummaryList data structure
- * @param {ApplicationPolicy} answers policy answers/submitted data in a simple object.text structure
- * @param {ApplicationPolicyContact} answersPolicyContact policyContact answers/submitted data in a simple object.text structure
- * @param {Boolean} checkAndChange true if coming from check your answers section in submit application section.  Default as false
+ * @param {ApplicationExportContract} answers: export contract answers/submitted data in a simple object.text structure
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array} countries: Countries
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
-const exportContractSummaryList = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange = false) => {
-  const fields = generateAboutGoodsOrServicesFields(answers, referenceNumber, countries, checkAndChange);
+export const exportContractSummaryLists = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange = false) => {
+  const fields = generateFields(answers, referenceNumber, countries, checkAndChange);
 
-  const summaryList = generateSummaryListRows(fields);
+  const summaryList = generateGroupsOfSummaryLists(fields);
 
   return summaryList;
 };
-
-export { exportContractSummaryList };

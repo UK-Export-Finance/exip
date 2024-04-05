@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const {
   YOUR_BUYER: { CREDIT_INSURANCE_COVER },
-  ALL_SECTIONS,
   ROOT,
 } = INSURANCE_ROUTES;
 
@@ -11,7 +10,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your buyer - Credit insurance cover - Save and back - No', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -24,7 +22,6 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - No', 
       cy.completeAndSubmitTradingHistoryWithBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -45,8 +42,8 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - No', 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -63,8 +60,8 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - No', 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {

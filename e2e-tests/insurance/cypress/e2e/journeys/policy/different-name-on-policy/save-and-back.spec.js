@@ -10,7 +10,6 @@ const {
   POLICY: {
     DIFFERENT_NAME_ON_POLICY,
   },
-  ALL_SECTIONS,
 } = INSURANCE_ROUTES;
 
 const {
@@ -29,7 +28,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Different name on policy - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -42,7 +40,7 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
       cy.assertUrl(url);
     });
   });
@@ -62,8 +60,8 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `type of policy and exports` as `in progress`', () => {
@@ -90,8 +88,8 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `type of policy and exports` as `in progress`', () => {
@@ -116,8 +114,8 @@ context('Insurance - Policy - Different name on policy - Save and go back', () =
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `type of policy and exports` as `in progress`', () => {

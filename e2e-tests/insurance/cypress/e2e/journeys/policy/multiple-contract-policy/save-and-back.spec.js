@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     MULTIPLE_CONTRACT_POLICY,
   },
@@ -14,7 +13,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Multiple contract policy page - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -24,7 +22,6 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
       cy.completeAndSubmitPolicyTypeForm({ policyType: APPLICATION.POLICY_TYPE.MULTIPLE });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -45,8 +42,8 @@ context('Insurance - Policy - Multiple contract policy page - Save and go back',
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {

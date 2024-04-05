@@ -1,11 +1,14 @@
 import { MAXIMUM_CHARACTERS } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
+import { FORM_TITLES } from '../../../form-titles';
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { DECLINED_DESCRIPTION },
 } = FIELD_IDS;
+
+const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
 
 export const EXPORT_CONTRACT_FIELDS = {
   ABOUT_GOODS_OR_SERVICES: {
@@ -23,6 +26,7 @@ export const EXPORT_CONTRACT_FIELDS = {
       MAXIMUM: MAXIMUM_CHARACTERS.ABOUT_GOODS_OR_SERVICES_DESCRIPTION,
       SUMMARY: {
         TITLE: "Goods or services you're exporting",
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.ABOUT_THE_EXPORT,
       },
     },
     [FINAL_DESTINATION_KNOWN]: {
@@ -31,7 +35,8 @@ export const EXPORT_CONTRACT_FIELDS = {
     [FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
       SUMMARY: {
-        TITLE: 'Final destination of export',
+        TITLE: 'Final destination of goods or services',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.ABOUT_THE_EXPORT,
       },
     },
   },
@@ -43,6 +48,10 @@ export const EXPORT_CONTRACT_FIELDS = {
         OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else.",
       },
       MAXIMUM: MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION,
+      SUMMARY: {
+        TITLE: "How you'll be paid",
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.ABOUT_THE_EXPORT,
+      },
     },
   },
   PRIVATE_MARKET: {

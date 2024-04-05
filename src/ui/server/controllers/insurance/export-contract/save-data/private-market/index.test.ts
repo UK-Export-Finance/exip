@@ -66,23 +66,19 @@ describe('controllers/insurance/export-contract/save-data/private-market', () =>
     });
   });
 
-  describe('api error handling', () => {
-    describe('update privateMarket call', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.update.privateMarket = updateApplicationSpy;
-        });
+  describe('when there is an error calling the API', () => {
+    beforeAll(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.privateMarket = updateApplicationSpy;
+    });
 
-        it('should throw an error', async () => {
-          try {
-            await save.privateMarket(mockApplication, mockFormBody.valid);
-          } catch (err) {
-            const expected = new Error("Updating application's privateMarket");
-            expect(err).toEqual(expected);
-          }
-        });
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.privateMarket(mockApplication, mockFormBody.valid);
+      } catch (err) {
+        const expected = new Error("Updating application's privateMarket");
+        expect(err).toEqual(expected);
+      }
     });
   });
 });

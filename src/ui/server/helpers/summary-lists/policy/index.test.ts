@@ -12,16 +12,18 @@ describe('server/helpers/summary-lists/policy', () => {
   const mockAnswers = mockApplication.policy;
   const checkAndChange = false;
 
-  it('should return fields and values from the submitted data/answers', () => {
-    const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
+  describe('generateFields', () => {
+    it('should return fields and values from the submitted data/answers', () => {
+      const result = generateFields(mockAnswers, mockContact, mockBroker, referenceNumber, mockCurrencies, checkAndChange);
 
-    const expected = [
-      generatePolicyAndDateFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
-      generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
-      generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
-    ];
+      const expected = [
+        generatePolicyAndDateFields(mockAnswers, referenceNumber, mockCurrencies, checkAndChange),
+        generatePolicyContactFields(mockContact, referenceNumber, checkAndChange),
+        generateBrokerFields(mockBroker, referenceNumber, checkAndChange),
+      ];
 
-    expect(result).toEqual(expected);
+      expect(result).toEqual(expected);
+    });
   });
 
   describe('policySummaryLists', () => {

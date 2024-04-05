@@ -1,14 +1,9 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import header from '../../../../../partials/header';
 import { PAGES } from '../../../../../content-strings';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT,
-  DASHBOARD,
-  ALL_SECTIONS,
-  ELIGIBILITY,
-} = ROUTES.INSURANCE;
+const { DASHBOARD, ELIGIBILITY } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.DASHBOARD;
 
@@ -79,9 +74,7 @@ context('Insurance - Dashboard - no applications', () => {
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
-        const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-        cy.assertUrl(allSectionsUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
 
       // go to the dashboard
