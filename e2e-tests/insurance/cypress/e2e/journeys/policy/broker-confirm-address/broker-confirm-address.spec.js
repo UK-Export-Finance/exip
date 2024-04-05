@@ -14,7 +14,6 @@ const {
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     BROKER_CONFIRM_ADDRESS_ROOT,
     BROKER_DETAILS_ROOT,
@@ -29,7 +28,6 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
   let url;
   let lossPayeeUrl;
   let brokerDetailsUrl;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -50,7 +48,6 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_CONFIRM_ADDRESS_ROOT}`;
       lossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
       brokerDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -107,7 +104,7 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
         );
       });
 
-      it(`should redirect to ${ALL_SECTIONS} page`, () => {
+      it(`should redirect to ${BROKER_DETAILS_ROOT}`, () => {
         brokerConfirmAddressPage.useDifferentAddressLink().click();
 
         cy.assertUrl(brokerDetailsUrl);
@@ -132,12 +129,12 @@ context("Insurance - Policy - Broker confirm address - As an exporter, I want to
   });
 
   describe('when clicking the `save and back` button', () => {
-    it(`should redirect to ${ALL_SECTIONS} page`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
   });
 });

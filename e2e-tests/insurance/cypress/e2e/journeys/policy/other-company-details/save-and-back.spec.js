@@ -7,7 +7,6 @@ const { REQUESTED_JOINTLY_INSURED_PARTY: FIXTURES } = application;
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     OTHER_COMPANY_DETAILS,
   },
@@ -22,7 +21,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Other company details page - Save and back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -39,7 +37,6 @@ context('Insurance - Policy - Other company details page - Save and back', () =>
       cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -54,32 +51,32 @@ context('Insurance - Policy - Other company details page - Save and back', () =>
   });
 
   describe('when no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
   describe('when fields are partially completed', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field(COMPANY_NAME).input(), FIXTURES[COMPANY_NAME]);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.startInsurancePolicySection({});
 
@@ -91,20 +88,20 @@ context('Insurance - Policy - Other company details page - Save and back', () =>
   });
 
   describe('when all fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeAndSubmitOtherCompanyDetailsForm();
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.startInsurancePolicySection({});
 

@@ -5,7 +5,6 @@ import application from '../../../../../../fixtures/application';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID },
 } = INSURANCE_ROUTES;
 
@@ -20,7 +19,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -31,7 +29,6 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -52,8 +49,8 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
   });
 
@@ -66,8 +63,8 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should update the `export contract` task status to `completed`', () => {
@@ -113,8 +110,8 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should update the `export contract` task status to `in progress`', () => {

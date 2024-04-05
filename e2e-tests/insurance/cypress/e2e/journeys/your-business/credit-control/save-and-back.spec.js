@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: { CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
@@ -11,7 +10,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your business - Credit control - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -23,7 +21,6 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.completeAndSubmitTurnoverForm();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -44,29 +41,29 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `your business` as `in progress`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
   describe('when submitting the answer as `yes` via `save and go back` button', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.clickYesRadioInput();
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should change the status of task `your business` as `completed`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskBusinessStatusIsComplete();
     });
@@ -79,17 +76,17 @@ context('Insurance - Your business - Credit control - Save and go back', () => {
   });
 
   describe('when submitting the answer as `no` via `save and go back` button', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.clickNoRadioInput();
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should change the status of task `your business` as `completed`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskBusinessStatusIsComplete();
     });

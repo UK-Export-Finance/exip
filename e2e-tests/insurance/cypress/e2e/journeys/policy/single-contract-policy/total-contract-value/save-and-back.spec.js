@@ -6,7 +6,6 @@ import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE,
   },
@@ -27,7 +26,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Single contract policy - Total contract value page - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,7 +36,6 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.completeAndSubmitSingleContractPolicyForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -59,8 +56,8 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
@@ -80,8 +77,8 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
@@ -119,8 +116,8 @@ context('Insurance - Policy - Single contract policy - Total contract value page
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {

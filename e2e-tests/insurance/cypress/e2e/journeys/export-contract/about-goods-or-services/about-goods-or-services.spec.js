@@ -18,7 +18,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES;
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ROOT: EXPORT_CONTRACT_ROOT,
     ABOUT_GOODS_OR_SERVICES,
@@ -37,7 +36,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - About goods or services page - Final destination known - As an exporter, I want to enter the details of the export contract', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -46,7 +44,6 @@ context('Insurance - Export contract - About goods or services page - Final dest
       cy.startInsuranceExportContractSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -165,7 +162,7 @@ context('Insurance - Export contract - About goods or services page - Final dest
 
         cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
-        cy.navigateToUrl(allSectionsUrl);
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
         cy.checkTaskExportContractStatusIsInProgress();
       });

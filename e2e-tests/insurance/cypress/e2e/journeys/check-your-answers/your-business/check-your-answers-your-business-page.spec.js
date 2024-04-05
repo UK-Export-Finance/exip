@@ -5,7 +5,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
     YOUR_BUSINESS,
@@ -24,7 +23,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Check your answers - Your business - I want to confirm my selection for the your business section of my credit insurance application', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,8 +36,6 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
       cy.submitCheckYourAnswersForm();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
-
-      allSectionsUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -91,7 +87,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
 
       describe('when going back to the all sections page', () => {
         beforeEach(() => {
-          cy.navigateToUrl(allSectionsUrl);
+          cy.navigateToAllSectionsUrl(referenceNumber);
         });
 
         it('should retain the status of task `check your answers` as `in progress`', () => {

@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 
 const {
   YOUR_BUYER: { TRADING_HISTORY },
-  ALL_SECTIONS,
   ROOT,
 } = INSURANCE_ROUTES;
 
@@ -12,14 +11,12 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your buyer - Trading history - No outstanding payments - Save and back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
@@ -45,8 +42,8 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
       saveAndBackButton().click();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
@@ -63,8 +60,8 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
       saveAndBackButton().click();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -87,8 +84,8 @@ context('Insurance - Your buyer - Trading history - No outstanding payments - Sa
       saveAndBackButton().click();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {

@@ -64,23 +64,19 @@ describe('controllers/insurance/policy/save-data/policy-contact', () => {
     });
   });
 
-  describe('api error handling', () => {
-    describe('update policyContact call', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.update.policyContact = updateApplicationSpy;
-        });
+  describe('when there is an error calling the API', () => {
+    beforeEach(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.policyContact = updateApplicationSpy;
+    });
 
-        it('should throw an error', async () => {
-          try {
-            await save.policyContact(mockApplication, mockFormBody.valid);
-          } catch (err) {
-            const expected = new Error("Updating application's policy contact");
-            expect(err).toEqual(expected);
-          }
-        });
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.policyContact(mockApplication, mockFormBody.valid);
+      } catch (err) {
+        const expected = new Error("Updating application's policy contact");
+        expect(err).toEqual(expected);
+      }
     });
   });
 });

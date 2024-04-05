@@ -11,7 +11,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES, HOW_WILL_YOU_GET_PAID, AGENT },
 } = INSURANCE_ROUTES;
 
@@ -35,7 +34,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - How will you get paid page - As an exporter, I want to provide information on how I will be paid for my export, So that UKEF can have clarity on the payment terms I have with the buyer', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -46,7 +44,6 @@ context('Insurance - Export contract - How will you get paid page - As an export
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -140,7 +137,7 @@ context('Insurance - Export contract - How will you get paid page - As an export
     });
 
     it('should update the `export contract` task status to `completed`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskExportContractStatusIsComplete();
     });

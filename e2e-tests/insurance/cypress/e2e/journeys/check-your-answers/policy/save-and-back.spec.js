@@ -3,7 +3,6 @@ import { ROUTES } from '../../../../../../constants';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = ROUTES.INSURANCE;
 
@@ -16,7 +15,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Check your answers - Policy page - Save and back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -27,8 +25,6 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
       task.link().click();
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
-
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -42,14 +38,14 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should redirect to ${ALL_SECTIONS}`, () => {
+  it('should redirect to `all sections`', () => {
     cy.clickSaveAndBackButton();
 
-    cy.assertUrl(allSectionsUrl);
+    cy.assertAllSectionsUrl(referenceNumber);
   });
 
   it('should retain the status of task `check your answers` as `in progress`', () => {
-    cy.navigateToUrl(allSectionsUrl);
+    cy.navigateToAllSectionsUrl(referenceNumber);
 
     cy.checkTaskCheckAnswersStatusIsInProgress();
   });

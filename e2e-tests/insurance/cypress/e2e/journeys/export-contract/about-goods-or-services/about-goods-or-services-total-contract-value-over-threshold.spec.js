@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES,
     HOW_WILL_YOU_GET_PAID,
@@ -14,7 +13,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - About goods or services page - Submission with total contract value over threshold', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -23,7 +21,6 @@ context('Insurance - Export contract - About goods or services page - Submission
       cy.startInsuranceExportContractSection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -48,7 +45,7 @@ context('Insurance - Export contract - About goods or services page - Submission
     });
 
     it('should retain the `export contract` task status as `in progress`', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskExportContractStatusIsInProgress();
     });
