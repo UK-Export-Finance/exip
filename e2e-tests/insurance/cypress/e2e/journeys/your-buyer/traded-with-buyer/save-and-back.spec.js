@@ -2,7 +2,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   YOUR_BUYER: {
     TRADED_WITH_BUYER,
   },
@@ -44,8 +43,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -61,8 +60,8 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {

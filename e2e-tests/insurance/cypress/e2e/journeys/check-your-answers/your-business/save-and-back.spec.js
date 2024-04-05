@@ -3,7 +3,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
 } = INSURANCE_ROUTES;
 
@@ -16,7 +15,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Check your answers - Your business page - Save and back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -31,8 +29,6 @@ context('Insurance - Check your answers - Your business page - Save and back', (
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
       cy.assertUrl(url);
     });
   });
@@ -45,14 +41,14 @@ context('Insurance - Check your answers - Your business page - Save and back', (
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should redirect to ${ALL_SECTIONS}`, () => {
+  it('should redirect to `all sections`', () => {
     cy.clickSaveAndBackButton();
 
-    cy.assertUrl(allSectionsUrl);
+    cy.assertAllSectionsUrl(referenceNumber);
   });
 
   it('should retain the status of task `check your answers` as `in progress`', () => {
-    cy.navigateToUrl(allSectionsUrl);
+    cy.navigateToAllSectionsUrl(referenceNumber);
 
     cy.checkTaskCheckAnswersStatusIsInProgress();
   });

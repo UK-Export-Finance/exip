@@ -4,7 +4,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   POLICY: {
     SINGLE_CONTRACT_POLICY,
   },
@@ -56,10 +55,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
@@ -87,10 +84,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {
@@ -121,10 +116,8 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `type of policy` task status as `in progress`', () => {

@@ -10,8 +10,6 @@ const {
   ACCOUNT: {
     SIGN_IN: { ROOT: SIGN_IN_ROOT, ENTER_CODE, REQUEST_NEW_CODE },
   },
-  ROOT,
-  ALL_SECTIONS,
 } = ROUTES;
 
 const {
@@ -69,15 +67,13 @@ context('Insurance - Account - Sign in - I want to enter the new access code sen
       });
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.keyboardInput(field(ACCESS_CODE).input(), validAccessCode);
 
       cy.clickSubmitButton();
 
       cy.getReferenceNumber().then((referenceNumber) => {
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-        cy.assertUrl(expectedUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
     });
   });

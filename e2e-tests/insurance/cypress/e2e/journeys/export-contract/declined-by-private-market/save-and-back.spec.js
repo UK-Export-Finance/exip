@@ -4,7 +4,6 @@ import application from '../../../../../../fixtures/application';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
@@ -17,7 +16,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Declined by private market - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
@@ -30,7 +28,6 @@ context('Insurance - Export contract - Declined by private market - Save and go 
       cy.completeAndSubmitPrivateMarketForm({ attemptedPrivateMarketCover: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -51,26 +48,24 @@ context('Insurance - Export contract - Declined by private market - Save and go 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
   });
 
   describe('when submitting a valid answer', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.completeDeclinedByPrivateMarketForm({});
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     describe('when going back to the page', () => {
       it('should have the submitted value', () => {
-        cy.navigateToUrl(allSectionsUrl);
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
         cy.startInsuranceExportContractSection({});
 

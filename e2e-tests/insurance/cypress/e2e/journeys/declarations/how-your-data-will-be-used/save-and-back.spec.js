@@ -7,7 +7,6 @@ const { taskList } = partials.insurancePartials;
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   DECLARATIONS: { HOW_YOUR_DATA_WILL_BE_USED },
 } = INSURANCE_ROUTES;
 
@@ -57,10 +56,8 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `declarations` as `in progress`', () => {
@@ -77,10 +74,8 @@ context('Insurance - Declarations - How your data will be used page - Save and g
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      const expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-      cy.assertUrl(expected);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should update the status of task `declarations`` to `completed`', () => {

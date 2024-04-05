@@ -1,10 +1,10 @@
 import dashboardPage from '../../../../../pages/insurance/dashboard';
 import header from '../../../../../partials/header';
-import { ROUTES } from '../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
 const { table } = dashboardPage;
 
-const { ROOT, ALL_SECTIONS, DASHBOARD } = ROUTES.INSURANCE;
+const { DASHBOARD } = INSURANCE_ROUTES;
 
 context('Insurance - Dashboard - new application', () => {
   const baseUrl = Cypress.config('baseUrl');
@@ -45,9 +45,7 @@ context('Insurance - Dashboard - new application', () => {
       cy.getReferenceNumber().then((refNumber) => {
         referenceNumber = refNumber;
 
-        const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-        cy.assertUrl(allSectionsUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
     });
 

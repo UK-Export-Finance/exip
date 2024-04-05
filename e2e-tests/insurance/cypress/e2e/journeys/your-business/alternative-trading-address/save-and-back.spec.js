@@ -6,7 +6,6 @@ import application from '../../../../../../fixtures/application';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: { ALTERNATIVE_TRADING_ADDRESS_ROOT },
 } = INSURANCE_ROUTES;
 
@@ -25,7 +24,6 @@ const { DIFFERENT_TRADING_ADDRESS } = application;
 context('Insurance - Your business - Alternative trading address - Save and go back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -37,7 +35,6 @@ context('Insurance - Your business - Alternative trading address - Save and go b
       });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -58,30 +55,30 @@ context('Insurance - Your business - Alternative trading address - Save and go b
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(allSectionsUrl);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `your business` as `in progress', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskBusinessStatusIsInProgress();
     });
   });
 
   describe('when submitting an invalid answer', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       field(FULL_ADDRESS).textarea().type('a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1));
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `your business` as `in progress', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskBusinessStatusIsInProgress();
     });
@@ -94,18 +91,18 @@ context('Insurance - Your business - Alternative trading address - Save and go b
   });
 
   describe('when submitting a valid answer', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       field(FULL_ADDRESS).textarea().type(DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS]);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the status of task `your business` as `in progress', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.checkTaskBusinessStatusIsInProgress();
     });
