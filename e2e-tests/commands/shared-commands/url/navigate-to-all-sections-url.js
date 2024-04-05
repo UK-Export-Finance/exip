@@ -13,7 +13,7 @@ const baseUrl = Cypress.config('baseUrl');
 const navigateToAllSectionsUrl = (referenceNumber) => {
   const allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
-  cy.navigateToUrl(allSectionsUrl);
+  cy.visit(allSectionsUrl);
 };
 
 export default navigateToAllSectionsUrl;
