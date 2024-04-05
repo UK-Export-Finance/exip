@@ -4476,7 +4476,7 @@ var EXPORT_CONTRACT_FIELDS = {
     [FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
       SUMMARY: {
-        TITLE: "Final destination of export"
+        TITLE: "Final destination of goods or services"
       }
     }
   },
