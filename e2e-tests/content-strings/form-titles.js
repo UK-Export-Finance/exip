@@ -17,4 +17,9 @@ export const FORM_TITLES = {
     NAME_ON_POLICY: 'Named person on the policy',
     BROKER: 'Broker',
   },
+  EXPORT_CONTRACT: {
+    ABOUT_THE_EXPORT: 'About the export',
+    PRIVATE_MARKET: 'Private insurance market',
+    AGENT: 'Agent',
+  },
 };

@@ -40,7 +40,7 @@ const generateFields = (
  * @param {ApplicationBroker} answersBroker: broker answers/submitted data in a simple object/text structure
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Currencies
- * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section.  Default as false
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section. Defaults to false
  * @returns {Object} Multiple groups with multiple fields/answers in govukSummaryList data structure
  */
 const policySummaryLists = (

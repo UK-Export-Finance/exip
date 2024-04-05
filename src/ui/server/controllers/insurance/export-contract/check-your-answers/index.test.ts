@@ -6,7 +6,7 @@ import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { exportContractSummaryList } from '../../../../helpers/summary-lists/export-contract';
+import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
@@ -49,7 +49,7 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
     it('should render template', async () => {
       await get(req, res);
 
-      const summaryList = exportContractSummaryList(exportContract, referenceNumber, mockCountries);
+      const summaryLists = exportContractSummaryLists(exportContract, referenceNumber, mockCountries);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -58,7 +58,7 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
-        SUMMARY_LIST: summaryList,
+        SUMMARY_LISTS: summaryLists,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

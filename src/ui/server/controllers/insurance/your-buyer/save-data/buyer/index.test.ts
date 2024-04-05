@@ -60,25 +60,19 @@ describe('controllers/insurance/your-buyer/save-data/buyer', () => {
     });
   });
 
-  describe('api error handling', () => {
-    describe('update buyer call', () => {
-      const mockFormBody = mockBuyer;
+  describe('when there is an error calling the API', () => {
+    beforeAll(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.buyer = updateApplicationSpy;
+    });
 
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.update.buyer = updateApplicationSpy;
-        });
-
-        it('should throw an error', async () => {
-          try {
-            await save.buyer(mockApplication, mockFormBody);
-          } catch (err) {
-            const expected = new Error("Updating application's buyer");
-            expect(err).toEqual(expected);
-          }
-        });
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.buyer(mockApplication, mockBuyer);
+      } catch (err) {
+        const expected = new Error("Updating application's buyer");
+        expect(err).toEqual(expected);
+      }
     });
   });
 });

@@ -70,25 +70,19 @@ describe('controllers/insurance/your-buyer/save-data/buyer-trading-history', () 
     });
   });
 
-  describe('api error handling', () => {
-    describe('update buyer call', () => {
-      const mockFormBody = mockBuyerTradingHistory;
+  describe('when there is an error calling the API', () => {
+    beforeAll(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.buyerTradingHistory = updateApplicationSpy;
+    });
 
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.update.buyerTradingHistory = updateApplicationSpy;
-        });
-
-        it('should throw an error', async () => {
-          try {
-            await save.buyerTradingHistory(mockApplication, mockFormBody);
-          } catch (err) {
-            const expected = new Error('Updating buyer trading history');
-            expect(err).toEqual(expected);
-          }
-        });
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.buyerTradingHistory(mockApplication, mockBuyerTradingHistory);
+      } catch (err) {
+        const expected = new Error('Updating buyer trading history');
+        expect(err).toEqual(expected);
+      }
     });
   });
 });

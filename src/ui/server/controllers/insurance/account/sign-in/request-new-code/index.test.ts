@@ -123,18 +123,16 @@ describe('controllers/insurance/account/sign-in/request-new-code', () => {
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          signInSendNewCodeSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
-        });
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        signInSendNewCodeSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.account.signInSendNewCode = signInSendNewCodeSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
