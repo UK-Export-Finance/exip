@@ -45,6 +45,21 @@ export const mockPrivateMarket = {
   declinedDescription: 'Mock declined description',
 };
 
+export const mockExportContractAgentService = {
+  id: 'clldfm6pt000noqa6fs6cj5xl',
+  agentIsCharging: true,
+  serviceDescription: 'Mock export contract agent service decsription',
+};
+
+export const mockExportContractAgent = {
+  id: 'clldfm6pt000noqa6fs6cj5xm',
+  countryCode: mockCountries[0].isoCode,
+  fullAddress: 'Mock export contract agent address',
+  isUsingAgent: false,
+  name: 'Mock export contract agent name',
+  service: mockExportContractAgentService,
+};
+
 export const mockExportContract = {
   id: 'clldfm6pt000noqa6fs6cj5xn',
   goodsOrServicesDescription: 'Mock description',
@@ -52,6 +67,7 @@ export const mockExportContract = {
   finalDestinationCountryCode: mockCountries[0].isoCode,
   paymentTermsDescription: 'Mock payment terms description',
   privateMarket: mockPrivateMarket,
+  agent: mockExportContractAgent,
 };
 
 export const mockOwner = {
@@ -60,7 +76,7 @@ export const mockOwner = {
 
 export const mockCompanyDifferentTradingAddress = {
   id: 'clf3te7vx1432cfoqp9rboe55',
-  fullAddress: 'test',
+  fullAddress: 'Mock different trading address',
 };
 
 export const mockCompany = {
