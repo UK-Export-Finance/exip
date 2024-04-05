@@ -1,17 +1,19 @@
-import { field, summaryList } from '../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { createTimestampFromNumbers, formatDate } from '../../../../../../helpers/date';
-import formatCurrency from '../../../../../../helpers/format-currency';
-import application from '../../../../../../fixtures/application';
-import { USD } from '../../../../../../fixtures/currencies';
+import { field, summaryList } from '../../../../../../../pages/shared';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { createTimestampFromNumbers, formatDate } from '../../../../../../../helpers/date';
+import formatCurrency from '../../../../../../../helpers/format-currency';
+import { multipleContractPolicyExportValuePage } from '../../../../../../../pages/insurance/policy';
+import application from '../../../../../../../fixtures/application';
+import { USD } from '../../../../../../../fixtures/currencies';
 
 const {
   ROOT,
   POLICY: {
     CHECK_YOUR_ANSWERS,
-    SINGLE_CONTRACT_POLICY_CHANGE,
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_CHANGE,
+    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -20,14 +22,20 @@ const {
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: {
+        TOTAL_SALES_TO_BUYER,
+        MAXIMUM_BUYER_WILL_OWE,
+      },
     },
   },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Single contract policy - As an exporter, I want to change my answers to the type of policy section', () => {
+context('Insurance - Policy - Change your answers - Multiple contract policy - As an exporter, I want to change my answers to the type of policy section', () => {
   let referenceNumber;
   let url;
 
@@ -35,7 +43,7 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({});
+      cy.completePolicySection({ policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
@@ -50,17 +58,17 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('single policy type answers', () => {
+  describe('multiple policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;
 
       describe('when clicking the `change` link', () => {
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
+        it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
@@ -68,48 +76,6 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
         const newAnswer = {
           ...application.POLICY[fieldId],
           year: application.POLICY[fieldId].year + 1,
-        };
-
-        beforeEach(() => {
-          cy.navigateToUrl(url);
-
-          summaryList.field(fieldId).changeLink().click();
-
-          cy.keyboardInput(field(fieldId).yearInput(), newAnswer.year);
-          cy.keyboardInput(field(CONTRACT_COMPLETION_DATE).yearInput(), newAnswer.year + 1);
-
-          cy.clickSubmitButton();
-        });
-
-        it('should redirect to the check answers page', () => {
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-        });
-
-        it('should render the new answer', () => {
-          const expected = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, newAnswer.year));
-
-          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
-        });
-      });
-    });
-
-    describe(CONTRACT_COMPLETION_DATE, () => {
-      const fieldId = CONTRACT_COMPLETION_DATE;
-
-      describe('when clicking the `change` link', () => {
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
-          cy.navigateToUrl(url);
-
-          summaryList.field(fieldId).changeLink().click();
-
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
-        });
-      });
-
-      describe('form submission with a new answer', () => {
-        const newAnswer = {
-          ...application.POLICY[fieldId],
-          year: application.POLICY[fieldId].year + 2,
         };
 
         beforeEach(() => {
@@ -134,16 +100,54 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
       });
     });
 
-    describe(TOTAL_CONTRACT_VALUE, () => {
-      const fieldId = TOTAL_CONTRACT_VALUE;
+    describe(TOTAL_MONTHS_OF_COVER, () => {
+      const fieldId = TOTAL_MONTHS_OF_COVER;
 
       describe('when clicking the `change` link', () => {
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`, () => {
+        it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE, fieldId });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const newAnswer = String(Number(application.POLICY[fieldId]) + 1);
+
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.keyboardInput(field(fieldId).input(), newAnswer);
+
+          cy.clickSubmitButton();
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          const expected = `${newAnswer} months`;
+
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        });
+      });
+    });
+
+    describe(TOTAL_SALES_TO_BUYER, () => {
+      const fieldId = TOTAL_SALES_TO_BUYER;
+
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE, fieldId });
         });
       });
 
@@ -172,6 +176,44 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
       });
     });
 
+    describe(MAXIMUM_BUYER_WILL_OWE, () => {
+      const fieldId = MAXIMUM_BUYER_WILL_OWE;
+
+      describe('when clicking the `change` link', () => {
+        it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`, () => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE, fieldId });
+        });
+      });
+
+      describe('form submission with a new answer', () => {
+        const newAnswer = Number(application.POLICY[fieldId]) + 1000;
+
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+
+          summaryList.field(fieldId).changeLink().click();
+
+          cy.keyboardInput(multipleContractPolicyExportValuePage[fieldId].input(), newAnswer);
+
+          cy.clickSubmitButton();
+        });
+
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        });
+
+        it('should render the new answer', () => {
+          const expected = formatCurrency(newAnswer);
+
+          cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        });
+      });
+    });
+
     describe(CURRENCY_CODE, () => {
       const fieldId = CURRENCY_CODE;
 
@@ -182,12 +224,12 @@ context('Insurance - Policy - Change your answers - Single contract policy - As 
       };
 
       describe('when clicking the `change` link', () => {
-        it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHANGE}`, () => {
+        it(`should redirect to ${MULTIPLE_CONTRACT_POLICY_CHANGE}`, () => {
           cy.navigateToUrl(url);
 
           summaryList.field(fieldId).changeLink().click();
 
-          cy.assertChangeAnswersPageUrl({ referenceNumber, route: SINGLE_CONTRACT_POLICY_CHANGE, fieldId });
+          cy.assertChangeAnswersPageUrl({ referenceNumber, route: MULTIPLE_CONTRACT_POLICY_CHANGE, fieldId });
         });
       });
 
