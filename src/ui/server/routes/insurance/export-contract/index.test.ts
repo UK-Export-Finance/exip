@@ -22,8 +22,10 @@ const {
   ABOUT_GOODS_OR_SERVICES_CHANGE,
   ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
   HOW_WILL_YOU_GET_PAID,
+  HOW_WILL_YOU_GET_PAID_CHANGE,
   HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
   PRIVATE_MARKET,
+  PRIVATE_MARKET_CHANGE,
   PRIVATE_MARKET_SAVE_AND_BACK,
   DECLINED_BY_PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK,
@@ -41,8 +43,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(9);
-    expect(post).toHaveBeenCalledTimes(12);
+    expect(get).toHaveBeenCalledTimes(11);
+    expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -57,10 +59,14 @@ describe('routes/insurance/export-contract', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`, howWillYouGetPaidSaveAndBackPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHANGE}`, howWillYouGetPaidGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHANGE}`, howWillYouGetPaidPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_SAVE_AND_BACK}`, privateMarketSaveAndBackPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMarketGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMarketPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);

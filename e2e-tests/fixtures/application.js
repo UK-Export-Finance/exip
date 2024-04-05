@@ -168,7 +168,7 @@ const application = {
     [DESCRIPTION]: 'Mock description',
     [FINAL_DESTINATION]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
     HOW_WILL_YOU_GET_PAID: {
-      [PAYMENT_TERMS_DESCRIPTION]: 'Mock payment terms description',
+      [PAYMENT_TERMS_DESCRIPTION]: MULTI_LINE_STRING,
     },
     PRIVATE_MARKET: {
       [ATTEMPTED]: true,

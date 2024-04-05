@@ -181,4 +181,19 @@ export const mockApplicationMultiplePolicyWithoutCurrencyCode = {
   },
 } as Application;
 
+// export const mockApplicationTotalContractValueThresholdFalse = {
+//   ...mockApplication,
+//   totalContractValueOverThreshold: false,
+// } as Application;
+
+export const mockApplicationTotalContractValueThresholdTrue = {
+  ...mockApplication,
+  totalContractValueOverThreshold: true,
+} as Application;
+
+export const mockApplicationTotalContractValueThresholdFalse = {
+  ...mockApplication,
+  totalContractValueOverThreshold: false,
+} as Application;
+
 export default mockApplication;
