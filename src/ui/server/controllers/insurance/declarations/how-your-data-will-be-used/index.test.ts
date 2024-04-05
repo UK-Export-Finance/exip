@@ -108,19 +108,17 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeAll(() => {
-          getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject(new Error('mock')));
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        getLatestHowDataWillBeUsedSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-          api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
-        });
+        api.keystone.application.declarations.getLatestHowDataWillBeUsed = getLatestHowDataWillBeUsedSpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });
