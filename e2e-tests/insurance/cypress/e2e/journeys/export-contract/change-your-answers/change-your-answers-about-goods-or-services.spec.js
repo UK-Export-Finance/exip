@@ -61,7 +61,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = `${application.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES[fieldId]} additional text`;
+      const newAnswer = `${application.EXPORT_CONTRACT[fieldId]} additional text`;
 
       beforeEach(() => {
         cy.navigateToUrl(url);

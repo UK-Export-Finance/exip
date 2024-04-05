@@ -1,7 +1,6 @@
 import { summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
-import application from '../../../../../../fixtures/application';
 
 const {
   ROOT,
@@ -43,7 +42,7 @@ context('Insurance - Export contract - Change your answers - How you will get pa
 
   describe(FIELD_ID, () => {
     describe('form submission with a new answer', () => {
-      const newAnswer = `${application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID]} additional text`;
+      const newAnswer = 'Mock new description';
 
       beforeEach(() => {
         cy.navigateToUrl(url);
