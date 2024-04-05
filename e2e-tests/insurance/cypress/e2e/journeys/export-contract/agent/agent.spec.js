@@ -16,7 +16,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
 const {
   ROOT: INSURANCE_ROOT,
   EXPORT_CONTRACT: {
-    HOW_WILL_YOU_GET_PAID, AGENT, AGENT_SERVICES, CHECK_YOUR_ANSWERS,
+    HOW_WILL_YOU_GET_PAID, AGENT, AGENT_DETAILS, CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -29,7 +29,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Agent page - As an Exporter, I want to state whether another party helped me win my export contract, So that I can provide underwriters with all required pre-requisite information as part of my application', () => {
   let referenceNumber;
   let url;
-  let agentServicesUrl;
+  let agentDetailsUrl;
   let checkYourAnswersUrl;
 
   before(() => {
@@ -42,7 +42,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
-      agentServicesUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICES}`;
+      agentDetailsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
       checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
@@ -129,10 +129,10 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
     });
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
-      it(`should redirect to ${AGENT_SERVICES}`, () => {
+      it(`should redirect to ${AGENT_DETAILS}`, () => {
         cy.completeAndSubmitAgentForm({ usingAgent: true });
 
-        cy.assertUrl(agentServicesUrl);
+        cy.assertUrl(agentDetailsUrl);
       });
     });
   });
