@@ -8,7 +8,7 @@ import { assertCountryAutocompleteInput } from '../../../../../../shared-test-as
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
   EXPORT_CONTRACT: { AGENT, AGENT_DETAILS, AGENT_SERVICE },
 } = INSURANCE_ROUTES;
 
@@ -33,8 +33,8 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitAgentForm({ usingAgent: true });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
-      agentServiceUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
+      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
     });
   });
 
@@ -49,8 +49,8 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`,
+      currentHref: `${ROOT}/${referenceNumber}${AGENT_DETAILS}`,
+      backLink: `${ROOT}/${referenceNumber}${AGENT}`,
     });
   });
 
