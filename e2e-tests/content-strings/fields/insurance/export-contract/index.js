@@ -6,6 +6,7 @@ const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { DECLINED_DESCRIPTION },
+  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
@@ -58,6 +59,18 @@ export const EXPORT_CONTRACT_FIELDS = {
     [DECLINED_DESCRIPTION]: {
       HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to.",
       MAXIMUM: MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION,
+    },
+  },
+  AGENT_DETAILS: {
+    [NAME]: {
+      LABEL: 'Name of the agent',
+    },
+    [FULL_ADDRESS]: {
+      LABEL: 'Address of the agent',
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+    },
+    [COUNTRY_CODE]: {
+      LABEL: 'Country the agent is based in',
     },
   },
 };

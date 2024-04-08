@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_SAVE_AND_BACK, AGENT_SERVICES, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
@@ -162,14 +162,14 @@ describe('controllers/insurance/export-contract/agent', () => {
       });
 
       describe('when the answer is true', () => {
-        it(`should redirect to ${AGENT_SERVICES}`, async () => {
+        it(`should redirect to ${AGENT_DETAILS}`, async () => {
           req.body = {
             [FIELD_ID]: 'true',
           };
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_SERVICES}`;
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_DETAILS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
