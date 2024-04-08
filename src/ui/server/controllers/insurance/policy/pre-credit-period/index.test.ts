@@ -41,8 +41,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {

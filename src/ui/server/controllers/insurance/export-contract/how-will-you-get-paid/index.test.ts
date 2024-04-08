@@ -47,8 +47,6 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {

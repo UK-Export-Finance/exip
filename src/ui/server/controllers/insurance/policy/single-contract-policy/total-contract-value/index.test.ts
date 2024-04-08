@@ -57,7 +57,6 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 

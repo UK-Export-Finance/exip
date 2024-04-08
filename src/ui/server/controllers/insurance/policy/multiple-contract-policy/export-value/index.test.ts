@@ -57,7 +57,6 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 

@@ -40,8 +40,6 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {

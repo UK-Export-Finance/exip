@@ -44,8 +44,6 @@ describe('controllers/insurance/policy/another-company', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {

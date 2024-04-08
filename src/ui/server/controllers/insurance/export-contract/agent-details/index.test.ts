@@ -28,7 +28,6 @@ describe('controllers/insurance/export-contract/agent-details', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     api.keystone.countries.getAll = getCountriesSpy;
   });
 

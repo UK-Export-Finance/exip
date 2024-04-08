@@ -87,7 +87,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 

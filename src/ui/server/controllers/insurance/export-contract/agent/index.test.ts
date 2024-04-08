@@ -31,8 +31,6 @@ describe('controllers/insurance/export-contract/agent', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {

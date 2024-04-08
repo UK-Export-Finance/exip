@@ -37,8 +37,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
   });
 
   afterAll(() => {
