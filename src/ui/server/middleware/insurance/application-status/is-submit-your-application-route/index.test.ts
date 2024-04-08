@@ -1,6 +1,6 @@
 import isSubmitYourApplicationRoute, { mapSubmitYourApplicationRoutes } from '.';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { mockApplication } from '../../../../test-mocks';
+import { referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -12,8 +12,6 @@ const {
     HOW_YOUR_DATA_WILL_BE_USED,
   },
 } = INSURANCE_ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('middleware/insurance/application-status/is-submit-your-application-route', () => {
   describe('mapSubmitYourApplicationRoutes', () => {

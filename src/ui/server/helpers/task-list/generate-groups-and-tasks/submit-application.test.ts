@@ -41,7 +41,7 @@ describe('server/helpers/task-list/submit-application', () => {
     const expectedDependencies = [...initialChecksFields, ...prepareApplicationFields];
 
     const CHECK_ANSWERS = {
-      href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TYPE_OF_POLICY}`,
+      href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
       fields: [POLICY, EXPORTER_BUSINESS, BUYER],

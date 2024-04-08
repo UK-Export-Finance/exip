@@ -6,15 +6,13 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/policy-contact';
 import generateValidationErrors from '../validation';
 import { Request, Response } from '../../../../../../types';
-import { mockApplication, mockReq, mockRes, mockContact } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockContact, referenceNumber } from '../../../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
 const { FIRST_NAME } = ACCOUNT_FIELD_IDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/different-name-on-policy/save-and-back', () => {
   let req: Request;
@@ -33,8 +31,6 @@ describe('controllers/insurance/policy/different-name-on-policy/save-and-back', 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(referenceNumber);
 
     req.body = mockFormBody;
   });

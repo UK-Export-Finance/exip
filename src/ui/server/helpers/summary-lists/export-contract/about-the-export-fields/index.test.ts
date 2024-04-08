@@ -8,7 +8,7 @@ import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
-import { mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
@@ -31,7 +31,6 @@ const {
 
 describe('server/helpers/summary-lists/export-contract/about-goods-or-services-fields', () => {
   const mockAnswers = mockApplication.exportContract;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   it('should return fields and values from the submitted data/answers', () => {

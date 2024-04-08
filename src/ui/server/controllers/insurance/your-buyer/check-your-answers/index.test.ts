@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBuyerSummaryList } from '../../../../helpers/summary-lists/your-buyer';
 import { Request, Response, ApplicationBuyer } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.YOUR_BUYER;
 const { CHECK_YOUR_ANSWERS: CHECK_YOUR_ANSWERS_TEMPLATE } = TEMPLATES.INSURANCE.YOUR_BUYER;
@@ -22,8 +22,6 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('TEMPLATE', () => {
@@ -42,7 +40,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
       const summaryList = yourBuyerSummaryList(
         mockApplicationBuyer,
         mockApplication.eligibility,
-        mockApplication.referenceNumber,
+        referenceNumber,
         mockApplication.totalContractValueOverThreshold,
       );
 

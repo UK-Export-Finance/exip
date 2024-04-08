@@ -298,10 +298,10 @@ var EXPORT_CONTRACT = {
     DECLINED_DESCRIPTION: "declinedDescription"
   },
   USING_AGENT: "isUsingAgent",
-  AGENT: {
-    COUNTRY_CODE: "countryCode",
+  AGENT_DETAILS: {
+    NAME: "name",
     FULL_ADDRESS: "fullAddress",
-    NAME: "name"
+    COUNTRY_CODE: "countryCode"
   },
   AGENT_SERVICE: {
     IS_CHARGING: "agentIsCharging",

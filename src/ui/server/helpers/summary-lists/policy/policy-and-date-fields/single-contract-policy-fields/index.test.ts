@@ -7,7 +7,7 @@ import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
 import formatDate from '../../../../date/format-date';
 import formatCurrency from '../../../../format-currency';
-import mockApplication, { mockSinglePolicy } from '../../../../../test-mocks/mock-application';
+import { referenceNumber, mockSinglePolicy } from '../../../../../test-mocks/mock-application';
 
 const {
   CONTRACT_POLICY: {
@@ -22,7 +22,6 @@ const {
 
 describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-contract-policy-fields', () => {
   const mockAnswers = mockSinglePolicy;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   const expectedBase = {

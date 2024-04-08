@@ -17,6 +17,7 @@ import {
   mockApplication,
   mockApplicationTotalContractValueThresholdTrue,
   mockApplicationTotalContractValueThresholdFalse,
+  referenceNumber,
 } from '../../../../test-mocks';
 
 const {
@@ -38,7 +39,6 @@ const {
 describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/export-contract');
 
@@ -49,8 +49,6 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -65,7 +63,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
@@ -97,7 +95,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
       const expectedVariables = {
         ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
       };
@@ -145,7 +143,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${PRIVATE_MARKET_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -158,7 +156,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -170,7 +168,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${PRIVATE_MARKET}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -197,7 +195,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
         const expectedVariables = {
           ...singleInputPageVariables({ FIELD_ID, PAGE_CONTENT_STRINGS, BACK_LINK: req.headers.referer }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,

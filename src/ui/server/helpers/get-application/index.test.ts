@@ -1,6 +1,6 @@
 import getApplication from '.';
 import api from '../../api';
-import { mockApplication } from '../../test-mocks';
+import { mockApplication, referenceNumber } from '../../test-mocks';
 
 describe('helpers/get-application', () => {
   let getApplicationSpy;
@@ -9,10 +9,10 @@ describe('helpers/get-application', () => {
     getApplicationSpy = jest.fn(() => Promise.resolve());
     api.keystone.application.get = getApplicationSpy;
 
-    await getApplication(mockApplication.referenceNumber);
+    await getApplication(referenceNumber);
 
     expect(getApplicationSpy).toHaveBeenCalledTimes(1);
-    expect(getApplicationSpy).toHaveBeenCalledWith(mockApplication.referenceNumber);
+    expect(getApplicationSpy).toHaveBeenCalledWith(referenceNumber);
   });
 
   describe('when there is no application', () => {
@@ -20,7 +20,7 @@ describe('helpers/get-application', () => {
       getApplicationSpy = jest.fn(() => Promise.resolve());
       api.keystone.application.get = getApplicationSpy;
 
-      const result = await getApplication(mockApplication.referenceNumber);
+      const result = await getApplication(referenceNumber);
 
       expect(result).toEqual(false);
     });
@@ -31,7 +31,7 @@ describe('helpers/get-application', () => {
       getApplicationSpy = jest.fn(() => Promise.resolve({}));
       api.keystone.application.get = getApplicationSpy;
 
-      const result = await getApplication(mockApplication.referenceNumber);
+      const result = await getApplication(referenceNumber);
 
       expect(result).toEqual(false);
     });
@@ -42,7 +42,7 @@ describe('helpers/get-application', () => {
       getApplicationSpy = jest.fn(() => Promise.resolve({}));
       api.keystone.application.get = getApplicationSpy;
 
-      const result = await getApplication(mockApplication.referenceNumber);
+      const result = await getApplication(referenceNumber);
 
       expect(result).toEqual(false);
     });
@@ -55,7 +55,7 @@ describe('helpers/get-application', () => {
       api.keystone.application.get = getApplicationSpy;
 
       try {
-        await getApplication(mockApplication.referenceNumber);
+        await getApplication(referenceNumber);
       } catch (err) {
         expect(err).toEqual(new Error(`Getting application ${mockErrorMessage}`));
       }
@@ -66,7 +66,7 @@ describe('helpers/get-application', () => {
     getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
     api.keystone.application.get = getApplicationSpy;
 
-    const result = await getApplication(mockApplication.referenceNumber);
+    const result = await getApplication(referenceNumber);
 
     expect(result).toEqual(mockApplication);
   });

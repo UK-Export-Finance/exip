@@ -1,10 +1,8 @@
 import isCheckYourAnswersRoute, { mapCheckYourAnswersRoutes } from '.';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-import { mockApplication } from '../../../../test-mocks';
+import { referenceNumber } from '../../../../test-mocks';
 
 const { CHECK_YOUR_ANSWERS, INSURANCE_ROOT } = INSURANCE_ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('middleware/insurance/application-status/is-check-your-answers-route', () => {
   describe('mapCheckYourAnswersRoutes', () => {

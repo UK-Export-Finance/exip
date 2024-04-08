@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateNatureOfYourBusinessFields from '.';
-import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+import { mockBusiness, referenceNumber } from '../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../generate-change-link';
 
 const {
@@ -24,7 +24,6 @@ const {
 
 describe('server/helpers/summary-lists/your-business/nature-of-your-business-fields', () => {
   const mockAnswers = mockBusiness;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   const expectedFields = [

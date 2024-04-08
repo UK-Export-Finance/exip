@@ -7,15 +7,13 @@ import mapAndSave from '../../map-and-save/export-contract';
 import generateValidationErrors from '../validation';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockApplication, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
+import { mockCountries, mockReq, mockRes, referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
 } = EXPORT_CONTRACT_FIELD_IDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/export-contract/about-goods-or-services/save-and-back', () => {
   let req: Request;
@@ -34,8 +32,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services/save-and
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(referenceNumber);
 
     req.body = mockFormBody;
 

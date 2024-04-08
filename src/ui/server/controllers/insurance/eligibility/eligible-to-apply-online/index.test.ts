@@ -6,7 +6,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../helpers/map-eligibility-answers';
 import api from '../../../../api';
-import { mockAccount, mockApplication, mockSession, mockReq, mockRes } from '../../../../test-mocks';
+import { mockAccount, referenceNumber, mockSession, mockReq, mockRes } from '../../../../test-mocks';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -22,8 +22,6 @@ const {
 describe('controllers/insurance/eligibility/eligible-to-apply-online', () => {
   let req: Request;
   let res: Response;
-
-  const { referenceNumber } = mockApplication;
 
   const mockCreateApplicationResponse = { referenceNumber };
 

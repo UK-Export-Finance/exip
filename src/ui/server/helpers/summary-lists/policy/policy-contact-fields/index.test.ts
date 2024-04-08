@@ -7,7 +7,7 @@ import { POLICY_FIELDS as FIELDS } from '../../../../content-strings/fields/insu
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import generateChangeLink from '../../../generate-change-link';
-import { mockApplication, mockContact } from '../../../../test-mocks';
+import { referenceNumber, mockContact } from '../../../../test-mocks';
 
 const {
   POLICY: { NAME_ON_POLICY: FORM_TITLE },
@@ -27,7 +27,6 @@ const {
 
 describe('server/helpers/summary-lists/policy/policy-contact-fields', () => {
   const mockAnswers = mockContact;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   it(`should return relevant fields and values including ${EMAIL} field without a change link when ${IS_SAME_AS_OWNER} is true`, () => {

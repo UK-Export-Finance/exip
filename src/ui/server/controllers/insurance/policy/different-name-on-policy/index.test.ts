@@ -12,7 +12,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy-contact';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockContact } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockContact, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -35,7 +35,6 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
 describe('controllers/insurance/policy/different-name-on-policy', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/policy-contact');
 
@@ -44,9 +43,6 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -55,7 +51,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -79,7 +75,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
             ID: POLICY_CONTACT_DETAIL,
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -109,7 +105,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mockApplication,
         submittedValues: {
@@ -170,7 +166,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -183,7 +179,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -201,7 +197,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.DIFFERENT_NAME_ON_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplication,
           submittedValues: payload,

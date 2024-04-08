@@ -5,7 +5,7 @@ import constructPayload from '../../../../../helpers/construct-payload';
 import mapAndSave from '../../map-and-save/private-market';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
 import { Request, Response } from '../../../../../../types';
-import { mockApplication, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
+import { referenceNumber, mockCountries, mockReq, mockRes } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
@@ -17,8 +17,6 @@ describe('controllers/insurance/export-contract/private-market/save-and-back', (
 
   let mapAndSaveSpy = jest.fn(() => Promise.resolve(true));
 
-  const refNumber = Number(mockApplication.referenceNumber);
-
   const mockFormBody = {
     _csrf: '1234',
     [FIELD_ID]: 'Mock description',
@@ -27,8 +25,6 @@ describe('controllers/insurance/export-contract/private-market/save-and-back', (
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
 
     req.body = mockFormBody;
 
@@ -59,7 +55,7 @@ describe('controllers/insurance/export-contract/private-market/save-and-back', (
       it(`should redirect to ${ALL_SECTIONS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -72,7 +68,7 @@ describe('controllers/insurance/export-contract/private-market/save-and-back', (
 
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

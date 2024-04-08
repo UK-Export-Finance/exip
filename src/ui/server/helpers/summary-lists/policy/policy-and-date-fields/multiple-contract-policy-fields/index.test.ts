@@ -7,7 +7,7 @@ import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
 import formatCurrency from '../../../../format-currency';
 import mapMonthString from '../../../../data-content-mappings/map-month-string';
-import mockApplication, { mockMultiplePolicy } from '../../../../../test-mocks/mock-application';
+import { mockMultiplePolicy, referenceNumber } from '../../../../../test-mocks/mock-application';
 import generateChangeLink from '../../../../generate-change-link';
 
 const {
@@ -30,7 +30,6 @@ const {
 
 describe('server/helpers/summary-lists/policy/policy-and-date-fields/multiple-contract-policy-fields', () => {
   const mockAnswers = mockMultiplePolicy;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   const expectedBase = {

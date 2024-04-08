@@ -2,11 +2,11 @@ import generateTaskList, { mapTask, generateTaskStatusesAndLinks, generateSimpli
 import { taskStatus, taskLink } from './task-helpers';
 import generateGroupsAndTasks from './generate-groups-and-tasks';
 import flattenApplicationData from '../flatten-application-data';
-import { mockApplication } from '../../test-mocks';
+import { mockApplication, referenceNumber } from '../../test-mocks';
 
 describe('server/helpers/task-list', () => {
   const mockApplicationFlat = flattenApplicationData(mockApplication);
-  const mockTaskListData = generateGroupsAndTasks(mockApplication.referenceNumber);
+  const mockTaskListData = generateGroupsAndTasks(referenceNumber);
 
   const { 0: mockTaskGroup } = mockTaskListData;
   const { tasks: group1Tasks } = mockTaskGroup;

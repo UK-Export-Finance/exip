@@ -9,7 +9,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsInternational } from '../../../../test-mocks';
+import { mockReq, mockRes, mockLossPayeeFinancialDetailsInternational, referenceNumber } from '../../../../test-mocks';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -21,8 +21,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/loss-payee-financial-details-international', () => {
   let req: Request;
@@ -124,7 +122,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
           validationErrors: generateValidationErrors(payload),

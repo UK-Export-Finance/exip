@@ -11,7 +11,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/broker';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const { USING_BROKER } = POLICY_FIELD_IDS;
 
@@ -36,8 +36,6 @@ const {
     INSURANCE: { BROKER: BROKER_PARTIALS },
   },
 } = TEMPLATES;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/broker', () => {
   let req: Request;

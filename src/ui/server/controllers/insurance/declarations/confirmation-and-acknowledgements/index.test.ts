@@ -11,7 +11,7 @@ import keystoneDocumentRendererConfig from '../../../../helpers/keystone-documen
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockDeclarations, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -48,14 +48,14 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -83,7 +83,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
@@ -171,7 +171,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.CONFIRMATION_AND_ACKNOWLEDGEMENTS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.confirmationAndAcknowledgement.content.document,
           documentConfig: keystoneDocumentRendererConfig(),

@@ -38,8 +38,8 @@ const {
 const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
 
 const {
-  referenceNumber,
   policy: { policyCurrencyCode },
+  referenceNumber,
 } = mockApplication;
 
 const { allCurrencies } = mockCurrenciesResponse;
@@ -47,7 +47,6 @@ const { allCurrencies } = mockCurrenciesResponse;
 describe('controllers/insurance/policy/single-contract-policy/total-contract-value', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../../map-and-save/policy');
 
@@ -59,8 +58,6 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -216,7 +213,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -228,7 +225,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

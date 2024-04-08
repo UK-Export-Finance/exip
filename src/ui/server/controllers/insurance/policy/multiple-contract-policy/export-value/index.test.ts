@@ -39,6 +39,7 @@ const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
 
 const {
   policy: { policyCurrencyCode },
+  referenceNumber,
 } = mockApplication;
 
 const { allCurrencies } = mockCurrenciesResponse;
@@ -46,7 +47,6 @@ const { allCurrencies } = mockCurrenciesResponse;
 describe('controllers/insurance/policy/multiple-contract-policy/export-value', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../../map-and-save/policy');
 
@@ -58,8 +58,6 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -75,7 +73,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
+      const result = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
 
       const currency = getCurrencyByCode(mockCurrencies, String(policyCurrencyCode));
 
@@ -92,7 +90,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
         },
         DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -123,7 +121,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     it('should render template', async () => {
       await get(req, res);
 
-      const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
+      const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
 
       const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 
@@ -224,7 +222,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -236,7 +234,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -255,7 +253,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        const generatedPageVariables = pageVariables(refNumber, allCurrencies, String(policyCurrencyCode));
+        const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
 
         const { DYNAMIC_PAGE_TITLE } = generatedPageVariables;
 

@@ -10,15 +10,13 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = EXPORT_CONTRACT_FIELD_IDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/export-contract/agent-details', () => {
   let req: Request;
@@ -31,7 +29,6 @@ describe('controllers/insurance/export-contract/agent-details', () => {
     res = mockRes();
 
     res.locals.application = mockApplication;
-    req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
   });
 
