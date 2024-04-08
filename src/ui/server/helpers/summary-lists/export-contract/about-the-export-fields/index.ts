@@ -5,8 +5,9 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
-import { ApplicationExportContract, Country, SummaryListItemData } from '../../../../../types';
 import generateChangeLink from '../../../generate-change-link';
+import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import { ApplicationExportContract, Country, SummaryListItemData } from '../../../../../types';
 
 const {
   EXPORT_CONTRACT: { ABOUT_THE_EXPORT: FORM_TITLE },
@@ -18,7 +19,12 @@ const {
 } = FIELD_IDS;
 
 const {
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE },
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES_CHANGE,
+    ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+    HOW_WILL_YOU_GET_PAID_CHANGE,
+    HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 /**
@@ -61,10 +67,16 @@ const generateAboutTheExportFields = (answers: ApplicationExportContract, refere
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.HOW_WILL_YOU_GET_PAID, PAYMENT_TERMS_DESCRIPTION),
-        href: generateChangeLink('#', '#', `#${PAYMENT_TERMS_DESCRIPTION}-label`, referenceNumber, checkAndChange),
+        href: generateChangeLink(
+          HOW_WILL_YOU_GET_PAID_CHANGE,
+          HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
+          `#${PAYMENT_TERMS_DESCRIPTION}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
         renderChangeLink: true,
       },
-      answers[PAYMENT_TERMS_DESCRIPTION],
+      replaceNewLineWithLineBreak(answers[PAYMENT_TERMS_DESCRIPTION]),
     ),
   ] as Array<SummaryListItemData>;
 
