@@ -156,6 +156,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
 
   describe('post', () => {
     const validBody = {
+      [NAME]: mockApplication.exportContract.agent[NAME],
       [FULL_ADDRESS]: mockApplication.exportContract.agent[FULL_ADDRESS],
       [COUNTRY_CODE]: mockCountries[0].isoCode,
     };

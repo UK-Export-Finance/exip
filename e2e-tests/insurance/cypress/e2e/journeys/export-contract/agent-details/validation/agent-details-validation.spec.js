@@ -10,7 +10,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_DETAILS: { FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
 
 const {
@@ -21,7 +21,7 @@ const {
   },
 } = ERROR_MESSAGES;
 
-const expectedErrorsCount = 2;
+const expectedErrorsCount = 3;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -51,6 +51,44 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
     cy.deleteApplication(referenceNumber);
   });
 
+  describe(NAME, () => {
+    const assertions = {
+      field: fieldSelector(NAME),
+      errorIndex: 0,
+      expectedErrorsCount,
+    };
+
+    const ERROR_MESSAGES_OBJECT = AGENT_DETAILS_ERROR_MESSAGES[NAME];
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should render validation errors when ${NAME} is over ${MAXIMUM_CHARACTERS.AGENT_NAME} characters`, () => {
+      const value = 'a'.repeat(MAXIMUM_CHARACTERS.AGENT_NAME + 1);
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM });
+    });
+
+    it(`should render validation errors when ${NAME} contains a special character`, () => {
+      const value = 'a!';
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
+    });
+
+    it(`should render validation errors when ${NAME} contains a number`, () => {
+      const value = 'a1';
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
+    });
+
+    it(`should render validation errors when ${NAME} contains a number and special character`, () => {
+      const value = 'a1!';
+
+      cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
+    });
+  });
+
   describe(FULL_ADDRESS, () => {
     const field = fieldSelector(FULL_ADDRESS);
 
@@ -59,13 +97,14 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       input: field.textarea,
     };
 
-    const errorIndex = 0;
-
+    const errorIndex = 1;
     const ERROR_MESSAGES_OBJECT = AGENT_DETAILS_ERROR_MESSAGES[FULL_ADDRESS];
 
-    it(`should render validation errors when ${FULL_ADDRESS} is left empty`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
+    it(`should render validation errors when ${FULL_ADDRESS} is left empty`, () => {
       cy.submitAndAssertFieldErrors({
         field: textareaField,
         errorIndex,
@@ -75,8 +114,6 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
     });
 
     it(`should render validation errors when ${FULL_ADDRESS} is over ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`, () => {
-      cy.navigateToUrl(url);
-
       cy.submitAndAssertFieldErrors({
         field: textareaField,
         value: 'a'.repeat(MAXIMUM_CHARACTERS.FULL_ADDRESS + 1),
@@ -93,7 +130,7 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
 
       cy.submitAndAssertFieldErrors({
         field: autoCompleteField(COUNTRY_CODE),
-        errorIndex: 1,
+        errorIndex: 2,
         expectedErrorsCount,
         expectedErrorMessage: AGENT_DETAILS_ERROR_MESSAGES[COUNTRY_CODE].IS_EMPTY,
       });
