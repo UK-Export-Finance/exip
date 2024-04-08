@@ -1,4 +1,5 @@
 import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-contract';
+import { EXPECTED_MULTI_LINE_STRING } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import application from '../../../../../../fixtures/application';
@@ -90,7 +91,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
 
       cy.checkTextareaValue({
         fieldId: FIELD_ID,
-        expectedValue: value,
+        expectedValue: EXPECTED_MULTI_LINE_STRING,
       });
     });
   });

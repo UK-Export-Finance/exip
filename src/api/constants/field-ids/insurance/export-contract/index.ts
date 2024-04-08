@@ -16,13 +16,13 @@ export const EXPORT_CONTRACT = {
   },
   USING_AGENT: 'isUsingAgent',
   AGENT: {
-    NAME: 'name',
-    FULL_ADDRESS: 'fullAddress',
     COUNTRY_CODE: 'countryCode',
+    FULL_ADDRESS: 'fullAddress',
+    NAME: 'name',
   },
   AGENT_SERVICE: {
-    SERVICE_DESCRIPTION: 'serviceDescription',
     IS_CHARGING: 'agentIsCharging',
+    SERVICE_DESCRIPTION: 'serviceDescription',
   },
 };
 

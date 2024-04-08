@@ -22,8 +22,10 @@ const {
   ABOUT_GOODS_OR_SERVICES_CHANGE,
   ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
   HOW_WILL_YOU_GET_PAID,
+  HOW_WILL_YOU_GET_PAID_CHANGE,
   HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
   PRIVATE_MARKET,
+  PRIVATE_MARKET_CHANGE,
   PRIVATE_MARKET_SAVE_AND_BACK,
   DECLINED_BY_PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK,
@@ -47,10 +49,14 @@ exportContractRoute.post(`/:referenceNumber${ABOUT_GOODS_OR_SERVICES_CHECK_AND_C
 exportContractRoute.get(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidGet);
 exportContractRoute.post(`/:referenceNumber${HOW_WILL_YOU_GET_PAID}`, howWillYouGetPaidPost);
 exportContractRoute.post(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`, howWillYouGetPaidSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHANGE}`, howWillYouGetPaidGet);
+exportContractRoute.post(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHANGE}`, howWillYouGetPaidPost);
 
 exportContractRoute.get(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketGet);
 exportContractRoute.post(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketPost);
 exportContractRoute.post(`/:referenceNumber${PRIVATE_MARKET_SAVE_AND_BACK}`, privateMarketSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMarketGet);
+exportContractRoute.post(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMarketPost);
 
 exportContractRoute.get(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
 exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);
