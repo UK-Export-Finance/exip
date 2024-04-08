@@ -17,7 +17,7 @@ const {
   ROOT,
   ALL_SECTIONS,
   EXPORT_CONTRACT: {
-    HOW_WILL_YOU_GET_PAID, AGENT, AGENT_SERVICES, CHECK_YOUR_ANSWERS,
+    HOW_WILL_YOU_GET_PAID, AGENT, AGENT_SERVICE, CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
@@ -44,7 +44,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
-      agentServicesUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICES}`;
+      agentServicesUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
@@ -146,7 +146,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
     });
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
-      it(`should redirect to ${AGENT_SERVICES}`, () => {
+      it(`should redirect to ${AGENT_SERVICE}`, () => {
         cy.completeAndSubmitAgentForm({ usingAgent: true });
 
         cy.assertUrl(agentServicesUrl);

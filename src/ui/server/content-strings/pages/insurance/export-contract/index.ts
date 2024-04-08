@@ -45,6 +45,11 @@ const AGENT = {
   HINT: 'This is usually an agent who helped with tendering, connecting you to the buyer or setting up the contract.',
 };
 
+const AGENT_SERVICE = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the service the agent is providing',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -57,5 +62,6 @@ export default {
   PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET,
   AGENT,
+  AGENT_SERVICE,
   CHECK_YOUR_ANSWERS,
 };

@@ -1,0 +1,86 @@
+{% extends 'index.njk' %}
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from 'govuk/components/error-summary/macro.njk' import govukErrorSummary %}
+{% from "govuk/components/character-count/macro.njk" import govukCharacterCount %}
+{% import '../../components/yes-no-radio-buttons.njk' as yesNoRadioButtons %}
+{% import '../../components/form-buttons.njk' as formButtons %}
+
+{% block pageTitle %}
+  {{ CONTENT_STRINGS.PAGE_TITLE }}
+{% endblock %}
+
+{% block content %}
+
+  {{ govukBackLink({
+    text: CONTENT_STRINGS.LINKS.BACK,
+    href: BACK_LINK,
+    attributes: {
+      "data-cy": DATA_CY.BACK_LINK
+    }
+  }) }}
+
+  {% if validationErrors.summary %}
+    {{ govukErrorSummary({
+      titleText: CONTENT_STRINGS.ERROR_MESSAGES.THERE_IS_A_PROBLEM,
+      errorList: validationErrors.summary
+    }) }}
+  {% endif %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters-from-desktop">
+      <span class="govuk-caption-l" data-cy="heading-caption">{{ CONTENT_STRINGS.HEADING_CAPTION }}</span>
+      <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+    </div>
+  </div>
+
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
+
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
+
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds-from-desktop">
+        {{ govukCharacterCount({
+          name: FIELDS.SERVICE_DESCRIPTION.ID,
+          id: FIELDS.SERVICE_DESCRIPTION.ID,
+          label: {
+            text: FIELDS.SERVICE_DESCRIPTION.LABEL,
+            classes: "govuk-!-font-weight-bold",
+            attributes: {
+              'data-cy': FIELDS.SERVICE_DESCRIPTION.ID + '-label',
+              id: FIELDS.SERVICE_DESCRIPTION.ID + '-label'
+            }
+          },
+          attributes: {
+            'data-cy': FIELDS.SERVICE_DESCRIPTION.ID
+          },
+          maxlength: FIELDS.SERVICE_DESCRIPTION.MAXIMUM,
+          errorMessage: validationErrors.errorList[FIELDS.SERVICE_DESCRIPTION.ID] and {
+            text: validationErrors.errorList[FIELDS.SERVICE_DESCRIPTION.ID].text,
+            attributes: {
+              "data-cy": FIELDS.SERVICE_DESCRIPTION.ID + "-error-message"
+            }
+          }
+        }) }}
+      </div>
+    </div>
+
+    {{ yesNoRadioButtons.render({
+      fieldId: FIELDS.IS_CHARGING,
+      legendText: FIELDS.IS_CHARGING.LABEL,
+      legendClass: 'govuk-fieldset__legend--s',
+      legendSpan: true,
+      submittedAnswer: submittedValues[FIELDS.IS_CHARGING],
+      errorMessage: validationErrors.errorList[FIELDS.IS_CHARGING],
+      dataCyLegend: FIELDS.IS_CHARGING + '-legend',
+      horizontalRadios: HORIZONTAL_RADIOS,
+      noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION
+    }) }}
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.BUTTONS,
+      saveAndBackUrl: SAVE_AND_BACK_URL
+    }) }}
+        
+  </form>
+
+{% endblock %}
