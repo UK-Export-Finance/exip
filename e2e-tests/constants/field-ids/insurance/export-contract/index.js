@@ -21,8 +21,8 @@ export const EXPORT_CONTRACT = {
     COUNTRY_CODE: 'countryCode',
   },
   AGENT_SERVICE: {
-    SERVICE_DESCRIPTION: 'serviceDescription',
     IS_CHARGING: 'agentIsCharging',
+    SERVICE_DESCRIPTION: 'serviceDescription',
   },
 };
 
