@@ -58,7 +58,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAgentForm({ usingAgent: false });
+      cy.completeAgentForm({ usingAgent: false });
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
@@ -88,7 +88,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAgentForm({ usingAgent: true });
+      cy.completeAgentForm({ usingAgent: true });
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
