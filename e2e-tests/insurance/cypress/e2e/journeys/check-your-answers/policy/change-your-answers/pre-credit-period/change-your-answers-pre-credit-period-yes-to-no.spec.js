@@ -2,11 +2,11 @@ import {
   field,
   status,
   summaryList,
-} from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { FIELD_VALUES } from '../../../../../../../constants';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+} from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
   ROOT,

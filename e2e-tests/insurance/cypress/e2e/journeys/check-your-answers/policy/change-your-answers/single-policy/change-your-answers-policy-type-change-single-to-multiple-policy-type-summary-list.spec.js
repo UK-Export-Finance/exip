@@ -1,10 +1,10 @@
-import partials from '../../../../../../../partials';
-import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { summaryList } from '../../../../../../../pages/shared';
-import formatCurrency from '../../../../../../../helpers/format-currency';
-import application from '../../../../../../../fixtures/application';
+import partials from '../../../../../../../../partials';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { summaryList } from '../../../../../../../../pages/shared';
+import formatCurrency from '../../../../../../../../helpers/format-currency';
+import application from '../../../../../../../../fixtures/application';
 
 const {
   ROOT,

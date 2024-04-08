@@ -2,12 +2,12 @@ import {
   field,
   status,
   summaryList,
-} from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
-import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+} from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/policy';
+import { FIELD_VALUES } from '../../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
   ROOT,

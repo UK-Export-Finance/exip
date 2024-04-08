@@ -1,8 +1,8 @@
-import { field, summaryList } from '../../../../../../pages/shared';
-import { FIELD_VALUES } from '../../../../../../constants';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/policy';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { field, summaryList } from '../../../../../../../pages/shared';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
   USING_BROKER,

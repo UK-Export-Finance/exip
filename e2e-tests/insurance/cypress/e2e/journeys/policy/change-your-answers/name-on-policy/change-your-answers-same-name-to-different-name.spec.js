@@ -1,7 +1,7 @@
-import { summaryList } from '../../../../../../pages/shared';
-import application from '../../../../../../fixtures/application';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { summaryList } from '../../../../../../../pages/shared';
+import application from '../../../../../../../fixtures/application';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
   POLICY: {
