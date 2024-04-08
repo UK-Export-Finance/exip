@@ -1,8 +1,8 @@
-import partials from '../../../../../../../partials';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import partials from '../../../../../../../../partials';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -25,14 +25,14 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Policy - Multiple contract policy - Same name - Summary List', () => {
+context('Insurance - Check your answers - Policy - Single contract policy - Same name - Summary List', () => {
   let url;
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, usingBroker: false });
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: false });
 
       task.link().click();
 
@@ -53,7 +53,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Sa
   });
 
   it('should render generic policy summary list rows', () => {
-    cy.assertGenericMultiplePolicySummaryListRows();
+    cy.assertGenericSinglePolicySummaryListRows();
   });
 
   it(`should render a ${NEED_PRE_CREDIT_PERIOD} summary list row`, () => {

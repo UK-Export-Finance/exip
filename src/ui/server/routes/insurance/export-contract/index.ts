@@ -13,6 +13,7 @@ import {
 } from '../../../controllers/insurance/export-contract/declined-by-private-market';
 import { post as declinedByPrivateMarketSaveAndBackPost } from '../../../controllers/insurance/export-contract/declined-by-private-market/save-and-back';
 import { get as agentGet, post as agentPost } from '../../../controllers/insurance/export-contract/agent';
+import { post as agentSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent/save-and-back';
 import { get as agentDetailsGet, post as agentDetailsPost } from '../../../controllers/insurance/export-contract/agent-details';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
@@ -31,6 +32,7 @@ const {
   DECLINED_BY_PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK,
   AGENT,
+  AGENT_SAVE_AND_BACK,
   AGENT_DETAILS,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
@@ -66,6 +68,7 @@ exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_SAVE_AND
 
 exportContractRoute.get(`/:referenceNumber${AGENT}`, agentGet);
 exportContractRoute.post(`/:referenceNumber${AGENT}`, agentPost);
+exportContractRoute.post(`/:referenceNumber${AGENT_SAVE_AND_BACK}`, agentSaveAndBackPost);
 
 exportContractRoute.get(`/:referenceNumber${AGENT_DETAILS}`, agentDetailsGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_DETAILS}`, agentDetailsPost);

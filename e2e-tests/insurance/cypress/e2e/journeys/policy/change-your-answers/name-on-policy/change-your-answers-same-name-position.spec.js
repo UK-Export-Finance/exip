@@ -1,8 +1,7 @@
-import { summaryList } from '../../../../../../pages/shared';
-import application from '../../../../../../fixtures/application';
-import account from '../../../../../../fixtures/account';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
+import { summaryList, field } from '../../../../../../../pages/shared';
+import account from '../../../../../../../fixtures/account';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
   POLICY: {
@@ -20,9 +19,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const { POLICY_CONTACT } = application;
-
-context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers from different name to the same name on policy as policy owner', () => {
+context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers to the same name on policy as policy owner', () => {
   let referenceNumber;
   let url;
 
@@ -30,7 +27,7 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ sameName: false });
+      cy.completePolicySection({});
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       cy.assertUrl(url);
@@ -45,8 +42,8 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(NAME, () => {
-    const fieldId = NAME;
+  describe(POSITION, () => {
+    const fieldId = POSITION;
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
@@ -59,20 +56,23 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
     });
 
     describe('form submission with a new answer', () => {
+      const newAnswer = 'Boss';
+
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitNameOnPolicyForm({});
+        cy.keyboardInput(field(POSITION).input(), newAnswer);
+
+        cy.clickSubmitButton();
       });
 
       it('should render the new answers when completing the same name on policy form', () => {
-        const newName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
-        const newPosition = POLICY_CONTACT[POSITION];
+        const oldName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
 
-        cy.assertSummaryListRowValue(summaryList, fieldId, newName);
-        cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
+        cy.assertSummaryListRowValue(summaryList, NAME, oldName);
+        cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
       });
     });
   });

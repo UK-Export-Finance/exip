@@ -1,9 +1,9 @@
-import partials from '../../../../../../../partials';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { summaryList } from '../../../../../../../pages/shared';
-import application from '../../../../../../../fixtures/application';
-import account from '../../../../../../../fixtures/account';
+import partials from '../../../../../../../../partials';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { summaryList } from '../../../../../../../../pages/shared';
+import application from '../../../../../../../../fixtures/application';
+import account from '../../../../../../../../fixtures/account';
 
 const {
   ROOT: INSURANCE_ROOT,
