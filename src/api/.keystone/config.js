@@ -298,10 +298,10 @@ var EXPORT_CONTRACT = {
     DECLINED_DESCRIPTION: "declinedDescription"
   },
   USING_AGENT: "isUsingAgent",
-  AGENT: {
-    COUNTRY_CODE: "countryCode",
+  AGENT_DETAILS: {
+    NAME: "name",
     FULL_ADDRESS: "fullAddress",
-    NAME: "name"
+    COUNTRY_CODE: "countryCode"
   },
   AGENT_SERVICE: {
     IS_CHARGING: "agentIsCharging",
@@ -1812,7 +1812,6 @@ var requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }) {
-    console.log("---- request ", request);
     if (!request.operationName || request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error("Operation not permitted");
     }

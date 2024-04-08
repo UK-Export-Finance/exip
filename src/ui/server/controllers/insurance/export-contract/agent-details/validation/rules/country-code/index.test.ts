@@ -1,20 +1,20 @@
 import countryCode from '.';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { mockErrors, mockCountries } from '../../../../../../../test-mocks';
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: { COUNTRY_CODE: FIELD_ID },
-} = POLICY_FIELD_IDS;
+  AGENT_DETAILS: { COUNTRY_CODE: FIELD_ID },
+} = FIELD_IDS;
 
 const {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
+  AGENT_DETAILS: {
     [FIELD_ID]: { IS_EMPTY: ERROR_MESSAGE },
   },
-} = ERROR_MESSAGES.INSURANCE.POLICY;
+} = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT;
 
-describe('controllers/insurance/policy/other-company-details/validation/rules/country-code', () => {
+describe('controllers/insurance/export-contract/agent-details/validation/rules/country-code', () => {
   const mockBody = {
     [FIELD_ID]: mockCountries[0].name,
   };

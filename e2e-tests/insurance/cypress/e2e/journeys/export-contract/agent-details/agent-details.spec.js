@@ -1,15 +1,15 @@
 import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS;
 
 const {
   ROOT: INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS },
+  EXPORT_CONTRACT: { AGENT, AGENT_DETAILS, AGENT_SERVICE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -21,14 +21,20 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Agent details page - As an Exporter, I want to give details about the agent that helped me win the export contract, So that UKEF can contact the appropriate parties to find out more about the working relationship', () => {
   let referenceNumber;
   let url;
+  let agentServiceUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitAgentForm({ usingAgent: true });
 
-      cy.navigateToUrl(url);
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
+      agentServiceUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`;
     });
   });
 
@@ -44,7 +50,7 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}#`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`,
     });
   });
 
@@ -82,6 +88,18 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should redirect to ${AGENT_SERVICE}`, () => {
+      cy.clickSubmitButton();
+
+      cy.assertUrl(agentServiceUrl);
     });
   });
 });
