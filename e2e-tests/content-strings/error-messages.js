@@ -168,7 +168,21 @@ export const ERROR_MESSAGES = {
         },
       },
       [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.USING_AGENT]: {
-        IS_EMPTY: 'Select if you have tried to insure this export through the private market',
+        IS_EMPTY: 'Select if anyone, like an agent, helped you win your export contract',
+      },
+      AGENT_DETAILS: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS.NAME]: {
+          IS_EMPTY: 'Enter the name of the agent',
+          ABOVE_MAXIMUM: `The name of the agent cannot be more than ${MAXIMUM_CHARACTERS.AGENT_NAME} characters`,
+          INCORRECT_FORMAT: "The agent's name must not include any numbers or symbols",
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS.FULL_ADDRESS]: {
+          IS_EMPTY: "Enter the agent's address",
+          ABOVE_MAXIMUM: `The agent's address cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS.COUNTRY_CODE]: {
+          IS_EMPTY: 'Enter the country the agent is based in',
+        },
       },
     },
     POLICY: {

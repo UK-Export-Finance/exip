@@ -1,4 +1,4 @@
-import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
+import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -9,10 +9,16 @@ import mapCountries from '../../../../helpers/mappings/map-countries';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  EXPORT_CONTRACT: { AGENT_SERVICE },
+  PROBLEM_WITH_SERVICE,
+} = INSURANCE_ROUTES;
 
 const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
@@ -142,6 +148,107 @@ describe('controllers/insurance/export-contract/agent-details', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = {
+      [FULL_ADDRESS]: mockApplication.exportContract.agent[FULL_ADDRESS],
+      [COUNTRY_CODE]: mockCountries[0].isoCode,
+    };
+
+    beforeEach(() => {
+      getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
+
+      api.keystone.countries.getAll = getCountriesSpy;
+    });
+
+    describe('when there are validation errors', () => {
+      it('should call api.keystone.countries.getAll', async () => {
+        await post(req, res);
+
+        expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should render template with validation errors and submitted values', async () => {
+        req.body = {};
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber),
+          userName: getUserNameFromSession(req.session.user),
+          application: mapApplicationToFormFields(mockApplication),
+          submittedValues: payload,
+          validationErrors,
+          countries: mapCountries(mockCountries),
+        });
+      });
+
+      describe('when the get countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries API call does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should NOT call api.keystone.countries.getAll', async () => {
+        await post(req, res);
+
+        expect(getCountriesSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it(`should redirect to ${AGENT_SERVICE}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_SERVICE}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });

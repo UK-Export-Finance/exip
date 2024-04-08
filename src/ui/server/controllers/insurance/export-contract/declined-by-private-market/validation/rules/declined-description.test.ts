@@ -14,6 +14,7 @@ const {
     PRIVATE_MARKET: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
   },
 } = ERROR_MESSAGES.INSURANCE;
+
 describe('controllers/insurance/export-contract/declined-by-private-market/validation/rules/declined-description', () => {
   const mockBody = {};
 
