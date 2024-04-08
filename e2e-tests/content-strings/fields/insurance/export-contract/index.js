@@ -67,6 +67,7 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [FULL_ADDRESS]: {
       LABEL: 'Address of the agent',
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
     },
     [COUNTRY_CODE]: {
       LABEL: 'Country the agent is based in',

@@ -3,13 +3,18 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
+import api from '../../../../api';
+import { isPopulatedArray } from '../../../../helpers/array';
+import mapCountries from '../../../../helpers/mappings/map-countries';
+import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
 
 const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
-  AGENT: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 export const FIELD_IDS = [NAME, FULL_ADDRESS, COUNTRY_CODE];
@@ -49,15 +54,35 @@ export const pageVariables = (referenceNumber: number) => ({
  * @param {Express.Response} Express response
  * @returns {Express.Response.render} "Agent details" page
  */
-export const get = (req: Request, res: Response) => {
+export const get = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  return res.render(TEMPLATE, {
-    ...pageVariables(application.referenceNumber),
-    userName: getUserNameFromSession(req.session.user),
-  });
+  try {
+    const countries = await api.keystone.countries.getAll();
+
+    const mappedCountries = mapCountries(countries);
+
+    if (!isPopulatedArray(countries)) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.render(TEMPLATE, {
+      ...insuranceCorePageVariables({
+        PAGE_CONTENT_STRINGS,
+        BACK_LINK: req.headers.referer,
+      }),
+      ...pageVariables(application.referenceNumber),
+      userName: getUserNameFromSession(req.session.user),
+      application: mapApplicationToFormFields(application),
+      countries: mappedCountries,
+    });
+  } catch (err) {
+    console.error('Error getting countries %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };
