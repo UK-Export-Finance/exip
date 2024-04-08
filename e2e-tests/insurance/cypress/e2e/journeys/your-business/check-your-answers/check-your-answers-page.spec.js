@@ -4,7 +4,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: {
     CREDIT_CONTROL,
     CHECK_YOUR_ANSWERS,
@@ -18,7 +17,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your Business - Check your answers - As an exporter, I want to check my answers to the your business section', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -32,7 +30,6 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
       cy.completeAndSubmitCreditControlForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -71,12 +68,12 @@ context('Insurance - Your Business - Check your answers - As an exporter, I want
 
   describe('form submission', () => {
     describe('continue', () => {
-      it(`should redirect to ${ALL_SECTIONS}`, () => {
+      it('should redirect to `all sections`', () => {
         cy.navigateToUrl(url);
 
         cy.clickSaveAndBackButton();
 
-        cy.assertUrl(allSectionsUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
     });
   });

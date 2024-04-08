@@ -6,6 +6,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 /**
  * assertAllSectionsUrl
+ * Assert that the URL is an application's "all sections" URL.
  * @param {Number} Application reference number
  */
 const assertAllSectionsUrl = (referenceNumber) => {

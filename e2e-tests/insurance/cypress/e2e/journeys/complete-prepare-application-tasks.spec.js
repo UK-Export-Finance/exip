@@ -1,15 +1,5 @@
-import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
-
-const {
-  ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-} = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
-
 context('Insurance - Complete `prepare your application` tasks', () => {
   let referenceNumber;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -17,18 +7,16 @@ context('Insurance - Complete `prepare your application` tasks', () => {
 
       cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      allSectionsUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
-      cy.navigateToUrl(allSectionsUrl);
-
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
 
-    cy.navigateToUrl(allSectionsUrl);
+    cy.navigateToAllSectionsUrl(referenceNumber);
   });
 
   after(() => {

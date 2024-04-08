@@ -14,8 +14,6 @@ const {
 } = FIELD_IDS;
 
 const {
-  ROOT,
-  ALL_SECTIONS,
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION,
   },
@@ -56,8 +54,8 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
@@ -74,8 +72,8 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -106,8 +104,8 @@ context('Insurance - Your buyer - Company or organisation - Save and back', () =
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {

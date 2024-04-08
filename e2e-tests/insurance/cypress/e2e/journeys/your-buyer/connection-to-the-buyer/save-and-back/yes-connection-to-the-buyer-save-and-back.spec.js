@@ -9,7 +9,6 @@ const {
 
 const {
   YOUR_BUYER: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE },
-  ALL_SECTIONS,
   ROOT,
 } = INSURANCE_ROUTES;
 
@@ -49,8 +48,8 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `not started yet`', () => {
@@ -69,8 +68,8 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {
@@ -96,8 +95,8 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your buyer` task status as `in progress`', () => {

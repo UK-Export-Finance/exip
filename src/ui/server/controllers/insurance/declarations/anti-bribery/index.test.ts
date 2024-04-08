@@ -107,18 +107,16 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       });
     });
 
-    describe('api error handling', () => {
-      describe('when there is an error', () => {
-        beforeAll(() => {
-          getLatestAntiBriberySpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.declarations.getLatestAntiBribery = getLatestAntiBriberySpy;
-        });
+    describe('when there is an error calling the API', () => {
+      beforeAll(() => {
+        getLatestAntiBriberySpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.application.declarations.getLatestAntiBribery = getLatestAntiBriberySpy;
+      });
 
-        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
-          await get(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
 
-          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
-        });
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
     });
   });

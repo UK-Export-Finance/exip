@@ -6,9 +6,10 @@ import { ERROR_MESSAGES, PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
-import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import mapAndSave from '../map-and-save/private-market';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
@@ -33,6 +34,10 @@ const { referenceNumber } = mockApplication;
 describe('controllers/insurance/export-contract/declined-by-private-market', () => {
   let req: Request;
   let res: Response;
+
+  jest.mock('../map-and-save/private-market');
+
+  mapAndSave.privateMarket = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -121,10 +126,10 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
     };
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
+      it('should render template with validation errors and submitted values', async () => {
         req.body = {};
 
-        post(req, res);
+        await post(req, res);
 
         const payload = constructPayload(req.body, [FIELD_ID]);
 
@@ -146,8 +151,18 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
         req.body = validBody;
       });
 
-      it(`should redirect to ${AGENT}`, () => {
-        post(req, res);
+      it('should call mapAndSave.exportContract with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.privateMarket).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.privateMarket).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      it(`should redirect to ${AGENT}`, async () => {
+        await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
 
@@ -160,10 +175,46 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('mapAndSave.privateMarket call', () => {
+        beforeEach(() => {
+          req.body = validBody;
+        });
+
+        describe('when a true boolean is not returned', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+            mapAndSave.privateMarket = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
+
+        describe('when there is an error', () => {
+          beforeEach(() => {
+            const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+            mapAndSave.privateMarket = mapAndSaveSpy;
+          });
+
+          it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+          });
+        });
       });
     });
   });

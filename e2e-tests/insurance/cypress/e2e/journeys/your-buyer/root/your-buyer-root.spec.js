@@ -101,7 +101,7 @@ context('Insurance - Your buyer - Start page - As an exporter, I want to provide
   });
 
   describe('when clicking the `all sections` link', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       assertSectionStartContent.allSections.linkRedirection({
         currentUrl: yourBuyerRootUrl,
         expectedUrl: `${baseUrl}${allSectionsUrl}`,

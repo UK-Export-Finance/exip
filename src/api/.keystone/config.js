@@ -1812,6 +1812,7 @@ var requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }) {
+    console.log("---- request ", request);
     if (!request.operationName || request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error("Operation not permitted");
     }
@@ -4478,7 +4479,7 @@ var EXPORT_CONTRACT_FIELDS = {
     [FINAL_DESTINATION]: {
       LABEL: "What's the final destination of the goods or services?",
       SUMMARY: {
-        TITLE: "Final destination of export"
+        TITLE: "Final destination of goods or services"
       }
     }
   },

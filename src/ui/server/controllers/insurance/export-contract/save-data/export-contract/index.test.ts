@@ -67,22 +67,18 @@ describe('controllers/insurance/export-contract/save-data/export-contract', () =
   });
 
   describe('api error handling', () => {
-    describe('update exportContract call', () => {
-      describe('when there is an error', () => {
-        beforeEach(() => {
-          updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.application.update.exportContract = updateApplicationSpy;
-        });
+    beforeEach(() => {
+      updateApplicationSpy = jest.fn(() => Promise.reject(new Error('mock')));
+      api.keystone.application.update.exportContract = updateApplicationSpy;
+    });
 
-        it('should throw an error', async () => {
-          try {
-            await save.exportContract(mockApplication, mockFormBody.valid);
-          } catch (err) {
-            const expected = new Error("Updating application's exportContract");
-            expect(err).toEqual(expected);
-          }
-        });
-      });
+    it('should throw an error', async () => {
+      try {
+        await save.exportContract(mockApplication, mockFormBody.valid);
+      } catch (err) {
+        const expected = new Error("Updating application's exportContract");
+        expect(err).toEqual(expected);
+      }
     });
   });
 });

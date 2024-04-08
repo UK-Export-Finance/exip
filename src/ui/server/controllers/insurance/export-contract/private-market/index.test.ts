@@ -160,6 +160,29 @@ describe('controllers/insurance/export-contract/private-market', () => {
     });
 
     describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should call mapAndSave.exportContract with data from constructPayload function and application', async () => {
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.privateMarket).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.privateMarket).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      describe('when the answer is false', () => {
+        it(`should redirect to ${AGENT}`, async () => {
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
       describe('when the answer is true', () => {
         it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET}`, async () => {
           req.body = {

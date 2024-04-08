@@ -11,7 +11,6 @@ const {
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORTER_BUSINESS: {
     TURNOVER_ROOT,
   },
@@ -53,8 +52,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -71,8 +70,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {
@@ -100,8 +99,8 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
       cy.clickSaveAndBackButton();
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
-      cy.assertUrl(`${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+    it('should redirect to `all sections`', () => {
+      cy.assertAllSectionsUrl(referenceNumber);
     });
 
     it('should retain the `your business` task status as `in progress`', () => {

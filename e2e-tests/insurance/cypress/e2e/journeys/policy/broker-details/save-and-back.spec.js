@@ -9,7 +9,6 @@ const {
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     BROKER_DETAILS_ROOT,
   },
@@ -20,7 +19,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Broker details page - Save and back', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -38,7 +36,6 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
       cy.completeAndSubmitBrokerForm({ usingBroker: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -53,12 +50,12 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
   });
 
   describe('when no fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
     });
@@ -69,12 +66,12 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.keyboardInput(fieldSelector(NAME).input(), mockApplication.BROKER[NAME]);
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
     });
@@ -85,20 +82,20 @@ context('Insurance - Policy - Broker details page - Save and back', () => {
   });
 
   describe('when all fields are provided', () => {
-    it(`should redirect to ${ALL_SECTIONS} and retain the "insurance policy" task status as "in progress"`, () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeBrokerDetailsForm({});
 
       cy.clickSaveAndBackButton();
 
-      cy.assertUrl(allSectionsUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
 
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {
-      cy.navigateToUrl(allSectionsUrl);
+      cy.navigateToAllSectionsUrl(referenceNumber);
 
       cy.startInsurancePolicySection({});
 

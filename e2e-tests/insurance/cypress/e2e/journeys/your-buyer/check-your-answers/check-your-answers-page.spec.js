@@ -7,7 +7,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   YOUR_BUYER: {
     BUYER_FINANCIAL_INFORMATION,
     CHECK_YOUR_ANSWERS,
@@ -21,7 +20,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Your buyer - Check your answers - As an exporter, I want to check my answers to the your buyer section', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -35,7 +33,6 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -70,14 +67,12 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${ALL_SECTIONS}`, () => {
+    it('should redirect to `all sections`', () => {
       cy.navigateToUrl(url);
 
       cy.clickSubmitButton();
 
-      const expectedUrl = `${baseUrl}${allSectionsUrl}`;
-
-      cy.assertUrl(expectedUrl);
+      cy.assertAllSectionsUrl(referenceNumber);
     });
   });
 });
