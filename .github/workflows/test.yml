@@ -239,6 +239,7 @@ jobs:
             "export-contract/private-market/**/*.spec.js",
             "export-contract/declined-by-private-market/**/*.spec.js",
             "export-contract/agent/**/*.spec.js",
+            "export-contract/agent-details/**/*.spec.js",
             "export-contract/agent-service/**/*.spec.js",
             "export-contract/change-your-answers/**/*.spec.js",
             "export-contract/check-your-answers/**/*.spec.js",

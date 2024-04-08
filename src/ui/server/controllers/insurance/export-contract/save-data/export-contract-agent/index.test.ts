@@ -7,7 +7,7 @@ import { mockApplication } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
-    AGENT: { NAME, FULL_ADDRESS },
+    AGENT_DETAILS: { NAME, FULL_ADDRESS },
   },
 } = INSURANCE_FIELD_IDS;
 

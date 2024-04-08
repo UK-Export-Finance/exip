@@ -15,10 +15,10 @@ export const EXPORT_CONTRACT = {
     DECLINED_DESCRIPTION: 'declinedDescription',
   },
   USING_AGENT: 'isUsingAgent',
-  AGENT: {
-    COUNTRY_CODE: 'countryCode',
-    FULL_ADDRESS: 'fullAddress',
+  AGENT_DETAILS: {
     NAME: 'name',
+    FULL_ADDRESS: 'fullAddress',
+    COUNTRY_CODE: 'countryCode',
   },
   AGENT_SERVICE: {
     IS_CHARGING: 'agentIsCharging',
