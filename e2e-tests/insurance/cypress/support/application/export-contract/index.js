@@ -8,4 +8,5 @@ Cypress.Commands.add('completeDeclinedByPrivateMarketForm', require('../../../..
 Cypress.Commands.add('completeAndSubmitDeclinedByPrivateMarketForm', require('../../../../../commands/insurance/complete-and-submit-declined-by-private-market-form'));
 Cypress.Commands.add('completeAgentForm', require('../../../../../commands/insurance/complete-agent-form'));
 Cypress.Commands.add('completeAgentDetailsForm', require('../../../../../commands/insurance/complete-agent-details-form'));
+Cypress.Commands.add('completeAndSubmitAgentDetailsForm', require('../../../../../commands/insurance/complete-and-submit-agent-details-form'));
 Cypress.Commands.add('completeAndSubmitAgentForm', require('../../../../../commands/insurance/complete-and-submit-agent-form'));

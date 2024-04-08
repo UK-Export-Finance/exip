@@ -97,7 +97,7 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
     });
 
     it(`should redirect to ${AGENT_SERVICE}`, () => {
-      cy.clickSubmitButton();
+      cy.completeAndSubmitAgentDetailsForm({});
 
       cy.assertUrl(agentServiceUrl);
     });
