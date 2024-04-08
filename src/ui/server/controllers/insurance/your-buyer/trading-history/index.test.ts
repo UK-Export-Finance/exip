@@ -12,7 +12,15 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockApplicationTotalContractValueThresholdTrue,
+  mockApplicationTotalContractValueThresholdFalse,
+  mockCurrencies,
+  mockCurrenciesResponse,
+} from '../../../../test-mocks';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import api from '../../../../api';
 
@@ -276,10 +284,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
       describe('when application.totalContractValueOverThreshold is true', () => {
         it(`should redirect to ${CREDIT_INSURANCE_COVER}`, async () => {
-          res.locals.application = {
-            ...mockApplication,
-            totalContractValueOverThreshold: true,
-          };
+          res.locals.application = mockApplicationTotalContractValueThresholdTrue;
 
           await post(req, res);
 
@@ -291,10 +296,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
       describe('when application.totalContractValueOverThreshold is NOT true', () => {
         it('should redirect to the next page', async () => {
-          res.locals.application = {
-            ...mockApplication,
-            totalContractValueOverThreshold: false,
-          };
+          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
 
           await post(req, res);
           const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;

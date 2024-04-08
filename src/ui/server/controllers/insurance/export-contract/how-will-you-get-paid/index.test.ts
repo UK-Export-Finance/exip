@@ -11,12 +11,18 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockApplicationTotalContractValueThresholdTrue,
+  mockApplicationTotalContractValueThresholdFalse,
+} from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, AGENT },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, PRIVATE_MARKET_CHANGE, AGENT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -132,12 +138,35 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
         expect(mapAndSave.exportContract).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
+      describe("when the url's last substring is `change` and application.totalContractValueOverThreshold is true", () => {
+        it(`should redirect to ${PRIVATE_MARKET_CHANGE}`, async () => {
+          req.originalUrl = HOW_WILL_YOU_GET_PAID_CHANGE;
+          res.locals.application = mockApplicationTotalContractValueThresholdTrue;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${PRIVATE_MARKET_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `change` and application.totalContractValueOverThreshold is false", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = HOW_WILL_YOU_GET_PAID_CHANGE;
+          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
       describe('when application.totalContractValueOverThreshold is true', () => {
         it(`should redirect to ${PRIVATE_MARKET}`, async () => {
-          res.locals.application = {
-            ...mockApplication,
-            totalContractValueOverThreshold: true,
-          };
+          res.locals.application = mockApplicationTotalContractValueThresholdTrue;
 
           await post(req, res);
 
@@ -149,10 +178,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
 
       describe('when application.totalContractValueOverThreshold is NOT true', () => {
         it(`should redirect to ${AGENT}`, async () => {
-          res.locals.application = {
-            ...mockApplication,
-            totalContractValueOverThreshold: false,
-          };
+          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
 
           await post(req, res);
 

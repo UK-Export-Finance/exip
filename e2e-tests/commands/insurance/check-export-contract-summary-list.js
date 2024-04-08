@@ -1,5 +1,6 @@
 import { summaryList } from '../../pages/shared';
 import getSummaryListField from './get-summary-list-field';
+import { EXPECTED_SINGLE_LINE_STRING } from '../../constants';
 import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../content-strings/fields/insurance/export-contract';
 import application from '../../fixtures/application';
@@ -38,11 +39,23 @@ const checkExportContractSummaryList = ({
   [PAYMENT_TERMS_DESCRIPTION]: () => {
     const fieldId = PAYMENT_TERMS_DESCRIPTION;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.HOW_WILL_YOU_GET_PAID);
+    const { expectedKey } = getSummaryListField(fieldId, FIELDS.HOW_WILL_YOU_GET_PAID);
 
-    const expectedValue = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[fieldId];
+    const row = summaryList.field(fieldId);
 
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    cy.checkText(
+      row.key(),
+      expectedKey,
+    );
+
+    row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+
+    const expectedLineBreaks = 3;
+
+    cy.assertLength(
+      row.valueHtmlLineBreak(),
+      expectedLineBreaks,
+    );
   },
 });
 
