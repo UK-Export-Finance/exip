@@ -161,6 +161,8 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     });
 
     it('should render template', async () => {
+      res.locals.application = mockApplication;
+
       await get(req, res);
 
       const expectedVariables = {
@@ -327,6 +329,8 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe(`when the application has a ${POLICY_CURRENCY_CODE} answer`, () => {
         it('should render template with validation errors and submitted values from constructPayload function and application', async () => {
+          res.locals.application = mockApplication;
+
           await post(req, res);
 
           const payload = constructPayload(req.body, FIELD_IDS);

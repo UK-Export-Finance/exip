@@ -118,6 +118,8 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
     });
 
     it('should render template', async () => {
+      res.locals.application = mockApplication;
+
       await get(req, res);
 
       const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(policyCurrencyCode));
@@ -248,6 +250,8 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
       });
 
       it('should render template with validation errors and submitted values from constructPayload function', async () => {
+        res.locals.application = mockApplication;
+
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
