@@ -14,7 +14,8 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
 
 const {
-  ROOT: INSURANCE_ROOT,
+  ROOT,
+  ALL_SECTIONS,
   EXPORT_CONTRACT: {
     HOW_WILL_YOU_GET_PAID, AGENT, AGENT_SERVICES, CHECK_YOUR_ANSWERS,
   },
@@ -31,6 +32,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
   let url;
   let agentServicesUrl;
   let checkYourAnswersUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -41,9 +43,10 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
-      agentServicesUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICES}`;
-      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
+      agentServicesUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICES}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
   });
 
@@ -58,8 +61,8 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
+      currentHref: `${ROOT}/${referenceNumber}${AGENT}`,
+      backLink: `${ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`,
     });
   });
 
@@ -126,6 +129,20 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
 
         cy.assertUrl(checkYourAnswersUrl);
       });
+
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToUrl(allSectionsUrl);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertNoRadioOptionIsChecked();
+        });
+      });
     });
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
@@ -133,6 +150,20 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
         cy.completeAndSubmitAgentForm({ usingAgent: true });
 
         cy.assertUrl(agentServicesUrl);
+      });
+
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToUrl(allSectionsUrl);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted value', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertYesRadioOptionIsChecked();
+        });
       });
     });
   });

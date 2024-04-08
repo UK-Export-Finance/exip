@@ -299,13 +299,13 @@ var EXPORT_CONTRACT = {
   },
   USING_AGENT: "isUsingAgent",
   AGENT: {
-    NAME: "name",
+    COUNTRY_CODE: "countryCode",
     FULL_ADDRESS: "fullAddress",
-    COUNTRY_CODE: "countryCode"
+    NAME: "name"
   },
   AGENT_SERVICE: {
-    SERVICE_DESCRIPTION: "serviceDescription",
-    IS_CHARGING: "agentIsCharging"
+    IS_CHARGING: "agentIsCharging",
+    SERVICE_DESCRIPTION: "serviceDescription"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;
@@ -397,6 +397,8 @@ var DEFAULT_RESOLVERS = [
   "updatePolicy",
   "updatePolicyContact",
   "updateExportContract",
+  "updateExportContractAgent",
+  "updateExportContractAgentService",
   "updatePrivateMarket",
   "updateSectionReview",
   "updateEligibility",
@@ -1810,6 +1812,7 @@ var requestDidStart = () => ({
    * via an explicit list of allowed resolvers.
    */
   didResolveOperation({ request }) {
+    console.log("---- request ", request);
     if (!request.operationName || request.operationName && !ALLOWED_GRAPHQL_RESOLVERS.includes(request.operationName)) {
       throw new Error("Operation not permitted");
     }
