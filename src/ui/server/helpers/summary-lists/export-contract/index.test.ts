@@ -1,5 +1,7 @@
 import { generateFields, exportContractSummaryLists } from '.';
 import generateAboutTheExportFields from './about-the-export-fields';
+import generatePrivateMarketFields from './private-market-fields';
+import agentFields from './agent-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { mockCountries } from '../../../test-mocks';
 import { referenceNumber, mockExportContract } from '../../../test-mocks/mock-application';
@@ -12,7 +14,11 @@ describe('server/helpers/summary-lists/export-contract', () => {
     it('should return fields and values from the submitted data/answers', () => {
       const result = generateFields(mockAnswers, referenceNumber, mockCountries, checkAndChange);
 
-      const expected = [generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange)];
+      const expected = [
+        generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
+        generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
+        agentFields(mockAnswers.agent, referenceNumber, checkAndChange),
+      ];
 
       expect(result).toEqual(expected);
     });

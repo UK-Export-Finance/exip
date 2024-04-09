@@ -1,7 +1,7 @@
 import { FORM_TITLES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { EXPORT_CONTRACT as EXPORT_CONTRACT_ROUTES } from '../../../../constants/routes/insurance/export-contract';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
@@ -18,14 +18,8 @@ const {
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
 } = FIELD_IDS;
 
-const {
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES_CHANGE,
-    ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
-    HOW_WILL_YOU_GET_PAID_CHANGE,
-    HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
-  },
-} = INSURANCE_ROUTES;
+const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 
 /**
  * generateAboutTheExportFields

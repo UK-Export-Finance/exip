@@ -1,4 +1,6 @@
 import generateAboutTheExportFields from './about-the-export-fields';
+import generatePrivateMarketFields from './private-market-fields';
+import agentFields from './agent-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { ApplicationExportContract, Country, SummaryListGroupData } from '../../../../types';
 
@@ -12,7 +14,11 @@ import { ApplicationExportContract, Country, SummaryListGroupData } from '../../
  * @returns {Object} Fields and values in an object structure for GOVUK summary list structure
  */
 export const generateFields = (answers: ApplicationExportContract, referenceNumber: number, countries: Array<Country>, checkAndChange: boolean) => {
-  const fields = [generateAboutTheExportFields(answers, referenceNumber, countries, checkAndChange)] as Array<SummaryListGroupData>;
+  const fields = [
+    generateAboutTheExportFields(answers, referenceNumber, countries, checkAndChange),
+    generatePrivateMarketFields(answers.privateMarket, referenceNumber, checkAndChange),
+    agentFields(answers.agent, referenceNumber, checkAndChange),
+  ] as Array<SummaryListGroupData>;
 
   return fields;
 };

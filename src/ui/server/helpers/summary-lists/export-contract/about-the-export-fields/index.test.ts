@@ -2,7 +2,7 @@ import generateAboutTheExportFields from '.';
 import { FORM_TITLES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
+import { EXPORT_CONTRACT as EXPORT_CONTRACT_ROUTES } from '../../../../constants/routes/insurance/export-contract';
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
@@ -19,15 +19,8 @@ const {
   EXPORT_CONTRACT: { ABOUT_THE_EXPORT: FORM_TITLE },
 } = FORM_TITLES;
 
-const {
-  INSURANCE_ROOT,
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES_CHANGE,
-    ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
-    HOW_WILL_YOU_GET_PAID_CHANGE,
-    HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
-  },
-} = INSURANCE_ROUTES;
+const { ABOUT_GOODS_OR_SERVICES_CHANGE, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 
 describe('server/helpers/summary-lists/export-contract/about-goods-or-services-fields', () => {
   const mockAnswers = mockApplication.exportContract;
@@ -54,7 +47,13 @@ describe('server/helpers/summary-lists/export-contract/about-goods-or-services-f
         fieldGroupItem(
           {
             field: getFieldById(FIELDS.ABOUT_GOODS_OR_SERVICES, FINAL_DESTINATION),
-            href: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHANGE}#${FINAL_DESTINATION}-label`,
+            href: generateChangeLink(
+              ABOUT_GOODS_OR_SERVICES_CHANGE,
+              ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+              `#${FINAL_DESTINATION}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
             renderChangeLink: true,
           },
           mockAnswers[FINAL_DESTINATION] && getCountryByIsoCode(mockCountries, mockAnswers[FINAL_DESTINATION]).name,
