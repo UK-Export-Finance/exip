@@ -39,49 +39,27 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
       const result = agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange);
 
       const expected = [
-        fieldGroupItem(
-          {
-            field: getFieldById(FIELDS.AGENT_DETAILS, NAME),
-            data: mockAnswersUsingAgentTrue,
-            href: generateChangeLink(
-              AGENT_DETAILS_CHANGE,
-              AGENT_DETAILS_CHECK_AND_CHANGE,
-              `#${NAME}-label`,
-              referenceNumber,
-              checkAndChange,
-            ),
-            renderChangeLink: true,
-          },
-        ),
+        fieldGroupItem({
+          field: getFieldById(FIELDS.AGENT_DETAILS, NAME),
+          data: mockAnswersUsingAgentTrue,
+          href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        }),
         fieldGroupItem(
           {
             field: getFieldById(FIELDS.AGENT_DETAILS, FULL_ADDRESS),
             data: mockAnswersUsingAgentTrue,
-            href: generateChangeLink(
-              AGENT_DETAILS_CHANGE,
-              AGENT_DETAILS_CHECK_AND_CHANGE,
-              `#${FULL_ADDRESS}-label`,
-              referenceNumber,
-              checkAndChange,
-            ),
+            href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
           replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue[FULL_ADDRESS]),
         ),
-        fieldGroupItem(
-          {
-            field: getFieldById(FIELDS.AGENT_DETAILS, COUNTRY_CODE),
-            data: mockAnswersUsingAgentTrue,
-            href: generateChangeLink(
-              AGENT_DETAILS_CHANGE,
-              AGENT_DETAILS_CHECK_AND_CHANGE,
-              `#${COUNTRY_CODE}-label`,
-              referenceNumber,
-              checkAndChange,
-            ),
-            renderChangeLink: true,
-          },
-        ),
+        fieldGroupItem({
+          field: getFieldById(FIELDS.AGENT_DETAILS, COUNTRY_CODE),
+          data: mockAnswersUsingAgentTrue,
+          href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        }),
       ];
 
       expect(result).toEqual(expected);

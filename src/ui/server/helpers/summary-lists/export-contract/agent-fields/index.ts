@@ -30,49 +30,27 @@ const { AGENT_CHANGE, AGENT_CHECK_AND_CHANGE, AGENT_DETAILS_CHANGE, AGENT_DETAIL
  */
 export const agentDetailsFields = (answers: ApplicationExportContractAgent, referenceNumber: number, checkAndChange: boolean) => {
   const fields = [
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS.AGENT_DETAILS, NAME),
-        data: answers,
-        href: generateChangeLink(
-          AGENT_DETAILS_CHANGE,
-          AGENT_DETAILS_CHECK_AND_CHANGE,
-          `#${NAME}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      },
-    ),
+    fieldGroupItem({
+      field: getFieldById(FIELDS.AGENT_DETAILS, NAME),
+      data: answers,
+      href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
+      renderChangeLink: true,
+    }),
     fieldGroupItem(
       {
         field: getFieldById(FIELDS.AGENT_DETAILS, FULL_ADDRESS),
         data: answers,
-        href: generateChangeLink(
-          AGENT_DETAILS_CHANGE,
-          AGENT_DETAILS_CHECK_AND_CHANGE,
-          `#${FULL_ADDRESS}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
+        href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${FULL_ADDRESS}-label`, referenceNumber, checkAndChange),
         renderChangeLink: true,
       },
       replaceNewLineWithLineBreak(answers[FULL_ADDRESS]),
     ),
-    fieldGroupItem(
-      {
-        field: getFieldById(FIELDS.AGENT_DETAILS, COUNTRY_CODE),
-        data: answers,
-        href: generateChangeLink(
-          AGENT_DETAILS_CHANGE,
-          AGENT_DETAILS_CHECK_AND_CHANGE,
-          `#${COUNTRY_CODE}-label`,
-          referenceNumber,
-          checkAndChange,
-        ),
-        renderChangeLink: true,
-      },
-    ),
+    fieldGroupItem({
+      field: getFieldById(FIELDS.AGENT_DETAILS, COUNTRY_CODE),
+      data: answers,
+      href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
+      renderChangeLink: true,
+    }),
   ];
 
   return fields;
@@ -100,10 +78,7 @@ const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: n
   ] as Array<SummaryListItemData>;
 
   if (answers[USING_AGENT]) {
-    fields = [
-      ...fields,
-      ...agentDetailsFields(answers, referenceNumber, checkAndChange),
-    ];
+    fields = [...fields, ...agentDetailsFields(answers, referenceNumber, checkAndChange)];
   }
 
   return {
