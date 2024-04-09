@@ -1,7 +1,8 @@
 import updateLossPayeeFinancialDetailsUk from '.';
 import { mockLossPayeeFinancialDetailsUk } from '../../../test-mocks';
-import { Context, SuccessResponse } from '../../../types';
+import { Context, SuccessResponse, ApplicationLossPayeeFinancialUk } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
+import createLossPayeeFinancialDetailsUk from '../../../test-helpers/loss-payee-financial-uk';
 
 describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   let context: Context;
@@ -22,6 +23,9 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   describe('successfully creating loss payee financial details', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
+      const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
+
+      variables.id = lossPayeeFinancialDetailsUk.id;
       lossPayeeFinancialDetailsUkResponse = (await updateLossPayeeFinancialDetailsUk({}, variables, context)) as SuccessResponse;
     });
 
