@@ -12,6 +12,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/export-contract-agent';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -149,5 +150,16 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
+  try {
+    const saveResponse = await mapAndSave.exportContractAgent(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - agent details %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };
