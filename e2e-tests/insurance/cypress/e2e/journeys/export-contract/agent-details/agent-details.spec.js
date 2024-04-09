@@ -1,9 +1,9 @@
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { autoCompleteField, field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
-import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
+import { assertCountryAutocompleteInput, checkAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS;
 
@@ -15,6 +15,8 @@ const {
 const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
+
+const countryCodeField = autoCompleteField(COUNTRY_CODE);
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -100,6 +102,20 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.completeAndSubmitAgentDetailsForm({});
 
       cy.assertUrl(agentServiceUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertAgentDetailsFieldValues({});
+      });
+
+      it(`should have a visible ${COUNTRY_CODE}`, () => {
+        cy.navigateToUrl(url);
+
+        checkAutocompleteInput.isVisible(countryCodeField);
+      });
     });
   });
 });
