@@ -1,12 +1,15 @@
 import updateLossPayeeFinancialDetailsUk from '.';
 import { mockLossPayeeFinancialDetailsUk } from '../../../test-mocks';
-import { Context, ApplicationLossPayeeFinancialUk, SuccessResponse } from '../../../types';
+import { Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
 describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   let context: Context;
   let lossPayeeFinancialDetailsUkResponse: SuccessResponse;
-  const variables = mockLossPayeeFinancialDetailsUk;
+  const variables = {
+    id: '1',
+    ...mockLossPayeeFinancialDetailsUk,
+  };
 
   beforeAll(() => {
     context = getKeystoneContext();

@@ -1,11 +1,13 @@
 import crypto from 'crypto';
 import { FINANCIAL_DETAILS } from '../../constants';
+import generateKey from './generate-key';
+import generateIv from './generate-iv';
 
-const { KEY, IV, ALGORITHM, ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
+const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
 
-const key = crypto.createHash(ALGORITHM).update(KEY.SIGNATURE).digest('hex').substring(0, 32);
+const key = generateKey();
 // initialisation vector
-const iv = crypto.randomBytes(IV.BYTES).toString(IV.ENCODING);
+const iv = generateIv();
 
 /**
  * encrypt

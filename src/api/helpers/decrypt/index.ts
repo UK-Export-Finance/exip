@@ -1,12 +1,13 @@
 import crypto from 'crypto';
 import dotenv from 'dotenv';
 import { FINANCIAL_DETAILS } from '../../constants';
+import generateKey from '../encrypt/generate-key';
 
 dotenv.config();
 
-const { KEY, ALGORITHM, ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
+const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
 
-const key = crypto.createHash(ALGORITHM).update(KEY.SIGNATURE).digest('hex').substring(0, 32);
+const key = generateKey();
 
 const decrypt = (dataToDecrypt: any) => {
   const buff = Buffer.from(dataToDecrypt.value, STRING_ENCODING);
