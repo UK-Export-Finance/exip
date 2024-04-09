@@ -11,6 +11,8 @@ import { mockApplication } from '../../../test-mocks';
 const {
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION_KNOWN },
+    PRIVATE_MARKET: { ATTEMPTED },
+    USING_AGENT,
   },
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
@@ -38,6 +40,8 @@ describe('server/helpers/required-fields/section-review', () => {
       ...requiredExportContractFields({
         finalDestinationKnown: flatApplicationData[FINAL_DESTINATION_KNOWN],
         totalContractValueOverThreshold,
+        attemptedPrivateMarketCover: flatApplicationData[ATTEMPTED],
+        isUsingAgent: flatApplicationData[USING_AGENT],
       }),
       ...requiredBusinessFields(flatApplicationData[HAS_DIFFERENT_TRADING_NAME]),
       ...requiredYourBuyerFields({

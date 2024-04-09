@@ -152,10 +152,10 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
         cy.assertUrl(agentDetailsUrl);
       });
 
-      it('should update the `export contract` task status to `completed`', () => {
-        cy.navigateToUrl(allSectionsUrl);
+      it('should retain the `export contract` task status as `in progress`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
 
       describe('when going back to the page', () => {

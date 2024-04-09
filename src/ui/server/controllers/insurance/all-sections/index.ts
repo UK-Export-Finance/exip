@@ -29,6 +29,7 @@ export const get = (req: Request, res: Response) => {
   const {
     finalDestinationKnown,
     privateMarket: { attempted: attemptedPrivateMarketCover },
+    agent: { isUsingAgent },
   } = exportContract;
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
@@ -53,6 +54,7 @@ export const get = (req: Request, res: Response) => {
     exporterHasPreviousCreditInsuranceWithBuyer,
     totalContractValueOverThreshold,
     attemptedPrivateMarketCover,
+    isUsingAgent,
   );
 
   const taskListData = generateTaskList(taskListStructure, flatApplicationData);

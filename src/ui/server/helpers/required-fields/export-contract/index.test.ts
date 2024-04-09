@@ -1,11 +1,13 @@
-import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks } from '.';
+import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks, agentTasks } from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { mockApplication } from '../../../test-mocks';
 
 const {
   ABOUT_GOODS_OR_SERVICES,
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { ATTEMPTED },
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+  USING_AGENT,
+  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -13,6 +15,7 @@ describe('server/helpers/required-fields/export-contract', () => {
     exportContract: {
       finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarketCover },
+      agent: { isUsingAgent },
     },
     totalContractValueOverThreshold,
   } = mockApplication;
@@ -44,10 +47,10 @@ describe('server/helpers/required-fields/export-contract', () => {
   describe('privateCoverTasks', () => {
     describe('when totalContractValueOverThreshold is true', () => {
       describe('when attemptedPrivateMarketCover is true', () => {
-        it('should return an empty array', () => {
+        it(`should return an array with ${DECLINED_DESCRIPTION} field ID`, () => {
           const result = privateCoverTasks({ totalContractValueOverThreshold: true, attemptedPrivateMarketCover: true });
 
-          expect(result).toEqual([]);
+          expect(result).toEqual([DECLINED_DESCRIPTION]);
         });
       });
 
@@ -89,14 +92,37 @@ describe('server/helpers/required-fields/export-contract', () => {
     });
   });
 
+  describe('agentTasks', () => {
+    describe('when isUsingAgent is true', () => {
+      it('should return an array with required agent details field IDs', () => {
+        const result = agentTasks({ isUsingAgent: true });
+
+        const expected = [NAME, FULL_ADDRESS, COUNTRY_CODE];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isUsingAgent is false', () => {
+      it(`should return an array with ${USING_AGENT} field ID`, () => {
+        const result = agentTasks({ isUsingAgent: false });
+
+        const expected = [USING_AGENT];
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
-      const result = requiredFields({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover });
+      const result = requiredFields({ totalContractValueOverThreshold, finalDestinationKnown, attemptedPrivateMarketCover, isUsingAgent });
 
       const expected = [
         PAYMENT_TERMS_DESCRIPTION,
         ...getAboutGoodsOrServicesTasks(finalDestinationKnown),
         ...privateCoverTasks({ totalContractValueOverThreshold, attemptedPrivateMarketCover }),
+        ...agentTasks({ isUsingAgent }),
       ];
 
       expect(result).toEqual(expected);

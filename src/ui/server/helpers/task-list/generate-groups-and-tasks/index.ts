@@ -22,6 +22,7 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * @param {Boolean} hasPreviousCreditInsuranceWithBuyer: "Exporter has previous credit insurance with buyer" flag
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (
@@ -38,6 +39,7 @@ const generateGroupsAndTasks = (
   hasPreviousCreditInsuranceWithBuyer?: boolean,
   totalContractValueOverThreshold?: boolean,
   attemptedPrivateMarketCover?: boolean,
+  isUsingAgent?: boolean,
 ): TaskListData => {
   let groups = [
     {
@@ -67,6 +69,7 @@ const generateGroupsAndTasks = (
         hasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
+        isUsingAgent,
       ),
     },
   ] as TaskListData;
