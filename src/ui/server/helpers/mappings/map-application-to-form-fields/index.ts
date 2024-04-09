@@ -35,6 +35,7 @@ const {
 const mapApplicationToFormFields = (application?: Application): Application | object => {
   if (application && objectHasKeysAndValues(application)) {
     const mapped = {
+      ...application,
       ...mapNameFields(application),
       ...mapTextareaFields(application),
     };

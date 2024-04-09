@@ -45,7 +45,7 @@
           id: FIELDS.NAME.ID,
           labelText: FIELDS.NAME.LABEL,
           labelClasses: "govuk-!-font-weight-bold",
-          value: submittedValues[FIELDS.NAME.ID],
+          value: submittedValues[FIELDS.NAME.ID] or application.exportContract.agent[FIELDS.NAME.ID],
           errorMessage: validationErrors.errorList[FIELDS.NAME.ID]
         }) }}
       </div>
@@ -71,7 +71,7 @@
             'data-cy': FIELDS.FULL_ADDRESS.ID
           },
           maxlength: FIELDS.FULL_ADDRESS.MAXIMUM,
-          value: submittedValues[FIELDS.FULL_ADDRESS.ID] or application.exportContract[FIELDS.FULL_ADDRESS.ID],
+          value: submittedValues[FIELDS.FULL_ADDRESS.ID] or application.exportContract.agent[FIELDS.FULL_ADDRESS.ID],
           errorMessage: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID] and {
             text: validationErrors.errorList[FIELDS.FULL_ADDRESS.ID].text,
             attributes: {
