@@ -67,11 +67,11 @@ describe('server/helpers/summary-lists/export-contract/private-market-fields', (
           fieldGroupItem(
             {
               field: getFieldById(FIELDS.PRIVATE_MARKET, ATTEMPTED),
-              data: mockAnswersAttemptedFalse,
+              data: mockAnswersAttemptedTrue,
               href: generateChangeLink(PRIVATE_MARKET_CHANGE, PRIVATE_MARKET_CHECK_AND_CHANGE, `#${ATTEMPTED}-label`, referenceNumber, checkAndChange),
               renderChangeLink: true,
             },
-            mapYesNoField(mockAnswersAttemptedFalse[ATTEMPTED]),
+            mapYesNoField(mockAnswersAttemptedTrue[ATTEMPTED]),
           ),
           fieldGroupItem(
             {
