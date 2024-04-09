@@ -1,11 +1,10 @@
 import { headingCaption } from '../../../../../../pages/shared';
 import { howWillYouGetPaidPage } from '../../../../../../pages/insurance/export-contract';
-import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
+import { EXPECTED_MULTI_LINE_STRING, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID;
 
@@ -146,11 +145,9 @@ context('Insurance - Export contract - How will you get paid page - As an export
       it('should have the submitted values', () => {
         cy.navigateToUrl(url);
 
-        const expectedValue = application.EXPORT_CONTRACT.HOW_WILL_YOU_GET_PAID[FIELD_ID];
-
         cy.checkTextareaValue({
           fieldId: FIELD_ID,
-          expectedValue,
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });

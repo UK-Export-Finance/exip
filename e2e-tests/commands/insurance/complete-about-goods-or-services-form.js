@@ -1,17 +1,15 @@
-import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
+import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import { aboutGoodsOrServicesPage } from '../../pages/insurance/export-contract';
 import { autoCompleteField } from '../../pages/shared';
 import application from '../../fixtures/application';
 import { COUNTRY_APPLICATION_SUPPORT } from '../../fixtures/countries';
 
 const {
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: {
-      DESCRIPTION,
-      FINAL_DESTINATION,
-    },
+  ABOUT_GOODS_OR_SERVICES: {
+    DESCRIPTION,
+    FINAL_DESTINATION,
   },
-} = INSURANCE_FIELD_IDS;
+} = FIELD_IDS;
 
 /**
  * completeAboutGoodsOrServicesForm

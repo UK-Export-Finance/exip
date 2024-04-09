@@ -298,14 +298,14 @@ var EXPORT_CONTRACT = {
     DECLINED_DESCRIPTION: "declinedDescription"
   },
   USING_AGENT: "isUsingAgent",
-  AGENT: {
+  AGENT_DETAILS: {
     NAME: "name",
     FULL_ADDRESS: "fullAddress",
     COUNTRY_CODE: "countryCode"
   },
   AGENT_SERVICE: {
-    SERVICE_DESCRIPTION: "serviceDescription",
-    IS_CHARGING: "agentIsCharging"
+    IS_CHARGING: "agentIsCharging",
+    SERVICE_DESCRIPTION: "serviceDescription"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;
@@ -397,6 +397,8 @@ var DEFAULT_RESOLVERS = [
   "updatePolicy",
   "updatePolicyContact",
   "updateExportContract",
+  "updateExportContractAgent",
+  "updateExportContractAgentService",
   "updatePrivateMarket",
   "updateSectionReview",
   "updateEligibility",

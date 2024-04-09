@@ -78,17 +78,21 @@ context('Insurance - Export contract - About goods or services page - Final dest
       const fieldId = DESCRIPTION;
       const field = aboutGoodsOrServicesPage[fieldId];
 
-      cy.checkText(field.label(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].LABEL);
+      const fieldStrings = FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId];
 
-      cy.checkText(field.hint.intro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.INTRO);
+      cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
 
-      cy.checkText(field.hint.list.item1(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[0]);
-      cy.checkText(field.hint.list.item2(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[1]);
-      cy.checkText(field.hint.list.item3(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.LIST[2]);
+      cy.checkText(field.hint.list.item1(), fieldStrings.HINT.LIST[0]);
+      cy.checkText(field.hint.list.item2(), fieldStrings.HINT.LIST[1]);
+      cy.checkText(field.hint.list.item3(), fieldStrings.HINT.LIST[2]);
 
-      cy.checkText(field.hint.outro(), FIELDS.ABOUT_GOODS_OR_SERVICES[fieldId].HINT.OUTRO);
+      cy.checkText(field.hint.outro(), fieldStrings.HINT.OUTRO);
 
-      field.textarea().should('exist');
+      cy.assertTextareaRendering({
+        fieldId,
+        expectedLabel: fieldStrings.LABEL,
+        maximumCharacters: fieldStrings.MAXIMUM,
+      });
     });
 
     describe(`${FINAL_DESTINATION_KNOWN} label and input`, () => {

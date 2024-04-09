@@ -35,12 +35,28 @@ interface ApplicationPrivateMarket {
   declinedDescription?: string;
 }
 
+interface ApplicationExportContractAgentService {
+  id: string;
+  agentIsCharging?: boolean;
+  serviceDescription?: string;
+}
+
+interface ApplicationExportContractAgent {
+  id: string;
+  countryCode?: string;
+  fullAddress?: string;
+  isUsingAgent?: boolean;
+  name?: string;
+  service: ApplicationExportContractAgentService;
+}
+
 interface ApplicationExportContract {
   id: string;
   goodsOrServicesDescription?: string;
   finalDestinationKnown?: boolean;
   finalDestinationCountryCode?: string;
   privateMarket: ApplicationPrivateMarket;
+  agent: ApplicationExportContractAgent;
 }
 
 interface ApplicationDifferentTradingAddress {

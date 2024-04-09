@@ -9,12 +9,13 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, AGENT },
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, PRIVATE_MARKET_CHANGE, AGENT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -108,12 +109,29 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const { totalContractValueOverThreshold } = application;
+
+    if (isChangeRoute(req.originalUrl)) {
+      /**
+       * If the URL is a "change" route
+       * and totalContractValue is over the threshold,
+       * redirect to PRIVATE_MARKET with /change in URL.
+       * This ensures that the next page can consume /change in the URL
+       * and therefore correctly redirect on submission.
+       */
+      if (totalContractValueOverThreshold) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
     /**
      * if totalContractValue is over the threshold
      * redirect to PRIVATE_MARKET
      * otherwise it should redirect to the AGENT page
      */
-    if (application.totalContractValueOverThreshold) {
+    if (totalContractValueOverThreshold) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET}`);
     }
 

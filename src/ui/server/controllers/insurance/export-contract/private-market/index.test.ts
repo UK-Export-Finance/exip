@@ -13,7 +13,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET, PRIVATE_MARKET_SAVE_AND_BACK, AGENT },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, DECLINED_BY_PRIVATE_MARKET, PRIVATE_MARKET_SAVE_AND_BACK, PRIVATE_MARKET_CHANGE, AGENT },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -98,7 +98,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
 
       const expected = {
         FIELD_ID,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRIVATE_MARKET_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -178,7 +178,19 @@ describe('controllers/insurance/export-contract/private-market', () => {
         it(`should redirect to ${AGENT}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the answer is false and the url's last substring is `change` and application.totalContractValueOverThreshold is true", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = PRIVATE_MARKET_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

@@ -1,4 +1,4 @@
-import country from '.';
+import countryCode from '.';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
@@ -14,13 +14,13 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-describe('controllers/insurance/policy/other-company-details/validation/rules/country', () => {
+describe('controllers/insurance/policy/other-company-details/validation/rules/country-code', () => {
   const mockBody = {
     [FIELD_ID]: mockCountries[0].name,
   };
 
-  it('should return the result of providedAndMaxLength', () => {
-    const result = country(mockBody, mockErrors);
+  it('should return the result of emptyFieldValidation', () => {
+    const result = countryCode(mockBody, mockErrors);
 
     const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE, mockErrors);
 

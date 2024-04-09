@@ -88,6 +88,7 @@ const applicationQuery = gql`
             declinedDescription
           }
           agent {
+            id
             isUsingAgent
             name
             fullAddress
