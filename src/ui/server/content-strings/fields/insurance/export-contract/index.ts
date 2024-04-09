@@ -7,6 +7,7 @@ const {
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { DECLINED_DESCRIPTION },
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
@@ -71,6 +72,15 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [COUNTRY_CODE]: {
       LABEL: 'Country the agent is based in',
+    },
+  },
+  AGENT_SERVICE: {
+    [IS_CHARGING]: {
+      LABEL: 'Is the agent charging for their support in the export contract?',
+    },
+    [SERVICE_DESCRIPTION]: {
+      LABEL: 'Service the agent is providing',
+      MAXIMUM: MAXIMUM_CHARACTERS.AGENT_SERVICE_DESCRIPTION,
     },
   },
 };

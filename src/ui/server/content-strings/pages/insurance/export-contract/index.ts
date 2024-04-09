@@ -50,6 +50,11 @@ const AGENT_DETAILS = {
   PAGE_TITLE: 'Tell us about the person who helped you win the export contract',
 };
 
+const AGENT_SERVICE = {
+  ...SHARED,
+  PAGE_TITLE: 'Tell us about the service the agent is providing',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -63,5 +68,6 @@ export default {
   DECLINED_BY_PRIVATE_MARKET,
   AGENT,
   AGENT_DETAILS,
+  AGENT_SERVICE,
   CHECK_YOUR_ANSWERS,
 };
