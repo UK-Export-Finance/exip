@@ -14,7 +14,7 @@ const iv = generateIv();
  * encrypts data
  * returns encrypted value and initialisation vector
  * @param dataToEncrypt
- * @returns {Object} value and inititialisation vector
+ * @returns {Object} value and initialisation vector
  */
 const encrypt = (dataToEncrypt: any) => {
   const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, iv);
