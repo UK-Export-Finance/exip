@@ -57,8 +57,6 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
     res.locals.application = mockApplicationWithoutCountryCode;
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     api.keystone.countries.getAll = getCountriesSpy;
   });
 

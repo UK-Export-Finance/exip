@@ -12,7 +12,16 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockContact } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+  mockContact,
+  referenceNumber,
+} from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
@@ -25,7 +34,7 @@ const {
   },
 } = ROUTES;
 
-const { policy, exportContract, referenceNumber } = mockApplication;
+const { policy, exportContract } = mockApplication;
 
 describe('controllers/insurance/check-your-answers/policy', () => {
   jest.mock('../save-data');
@@ -43,7 +52,6 @@ describe('controllers/insurance/check-your-answers/policy', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 

@@ -11,7 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/nominated-loss-payee';
-import { mockReq, mockRes, mockApplication, mockLossPayeeDetails } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeDetails, referenceNumber } from '../../../../test-mocks';
 
 const { NAME, LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
@@ -30,8 +30,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/loss-payee-details', () => {
   let req: Request;
@@ -142,7 +140,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
           validationErrors: generateValidationErrors(payload),
@@ -175,7 +173,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -186,7 +184,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

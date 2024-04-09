@@ -1,8 +1,8 @@
 import getApplicationMiddleware, { RELEVANT_ROUTES } from '.';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import api from '../../../api';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
 import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
 const {
@@ -35,8 +35,6 @@ describe('middleware/insurance/get-application', () => {
     req = mockReq();
     res = mockRes();
     next = nextSpy;
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('RELEVANT_ROUTES', () => {
@@ -74,7 +72,7 @@ describe('middleware/insurance/get-application', () => {
 
   describe('when the route contains a relevant route', () => {
     beforeEach(() => {
-      req.originalUrl = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
+      req.originalUrl = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
     });
 
     describe('when an application exists', () => {

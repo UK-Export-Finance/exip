@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -35,8 +35,6 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -47,10 +45,10 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
     it('should have correct properties', () => {
       const expected = {
         FIELD_ID: TRADED_WITH_BUYER,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER_SAVE_AND_BACK}`,
       };
 
-      expect(pageVariables(mockApplication.referenceNumber)).toEqual(expected);
+      expect(pageVariables(referenceNumber)).toEqual(expected);
     });
   });
 
@@ -96,7 +94,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
           HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         submittedValues: mockApplication.buyer.buyerTradingHistory,
       };
 
@@ -132,7 +130,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
       it(`should redirect to the next page when ${TRADED_WITH_BUYER} is true`, async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_HISTORY}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -167,7 +165,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
           };
 
           await post(req, res);
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -183,7 +181,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -199,7 +197,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -218,7 +216,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_INSURANCE_COVER}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -240,7 +238,7 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
             HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           submittedValues: payload,
           application: mapApplicationToFormFields(mockApplication),
           validationErrors,

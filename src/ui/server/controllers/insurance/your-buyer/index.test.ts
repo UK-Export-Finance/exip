@@ -5,14 +5,12 @@ import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import sectionStartPageVariables from '../../../helpers/page-variables/core/insurance/section-start';
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../types';
-import { mockApplication, mockReq, mockRes } from '../../../test-mocks';
+import { referenceNumber, mockReq, mockRes } from '../../../test-mocks';
 
 const {
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/your-buyer/index', () => {
   let req: Request;

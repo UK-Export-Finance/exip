@@ -14,7 +14,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
-import mockApplication, { mockApplicationSinglePolicyWithoutCurrencyCode } from '../../../../test-mocks/mock-application';
+import mockApplication, { referenceNumber, mockApplicationSinglePolicyWithoutCurrencyCode } from '../../../../test-mocks/mock-application';
 
 const {
   INSURANCE_ROOT,
@@ -68,7 +68,6 @@ const applicationCurrencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
 describe('controllers/insurance/policy/single-contract-policy', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../save-data/policy');
 
@@ -79,10 +78,6 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -92,7 +87,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -158,7 +153,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, applicationCurrencyAnswer),
@@ -266,7 +261,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -280,7 +275,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -296,7 +291,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -310,7 +305,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -336,7 +331,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
               PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
               BACK_LINK: req.headers.referer,
             }),
-            ...pageVariables(refNumber),
+            ...pageVariables(referenceNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplication),
             submittedValues: payload,
@@ -361,7 +356,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
               PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLICY,
               BACK_LINK: req.headers.referer,
             }),
-            ...pageVariables(refNumber),
+            ...pageVariables(referenceNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationSinglePolicyWithoutCurrencyCode),
             submittedValues: payload,

@@ -6,7 +6,7 @@ import fieldGroupItem from '../../../../generate-field-group-item';
 import getFieldById from '../../../../../get-field-by-id';
 import generateChangeLink from '../../../../../generate-change-link';
 import formatCurrency from '../../../../../format-currency';
-import mockApplication, { mockApplicationBuyer } from '../../../../../../test-mocks/mock-application';
+import { mockApplicationBuyer, referenceNumber } from '../../../../../../test-mocks/mock-application';
 
 const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
@@ -17,7 +17,6 @@ const {
 
 describe('server/helpers/summary-lists/your-buyer/trading-history/optional-fields/outstanding-payments', () => {
   const mockAnswers = mockApplicationBuyer.buyerTradingHistory;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   describe(`when ${OUTSTANDING_PAYMENTS} is true`, () => {

@@ -6,7 +6,7 @@ import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
 import generateChangeLink from '../../../../generate-change-link';
 import mapYesNoField from '../../../../mappings/map-yes-no-field';
-import mockApplication, { mockSinglePolicy } from '../../../../../test-mocks/mock-application';
+import { referenceNumber, mockSinglePolicy } from '../../../../../test-mocks/mock-application';
 import { ApplicationPolicy } from '../../../../../../types';
 
 const { NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
@@ -15,7 +15,6 @@ const {
   POLICY: { PRE_CREDIT_PERIOD_CHANGE, PRE_CREDIT_PERIOD_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
-const { referenceNumber } = mockApplication;
 const checkAndChange = true;
 
 const expectedNeedPreCreditPeriodField = (answers: ApplicationPolicy) =>

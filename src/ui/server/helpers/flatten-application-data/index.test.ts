@@ -1,7 +1,7 @@
 import flattenApplicationData, { mapPolicyContact, mapBroker } from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
-import { mockApplication } from '../../test-mocks';
+import { mockApplication, referenceNumber } from '../../test-mocks';
 
 const {
   POLICY: {
@@ -56,7 +56,7 @@ describe('server/helpers/flatten-application-data', () => {
       const expected = {
         ...mockApplication.eligibility,
         version: mockApplication.version,
-        referenceNumber: mockApplication.referenceNumber,
+        referenceNumber,
         createdAt: mockApplication.createdAt,
         updatedAt: mockApplication.updatedAt,
         dealType: mockApplication.dealType,

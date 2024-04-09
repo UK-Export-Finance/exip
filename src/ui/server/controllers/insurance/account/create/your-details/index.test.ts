@@ -13,7 +13,7 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockApplication, mockSession } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, mockSession, referenceNumber } from '../../../../../test-mocks';
 
 const { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD } = ACCOUNT_FIELD_IDS;
 
@@ -27,8 +27,6 @@ const {
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/account/create/your-details', () => {
   let req: Request;

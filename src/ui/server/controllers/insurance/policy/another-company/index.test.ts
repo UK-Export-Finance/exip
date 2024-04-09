@@ -11,7 +11,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/jointly-insured-party';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -38,18 +38,12 @@ const {
 describe('controllers/insurance/policy/another-company', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/policy');
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -77,7 +71,7 @@ describe('controllers/insurance/policy/another-company', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD_ID,
@@ -116,7 +110,7 @@ describe('controllers/insurance/policy/another-company', () => {
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         submittedValues: mockApplication.policy.jointlyInsuredParty,
       };
@@ -213,7 +207,7 @@ describe('controllers/insurance/policy/another-company', () => {
             BACK_LINK: req.headers.referer,
             HTML_FLAGS,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: res.locals.application,
           submittedValues: sanitisedData,

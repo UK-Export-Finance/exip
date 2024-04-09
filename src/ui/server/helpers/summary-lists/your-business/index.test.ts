@@ -4,10 +4,9 @@ import generateYourCompanyFields from './your-company-fields';
 import generateTurnoverFields from './turnover-fields';
 import generateCreditControlFields from './credit-control-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
-import mockApplication, { mockCompany, mockBusiness } from '../../../test-mocks/mock-application';
+import { mockCompany, mockBusiness, referenceNumber } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-business', () => {
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   describe('generateFields', () => {
