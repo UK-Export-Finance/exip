@@ -18,9 +18,17 @@ const completeAgentDetailsForm = ({
   fullAddress = application.EXPORT_CONTRACT.AGENT_DETAILS[FULL_ADDRESS],
   countryCode = application.EXPORT_CONTRACT.AGENT_DETAILS[COUNTRY_CODE],
 }) => {
-  cy.keyboardInput(field(NAME).input(), name);
-  cy.keyboardInput(field(FULL_ADDRESS).textarea(), fullAddress);
-  cy.keyboardInput(autoCompleteField(COUNTRY_CODE).input(), countryCode);
+  if (name) {
+    cy.keyboardInput(field(NAME).input(), name);
+  }
+
+  if (fullAddress) {
+    cy.keyboardInput(field(FULL_ADDRESS).textarea(), fullAddress);
+  }
+
+  if (countryCode) {
+    cy.keyboardInput(autoCompleteField(COUNTRY_CODE).input(), countryCode);
+  }
 };
 
 export default completeAgentDetailsForm;

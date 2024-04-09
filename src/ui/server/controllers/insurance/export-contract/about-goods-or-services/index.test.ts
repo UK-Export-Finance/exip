@@ -156,8 +156,8 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
     describe('when a country has been previously submitted', () => {
       const mockApplicationWithCountry = {
         ...mockApplication,
-        policy: {
-          ...mockApplication.policy,
+        exportContract: {
+          ...mockApplication.exportContract,
           [FINAL_DESTINATION]: countryIsoCode,
         },
       };

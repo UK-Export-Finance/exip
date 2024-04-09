@@ -4,12 +4,13 @@ import { Application } from '../../../../types';
 
 const {
   EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: ALT_TRADING_FULL_ADDRESS },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
   },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
     PRIVATE_MARKET: { DECLINED_DESCRIPTION },
+    AGENT_DETAILS: { FULL_ADDRESS: AGENT_FULL_ADDRESS },
   },
   POLICY: {
     BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
@@ -41,11 +42,13 @@ const mapTextareaFields = (application: Application): Application => {
 
   buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] = replaceCharacterCodesWithCharacters(buyer[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
 
-  company.differentTradingAddress[FULL_ADDRESS] = replaceCharacterCodesWithCharacters(company.differentTradingAddress[FULL_ADDRESS]);
+  company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(company.differentTradingAddress[ALT_TRADING_FULL_ADDRESS]);
 
   exportContract[DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract[DESCRIPTION]);
 
   exportContract.privateMarket[DECLINED_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.privateMarket[DECLINED_DESCRIPTION]);
+
+  exportContract.agent[AGENT_FULL_ADDRESS] = replaceCharacterCodesWithCharacters(exportContract.agent[AGENT_FULL_ADDRESS]);
 
   policy[CREDIT_PERIOD_WITH_BUYER] = replaceCharacterCodesWithCharacters(policy[CREDIT_PERIOD_WITH_BUYER]);
 
