@@ -9,7 +9,7 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import optionalTradedWithBuyerFields from './optional-fields/traded-with-buyer';
 import optionalOutstandingPaymentsFields from './optional-fields/outstanding-payments';
-import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
+import { mockApplicationBuyer, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const {
   YOUR_BUYER: { TRADING_HISTORY: FORM_TITLE },
@@ -21,7 +21,6 @@ const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS } = BUYER_FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-buyer/trading-history', () => {
   const mockAnswers = mockApplicationBuyer.buyerTradingHistory;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   const expectedBase = [

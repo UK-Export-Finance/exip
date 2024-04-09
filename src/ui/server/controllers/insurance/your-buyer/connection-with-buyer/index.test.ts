@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockBuyer } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockBuyer, referenceNumber } from '../../../../test-mocks';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-relationship';
 
@@ -47,8 +47,6 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -77,7 +75,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD_ID: CONNECTION_WITH_BUYER,
@@ -93,7 +91,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           },
         },
         PAGE_CONTENT_STRINGS,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -122,7 +120,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
@@ -161,7 +159,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADED_WITH_BUYER}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -184,7 +182,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -196,7 +194,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -217,7 +215,7 @@ describe('controllers/insurance/your-buyer/connection-with-buyer', () => {
             BACK_LINK: req.headers.referer,
             HTML_FLAGS,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors,
           submittedValues: sanitiseData(payload),

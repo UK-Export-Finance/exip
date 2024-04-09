@@ -10,7 +10,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-uk';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsUk } from '../../../../test-mocks';
+import { mockReq, mockRes, mockLossPayeeFinancialDetailsUk, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -23,8 +23,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_FINANCIAL_UK, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
-
-const { referenceNumber } = mockApplication;
 
 describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
   let req: Request;
@@ -130,7 +128,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           submittedValues: payload,
           validationErrors: generateValidationErrors(payload),
@@ -163,7 +161,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

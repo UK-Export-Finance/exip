@@ -11,7 +11,7 @@ import keystoneDocumentRendererConfig from '../../../../helpers/keystone-documen
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockDeclarations } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockDeclarations, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -50,7 +50,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
@@ -58,7 +58,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           ...FIELDS[FIELD_ID],
         },
         SUBMIT_BUTTON_COPY: BUTTONS.SUBMIT_APPLICATION,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -86,7 +86,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         documentContent: mockDeclarations.howDataWillBeUsed.content.document,
         documentConfig: keystoneDocumentRendererConfig(),
@@ -196,7 +196,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.DECLARATIONS.HOW_YOUR_DATA_WILL_BE_USED,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           documentContent: mockDeclarations.howDataWillBeUsed.content.document,
           documentConfig: keystoneDocumentRendererConfig(),

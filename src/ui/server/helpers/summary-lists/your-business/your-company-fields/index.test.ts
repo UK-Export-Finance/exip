@@ -7,7 +7,7 @@ import getFieldById from '../../../get-field-by-id';
 import formatDate from '../../../date/format-date';
 import generateYourCompanyFields from '.';
 import generateChangeLink from '../../../generate-change-link';
-import mockApplication, { mockCompany } from '../../../../test-mocks/mock-application';
+import { mockCompany, referenceNumber } from '../../../../test-mocks/mock-application';
 import { DEFAULT } from '../../../../content-strings';
 import { ApplicationCompany } from '../../../../../types';
 import generateMultipleFieldHtml from '../../../generate-multiple-field-html';
@@ -39,18 +39,12 @@ const {
 const addressObject = generateAddressObject(mockCompany[DIFFERENT_TRADING_ADDRESS][FULL_ADDRESS]);
 const address = generateMultipleFieldHtml(addressObject);
 
-const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, financialYearEndDateValue: string, checkAndChange = false) => [
+const summaryList = (mockAnswers: ApplicationCompany, refNumber: number, financialYearEndDateValue: string, checkAndChange = false) => [
   fieldGroupItem(
     {
       field: getFieldById(FIELDS.COMPANY_DETAILS, HAS_DIFFERENT_TRADING_NAME),
       data: mockAnswers,
-      href: generateChangeLink(
-        COMPANY_DETAILS_CHANGE,
-        COMPANY_DETAILS_CHECK_AND_CHANGE,
-        `#${HAS_DIFFERENT_TRADING_NAME}-label`,
-        referenceNumber,
-        checkAndChange,
-      ),
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${HAS_DIFFERENT_TRADING_NAME}-label`, refNumber, checkAndChange),
       renderChangeLink: true,
     },
     mapYesAlternateField(mockAnswers[HAS_DIFFERENT_TRADING_NAME], mockAnswers[DIFFERENT_TRADING_NAME]),
@@ -59,7 +53,7 @@ const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, f
     {
       field: getFieldById(FIELDS.COMPANY_DETAILS, TRADING_ADDRESS),
       data: mockAnswers,
-      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, referenceNumber, checkAndChange),
+      href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${TRADING_ADDRESS}-label`, refNumber, checkAndChange),
       renderChangeLink: true,
     },
     mapYesAlternateField(mockAnswers[TRADING_ADDRESS], address),
@@ -67,13 +61,13 @@ const summaryList = (mockAnswers: ApplicationCompany, referenceNumber: number, f
   fieldGroupItem({
     field: getFieldById(FIELDS.COMPANY_DETAILS, WEBSITE),
     data: mockAnswers,
-    href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${WEBSITE}-label`, referenceNumber, checkAndChange),
+    href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${WEBSITE}-label`, refNumber, checkAndChange),
     renderChangeLink: true,
   }),
   fieldGroupItem({
     field: getFieldById(FIELDS.COMPANY_DETAILS, PHONE_NUMBER),
     data: mockAnswers,
-    href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${PHONE_NUMBER}-label`, referenceNumber, checkAndChange),
+    href: generateChangeLink(COMPANY_DETAILS_CHANGE, COMPANY_DETAILS_CHECK_AND_CHANGE, `#${PHONE_NUMBER}-label`, refNumber, checkAndChange),
     renderChangeLink: true,
   }),
 ];
@@ -82,7 +76,6 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
   describe('generateYourCompanyFields', () => {
     describe('when a company has a financial year end date', () => {
       const mockAnswers = mockCompany;
-      const { referenceNumber } = mockApplication;
       const checkAndChange = false;
       const financialYearEndDateValue = formatDate(mockAnswers[FINANCIAL_YEAR_END_DATE], DATE_FORMAT);
 
@@ -102,7 +95,6 @@ describe('server/helpers/summary-lists/your-business/your-company-fields', () =>
 
     describe('when a company does not have a financial year end date', () => {
       const mockAnswers = mockCompany;
-      const { referenceNumber } = mockApplication;
       const checkAndChange = false;
       const financialYearEndDateValue = DEFAULT.EMPTY;
 

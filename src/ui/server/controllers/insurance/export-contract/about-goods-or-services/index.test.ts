@@ -14,7 +14,7 @@ import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -38,7 +38,6 @@ const {
 describe('controllers/insurance/export-contract/about-goods-or-services', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/export-contract');
 
@@ -60,8 +59,6 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
     res = mockRes();
 
     res.locals.application = mockApplicationWithoutCountryCode;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
   });
 
@@ -77,7 +74,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -144,7 +141,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
         countries: mapCountries(mockCountries),
@@ -175,7 +172,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
             BACK_LINK: req.headers.referer,
             HTML_FLAGS,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplicationWithCountry),
           countries: mapCountries(mockCountries, countryIsoCode),
@@ -275,7 +272,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -287,7 +284,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -306,7 +303,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
             BACK_LINK: req.headers.referer,
             HTML_FLAGS,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: mockApplicationWithoutCountryCode,
           submittedValues: sanitiseData(payload),
@@ -337,7 +334,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
               BACK_LINK: req.headers.referer,
               HTML_FLAGS,
             }),
-            ...pageVariables(refNumber),
+            ...pageVariables(referenceNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mockApplicationWithoutCountryCode,
             submittedValues: payload,

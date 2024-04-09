@@ -24,8 +24,6 @@ describe('controllers/insurance/export-contract/check-your-answers', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     api.keystone.countries.getAll = getCountriesSpy;
   });
 

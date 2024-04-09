@@ -5,10 +5,10 @@ import tradingHistoryFields from './trading-history';
 import creditInsuranceHistoryFields from './credit-insurance-history';
 import financialAccountsFields from './financial-accounts';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
-import mockApplication, { mockApplicationBuyer } from '../../../test-mocks/mock-application';
+import mockApplication, { mockApplicationBuyer, referenceNumber } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/your-buyer', () => {
-  const { referenceNumber, buyer, totalContractValueOverThreshold } = mockApplication;
+  const { buyer, totalContractValueOverThreshold } = mockApplication;
   const checkAndChange = false;
 
   describe('optionalFields', () => {

@@ -4,11 +4,9 @@ import generatePolicyContactFields from './policy-contact-fields';
 import { generateBrokerFields } from './broker-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { mockCurrencies, mockContact } from '../../../test-mocks';
-import mockApplication, { mockBroker } from '../../../test-mocks/mock-application';
+import mockApplication, { mockBroker, referenceNumber } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/policy', () => {
-  const { referenceNumber } = mockApplication;
-
   const mockAnswers = mockApplication.policy;
   const checkAndChange = false;
 

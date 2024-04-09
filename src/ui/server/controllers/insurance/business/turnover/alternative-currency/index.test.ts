@@ -12,7 +12,7 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import generateValidationErrors from './validation';
 import mapAndSave from '../../map-and-save/turnover';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockApplication, GBP } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse, mockApplication, referenceNumber, GBP } from '../../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -209,7 +209,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
@@ -219,7 +219,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -231,7 +231,7 @@ describe('controllers/insurance/business/turnover/alternative-currency', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

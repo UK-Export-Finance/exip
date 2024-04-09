@@ -7,7 +7,7 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import replaceNewLineWithLineBreak from '../../../../helpers/replace-new-line-with-line-break';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { FULL_ADDRESS: FIELD_ID },
@@ -47,11 +47,11 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
-        USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BROKER_DETAILS_ROOT}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`,
+        USE_DIFFERENT_ADDRESS_URL: `${INSURANCE_ROOT}/${referenceNumber}${BROKER_DETAILS_ROOT}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       };
 
       expect(result).toEqual(expected);
@@ -67,7 +67,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         submittedAnswer: replaceNewLineWithLineBreak(mockApplication.broker[FIELD_ID]),
       });
@@ -90,7 +90,7 @@ describe('controllers/insurance/policy/broker-confirm-address', () => {
     it(`should redirect to ${LOSS_PAYEE_ROOT}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${LOSS_PAYEE_ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

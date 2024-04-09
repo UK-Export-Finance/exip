@@ -11,7 +11,7 @@ import generateValidationErrors from './validation';
 import accessCodeValidationErrors from './validation/rules/access-code';
 import api from '../../../../../api';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockAccount, mockApplication, mockSession, mockApplications } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockAccount, referenceNumber, mockSession, mockApplications } from '../../../../../test-mocks';
 
 const {
   ACCOUNT: { ACCESS_CODE },
@@ -32,8 +32,6 @@ const {
 describe('controllers/insurance/account/sign-in/enter-code', () => {
   let req: Request;
   let res: Response;
-
-  const { referenceNumber } = mockApplication;
 
   beforeEach(() => {
     req = mockReq();

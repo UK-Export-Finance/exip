@@ -1,13 +1,13 @@
 import sectionStartPageVariables from '.';
 import insuranceCorePageVariables from '..';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-import { mockApplication } from '../../../../../test-mocks';
+import { referenceNumber } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT } = INSURANCE_ROUTES;
 
 describe('server/helpers/page-variables/core/insurance/section-start', () => {
   const mock = {
-    REFERENCE_NUMBER: mockApplication.referenceNumber,
+    REFERENCE_NUMBER: referenceNumber,
     START_NOW_ROUTE: '/mock-route',
     PAGE_CONTENT_STRINGS: {
       PAGE_TITLE: 'Mock title',

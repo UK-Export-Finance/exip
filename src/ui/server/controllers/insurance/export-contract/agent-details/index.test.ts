@@ -12,7 +12,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -24,8 +24,6 @@ const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
-const { referenceNumber } = mockApplication;
-
 describe('controllers/insurance/export-contract/agent-details', () => {
   let req: Request;
   let res: Response;
@@ -36,8 +34,6 @@ describe('controllers/insurance/export-contract/agent-details', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-    req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
   });
 

@@ -7,7 +7,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
+import { mockApplicationBuyer, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const {
   YOUR_BUYER: { CREDIT_INSURANCE_HISTORY: FORM_TITLE },
@@ -21,7 +21,6 @@ const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANC
 
 describe('server/helpers/summary-lists/your-buyer/credit-insurance-history-fields', () => {
   const mockAnswers = mockApplicationBuyer.relationship;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   describe('optionalFields', () => {

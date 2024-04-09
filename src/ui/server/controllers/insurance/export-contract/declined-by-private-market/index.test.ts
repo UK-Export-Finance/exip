@@ -11,7 +11,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/private-market';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -29,8 +29,6 @@ const {
   },
 } = TEMPLATES;
 
-const { referenceNumber } = mockApplication;
-
 describe('controllers/insurance/export-contract/declined-by-private-market', () => {
   let req: Request;
   let res: Response;
@@ -42,9 +40,6 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
-    req.params.referenceNumber = String(referenceNumber);
   });
 
   afterAll(() => {

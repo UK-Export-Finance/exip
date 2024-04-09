@@ -9,28 +9,33 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockContact, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockCurrencies,
+  mockContact,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+  referenceNumber,
+} from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { POLICY } = FIELD_IDS.INSURANCE;
 
-const { policy, exportContract, referenceNumber } = mockApplication;
+const { policy, exportContract } = mockApplication;
 
 describe('controllers/insurance/policy/check-your-answers', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
@@ -41,7 +46,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: FIELDS[POLICY.POLICY_TYPE],
@@ -80,7 +85,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
         SUMMARY_LISTS: summaryLists,

@@ -11,6 +11,8 @@ import tradingHistoryValidation from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/buyer-trading-history';
+import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
+import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
 import {
   mockReq,
@@ -20,9 +22,8 @@ import {
   mockApplicationTotalContractValueThresholdFalse,
   mockCurrencies,
   mockCurrenciesResponse,
+  referenceNumber,
 } from '../../../../test-mocks';
-import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
-import api from '../../../../api';
 
 const {
   INSURANCE_ROOT,
@@ -69,7 +70,6 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -79,7 +79,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue);
+      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue);
 
       const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -103,8 +103,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           },
         },
         PAGE_CONTENT_STRINGS,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
-        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_CURRENCY}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
       };
 
@@ -115,7 +115,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
       it(`should have correct properties with "PROVIDE_ALTERNATIVE_CURRENCY_URL" set to ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
         const isChange = true;
 
-        const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue, isChange);
+        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange);
 
         const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -139,8 +139,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
             },
           },
           PAGE_CONTENT_STRINGS,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
-          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHANGE}`,
           CURRENCY_PREFIX_SYMBOL: currency.symbol,
         };
 
@@ -153,7 +153,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
         const isChange = undefined;
         const isCheckAndChange = true;
 
-        const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
+        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
 
         const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -177,8 +177,8 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
             },
           },
           PAGE_CONTENT_STRINGS,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${SAVE_AND_BACK}`,
-          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SAVE_AND_BACK}`,
+          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
           CURRENCY_PREFIX_SYMBOL: currency.symbol,
         };
 
@@ -235,7 +235,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           HTML_FLAGS,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
+        ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
         application: mapApplicationToFormFields(mockApplication),
       };
 
@@ -288,7 +288,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_INSURANCE_COVER}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -299,7 +299,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
           res.locals.application = mockApplicationTotalContractValueThresholdFalse;
 
           await post(req, res);
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BUYER_FINANCIAL_INFORMATION}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -311,7 +311,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -323,7 +323,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -345,7 +345,7 @@ describe('controllers/insurance/your-buyer/trading-history', () => {
             HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
+          ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
           submittedValues: payload,
           validationErrors,
         };

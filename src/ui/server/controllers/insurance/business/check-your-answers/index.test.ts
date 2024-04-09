@@ -7,7 +7,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { yourBusinessSummaryLists } from '../../../../helpers/summary-lists/your-business';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 import { mockCompany, mockBusiness } from '../../../../test-mocks/mock-application';
 
 const { CHECK_YOUR_ANSWERS } = PAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -18,14 +18,10 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 describe('controllers/insurance/business/check-your-answers', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   describe('TEMPLATE', () => {
@@ -37,7 +33,7 @@ describe('controllers/insurance/business/check-your-answers', () => {
   describe('get', () => {
     it('should render template', async () => {
       await get(req, res);
-      const summaryLists = yourBusinessSummaryLists(mockCompany, mockBusiness, mockApplication.referenceNumber);
+      const summaryLists = yourBusinessSummaryLists(mockCompany, mockBusiness, referenceNumber);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -46,7 +42,7 @@ describe('controllers/insurance/business/check-your-answers', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${refNumber}${ALL_SECTIONS}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
         SUMMARY_LISTS: summaryLists,
       };
 

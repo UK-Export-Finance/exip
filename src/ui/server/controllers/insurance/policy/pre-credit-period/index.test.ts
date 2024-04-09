@@ -12,7 +12,7 @@ import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -33,7 +33,6 @@ const {
 describe('controllers/insurance/policy/pre-credit-period', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/policy');
 
@@ -42,11 +41,6 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
   });
 
   afterAll(() => {
@@ -67,7 +61,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD_ID: NEED_PRE_CREDIT_PERIOD,
@@ -126,7 +120,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
           BACK_LINK: req.headers.referer,
           HTML_FLAGS,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         applicationAnswer: mockApplication.policy[NEED_PRE_CREDIT_PERIOD],
@@ -183,7 +177,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -195,7 +189,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -224,7 +218,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
             BACK_LINK: req.headers.referer,
             HTML_FLAGS,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           application: res.locals.application,
           submittedValues: sanitisedData,

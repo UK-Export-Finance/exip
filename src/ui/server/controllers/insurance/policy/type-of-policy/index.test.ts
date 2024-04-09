@@ -11,7 +11,7 @@ import generateValidationErrors from './validation';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -29,8 +29,6 @@ const {
   TYPE_OF_POLICY: { POLICY_TYPE: FIELD_ID },
 } = POLICY_FIELD_IDS;
 
-const { referenceNumber } = mockApplication;
-
 const singlePolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY}`;
 const multiplePolicyRoute = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY}`;
 const checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
@@ -38,7 +36,6 @@ const checkAndChangeRoute = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRA
 describe('controllers/insurance/policy/type-of-policy', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../save-data/policy');
 
@@ -48,17 +45,15 @@ describe('controllers/insurance/policy/type-of-policy', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(referenceNumber);
-    refNumber = Number(referenceNumber);
   });
+
   afterAll(() => {
     jest.resetAllMocks();
   });
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: FIELDS[FIELD_ID],
@@ -91,7 +86,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.TYPE_OF_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(res.locals.application),
       };
@@ -155,7 +150,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -204,7 +199,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -223,7 +218,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.TYPE_OF_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload),
         };
@@ -249,7 +244,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
             PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.TYPE_OF_POLICY,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(refNumber),
+          ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
           validationErrors: generateValidationErrors(payload),
         };

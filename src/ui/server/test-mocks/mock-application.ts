@@ -15,6 +15,8 @@ import { GBP, EUR } from '../constants/supported-currencies';
 
 dotenv.config();
 
+export const referenceNumber = 10001;
+
 const mockGenericPolicy = {
   id: 'clav8by1i0007kgoqies0dbfc',
   requestedStartDate: add(new Date(), { months: 1 }),
@@ -148,8 +150,8 @@ export const mockApplicationDeclaration = {
 
 const mockApplication = {
   id: 'clacdgc630000kdoqn7wcgrz1',
+  referenceNumber,
   version: APPLICATION.LATEST_VERSION.LATEST_VERSION_NUMBER,
-  referenceNumber: 10001,
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   dealType: APPLICATION.DEAL_TYPE,

@@ -7,7 +7,7 @@ import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import mockApplication, { mockApplicationBuyer } from '../../../../test-mocks/mock-application';
+import { mockApplicationBuyer, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const { YOUR_BUYER: FIELD_IDS } = INSURANCE_FIELD_IDS;
 
@@ -25,7 +25,6 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
 
 describe('server/helpers/summary-lists/your-buyer/connection-with-buyer-fields', () => {
   const mockAnswers = mockApplicationBuyer.relationship;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   describe('optionalFields', () => {
