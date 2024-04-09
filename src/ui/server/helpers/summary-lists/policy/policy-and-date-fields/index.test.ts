@@ -11,7 +11,7 @@ import generatePreCreditPeriodFields from './pre-credit-period-fields';
 import generateSingleContractPolicyFields from './single-contract-policy-fields';
 import generateMultipleContractPolicyFields from './multiple-contract-policy-fields';
 import getCurrencyByCode from '../../../get-currency-by-code';
-import { mockApplication, mockApplicationMultiplePolicy, mockCurrencies } from '../../../../test-mocks';
+import { mockApplication, mockApplicationMultiplePolicy, mockCurrencies, referenceNumber } from '../../../../test-mocks';
 import { ApplicationPolicy } from '../../../../../types';
 
 const {
@@ -32,8 +32,6 @@ const {
 } = INSURANCE_ROUTES;
 
 describe('server/helpers/summary-lists/policy/policy-and-date-fields', () => {
-  const { referenceNumber } = mockApplication;
-
   const mockAnswers = mockApplication.policy;
   const checkAndChange = false;
 

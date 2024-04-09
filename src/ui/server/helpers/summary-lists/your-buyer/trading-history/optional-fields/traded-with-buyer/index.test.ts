@@ -6,7 +6,7 @@ import fieldGroupItem from '../../../../generate-field-group-item';
 import getFieldById from '../../../../../get-field-by-id';
 import mapYesNoField from '../../../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../../../generate-change-link';
-import mockApplication, { mockApplicationBuyer } from '../../../../../../test-mocks/mock-application';
+import { mockApplicationBuyer, referenceNumber } from '../../../../../../test-mocks/mock-application';
 
 const { TRADING_HISTORY_CHANGE, TRADING_HISTORY_CHECK_AND_CHANGE } = YOUR_BUYER_ROUTES;
 
@@ -14,7 +14,6 @@ const { TRADED_WITH_BUYER, OUTSTANDING_PAYMENTS, FAILED_PAYMENTS } = BUYER_FIELD
 
 describe('server/helpers/summary-lists/your-buyer/trading-history/optional-fields/traded-with-buyer', () => {
   const mockAnswers = mockApplicationBuyer.buyerTradingHistory;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   describe(`when ${TRADED_WITH_BUYER} is true`, () => {

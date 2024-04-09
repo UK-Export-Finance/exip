@@ -7,7 +7,7 @@ import getFieldById from '../../../get-field-by-id';
 import generateTurnoverFields from '.';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
-import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+import { mockBusiness, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const {
   YOUR_BUSINESS: { CREDIT_CONTROL: FORM_TITLE },
@@ -23,7 +23,6 @@ const {
 
 describe('server/helpers/summary-lists/your-business/credit-control-fields', () => {
   const mockAnswers = mockBusiness;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   const expectedFields = [

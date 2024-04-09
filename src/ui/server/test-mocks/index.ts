@@ -15,6 +15,7 @@ import mockApplication, {
   mockApplicationTotalContractValueThresholdFalse,
   mockBusiness,
   mockCompanyDifferentTradingAddress,
+  referenceNumber,
 } from './mock-application';
 import mockApplications from './mock-applications';
 import mockEligibility from './mock-eligibility';
@@ -57,7 +58,7 @@ const mockReq = () => {
     originalUrl: 'mock?mockQueryParam',
     baseUrl: 'mock',
     params: {
-      referenceNumber: mockApplication.referenceNumber.toString(),
+      referenceNumber: String(referenceNumber),
     },
     query: {},
     redirect: jest.fn(),
@@ -154,4 +155,5 @@ export {
   mockReq,
   mockRes,
   mockValidEmail,
+  referenceNumber,
 };

@@ -5,7 +5,7 @@ import insuranceCorePageVariables from '../../../helpers/page-variables/core/ins
 import getUserNameFromSession from '../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../test-mocks';
 
 const {
   INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
@@ -70,7 +70,7 @@ describe('controllers/insurance/application-submitted', () => {
       it(`should redirect to ${ALL_SECTIONS}`, () => {
         get(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALL_SECTIONS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

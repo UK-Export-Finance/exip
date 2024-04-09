@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/private-market';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -26,9 +26,6 @@ const {
     INSURANCE: { EXPORT_CONTRACT },
   },
 } = TEMPLATES;
-
-const { referenceNumber } = mockApplication;
-
 describe('controllers/insurance/export-contract/private-market', () => {
   let req: Request;
   let res: Response;
@@ -40,9 +37,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplication;
-    req.params.referenceNumber = String(referenceNumber);
   });
 
   afterAll(() => {

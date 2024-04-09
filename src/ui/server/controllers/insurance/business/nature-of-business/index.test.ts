@@ -10,7 +10,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/business';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK } = BUSINESS_FIELD_IDS.NATURE_OF_YOUR_BUSINESS;
 
@@ -66,7 +66,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -85,8 +85,8 @@ describe('controllers/insurance/business/nature-of-business', () => {
           },
         },
         POST_ROUTES: {
-          NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_SAVE_AND_BACK}`,
+          NATURE_OF_BUSINESS: `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_SAVE_AND_BACK}`,
         },
       };
 
@@ -105,7 +105,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
       });
     });
 
@@ -141,7 +141,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
@@ -161,7 +161,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
@@ -188,7 +188,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -201,7 +201,7 @@ describe('controllers/insurance/business/nature-of-business', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

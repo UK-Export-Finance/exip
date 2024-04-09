@@ -9,7 +9,7 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
-import mockApplication, { mockBroker } from '../../../../test-mocks/mock-application';
+import { mockBroker, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const {
   POLICY: { BROKER: FORM_TITLE },
@@ -28,7 +28,6 @@ const {
 
 describe('server/helpers/summary-lists/policy/broker-fields', () => {
   describe('optionalBrokerFields', () => {
-    const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
     describe(`${USING_BROKER} is Yes`, () => {
@@ -77,7 +76,6 @@ describe('server/helpers/summary-lists/policy/broker-fields', () => {
   });
 
   describe('generateBrokerFields', () => {
-    const { referenceNumber } = mockApplication;
     const checkAndChange = false;
 
     it('should return a title and fields from the submitted data/answers', () => {

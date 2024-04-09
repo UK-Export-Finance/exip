@@ -8,7 +8,7 @@ import formatCurrency from '../../../format-currency';
 import generateTurnoverFields from '.';
 import mapPercentage from '../../../map-percentage';
 import generateChangeLink from '../../../generate-change-link';
-import mockApplication, { mockBusiness } from '../../../../test-mocks/mock-application';
+import { mockBusiness, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const {
   YOUR_BUSINESS: { TURNOVER: FORM_TITLE },
@@ -26,7 +26,6 @@ const {
 
 describe('server/helpers/summary-lists/your-business/turnover-fields', () => {
   const mockAnswers = mockBusiness;
-  const { referenceNumber } = mockApplication;
   const checkAndChange = false;
 
   const expectedFields = [

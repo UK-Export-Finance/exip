@@ -20,6 +20,7 @@ import {
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
   mockBuyerTradingHistory,
+  referenceNumber,
 } from '../../../../test-mocks';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 
@@ -45,7 +46,6 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -174,7 +174,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
       it('should redirect to the next page', async () => {
         await post(req, res);
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_HISTORY}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
@@ -195,7 +195,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_HISTORY_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -207,7 +207,7 @@ describe('controllers/insurance/your-buyer/alternative-currency', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TRADING_HISTORY_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

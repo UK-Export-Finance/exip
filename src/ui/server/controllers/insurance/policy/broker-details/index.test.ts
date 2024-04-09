@@ -176,7 +176,7 @@ describe('controllers/insurance/policy/broker-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -187,7 +187,7 @@ describe('controllers/insurance/policy/broker-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

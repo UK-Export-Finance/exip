@@ -10,7 +10,7 @@ import mapAndSave from '../map-and-save/company-details';
 import { companiesHouseSummaryList } from '../../../../helpers/summary-lists/companies-house';
 import { Request, Response } from '../../../../../types';
 import companyDetailsValidation from './validation/company-details';
-import { mockReq, mockRes, mockApplication, mockPhoneNumbers } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockPhoneNumbers, referenceNumber } from '../../../../test-mocks';
 
 const {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER, DIFFERENT_TRADING_NAME },
@@ -77,11 +77,11 @@ describe('controllers/insurance/business/companies-details', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-        DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${COMPANY_DETAILS_ROOT}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
+        DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
         FIELDS: BUSINESS_FIELD_IDS,
       };
 
@@ -104,7 +104,7 @@ describe('controllers/insurance/business/companies-details', () => {
     describe('when application has populated company data', () => {
       it('should render the company-details template with correct variables', () => {
         get(req, res);
-        const { company, referenceNumber } = mockApplication;
+        const { company } = mockApplication;
 
         const submittedValues = {
           [HAS_DIFFERENT_TRADING_NAME]: company?.[HAS_DIFFERENT_TRADING_NAME],
@@ -176,7 +176,7 @@ describe('controllers/insurance/business/companies-details', () => {
             HTML_FLAGS,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber),
+          ...pageVariables(referenceNumber),
           validationErrors,
           submittedValues: expectedSubmittedValues,
           SUMMARY_LIST: companiesHouseSummaryList(mockApplication.company, IS_APPLICATION_SUMMARY_LIST),
@@ -187,11 +187,11 @@ describe('controllers/insurance/business/companies-details', () => {
     describe('when there are no validation errors', () => {
       it('should redirect to next page', async () => {
         req.body = validBody;
-        req.originalUrl = `insurance/${mockApplication.referenceNumber}/${COMPANY_DETAILS_ROOT}`;
+        req.originalUrl = `insurance/${referenceNumber}/${COMPANY_DETAILS_ROOT}`;
 
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
@@ -225,7 +225,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
               await post(req, res);
 
-              const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
+              const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_ROOT}`;
               expect(res.redirect).toHaveBeenCalledWith(expected);
             });
           });
@@ -241,7 +241,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
               await post(req, res);
 
-              const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
+              const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHANGE}`;
               expect(res.redirect).toHaveBeenCalledWith(expected);
             });
           });
@@ -257,7 +257,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
               await post(req, res);
 
-              const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
+              const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`;
               expect(res.redirect).toHaveBeenCalledWith(expected);
             });
           });
@@ -275,7 +275,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -291,7 +291,7 @@ describe('controllers/insurance/business/companies-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

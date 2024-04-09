@@ -14,7 +14,11 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/policy';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
-import { mockApplicationMultiplePolicy as mockApplication, mockApplicationMultiplePolicyWithoutCurrencyCode } from '../../../../test-mocks/mock-application';
+import {
+  mockApplicationMultiplePolicy as mockApplication,
+  mockApplicationMultiplePolicyWithoutCurrencyCode,
+  referenceNumber,
+} from '../../../../test-mocks/mock-application';
 
 const {
   INSURANCE_ROOT,
@@ -73,7 +77,6 @@ const applicationCurrencyAnswer = mockApplication.policy[POLICY_CURRENCY_CODE];
 describe('controllers/insurance/policy/multiple-contract-policy', () => {
   let req: Request;
   let res: Response;
-  let refNumber: number;
 
   jest.mock('../map-and-save/policy');
 
@@ -84,9 +87,6 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplication;
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-    refNumber = Number(mockApplication.referenceNumber);
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
@@ -96,7 +96,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(refNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELDS: {
@@ -161,6 +161,8 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
     });
 
     it('should render template', async () => {
+      res.locals.application = mockApplication;
+
       await get(req, res);
 
       const expectedVariables = {
@@ -168,7 +170,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
           PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(refNumber),
+        ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, applicationCurrencyAnswer),
@@ -266,7 +268,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_YOUR_ANSWERS}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -280,7 +282,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -296,7 +298,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${CHECK_AND_CHANGE_ROUTE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -310,7 +312,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
             await post(req, res);
 
-            const expected = `${INSURANCE_ROOT}/${refNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`;
+            const expected = `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_CHECK_AND_CHANGE}`;
 
             expect(res.redirect).toHaveBeenCalledWith(expected);
           });
@@ -327,6 +329,8 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
 
       describe(`when the application has a ${POLICY_CURRENCY_CODE} answer`, () => {
         it('should render template with validation errors and submitted values from constructPayload function and application', async () => {
+          res.locals.application = mockApplication;
+
           await post(req, res);
 
           const payload = constructPayload(req.body, FIELD_IDS);
@@ -336,7 +340,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
               PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
               BACK_LINK: req.headers.referer,
             }),
-            ...pageVariables(refNumber),
+            ...pageVariables(referenceNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplication),
             submittedValues: payload,
@@ -361,7 +365,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
               PAGE_CONTENT_STRINGS: PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY,
               BACK_LINK: req.headers.referer,
             }),
-            ...pageVariables(refNumber),
+            ...pageVariables(referenceNumber),
             userName: getUserNameFromSession(req.session.user),
             application: mapApplicationToFormFields(mockApplicationMultiplePolicyWithoutCurrencyCode),
             submittedValues: payload,

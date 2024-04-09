@@ -11,9 +11,9 @@ import sectionStatus from '../../../../helpers/section-status';
 import constructPayload from '../../../../helpers/construct-payload';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
-const { company, business, referenceNumber } = mockApplication;
+const { company, business } = mockApplication;
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -38,8 +38,6 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
   });
 
   describe('FIELD_ID', () => {
@@ -52,14 +50,14 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber);
+      const result = pageVariables(referenceNumber);
 
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -90,7 +88,7 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
         userName: getUserNameFromSession(req.session.user),
         status,
         SUMMARY_LISTS: summaryList,
-        ...pageVariables(mockApplication.referenceNumber),
+        ...pageVariables(referenceNumber),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

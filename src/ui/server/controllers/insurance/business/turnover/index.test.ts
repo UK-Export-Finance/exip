@@ -13,7 +13,15 @@ import mapAndSave from '../map-and-save/turnover';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import api from '../../../../api';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCurrencies, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../test-mocks';
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  referenceNumber,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockCurrenciesEmptyResponse,
+} from '../../../../test-mocks';
 
 const { FINANCIAL_YEAR_END_DATE, ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER, TURNOVER_CURRENCY_CODE } = BUSINESS_FIELD_IDS.TURNOVER;
 
@@ -75,7 +83,7 @@ describe('controllers/insurance/business/turnover', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue);
+      const result = pageVariables(referenceNumber, mockCurrencies, currencyValue);
 
       const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -94,8 +102,8 @@ describe('controllers/insurance/business/turnover', () => {
             ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
           },
         },
-        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+        PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
       };
 
@@ -106,7 +114,7 @@ describe('controllers/insurance/business/turnover', () => {
       it(`should have correct properties with "PROVIDE_ALTERNATIVE_CURRENCY_URL" set to ${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`, () => {
         const isChange = true;
 
-        const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue, isChange);
+        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange);
 
         const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -125,8 +133,8 @@ describe('controllers/insurance/business/turnover', () => {
               ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
             },
           },
-          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
           CURRENCY_PREFIX_SYMBOL: currency.symbol,
         };
 
@@ -139,7 +147,7 @@ describe('controllers/insurance/business/turnover', () => {
         const isChange = undefined;
         const isCheckAndChange = true;
 
-        const result = pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
+        const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
 
         const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
 
@@ -158,8 +166,8 @@ describe('controllers/insurance/business/turnover', () => {
               ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
             },
           },
-          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
+          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
           CURRENCY_PREFIX_SYMBOL: currency.symbol,
         };
 
@@ -185,7 +193,7 @@ describe('controllers/insurance/business/turnover', () => {
         }),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
+        ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
       });
     });
 
@@ -258,7 +266,7 @@ describe('controllers/insurance/business/turnover', () => {
             BACK_LINK: req.headers.referer,
           }),
           userName: getUserNameFromSession(req.session.user),
-          ...pageVariables(mockApplication.referenceNumber, mockCurrencies, currencyValue),
+          ...pageVariables(referenceNumber, mockCurrencies, currencyValue),
           validationErrors,
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: sanitiseData(payload),
@@ -274,7 +282,7 @@ describe('controllers/insurance/business/turnover', () => {
       it('should redirect to next page', async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CREDIT_CONTROL}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CREDIT_CONTROL}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
@@ -294,7 +302,7 @@ describe('controllers/insurance/business/turnover', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -305,7 +313,7 @@ describe('controllers/insurance/business/turnover', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

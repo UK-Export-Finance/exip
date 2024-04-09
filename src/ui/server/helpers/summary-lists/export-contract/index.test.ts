@@ -2,11 +2,9 @@ import { generateFields, exportContractSummaryLists } from '.';
 import generateAboutTheExportFields from './about-the-export-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { mockCountries } from '../../../test-mocks';
-import mockApplication, { mockExportContract } from '../../../test-mocks/mock-application';
+import { referenceNumber, mockExportContract } from '../../../test-mocks/mock-application';
 
 describe('server/helpers/summary-lists/export-contract', () => {
-  const { referenceNumber } = mockApplication;
-
   const mockAnswers = mockExportContract;
   const checkAndChange = true;
 

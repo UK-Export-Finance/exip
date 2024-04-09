@@ -8,7 +8,7 @@ import { FIELDS } from '../../../../content-strings/fields/insurance/your-busine
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
@@ -75,7 +75,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { company, referenceNumber } = mockApplication;
+      const { company } = mockApplication;
 
       const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
 
@@ -114,7 +114,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
 
         await post(req, res);
 
-        const { company, referenceNumber } = mockApplication;
+        const { company } = mockApplication;
 
         const addressHtml = generateMultipleFieldHtml(company[COMPANY_ADDRESS]);
 
@@ -158,7 +158,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
       it('should redirect to next page', async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${NATURE_OF_BUSINESS_ROOT}`;
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
@@ -168,7 +168,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });
@@ -179,7 +179,7 @@ describe('controllers/insurance/business/alternative-trading-address', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

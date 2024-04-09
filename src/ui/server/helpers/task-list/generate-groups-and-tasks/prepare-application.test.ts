@@ -69,7 +69,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
 
       const EXPORTER_BUSINESS = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
+        href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.EXPORTER_BUSINESS,
         id: TASK_IDS.PREPARE_APPLICATION.EXPORTER_BUSINESS,
         fields: businessRequiredFields(hasDifferentTradingName),
@@ -77,7 +77,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const YOUR_BUYER = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${YOUR_BUYER_ROOT}`,
+        href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER_ROOT}`,
         title: PREPARE_APPLICATION.TASKS.BUYER,
         id: TASK_IDS.PREPARE_APPLICATION.BUYER,
         fields: yourBuyerRequiredFields({
@@ -91,7 +91,7 @@ describe('server/helpers/task-list/prepare-application', () => {
       };
 
       const POLICY = {
-        href: `${INSURANCE_ROOT}/${mockApplication.referenceNumber}${POLICY_ROOT}`,
+        href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
         title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
         id: TASK_IDS.PREPARE_APPLICATION.POLICY,
         fields: policyRequiredFields({

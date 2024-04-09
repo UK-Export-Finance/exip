@@ -32,8 +32,6 @@ describe('controllers/insurance/policy/call-map-and-save', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     req.body = mockFormBody;
   });
 
