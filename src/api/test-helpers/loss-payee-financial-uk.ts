@@ -1,10 +1,10 @@
 import { ApplicationLossPayeeFinancialUk, TestHelperCreate } from '../types';
 
 /**
- * create company test helper
- * Creates a blank company.
+ * create loss payee financial details uk helper
+ * Creates a blank LossPayeeFinancialUk.
  * @param {Object} KeystoneJS context API
- * @returns {Object} Created company id
+ * @returns {Object} Created LossPayeeFinancialUk
  */
 const createLossPayeeFinancialDetailsUk = async ({ context }: TestHelperCreate) => {
   try {
