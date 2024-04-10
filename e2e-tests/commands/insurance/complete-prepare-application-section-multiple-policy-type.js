@@ -6,13 +6,16 @@ const { POLICY_TYPE } = APPLICATION;
  * completePrepareApplicationMultiplePolicyType
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
- * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form.
- * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
- * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
- * - policyValueOverMvpMaximum: should submit an application with the value over the MVP maximum amount
- * - differentPolicyContact: Should submit an application with a different policy contact to the owner
- * - needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
- * - submitCheckYourAnswers: Should click each section's "check your answers" submit button
+ * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
+ * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
+ * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
+ * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
+ * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
+ * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false.
+ * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
+ * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
+ * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  */
 const completePrepareApplicationMultiplePolicyType = ({
   differentTradingAddress = false,
@@ -22,6 +25,9 @@ const completePrepareApplicationMultiplePolicyType = ({
   policyValueOverMvpMaximum = false,
   differentPolicyContact = false,
   needPreCreditPeriod = false,
+  totalContractValueOverThreshold = false,
+  attemptedPrivateMarketCover = false,
+  isUsingAgent = false,
   submitCheckYourAnswers = true,
 }) => {
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
@@ -41,7 +47,13 @@ const completePrepareApplicationMultiplePolicyType = ({
     needPreCreditPeriod,
   });
 
-  cy.completeExportContractSection({ viaTaskList: false, submitCheckYourAnswers });
+  cy.completeExportContractSection({
+    viaTaskList: false,
+    totalContractValueOverThreshold,
+    attemptedPrivateMarketCover,
+    isUsingAgent,
+    submitCheckYourAnswers,
+  });
 };
 
 export default completePrepareApplicationMultiplePolicyType;

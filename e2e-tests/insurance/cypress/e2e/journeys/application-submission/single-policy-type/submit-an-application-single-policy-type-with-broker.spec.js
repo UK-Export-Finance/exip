@@ -1,7 +1,3 @@
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-
-const { APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
-
 context('Insurance - submit an application - Single policy type with a broker - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application', () => {
   let referenceNumber;
 
@@ -19,7 +15,7 @@ context('Insurance - submit an application - Single policy type with a broker - 
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
+  it('should successfully submit the application and redirect to `application submitted`', () => {
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 });

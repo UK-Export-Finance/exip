@@ -1,12 +1,13 @@
-import { APPLICATION } from '../../../../../../constants';
+import { APPLICATION } from '../../../../../../constants'
 
-context('Insurance - submit an application - Multiple policy type, no broker - As an Exporter, I want to submit my completed credit insurance application with a value greater than 500000, So that UKEF can process and make a decision on my application', () => {
+context('Insurance - submit an application - Multiple policy type, attempted private market cover', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      policyValueOverMvpMaximum: true,
+      totalContractValueOverThreshold: true,
+      attemptedPrivateMarketCover: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
