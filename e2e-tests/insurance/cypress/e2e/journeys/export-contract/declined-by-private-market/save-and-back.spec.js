@@ -63,6 +63,12 @@ context('Insurance - Export contract - Declined by private market - Save and go 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
+    it('should retain the `export contract` task status as `in progress`', () => {
+      cy.navigateToAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskExportContractStatusIsInProgress();
+    });
+
     describe('when going back to the page', () => {
       it('should have the submitted value', () => {
         cy.navigateToAllSectionsUrl(referenceNumber);

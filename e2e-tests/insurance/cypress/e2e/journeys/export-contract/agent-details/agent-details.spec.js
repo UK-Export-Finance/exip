@@ -37,6 +37,8 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
       agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
+
+      cy.assertUrl(url);
     });
   });
 

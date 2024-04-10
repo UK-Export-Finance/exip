@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   ROOT,
   ALL_SECTIONS,
-  EXPORT_CONTRACT: { PRIVATE_MARKET },
+  EXPORT_CONTRACT: { AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -26,8 +26,9 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitPrivateMarketForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
@@ -59,6 +60,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
       cy.navigateToUrl(url);
 
       cy.completeAgentForm({ usingAgent: false });
+      // cy.wait(7000);
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
@@ -94,10 +96,10 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
       cy.assertUrl(allSectionsUrl);
     });
 
-    it('should update the `export contract` task status to `completed`', () => {
+    it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -106,8 +108,8 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 2 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 2 });
+        // go through 3 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 3 });
 
         cy.assertYesRadioOptionIsChecked();
       });

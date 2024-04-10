@@ -61,10 +61,10 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `completed`', () => {
+    it('should retain the `export contract` task status as `in progress`', () => {
       cy.navigateToAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -91,10 +91,10 @@ context('Insurance - Export contract - Private market - Save and go back', () =>
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `completed`', () => {
+    it('should retain the `export contract` task status as `in progress`', () => {
       cy.navigateToAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

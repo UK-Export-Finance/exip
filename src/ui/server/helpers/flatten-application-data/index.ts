@@ -9,7 +9,6 @@ const {
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   },
   EXPORT_CONTRACT: {
-    USING_AGENT,
     AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, COUNTRY_CODE },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
@@ -55,7 +54,7 @@ export const mapBroker = (broker: ApplicationBroker) => ({
  */
 export const mapExportContractAgentDetails = (agent: ApplicationExportContractAgent) => ({
   id: agent.id,
-  [USING_AGENT]: agent[USING_AGENT],
+  ...getTrueAndFalseAnswers(agent),
   [AGENT_NAME]: agent[NAME],
   [AGENT_FULL_ADDRESS]: agent[FULL_ADDRESS],
   [COUNTRY_CODE]: agent[COUNTRY_CODE],
@@ -70,7 +69,7 @@ export const mapExportContractAgentDetails = (agent: ApplicationExportContractAg
 const flattenApplicationData = (application: Application): ApplicationFlat => {
   const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = application;
   const { buyerTradingHistory, contact, relationship } = buyer;
-
+  
   const flattened = {
     ...application.eligibility,
     version: application.version,

@@ -10,7 +10,6 @@ const {
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   },
   EXPORT_CONTRACT: {
-    USING_AGENT,
     AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, COUNTRY_CODE },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
@@ -59,7 +58,7 @@ describe('server/helpers/flatten-application-data', () => {
 
       const expected = {
         id: exportContract.agent.id,
-        [USING_AGENT]: exportContract.agent[USING_AGENT],
+        ...getTrueAndFalseAnswers(exportContract.agent),
         [AGENT_NAME]: exportContract.agent[NAME],
         [AGENT_FULL_ADDRESS]: exportContract.agent[FULL_ADDRESS],
         [COUNTRY_CODE]: exportContract.agent[COUNTRY_CODE],
