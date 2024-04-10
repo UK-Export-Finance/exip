@@ -60,7 +60,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
       cy.navigateToUrl(url);
 
       cy.completeAgentForm({ usingAgent: false });
-      // cy.wait(7000);
+
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
