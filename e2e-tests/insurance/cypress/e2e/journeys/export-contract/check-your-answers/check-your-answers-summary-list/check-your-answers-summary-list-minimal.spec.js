@@ -22,7 +22,7 @@ context('Insurance - Export contract - Check your answers - Summary list - no pr
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completeExportContractSection({});
@@ -53,8 +53,8 @@ context('Insurance - Export contract - Check your answers - Summary list - no pr
     checkSummaryList[PAYMENT_TERMS_DESCRIPTION]();
   });
 
-  it(`should render an ${ATTEMPTED} summary list row`, () => {
-    checkSummaryList[ATTEMPTED]({ isYes: false });
+  it(`should NOT render an ${ATTEMPTED} summary list row`, () => {
+    checkSummaryList[ATTEMPTED]({ shouldRender: false });
   });
 
   it(`should NOT render an ${DECLINED_DESCRIPTION} summary list row`, () => {
@@ -65,15 +65,15 @@ context('Insurance - Export contract - Check your answers - Summary list - no pr
     checkSummaryList[USING_AGENT]({ isYes: false });
   });
 
-  it(`should NOT render an ${NAME} summary list row`, () => {
+  it(`should NOT render a ${NAME} summary list row`, () => {
     checkSummaryList[NAME]({ shouldRender: false });
   });
 
-  it(`should NOT render an ${FULL_ADDRESS} summary list row`, () => {
+  it(`should NOT render a ${FULL_ADDRESS} summary list row`, () => {
     checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
   });
 
-  it(`should NOT render an ${COUNTRY_CODE} summary list row`, () => {
+  it(`should NOT render a ${COUNTRY_CODE} summary list row`, () => {
     checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
   });
 });

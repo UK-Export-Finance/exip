@@ -42,10 +42,6 @@ const generatePrivateMarketFields = (answers: ApplicationPrivateMarket, referenc
     ),
   ] as Array<SummaryListItemData>;
 
-  // TODO: attempted is saved as NULL.
-  // TODO: does this mean private market data saving is also broken?
-  // console.info('-----------answers ', answers);
-
   if (answers[ATTEMPTED]) {
     fields.push(
       fieldGroupItem(

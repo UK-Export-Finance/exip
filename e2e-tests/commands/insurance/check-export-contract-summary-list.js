@@ -60,20 +60,24 @@ const checkExportContractSummaryList = ({
       expectedLineBreaks,
     );
   },
-  [ATTEMPTED]: ({ isYes = false }) => {
+  [ATTEMPTED]: ({ shouldRender = false, isYes = false }) => {
     const fieldId = ATTEMPTED;
 
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.PRIVATE_MARKET);
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.PRIVATE_MARKET);
 
-    let expectedValue;
+      let expectedValue;
 
-    if (isYes) {
-      expectedValue = FIELD_VALUES.YES;
+      if (isYes) {
+        expectedValue = FIELD_VALUES.YES;
+      } else {
+        expectedValue = FIELD_VALUES.NO;
+      }
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
-      expectedValue = FIELD_VALUES.NO;
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
   [DECLINED_DESCRIPTION]: ({ shouldRender = false }) => {
     const fieldId = DECLINED_DESCRIPTION;
