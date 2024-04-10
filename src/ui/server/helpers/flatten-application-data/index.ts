@@ -69,7 +69,7 @@ export const mapExportContractAgentDetails = (agent: ApplicationExportContractAg
 const flattenApplicationData = (application: Application): ApplicationFlat => {
   const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = application;
   const { buyerTradingHistory, contact, relationship } = buyer;
-  
+
   const flattened = {
     ...application.eligibility,
     version: application.version,
