@@ -44,7 +44,7 @@
     "otplib": "^12.0.1",
     "overload-protection": "^1.2.3",
     "postcode-validator": "^3.8.20",
-    "typescript": "^5.4.4"
+    "typescript": "^5.4.5"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.18.6",
