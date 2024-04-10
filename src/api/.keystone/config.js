@@ -847,29 +847,6 @@ var updateApplication = {
 };
 var update_application_default = updateApplication;
 
-// helpers/get-account-by-field/index.ts
-var getAccountByField = async (context, field, value) => {
-  try {
-    console.info("Getting account by field/value $s", `${field}, ${value}`);
-    const accountsArray = await context.db.Account.findMany({
-      where: {
-        [field]: { equals: value }
-      },
-      take: 1
-    });
-    if (!accountsArray?.length || !accountsArray[0]) {
-      console.info("Getting account by field - no account exists with the provided field/value");
-      return false;
-    }
-    const account2 = accountsArray[0];
-    return account2;
-  } catch (err) {
-    console.error("Error getting account by field/value %O", err);
-    throw new Error(`Getting account by field/value ${err}`);
-  }
-};
-var get_account_by_field_default = getAccountByField;
-
 // nullable-checkbox/index.ts
 var import_types = require("@keystone-6/core/types");
 var import_core = require("@keystone-6/core");
@@ -1352,18 +1329,6 @@ var lists = {
         ref: "Application",
         many: true
       })
-    },
-    hooks: {
-      validateInput: async ({ context, operation, resolvedData }) => {
-        if (operation === "create") {
-          const { email } = resolvedData;
-          const requestedEmail = String(email);
-          const account2 = await get_account_by_field_default(context, account_default.EMAIL, requestedEmail);
-          if (account2) {
-            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
-          }
-        }
-      }
     },
     access: import_access.allowAll
   }),
@@ -2197,6 +2162,29 @@ var typeDefs = `
   }
 `;
 var type_defs_default = typeDefs;
+
+// helpers/get-account-by-field/index.ts
+var getAccountByField = async (context, field, value) => {
+  try {
+    console.info("Getting account by field/value $s", `${field}, ${value}`);
+    const accountsArray = await context.db.Account.findMany({
+      where: {
+        [field]: { equals: value }
+      },
+      take: 1
+    });
+    if (!accountsArray?.length || !accountsArray[0]) {
+      console.info("Getting account by field - no account exists with the provided field/value");
+      return false;
+    }
+    const account2 = accountsArray[0];
+    return account2;
+  } catch (err) {
+    console.error("Error getting account by field/value %O", err);
+    throw new Error(`Getting account by field/value ${err}`);
+  }
+};
+var get_account_by_field_default = getAccountByField;
 
 // helpers/encrypt-password/index.ts
 var import_crypto = __toESM(require("crypto"));
