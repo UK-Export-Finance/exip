@@ -1,7 +1,7 @@
 import { generateFields, exportContractSummaryLists } from '.';
 import generateAboutTheExportFields from './about-the-export-fields';
 import generatePrivateMarketFields from './private-market-fields';
-import agentFields from './agent-fields';
+import generateAgentFields from './agent-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { mockCountries } from '../../../test-mocks';
 import { referenceNumber, mockExportContract } from '../../../test-mocks/mock-application';
@@ -11,7 +11,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
   const checkAndChange = true;
 
   describe('generateFields', () => {
-    describe('when mockExportContract is false', () => {
+    describe('when totalContractValueOverThreshold is false', () => {
       const totalContractValueOverThreshold = false;
 
       it('should return some fields and values from the submitted data/answers', () => {
@@ -19,7 +19,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          agentFields(mockAnswers.agent, referenceNumber, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, checkAndChange),
         ];
 
         expect(result).toEqual(expected);
@@ -35,7 +35,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
-          agentFields(mockAnswers.agent, referenceNumber, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, checkAndChange),
         ];
 
         expect(result).toEqual(expected);

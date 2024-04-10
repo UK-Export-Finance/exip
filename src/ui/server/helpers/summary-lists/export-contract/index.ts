@@ -1,6 +1,6 @@
 import generateAboutTheExportFields from './about-the-export-fields';
 import generatePrivateMarketFields from './private-market-fields';
-import agentFields from './agent-fields';
+import generateAgentFields from './agent-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { ApplicationExportContract, Country, SummaryListGroupData } from '../../../../types';
 
@@ -27,7 +27,7 @@ export const generateFields = (
     fields.push(generatePrivateMarketFields(answers.privateMarket, referenceNumber, checkAndChange));
   }
 
-  fields.push(agentFields(answers.agent, referenceNumber, checkAndChange));
+  fields.push(generateAgentFields(answers.agent, referenceNumber, checkAndChange));
 
   return fields;
 };
