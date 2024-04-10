@@ -17,7 +17,9 @@ export const EXPORT_CONTRACT = {
   USING_AGENT: 'isUsingAgent',
   AGENT_DETAILS: {
     NAME: 'name',
+    AGENT_NAME: 'agent.name',
     FULL_ADDRESS: 'fullAddress',
+    AGENT_FULL_ADDRESS: 'agent.fullAddress',
     COUNTRY_CODE: 'countryCode',
   },
   AGENT_SERVICE: {

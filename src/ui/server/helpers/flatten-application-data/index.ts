@@ -1,12 +1,16 @@
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
-import { Application, ApplicationBroker, ApplicationFlat, ApplicationPolicyContact } from '../../../types';
+import { Application, ApplicationBroker, ApplicationExportContractAgent, ApplicationFlat, ApplicationPolicyContact } from '../../../types';
 
 const {
   POLICY: {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL },
     USING_BROKER,
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
+  },
+  EXPORT_CONTRACT: {
+    USING_AGENT,
+    AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, COUNTRY_CODE },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
@@ -29,10 +33,10 @@ export const mapPolicyContact = (policyContact: ApplicationPolicyContact) => ({
 
 /**
  * mapBroker
- * maps broker and replaces email with BROKER_EMAIL for task list
+ * Map the broker, replacing EMAIL with BROKER_EMAIL for task list
  * BROKER_EMAIL - has dot notation to stop clashes with other email fields.
  * @param {ApplicationBroker} broker
- * @returns {Object}
+ * @returns {Object} ApplicationBroker with slightly different field names
  */
 export const mapBroker = (broker: ApplicationBroker) => ({
   id: broker.id,
@@ -40,6 +44,21 @@ export const mapBroker = (broker: ApplicationBroker) => ({
   [NAME]: broker[NAME],
   [BROKER_EMAIL]: broker[EMAIL],
   [FULL_ADDRESS]: broker[FULL_ADDRESS],
+});
+
+/**
+ * mapExportContractAgentDetails
+ * Map the agent replacing NAME with BROKER_EMAIL for task list
+ * AGENT_NAME - has dot notation to stop clashes with other name fields.
+ * @param {ApplicationExportContractAgent} agent
+ * @returns {Object} ApplicationExportContractAgent with slightly different field names
+ */
+export const mapExportContractAgentDetails = (agent: ApplicationExportContractAgent) => ({
+  id: agent.id,
+  [USING_AGENT]: agent[USING_AGENT],
+  [AGENT_NAME]: agent[NAME],
+  [AGENT_FULL_ADDRESS]: agent[FULL_ADDRESS],
+  [COUNTRY_CODE]: agent[COUNTRY_CODE],
 });
 
 /**
@@ -75,8 +94,7 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     ...getTrueAndFalseAnswers(exportContract),
     ...exportContract.privateMarket,
     ...getTrueAndFalseAnswers(exportContract.privateMarket),
-    ...exportContract.agent,
-    ...getTrueAndFalseAnswers(exportContract.agent),
+    ...mapExportContractAgentDetails(exportContract.agent),
     ...getTrueAndFalseAnswers(declaration),
     // TODO: EMS-2772, EMS-2815
     // ...nominatedLossPayee,

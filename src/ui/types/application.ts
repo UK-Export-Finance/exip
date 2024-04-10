@@ -269,6 +269,7 @@ export {
   ApplicationBuyerUiInput,
   ApplicationBuyerApiInput,
   ApplicationExportContract,
+  ApplicationExportContractAgent,
   ApplicationSectionReview,
   ApplicationDeclaration,
   ApplicationVersion,
