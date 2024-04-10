@@ -1,7 +1,7 @@
 /**
  * completeAndSubmitAgentForm
  * Complete and submit the "Using an agent" form
- * @param {Boolean} usingAgent: Is using an agent. Defaults to false.
+ * @param {Boolean} usingAgent: Exporter is using an agent. Defaults to false.
  */
 const completeAndSubmitAgentForm = ({ usingAgent }) => {
   cy.completeAgentForm({ usingAgent });

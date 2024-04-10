@@ -27,7 +27,7 @@ export const generateFields = (
     fields.push(generatePrivateMarketFields(answers.privateMarket, referenceNumber, checkAndChange));
   }
 
-  fields.push(generateAgentFields(answers.agent, referenceNumber, checkAndChange));
+  fields.push(generateAgentFields(answers.agent, referenceNumber, countries, checkAndChange));
 
   return fields;
 };

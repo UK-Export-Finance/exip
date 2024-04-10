@@ -19,7 +19,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
 
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
         ];
 
         expect(result).toEqual(expected);
@@ -35,7 +35,7 @@ describe('server/helpers/summary-lists/export-contract', () => {
         const expected = [
           generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
           generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
-          generateAgentFields(mockAnswers.agent, referenceNumber, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
         ];
 
         expect(result).toEqual(expected);

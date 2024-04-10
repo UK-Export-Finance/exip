@@ -6,9 +6,10 @@ import { EXPORT_CONTRACT as EXPORT_CONTRACT_ROUTES } from '../../../../constants
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
+import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
-import { mockApplication, referenceNumber } from '../../../../test-mocks';
+import { mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: { AGENT: FORM_TITLE },
@@ -36,7 +37,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
 
   describe('agentDetailsFields', () => {
     it('should return all agent details fields and values', () => {
-      const result = agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange);
+      const result = agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange);
 
       const expected = [
         fieldGroupItem({
@@ -54,12 +55,15 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
           },
           replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue[FULL_ADDRESS]),
         ),
-        fieldGroupItem({
-          field: getFieldById(FIELDS.AGENT_DETAILS, COUNTRY_CODE),
-          data: mockAnswersUsingAgentTrue,
-          href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
-          renderChangeLink: true,
-        }),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_DETAILS, COUNTRY_CODE),
+            data: mockAnswersUsingAgentTrue,
+            href: generateChangeLink(AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE, `#${COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          getCountryByIsoCode(mockCountries, mockAnswersUsingAgentTrue[COUNTRY_CODE]).name,
+        ),
       ];
 
       expect(result).toEqual(expected);
@@ -69,7 +73,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
   describe('agentFields', () => {
     describe(`when ${USING_AGENT} is false`, () => {
       it(`should return one ${USING_AGENT} field and value`, () => {
-        const result = agentFields(mockAnswersUsingAgentFalse, referenceNumber, checkAndChange);
+        const result = agentFields(mockAnswersUsingAgentFalse, referenceNumber, mockCountries, checkAndChange);
 
         const expected = {
           title: FORM_TITLE,
@@ -92,7 +96,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
 
     describe(`when ${USING_AGENT} is true`, () => {
       it(`should return ${USING_AGENT} and agentDetailsFields`, () => {
-        const result = agentFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange);
+        const result = agentFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange);
 
         const expected = {
           title: FORM_TITLE,
@@ -106,7 +110,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
               },
               mapYesNoField(mockAnswersUsingAgentTrue[USING_AGENT]),
             ),
-            ...agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange),
+            ...agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange),
           ],
         };
 

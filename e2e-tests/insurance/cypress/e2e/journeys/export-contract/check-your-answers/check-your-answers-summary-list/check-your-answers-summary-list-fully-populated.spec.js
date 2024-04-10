@@ -16,16 +16,20 @@ const {
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
-// TO
-context('Insurance - Export contract - Check your answers - Summary list - application under total contract value threshold, no private insurance attempt, not using an agent', () => {
+
+context('Insurance - Export contract - Check your answers - Summary list - application over total contract value threshold, private insurance attempt, using an agent', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({ }).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completeExportContractSection({});
+      cy.completeExportContractSection({
+        totalContractValueOverThreshold: true,
+        attemptedPrivateMarketCover: true,
+        usingAgent: true,
+      });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
     });
@@ -53,27 +57,27 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
     checkSummaryList[PAYMENT_TERMS_DESCRIPTION]();
   });
 
-  it(`should NOT render an ${ATTEMPTED} summary list row`, () => {
-    checkSummaryList[ATTEMPTED]({ shouldRender: false });
+  it(`should render an ${ATTEMPTED} summary list row`, () => {
+    checkSummaryList[ATTEMPTED]({ shouldRender: true });
   });
 
-  it(`should NOT render an ${DECLINED_DESCRIPTION} summary list row`, () => {
-    checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
+  it(`should render an ${DECLINED_DESCRIPTION} summary list row`, () => {
+    checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: true });
   });
 
   it(`should render an ${USING_AGENT} summary list row`, () => {
-    checkSummaryList[USING_AGENT]({ isYes: false });
+    checkSummaryList[USING_AGENT]({ isYes: true });
   });
 
-  it(`should NOT render a ${NAME} summary list row`, () => {
-    checkSummaryList[NAME]({ shouldRender: false });
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({ shouldRender: true });
   });
 
-  it(`should NOT render a ${FULL_ADDRESS} summary list row`, () => {
-    checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
+  it(`should render a ${FULL_ADDRESS} summary list row`, () => {
+    checkSummaryList[FULL_ADDRESS]({ shouldRender: true });
   });
 
-  it(`should NOT render a ${COUNTRY_CODE} summary list row`, () => {
-    checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
+  it(`should render a ${COUNTRY_CODE} summary list row`, () => {
+    checkSummaryList[COUNTRY_CODE]({ shouldRender: true });
   });
 });
