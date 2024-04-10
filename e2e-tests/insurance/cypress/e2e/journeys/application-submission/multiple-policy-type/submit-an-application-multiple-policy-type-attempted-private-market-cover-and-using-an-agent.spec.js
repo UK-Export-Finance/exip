@@ -1,4 +1,4 @@
-import { APPLICATION } from '../../../../../../constants'
+import { APPLICATION } from '../../../../../../constants';
 
 context('Insurance - submit an application - Multiple policy type, attempted private market cover, using an agent', () => {
   let referenceNumber;
