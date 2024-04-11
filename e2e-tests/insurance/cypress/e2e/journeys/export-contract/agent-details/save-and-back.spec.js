@@ -48,7 +48,7 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
   });
 
   describe('when fields are partially completed', () => {
-    it('should update the `export contract` task status to `completed`', () => {
+    it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeAgentDetailsForm({
@@ -60,7 +60,7 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

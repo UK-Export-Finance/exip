@@ -42,7 +42,6 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitPrivateMarketForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;

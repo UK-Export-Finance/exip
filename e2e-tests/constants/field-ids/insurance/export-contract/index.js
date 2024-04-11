@@ -21,6 +21,7 @@ export const EXPORT_CONTRACT = {
     FULL_ADDRESS: 'fullAddress',
     AGENT_FULL_ADDRESS: 'agent.fullAddress',
     COUNTRY_CODE: 'countryCode',
+    AGENT_COUNTRY_CODE: 'agent.countryCode',
   },
   AGENT_SERVICE: {
     IS_CHARGING: 'agentIsCharging',

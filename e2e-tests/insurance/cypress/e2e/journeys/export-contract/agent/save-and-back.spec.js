@@ -26,7 +26,6 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitPrivateMarketForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;

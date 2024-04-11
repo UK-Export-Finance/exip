@@ -10,7 +10,7 @@ const {
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   },
   EXPORT_CONTRACT: {
-    AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, COUNTRY_CODE },
+    AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, COUNTRY_CODE },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
@@ -61,7 +61,7 @@ describe('server/helpers/flatten-application-data', () => {
         ...getTrueAndFalseAnswers(exportContract.agent),
         [AGENT_NAME]: exportContract.agent[NAME],
         [AGENT_FULL_ADDRESS]: exportContract.agent[FULL_ADDRESS],
-        [COUNTRY_CODE]: exportContract.agent[COUNTRY_CODE],
+        [AGENT_COUNTRY_CODE]: exportContract.agent[COUNTRY_CODE],
       };
 
       expect(result).toEqual(expected);
