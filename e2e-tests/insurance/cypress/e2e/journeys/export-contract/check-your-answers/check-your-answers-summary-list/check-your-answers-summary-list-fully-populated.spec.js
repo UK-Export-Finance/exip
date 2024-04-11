@@ -28,7 +28,7 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
       cy.completeExportContractSection({
         totalContractValueOverThreshold: true,
         attemptedPrivateMarketCover: true,
-        usingAgent: true,
+        isUsingAgent: true,
       });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;

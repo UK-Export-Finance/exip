@@ -9,6 +9,8 @@ import { ApplicationFlat } from '../../../../types';
 const {
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION_KNOWN },
+    PRIVATE_MARKET: { ATTEMPTED },
+    USING_AGENT,
   },
   POLICY: {
     TYPE_OF_POLICY: { POLICY_TYPE },
@@ -33,6 +35,8 @@ const requiredFields = (application: ApplicationFlat): Array<string> => [
   ...requiredExportContractFields({
     finalDestinationKnown: application[FINAL_DESTINATION_KNOWN],
     totalContractValueOverThreshold: application.totalContractValueOverThreshold,
+    attemptedPrivateMarketCover: application[ATTEMPTED],
+    isUsingAgent: application[USING_AGENT],
   }),
   ...requiredBusinessFields(application[HAS_DIFFERENT_TRADING_NAME]),
   ...requiredYourBuyerFields({

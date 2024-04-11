@@ -47,6 +47,8 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+
+      cy.assertUrl(url);
     });
   });
 
@@ -125,7 +127,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
 
     describe(`when selecting no for ${FIELD_ID}`, () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.completeAndSubmitAgentForm({ usingAgent: false });
+        cy.completeAndSubmitAgentForm({ isUsingAgent: false });
 
         cy.assertUrl(checkYourAnswersUrl);
       });
@@ -147,15 +149,15 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
       it(`should redirect to ${AGENT_DETAILS}`, () => {
-        cy.completeAndSubmitAgentForm({ usingAgent: true });
+        cy.completeAndSubmitAgentForm({ isUsingAgent: true });
 
         cy.assertUrl(agentDetailsUrl);
       });
 
-      it('should update the `export contract` task status to `completed`', () => {
-        cy.navigateToUrl(allSectionsUrl);
+      it('should retain the `export contract` task status as `in progress`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
-        cy.checkTaskExportContractStatusIsComplete();
+        cy.checkTaskExportContractStatusIsInProgress();
       });
 
       describe('when going back to the page', () => {

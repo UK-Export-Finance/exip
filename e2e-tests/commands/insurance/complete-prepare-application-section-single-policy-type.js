@@ -17,6 +17,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
+ * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  */
 const completePrepareApplicationSinglePolicyType = ({
@@ -30,7 +32,9 @@ const completePrepareApplicationSinglePolicyType = ({
   policyValueOverMvpMaximum = false,
   differentPolicyContact,
   needPreCreditPeriod = false,
-  totalContractValueOverThreshold,
+  totalContractValueOverThreshold = false,
+  attemptedPrivateMarketCover = false,
+  isUsingAgent = false,
   submitCheckYourAnswers = true,
 }) => {
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
@@ -57,6 +61,8 @@ const completePrepareApplicationSinglePolicyType = ({
   cy.completeExportContractSection({
     viaTaskList: false,
     totalContractValueOverThreshold,
+    attemptedPrivateMarketCover,
+    isUsingAgent,
     submitCheckYourAnswers,
   });
 };
