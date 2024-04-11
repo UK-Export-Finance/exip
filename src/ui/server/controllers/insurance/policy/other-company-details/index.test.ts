@@ -30,8 +30,6 @@ const {
   policy: { jointlyInsuredParty },
 } = mockApplication;
 
-const mockApplicationWithCountry = mockApplication;
-
 describe('controllers/insurance/policy/other-company-details', () => {
   let req: Request;
   let res: Response;
@@ -40,22 +38,9 @@ describe('controllers/insurance/policy/other-company-details', () => {
 
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
-  const mockApplicationWithoutCountryCode = {
-    ...mockApplication,
-    policy: {
-      ...mockApplication.policy,
-      jointlyInsuredParty: {
-        ...jointlyInsuredParty,
-        [COUNTRY_CODE]: null,
-      },
-    },
-  };
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
-
-    res.locals.application = mockApplicationWithoutCountryCode;
 
     api.keystone.countries.getAll = getCountriesSpy;
   });
@@ -129,34 +114,11 @@ describe('controllers/insurance/policy/other-company-details', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mockApplicationWithoutCountryCode,
-        countries: mapCountries(mockCountries),
+        application: mockApplication,
+        countries: mapCountries(mockCountries, jointlyInsuredParty[COUNTRY_CODE]),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when a final destination has been previously submitted', () => {
-      beforeEach(() => {
-        res.locals.application = mockApplicationWithCountry;
-      });
-
-      it('should render template with countries mapped to submitted country', async () => {
-        await get(req, res);
-
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(referenceNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mockApplicationWithCountry,
-          countries: mapCountries(mockCountries, jointlyInsuredParty[COUNTRY_CODE]),
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when there is no application', () => {
@@ -204,8 +166,6 @@ describe('controllers/insurance/policy/other-company-details', () => {
     beforeEach(() => {
       jest.resetAllMocks();
 
-      res.locals.application = mockApplicationWithoutCountryCode;
-
       getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
       api.keystone.countries.getAll = getCountriesSpy;
 
@@ -237,52 +197,19 @@ describe('controllers/insurance/policy/other-company-details', () => {
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mockApplicationWithoutCountryCode,
+          application: mockApplication,
           submittedValues: payload,
-          countries: mapCountries(mockCountries),
+          countries: mapCountries(mockCountries, payload[COUNTRY_CODE]),
           validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-
-      describe('when a country has been previously submitted', () => {
-        beforeEach(() => {
-          res.locals.application = mockApplicationWithCountry;
-
-          req.body = {
-            [COUNTRY_CODE]: mockCountries[0].isoCode,
-          };
-        });
-
-        it('should render template with countries mapped to submitted country', async () => {
-          await post(req, res);
-
-          const payload = constructPayload(req.body, FIELD_IDS);
-
-          const expectedVariables = {
-            ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS,
-              BACK_LINK: req.headers.referer,
-            }),
-            ...pageVariables(referenceNumber),
-            userName: getUserNameFromSession(req.session.user),
-            application: mockApplicationWithCountry,
-            submittedValues: payload,
-            countries: mapCountries(mockCountries, payload[COUNTRY_CODE]),
-            validationErrors: generateValidationErrors(payload),
-          };
-
-          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-        });
       });
     });
 
     describe('when there are no validation errors', () => {
       beforeEach(() => {
         req.body = validBody;
-
-        res.locals.application = mockApplicationWithCountry;
       });
 
       it('should NOT call api.keystone.countries.getAll', async () => {
