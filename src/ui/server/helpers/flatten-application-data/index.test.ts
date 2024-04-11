@@ -1,4 +1,4 @@
-import flattenApplicationData, { mapPolicyContact, mapBroker } from '.';
+import flattenApplicationData, { mapPolicyContact, mapBroker, mapExportContractAgentDetails } from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { mockApplication, referenceNumber } from '../../test-mocks';
@@ -8,6 +8,9 @@ const {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL },
     USING_BROKER,
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
+  },
+  EXPORT_CONTRACT: {
+    AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, COUNTRY_CODE },
   },
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
@@ -49,6 +52,22 @@ describe('server/helpers/flatten-application-data', () => {
     });
   });
 
+  describe('mapExportContractAgentDetails', () => {
+    it('should return mapped export contract agent fields', () => {
+      const result = mapExportContractAgentDetails(exportContract.agent);
+
+      const expected = {
+        id: exportContract.agent.id,
+        ...getTrueAndFalseAnswers(exportContract.agent),
+        [AGENT_NAME]: exportContract.agent[NAME],
+        [AGENT_FULL_ADDRESS]: exportContract.agent[FULL_ADDRESS],
+        [AGENT_COUNTRY_CODE]: exportContract.agent[COUNTRY_CODE],
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('flattenApplicationData', () => {
     it('should return an application with a flat structure with no nested objects', () => {
       const result = flattenApplicationData(mockApplication);
@@ -77,7 +96,9 @@ describe('server/helpers/flatten-application-data', () => {
         ...getTrueAndFalseAnswers(exportContract),
         ...exportContract.privateMarket,
         ...getTrueAndFalseAnswers(exportContract.privateMarket),
-        ...nominatedLossPayee,
+        ...mapExportContractAgentDetails(exportContract.agent),
+        // TODO: EMS-2772, EMS-2815
+        // ...nominatedLossPayee,
         ...getTrueAndFalseAnswers(nominatedLossPayee),
         ...relationship,
         ...policy,

@@ -16,6 +16,9 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - policyValueOverMvpMaximum: should submit an application with a value over the MVP maximum amount. Defaults to false.
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to false.
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
+ * - totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
+ * - attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
+ * - isUsingAgent: Should submit "yes" to "using an agent" form.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -27,8 +30,11 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   usingBroker = false,
   differentPolicyContact = false,
+  totalContractValueOverThreshold = false,
+  attemptedPrivateMarketCover = false,
+  isUsingAgent = false,
 }) => {
-  completeSignInAndGoToApplication({}).then(({ referenceNumber }) => {
+  completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
       cy.completePrepareApplicationMultiplePolicyType({
         differentTradingAddress,
@@ -37,6 +43,9 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         usingBroker,
         differentPolicyContact,
+        totalContractValueOverThreshold,
+        attemptedPrivateMarketCover,
+        isUsingAgent,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -46,6 +55,9 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         usingBroker,
         differentPolicyContact,
+        totalContractValueOverThreshold,
+        attemptedPrivateMarketCover,
+        isUsingAgent,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

@@ -4,7 +4,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 const {
   ROOT,
   ALL_SECTIONS,
-  EXPORT_CONTRACT: { PRIVATE_MARKET },
+  EXPORT_CONTRACT: { AGENT },
 } = INSURANCE_ROUTES;
 
 const {
@@ -19,7 +19,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
   let allSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
@@ -27,7 +27,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${PRIVATE_MARKET}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
@@ -58,7 +58,8 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentForm({ usingAgent: false });
+      cy.completeAgentForm({ isUsingAgent: false });
+
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
@@ -88,16 +89,16 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentForm({ usingAgent: true });
+      cy.completeAgentForm({ isUsingAgent: true });
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
     });
 
-    it('should update the `export contract` task status to `completed`', () => {
+    it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(allSectionsUrl);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {

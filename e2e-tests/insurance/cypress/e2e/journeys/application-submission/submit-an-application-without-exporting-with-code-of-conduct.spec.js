@@ -1,7 +1,3 @@
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-
-const { APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
-
 context('Insurance - submit an application - Single policy type, without `exporting with code of conduct` declaration', () => {
   let referenceNumber;
 
@@ -19,7 +15,7 @@ context('Insurance - submit an application - Single policy type, without `export
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should successfully submit the application and redirect to ${APPLICATION_SUBMITTED}`, () => {
+  it('should successfully submit the application and redirect to `application submitted`', () => {
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 });

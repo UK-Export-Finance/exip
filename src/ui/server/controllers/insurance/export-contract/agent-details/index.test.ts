@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } fro
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -295,10 +295,10 @@ describe('controllers/insurance/export-contract/agent-details', () => {
         expect(mapAndSave.exportContractAgent).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${AGENT_SERVICE}`, async () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_SERVICE}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

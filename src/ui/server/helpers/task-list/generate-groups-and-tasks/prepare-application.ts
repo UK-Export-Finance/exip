@@ -20,11 +20,12 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
 
 /**
  * createPrepareApplicationTasks
- * @param {Number} Application reference number
- * @param {Array} Task list groups
- * @param {String} Application "Policy type"
- * @param {Boolean} Application "Is using broker" flag
- * @param {Boolean} "Attempted cover via the private market" flag
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array} otherGroups: Task list groups
+ * @param {String} policyType: Application "Policy type"
+ * @param {Boolean} isUsingBroker: "Is using broker" flag
+ * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
+ * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @returns {Array} Prepare application tasks
  */
 const createPrepareApplicationTasks = (
@@ -41,6 +42,7 @@ const createPrepareApplicationTasks = (
   hasPreviousCreditInsuranceWithBuyer?: boolean,
   totalContractValueOverThreshold?: boolean,
   attemptedPrivateMarketCover?: boolean,
+  isUsingAgent?: boolean,
 ): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
@@ -87,6 +89,7 @@ const createPrepareApplicationTasks = (
       attemptedPrivateMarketCover,
       // TODO: refactor createPrepareApplicationTasks to have object structured params.
       totalContractValueOverThreshold: Boolean(totalContractValueOverThreshold),
+      isUsingAgent,
     }),
     dependencies,
   };
