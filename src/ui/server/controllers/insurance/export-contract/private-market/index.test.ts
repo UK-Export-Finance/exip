@@ -200,11 +200,9 @@ describe('controllers/insurance/export-contract/private-market', () => {
       });
 
       describe("when the answer is false and the url's last substring is `change`", () => {
-        beforeEach(() => {
-          req.originalUrl = PRIVATE_MARKET_CHANGE;
-        });
-
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = PRIVATE_MARKET_CHANGE;
+
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -214,7 +212,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
       });
 
       describe(`when the answer is true, no ${DECLINED_DESCRIPTION} available and the url's last substring is 'change'`, () => {
-        beforeEach(() => {
+        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, async () => {
           req.body = {
             [FIELD_ID]: 'true',
           };
@@ -222,9 +220,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
           req.originalUrl = PRIVATE_MARKET_CHANGE;
 
           delete res.locals.application?.exportContract.privateMarket[DECLINED_DESCRIPTION];
-        });
 
-        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, async () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHANGE}`;
