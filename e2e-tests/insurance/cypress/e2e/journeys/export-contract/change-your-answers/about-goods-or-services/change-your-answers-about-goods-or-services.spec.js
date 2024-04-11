@@ -1,9 +1,9 @@
-import { summaryList, autoCompleteField } from '../../../../../../pages/shared';
-import { aboutGoodsOrServicesPage } from '../../../../../../pages/insurance/export-contract';
-import { FIELD_IDS, ROUTES } from '../../../../../../constants';
-import { INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
-import application from '../../../../../../fixtures/application';
-import { XAD } from '../../../../../../fixtures/countries';
+import { summaryList, autoCompleteField } from '../../../../../../../pages/shared';
+import { aboutGoodsOrServicesPage } from '../../../../../../../pages/insurance/export-contract';
+import { FIELD_IDS, ROUTES } from '../../../../../../../constants';
+import { INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../fixtures/application';
+import { XAD } from '../../../../../../../fixtures/countries';
 
 const {
   EXPORT_CONTRACT: {

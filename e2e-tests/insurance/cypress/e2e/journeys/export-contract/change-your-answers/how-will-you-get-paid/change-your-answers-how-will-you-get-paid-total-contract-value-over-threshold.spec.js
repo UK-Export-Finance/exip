@@ -1,6 +1,6 @@
-import { summaryList } from '../../../../../../pages/shared';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
+import { summaryList } from '../../../../../../../pages/shared';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 
 const {
   ROOT,

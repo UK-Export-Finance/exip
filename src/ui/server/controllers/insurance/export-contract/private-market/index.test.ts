@@ -13,12 +13,19 @@ import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, DECLINED_BY_PRIVATE_MARKET, PRIVATE_MARKET_SAVE_AND_BACK, PRIVATE_MARKET_CHANGE, AGENT },
+  EXPORT_CONTRACT: {
+    AGENT,
+    CHECK_YOUR_ANSWERS,
+    DECLINED_BY_PRIVATE_MARKET,
+    DECLINED_BY_PRIVATE_MARKET_CHANGE,
+    PRIVATE_MARKET_SAVE_AND_BACK,
+    PRIVATE_MARKET_CHANGE,
+  },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
-  PRIVATE_MARKET: { ATTEMPTED },
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -26,6 +33,7 @@ const {
     INSURANCE: { EXPORT_CONTRACT },
   },
 } = TEMPLATES;
+
 describe('controllers/insurance/export-contract/private-market', () => {
   let req: Request;
   let res: Response;
@@ -177,18 +185,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
         });
       });
 
-      describe("when the answer is false and the url's last substring is `change` and application.totalContractValueOverThreshold is true", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = PRIVATE_MARKET_CHANGE;
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
       describe('when the answer is true', () => {
         it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET}`, async () => {
           req.body = {
@@ -203,15 +199,36 @@ describe('controllers/insurance/export-contract/private-market', () => {
         });
       });
 
-      describe('when the answer is false', () => {
-        it(`should redirect to ${AGENT}`, async () => {
-          req.body = {
-            [FIELD_ID]: 'false',
-          };
+      describe("when the answer is false and the url's last substring is `change`", () => {
+        beforeEach(() => {
+          req.originalUrl = PRIVATE_MARKET_CHANGE;
+        });
 
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the answer is true, no ${DECLINED_DESCRIPTION} available and the url's last substring is 'change'`, () => {
+        beforeEach(() => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          req.originalUrl = PRIVATE_MARKET_CHANGE;
+
+          delete res.locals.application?.exportContract.privateMarket[DECLINED_DESCRIPTION];
+        });
+
+        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, async () => {
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHANGE}`;
+
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

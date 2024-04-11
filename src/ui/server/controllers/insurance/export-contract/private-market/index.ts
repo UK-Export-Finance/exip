@@ -12,12 +12,12 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET, PRIVATE_MARKET_SAVE_AND_BACK, AGENT, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET_CHANGE, PRIVATE_MARKET_SAVE_AND_BACK, AGENT, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
-  PRIVATE_MARKET: { ATTEMPTED },
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -121,12 +121,32 @@ export const post = async (req: Request, res: Response) => {
 
     const answer = payload[FIELD_ID];
 
-    if (answer === 'true') {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`);
+    const attemptedPrivateMarketCover = answer === 'true';
+
+    const hasDeclinedDescription = application.exportContract.privateMarket[DECLINED_DESCRIPTION];
+
+    /**
+     * If the route is a "change" route,
+     * the exporter has ATTEMPTED (private market cover),
+     * and no DECLINED_DESCRIPTION has been submitted,
+     * redirect to DECLINED_BY_PRIVATE_MARKET form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      if (attemptedPrivateMarketCover && !hasDeclinedDescription) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
-    if (isChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    /**
+     * If the exporter has ATTEMPTED (private market cover),
+     * redirect to DECLINED_BY_PRIVATE_MARKET form.
+     * otherwise, redirect to the next part of the flow.
+     */
+    if (attemptedPrivateMarketCover) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT}`);
