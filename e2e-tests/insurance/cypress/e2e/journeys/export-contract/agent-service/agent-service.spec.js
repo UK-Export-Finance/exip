@@ -24,9 +24,16 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitAgentForm({ usingAgent: true });
+      cy.completeAndSubmitAgentDetailsForm({});
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
 
-      cy.navigateToUrl(url);
+      cy.assertUrl(url);
     });
   });
 
@@ -88,8 +95,10 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
       });
     });
 
-    it('renders a `save and back` button', () => {
+    it.only('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+
+      cy.clickSubmitButton();
     });
   });
 });

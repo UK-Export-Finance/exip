@@ -184,6 +184,15 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Enter the country the agent is based in',
         },
       },
+      AGENT_SERVICE: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_SERVICE.SERVICE_DESCRIPTION]: {
+          IS_EMPTY: 'Enter the details of the service the agent is providing',
+          ABOVE_MAXIMUM: `The details of the service the agent is providing cannot be more than ${MAXIMUM_CHARACTERS.FULL_ADDRESS} characters`,
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_SERVICE.IS_CHARGING]: {
+          IS_EMPTY: 'Select if the agent is charging for their support',
+        },
+      },
     },
     POLICY: {
       TYPE_OF_POLICY: {
