@@ -155,7 +155,7 @@ export const FINANCIAL_DETAILS = {
       SIGNATURE: String(process.env.ENCRYPTION_KEY),
     },
     IV: {
-      BYTES: 12,
+      BYTES: 16,
       ENCODING: 'base64' as BufferEncoding,
     },
   },

@@ -787,7 +787,7 @@ var FINANCIAL_DETAILS = {
       SIGNATURE: String(process.env.ENCRYPTION_KEY)
     },
     IV: {
-      BYTES: 12,
+      BYTES: 16,
       ENCODING: "base64"
     }
   }
@@ -5455,12 +5455,26 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
 // helpers/encrypt/index.ts
+var import_crypto11 = __toESM(require("crypto"));
+
+// helpers/encrypt/generate-key/index.ts
 var import_crypto9 = __toESM(require("crypto"));
-var { KEY: KEY3, IV, ALGORITHM: ALGORITHM2, ENCRYPTION_METHOD, ENCODING: ENCODING2, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
-var key = import_crypto9.default.createHash(ALGORITHM2).update(KEY3.SIGNATURE).digest("hex").substring(0, 32);
-var iv = import_crypto9.default.randomBytes(IV.BYTES).toString(IV.ENCODING);
+var { KEY: KEY3, ALGORITHM: ALGORITHM2 } = FINANCIAL_DETAILS.ENCRYPTION;
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(KEY3.SIGNATURE).digest("hex").substring(0, 32);
+var generate_key_default = generateKey;
+
+// helpers/encrypt/generate-initialisation-vector/index.ts
+var import_crypto10 = __toESM(require("crypto"));
+var { IV } = FINANCIAL_DETAILS.ENCRYPTION;
+var generateInitialisationVector = () => import_crypto10.default.randomBytes(IV.BYTES).toString(IV.ENCODING).slice(0, 16);
+var generate_initialisation_vector_default = generateInitialisationVector;
+
+// helpers/encrypt/index.ts
+var { ENCRYPTION_METHOD, ENCODING: ENCODING2, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
+var key = generate_key_default();
+var iv = generate_initialisation_vector_default();
 var encrypt = (dataToEncrypt) => {
-  const cipher = import_crypto9.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
+  const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
   return {
     value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING2) + cipher.final(ENCODING2)).toString(STRING_ENCODING2),
     iv

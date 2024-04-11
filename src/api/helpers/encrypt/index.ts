@@ -1,13 +1,13 @@
 import crypto from 'crypto';
 import { FINANCIAL_DETAILS } from '../../constants';
 import generateKey from './generate-key';
-import generateIv from './generate-iv';
+import generateInitialisationVector from './generate-initialisation-vector';
 
 const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
 
 const key = generateKey();
 // initialisation vector
-const iv = generateIv();
+const iv = generateInitialisationVector();
 
 /**
  * encrypt
