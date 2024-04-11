@@ -4,7 +4,7 @@
  * @param {Boolean} viaTaskList: Start the "export contract" section from the task list.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} attemptedPrivateMarketCover: Has attempted to insure through the private market
- * @param {Boolean} isUsingAgent: Is using an agent to help win the export contract
+ * @param {Boolean} isUsingAgent: Exporter is using an agent
  * @param {Boolean} submitCheckYourAnswers: Click export contract "check your answers" submit button
  */
 const completeExportContractSection = ({
@@ -28,6 +28,10 @@ const completeExportContractSection = ({
   }
 
   cy.completeAndSubmitAgentForm({ isUsingAgent });
+
+  if (isUsingAgent) {
+    cy.completeAndSubmitAgentDetailsForm({});
+  }
 
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();

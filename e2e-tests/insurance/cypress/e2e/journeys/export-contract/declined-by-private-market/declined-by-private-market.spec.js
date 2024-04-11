@@ -1,10 +1,9 @@
 import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
-import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
+import { MAXIMUM_CHARACTERS, EXPECTED_MULTI_LINE_STRING } from '../../../../../../constants';
 import { ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.DECLINED_BY_PRIVATE_MARKET;
 
@@ -149,7 +148,7 @@ context('Insurance - Export contract - Declined by private market page - As an e
 
         cy.checkTextareaValue({
           fieldId: FIELD_ID,
-          expectedValue: application.EXPORT_CONTRACT.PRIVATE_MARKET[FIELD_ID],
+          expectedValue: EXPECTED_MULTI_LINE_STRING,
         });
       });
     });

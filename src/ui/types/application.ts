@@ -270,6 +270,8 @@ export {
   ApplicationBuyerApiInput,
   ApplicationExportContract,
   ApplicationExportContractAgent,
+  ApplicationExportContractAgentService,
+  ApplicationPrivateMarket,
   ApplicationSectionReview,
   ApplicationDeclaration,
   ApplicationVersion,

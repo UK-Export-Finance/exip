@@ -10,16 +10,19 @@ const {
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+  USING_AGENT,
+  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Check your answers - Summary list', () => {
+context('Insurance - Export contract - Check your answers - Summary list - application under total contract value threshold, no private insurance attempt, not using an agent', () => {
   let referenceNumber;
   let url;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       cy.completeExportContractSection({});
@@ -48,5 +51,29 @@ context('Insurance - Export contract - Check your answers - Summary list', () =>
 
   it(`should render a ${PAYMENT_TERMS_DESCRIPTION} summary list row`, () => {
     checkSummaryList[PAYMENT_TERMS_DESCRIPTION]();
+  });
+
+  it(`should NOT render an ${ATTEMPTED} summary list row`, () => {
+    checkSummaryList[ATTEMPTED]({ shouldRender: false });
+  });
+
+  it(`should NOT render an ${DECLINED_DESCRIPTION} summary list row`, () => {
+    checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
+  });
+
+  it(`should render an ${USING_AGENT} summary list row`, () => {
+    checkSummaryList[USING_AGENT]({ isYes: false });
+  });
+
+  it(`should NOT render a ${NAME} summary list row`, () => {
+    checkSummaryList[NAME]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${FULL_ADDRESS} summary list row`, () => {
+    checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${COUNTRY_CODE} summary list row`, () => {
+    checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
   });
 });
