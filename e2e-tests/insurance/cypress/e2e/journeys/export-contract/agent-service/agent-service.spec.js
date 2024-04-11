@@ -95,10 +95,8 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
       });
     });
 
-    it.only('renders a `save and back` button', () => {
+    it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
-
-      cy.clickSubmitButton();
     });
   });
 });
