@@ -31,7 +31,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Check your answers - Summary list - your buyer - application below total contract value threshold, no optional buyer fields', () => {
+context('Insurance - Your buyer - Check your answers - Summary list - Your buyer - Application below total contract value threshold, no optional buyer fields', () => {
   let referenceNumber;
   let url;
 

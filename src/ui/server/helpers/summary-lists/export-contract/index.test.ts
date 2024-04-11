@@ -1,5 +1,7 @@
 import { generateFields, exportContractSummaryLists } from '.';
 import generateAboutTheExportFields from './about-the-export-fields';
+import generatePrivateMarketFields from './private-market-fields';
+import generateAgentFields from './agent-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
 import { mockCountries } from '../../../test-mocks';
 import { referenceNumber, mockExportContract } from '../../../test-mocks/mock-application';
@@ -9,20 +11,45 @@ describe('server/helpers/summary-lists/export-contract', () => {
   const checkAndChange = true;
 
   describe('generateFields', () => {
-    it('should return fields and values from the submitted data/answers', () => {
-      const result = generateFields(mockAnswers, referenceNumber, mockCountries, checkAndChange);
+    describe('when totalContractValueOverThreshold is false', () => {
+      const totalContractValueOverThreshold = false;
 
-      const expected = [generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange)];
+      it('should return some fields and values from the submitted data/answers', () => {
+        const result = generateFields(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
 
-      expect(result).toEqual(expected);
+        const expected = [
+          generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
+        ];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when totalContractValueOverThreshold is true', () => {
+      const totalContractValueOverThreshold = true;
+
+      it('should return all fields and values from the submitted data/answers', () => {
+        const result = generateFields(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+
+        const expected = [
+          generateAboutTheExportFields(mockAnswers, referenceNumber, mockCountries, checkAndChange),
+          generatePrivateMarketFields(mockAnswers.privateMarket, referenceNumber, checkAndChange),
+          generateAgentFields(mockAnswers.agent, referenceNumber, mockCountries, checkAndChange),
+        ];
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
   describe('exportContractSummaryLists', () => {
     it('should return an array of summary list rows', () => {
-      const result = exportContractSummaryLists(mockAnswers, referenceNumber, mockCountries, checkAndChange);
+      const totalContractValueOverThreshold = false;
 
-      const fields = generateFields(mockAnswers, referenceNumber, mockCountries, checkAndChange);
+      const result = exportContractSummaryLists(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
+
+      const fields = generateFields(mockAnswers, totalContractValueOverThreshold, referenceNumber, mockCountries, checkAndChange);
 
       const expected = generateGroupsOfSummaryLists(fields);
 
