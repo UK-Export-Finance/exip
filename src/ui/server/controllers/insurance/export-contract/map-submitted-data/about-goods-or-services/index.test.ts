@@ -1,12 +1,12 @@
 import mapSubmittedData from '.';
-import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
 import { mockCountries } from '../../../../../test-mocks';
 import { RequestBody } from '../../../../../../types';
 
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
-} = EXPORT_CONTRACT_FIELD_IDS;
+} = FIELD_IDS;
 
 const mockCountryIsoCode = mockCountries[0].isoCode;
 

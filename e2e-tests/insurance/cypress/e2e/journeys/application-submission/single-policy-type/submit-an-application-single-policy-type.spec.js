@@ -5,7 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const { table } = dashboardPage;
 
-const { DASHBOARD, APPLICATION_SUBMITTED } = INSURANCE_ROUTES;
+const { DASHBOARD } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -27,7 +27,7 @@ context('Insurance - submit an application - Single policy type, no broker - As 
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should redirect to ${APPLICATION_SUBMITTED}`, () => {
+  it('should successfully submit the application and redirect to `application submitted`', () => {
     cy.assertApplicationSubmittedUrl(referenceNumber);
   });
 

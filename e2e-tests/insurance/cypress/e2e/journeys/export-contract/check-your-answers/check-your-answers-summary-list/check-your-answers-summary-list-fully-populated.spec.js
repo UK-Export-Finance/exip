@@ -28,7 +28,7 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
       cy.completeExportContractSection({
         totalContractValueOverThreshold: true,
         attemptedPrivateMarketCover: true,
-        usingAgent: true,
+        isUsingAgent: true,
       });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.CHECK_YOUR_ANSWERS}`;
@@ -58,7 +58,7 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
   });
 
   it(`should render an ${ATTEMPTED} summary list row`, () => {
-    checkSummaryList[ATTEMPTED]({ shouldRender: true });
+    checkSummaryList[ATTEMPTED]({ shouldRender: true, isYes: true });
   });
 
   it(`should render an ${DECLINED_DESCRIPTION} summary list row`, () => {

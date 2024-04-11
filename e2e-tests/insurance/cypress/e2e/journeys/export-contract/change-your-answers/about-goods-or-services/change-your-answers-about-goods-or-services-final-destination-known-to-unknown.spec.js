@@ -1,7 +1,7 @@
-import { summaryList } from '../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { DEFAULT } from '../../../../../../content-strings';
+import { summaryList } from '../../../../../../../pages/shared';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { DEFAULT } from '../../../../../../../content-strings';
 
 const {
   ROOT,

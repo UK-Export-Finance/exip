@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT, DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { AGENT, DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK, DECLINED_BY_PRIVATE_MARKET_CHANGE, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -154,6 +154,18 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
         expect(mapAndSave.privateMarket).toHaveBeenCalledTimes(1);
 
         expect(mapAndSave.privateMarket).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
+      describe("when the answer is false and the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = DECLINED_BY_PRIVATE_MARKET_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
 
       it(`should redirect to ${AGENT}`, async () => {

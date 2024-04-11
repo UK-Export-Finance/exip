@@ -17,7 +17,7 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -157,7 +157,8 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
+    // return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
     console.error('Error updating application - export contract - agent details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);

@@ -68,8 +68,8 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `completed`', () => {
-      cy.checkTaskExportContractStatusIsComplete();
+    it('should retain the status of task `export contract` as `in progress`', () => {
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     it('should have the originally submitted answer when going back to the page after submission', () => {
@@ -115,7 +115,7 @@ context('Insurance - Export contract - How will you get paid page - Save and go 
       cy.assertAllSectionsUrl(referenceNumber);
     });
 
-    it('should update the `export contract` task status to `in progress`', () => {
+    it('should retain the status of task `export contract` as `in progress`', () => {
       cy.checkTaskExportContractStatusIsInProgress();
     });
 

@@ -1,8 +1,9 @@
 import mapAndSave from '.';
 import save from '../../save-data/private-market';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { mockApplication } from '../../../../../test-mocks';
+import mapSubmittedData from '../../map-submitted-data/private-market';
 import generateValidationErrors from '../../../../../helpers/validation';
+import { mockApplication } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -22,15 +23,17 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract', (
   const mockSaveExportContract = jest.fn(() => Promise.resolve({}));
   save.privateMarket = mockSaveExportContract;
 
+  const populatedData = mapSubmittedData(mockFormBody);
+
   const mockValidationErrors = generateValidationErrors(DECLINED_DESCRIPTION, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
-      it('should call save.privateMarket with application, submitted data and validationErrors.errorList', async () => {
+      it('should call save.privateMarket with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.privateMarket(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.privateMarket).toHaveBeenCalledTimes(1);
-        expect(save.privateMarket).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+        expect(save.privateMarket).toHaveBeenCalledWith(mockApplication, populatedData, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -41,11 +44,11 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract', (
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call save.privateMarket with application and submitted data', async () => {
+      it('should call save.privateMarket with application and populated submitted data', async () => {
         await mapAndSave.privateMarket(mockFormBody, mockApplication);
 
         expect(save.privateMarket).toHaveBeenCalledTimes(1);
-        expect(save.privateMarket).toHaveBeenCalledWith(mockApplication, mockFormBody);
+        expect(save.privateMarket).toHaveBeenCalledWith(mockApplication, populatedData);
       });
 
       it('should return true', async () => {
