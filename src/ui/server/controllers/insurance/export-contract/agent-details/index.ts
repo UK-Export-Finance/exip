@@ -10,12 +10,14 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
+import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/export-contract-agent';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -50,7 +52,7 @@ export const pageVariables = (referenceNumber: number) => ({
       ...FIELDS.AGENT_DETAILS[COUNTRY_CODE],
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS_SAVE_AND_BACK}`,
 });
 
 /**
@@ -70,7 +72,13 @@ export const get = async (req: Request, res: Response) => {
   try {
     const countries = await api.keystone.countries.getAll();
 
-    const mappedCountries = mapCountries(countries);
+    let mappedCountries;
+
+    if (objectHasProperty(application.exportContract.agent, COUNTRY_CODE)) {
+      mappedCountries = mapCountries(countries, application.exportContract.agent[COUNTRY_CODE]);
+    } else {
+      mappedCountries = mapCountries(countries);
+    }
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
@@ -142,5 +150,17 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
+  try {
+    const saveResponse = await mapAndSave.exportContractAgent(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    // return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - agent details %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

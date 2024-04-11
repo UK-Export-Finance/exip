@@ -1,27 +1,29 @@
-import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
+import { autoCompleteField, field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
-import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
+import { assertCountryAutocompleteInput, checkAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT, AGENT_DETAILS, AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT, AGENT_DETAILS, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
 
+const countryCodeField = autoCompleteField(COUNTRY_CODE);
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Export contract - Agent details page - As an Exporter, I want to give details about the agent that helped me win the export contract, So that UKEF can contact the appropriate parties to find out more about the working relationship', () => {
   let referenceNumber;
   let url;
-  let agentServiceUrl;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -31,10 +33,12 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ usingAgent: true });
+      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
-      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+      cy.assertUrl(url);
     });
   });
 
@@ -96,10 +100,24 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${AGENT_SERVICE}`, () => {
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.completeAndSubmitAgentDetailsForm({});
 
-      cy.assertUrl(agentServiceUrl);
+      cy.assertUrl(checkYourAnswersUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertAgentDetailsFieldValues({});
+      });
+
+      it(`should have a visible ${COUNTRY_CODE}`, () => {
+        cy.navigateToUrl(url);
+
+        checkAutocompleteInput.isVisible(countryCodeField);
+      });
     });
   });
 });

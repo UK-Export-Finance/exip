@@ -5,7 +5,8 @@ import { FORM_TITLES } from '../../../form-titles';
 const {
   ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { DECLINED_DESCRIPTION },
+  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+  USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
@@ -57,21 +58,49 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
   },
   PRIVATE_MARKET: {
+    [ATTEMPTED]: {
+      SUMMARY: {
+        TITLE: 'Approached private market',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.PRIVATE_MARKET,
+      },
+    },
     [DECLINED_DESCRIPTION]: {
       HINT: "Tell us about the best quote you received and why you were unable to use it. For example, your current policy might not cover the country you're exporting to.",
       MAXIMUM: MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION,
+      SUMMARY: {
+        TITLE: 'Reason(s) unable to obtain cover',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.PRIVATE_MARKET,
+      },
+    },
+  },
+  [USING_AGENT]: {
+    SUMMARY: {
+      TITLE: 'Using an agent',
+      FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
     },
   },
   AGENT_DETAILS: {
     [NAME]: {
       LABEL: 'Name of the agent',
+      SUMMARY: {
+        TITLE: 'Agent name',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [FULL_ADDRESS]: {
       LABEL: 'Address of the agent',
       MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS,
+      SUMMARY: {
+        TITLE: 'Agent address',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [COUNTRY_CODE]: {
       LABEL: 'Country the agent is based in',
+      SUMMARY: {
+        TITLE: 'Country the agent is based in',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
   },
   AGENT_SERVICE: {

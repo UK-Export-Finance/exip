@@ -173,12 +173,12 @@ const application = {
     },
     PRIVATE_MARKET: {
       [ATTEMPTED]: true,
-      [DECLINED_DESCRIPTION]: 'Mock declined description',
+      [DECLINED_DESCRIPTION]: MULTI_LINE_STRING,
     },
     AGENT_DETAILS: {
       [AGENT_NAME]: 'Mock export contract agent name',
       [AGENT_COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
-      [AGENT_FULL_ADDRESS]: 'Mock export contract agent address',
+      [AGENT_FULL_ADDRESS]: MULTI_LINE_STRING,
     },
   },
   EXPORTER_BUSINESS: {

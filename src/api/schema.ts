@@ -5,9 +5,7 @@ import { document } from '@keystone-6/fields-document';
 import { addMonths } from 'date-fns';
 import { Lists } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION, FEEDBACK } from './constants';
-import ACCOUNT_FIELD_IDS from './constants/field-ids/insurance/account';
 import updateApplication from './helpers/update-application';
-import getAccountByField from './helpers/get-account-by-field';
 import nullableCheckbox from './nullable-checkbox';
 
 export const lists = {
@@ -474,25 +472,6 @@ export const lists = {
         ref: 'Application',
         many: true,
       }),
-    },
-    hooks: {
-      validateInput: async ({ context, operation, resolvedData }) => {
-        if (operation === 'create') {
-          const { email } = resolvedData;
-
-          const requestedEmail = String(email);
-
-          /**
-           * Check if an account with the email already exists.
-           * If so, reject.
-           */
-          const account = await getAccountByField(context, ACCOUNT_FIELD_IDS.EMAIL, requestedEmail);
-
-          if (account) {
-            throw new Error(`Unable to create a new account for ${requestedEmail} - account already exists`);
-          }
-        }
-      },
     },
     access: allowAll,
   }),

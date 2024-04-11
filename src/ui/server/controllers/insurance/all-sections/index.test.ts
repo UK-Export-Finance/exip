@@ -37,6 +37,7 @@ describe('controllers/insurance/all-sections', () => {
       const {
         finalDestinationKnown,
         privateMarket: { attempted: attemptedPrivateMarketCover },
+        agent: { isUsingAgent },
       } = exportContract;
       const { isUsingBroker } = broker;
       const { hasDifferentTradingName } = company;
@@ -61,6 +62,7 @@ describe('controllers/insurance/all-sections', () => {
         exporterHasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
+        isUsingAgent,
       );
 
       const expectedTaskListData = generateTaskList(taskListStructure, flatApplicationData);
