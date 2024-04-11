@@ -19,7 +19,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
   let allSectionsUrl;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       // go to the page we want to test.
@@ -58,7 +58,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentForm({ usingAgent: false });
+      cy.completeAgentForm({ isUsingAgent: false });
 
       cy.clickSaveAndBackButton();
 
@@ -89,7 +89,7 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentForm({ usingAgent: true });
+      cy.completeAgentForm({ isUsingAgent: true });
       cy.clickSaveAndBackButton();
 
       cy.assertUrl(allSectionsUrl);
@@ -107,8 +107,8 @@ context('Insurance - Export contract - Agent - Save and go back', () => {
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 3 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 3 });
+        // go through 2 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 2 });
 
         cy.assertYesRadioOptionIsChecked();
       });
