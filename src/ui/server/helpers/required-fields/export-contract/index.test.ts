@@ -7,7 +7,7 @@ const {
   HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
-  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -97,7 +97,7 @@ describe('server/helpers/required-fields/export-contract', () => {
       it('should return an array with required agent details field IDs', () => {
         const result = agentTasks({ isUsingAgent: true });
 
-        const expected = [NAME, FULL_ADDRESS, COUNTRY_CODE];
+        const expected = [AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE];
 
         expect(result).toEqual(expected);
       });
