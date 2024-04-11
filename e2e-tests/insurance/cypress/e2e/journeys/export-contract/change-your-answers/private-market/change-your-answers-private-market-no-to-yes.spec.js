@@ -90,7 +90,7 @@ context('Insurance - Export contract - Change your answers - Private market - No
       });
 
       it(`should render new answers and change links for ${FIELD_ID} and ${DECLINED_DESCRIPTION}`, () => {
-        checkSummaryList[FIELD_ID]({ shouldRender: true });
+        checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: true });
         checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: true });
       });
     });
