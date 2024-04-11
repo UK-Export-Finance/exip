@@ -127,7 +127,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
 
     describe(`when selecting no for ${FIELD_ID}`, () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.completeAndSubmitAgentForm({ usingAgent: false });
+        cy.completeAndSubmitAgentForm({ isUsingAgent: false });
 
         cy.assertUrl(checkYourAnswersUrl);
       });
@@ -149,7 +149,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
       it(`should redirect to ${AGENT_DETAILS}`, () => {
-        cy.completeAndSubmitAgentForm({ usingAgent: true });
+        cy.completeAndSubmitAgentForm({ isUsingAgent: true });
 
         cy.assertUrl(agentDetailsUrl);
       });

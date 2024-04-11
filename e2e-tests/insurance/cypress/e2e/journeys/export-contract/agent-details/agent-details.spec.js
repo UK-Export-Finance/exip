@@ -33,7 +33,7 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.startInsuranceExportContractSection({});
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
-      cy.completeAndSubmitAgentForm({ usingAgent: true });
+      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
       agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
