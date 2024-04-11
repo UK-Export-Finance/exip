@@ -192,7 +192,7 @@ export const post = async (req: Request, res: Response) => {
      * If the route is a "change" route,
      * and the application has no TOTAL_SALES_TO_BUYER or MAXIMUM_BUYER_WILL_OWE saved (specifically required for a "multiple" policy type),
      * redirect to the EXPORT_VALUE form.
-     * Otherwise, redirect to "check your answers".
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
     if (isChangeRoute(req.originalUrl)) {
       if (!hasTotalSalesAndMaximumWillOwe) {

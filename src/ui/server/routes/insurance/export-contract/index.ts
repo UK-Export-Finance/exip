@@ -33,6 +33,7 @@ const {
   PRIVATE_MARKET_SAVE_AND_BACK,
   DECLINED_BY_PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK,
+  DECLINED_BY_PRIVATE_MARKET_CHANGE,
   AGENT,
   AGENT_SAVE_AND_BACK,
   AGENT_DETAILS,
@@ -69,6 +70,8 @@ exportContractRoute.post(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMar
 exportContractRoute.get(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
 exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);
 exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`, declinedByPrivateMarketSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, declinedByPrivateMarketGet);
+exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, declinedByPrivateMarketPost);
 
 exportContractRoute.get(`/:referenceNumber${AGENT}`, agentGet);
 exportContractRoute.post(`/:referenceNumber${AGENT}`, agentPost);
