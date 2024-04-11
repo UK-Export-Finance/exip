@@ -19,7 +19,6 @@ const {
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} emptyFieldValidation
  */
-const isCharging = (formBody: RequestBody, errors: object) =>
-  emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
+const isCharging = (formBody: RequestBody, errors: object) => emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE, errors);
 
 export default isCharging;
