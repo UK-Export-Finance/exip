@@ -1,5 +1,5 @@
 import mapAndSave from '.';
-import mapSubmittedData from '../../map-submitted-data/about-goods-or-services';
+import mapSubmittedData from '../../map-submitted-data/export-contract';
 import save from '../../save-data/export-contract';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { mockApplication, mockCountries } from '../../../../../test-mocks';

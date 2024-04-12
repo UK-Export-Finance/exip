@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_SERVICE;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SERVICE },
 } = INSURANCE_ROUTES;
 
 const { AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION } } = FIELD_IDS;
@@ -24,9 +24,16 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+      cy.completeAndSubmitAgentDetailsForm({});
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
 
-      cy.navigateToUrl(url);
+      cy.assertUrl(url);
     });
   });
 
@@ -42,7 +49,7 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${AGENT_SERVICE}`,
-      backLink: `${ROOT}/${referenceNumber}${AGENT_SERVICE}#`,
+      backLink: `${ROOT}/${referenceNumber}${AGENT_DETAILS}`,
     });
   });
 

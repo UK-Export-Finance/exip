@@ -36,8 +36,10 @@ const {
   DECLINED_BY_PRIVATE_MARKET_CHANGE,
   AGENT,
   AGENT_SAVE_AND_BACK,
+  AGENT_CHANGE,
   AGENT_DETAILS,
   AGENT_DETAILS_SAVE_AND_BACK,
+  AGENT_DETAILS_CHANGE,
   AGENT_SERVICE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
@@ -76,10 +78,14 @@ exportContractRoute.post(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHANGE}`
 exportContractRoute.get(`/:referenceNumber${AGENT}`, agentGet);
 exportContractRoute.post(`/:referenceNumber${AGENT}`, agentPost);
 exportContractRoute.post(`/:referenceNumber${AGENT_SAVE_AND_BACK}`, agentSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${AGENT_CHANGE}`, agentGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_CHANGE}`, agentPost);
 
 exportContractRoute.get(`/:referenceNumber${AGENT_DETAILS}`, agentDetailsGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_DETAILS}`, agentDetailsPost);
 exportContractRoute.post(`/:referenceNumber${AGENT_DETAILS_SAVE_AND_BACK}`, agentDetailsSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetailsGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetailsPost);
 
 exportContractRoute.get(`/:referenceNumber${AGENT_SERVICE}`, agentServiceGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_SERVICE}`, agentServicePost);

@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_DETAILS;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT, AGENT_DETAILS, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT, AGENT_DETAILS, AGENT_SERVICE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -23,7 +23,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Agent details page - As an Exporter, I want to give details about the agent that helped me win the export contract, So that UKEF can contact the appropriate parties to find out more about the working relationship', () => {
   let referenceNumber;
   let url;
-  let checkYourAnswersUrl;
+  let agentServiceUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -36,7 +36,7 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
 
       cy.assertUrl(url);
     });
@@ -100,10 +100,10 @@ context('Insurance - Export contract - Agent details page - As an Exporter, I wa
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${AGENT_SERVICE}`, () => {
       cy.completeAndSubmitAgentDetailsForm({});
 
-      cy.assertUrl(checkYourAnswersUrl);
+      cy.assertUrl(agentServiceUrl);
     });
 
     describe('when going back to the page', () => {

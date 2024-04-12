@@ -53,9 +53,11 @@ export const checkAutocompleteInput = {
 
     cy.checkText(autoCompleteField(fieldId).results(), expectedValue);
   },
-  checkInput: (field, expectedValue) => {
-    // checks input displays the correct text
-    cy.checkText(field.results(), expectedValue);
+  checkInputResults: (fieldId, expectedValue) => {
+    cy.checkText(autoCompleteField(fieldId).results(), expectedValue);
+  },
+  checkEmptyResults: (fieldId) => {
+    autoCompleteField(fieldId).results().should('not.exist');
   },
 };
 
