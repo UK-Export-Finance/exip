@@ -34,24 +34,10 @@ describe('controllers/insurance/export-contract/agent-details', () => {
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
   mapAndSave.exportContractAgent = jest.fn(() => Promise.resolve(true));
 
-  const mockApplicationWithoutCountryCode = {
-    ...mockApplication,
-    exportContract: {
-      ...mockApplication.exportContract,
-      agent: {
-        ...mockApplication.exportContract.agent,
-        [COUNTRY_CODE]: null,
-      },
-    },
-  };
-
-  const countryIsoCode = mockCountries[0].isoCode;
-
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplicationWithoutCountryCode;
     req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
   });
@@ -123,45 +109,11 @@ describe('controllers/insurance/export-contract/agent-details', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
-        countries: mapCountries(mockCountries),
+        application: mapApplicationToFormFields(mockApplication),
+        countries: mapCountries(mockCountries, mockApplication.exportContract.agent[COUNTRY_CODE]),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when a country has been previously submitted', () => {
-      const mockApplicationWithCountry = {
-        ...mockApplication,
-        exportContract: {
-          ...mockApplication.exportContract,
-          agent: {
-            ...mockApplication.exportContract.agent,
-            [COUNTRY_CODE]: countryIsoCode,
-          },
-        },
-      };
-
-      beforeEach(() => {
-        res.locals.application = mockApplicationWithCountry;
-      });
-
-      it('should render template with countries mapped to submitted country', async () => {
-        await get(req, res);
-
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: req.headers.referer,
-          }),
-          ...pageVariables(referenceNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplicationWithCountry),
-          countries: mapCountries(mockCountries, countryIsoCode),
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when there is no application', () => {
@@ -238,7 +190,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
+          application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
           validationErrors,
           countries: mapCountries(mockCountries),

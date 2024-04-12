@@ -10,6 +10,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import constructPayload from '../../../../helpers/construct-payload';
 import api from '../../../../api';
 import generateValidationErrors from './validation';
+import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract';
@@ -44,21 +45,12 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
   mapAndSave.exportContract = jest.fn(() => Promise.resolve(true));
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
-  const mockApplicationWithoutCountryCode = {
-    ...mockApplication,
-    exportContract: {
-      ...mockApplication.exportContract,
-      [FINAL_DESTINATION]: null,
-    },
-  };
-
   const countryIsoCode = mockCountries[0].isoCode;
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
-    res.locals.application = mockApplicationWithoutCountryCode;
     api.keystone.countries.getAll = getCountriesSpy;
   });
 
@@ -143,43 +135,11 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
-        application: mapApplicationToFormFields(mockApplicationWithoutCountryCode),
-        countries: mapCountries(mockCountries),
+        application: mapApplicationToFormFields(mockApplication),
+        countries: mapCountries(mockCountries, mockApplication.exportContract[FINAL_DESTINATION]),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when a country has been previously submitted', () => {
-      const mockApplicationWithCountry = {
-        ...mockApplication,
-        exportContract: {
-          ...mockApplication.exportContract,
-          [FINAL_DESTINATION]: countryIsoCode,
-        },
-      };
-
-      beforeEach(() => {
-        res.locals.application = mockApplicationWithCountry;
-      });
-
-      it('should render template with countries mapped to submitted country', async () => {
-        await get(req, res);
-
-        const expectedVariables = {
-          ...insuranceCorePageVariables({
-            PAGE_CONTENT_STRINGS,
-            BACK_LINK: req.headers.referer,
-            HTML_FLAGS,
-          }),
-          ...pageVariables(referenceNumber),
-          userName: getUserNameFromSession(req.session.user),
-          application: mapApplicationToFormFields(mockApplicationWithCountry),
-          countries: mapCountries(mockCountries, countryIsoCode),
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when there is no application', () => {
@@ -297,6 +257,8 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
+        const submittedCountry = getCountryByIsoCode(mockCountries, payload[FINAL_DESTINATION]);
+
         const expectedVariables = {
           ...insuranceCorePageVariables({
             PAGE_CONTENT_STRINGS,
@@ -305,45 +267,13 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
           }),
           ...pageVariables(referenceNumber),
           userName: getUserNameFromSession(req.session.user),
-          application: mockApplicationWithoutCountryCode,
+          application: mockApplication,
           submittedValues: sanitiseData(payload),
-          countries: mapCountries(mockCountries),
+          countries: mapCountries(mockCountries, submittedCountry?.isoCode),
           validationErrors: generateValidationErrors(payload),
         };
 
         expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
-
-      describe('when a country is submitted', () => {
-        const mockFormBody = {
-          [FINAL_DESTINATION]: countryIsoCode,
-        };
-
-        beforeEach(() => {
-          req.body = mockFormBody;
-        });
-
-        it('should render template with countries mapped to submitted country', async () => {
-          await post(req, res);
-
-          const payload = constructPayload(req.body, FIELD_IDS);
-
-          const expectedVariables = {
-            ...insuranceCorePageVariables({
-              PAGE_CONTENT_STRINGS,
-              BACK_LINK: req.headers.referer,
-              HTML_FLAGS,
-            }),
-            ...pageVariables(referenceNumber),
-            userName: getUserNameFromSession(req.session.user),
-            application: mockApplicationWithoutCountryCode,
-            submittedValues: payload,
-            countries: mapCountries(mockCountries, countryIsoCode),
-            validationErrors: generateValidationErrors(payload),
-          };
-
-          expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-        });
       });
     });
 
