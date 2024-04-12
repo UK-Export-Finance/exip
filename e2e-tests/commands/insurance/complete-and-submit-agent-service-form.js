@@ -14,7 +14,6 @@ const completeAndSubmitAgentServiceForm = ({
   serviceDescription = application.EXPORT_CONTRACT.AGENT_SERVICE[SERVICE_DESCRIPTION],
   agentIsCharging = false,
 }) => {
-
   cy.keyboardInput(field(SERVICE_DESCRIPTION).textarea(), serviceDescription);
 
   if (agentIsCharging) {
