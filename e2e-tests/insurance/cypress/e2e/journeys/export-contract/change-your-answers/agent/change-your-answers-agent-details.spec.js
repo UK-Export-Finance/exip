@@ -1,4 +1,5 @@
 import { autoCompleteField, field, summaryList } from '../../../../../../../pages/shared';
+import { EXPECTED_SINGLE_LINE_STRING } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import application from '../../../../../../../fixtures/application';
@@ -13,7 +14,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  USING_AGENT: FIELD_ID,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
 } = FIELD_IDS;
 
@@ -54,9 +54,9 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
       it(`should redirect to ${AGENT_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
-        summaryList.field(FIELD_ID).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_DETAILS_CHANGE, fieldId: FIELD_ID });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_DETAILS_CHANGE, fieldId });
       });
     });
 
@@ -90,9 +90,9 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
       it(`should redirect to ${AGENT_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
-        summaryList.field(FIELD_ID).changeLink().click();
+        summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_DETAILS_CHANGE, fieldId: FIELD_ID });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: AGENT_DETAILS_CHANGE, fieldId });
       });
     });
 
@@ -114,7 +114,9 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        const row = summaryList.field(fieldId);
+
+        row.value().contains(EXPECTED_SINGLE_LINE_STRING);
       });
     });
   });
