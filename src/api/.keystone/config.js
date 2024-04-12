@@ -11,9 +11,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key2 of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key2) && key2 !== except)
-        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
   }
   return to;
 };
@@ -424,6 +424,7 @@ var CUSTOM_RESOLVERS = [
   "sendEmailConfirmEmailAddress",
   "sendEmailPasswordResetLink",
   "sendEmailReactivateAccountLink",
+  "updateLossPayeeFinancialDetailsUk",
   "verifyAccountEmailAddress",
   "verifyAccountPasswordResetToken",
   "verifyAccountReactivationToken",
@@ -438,8 +439,6 @@ var CUSTOM_RESOLVERS = [
   "submitApplication",
   // feedback
   "createFeedbackAndSendEmail",
-  // loss payee financial details
-  "updateLossPayeeFinancialDetailsUk",
   "getApimCisCountries",
   "getApimCurrencies"
 ];
@@ -780,18 +779,21 @@ var ACCOUNT2 = {
 };
 var FINANCIAL_DETAILS = {
   ENCRYPTION: {
-    KEY_LENGTH: 128,
     ENCODING: "hex",
     STRING_ENCODING: "base64",
-    ALGORITHM: "sha512",
     ENCRYPTION_METHOD: "aes-256-cbc",
     OUTPUT_ENCODING: "utf-8",
     KEY: {
-      SIGNATURE: String(process.env.ENCRYPTION_KEY)
+      ALGORITHM: "sha512",
+      SIGNATURE: String(process.env.ENCRYPTION_KEY),
+      SUBSTRING_LOWER_VALUE: 0,
+      SUBSTRING_UPPER_VALUE: 16
     },
     IV: {
-      BYTES: 16,
-      ENCODING: "base64"
+      BYTES_SIZE: 16,
+      ENCODING: "base64",
+      SLICE_LOWER_VALUE: 0,
+      SLICE_UPPER_VALUE: 16
     }
   }
 };
@@ -5450,24 +5452,24 @@ var import_crypto11 = __toESM(require("crypto"));
 
 // helpers/encrypt/generate-key/index.ts
 var import_crypto9 = __toESM(require("crypto"));
-var { KEY: KEY3, ALGORITHM: ALGORITHM2 } = FINANCIAL_DETAILS.ENCRYPTION;
-var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(KEY3.SIGNATURE).digest("hex").substring(0, 32);
+var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_LOWER_VALUE, SUBSTRING_UPPER_VALUE } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_LOWER_VALUE, SUBSTRING_UPPER_VALUE);
 var generate_key_default = generateKey;
 
 // helpers/encrypt/generate-initialisation-vector/index.ts
 var import_crypto10 = __toESM(require("crypto"));
-var { IV } = FINANCIAL_DETAILS.ENCRYPTION;
-var generateInitialisationVector = () => import_crypto10.default.randomBytes(IV.BYTES).toString(IV.ENCODING).slice(0, 16);
+var { BYTES_SIZE, ENCODING: ENCODING2, SLICE_LOWER_VALUE, SLICE_UPPER_VALUE } = FINANCIAL_DETAILS.ENCRYPTION.IV;
+var generateInitialisationVector = () => import_crypto10.default.randomBytes(BYTES_SIZE).toString(ENCODING2).slice(SLICE_LOWER_VALUE, SLICE_UPPER_VALUE);
 var generate_initialisation_vector_default = generateInitialisationVector;
 
 // helpers/encrypt/index.ts
-var { ENCRYPTION_METHOD, ENCODING: ENCODING2, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
-var key = generate_key_default();
-var iv = generate_initialisation_vector_default();
+var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
 var encrypt = (dataToEncrypt) => {
+  const key = generate_key_default();
+  const iv = generate_initialisation_vector_default();
   const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
   return {
-    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING2) + cipher.final(ENCODING2)).toString(STRING_ENCODING2),
+    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3) + cipher.final(ENCODING3)).toString(STRING_ENCODING2),
     iv
   };
 };

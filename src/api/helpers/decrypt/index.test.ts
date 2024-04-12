@@ -32,6 +32,16 @@ describe('api/helpers/decrypt', () => {
     expect(result).toEqual(dataToEncrypt);
   });
 
+  it('should return the same provided value when the value has letters, numbers, special characters and empty space', () => {
+    const dataToEncrypt = 'test 123!';
+
+    const encryptedValue = encrypt(dataToEncrypt);
+
+    const result = decrypt(encryptedValue);
+
+    expect(result).toEqual(dataToEncrypt);
+  });
+
   it('should return the same provided value when the value has spaces', () => {
     const dataToEncrypt = 'String with spaces';
 

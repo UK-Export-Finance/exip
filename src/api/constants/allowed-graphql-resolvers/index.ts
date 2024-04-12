@@ -53,6 +53,7 @@ const CUSTOM_RESOLVERS = [
   'sendEmailConfirmEmailAddress',
   'sendEmailPasswordResetLink',
   'sendEmailReactivateAccountLink',
+  'updateLossPayeeFinancialDetailsUk',
   'verifyAccountEmailAddress',
   'verifyAccountPasswordResetToken',
   'verifyAccountReactivationToken',
@@ -69,9 +70,6 @@ const CUSTOM_RESOLVERS = [
 
   // feedback
   'createFeedbackAndSendEmail',
-
-  // loss payee financial details
-  'updateLossPayeeFinancialDetailsUk',
 
   'getApimCisCountries',
   'getApimCurrencies',

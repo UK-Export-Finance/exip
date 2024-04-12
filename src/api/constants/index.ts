@@ -145,18 +145,23 @@ export const ACCOUNT = {
 
 export const FINANCIAL_DETAILS = {
   ENCRYPTION: {
-    KEY_LENGTH: 128,
-    ENCODING: 'hex' as BufferEncoding,
-    STRING_ENCODING: 'base64' as BufferEncoding,
-    ALGORITHM: 'sha512' as Algorithm,
-    ENCRYPTION_METHOD: 'aes-256-cbc',
-    OUTPUT_ENCODING: 'utf-8' as BufferEncoding,
+    CIPHER: {
+      ENCODING: 'hex' as BufferEncoding,
+      STRING_ENCODING: 'base64' as BufferEncoding,
+      ENCRYPTION_METHOD: 'aes-256-cbc',
+      OUTPUT_ENCODING: 'utf-8' as BufferEncoding,
+    },
     KEY: {
-      SIGNATURE: String(process.env.ENCRYPTION_KEY),
+      ALGORITHM: 'sha512' as Algorithm,
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
+      SUBSTRING_LOWER_VALUE: 0,
+      SUBSTRING_UPPER_VALUE: 16,
     },
     IV: {
-      BYTES: 16,
+      BYTES_SIZE: 16,
       ENCODING: 'base64' as BufferEncoding,
+      SLICE_LOWER_VALUE: 0,
+      SLICE_UPPER_VALUE: 16,
     },
   },
 };

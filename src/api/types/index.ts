@@ -8,6 +8,7 @@ export * from './company';
 export * from './country';
 export * from './currency';
 export * from './email';
+export * from './encryption';
 export * from './feedback';
 export * from './generic';
 export * from './ordnance-survey';

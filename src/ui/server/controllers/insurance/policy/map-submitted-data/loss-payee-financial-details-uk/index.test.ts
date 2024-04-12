@@ -22,4 +22,14 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee-financial-d
       expect(result).toEqual(expected);
     });
   });
+
+  describe(`when form body ${SORT_CODE} is NOT provided`, () => {
+    it('should return form data as provided', () => {
+      const mockBody = {};
+
+      const result = mapSubmittedData(mockBody);
+
+      expect(result).toEqual(mockBody);
+    });
+  });
 });

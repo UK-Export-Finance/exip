@@ -9,7 +9,7 @@ const {
 
 /**
  * mapSubmittedData
- * if not IS_APPOINTED, wipe IS_APPOINTED data.
+ * if SORT_CODE, then run stripHyphensAndSpacesFromString to remove hyphens and spaces
  * @param {Express.Request.body} Form data
  * @returns {Object} populated data
  */

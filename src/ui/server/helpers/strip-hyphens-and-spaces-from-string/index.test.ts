@@ -3,19 +3,19 @@ import stripHyphensAndSpacesFromString from '.';
 describe('helpers/strip-hyphens-and-spaces-from-string', () => {
   describe('when a string does not have a hyphen or a space', () => {
     it('should return the string', () => {
-      const string = 'mockstring';
+      const mockString = 'mockstring';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
-      expect(result).toEqual(string);
+      expect(result).toEqual(mockString);
     });
   });
 
   describe('when a string contains hyphens', () => {
     it('should remove the hyphens', () => {
-      const string = 'mock-string';
+      const mockString = 'mock-string';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
       const expected = 'mockstring';
 
@@ -25,9 +25,9 @@ describe('helpers/strip-hyphens-and-spaces-from-string', () => {
 
   describe('when a string contains hyphens and spaces', () => {
     it('should remove the hyphens and spaces', () => {
-      const string = 'mock-string test';
+      const mockString = 'mock-string test';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
       const expected = 'mockstringtest';
 
@@ -37,9 +37,9 @@ describe('helpers/strip-hyphens-and-spaces-from-string', () => {
 
   describe('when a string contains multiple hyphens and spaces', () => {
     it('should remove the hyphens and spaces', () => {
-      const string = 'mock--string  test';
+      const mockString = 'mock--string  test';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
       const expected = 'mockstringtest';
 
@@ -49,19 +49,19 @@ describe('helpers/strip-hyphens-and-spaces-from-string', () => {
 
   describe('when a string contains only numbers', () => {
     it('should return the string', () => {
-      const string = '123456';
+      const mockString = '123456';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
-      expect(result).toEqual(string);
+      expect(result).toEqual(mockString);
     });
   });
 
   describe('when a string contains numbers and hyphens', () => {
     it('should remove the hyphens', () => {
-      const string = '123-456';
+      const mockString = '123-456';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
       const expected = '123456';
 
@@ -71,9 +71,9 @@ describe('helpers/strip-hyphens-and-spaces-from-string', () => {
 
   describe('when a string contains numbers and hyphens and spaces', () => {
     it('should remove the hyphens and spaces', () => {
-      const string = '12-34 56';
+      const mockString = '12-34 56';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
       const expected = '123456';
 
@@ -83,9 +83,9 @@ describe('helpers/strip-hyphens-and-spaces-from-string', () => {
 
   describe('when a string contains numbers and multiple hyphens and spaces', () => {
     it('should remove the hyphens and spaces', () => {
-      const string = '12-3-4 5 6';
+      const mockString = '12-3-4 5 6';
 
-      const result = stripHyphensAndSpacesFromString(string);
+      const result = stripHyphensAndSpacesFromString(mockString);
 
       const expected = '123456';
 

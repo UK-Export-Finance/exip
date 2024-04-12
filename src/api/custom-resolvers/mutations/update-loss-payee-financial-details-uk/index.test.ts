@@ -20,7 +20,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     jest.resetAllMocks();
   });
 
-  describe('successfully creating loss payee financial details', () => {
+  describe('successfully updates loss payee financial details', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
       const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
@@ -29,7 +29,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
       lossPayeeFinancialDetailsUkResponse = (await updateLossPayeeFinancialDetailsUk({}, variables, context)) as SuccessResponse;
     });
 
-    it('should generate and return the loss payee financial details', () => {
+    it('should return success as true', () => {
       const { success } = lossPayeeFinancialDetailsUkResponse;
 
       expect(success).toEqual(true);

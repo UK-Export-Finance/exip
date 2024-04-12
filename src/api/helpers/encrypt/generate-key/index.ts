@@ -1,13 +1,13 @@
 import crypto from 'crypto';
 import { FINANCIAL_DETAILS } from '../../../constants';
 
-const { KEY, ALGORITHM } = FINANCIAL_DETAILS.ENCRYPTION;
+const { ALGORITHM, SIGNATURE, SUBSTRING_LOWER_VALUE, SUBSTRING_UPPER_VALUE } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
 
 /**
  * generateKey
  * generates key for encryption
  * @returns {String} key
  */
-const generateKey = () => crypto.createHash(ALGORITHM).update(KEY.SIGNATURE).digest('hex').substring(0, 32);
+const generateKey = () => crypto.createHash(ALGORITHM).update(SIGNATURE).digest('hex').substring(SUBSTRING_LOWER_VALUE, SUBSTRING_UPPER_VALUE);
 
 export default generateKey;

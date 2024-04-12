@@ -51,7 +51,7 @@ export const mockBuyer = {
 export const mockLossPayeeFinancialDetailsUk = {
   accountNumber: '12345678',
   sortCode: '123456',
-  bankAddress: 'Mock bank address',
+  bankAddress: 'Mock UK financial address',
 };
 
 export const mockCountries = [
