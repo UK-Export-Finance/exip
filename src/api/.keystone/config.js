@@ -779,15 +779,17 @@ var ACCOUNT2 = {
 };
 var FINANCIAL_DETAILS = {
   ENCRYPTION: {
-    ENCODING: "hex",
-    STRING_ENCODING: "base64",
-    ENCRYPTION_METHOD: "aes-256-cbc",
-    OUTPUT_ENCODING: "utf-8",
+    CIPHER: {
+      ENCODING: "hex",
+      STRING_ENCODING: "base64",
+      ENCRYPTION_METHOD: "aes-256-cbc",
+      OUTPUT_ENCODING: "utf-8"
+    },
     KEY: {
       ALGORITHM: "sha512",
-      SIGNATURE: String(process.env.ENCRYPTION_KEY),
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
       SUBSTRING_LOWER_VALUE: 0,
-      SUBSTRING_UPPER_VALUE: 16
+      SUBSTRING_UPPER_VALUE: 32
     },
     IV: {
       BYTES_SIZE: 16,
@@ -5463,7 +5465,7 @@ var generateInitialisationVector = () => import_crypto10.default.randomBytes(BYT
 var generate_initialisation_vector_default = generateInitialisationVector;
 
 // helpers/encrypt/index.ts
-var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
+var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
   const key = generate_key_default();
   const iv = generate_initialisation_vector_default();

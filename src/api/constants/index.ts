@@ -155,7 +155,7 @@ export const FINANCIAL_DETAILS = {
       ALGORITHM: 'sha512' as Algorithm,
       SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
       SUBSTRING_LOWER_VALUE: 0,
-      SUBSTRING_UPPER_VALUE: 16,
+      SUBSTRING_UPPER_VALUE: 32,
     },
     IV: {
       BYTES_SIZE: 16,
