@@ -30,7 +30,7 @@ context('Insurance - Export contract - Change your answers - Agent - Yes to no -
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      // cy.assertUrl(checkYourAnswersUrl);
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
