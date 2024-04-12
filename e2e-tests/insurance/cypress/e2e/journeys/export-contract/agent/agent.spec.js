@@ -15,7 +15,6 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT;
 
 const {
   ROOT,
-  ALL_SECTIONS,
   EXPORT_CONTRACT: {
     HOW_WILL_YOU_GET_PAID, AGENT, AGENT_DETAILS, CHECK_YOUR_ANSWERS,
   },
@@ -32,7 +31,6 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
   let url;
   let agentDetailsUrl;
   let checkYourAnswersUrl;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -46,7 +44,6 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT}`;
       agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${baseUrl}${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -133,7 +130,7 @@ context('Insurance - Export contract - Agent page - As an Exporter, I want to st
       });
 
       it('should update the `export contract` task status to `completed`', () => {
-        cy.navigateToUrl(allSectionsUrl);
+        cy.navigateToAllSectionsUrl(referenceNumber);
 
         cy.checkTaskExportContractStatusIsComplete();
       });
