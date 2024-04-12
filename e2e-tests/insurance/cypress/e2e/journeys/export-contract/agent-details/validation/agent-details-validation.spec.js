@@ -25,7 +25,7 @@ const expectedErrorsCount = 3;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Agent details page - As an Exporter, I want to give details about the agent that helped me win the export contract, So that UKEF can contact the appropriate parties to find out more about the working relationship', () => {
+context('Insurance - Export contract - Agent details page - form validation', () => {
   let referenceNumber;
   let url;
 

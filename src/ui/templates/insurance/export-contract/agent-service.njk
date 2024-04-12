@@ -65,12 +65,12 @@
     </div>
 
     {{ yesNoRadioButtons.render({
-      fieldId: FIELDS.IS_CHARGING,
+      fieldId: FIELDS.IS_CHARGING.ID,
       legendText: FIELDS.IS_CHARGING.LABEL,
       legendClass: 'govuk-fieldset__legend--s',
       legendSpan: true,
-      submittedAnswer: submittedValues[FIELDS.IS_CHARGING],
-      errorMessage: validationErrors.errorList[FIELDS.IS_CHARGING],
+      submittedAnswer: submittedValues[FIELDS.IS_CHARGING.ID],
+      errorMessage: validationErrors.errorList[FIELDS.IS_CHARGING.ID],
       dataCyLegend: FIELDS.IS_CHARGING + '-legend',
       horizontalRadios: HORIZONTAL_RADIOS,
       noRadioAsFirstOption: NO_RADIO_AS_FIRST_OPTION
