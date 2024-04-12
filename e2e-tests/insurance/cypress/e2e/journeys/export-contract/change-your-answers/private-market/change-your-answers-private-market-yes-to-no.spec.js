@@ -5,7 +5,7 @@ import checkSummaryList from '../../../../../../../commands/insurance/check-expo
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, PRIVATE_MARKET_CHANGE },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, PRIVATE_MARKET_CHANGE, DECLINED_BY_PRIVATE_MARKET },
 } = INSURANCE_ROUTES;
 
 const {
@@ -72,7 +72,7 @@ context('Insurance - Export contract - Change your answers - Private market - Ye
         checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
       });
 
-      describe('when changing the answer again from no to yes', () => {
+      describe(`when changing the answer again from no to yes and going back ${DECLINED_BY_PRIVATE_MARKET}`, () => {
         it(`should have an empty ${DECLINED_DESCRIPTION} value`, () => {
           summaryList.field(FIELD_ID).changeLink().click();
 

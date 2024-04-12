@@ -8,12 +8,13 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/export-contract-agent';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_DETAILS_CHANGE, AGENT_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
@@ -109,9 +110,28 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = payload[FIELD_ID];
+    const isUsingAnAgent = payload[FIELD_ID] === 'true';
 
-    if (answer === 'true') {
+    /**
+     * If the route is a "change" route,
+     * the exporter is USING_AGENT,
+     * redirect to AGENT_DETAILS form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      if (isUsingAnAgent) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the exporter is USING_AGENT,
+     * redirect to AGENT_DETAILS form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isUsingAnAgent) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`);
     }
 

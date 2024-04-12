@@ -119,9 +119,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = payload[FIELD_ID];
-
-    const attemptedPrivateMarketCover = answer === 'true';
+    const attemptedPrivateMarketCover = payload[FIELD_ID] === 'true';
 
     const hasDeclinedDescription = application.exportContract.privateMarket[DECLINED_DESCRIPTION];
 
