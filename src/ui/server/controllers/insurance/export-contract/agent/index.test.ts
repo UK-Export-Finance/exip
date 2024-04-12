@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SAVE_AND_BACK, AGENT_CHANGE, AGENT_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
@@ -156,6 +156,20 @@ describe('controllers/insurance/export-contract/agent', () => {
         expect(mapAndSave.exportContractAgent).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
+      describe('when the answer is false', () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
       describe('when the answer is true', () => {
         it(`should redirect to ${AGENT_DETAILS}`, async () => {
           req.body = {
@@ -170,15 +184,33 @@ describe('controllers/insurance/export-contract/agent', () => {
         });
       });
 
-      describe('when the answer is false', () => {
+      describe("when the answer is true and the url's last substring is `change`", () => {
+        it(`should redirect to ${AGENT_DETAILS_CHANGE}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          req.originalUrl = AGENT_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the answer is false and the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
             [FIELD_ID]: 'false',
           };
 
+          req.originalUrl = AGENT_CHANGE;
+
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

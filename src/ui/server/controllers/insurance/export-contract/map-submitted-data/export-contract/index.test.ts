@@ -10,7 +10,7 @@ const {
 
 const mockCountryIsoCode = mockCountries[0].isoCode;
 
-describe('controllers/insurance/export-contract/map-submitted-data/about-goods-or-services', () => {
+describe('controllers/insurance/export-contract/map-submitted-data/export-contract', () => {
   let mockFormBody: RequestBody;
 
   beforeEach(() => {

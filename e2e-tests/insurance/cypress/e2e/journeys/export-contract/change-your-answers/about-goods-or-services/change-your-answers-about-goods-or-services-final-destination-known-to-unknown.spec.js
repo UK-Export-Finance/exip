@@ -21,7 +21,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Export contract - Change your answers - About goods or services - Change Final destination known from `yes` to `no`', () => {
   let referenceNumber;
-  let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -29,8 +29,8 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
       cy.completeExportContractSection({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.assertUrl(url);
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -44,7 +44,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
   describe(`form submission with ${FINAL_DESTINATION_KNOWN} as 'unknown'`, () => {
     beforeEach(() => {
-      cy.navigateToUrl(url);
+      cy.navigateToUrl(checkYourAnswersUrl);
 
       summaryList.field(fieldId).changeLink().click();
 

@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } fro
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT_DETAILS_CHANGE, AGENT_DETAILS_SAVE_AND_BACK, AGENT_SERVICE, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -253,6 +253,20 @@ describe('controllers/insurance/export-contract/agent-details', () => {
         const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_SERVICE}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = AGENT_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
