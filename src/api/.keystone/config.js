@@ -788,14 +788,14 @@ var FINANCIAL_DETAILS = {
     KEY: {
       ALGORITHM: "sha512",
       SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
-      SUBSTRING_LOWER_VALUE: 0,
-      SUBSTRING_UPPER_VALUE: 32
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32
     },
     IV: {
       BYTES_SIZE: 16,
       ENCODING: "base64",
-      SLICE_LOWER_VALUE: 0,
-      SLICE_UPPER_VALUE: 16
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16
     }
   }
 };
@@ -5454,14 +5454,14 @@ var import_crypto11 = __toESM(require("crypto"));
 
 // helpers/encrypt/generate-key/index.ts
 var import_crypto9 = __toESM(require("crypto"));
-var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_LOWER_VALUE, SUBSTRING_UPPER_VALUE } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
-var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_LOWER_VALUE, SUBSTRING_UPPER_VALUE);
+var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_INDEX_START, SUBSTRING_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
 var generate_key_default = generateKey;
 
 // helpers/encrypt/generate-initialisation-vector/index.ts
 var import_crypto10 = __toESM(require("crypto"));
-var { BYTES_SIZE, ENCODING: ENCODING2, SLICE_LOWER_VALUE, SLICE_UPPER_VALUE } = FINANCIAL_DETAILS.ENCRYPTION.IV;
-var generateInitialisationVector = () => import_crypto10.default.randomBytes(BYTES_SIZE).toString(ENCODING2).slice(SLICE_LOWER_VALUE, SLICE_UPPER_VALUE);
+var { BYTES_SIZE, ENCODING: ENCODING2, SLICE_INDEX_START, SLICE_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.IV;
+var generateInitialisationVector = () => import_crypto10.default.randomBytes(BYTES_SIZE).toString(ENCODING2).slice(SLICE_INDEX_START, SLICE_INDEX_END);
 var generate_initialisation_vector_default = generateInitialisationVector;
 
 // helpers/encrypt/index.ts

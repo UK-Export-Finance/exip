@@ -7,7 +7,7 @@ const {
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/loss-payee-financial-details-uk', () => {
-  describe(`when form body ${SORT_CODE} is true`, () => {
+  describe(`when form body ${SORT_CODE} is provided`, () => {
     const mockBody = {
       [SORT_CODE]: '12-34-56',
     };

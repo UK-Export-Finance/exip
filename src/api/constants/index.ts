@@ -154,14 +154,14 @@ export const FINANCIAL_DETAILS = {
     KEY: {
       ALGORITHM: 'sha512' as Algorithm,
       SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
-      SUBSTRING_LOWER_VALUE: 0,
-      SUBSTRING_UPPER_VALUE: 32,
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32,
     },
     IV: {
       BYTES_SIZE: 16,
       ENCODING: 'base64' as BufferEncoding,
-      SLICE_LOWER_VALUE: 0,
-      SLICE_UPPER_VALUE: 16,
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16,
     },
   },
 };
