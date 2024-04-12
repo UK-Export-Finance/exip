@@ -15,6 +15,7 @@ import {
   mockApplication,
   mockCurrencies,
   mockContact,
+  mockCountries,
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
   referenceNumber,
@@ -32,12 +33,14 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   let res: Response;
 
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+  let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
     api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+    api.keystone.countries.getAll = getCountriesSpy;
   });
 
   afterAll(() => {
@@ -78,7 +81,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, referenceNumber, mockCurrencies);
+      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, referenceNumber, mockCurrencies, mockCountries);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({
@@ -124,6 +127,19 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         beforeEach(() => {
           getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesEmptyResponse));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.countries.getAll = getCurrenciesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
