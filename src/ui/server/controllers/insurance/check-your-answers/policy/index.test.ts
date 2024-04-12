@@ -124,6 +124,18 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
     });
 
+    it('should call api.keystone.countries.getAll', async () => {
+      await get(req, res);
+
+      expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it('should call api.keystone.APIM.getCurrencies', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
     describe('when there is no application', () => {
       beforeEach(() => {
         delete res.locals.application;
@@ -166,6 +178,19 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.countries.getAll = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries response does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
           api.keystone.countries.getAll = getCurrenciesSpy;
         });
 
