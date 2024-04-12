@@ -189,7 +189,7 @@ export const post = async (req: Request, res: Response) => {
      * If the route is a "change" route,
      * and the application has no TOTAL_CONTRACT_VALUE saved (specifically required for a "single" policy type),
      * redirect to the TOTAL_CONTRACT_VALUE form.
-     * Otherwise, redirect to "check your answers".
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
     if (isChangeRoute(req.originalUrl)) {
       if (!hasTotalContractValue) {

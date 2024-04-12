@@ -60,13 +60,19 @@ const checkExportContractSummaryList = ({
       expectedLineBreaks,
     );
   },
-  [ATTEMPTED]: ({ shouldRender = false }) => {
+  [ATTEMPTED]: ({ isYes = false, shouldRender = false }) => {
     const fieldId = ATTEMPTED;
 
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.PRIVATE_MARKET);
 
-      const expectedValue = FIELD_VALUES.YES;
+      let expectedValue;
+
+      if (isYes) {
+        expectedValue = FIELD_VALUES.YES;
+      } else {
+        expectedValue = FIELD_VALUES.NO;
+      }
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {

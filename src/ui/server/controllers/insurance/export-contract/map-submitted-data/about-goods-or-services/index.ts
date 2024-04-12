@@ -1,11 +1,11 @@
-import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import getCountryByIsoCode from '../../../../../helpers/get-country-by-iso-code';
 import { objectHasProperty } from '../../../../../helpers/object';
 import { Country, RequestBody } from '../../../../../../types';
 
 const {
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
-} = EXPORT_CONTRACT_FIELD_IDS;
+} = FIELD_IDS;
 
 /**
  * mapSubmittedData
