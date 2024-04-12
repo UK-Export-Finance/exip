@@ -13,11 +13,12 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_SERVICE, AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -157,8 +158,11 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    // return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);
   } catch (err) {
     console.error('Error updating application - export contract - agent details %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
