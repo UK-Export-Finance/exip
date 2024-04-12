@@ -5,7 +5,7 @@ const PRIVATE_MARKET_ROOT = `${ROOT}/private-market`;
 const DECLINED_BY_PRIVATE_MARKET_ROOT = `${ROOT}/declined-by-private-market`;
 const AGENT_ROOT = `${ROOT}/agent`;
 const AGENT_DETAILS_ROOT = `${ROOT}/agent-details`;
-const AGENT_SERVICE_ROOT = `${ROOT}/agent-services`;
+const AGENT_SERVICE_ROOT = `${ROOT}/agent-service`;
 const AGENT_CHARGES_ROOT = `${ROOT}/agent-charges`;
 
 export const EXPORT_CONTRACT = {
