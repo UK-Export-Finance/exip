@@ -76,7 +76,7 @@ describe('controllers/insurance/policy/another-company', () => {
       const expected = {
         FIELD_ID,
         FIELD_HINT: PAGE_CONTENT_STRINGS.HINT,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANOTHER_COMPANY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ANOTHER_COMPANY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

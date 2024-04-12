@@ -68,7 +68,7 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
           ID: FIELD_ID,
           ...FIELDS.HOW_WILL_YOU_GET_PAID[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

@@ -47,7 +47,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when no fields are provided', () => {
+  describe('when submitting an empty form via `save and go back` button', () => {
     it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 

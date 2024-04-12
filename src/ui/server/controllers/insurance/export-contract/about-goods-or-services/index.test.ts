@@ -83,7 +83,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
             ...FIELDS.ABOUT_GOODS_OR_SERVICES[FINAL_DESTINATION],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
