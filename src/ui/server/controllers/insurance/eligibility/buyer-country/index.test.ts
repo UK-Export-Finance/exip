@@ -12,7 +12,7 @@ import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapSubmittedEligibilityCountry from '../../../../helpers/mappings/map-submitted-eligibility-country';
 import { updateSubmittedData } from '../../../../helpers/update-submitted-data/insurance';
 import { Country, Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockSession, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockCountries } from '../../../../test-mocks';
 
 const {
   PROBLEM_WITH_SERVICE,
@@ -69,7 +69,6 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
     let getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData.quoteEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY];
       api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
@@ -86,34 +85,11 @@ describe('controllers/insurance/eligibility/buyer-country', () => {
         ...singleInputPageVariables(PAGE_VARIABLES),
         BACK_LINK: req.headers.referer,
         userName: getUserNameFromSession(req.session.user),
-        countries: mapCountries(mockCountriesResponse),
+        countries: mapCountries(mockCountriesResponse, req.session.submittedData.insuranceEligibility[FIELD_ID]?.isoCode),
         submittedValues: req.session.submittedData.insuranceEligibility,
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-    });
-
-    describe('when a country has been submitted', () => {
-      it('should render template with countries mapped to submitted country', async () => {
-        req.session.submittedData = mockSession.submittedData;
-
-        await get(req, res);
-
-        const expectedCountries = mapCountries(
-          mockCountriesResponse,
-          req.session.submittedData.insuranceEligibility[FIELD_IDS.ELIGIBILITY.BUYER_COUNTRY].isoCode,
-        );
-
-        const expectedVariables = {
-          ...singleInputPageVariables(PAGE_VARIABLES),
-          BACK_LINK: req.headers.referer,
-          userName: getUserNameFromSession(req.session.user),
-          countries: expectedCountries,
-          submittedValues: req.session.submittedData.insuranceEligibility,
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
-      });
     });
 
     describe('when the get CIS countries API call fails', () => {

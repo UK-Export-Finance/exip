@@ -2,7 +2,6 @@ import { PAGES } from '../../../../content-strings';
 import { FIELD_IDS, TEMPLATES } from '../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import api from '../../../../api';
-import { objectHasProperty } from '../../../../helpers/object';
 import { isPopulatedArray } from '../../../../helpers/array';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import singleInputPageVariables from '../../../../helpers/page-variables/single-input/insurance';
@@ -38,20 +37,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let countryValue;
     const { insuranceEligibility } = req.session.submittedData;
 
-    if (objectHasProperty(insuranceEligibility, FIELD_ID)) {
-      countryValue = insuranceEligibility[FIELD_ID];
-    }
-
-    let mappedCountries;
-
-    if (countryValue) {
-      mappedCountries = mapCountries(countries, countryValue.isoCode);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, insuranceEligibility[FIELD_ID]?.isoCode);
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({
