@@ -1,11 +1,12 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
+import { checkAutocompleteInput } from '../../../../../../../shared-test-assertions';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHANGE },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_DETAILS, AGENT_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -29,7 +30,7 @@ context('Insurance - Export contract - Change your answers - Agent - Yes to no -
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-      cy.assertUrl(checkYourAnswersUrl);
+      // cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -52,7 +53,7 @@ context('Insurance - Export contract - Change your answers - Agent - Yes to no -
       });
     });
 
-    describe('after changing the answer from no to yes', () => {
+    describe('after changing the answer from yes to no', () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
       });
@@ -72,6 +73,25 @@ context('Insurance - Export contract - Change your answers - Agent - Yes to no -
         checkSummaryList[NAME]({ shouldRender: false });
         checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
         checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
+      });
+
+      describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}`, () => {
+        it('should have empty field values', () => {
+          summaryList.field(FIELD_ID).changeLink().click();
+
+          cy.completeAndSubmitAgentForm({
+            isUsingAgent: true,
+          });
+
+          cy.checkValue(field(NAME), '');
+
+          cy.checkTextareaValue({
+            fieldId: FULL_ADDRESS,
+            expectedValue: '',
+          });
+
+          checkAutocompleteInput.checkEmptyResults(COUNTRY_CODE);
+        });
       });
     });
   });

@@ -7,6 +7,8 @@ const {
   ABOUT_GOODS_OR_SERVICES: { FINAL_DESTINATION, FINAL_DESTINATION_KNOWN },
 } = FIELD_IDS;
 
+// TODO: rename this file to export-contract.
+
 /**
  * mapSubmittedData
  * Map About goods or services fields
