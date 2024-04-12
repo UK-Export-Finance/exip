@@ -183,7 +183,7 @@ const assertCurrencyFormFields = ({
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
 
     // alternative currency input should render correct result
-    checkAutocompleteInput.checkInput(autoCompleteField(alternativeCurrencyFieldId), expectedValue);
+    checkAutocompleteInput.checkInputResults(autoCompleteField(alternativeCurrencyFieldId), expectedValue);
   },
 });
 

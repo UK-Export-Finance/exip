@@ -1,5 +1,5 @@
 import hasFormData from '../../../../../helpers/has-form-data';
-import mapSubmittedData from '../../map-submitted-data/about-goods-or-services';
+import mapSubmittedData from '../../map-submitted-data/export-contract';
 import save from '../../save-data/export-contract';
 import { Application, Country, RequestBody, ValidationErrors } from '../../../../../../types';
 

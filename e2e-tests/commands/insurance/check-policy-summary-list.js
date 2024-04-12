@@ -32,6 +32,12 @@ const {
     NAME_ON_POLICY: { NAME, POSITION },
     USING_BROKER,
     BROKER_DETAILS,
+    REQUESTED_JOINTLY_INSURED_PARTY: {
+      REQUESTED,
+      COMPANY_NAME,
+      COMPANY_NUMBER,
+      COUNTRY_CODE,
+    },
   },
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
 } = INSURANCE_FIELD_IDS;
@@ -41,6 +47,7 @@ const {
   EXPORT_VALUE,
   NAME_ON_POLICY,
   DIFFERENT_NAME_ON_POLICY,
+  REQUESTED_JOINTLY_INSURED_PARTY,
 } = FIELDS;
 
 const { POLICY_CONTACT } = application;
@@ -246,6 +253,60 @@ const checkPolicySummaryList = ({
       const expectedValue = application.BROKER[fieldId];
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    },
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [REQUESTED]: ({ requested = false }) => {
+      const fieldId = REQUESTED;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, REQUESTED_JOINTLY_INSURED_PARTY);
+
+      let expectedValue = FIELD_VALUES.NO;
+
+      if (requested) {
+        expectedValue = FIELD_VALUES.YES;
+      }
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    },
+    [COMPANY_NAME]: ({ shouldRender = false, name = application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NAME] }) => {
+      const fieldId = COMPANY_NAME;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, REQUESTED_JOINTLY_INSURED_PARTY);
+
+      if (shouldRender) {
+        const expectedValue = name;
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [COMPANY_NUMBER]: ({ shouldRender = false, companyNumber = application.REQUESTED_JOINTLY_INSURED_PARTY[COMPANY_NUMBER] }) => {
+      const fieldId = COMPANY_NUMBER;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, REQUESTED_JOINTLY_INSURED_PARTY);
+
+      if (shouldRender) {
+        const expectedValue = companyNumber;
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [COUNTRY_CODE]: ({ shouldRender = false, country = application.REQUESTED_JOINTLY_INSURED_PARTY[COUNTRY_CODE] }) => {
+      const fieldId = COUNTRY_CODE;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, REQUESTED_JOINTLY_INSURED_PARTY);
+
+      if (shouldRender) {
+        const expectedValue = country;
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
     },
   },
 });

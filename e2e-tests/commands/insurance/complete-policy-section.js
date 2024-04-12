@@ -11,6 +11,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
+ * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on  - defaults to false
  * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
  */
 const completePolicySection = ({
@@ -20,6 +21,7 @@ const completePolicySection = ({
   sameName = true,
   needPreCreditPeriod = false,
   usingBroker = false,
+  otherCompanyInvolved = false,
   submitCheckYourAnswers = false,
 }) => {
   cy.startInsurancePolicySection({ viaTaskList });
@@ -44,7 +46,11 @@ const completePolicySection = ({
 
   cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod });
 
-  cy.completeAndSubmitAnotherCompanyForm({});
+  cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved });
+
+  if (otherCompanyInvolved) {
+    cy.completeAndSubmitOtherCompanyDetailsForm();
+  }
 
   cy.completeAndSubmitBrokerForm({ usingBroker });
 
