@@ -10,7 +10,6 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
-import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent';
 import isChangeRoute from '../../../../helpers/is-change-route';
@@ -73,13 +72,7 @@ export const get = async (req: Request, res: Response) => {
   try {
     const countries = await api.keystone.countries.getAll();
 
-    let mappedCountries;
-
-    if (objectHasProperty(application.exportContract.agent, COUNTRY_CODE)) {
-      mappedCountries = mapCountries(countries, application.exportContract.agent[COUNTRY_CODE]);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, application.exportContract.agent[COUNTRY_CODE]);
 
     if (!isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);

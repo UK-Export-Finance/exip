@@ -16,7 +16,7 @@ import { get as agentGet, post as agentPost } from '../../../controllers/insuran
 import { post as agentSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent/save-and-back';
 import { get as agentDetailsGet, post as agentDetailsPost } from '../../../controllers/insurance/export-contract/agent-details';
 import { post as agentDetailsSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-details/save-and-back';
-import { get as agentServiceGet } from '../../../controllers/insurance/export-contract/agent-service';
+import { get as agentServiceGet, post as agentServicePost } from '../../../controllers/insurance/export-contract/agent-service';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -88,6 +88,7 @@ exportContractRoute.get(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetails
 exportContractRoute.post(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetailsPost);
 
 exportContractRoute.get(`/:referenceNumber${AGENT_SERVICE}`, agentServiceGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_SERVICE}`, agentServicePost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
