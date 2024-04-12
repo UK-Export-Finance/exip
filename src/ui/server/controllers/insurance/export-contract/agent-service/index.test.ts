@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -152,12 +152,12 @@ describe('controllers/insurance/export-contract/agent-service', () => {
     });
 
     describe('when there are no validation errors', () => {
-      it(`should redirect to ${AGENT_CHARGES}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
         req.body = validBody;
 
         post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_CHARGES}`;
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
