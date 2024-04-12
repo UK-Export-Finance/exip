@@ -71,20 +71,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(ROUTES.PROBLEM_WITH_SERVICE);
     }
 
-    let countryValue;
     const { quoteEligibility } = req.session.submittedData;
 
-    if (objectHasProperty(quoteEligibility, FIELD_ID)) {
-      countryValue = quoteEligibility[FIELD_ID];
-    }
-
-    let mappedCountries;
-
-    if (countryValue) {
-      mappedCountries = mapCountries(countries, countryValue.isoCode);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, quoteEligibility[FIELD_ID]?.isoCode);
 
     return res.render(TEMPLATE, {
       ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),

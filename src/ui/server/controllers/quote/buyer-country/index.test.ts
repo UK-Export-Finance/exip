@@ -11,7 +11,7 @@ import mapSubmittedEligibilityCountry from '../../../helpers/mappings/map-submit
 import api from '../../../api';
 import mapCountries from '../../../helpers/mappings/map-countries';
 import { updateSubmittedData } from '../../../helpers/update-submitted-data/quote';
-import { mockReq, mockRes, mockSession, mockCountries } from '../../../test-mocks';
+import { mockReq, mockRes, mockCountries } from '../../../test-mocks';
 import { Country, Request, Response } from '../../../../types';
 
 describe('controllers/quote/buyer-country', () => {
@@ -109,7 +109,6 @@ describe('controllers/quote/buyer-country', () => {
     let getCisCountriesSpy = jest.fn(() => Promise.resolve(mockCountriesResponse));
 
     beforeEach(() => {
-      delete req.session.submittedData.quoteEligibility[FIELD_ID];
       api.keystone.APIM.getCisCountries = getCisCountriesSpy;
     });
 
@@ -125,7 +124,7 @@ describe('controllers/quote/buyer-country', () => {
       const expectedVariables = {
         ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
         userName: getUserNameFromSession(req.session.user),
-        countries: mapCountries(mockCountriesResponse),
+        countries: mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_ID]?.isoCode),
         submittedValues: req.session.submittedData.quoteEligibility,
         isChangeRoute: isChangeRoute(req.originalUrl),
       };
@@ -166,26 +165,6 @@ describe('controllers/quote/buyer-country', () => {
         };
 
         expect(req.session.submittedData).toEqual(expected);
-      });
-    });
-
-    describe('when a country has been submitted', () => {
-      it('should render template with countries mapped to submitted country', async () => {
-        req.session.submittedData = mockSession.submittedData;
-
-        await get(req, res);
-
-        const expectedCountries = mapCountries(mockCountriesResponse, req.session.submittedData.quoteEligibility[FIELD_ID].isoCode);
-
-        const expectedVariables = {
-          ...singleInputPageVariables({ ...PAGE_VARIABLES, BACK_LINK: getBackLink(req.headers.referer), ORIGINAL_URL: req.originalUrl }),
-          userName: getUserNameFromSession(req.session.user),
-          countries: expectedCountries,
-          submittedValues: req.session.submittedData.quoteEligibility,
-          isChangeRoute: isChangeRoute(req.originalUrl),
-        };
-
-        expect(res.render).toHaveBeenCalledWith(TEMPLATES.SHARED_PAGES.BUYER_COUNTRY, expectedVariables);
       });
     });
 

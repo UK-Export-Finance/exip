@@ -12,7 +12,6 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/jointly-insured-party';
-import { objectHasProperty } from '../../../../helpers/object';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -76,15 +75,9 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let mappedCountries;
-
     const { jointlyInsuredParty } = application.policy;
 
-    if (objectHasProperty(jointlyInsuredParty, COUNTRY_CODE)) {
-      mappedCountries = mapCountries(countries, jointlyInsuredParty[COUNTRY_CODE]);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, jointlyInsuredParty[COUNTRY_CODE]);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -132,15 +125,7 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      let mappedCountries;
-
-      if (objectHasProperty(payload, COUNTRY_CODE)) {
-        const submittedCountryCode = payload[COUNTRY_CODE];
-
-        mappedCountries = mapCountries(countries, submittedCountryCode);
-      } else {
-        mappedCountries = mapCountries(countries);
-      }
+      const mappedCountries = mapCountries(countries, payload[COUNTRY_CODE]);
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({

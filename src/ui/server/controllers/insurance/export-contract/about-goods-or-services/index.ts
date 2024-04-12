@@ -9,7 +9,6 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
-import { objectHasProperty } from '../../../../helpers/object';
 import generateValidationErrors from './validation';
 import getCountryByIsoCode from '../../../../helpers/get-country-by-iso-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
@@ -100,13 +99,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    let mappedCountries;
-
-    if (objectHasProperty(application.exportContract, FINAL_DESTINATION)) {
-      mappedCountries = mapCountries(countries, application.exportContract[FINAL_DESTINATION]);
-    } else {
-      mappedCountries = mapCountries(countries);
-    }
+    const mappedCountries = mapCountries(countries, application.exportContract[FINAL_DESTINATION]);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -156,17 +149,9 @@ export const post = async (req: Request, res: Response) => {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
-      let mappedCountries;
+      const submittedCountry = getCountryByIsoCode(countries, payload[FINAL_DESTINATION]);
 
-      if (objectHasProperty(payload, FINAL_DESTINATION)) {
-        const submittedCountry = payload[FINAL_DESTINATION];
-
-        const country = getCountryByIsoCode(countries, submittedCountry);
-
-        mappedCountries = mapCountries(countries, country?.isoCode);
-      } else {
-        mappedCountries = mapCountries(countries);
-      }
+      const mappedCountries = mapCountries(countries, submittedCountry?.isoCode);
 
       return res.render(TEMPLATE, {
         ...insuranceCorePageVariables({
