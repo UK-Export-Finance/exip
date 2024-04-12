@@ -26,7 +26,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Export contract - Change your answers - About goods or services - As an exporter, I want to change my answers to the type of policy section', () => {
   let referenceNumber;
-  let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,8 +34,8 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
       cy.completeExportContractSection({});
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      cy.assertUrl(url);
+      checkYourAnswersUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -52,7 +52,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
@@ -64,7 +64,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
       const newAnswer = `${application.EXPORT_CONTRACT[fieldId]} additional text`;
 
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
@@ -78,9 +78,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
       });
 
       it('should render the new answer', () => {
-        const expected = newAnswer;
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
       });
     });
   });
@@ -90,7 +88,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
@@ -100,7 +98,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
 
     describe('form submission with a new destination/country answer', () => {
       beforeEach(() => {
-        cy.navigateToUrl(url);
+        cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
@@ -114,9 +112,7 @@ context('Insurance - Export contract - Change your answers - About goods or serv
       });
 
       it('should render the new destination/country', () => {
-        const expected = NEW_COUNTRY_INPUT;
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, expected);
+        cy.assertSummaryListRowValue(summaryList, fieldId, NEW_COUNTRY_INPUT);
       });
     });
   });
