@@ -60,7 +60,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
   });
 
   describe(`when selecting yes for ${FIELD_ID}`, () => {
-    it('should redirect to `all sections` and change the `insurance policy` task status to `completed`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickYesRadioInput();
@@ -69,8 +69,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      // TODO: EMS-2647 - re-enable
-      // cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the fields on the page', () => {
@@ -86,7 +85,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
   });
 
   describe(`when selecting no for ${FIELD_ID}`, () => {
-    it('should redirect to `all sections` and change the `insurance policy` task status to `Completed`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickNoRadioInput();
@@ -95,8 +94,7 @@ context('Insurance - Policy - Another company page - Save and back', () => {
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      // TODO: EMS-2647 - re-enable
-      // cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {

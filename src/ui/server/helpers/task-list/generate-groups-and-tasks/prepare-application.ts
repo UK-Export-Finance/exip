@@ -1,4 +1,3 @@
-import { TaskListDataTask, TaskListData } from '../../../../types';
 import { GROUP_IDS, TASK_IDS } from '../../../constants';
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import { TASKS } from '../../../content-strings';
@@ -7,6 +6,7 @@ import businessRequiredFields from '../../required-fields/business';
 import yourBuyerRequiredFields from '../../required-fields/your-buyer';
 import policyRequiredFields from '../../required-fields/policy';
 import exportContractRequiredFields from '../../required-fields/export-contract';
+import { CreatePrepareApplicationTasksParams, TaskListDataTask } from '../../../../types';
 
 const {
   INSURANCE_ROOT,
@@ -28,22 +28,22 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @returns {Array} Prepare application tasks
  */
-const createPrepareApplicationTasks = (
-  referenceNumber: number,
-  otherGroups: TaskListData,
-  policyType?: string,
-  finalDestinationKnown?: boolean,
-  jointlyInsuredParty?: boolean,
-  isUsingBroker?: boolean,
-  hasDifferentTradingName?: boolean,
-  connectionWithBuyer?: boolean,
-  tradedWithBuyer?: boolean,
-  outstandingPayments?: boolean,
-  hasPreviousCreditInsuranceWithBuyer?: boolean,
-  totalContractValueOverThreshold?: boolean,
-  attemptedPrivateMarketCover?: boolean,
-  isUsingAgent?: boolean,
-): Array<TaskListDataTask> => {
+const createPrepareApplicationTasks = ({
+  referenceNumber,
+  otherGroups,
+  policyType,
+  finalDestinationKnown,
+  jointlyInsuredParty,
+  isUsingBroker,
+  hasDifferentTradingName,
+  connectionWithBuyer,
+  tradedWithBuyer,
+  outstandingPayments,
+  hasPreviousCreditInsuranceWithBuyer,
+  totalContractValueOverThreshold,
+  attemptedPrivateMarketCover,
+  isUsingAgent,
+}: CreatePrepareApplicationTasksParams): Array<TaskListDataTask> => {
   const initialChecksGroup = getGroupById(otherGroups, GROUP_IDS.INITIAL_CHECKS);
 
   const allInitialChecksFields = getAllTasksFieldsInAGroup(initialChecksGroup);
@@ -87,8 +87,7 @@ const createPrepareApplicationTasks = (
     fields: exportContractRequiredFields({
       finalDestinationKnown,
       attemptedPrivateMarketCover,
-      // TODO: refactor createPrepareApplicationTasks to have object structured params.
-      totalContractValueOverThreshold: Boolean(totalContractValueOverThreshold),
+      totalContractValueOverThreshold,
       isUsingAgent,
     }),
     dependencies,
