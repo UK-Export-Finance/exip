@@ -13,6 +13,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
+ * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on  - defaults to false
  * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false.
@@ -29,6 +30,7 @@ const completePrepareApplicationSinglePolicyType = ({
   hasHadCreditInsuranceCover,
   exporterHasBuyerFinancialAccounts,
   usingBroker,
+  otherCompanyInvolved = false,
   policyValueOverMvpMaximum = false,
   differentPolicyContact,
   needPreCreditPeriod = false,
@@ -55,6 +57,7 @@ const completePrepareApplicationSinglePolicyType = ({
     policyValueOverMvpMaximum,
     submitCheckYourAnswers,
     usingBroker,
+    otherCompanyInvolved,
     needPreCreditPeriod,
   });
 

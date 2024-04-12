@@ -15,6 +15,7 @@ export const FORM_TITLES = {
   POLICY: {
     CONTRACT_POLICY: 'Requested insurance policy',
     NAME_ON_POLICY: 'Named person on the policy',
+    OTHER_COMPANY: 'Other company to be insured',
     BROKER: 'Broker',
   },
   EXPORT_CONTRACT: {

@@ -207,17 +207,33 @@ export const POLICY_FIELDS = {
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [REQUESTED]: {
       HINT: 'This could be a parent company, subsidiary or a subcontractor.',
+      SUMMARY: {
+        TITLE: 'Another company to be insured',
+        FORM_TITLE: POLICY_FORM_TITLES.OTHER_COMPANY,
+      },
     },
     [COMPANY_NAME]: {
       LABEL: 'Name of the other company',
       MAXIMUM: 200,
+      SUMMARY: {
+        TITLE: 'Name of the other company',
+        FORM_TITLE: POLICY_FORM_TITLES.OTHER_COMPANY,
+      },
     },
     [COMPANY_NUMBER]: {
       LABEL: 'Registration number of the other company (optional)',
       MAXIMUM: 100,
+      SUMMARY: {
+        TITLE: 'Registration number of the other company',
+        FORM_TITLE: POLICY_FORM_TITLES.OTHER_COMPANY,
+      },
     },
     [COUNTRY_CODE]: {
       LABEL: 'What country is the other company based in?',
+      SUMMARY: {
+        TITLE: 'Country of the company',
+        FORM_TITLE: POLICY_FORM_TITLES.OTHER_COMPANY,
+      },
     },
   },
   BROKER: {
