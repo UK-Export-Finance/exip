@@ -31,6 +31,8 @@ const completeExportContractSection = ({
 
   if (isUsingAgent) {
     cy.completeAndSubmitAgentDetailsForm({});
+
+    cy.completeAndSubmitAgentServiceForm({});
   }
 
   if (submitCheckYourAnswers) {
