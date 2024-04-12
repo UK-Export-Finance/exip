@@ -4,7 +4,7 @@ import generateKey from './generate-key';
 import generateInitialisationVector from './generate-initialisation-vector';
 import encrypt from '.';
 
-const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION;
+const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 
 const iv = generateInitialisationVector();
 
