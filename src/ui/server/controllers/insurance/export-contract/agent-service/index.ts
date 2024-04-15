@@ -5,8 +5,10 @@ import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
@@ -78,6 +80,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    application: mapApplicationToFormFields(application),
   });
 };
 
@@ -88,7 +91,7 @@ export const get = (req: Request, res: Response) => {
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Next part of the flow or error page
  */
-export const post = (req: Request, res: Response) => {
+export const post = async (req: Request, res: Response) => {
   const { application } = res.locals;
 
   if (!application) {
@@ -115,30 +118,41 @@ export const post = (req: Request, res: Response) => {
     });
   }
 
-  const agentIsCharging = payload[IS_CHARGING] === 'true';
+  try {
+    const saveResponse = await mapAndSave.exportContractAgentService(payload, application);
 
-  /**
-   * If the route is a "change" route,
-   * the agent is IS_CHARGING,
-   * redirect to AGENT_CHARGES_CHANGE form.
-   * Otherwise, redirect to CHECK_YOUR_ANSWERS.
-   */
-  if (isChangeRoute(req.originalUrl)) {
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const agentIsCharging = payload[IS_CHARGING] === 'true';
+
+    /**
+     * If the route is a "change" route,
+     * the agent is IS_CHARGING,
+     * redirect to AGENT_CHARGES_CHANGE form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      if (agentIsCharging) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the agent is IS_CHARGING,
+     * redirect to AGENT_CHARGES form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (agentIsCharging) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - agent service %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
   }
-
-  /**
-   * If the agent is IS_CHARGING,
-   * redirect to AGENT_CHARGES form.
-   * Otherwise, redirect to CHECK_YOUR_ANSWERS.
-   */
-  if (agentIsCharging) {
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
-  }
-
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

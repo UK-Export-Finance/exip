@@ -6,8 +6,10 @@ import { PAGES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/export-contract';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
@@ -27,6 +29,10 @@ const { referenceNumber } = mockApplication;
 describe('controllers/insurance/export-contract/agent-service', () => {
   let req: Request;
   let res: Response;
+
+  jest.mock('../map-and-save/export-contract-agent-service');
+
+  mapAndSave.exportContractAgentService = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -105,6 +111,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        application: mapApplicationToFormFields(mockApplication),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -130,8 +137,16 @@ describe('controllers/insurance/export-contract/agent-service', () => {
     };
 
     describe('when there are validation errors', () => {
-      it('should render template with validation errors and submitted values', () => {
-        post(req, res);
+      it('should NOT call mapAndSave.exportContractAgentService with data from constructPayload function and application', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        expect(mapAndSave.exportContractAgentService).toHaveBeenCalledTimes(0);
+      });
+
+      it('should render template with validation errors and submitted values', async () => {
+        await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -152,14 +167,26 @@ describe('controllers/insurance/export-contract/agent-service', () => {
     });
 
     describe('when there are no validation errors', () => {
+      it('should call mapAndSave.exportContractAgentService with data from constructPayload function and application', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.exportContractAgentService).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.exportContractAgentService).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
       describe(`when ${IS_CHARGING} is false`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
             ...validBody,
             [IS_CHARGING]: 'false',
           };
 
-          post(req, res);
+          await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -168,13 +195,13 @@ describe('controllers/insurance/export-contract/agent-service', () => {
       });
 
       describe(`when ${IS_CHARGING} is true`, () => {
-        it(`should redirect to ${AGENT_CHARGES}`, () => {
+        it(`should redirect to ${AGENT_CHARGES}`, async () => {
           req.body = {
             ...validBody,
             [IS_CHARGING]: 'true',
           };
 
-          post(req, res);
+          await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_CHARGES}`;
 
@@ -183,7 +210,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
       });
 
       describe(`when ${IS_CHARGING} is true and the url's last substring is 'change'`, () => {
-        it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
+        it(`should redirect to ${AGENT_CHARGES_CHANGE}`, async () => {
           req.body = {
             ...validBody,
             [IS_CHARGING]: 'true',
@@ -191,7 +218,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
 
           req.originalUrl = AGENT_SERVICE_CHANGE;
 
-          post(req, res);
+          await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`;
 
@@ -200,7 +227,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
       });
 
       describe(`when ${IS_CHARGING} is false and the url's last substring is 'change'`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
             ...validBody,
             [IS_CHARGING]: 'false',
@@ -208,7 +235,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
 
           req.originalUrl = AGENT_SERVICE_CHANGE;
 
-          post(req, res);
+          await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
@@ -222,8 +249,38 @@ describe('controllers/insurance/export-contract/agent-service', () => {
         delete res.locals.application;
       });
 
-      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, () => {
-        post(req, res);
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentService does not return a true boolean', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+        mapAndSave.exportContractAgentService = mapAndSaveSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentService returns an error', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+        mapAndSave.exportContractAgentService = mapAndSaveSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
