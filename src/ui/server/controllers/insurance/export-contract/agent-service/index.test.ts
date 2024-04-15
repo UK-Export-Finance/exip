@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 const {
@@ -92,7 +92,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
             ...FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

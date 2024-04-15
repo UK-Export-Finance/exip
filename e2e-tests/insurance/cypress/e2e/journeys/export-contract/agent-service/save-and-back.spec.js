@@ -2,12 +2,12 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS },
+  EXPORT_CONTRACT: { AGENT_SERVICE },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Agent details - Save and go back', () => {
+context('Insurance - Export contract - Agent service - Save and go back', () => {
   let referenceNumber;
   let url;
 
@@ -20,8 +20,9 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
       cy.completeAndSubmitAboutGoodsOrServicesForm({});
       cy.completeAndSubmitHowYouWillGetPaidForm({});
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+      cy.completeAndSubmitAgentDetailsForm({});
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
 
       cy.assertUrl(url);
     });
@@ -51,9 +52,8 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
     it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentDetailsForm({
-        fullAddress: '',
-        countryCode: '',
+      cy.completeAgentServiceForm({
+        serviceDescription: '',
       });
 
       cy.clickSaveAndBackButton();
@@ -67,25 +67,24 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
       it('should have the submitted value', () => {
         cy.navigateToUrl(url);
 
-        cy.assertAgentDetailsFieldValues({
-          expectedFullAddress: '',
-          countryCode: '',
+        cy.assertAgentServiceFieldValues({
+          expectedDescription: '',
         });
       });
     });
   });
 
   describe('when all fields are provided', () => {
-    it('should retain the status of task `export contract` as `in progress`', () => {
+    it('should update the `export contract` task status to `completed`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentDetailsForm({});
+      cy.completeAgentServiceForm({});
 
       cy.clickSaveAndBackButton();
 
       cy.navigateToAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsInProgress();
+      cy.checkTaskExportContractStatusIsComplete();
     });
 
     describe('when going back to the page', () => {
@@ -94,10 +93,10 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
 
         cy.startInsuranceExportContractSection({});
 
-        // go through 3 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 3 });
+        // go through 4 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
-        cy.assertAgentDetailsFieldValues({});
+        cy.assertAgentServiceFieldValues({});
       });
     });
   });

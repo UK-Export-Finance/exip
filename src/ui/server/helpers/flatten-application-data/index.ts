@@ -94,6 +94,8 @@ const flattenApplicationData = (application: Application): ApplicationFlat => {
     ...exportContract.privateMarket,
     ...getTrueAndFalseAnswers(exportContract.privateMarket),
     ...mapExportContractAgentDetails(exportContract.agent),
+    ...exportContract.agent.service,
+    ...getTrueAndFalseAnswers(exportContract.agent.service),
     ...getTrueAndFalseAnswers(declaration),
     // TODO: EMS-2772, EMS-2815
     // ...nominatedLossPayee,
