@@ -9,7 +9,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_SERVICE;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SERVICE },
+  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SERVICE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const { AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION } } = FIELD_IDS;
@@ -19,6 +19,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Agent service page - As an Exporter, I want to give details about the agent that helped me win the export contract, So that UKEF can contact the appropriate parties to find out more about the working relationship', () => {
   let referenceNumber;
   let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -32,6 +33,7 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
       cy.completeAndSubmitAgentDetailsForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.assertUrl(url);
     });
@@ -97,6 +99,26 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.completeAndSubmitAgentServiceForm({});
+
+      cy.assertUrl(checkYourAnswersUrl);
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertAgentServiceFieldValues({});
+      });
     });
   });
 });
