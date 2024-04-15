@@ -8,12 +8,13 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES, AGENT_CHARGES_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -112,6 +113,31 @@ export const post = (req: Request, res: Response) => {
       submittedValues: sanitiseData(payload),
       validationErrors,
     });
+  }
+
+  const agentIsCharging = payload[IS_CHARGING] === 'true';
+
+  /**
+   * If the route is a "change" route,
+   * the agent is IS_CHARGING,
+   * redirect to AGENT_CHARGES_CHANGE form.
+   * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+   */
+  if (isChangeRoute(req.originalUrl)) {
+    if (agentIsCharging) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  }
+
+  /**
+   * If the agent is IS_CHARGING,
+   * redirect to AGENT_CHARGES form.
+   * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+   */
+  if (agentIsCharging) {
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
   }
 
   return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
