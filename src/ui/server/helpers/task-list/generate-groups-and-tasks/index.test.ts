@@ -53,21 +53,21 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(
+      tasks: prepareApplicationTasks({
         referenceNumber,
-        [initialChecks],
+        otherGroups: [initialChecks],
         policyType,
         finalDestinationKnown,
-        jointlyInsuredParty.requested,
+        jointlyInsuredParty: jointlyInsuredParty.requested,
         isUsingBroker,
         hasDifferentTradingName,
-        exporterIsConnectedWithBuyer,
-        exporterHasTradedWithBuyer,
+        connectionWithBuyer: exporterIsConnectedWithBuyer,
+        tradedWithBuyer: exporterHasTradedWithBuyer,
         outstandingPayments,
-        exporterHasPreviousCreditInsuranceWithBuyer,
+        hasPreviousCreditInsuranceWithBuyer: exporterHasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
-      ),
+      }),
     };
 
     const submitApplication = {

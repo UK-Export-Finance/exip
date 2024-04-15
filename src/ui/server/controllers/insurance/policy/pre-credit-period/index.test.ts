@@ -76,7 +76,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
             ...FIELDS[CREDIT_PERIOD_WITH_BUYER],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRE_CREDIT_PERIOD_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

@@ -9,7 +9,7 @@ const {
  * mapSubmittedData
  * Map Private market fields
  * if ATTEMPTED is false, delete DECLINED_DESCRIPTION
- * @param {Express.Request.body} formBody
+ * @param {RequestBody} formBody
  * @param {Array} countries
  * @returns {Object} populatedData
  */

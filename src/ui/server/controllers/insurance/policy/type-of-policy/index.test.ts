@@ -57,7 +57,7 @@ describe('controllers/insurance/policy/type-of-policy', () => {
 
       const expected = {
         FIELD: FIELDS[FIELD_ID],
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

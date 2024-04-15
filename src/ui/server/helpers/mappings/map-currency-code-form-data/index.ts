@@ -13,7 +13,7 @@ const {
  * - Currency code is submitted as "alternative". Assign the alternative code to the currency code field.
  * - Currency code is submitted as CURRENCY_CODE, but the populated data should have a bespoke field ID.
  * - In any instance, delete the "alternative currency code" field.
- * @param {Express.Request.body} formBody: Form data
+ * @param {RequestBody} formBody: Form data
  * @param {String} fieldId: Currency code field ID
  * @returns {Object} Mapped object with currency field.
  */

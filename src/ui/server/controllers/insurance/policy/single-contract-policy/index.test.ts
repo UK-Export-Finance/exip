@@ -107,7 +107,7 @@ describe('controllers/insurance/policy/single-contract-policy', () => {
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

@@ -81,7 +81,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
           ID: FIELD_ID,
           ...FIELDS.PRIVATE_MARKET[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

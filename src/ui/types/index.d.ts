@@ -54,7 +54,7 @@ import {
   SummaryListGroup,
   SummaryListGroupData,
 } from './summary-list';
-import { TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
+import { CreatePrepareApplicationTasksParams, TaskList, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask } from './task-list';
 import {
   DateValidationRulesParams,
   DateValidationFormatRulesParams,
@@ -110,6 +110,7 @@ export {
   CorePageVariablesInput,
   CorePageVariables,
   Country,
+  CreatePrepareApplicationTasksParams,
   Currency,
   CurrencyRadios,
   DateErrorMessage,

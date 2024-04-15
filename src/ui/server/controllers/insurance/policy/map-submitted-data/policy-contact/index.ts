@@ -16,7 +16,7 @@ const { FIRST_NAME, LAST_NAME, EMAIL } = ACCOUNT_FIELD_IDS;
  * if SAME_NAME selected, then populated populatedData with owner details
  * NAME field removed as not sent to API
  * If OTHER_NAME and POSITION is populated, then should be set to empty string
- * @param {Express.Request.body} formBody
+ * @param {RequestBody} formBody
  * @param {Application} application
  * @returns {Object} Page variables
  */

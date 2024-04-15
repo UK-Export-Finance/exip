@@ -41,7 +41,7 @@ describe('server/helpers/task-list/prepare-application', () => {
   describe('createPrepareApplicationTasks', () => {
     const initialChecksTasks = createInitialChecksTasks();
 
-    const previousGroups = [
+    const otherGroups = [
       {
         title: TASKS.LIST.INITIAL_CHECKS.HEADING,
         id: GROUP_IDS.INITIAL_CHECKS,
@@ -50,23 +50,23 @@ describe('server/helpers/task-list/prepare-application', () => {
     ] as TaskListData;
 
     it('should return EXIP `prepare application` tasks', () => {
-      const result = createPrepareApplicationTasks(
+      const result = createPrepareApplicationTasks({
         referenceNumber,
-        previousGroups,
+        otherGroups,
         policyType,
         finalDestinationKnown,
-        jointlyInsuredParty.requested,
+        jointlyInsuredParty: jointlyInsuredParty.requested,
         isUsingBroker,
         hasDifferentTradingName,
-        exporterIsConnectedWithBuyer,
-        exporterHasTradedWithBuyer,
+        connectionWithBuyer: exporterIsConnectedWithBuyer,
+        tradedWithBuyer: exporterHasTradedWithBuyer,
         outstandingPayments,
-        exporterHasPreviousCreditInsuranceWithBuyer,
+        hasPreviousCreditInsuranceWithBuyer: exporterHasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
-      );
+      });
 
-      const expectedDependencies = getAllTasksFieldsInAGroup(previousGroups[0]);
+      const expectedDependencies = getAllTasksFieldsInAGroup(otherGroups[0]);
 
       const EXPORTER_BUSINESS = {
         href: `${INSURANCE_ROOT}/${referenceNumber}${EXPORTER_BUSINESS_ROOT}`,

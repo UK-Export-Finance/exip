@@ -55,9 +55,9 @@ const generateGroupsAndTasks = (
       title: PREPARE_APPLICATION.HEADING,
       hint: PREPARE_APPLICATION.HINT,
       id: GROUP_IDS.PREPARE_APPLICATION,
-      tasks: prepareApplicationTasks(
+      tasks: prepareApplicationTasks({
         referenceNumber,
-        groups,
+        otherGroups: groups,
         policyType,
         finalDestinationKnown,
         jointlyInsuredParty,
@@ -70,7 +70,7 @@ const generateGroupsAndTasks = (
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,
-      ),
+      }),
     },
   ] as TaskListData;
 
