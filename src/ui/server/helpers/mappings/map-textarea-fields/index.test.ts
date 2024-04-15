@@ -12,6 +12,7 @@ const {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
     PRIVATE_MARKET: { DECLINED_DESCRIPTION },
     AGENT_DETAILS: { FULL_ADDRESS: AGENT_FULL_ADDRESS },
+    AGENT_SERVICE: { SERVICE_DESCRIPTION },
   },
   POLICY: {
     BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
@@ -66,6 +67,10 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
         agent: {
           ...exportContract.agent,
           [AGENT_FULL_ADDRESS]: replaceCharacterCodesWithCharacters(exportContract.agent[AGENT_FULL_ADDRESS]),
+          service: {
+            ...exportContract.agent.service,
+            [SERVICE_DESCRIPTION]: replaceCharacterCodesWithCharacters(exportContract.agent.service[SERVICE_DESCRIPTION]),
+          },
         },
       },
       policy: {

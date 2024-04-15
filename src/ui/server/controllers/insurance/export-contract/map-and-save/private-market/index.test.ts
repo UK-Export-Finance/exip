@@ -11,7 +11,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-describe('controllers/insurance/export-contract/map-and-save/export-contract', () => {
+describe('controllers/insurance/export-contract/map-and-save/private-market', () => {
   jest.mock('../../save-data/private-market');
 
   let mockFormBody = {

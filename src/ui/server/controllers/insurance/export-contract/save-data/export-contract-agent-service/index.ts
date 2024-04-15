@@ -1,5 +1,6 @@
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
+import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 
@@ -13,7 +14,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @returns {Object} Saved data
  */
 const exportContractAgentService = async (application: Application, formBody: RequestBody, errorList?: object) => {
-  const dataToSave = getDataToSave(formBody, errorList);
+  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));
 
   const sanitisedData = sanitiseData(dataToSave);
 

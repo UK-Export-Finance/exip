@@ -6,6 +6,7 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
 /**
@@ -53,7 +54,7 @@ export const privateCoverTasks = ({ totalContractValueOverThreshold, attemptedPr
  */
 export const agentTasks = ({ isUsingAgent }: RequiredFields): Array<string> => {
   if (isUsingAgent) {
-    return [AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE];
+    return [AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, IS_CHARGING, SERVICE_DESCRIPTION];
   }
 
   return [USING_AGENT];

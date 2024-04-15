@@ -94,6 +94,7 @@ const applicationQuery = gql`
             fullAddress
             countryCode
             service {
+              id
               serviceDescription
               agentIsCharging
             }
