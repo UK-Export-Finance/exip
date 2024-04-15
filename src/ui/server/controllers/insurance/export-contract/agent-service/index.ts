@@ -15,7 +15,10 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    CHECK_YOUR_ANSWERS,
+    AGENT_SERVICE_SAVE_AND_BACK,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -54,7 +57,7 @@ export const pageVariables = (referenceNumber: number) => ({
       ...FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION],
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE_SAVE_AND_BACK}`,
 });
 
 /**
