@@ -75,7 +75,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
 
   describe('agentServiceFields', () => {
     it('should return all agent service fields and values', () => {
-      const result = agentServiceFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange);
+      const result = agentServiceFields(mockAnswersUsingAgentTrue.service, referenceNumber, checkAndChange);
 
       const expected = [
         fieldGroupItem(
@@ -134,7 +134,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
               mapYesNoField(mockAnswersUsingAgentTrue[USING_AGENT]),
             ),
             ...agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange),
-            ...agentServiceFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange),
+            ...agentServiceFields(mockAnswersUsingAgentTrue.service, referenceNumber, checkAndChange),
           ],
         };
 
