@@ -5,7 +5,7 @@ import { ValidationErrors } from '../../../types';
  * combineValidationRules
  * combine multiple validation rule results into a single object
  * throws validation errors if any fields are not completed or incorrectly completed
- * @param {Express.Request.body} formBody: containing an object with the company details response body
+ * @param {RequestBody} formBody: containing an object with the company details response body
  * @returns {Object} Errors or empty object
  */
 /* eslint-disable no-unused-vars, prettier/prettier */

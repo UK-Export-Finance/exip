@@ -116,7 +116,7 @@ describe('controllers/insurance/policy/multiple-contract-policy', () => {
             ID: ALTERNATIVE_CURRENCY_CODE,
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

@@ -45,7 +45,7 @@ context('Insurance - Your business - Turnover page - Save and back', () => {
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when no fields are provided', () => {
+  describe('when submitting an empty form via `save and go back` button', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 

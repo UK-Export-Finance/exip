@@ -35,7 +35,7 @@ context('Insurance - Export contract - Agent details - Save and go back', () => 
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('when no fields are provided', () => {
+  describe('when submitting an empty form via `save and go back` button', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 

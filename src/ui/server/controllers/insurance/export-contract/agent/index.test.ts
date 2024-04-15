@@ -83,7 +83,7 @@ describe('controllers/insurance/export-contract/agent', () => {
           ID: FIELD_ID,
           ...FIELDS.PRIVATE_MARKET[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_SAVE_AND_BACK}`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

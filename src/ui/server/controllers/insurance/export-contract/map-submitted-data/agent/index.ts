@@ -11,7 +11,6 @@ const {
  * Map Private market fields
  * if ATTEMPTED is false, delete AGENT_DETAILS fields
  * @param {Express.Request.body} formBody
- * @param {Array} countries
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
