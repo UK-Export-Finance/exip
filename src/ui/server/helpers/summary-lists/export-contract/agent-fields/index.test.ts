@@ -1,4 +1,4 @@
-import agentFields, { agentDetailsFields } from '.';
+import agentFields, { agentDetailsFields, agentServiceFields } from '.';
 import { FORM_TITLES } from '../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -18,9 +18,12 @@ const {
 const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
-const { AGENT_CHANGE, AGENT_CHECK_AND_CHANGE, AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { AGENT_CHANGE, AGENT_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 
 describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
   const mockAnswersUsingAgentTrue = {
@@ -70,6 +73,26 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
     });
   });
 
+  describe('agentServiceFields', () => {
+    it('should return all agent service fields and values', () => {
+      const result = agentServiceFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange);
+
+      const expected = [
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_SERVICE, SERVICE_DESCRIPTION),
+            data: mockAnswersUsingAgentTrue,
+            href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${SERVICE_DESCRIPTION}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue.service[SERVICE_DESCRIPTION])
+        ),
+      ];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('agentFields', () => {
     describe(`when ${USING_AGENT} is false`, () => {
       it(`should return one ${USING_AGENT} field and value`, () => {
@@ -111,6 +134,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
               mapYesNoField(mockAnswersUsingAgentTrue[USING_AGENT]),
             ),
             ...agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange),
+            ...agentServiceFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange),
           ],
         };
 
