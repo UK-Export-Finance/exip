@@ -85,7 +85,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
             href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${SERVICE_DESCRIPTION}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue.service[SERVICE_DESCRIPTION])
+          replaceNewLineWithLineBreak(mockAnswersUsingAgentTrue.service[SERVICE_DESCRIPTION]),
         ),
       ];
 
