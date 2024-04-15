@@ -54,6 +54,7 @@
             'data-cy': FIELDS.SERVICE_DESCRIPTION.ID
           },
           maxlength: FIELDS.SERVICE_DESCRIPTION.MAXIMUM,
+          value: submittedValues[FIELDS.SERVICE_DESCRIPTION.ID] or application.exportContract.agent.service[FIELDS.SERVICE_DESCRIPTION.ID],
           errorMessage: validationErrors.errorList[FIELDS.SERVICE_DESCRIPTION.ID] and {
             text: validationErrors.errorList[FIELDS.SERVICE_DESCRIPTION.ID].text,
             attributes: {
@@ -69,7 +70,7 @@
       legendText: FIELDS.IS_CHARGING.LABEL,
       legendClass: 'govuk-fieldset__legend--s',
       legendSpan: true,
-      submittedAnswer: submittedValues[FIELDS.IS_CHARGING.ID],
+      submittedAnswer: submittedValues[FIELDS.IS_CHARGING.ID] or application.exportContract.agent.service[FIELDS.IS_CHARGING.ID],
       errorMessage: validationErrors.errorList[FIELDS.IS_CHARGING.ID],
       dataCyLegend: FIELDS.IS_CHARGING + '-legend',
       horizontalRadios: HORIZONTAL_RADIOS,

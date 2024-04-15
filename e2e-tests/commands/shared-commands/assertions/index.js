@@ -61,5 +61,6 @@ Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-o
 Cypress.Commands.add('assertBrokerDetailsFieldValues', require('./assert-broker-details-field-values'));
 
 Cypress.Commands.add('assertAgentDetailsFieldValues', require('./assert-agent-details-field-values'));
+Cypress.Commands.add('assertAgentServiceFieldValues', require('./assert-agent-service-field-values'));
 
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));

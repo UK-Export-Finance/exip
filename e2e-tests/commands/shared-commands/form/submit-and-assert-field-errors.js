@@ -34,6 +34,10 @@ const submitAndAssertFieldErrors = ({
     errorSummaryLength: expectedErrorsCount,
     errorMessage: expectedErrorMessage,
   });
+
+  if (value) {
+    cy.checkValue(field, value);
+  }
 };
 
 export default submitAndAssertFieldErrors;
