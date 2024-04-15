@@ -12,6 +12,7 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING },
 } = FIELD_IDS;
 
 /**
@@ -169,6 +170,21 @@ const checkExportContractSummaryList = ({
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
+  },
+  [IS_CHARGING]: ({ isYes = false }) => {
+    const fieldId = IS_CHARGING;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_SERVICE);
+
+    let expectedValue;
+
+    if (isYes) {
+      expectedValue = FIELD_VALUES.YES;
+    } else {
+      expectedValue = FIELD_VALUES.NO;
+    }
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
 });
 

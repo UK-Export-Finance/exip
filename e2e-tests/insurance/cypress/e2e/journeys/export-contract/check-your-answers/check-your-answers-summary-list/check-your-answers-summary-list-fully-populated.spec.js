@@ -13,6 +13,7 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -79,5 +80,9 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
 
   it(`should render a ${COUNTRY_CODE} summary list row`, () => {
     checkSummaryList[COUNTRY_CODE]({ shouldRender: true });
+  });
+
+  it(`should render a ${IS_CHARGING} summary list row`, () => {
+    checkSummaryList[IS_CHARGING]({ isYes: true });
   });
 });

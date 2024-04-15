@@ -18,7 +18,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Change your answers - Agent service - As an Exporter, I want to be able to review my input regarding whether an agent helped me win the export contract, So that I can be assured I am providing UKEF with the right information', () => {
+context('Insurance - Export contract - Change your answers - Agent service - description - As an Exporter, I want to be able to review my input regarding whether an agent helped me win the export contract, So that I can be assured I am providing UKEF with the right information', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
