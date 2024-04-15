@@ -30,8 +30,6 @@ describe('controllers/insurance/export-contract/agent-details/save-and-back', ()
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(mockApplication.referenceNumber);
-
     req.body = mockFormBody;
 
     mapAndSave.exportContractAgent = mapAndSaveSpy;

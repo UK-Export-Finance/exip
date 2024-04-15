@@ -55,6 +55,11 @@ const AGENT_SERVICE = {
   PAGE_TITLE: 'Tell us about the service the agent is providing',
 };
 
+const AGENT_CHARGES = {
+  ...SHARED,
+  PAGE_TITLE: "Tell us about the agent's charges",
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -69,5 +74,6 @@ module.exports = {
   AGENT,
   AGENT_DETAILS,
   AGENT_SERVICE,
+  AGENT_CHARGES,
   CHECK_YOUR_ANSWERS,
 };

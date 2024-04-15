@@ -1,4 +1,4 @@
-import { MAXIMUM_CHARACTERS } from '../../../../constants';
+import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { FORM_TITLES } from '../../../form-titles';
 
@@ -9,6 +9,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
@@ -110,6 +111,15 @@ export const EXPORT_CONTRACT_FIELDS = {
     [SERVICE_DESCRIPTION]: {
       LABEL: 'Service the agent is providing',
       MAXIMUM: MAXIMUM_CHARACTERS.AGENT_SERVICE_DESCRIPTION,
+    },
+  },
+  AGENT_CHARGES: {
+    [METHOD]: {
+      LABEL: 'How is the agent charging you?',
+      OPTIONS: FIELD_VALUES.CHARGE_METHODS,
+    },
+    [PAYABLE_COUNTRY_CODE]: {
+      LABEL: 'Country where charges are payable',
     },
   },
 };

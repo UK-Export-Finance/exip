@@ -17,6 +17,7 @@ import { post as agentSaveAndBackPost } from '../../../controllers/insurance/exp
 import { get as agentDetailsGet, post as agentDetailsPost } from '../../../controllers/insurance/export-contract/agent-details';
 import { post as agentDetailsSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-details/save-and-back';
 import { get as agentServiceGet, post as agentServicePost } from '../../../controllers/insurance/export-contract/agent-service';
+import { get as agentChargesGet } from '../../../controllers/insurance/export-contract/agent-charges';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -41,6 +42,7 @@ const {
   AGENT_DETAILS_SAVE_AND_BACK,
   AGENT_DETAILS_CHANGE,
   AGENT_SERVICE,
+  AGENT_CHARGES,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -89,6 +91,8 @@ exportContractRoute.post(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetail
 
 exportContractRoute.get(`/:referenceNumber${AGENT_SERVICE}`, agentServiceGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_SERVICE}`, agentServicePost);
+
+exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES}`, agentChargesGet);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

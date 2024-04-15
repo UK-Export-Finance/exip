@@ -18,4 +18,16 @@ export const FIELD_VALUES = {
   TOTAL_MONTHS_OF_COVER: Array.from(Array(POLICY.TOTAL_MONTHS_OF_COVER).keys()),
   YES: 'Yes',
   NO: 'No',
+  CHARGE_METHODS: {
+    FIXED_AMOUNT: {
+      ID: 'fixedSum', // TODO: field IDs?
+      VALUE: 'fixedSum',
+      TEXT: 'Fixed sum',
+    },
+    PERCENTAGE: {
+      ID: 'percentage', // TODO: field IDs?
+      VALUE: 'percentage',
+      TEXT: 'Percentage',
+    },
+  },
 };

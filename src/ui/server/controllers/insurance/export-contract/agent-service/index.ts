@@ -62,7 +62,7 @@ export const pageVariables = (referenceNumber: number) => ({
  * Get the application and render the "Agent service" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} "Agent servic" page
+ * @returns {Express.Response.render} "Agent service" page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
