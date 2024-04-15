@@ -110,6 +110,10 @@ export const EXPORT_CONTRACT_FIELDS = {
     [SERVICE_DESCRIPTION]: {
       LABEL: 'Service the agent is providing',
       MAXIMUM: MAXIMUM_CHARACTERS.AGENT_SERVICE_DESCRIPTION,
+      SUMMARY: {
+        TITLE: 'Service the agent is providing',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
   },
 };
