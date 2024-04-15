@@ -75,7 +75,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
 
   describe('agentServiceFields', () => {
     it('should return all agent service fields and values', () => {
-      const result = agentServiceFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange);
+      const result = agentServiceFields(mockAnswersUsingAgentTrue, referenceNumber, checkAndChange);
 
       const expected = [
         fieldGroupItem(
