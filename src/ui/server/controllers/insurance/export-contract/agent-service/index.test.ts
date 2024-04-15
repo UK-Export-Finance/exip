@@ -86,7 +86,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
             ...FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION],
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${req.params.referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
       };
 
       expect(result).toEqual(expected);

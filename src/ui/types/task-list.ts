@@ -30,4 +30,21 @@ type TaskListData = Array<TaskListDataGroup>;
 
 type TaskList = Array<TaskListGroup>;
 
-export { TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };
+interface CreatePrepareApplicationTasksParams {
+  referenceNumber: number;
+  otherGroups: TaskListData;
+  policyType?: string;
+  finalDestinationKnown?: boolean;
+  jointlyInsuredParty?: boolean;
+  isUsingBroker?: boolean;
+  hasDifferentTradingName?: boolean;
+  connectionWithBuyer?: boolean;
+  tradedWithBuyer?: boolean;
+  outstandingPayments?: boolean;
+  hasPreviousCreditInsuranceWithBuyer?: boolean;
+  totalContractValueOverThreshold?: boolean;
+  attemptedPrivateMarketCover?: boolean;
+  isUsingAgent?: boolean;
+}
+
+export { CreatePrepareApplicationTasksParams, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };

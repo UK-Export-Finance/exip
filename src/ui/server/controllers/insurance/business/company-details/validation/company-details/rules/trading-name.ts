@@ -14,7 +14,7 @@ const ERROR_MESSAGE = EXPORTER_BUSINESS[FIELD_ID];
 /**
  * validates tradingName in company details response body
  * throws validation errors if there is no tradingName property
- * @param {Express.Request.body} formBody: containing an object with the company details response
+ * @param {RequestBody} formBody: containing an object with the company details response
  * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} Errors or empty object
  */
