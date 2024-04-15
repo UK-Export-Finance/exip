@@ -2,6 +2,7 @@ import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
+import SPECIAL_CHARACTERS from '../../../../../../../fixtures/special-characters';
 
 const {
   ROOT,
@@ -18,7 +19,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const submitAndAssertBothFields = (value, errorTotalOutstanding, errorAmountOverdue) => {
+const submitAndAssertBothFields = ({ value = null, errorTotalOutstanding, errorAmountOverdue, expectedValue, assertExpectedValue }) => {
   const expectedErrorsCount = 2;
 
   cy.submitAndAssertFieldErrors({
@@ -26,6 +27,8 @@ const submitAndAssertBothFields = (value, errorTotalOutstanding, errorAmountOver
     value,
     expectedErrorsCount,
     expectedErrorMessage: errorTotalOutstanding,
+    expectedValue,
+    assertExpectedValue,
   });
 
   cy.submitAndAssertFieldErrors({
@@ -34,6 +37,8 @@ const submitAndAssertBothFields = (value, errorTotalOutstanding, errorAmountOver
     errorIndex: 1,
     expectedErrorsCount,
     expectedErrorMessage: errorAmountOverdue,
+    expectedValue,
+    assertExpectedValue,
   });
 };
 
@@ -74,7 +79,10 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      submitAndAssertBothFields(null, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].IS_EMPTY, ERRORS[TOTAL_AMOUNT_OVERDUE].IS_EMPTY);
+      submitAndAssertBothFields({
+        errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].IS_EMPTY,
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].IS_EMPTY
+      });
     });
   });
 
@@ -86,9 +94,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      const value = 'ten';
-
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
+      submitAndAssertBothFields({
+        value: 'ten',
+        errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT,
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT,
+      });
     });
   });
 
@@ -100,9 +110,11 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      const value = 5.5;
-
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
+      submitAndAssertBothFields({
+        value: '5.5',
+        errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT,
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT,
+      });
     });
   });
 
@@ -114,9 +126,12 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      const value = '1,250.5';
-
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
+      submitAndAssertBothFields({
+        value: '1,250.5',
+        expectedValue: '1250.5',
+        errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT,
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT,
+      });
     });
   });
 
@@ -128,13 +143,16 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      const value = '0';
-
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].BELOW_MINIMUM, ERRORS[TOTAL_AMOUNT_OVERDUE].BELOW_MINIMUM);
+      submitAndAssertBothFields({
+        value: '0',
+        assertExpectedValue: false,
+        errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].BELOW_MINIMUM,
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].BELOW_MINIMUM,
+      });
     });
   });
 
-  describe(`when entering a value with a special character for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering a value with special characters for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
       cy.clickYesRadioInput();
@@ -142,9 +160,12 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
 
     it('should render validation errors', () => {
-      const value = '5*';
-
-      submitAndAssertBothFields(value, ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT, ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT);
+      submitAndAssertBothFields({
+        value: SPECIAL_CHARACTERS,
+        assertExpectedValue: false,
+        errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT,
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT,
+      });
     });
   });
 

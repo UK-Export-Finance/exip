@@ -6,6 +6,8 @@
  * @param {Number} errorIndex: Index of error. Defaults to 0.
  * @param {Number} expectedErrorsCount: Expected total amount of errors in the errors summary. Defaults to 1.
  * @param {Number} expectedErrorMessage: Expected error message.
+ * @param {Number} expectedValue: Expected value after submission.
+ * @param {Boolean} assertExpectedValue: Assert an expected value. Defaults to true.
  * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true.
  */
 const submitAndAssertFieldErrors = ({
@@ -14,6 +16,8 @@ const submitAndAssertFieldErrors = ({
   errorIndex = 0,
   expectedErrorsCount = 1,
   expectedErrorMessage,
+  expectedValue,
+  assertExpectedValue = true,
   clearInput = true,
 }) => {
   /**
@@ -35,8 +39,12 @@ const submitAndAssertFieldErrors = ({
     errorMessage: expectedErrorMessage,
   });
 
-  if (value) {
-    cy.checkValue(field, value);
+  if (assertExpectedValue) {
+    if (expectedValue) {
+      cy.checkValue(field, expectedValue);
+    } else if (value) {
+      cy.checkValue(field, value);
+    }
   }
 };
 

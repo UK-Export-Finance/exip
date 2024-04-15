@@ -53,7 +53,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY });
   });
 
-  it(`should display validation errors whe ${FIELD_ID} is a decimal place number`, () => {
+  it(`should display validation errors when ${FIELD_ID} is a decimal place number`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '5.5',
@@ -61,10 +61,11 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     });
   });
 
-  it(`should display validation errors whe ${FIELD_ID} has a comma`, () => {
+  it(`should display validation errors when ${FIELD_ID} has a comma`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '4,4',
+      expectedValue: '44',
       expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
     });
   });
@@ -85,7 +86,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     });
   });
 
-  it(`should display validation errors whe ${FIELD_ID} is below 0`, () => {
+  it(`should display validation errors when ${FIELD_ID} is below 0`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '-1',
