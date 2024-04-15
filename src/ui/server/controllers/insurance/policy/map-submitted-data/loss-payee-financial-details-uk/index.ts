@@ -10,7 +10,7 @@ const {
 /**
  * mapSubmittedData
  * if SORT_CODE, then run stripHyphensAndSpacesFromString to remove hyphens and spaces
- * @param {Express.Request.body} Form data
+ * @param {RequestBody} formBody
  * @returns {Object} populated data
  */
 const mapSubmittedData = (formBody: RequestBody): object => {
