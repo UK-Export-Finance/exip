@@ -19,7 +19,9 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-const submitAndAssertBothFields = ({ value = null, errorTotalOutstanding, errorAmountOverdue, expectedValue, assertExpectedValue }) => {
+const submitAndAssertBothFields = ({
+  value = null, errorTotalOutstanding, errorAmountOverdue, expectedValue, assertExpectedValue,
+}) => {
   const expectedErrorsCount = 2;
 
   cy.submitAndAssertFieldErrors({
@@ -81,7 +83,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].IS_EMPTY,
-        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].IS_EMPTY
+        errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].IS_EMPTY,
       });
     });
   });
