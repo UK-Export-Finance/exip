@@ -5471,7 +5471,7 @@ var encrypt = (dataToEncrypt) => {
   const iv = generate_initialisation_vector_default();
   const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
   return {
-    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3) + cipher.final(ENCODING3)).toString(STRING_ENCODING2),
+    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2),
     iv
   };
 };

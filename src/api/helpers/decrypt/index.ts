@@ -14,7 +14,7 @@ const decrypt = (dataToDecrypt: FinancialDetailsEncryption) => {
   const buff = Buffer.from(dataToDecrypt.value, STRING_ENCODING);
   const decipher = crypto.createDecipheriv(ENCRYPTION_METHOD, key, dataToDecrypt.iv);
 
-  return decipher.update(buff.toString(OUTPUT_ENCODING), ENCODING, OUTPUT_ENCODING) + decipher.final(OUTPUT_ENCODING);
+  return decipher.update(buff.toString(OUTPUT_ENCODING), ENCODING, OUTPUT_ENCODING).concat(decipher.final(OUTPUT_ENCODING));
 };
 
 export default decrypt;

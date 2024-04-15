@@ -22,7 +22,7 @@ const encrypt = (dataToEncrypt: string): FinancialDetailsEncryption => {
   const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, iv);
 
   return {
-    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING) + cipher.final(ENCODING)).toString(STRING_ENCODING),
+    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING).concat(cipher.final(ENCODING))).toString(STRING_ENCODING),
     iv,
   };
 };
