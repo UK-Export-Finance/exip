@@ -15,10 +15,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: {
-    CHECK_YOUR_ANSWERS,
-    AGENT_SERVICE_SAVE_AND_BACK,
-  },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK },
 } = INSURANCE_ROUTES;
 
 const {
