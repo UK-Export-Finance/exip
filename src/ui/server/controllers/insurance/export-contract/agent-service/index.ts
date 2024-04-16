@@ -127,7 +127,7 @@ export const post = async (req: Request, res: Response) => {
     const agentIsCharging = payload[IS_CHARGING] === 'true';
 
     if (agentIsCharging) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);  
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
