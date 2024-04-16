@@ -93,7 +93,7 @@ context('Insurance - Your business - Nature of your business page - As an Export
       cy.checkText(field.label(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].LABEL);
 
       field.hint().contains(FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].HINT);
-      cy.checkText(field.suffix(), FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX);
+      cy.assertSuffix({ fieldId, value: FIELDS.NATURE_OF_YOUR_BUSINESS[fieldId].SUFFIX });
     });
 
     it(`should display ${EMPLOYEES_UK} label and input`, () => {
