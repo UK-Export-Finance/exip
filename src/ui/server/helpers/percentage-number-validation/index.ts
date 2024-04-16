@@ -1,10 +1,8 @@
+import { MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../constants';
 import generateValidationErrors from '../validation';
 import { objectHasProperty } from '../object';
 import { isNumber, numberHasDecimal, isNumberBelowMinimum, isNumberAboveMaximum } from '../number';
 import { RequestBody, ErrorMessageObject } from '../../../types';
-
-const MINIMUM = 0;
-const MAXIMUM = 100;
 
 /**
  * percentageNumberValidation
@@ -35,12 +33,12 @@ const percentageNumberValidation = (formBody: RequestBody, field: string, errors
   }
 
   // if below the set minimum
-  if (isNumberBelowMinimum(Number(value), MINIMUM)) {
+  if (isNumberBelowMinimum(Number(value), MINIMUM_CHARACTERS.ZERO)) {
     return generateValidationErrors(field, BELOW_MINIMUM, errors);
   }
 
   // if above the set maximum
-  if (isNumberAboveMaximum(Number(value), MAXIMUM)) {
+  if (isNumberAboveMaximum(Number(value), MAXIMUM_CHARACTERS.PERCENTAGE)) {
     return generateValidationErrors(field, ABOVE_MAXIMUM, errors);
   }
 

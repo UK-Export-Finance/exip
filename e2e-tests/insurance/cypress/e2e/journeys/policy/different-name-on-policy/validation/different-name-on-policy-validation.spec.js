@@ -176,7 +176,7 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       expectedErrorsCount: 4,
     };
 
-    it(`should render validation errors when ${FIELD_ID} left empty`, () => {
+    it(`should render validation errors when ${FIELD_ID} is left empty`, () => {
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 

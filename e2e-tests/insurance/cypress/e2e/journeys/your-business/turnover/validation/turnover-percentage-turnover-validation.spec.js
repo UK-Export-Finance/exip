@@ -49,7 +49,7 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should display validation errors when ${FIELD_ID} left empty`, () => {
+  it(`should display validation errors when ${FIELD_ID} is left empty`, () => {
     cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY });
   });
 

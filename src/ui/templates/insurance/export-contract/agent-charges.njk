@@ -66,7 +66,7 @@
                   'data-cy': FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + '-label'
                 }
               },
-              value: FIELDS.METHOD.OPTIONS.FIXED_SUM.VALUE ,
+              value: FIELDS.METHOD.OPTIONS.FIXED_SUM.VALUE,
               text: FIELDS.METHOD.OPTIONS.FIXED_SUM.TEXT,
               checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.FIXED_SUM.ID,
               attributes: {
@@ -97,7 +97,7 @@
           errorMessage: validationErrors.errorList[FIELDS.METHOD.ID]and {
             text: validationErrors.errorList[FIELDS.METHOD.ID].text,
             attributes: {
-              "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.BELOW.ID + "-error-message"
+              "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + "-error-message"
             }
           }
         }) }}
@@ -106,22 +106,33 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-one-third-from-desktop govuk-!-margin-bottom-8">
-        {{ govukLabel({
-          for: FIELDS.PAYABLE_COUNTRY_CODE.ID,
-          classes: "govuk-!-font-weight-bold",
-          text: FIELDS.PAYABLE_COUNTRY_CODE.LABEL,
-          attributes: {
-            id: FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label",
-            "data-cy": FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label"
-          }
-        }) }}
 
-        {{ accessibleAutoCompleteSelect.render({
-          errorMessage: validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text,
-          fieldId: FIELDS.PAYABLE_COUNTRY_CODE.ID,
-          integrity: SRI.ACCESSIBILITY,
-          options: countries
-        }) }}
+        {% set containerClassName = "govuk-form-group" %}
+
+        {% set errorMessage = validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text %}
+
+        {% if errorMessage %}
+          {% set containerClassName = "govuk-form-group govuk-form-group--error" %}
+        {% endif %}
+
+        <div class="{{ containerClassName }}">
+          {{ govukLabel({
+            for: FIELDS.PAYABLE_COUNTRY_CODE.ID,
+            classes: "govuk-!-font-weight-bold",
+            text: FIELDS.PAYABLE_COUNTRY_CODE.LABEL,
+            attributes: {
+              id: FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label",
+              "data-cy": FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label"
+            }
+          }) }}
+
+          {{ accessibleAutoCompleteSelect.render({
+            errorMessage: validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text,
+            fieldId: FIELDS.PAYABLE_COUNTRY_CODE.ID,
+            integrity: SRI.ACCESSIBILITY,
+            options: countries
+          }) }}
+        </div>
       </div>
     </div>
 
