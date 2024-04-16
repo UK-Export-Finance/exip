@@ -1,4 +1,6 @@
 export const MINIMUM_CHARACTERS = {
+  ZERO: 0,
+  ONE: 1,
   SORT_CODE: 6,
   ACCOUNT_NUMBER: 6,
   BIC_SWIFT_CODE: 8,
@@ -6,6 +8,7 @@ export const MINIMUM_CHARACTERS = {
 };
 
 export const MAXIMUM_CHARACTERS = {
+  PERCENTAGE: 100,
   EMAIL: 300,
   FULL_ADDRESS: 500,
   SORT_CODE: 6,

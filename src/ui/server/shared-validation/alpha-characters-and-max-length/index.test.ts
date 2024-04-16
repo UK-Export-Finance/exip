@@ -2,7 +2,6 @@ import alphaCharactersAndMaxLength from '.';
 import alphaCharactersOnlyValidation from '../alpha-characters-only';
 import maxLengthValidation from '../max-length';
 import emptyFieldValidation from '../empty-field';
-import { RequestBody } from '../../../types';
 import { mockErrors, mockErrorMessagesObject } from '../../test-mocks';
 
 const mockMaxLength = 20;
@@ -10,9 +9,7 @@ const mockMaxLength = 20;
 describe('shared-validation/alpha-characters-and-max-length', () => {
   const FIELD_ID = 'field';
 
-  const mockBody = {
-    [FIELD_ID]: '',
-  } as RequestBody;
+  const mockBody = {};
 
   describe('when a value is empty', () => {
     it('should return the result of emptyFieldValidation', () => {

@@ -11,9 +11,15 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Currency, Request, Response } from '../../../../../types';
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 const {
   AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE },
@@ -105,13 +111,66 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber, supportedCurrencies),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      countries: mapCountries(countries),
       CONDITIONAL_FIXED_SUM_HTML,
       CONDITIONAL_PERCENTAGE_HTML,
-      countries: mapCountries(countries),
     });
   } catch (err) {
     console.error('Error getting countries %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
+};
+
+/**
+ * post
+ * Check for validation errors and if successful, redirect to the next part of the flow.
+ * @param {Express.Request} Express request
+ * @param {Express.Response} Express response
+ * @returns {Express.Response.redirect} Next part of the flow or error page
+ */
+export const post = async (req: Request, res: Response) => {
+  const { application } = res.locals;
+
+  if (!application) {
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
+
+  const { referenceNumber } = application;
+
+  const payload = constructPayload(req.body, FIELD_IDS);
+
+  const validationErrors = generateValidationErrors(payload);
+
+  if (validationErrors) {
+    try {
+      const countries = await api.keystone.countries.getAll();
+      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+
+      if (!isPopulatedArray(countries) || !isPopulatedArray(supportedCurrencies)) {
+        return res.redirect(PROBLEM_WITH_SERVICE);
+      }
+
+      return res.render(TEMPLATE, {
+        ...insuranceCorePageVariables({
+          PAGE_CONTENT_STRINGS,
+          BACK_LINK: req.headers.referer,
+        }),
+        ...pageVariables(application.referenceNumber, supportedCurrencies),
+        userName: getUserNameFromSession(req.session.user),
+        application: mapApplicationToFormFields(application),
+        countries: mapCountries(countries),
+        CONDITIONAL_FIXED_SUM_HTML,
+        CONDITIONAL_PERCENTAGE_HTML,
+        submittedValues: payload,
+        validationErrors,
+      });
+    } catch (err) {
+      console.error('Error getting countries or currencies %O', err);
+
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+  }
+
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
 };

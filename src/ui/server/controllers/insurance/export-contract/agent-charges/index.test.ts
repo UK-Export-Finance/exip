@@ -1,4 +1,4 @@
-import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
+import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
 import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
 import { PARTIALS as PARTIAL_TEMPLATES } from '../../../../constants/templates/partials';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
@@ -11,12 +11,18 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
+import constructPayload from '../../../../helpers/construct-payload';
+import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse } from '../../../../test-mocks';
 
 const { supportedCurrencies } = mockCurrenciesResponse;
 
-const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  INSURANCE_ROOT,
+  PROBLEM_WITH_SERVICE,
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+} = INSURANCE_ROUTES;
 
 const {
   AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE },
@@ -137,9 +143,9 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         ...pageVariables(referenceNumber, supportedCurrencies),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
+        countries: mapCountries(mockCountries),
         CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
-        countries: mapCountries(mockCountries),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);
@@ -170,10 +176,10 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
       });
     });
 
-    describe('when the get currencies API call fails', () => {
+    describe('when the get countries response does not return a populated array', () => {
       beforeEach(() => {
-        getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        getCountriesSpy = jest.fn(() => Promise.resolve([]));
+        api.keystone.countries.getAll = getCountriesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -183,10 +189,10 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
       });
     });
 
-    describe('when the get countries response does not return a populated array', () => {
+    describe('when the get currencies API call fails', () => {
       beforeEach(() => {
-        getCountriesSpy = jest.fn(() => Promise.resolve([]));
-        api.keystone.countries.getAll = getCountriesSpy;
+        getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -204,6 +210,144 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
         await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+  });
+
+  describe('post', () => {
+    const validBody = {
+      [METHOD]: FIXED_SUM,
+      [FIXED_SUM_AMOUNT]: '1234',
+      [PAYABLE_COUNTRY_CODE]: mockCountries[0].isoCode,
+    };
+
+    beforeEach(() => {
+      getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
+      getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+
+      api.keystone.countries.getAll = getCountriesSpy;
+      api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+    });
+
+    describe('when there are validation errors', () => {
+      it('should call api.keystone.countries.getAll', async () => {
+        await post(req, res);
+
+        expect(getCountriesSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('should render template with validation errors and submitted values', async () => {
+        req.body = {};
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        const validationErrors = generateValidationErrors(payload);
+
+        expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+          ...insuranceCorePageVariables({
+            PAGE_CONTENT_STRINGS,
+            BACK_LINK: req.headers.referer,
+          }),
+          ...pageVariables(referenceNumber, supportedCurrencies),
+          userName: getUserNameFromSession(req.session.user),
+          application: mapApplicationToFormFields(mockApplication),
+          countries: mapCountries(mockCountries),
+          CONDITIONAL_FIXED_SUM_HTML,
+          CONDITIONAL_PERCENTAGE_HTML,
+          submittedValues: payload,
+          validationErrors,
+        });
+      });
+
+      describe('when the get countries API call fails', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get countries API call does not return a populated array', () => {
+        beforeEach(() => {
+          getCountriesSpy = jest.fn(() => Promise.resolve([]));
+          api.keystone.countries.getAll = getCountriesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies API call fails', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the get currencies response does not return a populated array', () => {
+        beforeEach(() => {
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ ...mockCurrenciesResponse, supportedCurrencies: [] }));
+          api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await get(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+    });
+
+    describe('when there are no validation errors', () => {
+      beforeEach(() => {
+        req.body = validBody;
+      });
+
+      it('should NOT call api.keystone.countries.getAll', async () => {
+        await post(req, res);
+
+        expect(getCountriesSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it('should NOT call api.keystone.APIM.getCurrencies', async () => {
+        await post(req, res);
+
+        expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe('when there is no application', () => {
+      beforeEach(() => {
+        delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
       });
