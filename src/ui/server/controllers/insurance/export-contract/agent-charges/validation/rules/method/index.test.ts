@@ -26,7 +26,7 @@ describe('controllers/insurance/export-contract/agent-charges/validation/rules/m
       const expected = wholeNumberAboveMinimumValidation(mockBody, FIXED_SUM_AMOUNT, FIXED_SUM_AMOUNT_ERROR_MESSAGES, mockErrors, MINIMUM_CHARACTERS.ONE);
 
       expect(result).toEqual(expected);
-    });    
+    });
   });
 
   it('should return the result of emptyFieldValidation', () => {

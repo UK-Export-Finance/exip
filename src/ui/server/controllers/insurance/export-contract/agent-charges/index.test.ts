@@ -19,7 +19,7 @@ import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesRespons
 const { supportedCurrencies } = mockCurrenciesResponse;
 
 const {
-  INSURANCE_ROOT,  
+  INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
