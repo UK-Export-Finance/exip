@@ -30,8 +30,8 @@ export const EXPORT_CONTRACT = {
   AGENT_CHARGES: {
     METHOD: 'method',
     PAYABLE_COUNTRY_CODE: 'payableCountryCode',
-    FIXED_AMOUNT: 'fixedAmount',
-    FIXED_AMOUNT_CURRENCY_CODE: 'fixedAmountCurrencyCode',
+    FIXED_SUM: 'fixedSum',
+    FIXED_SUM_CURRENCY_CODE: 'fixedSumCurrencyCode',
     PERCENTAGE: 'percentage',
   },
 };

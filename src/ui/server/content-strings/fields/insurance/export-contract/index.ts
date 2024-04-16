@@ -1,4 +1,4 @@
-import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
+import { MAXIMUM_CHARACTERS } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { FORM_TITLES } from '../../../form-titles';
 
@@ -9,7 +9,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
@@ -120,7 +120,18 @@ export const EXPORT_CONTRACT_FIELDS = {
   AGENT_CHARGES: {
     [METHOD]: {
       LABEL: 'How is the agent charging you?',
-      OPTIONS: FIELD_VALUES.CHARGE_METHODS,
+      OPTIONS: {
+        FIXED_SUM: {
+          ID: FIXED_SUM,
+          VALUE: FIXED_SUM,
+          TEXT: 'Fixed sum',
+        },
+        PERCENTAGE: {
+          ID: PERCENTAGE,
+          VALUE: PERCENTAGE,
+          TEXT: 'Fixed sum',
+        },
+      },
     },
     [PAYABLE_COUNTRY_CODE]: {
       LABEL: 'Country where charges are payable',

@@ -1,9 +1,10 @@
 import { headingCaption } from '../../../../../../pages/shared';
-// import { FIELD_VALUES } from '../../../../../../constants';
+import { agentChargesPage } from '../../../../../../pages/insurance/export-contract';
 import { PAGES } from '../../../../../../content-strings';
-// import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
-// import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
+import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
+import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
@@ -12,7 +13,7 @@ const {
   EXPORT_CONTRACT: { AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
-// const { AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE } } = FIELD_IDS;
+const { AGENT_CHARGES: { METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE } } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -42,7 +43,7 @@ context('Insurance - Export contract - Agent charges page - As an Exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
-      backLink: `${ROOT}/${referenceNumber}#`,
+      backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}#`,
     });
   });
 
@@ -55,38 +56,27 @@ context('Insurance - Export contract - Agent charges page - As an Exporter, I wa
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    // it(`renders ${SERVICE_DESCRIPTION} label and input`, () => {
-    //   const fieldId = SERVICE_DESCRIPTION;
-    //   const fieldStrings = FIELDS.AGENT_CHARGES[fieldId];
+    describe(`${METHOD} label and inputs`, () => {
+      const { OPTIONS } = FIELDS.AGENT_CHARGES[METHOD];
 
-    //   cy.assertTextareaRendering({
-    //     fieldId,
-    //     expectedLabel: fieldStrings.LABEL,
-    //     maximumCharacters: fieldStrings.MAXIMUM,
-    //   });
-    // });
+      it(`renders a ${FIXED_SUM} radio input with label`, () => {
+        const field = agentChargesPage[METHOD][FIXED_SUM];
 
-    // describe(`${IS_CHARGING} label and input`, () => {
-    //   const fieldId = IS_CHARGING;
+        field.input().should('exist');
+        cy.checkText(field.label(), OPTIONS.FIXED_SUM.TEXT);
+      });
 
-    //   it('renders `yes` and `no` radio buttons in the correct order', () => {
-    //     cy.assertYesNoRadiosOrder({ noRadioFirst: true });
-    //   });
+      it(`renders a ${PERCENTAGE} radio input with label`, () => {
+        const field = agentChargesPage[METHOD][PERCENTAGE];
 
-    //   it('renders `no` radio button', () => {
-    //     cy.checkText(noRadio().label(), FIELD_VALUES.NO);
+        field.input().should('exist');
+        cy.checkText(field.label(), OPTIONS.PERCENTAGE.TEXT);
+      });
+    });
 
-    //     cy.checkRadioInputNoAriaLabel(FIELDS.AGENT_CHARGES[fieldId].LABEL);
-    //   });
-
-    //   it('renders `yes` radio button', () => {
-    //     yesRadio().input().should('exist');
-
-    //     cy.checkText(yesRadio().label(), FIELD_VALUES.YES);
-
-    //     cy.checkRadioInputYesAriaLabel(FIELDS.AGENT_CHARGES[fieldId].LABEL);
-    //   });
-    // });
+    describe(`searchable autocomplete input (${PAYABLE_COUNTRY_CODE})`, () => {
+      assertCountryAutocompleteInput({ fieldId: PAYABLE_COUNTRY_CODE });
+    });
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();

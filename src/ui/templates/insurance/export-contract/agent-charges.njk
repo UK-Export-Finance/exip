@@ -53,15 +53,15 @@
             {
               label: {
                 attributes: {
-                  id: FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_AMOUNT.ID + '-label',
-                  'data-cy': FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_AMOUNT.ID + '-label'
+                  id: FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + '-label',
+                  'data-cy': FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + '-label'
                 }
               },
-              value: FIELDS.METHOD.OPTIONS.FIXED_AMOUNT.VALUE ,
-              text: FIELDS.METHOD.OPTIONS.FIXED_AMOUNT.TEXT,
-              checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.FIXED_AMOUNT.ID,
+              value: FIELDS.METHOD.OPTIONS.FIXED_SUM.VALUE ,
+              text: FIELDS.METHOD.OPTIONS.FIXED_SUM.TEXT,
+              checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.FIXED_SUM.ID,
               attributes: {
-                "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_AMOUNT.ID + "-input"
+                "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + "-input"
               }
             },
             {
@@ -90,7 +90,7 @@
     </div>
 
     <div class="govuk-grid-row">
-      <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-8">
+      <div class="govuk-grid-column-one-third-from-desktop govuk-!-margin-bottom-8">
         {{ govukLabel({
           for: FIELDS.PAYABLE_COUNTRY_CODE.ID,
           classes: "govuk-!-font-weight-bold",

@@ -15,7 +15,7 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_AMOUNT, FIXED_AMOUNT_CURRENCY_CODE, PERCENTAGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const { referenceNumber } = mockApplication;
@@ -39,7 +39,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_AMOUNT, FIXED_AMOUNT_CURRENCY_CODE, PERCENTAGE];
+      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -71,13 +71,13 @@ describe('controllers/insurance/export-contract/agent-service', () => {
             ID: PAYABLE_COUNTRY_CODE,
             ...FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE],
           },
-          FIXED_AMOUNT: {
-            ID: FIXED_AMOUNT,
-            ...FIELDS.AGENT_CHARGES[FIXED_AMOUNT],
+          FIXED_SUM: {
+            ID: FIXED_SUM,
+            ...FIELDS.AGENT_CHARGES[FIXED_SUM],
           },
-          FIXED_AMOUNT_CURRENCY_CODE: {
-            ID: FIXED_AMOUNT_CURRENCY_CODE,
-            ...FIELDS.AGENT_CHARGES[FIXED_AMOUNT_CURRENCY_CODE],
+          FIXED_SUM_CURRENCY_CODE: {
+            ID: FIXED_SUM_CURRENCY_CODE,
+            ...FIELDS.AGENT_CHARGES[FIXED_SUM_CURRENCY_CODE],
           },
           PERCENTAGE: {
             ID: PERCENTAGE,
