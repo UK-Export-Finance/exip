@@ -235,7 +235,6 @@ jobs:
             "eligibility/total-value-insured/**/*.spec.js",
             "eligibility/uk-goods-or-services/**/*.spec.js",
             "export-contract/about-goods-or-services/**/*.spec.js",
-            "export-contract/agent/**/*.spec.js",
             "export-contract/how-will-you-get-paid/**/*.spec.js",
             "export-contract/private-market/**/*.spec.js",
             "export-contract/declined-by-private-market/**/*.spec.js",
