@@ -1,0 +1,19 @@
+{% import '../../components/text-input.njk' as textInput %}
+
+<div class="govuk-grid-row">
+  {% set field = FIELDS.FIXED_SUM_CURRENCY_CODE %}
+  {% set fieldId = field.ID %}
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
+      {{ textInput.render({
+        id: fieldId,
+        labelText: field.LABEL,
+        inputClasses: "govuk-input--width-5",
+        prefixText: CURRENCY_PREFIX_SYMBOL,
+        errorMessage: validationErrors.errorList[fieldId]
+      }) }}
+    </div>
+  </div>
+</div>

@@ -40,6 +40,15 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
+
+        {% set conditionalFixedSumHtml %}
+          {% include CONDITIONAL_FIXED_SUM_HTML %}
+        {% endset %}
+
+        {% set conditionalPercentageHtml %}
+          {% include CONDITIONAL_PERCENTAGE_HTML %}
+        {% endset %}
+
         {{ govukRadios({
           idPrefix: FIELDS.METHOD.ID,
           name: FIELDS.METHOD.ID,
@@ -62,6 +71,9 @@
               checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.FIXED_SUM.ID,
               attributes: {
                 "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + "-input"
+              },
+              conditional: {
+                html: conditionalFixedSumHtml
               }
             },
             {
@@ -76,6 +88,9 @@
               checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.PERCENTAGE.ID,
               attributes: {
                 "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.PERCENTAGE.ID + "-input"
+              },
+              conditional: {
+                html: conditionalPercentageHtml
               }
             }
           ],

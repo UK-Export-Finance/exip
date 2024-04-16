@@ -10,7 +10,7 @@ const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
   AGENT_CHARGES: {
-    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    METHOD, FIXED_SUM, PERCENTAGE, CHARGE_PERCENTAGE, FIXED_SUM_CURRENCY_CODE, PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -131,9 +131,16 @@ export const EXPORT_CONTRACT_FIELDS = {
         PERCENTAGE: {
           ID: PERCENTAGE,
           VALUE: PERCENTAGE,
-          TEXT: 'Fixed sum',
+          TEXT: 'Percentage',
         },
       },
+    },
+    [FIXED_SUM_CURRENCY_CODE]: {
+      LABEL: 'How much are they charging in TODO?',
+    },
+    [CHARGE_PERCENTAGE]: {
+      LABEL: 'What percentage are they charging',
+      SUFFIX: '%',
     },
     [PAYABLE_COUNTRY_CODE]: {
       LABEL: 'Country where charges are payable',

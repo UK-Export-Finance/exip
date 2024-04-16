@@ -23,6 +23,7 @@ Cypress.Commands.add('assertErrorSummaryListDoesNotExist', require('./assert-err
 
 Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
+Cypress.Commands.add('assertSuffix', require('./assert-suffix'));
 Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rendering'));
 Cypress.Commands.add('assertDynamicCharacterCount', require('./assert-dynamic-character-count'));
 

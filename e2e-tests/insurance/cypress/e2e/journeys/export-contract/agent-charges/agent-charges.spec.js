@@ -1,5 +1,6 @@
-import { headingCaption } from '../../../../../../pages/shared';
+import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../pages/insurance/export-contract';
+import { SYMBOLS } from '../../../../../../constants';
 import { PAGES } from '../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/export-contract';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
@@ -15,13 +16,13 @@ const {
 
 const {
   AGENT_CHARGES: {
-    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, FIXED_SUM_CURRENCY_CODE, CHARGE_PERCENTAGE,
   },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agent’s charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid', () => {
+context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agen's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
   let referenceNumber;
   let url;
 
@@ -75,6 +76,38 @@ context('Insurance - Export contract - Agent charges page - As an Exporter, I wa
 
         field.input().should('exist');
         cy.checkText(field.label(), OPTIONS.PERCENTAGE.TEXT);
+      });
+
+      it(`should NOT display conditional "${FIXED_SUM_CURRENCY_CODE}" field`, () => {
+        fieldSelector(FIXED_SUM_CURRENCY_CODE).input().should('not.be.visible');
+      });
+
+      it(`should NOT display conditional "${CHARGE_PERCENTAGE}" field`, () => {
+        fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
+      });
+
+      it(`should display conditional "${FIXED_SUM_CURRENCY_CODE}" field when selecting the ${FIXED_SUM} radio`, () => {
+        agentChargesPage[METHOD][FIXED_SUM].label().click();
+
+        const fieldId = FIXED_SUM_CURRENCY_CODE;
+
+        const field = fieldSelector(fieldId);
+
+        field.input().should('be.visible');
+        cy.checkText(field.label(), FIELDS.AGENT_CHARGES[fieldId].LABEL);
+        cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
+      });
+
+      it(`should display conditional "${CHARGE_PERCENTAGE}" field when selecting the ${PERCENTAGE} radio`, () => {
+        agentChargesPage[METHOD][PERCENTAGE].label().click();
+
+        const fieldId = CHARGE_PERCENTAGE;
+
+        const field = fieldSelector(fieldId);
+
+        field.input().should('be.visible');
+        cy.checkText(field.label(), FIELDS.AGENT_CHARGES[fieldId].LABEL);
+        cy.assertSuffix({ fieldId, value: FIELDS.AGENT_CHARGES[fieldId].SUFFIX });
       });
     });
 

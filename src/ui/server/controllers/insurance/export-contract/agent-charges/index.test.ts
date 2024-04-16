@@ -1,5 +1,6 @@
 import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get } from '.';
-import { TEMPLATES } from '../../../../constants';
+import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
+import { PARTIALS as PARTIAL_TEMPLATES } from '../../../../constants/templates/partials';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { PAGES } from '../../../../content-strings';
@@ -8,29 +9,42 @@ import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
+import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse } from '../../../../test-mocks';
+
+const { supportedCurrencies } = mockCurrenciesResponse;
 
 const { INSURANCE_ROOT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, CHARGE_PERCENTAGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    EXPORT_CONTRACT: {
+      AGENT_CHARGES: { CONDITIONAL_FIXED_SUM_HTML, CONDITIONAL_PERCENTAGE_HTML },
+    },
+  },
+} = PARTIAL_TEMPLATES;
 
 const { referenceNumber } = mockApplication;
 
-describe('controllers/insurance/export-contract/agent-service', () => {
+describe('controllers/insurance/export-contract/agent-charges', () => {
   let req: Request;
   let res: Response;
 
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
+  let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
 
   beforeEach(() => {
     req = mockReq();
     res = mockRes();
 
     api.keystone.countries.getAll = getCountriesSpy;
+    api.keystone.APIM.getCurrencies = getCurrenciesSpy;
   });
 
   afterAll(() => {
@@ -39,7 +53,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE];
+      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, CHARGE_PERCENTAGE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -59,7 +73,9 @@ describe('controllers/insurance/export-contract/agent-service', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber);
+      const result = pageVariables(referenceNumber, supportedCurrencies);
+
+      const currency = getCurrencyByCode(supportedCurrencies, GBP_CURRENCY_CODE);
 
       const expected = {
         FIELDS: {
@@ -75,6 +91,7 @@ describe('controllers/insurance/export-contract/agent-service', () => {
             ID: FIXED_SUM,
             ...FIELDS.AGENT_CHARGES[FIXED_SUM],
           },
+          // TODO: should be amount, not currency code
           FIXED_SUM_CURRENCY_CODE: {
             ID: FIXED_SUM_CURRENCY_CODE,
             ...FIELDS.AGENT_CHARGES[FIXED_SUM_CURRENCY_CODE],
@@ -83,7 +100,12 @@ describe('controllers/insurance/export-contract/agent-service', () => {
             ID: PERCENTAGE,
             ...FIELDS.AGENT_CHARGES[PERCENTAGE],
           },
+          CHARGE_PERCENTAGE: {
+            ID: CHARGE_PERCENTAGE,
+            ...FIELDS.AGENT_CHARGES[CHARGE_PERCENTAGE],
+          },
         },
+        CURRENCY_PREFIX_SYMBOL: currency.symbol,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
       };
 
@@ -98,6 +120,12 @@ describe('controllers/insurance/export-contract/agent-service', () => {
       expect(getCountriesSpy).toHaveBeenCalledTimes(1);
     });
 
+    it('should call api.keystone.currencies.getAll', async () => {
+      await get(req, res);
+
+      expect(getCurrenciesSpy).toHaveBeenCalledTimes(1);
+    });
+
     it('should render template', async () => {
       await get(req, res);
 
@@ -106,9 +134,11 @@ describe('controllers/insurance/export-contract/agent-service', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber),
+        ...pageVariables(referenceNumber, supportedCurrencies),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
+        CONDITIONAL_FIXED_SUM_HTML,
+        CONDITIONAL_PERCENTAGE_HTML,
         countries: mapCountries(mockCountries),
       };
 
@@ -140,10 +170,36 @@ describe('controllers/insurance/export-contract/agent-service', () => {
       });
     });
 
+    describe('when the get currencies API call fails', () => {
+      beforeEach(() => {
+        getCurrenciesSpy = jest.fn(() => Promise.reject(new Error('mock')));
+        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
     describe('when the get countries response does not return a populated array', () => {
       beforeEach(() => {
         getCountriesSpy = jest.fn(() => Promise.resolve([]));
         api.keystone.countries.getAll = getCountriesSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await get(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when the get currencies response does not return a populated array', () => {
+      beforeEach(() => {
+        getCurrenciesSpy = jest.fn(() => Promise.resolve({ ...mockCurrenciesResponse, supportedCurrencies: [] }));
+        api.keystone.APIM.getCurrencies = getCurrenciesSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
