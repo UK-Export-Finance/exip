@@ -111,9 +111,9 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(application.referenceNumber, supportedCurrencies),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
+      countries: mapCountries(countries),
       CONDITIONAL_FIXED_SUM_HTML,
       CONDITIONAL_PERCENTAGE_HTML,
-      countries: mapCountries(countries),
     });
   } catch (err) {
     console.error('Error getting countries %O', err);
@@ -159,9 +159,9 @@ export const post = async (req: Request, res: Response) => {
         ...pageVariables(application.referenceNumber, supportedCurrencies),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
+        countries: mapCountries(countries),
         CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
-        countries: mapCountries(countries),
         submittedValues: payload,
         validationErrors,
       });
