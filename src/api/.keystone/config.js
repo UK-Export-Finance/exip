@@ -309,6 +309,14 @@ var EXPORT_CONTRACT = {
   AGENT_SERVICE: {
     IS_CHARGING: "agentIsCharging",
     SERVICE_DESCRIPTION: "serviceDescription"
+  },
+  AGENT_CHARGES: {
+    METHOD: "method",
+    PAYABLE_COUNTRY_CODE: "payableCountryCode",
+    FIXED_SUM: "fixedSum",
+    FIXED_SUM_CURRENCY_CODE: "fixedSumCurrencyCode",
+    PERCENTAGE: "percentage",
+    CHARGE_PERCENTAGE: "chargePercentage"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;

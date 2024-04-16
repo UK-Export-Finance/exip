@@ -120,7 +120,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to en
 
       cy.checkText(field.label(), FIELDS.TURNOVER[fieldId].LABEL);
 
-      cy.checkText(field.suffix(), FIELDS.TURNOVER[fieldId].SUFFIX);
+      cy.assertSuffix({ fieldId, value: FIELDS.TURNOVER[fieldId].SUFFIX });
     });
 
     it('should render a `provide alternative currency` link', () => {

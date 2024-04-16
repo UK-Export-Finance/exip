@@ -27,6 +27,14 @@ export const EXPORT_CONTRACT = {
     IS_CHARGING: 'agentIsCharging',
     SERVICE_DESCRIPTION: 'serviceDescription',
   },
+  AGENT_CHARGES: {
+    METHOD: 'method',
+    PAYABLE_COUNTRY_CODE: 'payableCountryCode',
+    FIXED_SUM: 'fixedSum',
+    FIXED_SUM_AMOUNT: 'fixedSumAmount',
+    PERCENTAGE: 'percentage',
+    CHARGE_PERCENTAGE: 'chargePercentage',
+  },
 };
 
 export default EXPORT_CONTRACT;

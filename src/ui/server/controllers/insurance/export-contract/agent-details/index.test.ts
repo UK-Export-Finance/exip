@@ -38,7 +38,6 @@ describe('controllers/insurance/export-contract/agent-details', () => {
     req = mockReq();
     res = mockRes();
 
-    req.params.referenceNumber = String(referenceNumber);
     api.keystone.countries.getAll = getCountriesSpy;
   });
 
