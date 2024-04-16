@@ -16,7 +16,7 @@ const {
 
 const {
   AGENT_CHARGES: {
-    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, FIXED_SUM_CURRENCY_CODE, CHARGE_PERCENTAGE,
+    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE,
   },
 } = FIELD_IDS;
 
@@ -78,18 +78,18 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         cy.checkText(field.label(), OPTIONS.PERCENTAGE.TEXT);
       });
 
-      it(`should NOT display conditional "${FIXED_SUM_CURRENCY_CODE}" field`, () => {
-        fieldSelector(FIXED_SUM_CURRENCY_CODE).input().should('not.be.visible');
+      it(`should NOT display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
+        fieldSelector(FIXED_SUM_AMOUNT).input().should('not.be.visible');
       });
 
       it(`should NOT display conditional "${CHARGE_PERCENTAGE}" field`, () => {
         fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
       });
 
-      it(`should display conditional "${FIXED_SUM_CURRENCY_CODE}" field when selecting the ${FIXED_SUM} radio`, () => {
+      it(`should display conditional "${FIXED_SUM_AMOUNT}" field when selecting the ${FIXED_SUM} radio`, () => {
         agentChargesPage[METHOD][FIXED_SUM].label().click();
 
-        const fieldId = FIXED_SUM_CURRENCY_CODE;
+        const fieldId = FIXED_SUM_AMOUNT;
 
         const field = fieldSelector(fieldId);
 

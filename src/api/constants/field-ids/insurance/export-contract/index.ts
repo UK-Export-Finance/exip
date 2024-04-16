@@ -31,7 +31,7 @@ export const EXPORT_CONTRACT = {
     METHOD: 'method',
     PAYABLE_COUNTRY_CODE: 'payableCountryCode',
     FIXED_SUM: 'fixedSum',
-    FIXED_SUM_CURRENCY_CODE: 'fixedSumCurrencyCode',
+    FIXED_SUM_AMOUNT: 'fixedSumAmount',
     PERCENTAGE: 'percentage',
     CHARGE_PERCENTAGE: 'chargePercentage',
   },
