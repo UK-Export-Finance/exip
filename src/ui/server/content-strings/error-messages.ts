@@ -199,9 +199,10 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: 'The value the agent is charging must not include any letters or special characters',
           BELOW_MINIMUM: `The value the agent is charging must be ${MINIMUM_CHARACTERS.ONE} or more`,
         },
-        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.PERCENTAGE]: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.CHARGE_PERCENTAGE]: {
           IS_EMPTY: 'Enter the percentage the agent is charging',
           INCORRECT_FORMAT: 'Enter the percentage the agent is charging you in the correct format, without special characters',
+          // TODO: constants
           BELOW_MINIMUM: 'The percentage the agent is charging you must be a number between 1 and 100',
           ABOVE_MAXIMUM: 'The percentage the agent is charging you must be a number between 1 and 100',
         },
