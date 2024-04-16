@@ -3,6 +3,7 @@ import { REGEX } from '../../constants';
 import { objectHasProperty } from '../../helpers/object';
 import generateValidationErrors from '../../helpers/validation';
 import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number';
+import stripHyphensAndSpacesFromString from '../../helpers/strip-hyphens-and-spaces-from-string';
 import { RequestBody, ErrorMessageObject } from '../../../types';
 
 /**
@@ -44,7 +45,7 @@ const numberHyphenSpacesOnlyValidation = (
   }
 
   // replaces and removes hyphens and spaces
-  const replaced = fieldValue.replaceAll(REGEX.SPACE_AND_HYPHEN, '');
+  const replaced = stripHyphensAndSpacesFromString(fieldValue);
 
   // check if the field is below the minimum
   if (isNumberBelowMinimum(replaced.length, minimum)) {

@@ -432,6 +432,7 @@ var CUSTOM_RESOLVERS = [
   "sendEmailConfirmEmailAddress",
   "sendEmailPasswordResetLink",
   "sendEmailReactivateAccountLink",
+  "updateLossPayeeFinancialDetailsUk",
   "verifyAccountEmailAddress",
   "verifyAccountPasswordResetToken",
   "verifyAccountReactivationToken",
@@ -783,6 +784,28 @@ var ACCOUNT2 = {
    * To be safe, we use time rather than subtracting a day.
    */
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
+};
+var FINANCIAL_DETAILS = {
+  ENCRYPTION: {
+    CIPHER: {
+      ENCODING: "hex",
+      STRING_ENCODING: "base64",
+      ENCRYPTION_METHOD: "aes-256-cbc",
+      OUTPUT_ENCODING: "utf-8"
+    },
+    KEY: {
+      ALGORITHM: "sha512",
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32
+    },
+    IV: {
+      BYTES_SIZE: 16,
+      ENCODING: "base64",
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16
+    }
+  }
 };
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
@@ -1915,6 +1938,15 @@ var typeDefs = `
     eligibility: Boolean!
   }
 
+  input LossPayeeFinancialDetailsUkInput {
+    id: String
+    accountNumber: String
+    accountNumberVector: String
+    sortCode: String
+    sortCodeVector: String
+    bankAddress: String
+  }
+
    type OrdnanceSurveyResponse {
     success: Boolean
     addresses: [OrdnanceSurveyAddress]
@@ -2132,6 +2164,14 @@ var typeDefs = `
       referralUrl: String
       product: String
       service: String
+    ): SuccessResponse
+
+    """ update loss payee financial details uk """
+    updateLossPayeeFinancialDetailsUk(
+      id: String
+      bankAddress: String
+      accountNumber: String
+      sortCode: String
     ): SuccessResponse
   }
 
@@ -5417,6 +5457,67 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
 
+// helpers/encrypt/index.ts
+var import_crypto11 = __toESM(require("crypto"));
+
+// helpers/encrypt/generate-key/index.ts
+var import_crypto9 = __toESM(require("crypto"));
+var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_INDEX_START, SUBSTRING_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
+var generate_key_default = generateKey;
+
+// helpers/encrypt/generate-initialisation-vector/index.ts
+var import_crypto10 = __toESM(require("crypto"));
+var { BYTES_SIZE, ENCODING: ENCODING2, SLICE_INDEX_START, SLICE_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.IV;
+var generateInitialisationVector = () => import_crypto10.default.randomBytes(BYTES_SIZE).toString(ENCODING2).slice(SLICE_INDEX_START, SLICE_INDEX_END);
+var generate_initialisation_vector_default = generateInitialisationVector;
+
+// helpers/encrypt/index.ts
+var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var encrypt = (dataToEncrypt) => {
+  const key = generate_key_default();
+  const iv = generate_initialisation_vector_default();
+  const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
+  return {
+    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2),
+    iv
+  };
+};
+var encrypt_default = encrypt;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
+var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial details UK %s", variables.id);
+    const { id, accountNumber, sortCode, bankAddress } = variables;
+    const updateData = {
+      accountNumber: encrypt_default(accountNumber).value,
+      accountNumberVector: encrypt_default(accountNumber).iv,
+      sortCode: encrypt_default(sortCode).value,
+      sortCodeVector: encrypt_default(sortCode).iv,
+      bankAddress
+    };
+    const response = await context.db.LossPayeeFinancialUk.updateOne({
+      where: {
+        id
+      },
+      data: updateData
+    });
+    if (response) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error updating loss payee financial details UK %O", err);
+    throw new Error(`Updating loss payee financial details UK ${err}`);
+  }
+};
+var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
+
 // custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
@@ -6068,7 +6169,8 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
-    verifyAccountReactivationToken: verify_account_reactivation_token_default
+    verifyAccountReactivationToken: verify_account_reactivation_token_default,
+    updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,

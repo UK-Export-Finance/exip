@@ -61,6 +61,7 @@ services:
       APIM_MDM_VALUE:
       ORDNANCE_SURVEY_API_KEY:
       ORDNANCE_SURVEY_API_URL:
+      LOSS_PAYEE_ENCRYPTION_KEY:
 
   ui:
     build:
