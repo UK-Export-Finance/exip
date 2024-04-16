@@ -53,6 +53,7 @@ const CUSTOM_RESOLVERS = [
   'sendEmailConfirmEmailAddress',
   'sendEmailPasswordResetLink',
   'sendEmailReactivateAccountLink',
+  'updateLossPayeeFinancialDetailsUk',
   'verifyAccountEmailAddress',
   'verifyAccountPasswordResetToken',
   'verifyAccountReactivationToken',

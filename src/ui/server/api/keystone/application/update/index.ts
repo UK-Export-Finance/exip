@@ -11,6 +11,7 @@ import exportContractAgent from './exportContractAgent';
 import exportContractAgentService from './exportContractAgentService';
 import jointlyInsuredParty from './jointlyInsuredParty';
 import nominatedLossPayee from './nominatedLossPayee';
+import lossPayeeFinancialDetailsUk from './lossPayeeFinancialDetailsUk';
 import policy from './policy';
 import policyContact from './policyContact';
 import privateMarket from './privateMarket';
@@ -34,6 +35,7 @@ const update = {
   exportContractAgent,
   exportContractAgentService,
   jointlyInsuredParty,
+  lossPayeeFinancialDetailsUk,
   nominatedLossPayee,
   policy,
   policyContact,

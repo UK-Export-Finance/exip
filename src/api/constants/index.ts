@@ -143,6 +143,29 @@ export const ACCOUNT = {
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST(),
 };
 
+export const FINANCIAL_DETAILS = {
+  ENCRYPTION: {
+    CIPHER: {
+      ENCODING: 'hex' as BufferEncoding,
+      STRING_ENCODING: 'base64' as BufferEncoding,
+      ENCRYPTION_METHOD: 'aes-256-cbc',
+      OUTPUT_ENCODING: 'utf-8' as BufferEncoding,
+    },
+    KEY: {
+      ALGORITHM: 'sha512' as Algorithm,
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32,
+    },
+    IV: {
+      BYTES_SIZE: 16,
+      ENCODING: 'base64' as BufferEncoding,
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16,
+    },
+  },
+};
+
 export const EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: '24022e94-171c-4044-b0ee-d22418116575',

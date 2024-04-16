@@ -201,9 +201,14 @@ interface ApplicationJointlyInsuredParty {
   country?: string;
 }
 
+interface ApplicationLossPayeeFinancialDetailsUk {
+  id: string;
+}
+
 interface ApplicationNominatedLossPayee {
   id: string;
   isAppointed?: boolean;
+  financialUk: ApplicationLossPayeeFinancialDetailsUk;
 }
 
 interface ApplicationPolicy {
