@@ -11,7 +11,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES },
+  EXPORT_CONTRACT: { AGENT_CHARGES, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -25,12 +25,14 @@ const baseUrl = Cypress.config('baseUrl');
 context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agen's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
   let referenceNumber;
   let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
       cy.navigateToUrl(url);
     });
@@ -117,6 +119,18 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.completeAndSubmitAgentChargesForm();
+
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 });

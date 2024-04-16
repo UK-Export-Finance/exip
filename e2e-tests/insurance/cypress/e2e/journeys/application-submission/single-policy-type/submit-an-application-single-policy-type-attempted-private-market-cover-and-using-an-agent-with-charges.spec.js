@@ -1,4 +1,4 @@
-context('Insurance - submit an application - Single policy type, attempted private market cover, using an agent', () => {
+context('Insurance - submit an application - Single policy type, attempted private market cover, using an agent, agent is charging', () => {
   let referenceNumber;
 
   before(() => {
@@ -6,6 +6,7 @@ context('Insurance - submit an application - Single policy type, attempted priva
       totalContractValueOverThreshold: true,
       attemptedPrivateMarketCover: true,
       isUsingAgent: true,
+      agentIsCharging: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

@@ -20,6 +20,7 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
+ * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  */
 const completePrepareApplicationMultiplePolicyType = ({
@@ -37,6 +38,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   totalContractValueOverThreshold = false,
   attemptedPrivateMarketCover = false,
   isUsingAgent = false,
+  agentIsCharging = false,
   submitCheckYourAnswers = true,
 }) => {
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
@@ -66,6 +68,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     totalContractValueOverThreshold,
     attemptedPrivateMarketCover,
     isUsingAgent,
+    agentIsCharging,
     submitCheckYourAnswers,
   });
 };

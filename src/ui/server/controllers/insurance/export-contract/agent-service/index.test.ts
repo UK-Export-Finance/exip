@@ -17,7 +17,7 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
 const {
@@ -168,8 +168,24 @@ describe('controllers/insurance/export-contract/agent-service', () => {
         expect(mapAndSave.exportContractAgentService).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-        req.body = validBody;
+      it(`should redirect to ${AGENT_CHARGES} when ${IS_CHARGING} is true`, async () => {
+        req.body = {
+          ...validBody,
+          [IS_CHARGING]: 'true',
+        };
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_CHARGES}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it(`should redirect to ${CHECK_YOUR_ANSWERS} when ${IS_CHARGING} is false`, async () => {
+        req.body = {
+          ...validBody,
+          [IS_CHARGING]: 'false',
+        };
 
         await post(req, res);
 

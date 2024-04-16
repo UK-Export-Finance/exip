@@ -15,7 +15,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
 const {
@@ -122,6 +122,12 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    const agentIsCharging = payload[IS_CHARGING] === 'true';
+
+    if (agentIsCharging) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);  
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
