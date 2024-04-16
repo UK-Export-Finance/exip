@@ -64,7 +64,6 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
     describe(`${METHOD} label and inputs`, () => {
       const { OPTIONS } = FIELDS.AGENT_CHARGES[METHOD];
 
-      // TODO: test legend
       it(`renders a ${FIXED_SUM} radio input with label`, () => {
         const field = agentChargesPage[METHOD][FIXED_SUM];
 
