@@ -103,6 +103,15 @@ const typeDefs = `
     eligibility: Boolean!
   }
 
+  input LossPayeeFinancialDetailsUkInput {
+    id: String
+    accountNumber: String
+    accountNumberVector: String
+    sortCode: String
+    sortCodeVector: String
+    bankAddress: String
+  }
+
    type OrdnanceSurveyResponse {
     success: Boolean
     addresses: [OrdnanceSurveyAddress]
@@ -320,6 +329,14 @@ const typeDefs = `
       referralUrl: String
       product: String
       service: String
+    ): SuccessResponse
+
+    """ update loss payee financial details uk """
+    updateLossPayeeFinancialDetailsUk(
+      id: String
+      bankAddress: String
+      accountNumber: String
+      sortCode: String
     ): SuccessResponse
   }
 

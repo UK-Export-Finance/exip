@@ -48,6 +48,12 @@ export const mockBuyer = {
   exporterIsConnectedWithBuyer: true,
 };
 
+export const mockLossPayeeFinancialDetailsUk = {
+  accountNumber: '12345678',
+  sortCode: '123456',
+  bankAddress: 'Mock UK financial address',
+};
+
 export const mockCountries = [
   {
     name: 'Abu Dhabi',
