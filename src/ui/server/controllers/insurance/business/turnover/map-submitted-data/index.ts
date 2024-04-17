@@ -28,7 +28,9 @@ const mapSubmittedData = (formBody: RequestBody): object => {
   }
 
   if (objectHasProperty(populatedData, PERCENTAGE_TURNOVER)) {
-    populatedData[PERCENTAGE_TURNOVER] = stripCommas(populatedData[PERCENTAGE_TURNOVER]);
+    const percentageWithoutCommas = stripCommas(populatedData[PERCENTAGE_TURNOVER]);
+
+    populatedData[PERCENTAGE_TURNOVER] = Number(percentageWithoutCommas);
   }
 
   // map "currency code" and "alternative currency code" fields.
