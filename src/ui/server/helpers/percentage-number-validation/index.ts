@@ -39,12 +39,10 @@ const percentageNumberValidation = (
     return generateValidationErrors(field, INCORRECT_FORMAT, errors);
   }
 
-  // if below the set minimum
   if (isNumberBelowMinimum(Number(value), minimum)) {
     return generateValidationErrors(field, BELOW_MINIMUM, errors);
   }
 
-  // if above the set maximum
   if (isNumberAboveMaximum(Number(value), MAXIMUM_CHARACTERS.PERCENTAGE)) {
     return generateValidationErrors(field, ABOVE_MAXIMUM, errors);
   }
