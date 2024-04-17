@@ -13,6 +13,7 @@ import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Currency, Request, Response } from '../../../../../types';
 
 const {
@@ -162,7 +163,7 @@ export const post = async (req: Request, res: Response) => {
         countries: mapCountries(countries),
         CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
-        submittedValues: payload,
+        submittedValues: sanitiseData(payload),
         validationErrors,
       });
     } catch (err) {

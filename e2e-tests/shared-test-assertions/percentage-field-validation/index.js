@@ -42,7 +42,6 @@ export const percentageFieldValidation = ({
     cy.submitAndAssertFieldErrors({
       ...assertions,
       value: '4,4',
-      expectedValue: '44',
       expectedErrorMessage: errorMessages.INCORRECT_FORMAT,
     });
   });
