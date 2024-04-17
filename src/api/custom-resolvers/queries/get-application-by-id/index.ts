@@ -1,28 +1,32 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-import { GetApplicationByIdResponse, GetApplicationByIdVariables } from '../../../types';
+import { getApplicationByReferenceNumberResponse, getApplicationByReferenceNumberVariables } from '../../../types';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import decryptApplication from '../../../helpers/decrypt-application';
 
 /**
- * getApplicationById
+ * getApplicationByReferenceNumber
  * Gets an application by id
  * Based on decrypt variables, decrypts part of application
  * returns full application
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the GetApplicationByIdVariables mutation
+ * @param {Object} GraphQL variables for the getApplicationByReferenceNumberVariables mutation
  * @param {Object} KeystoneJS context API
- * @returns {Promise<GetApplicationByIdResponse>} Application with success flag
+ * @returns {Promise<getApplicationByReferenceNumberResponse>} Application with success flag
  */
-const getApplicationById = async (root: any, variables: GetApplicationByIdVariables, context: Context): Promise<GetApplicationByIdResponse> => {
+const getApplicationByReferenceNumber = async (
+  root: any,
+  variables: getApplicationByReferenceNumberVariables,
+  context: Context,
+): Promise<getApplicationByReferenceNumberResponse> => {
   try {
-    console.info('Getting decrypted application by id');
+    console.info('Getting application by reference number');
 
-    const { id, decryptFinancialUk } = variables;
+    const { referenceNumber, decryptFinancialUk } = variables;
 
     // finds applicationIds by id
     const applicationIds = (await context.db.Application.findOne({
       where: {
-        id,
+        referenceNumber,
       },
     })) as Application;
 
@@ -54,4 +58,4 @@ const getApplicationById = async (root: any, variables: GetApplicationByIdVariab
   }
 };
 
-export default getApplicationById;
+export default getApplicationByReferenceNumber;

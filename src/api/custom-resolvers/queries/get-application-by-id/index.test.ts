@@ -1,4 +1,4 @@
-import getApplicationById from '.';
+import getApplicationByReferenceNumber from '.';
 import { mockLossPayeeFinancialDetailsUk } from '../../../test-mocks/mock-application';
 import { Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -16,16 +16,16 @@ describe('custom-resolvers/get-application', () => {
     context = getKeystoneContext();
   });
 
-  let refNumber: string;
+  let refNumber: number;
 
   beforeAll(async () => {
     jest.resetAllMocks();
 
     const application = await createFullApplication(context);
 
-    const { id } = application;
+    const { referenceNumber } = application;
 
-    refNumber = id;
+    refNumber = referenceNumber;
   });
 
   beforeEach(async () => {
@@ -38,7 +38,7 @@ describe('custom-resolvers/get-application', () => {
 
   describe('when "decryptFinancialUk" is not set', () => {
     it('should return success=true and application without decryption', async () => {
-      const result = await getApplicationById({}, { id: refNumber }, context);
+      const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber }, context);
 
       const { financialUk } = result.application.nominatedLossPayee;
 
@@ -48,7 +48,7 @@ describe('custom-resolvers/get-application', () => {
     });
 
     it('should not call decrypt', async () => {
-      await getApplicationById({}, { id: refNumber }, context);
+      await getApplicationByReferenceNumber({}, { referenceNumber: refNumber }, context);
 
       expect(decryptSpy).toHaveBeenCalledTimes(0);
     });
@@ -56,7 +56,7 @@ describe('custom-resolvers/get-application', () => {
 
   describe('when "decryptFinancialUk" is set to "true"', () => {
     it('should return success=true and application without decryption', async () => {
-      const result = await getApplicationById({}, { id: refNumber, decryptFinancialUk: true }, context);
+      const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
       const { financialUk } = result.application.nominatedLossPayee;
 
@@ -66,7 +66,7 @@ describe('custom-resolvers/get-application', () => {
     });
 
     it('should not call decrypt', async () => {
-      await getApplicationById({}, { id: refNumber, decryptFinancialUk: true }, context);
+      await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
     });
@@ -74,7 +74,7 @@ describe('custom-resolvers/get-application', () => {
 
   describe('when the application cannot be found', () => {
     it('should return success=false', async () => {
-      const result = await getApplicationById({}, { id: '123' }, context);
+      const result = await getApplicationByReferenceNumber({}, { referenceNumber: 123 }, context);
 
       expect(result.success).toEqual(false);
     });

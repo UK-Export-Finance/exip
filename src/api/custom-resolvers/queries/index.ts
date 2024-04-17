@@ -2,7 +2,7 @@ import getAccountPasswordResetToken from './get-account-password-reset-token';
 import getApimCisCountries from './get-APIM-CIS-countries';
 import getApimCurrencies from './get-APIM-currencies';
 import getCompaniesHouseInformation from './get-companies-house-information';
-import getApplicationById from './get-application-by-id';
+import getApplicationByReferenceNumber from './get-application-by-id';
 import getOrdnanceSurveyAddress from './get-ordnance-survey-address';
 import verifyAccountPasswordResetToken from './verify-account-password-reset-token';
 
@@ -11,7 +11,7 @@ export {
   getApimCisCountries,
   getApimCurrencies,
   getCompaniesHouseInformation,
-  getApplicationById,
+  getApplicationByReferenceNumber,
   getOrdnanceSurveyAddress,
   verifyAccountPasswordResetToken,
 };

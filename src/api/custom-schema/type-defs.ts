@@ -103,6 +103,11 @@ const typeDefs = `
     eligibility: Boolean!
   }
 
+  input ApplicationWhereUniqueInput {
+    id: ID
+    referenceNumber: Int
+  }
+
   input LossPayeeFinancialDetailsUkInput {
     id: String
     accountNumber: String
@@ -399,8 +404,8 @@ const typeDefs = `
     ): CompaniesHouseResponse
 
     """ gets application by id """
-    getApplicationById(
-      Id: String
+    getApplicationByReferenceNumber(
+      referenceNumber: Int
       decryptFinancialUk: Boolean
     ): ApplicationSuccessResponse
 
