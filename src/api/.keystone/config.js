@@ -6133,7 +6133,7 @@ var decryptApplication = (application2, decryptFinancialUk2) => {
 };
 var decrypt_application_default = decryptApplication;
 
-// custom-resolvers/queries/get-application-by-id/index.ts
+// custom-resolvers/queries/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Getting application by reference number");
@@ -6161,7 +6161,7 @@ var getApplicationByReferenceNumber = async (root, variables, context) => {
     throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
   }
 };
-var get_application_by_id_default = getApplicationByReferenceNumber;
+var get_application_by_reference_number_default = getApplicationByReferenceNumber;
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
@@ -6327,7 +6327,7 @@ var customResolvers = {
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
-    getApplicationByReferenceNumber: get_application_by_id_default,
+    getApplicationByReferenceNumber: get_application_by_reference_number_default,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }
