@@ -199,7 +199,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -211,7 +211,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

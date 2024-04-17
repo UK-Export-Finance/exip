@@ -221,7 +221,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
       it(`should redirect to ${HOW_WILL_YOU_GET_PAID}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

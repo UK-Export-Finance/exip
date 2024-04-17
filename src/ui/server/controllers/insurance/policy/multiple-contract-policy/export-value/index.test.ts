@@ -212,7 +212,7 @@ describe('controllers/insurance/policy/multiple-contract-policy/export-value', (
       it(`should redirect to ${NAME_ON_POLICY}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${NAME_ON_POLICY}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${NAME_ON_POLICY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

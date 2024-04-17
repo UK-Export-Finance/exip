@@ -4,12 +4,17 @@
   {% set field = FIELDS.CHARGE_PERCENTAGE %}
   {% set fieldId = field.ID %}
 
-  {{ textInput.render({
-    id: fieldId,
-    labelText: field.LABEL,
-    labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
-    inputClasses: "govuk-input--width-5",
-    suffixText: field.SUFFIX,
-    errorMessage: validationErrors.errorList[fieldId]
-  }) }}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+      {{ textInput.render({
+        id: fieldId,
+        labelText: field.LABEL,
+        labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+        inputClasses: "govuk-input--width-5",
+        suffixText: field.SUFFIX,
+        errorMessage: validationErrors.errorList[fieldId],
+        value: submittedValues[fieldId]
+      }) }}
+    </div>
+  </div>
 </div>

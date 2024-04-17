@@ -13,6 +13,7 @@ import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse } from '../../../../test-mocks';
 
@@ -258,7 +259,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           countries: mapCountries(mockCountries),
           CONDITIONAL_FIXED_SUM_HTML,
           CONDITIONAL_PERCENTAGE_HTML,
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
           validationErrors,
         });
       });
@@ -336,7 +337,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

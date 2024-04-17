@@ -12,3 +12,4 @@ Cypress.Commands.add('completeAndSubmitAgentForm', require('../../../../../comma
 Cypress.Commands.add('completeAndSubmitAgentDetailsForm', require('../../../../../commands/insurance/complete-and-submit-agent-details-form'));
 Cypress.Commands.add('completeAgentServiceForm', require('../../../../../commands/insurance/complete-agent-service-form'));
 Cypress.Commands.add('completeAndSubmitAgentServiceForm', require('../../../../../commands/insurance/complete-and-submit-agent-service-form'));
+Cypress.Commands.add('completeAndSubmitAgentChargesForm', require('../../../../../commands/insurance/complete-and-submit-agent-charges-form'));

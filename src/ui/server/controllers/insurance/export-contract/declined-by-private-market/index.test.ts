@@ -171,7 +171,7 @@ describe('controllers/insurance/export-contract/declined-by-private-market', () 
       it(`should redirect to ${AGENT}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

@@ -9,7 +9,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_SERVICE;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_DETAILS, AGENT_SERVICE, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    AGENT_DETAILS, AGENT_SERVICE, CHECK_YOUR_ANSWERS, AGENT_CHARGES,
+  },
 } = INSURANCE_ROUTES;
 
 const { AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION } } = FIELD_IDS;
@@ -20,6 +22,7 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
+  let agentChargesUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,6 +37,7 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      agentChargesUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
 
       cy.assertUrl(url);
     });
@@ -107,17 +111,35 @@ context('Insurance - Export contract - Agent service page - As an Exporter, I wa
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.completeAndSubmitAgentServiceForm({});
+    describe(`when selecting no for ${IS_CHARGING}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.completeAndSubmitAgentServiceForm({});
 
-      cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertAgentServiceFieldValues({});
+        });
+      });
     });
 
-    describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        cy.navigateToUrl(url);
+    describe(`when selecting yes for ${IS_CHARGING}`, () => {
+      it(`should redirect to ${AGENT_CHARGES}`, () => {
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
 
-        cy.assertAgentServiceFieldValues({});
+        cy.assertUrl(agentChargesUrl);
+      });
+
+      describe('when going back to the page', () => {
+        it('should have the submitted values', () => {
+          cy.navigateToUrl(url);
+
+          cy.assertAgentServiceFieldValues({ agentIsCharging: true });
+        });
       });
     });
   });

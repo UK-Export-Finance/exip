@@ -120,7 +120,7 @@ describe('controllers/insurance/declarations/confidentiality', () => {
       it(`should redirect to ${ANTI_BRIBERY_ROOT}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANTI_BRIBERY_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ANTI_BRIBERY_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
