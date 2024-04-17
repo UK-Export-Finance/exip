@@ -224,7 +224,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
     it(`should redirect to ${YOUR_BUSINESS}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${YOUR_BUSINESS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

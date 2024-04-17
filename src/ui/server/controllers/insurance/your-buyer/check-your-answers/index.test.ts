@@ -74,7 +74,7 @@ describe('controllers/insurance/your-buyer/check-your-answers', () => {
     it(`should redirect to ${ALL_SECTIONS}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

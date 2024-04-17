@@ -148,7 +148,7 @@ describe('controllers/insurance/declarations/confirmation-and-acknowledgements',
       it(`should redirect to ${HOW_YOUR_DATA_WILL_BE_USED}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${HOW_YOUR_DATA_WILL_BE_USED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

@@ -141,7 +141,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${EXPORTING_WITH_CODE_OF_CONDUCT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -155,7 +155,7 @@ describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () =
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

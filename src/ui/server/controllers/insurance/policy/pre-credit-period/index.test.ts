@@ -166,7 +166,7 @@ describe('controllers/insurance/policy/pre-credit-period', () => {
       it(`should redirect to ${ANOTHER_COMPANY}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ANOTHER_COMPANY}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${ANOTHER_COMPANY}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

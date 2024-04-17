@@ -164,7 +164,7 @@ describe('controllers/insurance/export-contract/agent', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -178,7 +178,7 @@ describe('controllers/insurance/export-contract/agent', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_DETAILS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
