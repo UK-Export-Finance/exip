@@ -26,6 +26,12 @@ describe('api/helpers/decrypt-application', () => {
 
       expect(result).toEqual(mockApplication);
     });
+
+    it('should not call the decrypt function', () => {
+      decryptApplication(mockApplication, true);
+
+      expect(decryptSpy).toHaveBeenCalledTimes(0);
+    });
   });
 
   describe('when "decryptFinancialUk" is "true"', () => {

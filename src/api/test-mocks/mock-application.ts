@@ -140,7 +140,7 @@ export const mockLossPayeeFinancialDetailsUk = {
   sortCode: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA',
   sortCodeVector: 'AAaaAAA1aA+1aaa1',
   bankAddress: 'Mock UK financial address',
-}
+};
 
 export const mockNominatedLossPayee = {
   id: '123',

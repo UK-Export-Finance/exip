@@ -258,6 +258,11 @@ const typeDefs = `
     declaration: Declaration
   }
 
+  type ApplicationSuccessResponse {
+    success: Boolean!
+    application: ApplicationResponse
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -397,7 +402,7 @@ const typeDefs = `
     getApplicationByReferenceNumber(
       referenceNumber: Int
       decryptFinancialUk: Boolean
-    ): ApplicationResponse
+    ): ApplicationSuccessResponse
 
     """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(

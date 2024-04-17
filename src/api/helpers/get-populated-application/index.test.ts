@@ -5,7 +5,7 @@ import getCountryByField from '../get-country-by-field';
 import mockCountries from '../../test-mocks/mock-countries';
 import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
-import mockApplication, { mockLossPayeeFinancialDetailsUk} from '../../test-mocks/mock-application';
+import mockApplication, { mockLossPayeeFinancialDetailsUk } from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
