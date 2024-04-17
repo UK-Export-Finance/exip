@@ -139,7 +139,7 @@ export const EXPORT_CONTRACT_FIELDS = {
       LABEL: 'How much are they charging in TODO?',
     },
     [CHARGE_PERCENTAGE]: {
-      LABEL: 'What percentage are they charging',
+      LABEL: 'What percentage are they charging?',
       SUFFIX: '%',
     },
     [PAYABLE_COUNTRY_CODE]: {

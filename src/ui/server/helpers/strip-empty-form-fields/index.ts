@@ -15,7 +15,13 @@ const stripEmptyFormFields = (formBody: RequestBody, nullOrEmptyStringFields?: A
   keys.forEach((key) => {
     const value = formBody[key];
 
-    const hasValue = Boolean(value) || value === false;
+    /**
+     * Explicit value checks. The following values are valid:
+     * - boolean (true or false)
+     * - zero number.
+     * Without this check, a valid "false" or "0" value would be stripped.
+     */
+    const hasValue = Boolean(value) || value === false || value === 0;
 
     /**
      * if array exists and if key is in array

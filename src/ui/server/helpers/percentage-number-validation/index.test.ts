@@ -1,3 +1,4 @@
+import { MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../constants';
 import percentageNumberValidation from '.';
 import generateValidationErrors from '../validation';
 import { ErrorMessageObject } from '../../../types';
@@ -92,10 +93,23 @@ describe('server/helpers/percentage-number-validation', () => {
     });
   });
 
-  describe('percentage is negative', () => {
+  describe(`percentage is below the default minimum (${MINIMUM_CHARACTERS.ZERO})`, () => {
     it('should return a validation error', () => {
-      mockBody[FIELD_ID] = '-1';
+      mockBody[FIELD_ID] = MINIMUM_CHARACTERS.ZERO - 1;
       const response = percentageNumberValidation(mockBody, FIELD_ID, mockErrors, errorMessages);
+
+      const expected = generateValidationErrors(FIELD_ID, errorMessages.BELOW_MINIMUM, mockErrors);
+
+      expect(response).toEqual(expected);
+    });
+  });
+
+  describe('percentage is below a provided minimum', () => {
+    it('should return a validation error', () => {
+      const mockMinimum = 10;
+
+      mockBody[FIELD_ID] = mockMinimum - 1;
+      const response = percentageNumberValidation(mockBody, FIELD_ID, mockErrors, errorMessages, mockMinimum);
 
       const expected = generateValidationErrors(FIELD_ID, errorMessages.BELOW_MINIMUM, mockErrors);
 
@@ -114,9 +128,9 @@ describe('server/helpers/percentage-number-validation', () => {
     });
   });
 
-  describe('percentage is above 100', () => {
+  describe(`percentage is above ${MAXIMUM_CHARACTERS.PERCENTAGE}`, () => {
     it('should return a validation error', () => {
-      mockBody[FIELD_ID] = '101';
+      mockBody[FIELD_ID] = MAXIMUM_CHARACTERS.PERCENTAGE + 1;
       const response = percentageNumberValidation(mockBody, FIELD_ID, mockErrors, errorMessages);
 
       const expected = generateValidationErrors(FIELD_ID, errorMessages.ABOVE_MAXIMUM, mockErrors);
