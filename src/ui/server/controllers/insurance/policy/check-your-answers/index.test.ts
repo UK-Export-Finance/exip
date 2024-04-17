@@ -167,7 +167,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
     it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${EXPORT_CONTRACT.ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

@@ -170,7 +170,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CHECK_YOUR_ANSWERS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
