@@ -83,7 +83,7 @@ context(`Insurance - Export contract - Agent charges page - form validation - ${
   it(`should display validation errors when ${FIELD_ID} is below ${MINIMUM_CHARACTERS.ONE}`, () => {
     cy.submitAndAssertFieldErrors({
       ...assertions,
-      value: '0',
+      value: String(MINIMUM_CHARACTERS.ONE - 1),
       expectedErrorMessage: ERROR_MESSAGES_OBJECT.BELOW_MINIMUM,
     });
   });
