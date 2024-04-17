@@ -7,7 +7,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt(encryptedValue);
+    const result = decrypt.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -17,7 +17,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt(encryptedValue);
+    const result = decrypt.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -27,7 +27,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt(encryptedValue);
+    const result = decrypt.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -37,7 +37,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt(encryptedValue);
+    const result = decrypt.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -47,7 +47,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt(encryptedValue);
+    const result = decrypt.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });

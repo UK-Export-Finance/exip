@@ -3,8 +3,9 @@ import getPopulatedApplication, { generateErrorMessage } from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import getCountryByField from '../get-country-by-field';
 import mockCountries from '../../test-mocks/mock-countries';
+import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
-import mockApplication from '../../test-mocks/mock-application';
+import mockApplication, { mockLossPayeeFinancialDetailsUk} from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
@@ -30,6 +31,7 @@ describe('api/helpers/get-populated-application', () => {
       ownerId: application.owner.id,
       policyId: application.policy.id,
       policyContactId: application.policyContact.id,
+      nominatedLossPayeeId: application.nominatedLossPayee.id,
     };
   });
 
@@ -49,6 +51,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.owner.id).toEqual(application.owner.id);
     expect(result.policy.id).toEqual(application.policy.id);
     expect(result.policyContact.id).toEqual(application.policyContact.id);
+    expect(result.nominatedLossPayee.id).toEqual(application.nominatedLossPayee.id);
   });
 
   it('should return an application with populated buyer country', async () => {
@@ -67,6 +70,27 @@ describe('api/helpers/get-populated-application', () => {
 
     expect(result.buyer.country?.name).toEqual(expectedCountry.name);
     expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
+  });
+
+  it('should return an application with populated nominatedLossPayee', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    expect(result.nominatedLossPayee.isAppointed).toEqual(mockNominatedLossPayee.isAppointed);
+    expect(result.nominatedLossPayee.isLocatedInUk).toEqual(mockNominatedLossPayee.isLocatedInUk);
+    expect(result.nominatedLossPayee.isLocatedInternationally).toEqual(mockNominatedLossPayee.isLocatedInternationally);
+    expect(result.nominatedLossPayee.name).toEqual(mockNominatedLossPayee.name);
+  });
+
+  it('should return an application with populated financialUk', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    const { financialUk } = result.nominatedLossPayee;
+
+    expect(financialUk.accountNumber).toEqual(mockLossPayeeFinancialDetailsUk.accountNumber);
+    expect(financialUk.accountNumberVector).toEqual(mockLossPayeeFinancialDetailsUk.accountNumberVector);
+    expect(financialUk.sortCode).toEqual(mockLossPayeeFinancialDetailsUk.sortCode);
+    expect(financialUk.sortCodeVector).toEqual(mockLossPayeeFinancialDetailsUk.sortCodeVector);
+    expect(financialUk.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
   });
 
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {

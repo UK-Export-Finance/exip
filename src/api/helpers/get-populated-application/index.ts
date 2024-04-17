@@ -15,8 +15,8 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
  */
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
-
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application;
+  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId, nominatedLossPayeeId } =
+    application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -132,6 +132,16 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('buyer', application.id));
   }
 
+  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
+    where: { id: nominatedLossPayeeId },
+    query:
+      'id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id } isAppointed isLocatedInUk isLocatedInternationally name',
+  });
+
+  if (!nominatedLossPayee) {
+    throw new Error(generateErrorMessage('nominated loss payee', application.id));
+  }
+
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId },
   });
@@ -173,6 +183,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     owner: account,
     policy,
     policyContact,
+    nominatedLossPayee,
   };
 
   return populatedApplication;

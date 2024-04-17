@@ -15,6 +15,19 @@ const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, iv);
 describe('api/helpers/encrypt', () => {
   const dataToEncrypt = 'mockString';
 
+  describe('when an undefined string is provided', () => {
+    it('should return an object with empty strings for value and iv', () => {
+      const result = encrypt();
+
+      const expected = {
+        value: '',
+        iv: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   it('should return a value', () => {
     const result = encrypt(dataToEncrypt);
 

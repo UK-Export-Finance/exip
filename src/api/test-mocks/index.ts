@@ -6,6 +6,7 @@ import cisCountries from './mock-CIS-countries';
 import currencies from './mock-currencies';
 import company from './mock-company';
 import companySicCode from './mock-company-sic-code';
+import nominatedLossPayee from './mock-nominated-loss-payee';
 import { Account } from '../types';
 
 const {
@@ -42,6 +43,8 @@ export const mockCisCountries = cisCountries;
 
 export const mockCompany = company;
 export const mockCompanySicCode = companySicCode;
+
+export const mockNominatedLossPayee = nominatedLossPayee;
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',

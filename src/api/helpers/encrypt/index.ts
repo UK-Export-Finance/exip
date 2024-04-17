@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { FINANCIAL_DETAILS } from '../../constants';
 import generateKey from './generate-key';
 import generateInitialisationVector from './generate-initialisation-vector';
-import { FinancialDetailsEncryption } from '../../types';
+import { EncryptedData } from '../../types';
 
 const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 
@@ -11,9 +11,16 @@ const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANC
  * encrypts data
  * returns encrypted value and initialisation vector
  * @param dataToEncrypt
- * @returns {FinancialDetailsEncryption} value and initialisation vector
+ * @returns {EncryptedData} value and initialisation vector
  */
-const encrypt = (dataToEncrypt: string): FinancialDetailsEncryption => {
+const encrypt = (dataToEncrypt?: string): EncryptedData => {
+  if (!dataToEncrypt) {
+    return {
+      value: '',
+      iv: '',
+    };
+  }
+
   // generate the key
   const key = generateKey();
   // generate the initialisation vector
@@ -21,8 +28,10 @@ const encrypt = (dataToEncrypt: string): FinancialDetailsEncryption => {
 
   const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, iv);
 
+  const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING).concat(cipher.final(ENCODING))).toString(STRING_ENCODING);
+
   return {
-    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING).concat(cipher.final(ENCODING))).toString(STRING_ENCODING),
+    value,
     iv,
   };
 };

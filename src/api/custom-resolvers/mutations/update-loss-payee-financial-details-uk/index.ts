@@ -17,16 +17,19 @@ const updateLossPayeeFinancialDetailsUk = async (root: any, variables: Applicati
 
     const { id, accountNumber, sortCode, bankAddress } = variables;
 
+    const accountNumberEncrypted = encrypt(accountNumber);
+    const sortCodeEncrypted = encrypt(sortCode);
+
     /**
      * object with encrypted data and initialisation vectors
      * encrypts accountNumber and sortCode
      * adds the initialisation vectors
      */
     const updateData = {
-      accountNumber: encrypt(accountNumber).value,
-      accountNumberVector: encrypt(accountNumber).iv,
-      sortCode: encrypt(sortCode).value,
-      sortCodeVector: encrypt(sortCode).iv,
+      accountNumber: accountNumberEncrypted.value,
+      accountNumberVector: accountNumberEncrypted.iv,
+      sortCode: sortCodeEncrypted.value,
+      sortCodeVector: sortCodeEncrypted.iv,
       bankAddress,
     };
 

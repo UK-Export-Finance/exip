@@ -11,9 +11,9 @@ var __export = (target, all) => {
 };
 var __copyProps = (to, from, except, desc) => {
   if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    for (let key2 of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key2) && key2 !== except)
+        __defProp(to, key2, { get: () => from[key2], enumerable: !(desc = __getOwnPropDesc(from, key2)) || desc.enumerable });
   }
   return to;
 };
@@ -314,11 +314,7 @@ var EXPORT_CONTRACT = {
     METHOD: "method",
     PAYABLE_COUNTRY_CODE: "payableCountryCode",
     FIXED_SUM: "fixedSum",
-<<<<<<< HEAD
     FIXED_SUM_AMOUNT: "fixedSumAmount",
-=======
-    FIXED_SUM_CURRENCY_CODE: "fixedSumCurrencyCode",
->>>>>>> main-application-no-pdf
     PERCENTAGE: "percentage",
     CHARGE_PERCENTAGE: "chargePercentage"
   }
@@ -2068,6 +2064,35 @@ var typeDefs = `
     allCurrencies: [MappedCurrency]
   }
 
+  type Owner {
+    firstName: String
+    lastName: String
+    email: String
+  }
+
+  type ApplicationResponse {
+    id: String!
+    version: Int
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    dealType: String!
+    submissionCount: Int
+    submissionDeadline: DateTime
+    submissionType: String
+    submissionDate: DateTime
+    status: String!
+    eligibility: Eligibility
+    nominatedLossPayee: NominatedLossPayee
+    policyContact: PolicyContact
+    owner: Owner
+    company: Company
+    business: Business
+    broker: Broker
+    buyer: Buyer
+    sectionReview: SectionReview
+    declaration: Declaration
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -2202,6 +2227,12 @@ var typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ gets application by reference number """
+    getApplicationByReferenceNumber(
+      referenceNumber: Int
+      decryptFinancialUk: Boolean
+    ): ApplicationResponse
 
     """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(
@@ -4151,7 +4182,7 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId } = application2;
+  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId, nominatedLossPayeeId } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -4238,6 +4269,13 @@ var getPopulatedApplication = async (context, application2) => {
   if (!buyer) {
     throw new Error(generateErrorMessage("buyer", application2.id));
   }
+  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
+    where: { id: nominatedLossPayeeId },
+    query: "id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id } isAppointed isLocatedInUk isLocatedInternationally name"
+  });
+  if (!nominatedLossPayee) {
+    throw new Error(generateErrorMessage("nominated loss payee", application2.id));
+  }
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId }
   });
@@ -4272,7 +4310,8 @@ var getPopulatedApplication = async (context, application2) => {
     exportContract: populatedExportContract,
     owner: account2,
     policy,
-    policyContact
+    policyContact,
+    nominatedLossPayee
   };
   return populatedApplication;
 };
@@ -5479,11 +5518,18 @@ var generate_initialisation_vector_default = generateInitialisationVector;
 // helpers/encrypt/index.ts
 var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
-  const key = generate_key_default();
+  if (!dataToEncrypt) {
+    return {
+      value: "",
+      iv: ""
+    };
+  }
+  const key2 = generate_key_default();
   const iv = generate_initialisation_vector_default();
-  const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
+  const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key2, iv);
+  const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2);
   return {
-    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2),
+    value,
     iv
   };
 };
@@ -5494,11 +5540,13 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
   try {
     console.info("Updating loss payee financial details UK %s", variables.id);
     const { id, accountNumber, sortCode, bankAddress } = variables;
+    const accountNumberEncrypted = encrypt_default(accountNumber);
+    const sortCodeEncrypted = encrypt_default(sortCode);
     const updateData = {
-      accountNumber: encrypt_default(accountNumber).value,
-      accountNumberVector: encrypt_default(accountNumber).iv,
-      sortCode: encrypt_default(sortCode).value,
-      sortCodeVector: encrypt_default(sortCode).iv,
+      accountNumber: accountNumberEncrypted.value,
+      accountNumberVector: accountNumberEncrypted.iv,
+      sortCode: sortCodeEncrypted.value,
+      sortCodeVector: sortCodeEncrypted.iv,
       bankAddress
     };
     const response = await context.db.LossPayeeFinancialUk.updateOne({
@@ -6017,6 +6065,93 @@ var getCompaniesHouseInformation = async (root, variables) => {
 };
 var get_companies_house_information_default = getCompaniesHouseInformation;
 
+// helpers/decrypt/generate-decipher/index.ts
+var import_crypto12 = __toESM(require("crypto"));
+var { ENCRYPTION_METHOD: ENCRYPTION_METHOD2 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var generateDecipher = (key2, iv) => import_crypto12.default.createDecipheriv(ENCRYPTION_METHOD2, key2, iv);
+var generate_decipher_default = generateDecipher;
+
+// helpers/decrypt/generate-buffer/index.ts
+var { STRING_ENCODING: STRING_ENCODING3, OUTPUT_ENCODING: OUTPUT_ENCODING2 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var generateBufferInStringFormat = (value) => Buffer.from(value, STRING_ENCODING3).toString(OUTPUT_ENCODING2);
+var generate_buffer_default = generateBufferInStringFormat;
+
+// helpers/decrypt/index.ts
+var { ENCODING: ENCODING4, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var key = generate_key_default();
+var decryptData = (dataToDecrypt) => {
+  const { value, iv } = dataToDecrypt;
+  if (!value || !iv) {
+    return "";
+  }
+  const buffer = generate_buffer_default(value);
+  const decipher = generate_decipher_default(key, iv);
+  const decipherUpdate = decipher.update(buffer, ENCODING4, OUTPUT_ENCODING3);
+  const decipherFinal = decipher.final(OUTPUT_ENCODING3);
+  return decipherUpdate.concat(decipherFinal);
+};
+var decrypt = {
+  decrypt: decryptData
+};
+var decrypt_default = decrypt;
+
+// helpers/decrypt-financial-uk/index.ts
+var decryptFinancialUk = (applicationFinancialUk) => {
+  const updatedFinancialUk = applicationFinancialUk;
+  const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
+  const decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
+  const decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
+  updatedFinancialUk.accountNumber = decryptedAccountNumber;
+  updatedFinancialUk.sortCode = decryptedSortCode;
+  return updatedFinancialUk;
+};
+var decrypt_financial_uk_default = decryptFinancialUk;
+
+// helpers/decrypt-application/index.ts
+var decryptApplication = (application2, decryptFinancialUk2) => {
+  const updatedApplication = application2;
+  const {
+    nominatedLossPayee: { financialUk }
+  } = updatedApplication;
+  if (decryptFinancialUk2) {
+    const updatedFinancialUk = decrypt_financial_uk_default(financialUk);
+    updatedApplication.nominatedLossPayee.financialUk.accountNumber = updatedFinancialUk.accountNumber;
+    updatedApplication.nominatedLossPayee.financialUk.sortCode = updatedFinancialUk.sortCode;
+  }
+  return updatedApplication;
+};
+var decrypt_application_default = decryptApplication;
+
+// custom-resolvers/queries/get-application/index.ts
+var getApplicationByReferenceNumber = async (root, variables, context) => {
+  try {
+    console.info("Getting decrypted application by reference number");
+    const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
+    const applicationIds = await context.db.Application.findOne({
+      where: {
+        id: referenceNumber
+      }
+    });
+    if (applicationIds) {
+      let populatedApplication = await get_populated_application_default(context, applicationIds);
+      if (decryptFinancialUk2) {
+        populatedApplication = decrypt_application_default(populatedApplication, decryptFinancialUk2);
+      }
+      return {
+        success: true,
+        application: populatedApplication
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error getting application by reference number (GetApplicationByReferenceNumber mutation) %O", err);
+    throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
+  }
+};
+var get_application_default = getApplicationByReferenceNumber;
+
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
 var import_dotenv8 = __toESM(require("dotenv"));
@@ -6181,6 +6316,7 @@ var customResolvers = {
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
+    getApplicationByReferenceNumber: get_application_default,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }

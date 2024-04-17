@@ -1,20 +1,45 @@
-import crypto from 'crypto';
-import dotenv from 'dotenv';
 import { FINANCIAL_DETAILS } from '../../constants';
 import generateKey from '../encrypt/generate-key';
-import { FinancialDetailsEncryption } from '../../types';
+import generateDecipher from './generate-decipher';
+import generateBufferInStringFormat from './generate-buffer';
+import { EncryptedData } from '../../types';
 
-dotenv.config();
-
-const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+const { ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 
 const key = generateKey();
 
-const decrypt = (dataToDecrypt: FinancialDetailsEncryption) => {
-  const buff = Buffer.from(dataToDecrypt.value, STRING_ENCODING);
-  const decipher = crypto.createDecipheriv(ENCRYPTION_METHOD, key, dataToDecrypt.iv);
+/**
+ * decryptData
+ * uses key, initialisation and decipher to decrypt provided encrypted value
+ * createDecipheriv creates a new decipher object in same format as the created cipher for encryption
+ * decipher.update processes encrypted text in hex encoding and produces decrypted output in utf-8 format
+ * decipher.final finishes the process and produces the last portion of decrypted data in utf-8 format
+ * @param {EncryptedData} dataToDecrypt
+ * @returns {String} decrypted string
+ */
+const decryptData = (dataToDecrypt: EncryptedData) => {
+  const { value, iv } = dataToDecrypt;
 
-  return decipher.update(buff.toString(OUTPUT_ENCODING), ENCODING, OUTPUT_ENCODING).concat(decipher.final(OUTPUT_ENCODING));
+  // if any of these are undefined or empty, then return an empty string
+  if (!value || !iv) {
+    return '';
+  }
+
+  // creates buffer in string format
+  const buffer = generateBufferInStringFormat(value);
+  // creates decipher in same format as the cipher used for encryption
+  const decipher = generateDecipher(key, iv);
+
+  // processes encrypted text in hex and produces utf-8 decrypted output
+  const decipherUpdate = decipher.update(buffer, ENCODING, OUTPUT_ENCODING);
+  // finalises decryption process for last portion of decrypted data in utf-8 format
+  const decipherFinal = decipher.final(OUTPUT_ENCODING);
+
+  return decipherUpdate.concat(decipherFinal);
+};
+
+const decrypt = {
+  decrypt: decryptData,
 };
 
 export default decrypt;

@@ -6,6 +6,7 @@ import createABuyer from '../helpers/create-a-buyer';
 import createAPolicy from '../helpers/create-a-policy';
 import createACompany from '../helpers/create-a-company';
 import createAnExportContract from '../helpers/create-an-export-contract';
+import createANominatedLossPayee from '../helpers/create-a-nominated-loss-payee';
 import { FIELD_VALUES } from '../constants';
 import {
   mockApplicationEligibility,
@@ -14,8 +15,9 @@ import {
   mockExportContract,
   mockBusiness,
   mockPolicyContact,
+  mockLossPayeeFinancialDetailsUk,
 } from '../test-mocks/mock-application';
-import { mockApplicationDeclaration } from '../test-mocks';
+import { mockApplicationDeclaration, mockNominatedLossPayee } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
 import mockCountries from '../test-mocks/mock-countries';
 import {
@@ -25,7 +27,9 @@ import {
   ApplicationExportContract,
   ApplicationPolicy,
   ApplicationPolicyContact,
+  ApplicationFinancialUk,
   Context,
+  ApplicationNominatedLossPayee,
 } from '../types';
 
 const { POLICY_TYPE } = FIELD_VALUES;
@@ -56,7 +60,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } broker { id } declaration { id } buyer { id buyerTradingHistory { id } }',
+      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } nominatedLossPayee { id } broker { id } declaration { id } buyer { id buyerTradingHistory { id } }',
     data: {
       owner: {
         connect: {
@@ -94,6 +98,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create exportContract and associate with the application.
   const { exportContract } = await createAnExportContract(context, application.id);
 
+  // create a nominatedLossPayee and associate with the application.
+  const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
+
   /**
    * update the application with:
    * 1) Buyer relationship ID
@@ -119,6 +126,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
       },
       policy: {
         connect: { id: policy.id },
+      },
+      nominatedLossPayee: {
+        connect: { id: nominatedLossPayee.id },
       },
     },
   });
@@ -180,6 +190,30 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id hasAntiBriberyCodeOfConduct',
   })) as ApplicationDeclaration;
 
+  // gets financialUk id from application for updating
+  const updatedApplication = (await context.query.Application.findOne({
+    where: { id: application.id },
+    query: 'id nominatedLossPayee { id isAppointed financialUk { id } }',
+  })) as Application;
+
+  // updates nominatedLossPayee
+  (await context.query.NominatedLossPayee.updateOne({
+    where: {
+      id: updatedApplication.nominatedLossPayee.id,
+    },
+    data: mockNominatedLossPayee,
+    query: 'id',
+  })) as ApplicationNominatedLossPayee;
+
+  // updates financialUk table
+  (await context.query.LossPayeeFinancialUk.updateOne({
+    where: {
+      id: updatedApplication.nominatedLossPayee.financialUk.id,
+    },
+    data: mockLossPayeeFinancialDetailsUk,
+    query: 'id accountNumber sortCode',
+  })) as ApplicationFinancialUk;
+
   return {
     ...application,
     owner: account,
@@ -191,6 +225,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     eligibility,
     policy,
     policyContact,
+    nominatedLossPayee: updatedApplication.nominatedLossPayee,
   };
 };
 

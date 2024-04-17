@@ -1,4 +1,4 @@
-export interface FinancialDetailsEncryption {
-  value: string;
-  iv: string;
+export interface EncryptedData {
+  value?: string;
+  iv?: string;
 }

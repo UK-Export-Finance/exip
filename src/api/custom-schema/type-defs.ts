@@ -229,6 +229,35 @@ const typeDefs = `
     allCurrencies: [MappedCurrency]
   }
 
+  type Owner {
+    firstName: String
+    lastName: String
+    email: String
+  }
+
+  type ApplicationResponse {
+    id: String!
+    version: Int
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    dealType: String!
+    submissionCount: Int
+    submissionDeadline: DateTime
+    submissionType: String
+    submissionDate: DateTime
+    status: String!
+    eligibility: Eligibility
+    nominatedLossPayee: NominatedLossPayee
+    policyContact: PolicyContact
+    owner: Owner
+    company: Company
+    business: Business
+    broker: Broker
+    buyer: Buyer
+    sectionReview: SectionReview
+    declaration: Declaration
+  }
+
   type Mutation {
     """ create an account """
     createAnAccount(
@@ -363,6 +392,12 @@ const typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ gets application by reference number """
+    getApplicationByReferenceNumber(
+      referenceNumber: Int
+      decryptFinancialUk: Boolean
+    ): ApplicationResponse
 
     """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(
