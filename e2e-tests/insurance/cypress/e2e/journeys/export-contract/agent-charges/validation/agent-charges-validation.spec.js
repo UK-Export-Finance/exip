@@ -35,9 +35,15 @@ context('Insurance - Export contract - Agent charges page - form validation', ()
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+      cy.completeAndSubmitAgentDetailsForm({});
+      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
 
-      cy.navigateToUrl(url);
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
     });
   });
 

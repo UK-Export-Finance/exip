@@ -19,6 +19,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * - attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * - isUsingAgent: Should submit "yes" to "using an agent" form.
+ * - agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -33,6 +34,7 @@ const completeSignInAndSubmitAnApplication = ({
   totalContractValueOverThreshold = false,
   attemptedPrivateMarketCover = false,
   isUsingAgent = false,
+  agentIsCharging = false,
 }) => {
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
@@ -46,6 +48,7 @@ const completeSignInAndSubmitAnApplication = ({
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,
+        agentIsCharging,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -58,6 +61,7 @@ const completeSignInAndSubmitAnApplication = ({
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,
+        agentIsCharging,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

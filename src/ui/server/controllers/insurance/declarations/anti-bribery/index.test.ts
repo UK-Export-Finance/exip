@@ -140,7 +140,7 @@ describe('controllers/insurance/declarations/anti-bribery', () => {
       it(`should redirect to ${CODE_OF_CONDUCT}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CODE_OF_CONDUCT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CODE_OF_CONDUCT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

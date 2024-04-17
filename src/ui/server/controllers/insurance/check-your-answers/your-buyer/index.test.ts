@@ -133,7 +133,7 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

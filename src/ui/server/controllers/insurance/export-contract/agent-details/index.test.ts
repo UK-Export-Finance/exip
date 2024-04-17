@@ -249,7 +249,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
       it(`should redirect to ${AGENT_SERVICE}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${AGENT_SERVICE}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
