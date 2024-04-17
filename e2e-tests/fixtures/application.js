@@ -1,4 +1,5 @@
 import {
+  APPLICATION,
   COVER_PERIOD as COVER_PERIOD_CONSTANTS,
   FIELD_IDS,
   FIELD_VALUES,
@@ -10,6 +11,10 @@ import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
 import { GBP_CURRENCY_CODE } from './currencies';
 import { COUNTRY_APPLICATION_SUPPORT } from './countries';
 import mockCompanies from './companies';
+
+const {
+  AGENT_SERVICE_CHARGE,
+} = APPLICATION.EXPORT_CONTRACT;
 
 const {
   INSURANCE: {
@@ -191,7 +196,7 @@ const application = {
     AGENT_CHARGES: {
       [CHARGE_PERCENTAGE]: 10,
       [FIXED_SUM_AMOUNT]: 1500,
-      [METHOD]: 'Fixed sum',
+      [METHOD]: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM,
       [PAYABLE_COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
     },
   },
