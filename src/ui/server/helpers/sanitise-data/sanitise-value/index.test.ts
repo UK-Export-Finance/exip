@@ -8,9 +8,11 @@ const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: { PHONE_NUMBER },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES },
+    TURNOVER: { PERCENTAGE_TURNOVER },
   },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
+    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT },
   },
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME },
@@ -39,6 +41,9 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         ADDRESS,
         ACCOUNT_NUMBER,
         SORT_CODE,
+        PERCENTAGE_TURNOVER,
+        CHARGE_PERCENTAGE,
+        FIXED_SUM_AMOUNT,
       ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);

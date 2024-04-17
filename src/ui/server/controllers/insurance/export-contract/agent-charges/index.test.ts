@@ -13,6 +13,7 @@ import getCurrencyByCode from '../../../../helpers/get-currency-by-code';
 import mapCountries from '../../../../helpers/mappings/map-countries';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import { sanitiseData } from '../../../../helpers/sanitise-data';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse, mockExportContractAgentServiceCharge } from '../../../../test-mocks';
 
@@ -257,7 +258,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           countries: mapCountries(mockCountries),
           CONDITIONAL_FIXED_SUM_HTML,
           CONDITIONAL_PERCENTAGE_HTML,
-          submittedValues: payload,
+          submittedValues: sanitiseData(payload),
           validationErrors,
         });
       });

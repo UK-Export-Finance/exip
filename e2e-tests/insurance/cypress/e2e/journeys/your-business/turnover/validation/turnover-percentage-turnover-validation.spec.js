@@ -1,7 +1,7 @@
-import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { ROUTES } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
+import { percentageFieldValidation } from '../../../../../../../shared-test-assertions';
 
 const {
   TURNOVER: {
@@ -9,14 +9,9 @@ const {
   },
 } = FIELD_IDS;
 
-const TURNOVER_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
-const ERROR_MESSAGE = TURNOVER_ERRORS[FIELD_ID];
-
-const assertions = {
-  field: fieldSelector(FIELD_ID),
-  errorIndex: 1,
-  expectedErrorsCount: 2,
-};
+const {
+  [FIELD_ID]: ERROR_MESSAGES_OBJECT,
+} = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -49,68 +44,11 @@ describe(`Insurance - Your business - Turnover page - form validation - ${FIELD_
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should display validation errors when ${FIELD_ID} is left empty`, () => {
-    cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR_MESSAGE.IS_EMPTY });
-  });
-
-  it(`should display validation errors when ${FIELD_ID} is a decimal place number`, () => {
-    cy.submitAndAssertFieldErrors({
-      ...assertions,
-      value: '5.5',
-      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
-    });
-  });
-
-  it(`should display validation errors when ${FIELD_ID} has a comma`, () => {
-    cy.submitAndAssertFieldErrors({
-      ...assertions,
-      value: '4,4',
-      expectedValue: '44',
-      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
-    });
-  });
-
-  it(`should display validation errors when ${FIELD_ID} has special characters`, () => {
-    cy.submitAndAssertFieldErrors({
-      ...assertions,
-      value: '50!',
-      expectedErrorMessage: ERROR_MESSAGE.INCORRECT_FORMAT,
-    });
-  });
-
-  it(`should display validation errors when ${FIELD_ID} is over 100`, () => {
-    cy.submitAndAssertFieldErrors({
-      ...assertions,
-      value: '101',
-      expectedErrorMessage: ERROR_MESSAGE.ABOVE_MAXIMUM,
-    });
-  });
-
-  it(`should display validation errors when ${FIELD_ID} is below 0`, () => {
-    cy.submitAndAssertFieldErrors({
-      ...assertions,
-      value: '-1',
-      expectedErrorMessage: ERROR_MESSAGE.BELOW_MINIMUM,
-    });
-  });
-
-  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as a whole number`, () => {
-    const field = fieldSelector(FIELD_ID);
-
-    cy.keyboardInput(field.input(), '5');
-
-    cy.clickSubmitButton();
-
-    cy.assertErrorSummaryListLength(1);
-  });
-
-  it(`should NOT display validation errors when ${FIELD_ID} is correctly entered as 0`, () => {
-    const field = fieldSelector(FIELD_ID);
-
-    cy.keyboardInput(field.input(), '0');
-
-    cy.clickSubmitButton();
-
-    cy.assertErrorSummaryListLength(1);
+  percentageFieldValidation({
+    fieldId: FIELD_ID,
+    errorIndex: 1,
+    errorMessages: ERROR_MESSAGES_OBJECT,
+    totalExpectedErrors: 2,
+    totalExpectedOtherErrorsWithValidPercentage: 1,
   });
 });
