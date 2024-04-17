@@ -28,7 +28,7 @@ describe('api/helpers/decrypt-application', () => {
     });
 
     it('should not call the decrypt function', () => {
-      decryptApplication(mockApplication, true);
+      decryptApplication(mockApplication, false);
 
       expect(decryptSpy).toHaveBeenCalledTimes(0);
     });
