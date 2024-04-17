@@ -398,9 +398,9 @@ const typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ gets application by reference number """
-    getApplicationByReferenceNumber(
-      referenceNumber: Int
+    """ gets application by id """
+    getApplicationById(
+      Id: String
       decryptFinancialUk: Boolean
     ): ApplicationSuccessResponse
 

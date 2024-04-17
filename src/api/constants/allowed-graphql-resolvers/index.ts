@@ -66,6 +66,7 @@ const CUSTOM_RESOLVERS = [
   'declarationHowDataWillBeUseds',
   'deleteApplicationByReferenceNumber',
   'getCompaniesHouseInformation',
+  'getApplicationById',
   'submitApplication',
 
   // feedback

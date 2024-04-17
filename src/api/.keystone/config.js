@@ -444,6 +444,7 @@ var CUSTOM_RESOLVERS = [
   "declarationHowDataWillBeUseds",
   "deleteApplicationByReferenceNumber",
   "getCompaniesHouseInformation",
+  "getApplicationById",
   "submitApplication",
   // feedback
   "createFeedbackAndSendEmail",
@@ -2233,9 +2234,9 @@ var typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ gets application by reference number """
-    getApplicationByReferenceNumber(
-      referenceNumber: Int
+    """ gets application by id """
+    getApplicationById(
+      Id: String
       decryptFinancialUk: Boolean
     ): ApplicationSuccessResponse
 
@@ -6127,14 +6128,14 @@ var decryptApplication = (application2, decryptFinancialUk2) => {
 };
 var decrypt_application_default = decryptApplication;
 
-// custom-resolvers/queries/get-application/index.ts
-var getApplicationByReferenceNumber = async (root, variables, context) => {
+// custom-resolvers/queries/get-application-by-id/index.ts
+var getApplicationById = async (root, variables, context) => {
   try {
-    console.info("Getting decrypted application by reference number");
-    const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
+    console.info("Getting decrypted application by id");
+    const { id, decryptFinancialUk: decryptFinancialUk2 } = variables;
     const applicationIds = await context.db.Application.findOne({
       where: {
-        id: referenceNumber
+        id
       }
     });
     if (applicationIds) {
@@ -6155,7 +6156,7 @@ var getApplicationByReferenceNumber = async (root, variables, context) => {
     throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
   }
 };
-var get_application_default = getApplicationByReferenceNumber;
+var get_application_by_id_default = getApplicationById;
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
@@ -6321,7 +6322,7 @@ var customResolvers = {
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
-    getApplicationByReferenceNumber: get_application_default,
+    getApplicationById: get_application_by_id_default,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }

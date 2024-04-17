@@ -1,32 +1,28 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-import { GetApplicationByReferenceNumberVariables, GetApplicationByReferenceNumberResponse } from '../../../types';
+import { GetApplicationByIdResponse, GetApplicationByIdVariables } from '../../../types';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import decryptApplication from '../../../helpers/decrypt-application';
 
 /**
- * getApplicationByReferenceNumber
- * Gets an application by reference number
+ * getApplicationById
+ * Gets an application by id
  * Based on decrypt variables, decrypts part of application
  * returns full application
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the GetApplicationByReferenceNumberVariables mutation
+ * @param {Object} GraphQL variables for the GetApplicationByIdVariables mutation
  * @param {Object} KeystoneJS context API
- * @returns {Promise<GetApplicationByReferenceNumberResponse>} Application with success flag
+ * @returns {Promise<GetApplicationByIdResponse>} Application with success flag
  */
-const getApplicationByReferenceNumber = async (
-  root: any,
-  variables: GetApplicationByReferenceNumberVariables,
-  context: Context,
-): Promise<GetApplicationByReferenceNumberResponse> => {
+const getApplicationById = async (root: any, variables: GetApplicationByIdVariables, context: Context): Promise<GetApplicationByIdResponse> => {
   try {
-    console.info('Getting decrypted application by reference number');
+    console.info('Getting decrypted application by id');
 
-    const { referenceNumber, decryptFinancialUk } = variables;
+    const { id, decryptFinancialUk } = variables;
 
-    // finds applicationIds by reference number
+    // finds applicationIds by id
     const applicationIds = (await context.db.Application.findOne({
       where: {
-        id: referenceNumber,
+        id,
       },
     })) as Application;
 
@@ -58,4 +54,4 @@ const getApplicationByReferenceNumber = async (
   }
 };
 
-export default getApplicationByReferenceNumber;
+export default getApplicationById;

@@ -275,12 +275,12 @@ export interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
 }
 
-export interface GetApplicationByReferenceNumberVariables {
-  referenceNumber: string;
+export interface GetApplicationByIdVariables {
+  id: string;
   decryptFinancialUk?: boolean;
 }
 
-export interface GetApplicationByReferenceNumberResponse extends SuccessResponse {
+export interface GetApplicationByIdResponse extends SuccessResponse {
   application?: Application;
 }
 
