@@ -4,17 +4,17 @@
   {% set field = FIELDS.FIXED_SUM_AMOUNT %}
   {% set fieldId = field.ID %}
 
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds-from-desktop">
+  {{ textInput.render({
+    id: fieldId,
+    labelText: field.LABEL,
+    labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
+    inputClasses: "govuk-input--width-5",
+    prefixText: CURRENCY_PREFIX_SYMBOL,
+    errorMessage: validationErrors.errorList[fieldId],
+    value: submittedValues[fieldId]
+  }) }}
 
-      {{ textInput.render({
-        id: fieldId,
-        labelText: field.LABEL,
-        inputClasses: "govuk-input--width-5",
-        prefixText: CURRENCY_PREFIX_SYMBOL,
-        errorMessage: validationErrors.errorList[fieldId],
-        value: submittedValues[fieldId]
-      }) }}
-    </div>
-  </div>
+  <p class-"govuk-body">
+    <a class="govuk-link" data-cy="provide-alternative-currency-link" href="{{ PROVIDE_ALTERNATIVE_CURRENCY_URL }}">{{ CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY }}</a>
+  </p>
 </div>
