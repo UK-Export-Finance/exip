@@ -14,7 +14,7 @@ import mapCountries from '../../../../helpers/mappings/map-countries';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse, mockExportContractAgentServiceCharge } from '../../../../test-mocks';
 
 const { supportedCurrencies } = mockCurrenciesResponse;
 
@@ -218,9 +218,9 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('post', () => {
     const validBody = {
-      [METHOD]: FIXED_SUM,
-      [FIXED_SUM_AMOUNT]: '1234',
-      [PAYABLE_COUNTRY_CODE]: mockCountries[0].isoCode,
+      [METHOD]: mockExportContractAgentServiceCharge[METHOD],
+      [FIXED_SUM_AMOUNT]: mockExportContractAgentServiceCharge[FIXED_SUM_AMOUNT],
+      [PAYABLE_COUNTRY_CODE]: mockExportContractAgentServiceCharge[PAYABLE_COUNTRY_CODE],
     };
 
     beforeEach(() => {

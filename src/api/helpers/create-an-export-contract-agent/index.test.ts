@@ -58,6 +58,23 @@ describe('helpers/create-an-export-contract-agent', () => {
     expect(agentService.serviceDescription).toEqual('');
   });
 
+  test('it should return an agentServiceCharge ID', async () => {
+    const { agentServiceCharge } = await createAnExportContractAgent(context, applicationExportContract.id);
+
+    expect(agentServiceCharge.id).toBeDefined();
+    expect(typeof agentServiceCharge.id).toEqual('string');
+    expect(agentServiceCharge.id.length).toBeGreaterThan(0);
+  });
+
+  test('it should return empty agentService fields', async () => {
+    const { agentServiceCharge } = await createAnExportContractAgent(context, applicationExportContract.id);
+
+    expect(agentServiceCharge.chargePercentage).toEqual('');
+    expect(agentServiceCharge.fixedSumAmount).toEqual('');
+    expect(agentServiceCharge.payableCountryCode).toEqual('');
+    expect(agentServiceCharge.method).toBeNull();
+  });
+
   describe('when an invalid exportContract ID is passed', () => {
     test('it should throw an error', async () => {
       try {
