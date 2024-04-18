@@ -21,6 +21,8 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
  * @param {Boolean} agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
+ * @param {Boolean} agentChargeMethodFixedSum: Agent charge method is "fixed sum"
+ * @param {Boolean} agentChargeMethodPercentage: Agent charge method is "percentage"
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  */
 const completePrepareApplicationMultiplePolicyType = ({
@@ -39,6 +41,8 @@ const completePrepareApplicationMultiplePolicyType = ({
   attemptedPrivateMarketCover = false,
   isUsingAgent = false,
   agentIsCharging = false,
+  agentChargeMethodFixedSum = false,
+  agentChargeMethodPercentage = false,
   submitCheckYourAnswers = true,
 }) => {
   cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
@@ -69,6 +73,8 @@ const completePrepareApplicationMultiplePolicyType = ({
     attemptedPrivateMarketCover,
     isUsingAgent,
     agentIsCharging,
+    agentChargeMethodFixedSum,
+    agentChargeMethodPercentage,
     submitCheckYourAnswers,
   });
 };

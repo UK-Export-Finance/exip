@@ -20,6 +20,13 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
     exportContract: {
       finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarketCover },
+      agent: {
+        isUsingAgent,
+        service: {
+          agentIsCharging,
+          charge: { method: agentChargeMethod },
+        },
+      },
     },
     policy: { policyType, jointlyInsuredParty },
     referenceNumber,
@@ -67,6 +74,9 @@ describe('server/helpers/task-list/generate-groups-and-tasks', () => {
         hasPreviousCreditInsuranceWithBuyer: exporterHasPreviousCreditInsuranceWithBuyer,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
+        isUsingAgent,
+        agentIsCharging,
+        agentChargeMethod,
       }),
     };
 
