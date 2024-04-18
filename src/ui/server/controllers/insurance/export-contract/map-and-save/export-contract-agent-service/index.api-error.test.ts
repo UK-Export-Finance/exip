@@ -1,8 +1,8 @@
 import mapAndSave from '.';
-import save from '../../save-data/export-contract-agent-service-charge';
+import save from '../../save-data/export-contract-agent-service';
 import { mockApplication } from '../../../../../test-mocks';
 
-describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge - api errors', () => {
+describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service - api errors', () => {
   jest.mock('../../save-data/export-contract-agent-service-charge');
 
   const mockFormBody = {
@@ -10,25 +10,25 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     mock: true,
   };
 
-  describe('when save application exportContractAgentServiceCharge call does not return anything', () => {
+  describe('when save application exportContractAgentService call does not return anything', () => {
     beforeEach(() => {
-      save.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve());
+      save.exportContractAgentService = jest.fn(() => Promise.resolve());
     });
 
     it('should return false', async () => {
-      const result = await mapAndSave.exportContractAgentServiceCharge(mockFormBody, mockApplication);
+      const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });
   });
 
-  describe('when save application exportContractAgentServiceCharge call fails', () => {
+  describe('when save application exportContractAgentService call fails', () => {
     beforeEach(() => {
-      save.exportContractAgentServiceCharge = jest.fn(() => Promise.reject(new Error('mock')));
+      save.exportContractAgentService = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {
-      const result = await mapAndSave.exportContractAgentServiceCharge(mockFormBody, mockApplication);
+      const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication);
 
       expect(result).toEqual(false);
     });

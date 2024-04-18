@@ -13,7 +13,7 @@
         inputClasses: "govuk-input--width-5",
         prefixText: CURRENCY_PREFIX_SYMBOL,
         errorMessage: validationErrors.errorList[fieldId],
-        value: submittedValues[fieldId]
+        value: submittedValues[fieldId] or application.exportContract.agent.service.charge[fieldId]
       }) }}
     </div>
   </div>

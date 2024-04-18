@@ -24,6 +24,7 @@ const DEFAULT_RESOLVERS = [
   'updateExportContract',
   'updateExportContractAgent',
   'updateExportContractAgentService',
+  'updateExportContractAgentServiceCharge',
   'updatePrivateMarket',
   'updateSectionReview',
   'updateEligibility',

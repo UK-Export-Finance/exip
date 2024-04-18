@@ -1,5 +1,5 @@
 import mapAndSave from '.';
-import save from '../../save-data/export-contract-agent-service-charge';
+import save from '../../save-data/export-contract-agent-service';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockApplication } from '../../../../../test-mocks';
@@ -8,7 +8,7 @@ const {
   AGENT_SERVICE: { IS_CHARGING },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
-describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge', () => {
+describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service', () => {
   jest.mock('../../save-data/export-contract-agent-service-charge');
 
   let mockFormBody = {

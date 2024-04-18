@@ -14,6 +14,7 @@ import mapCountries from '../../../../helpers/mappings/map-countries';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import { Currency, Request, Response } from '../../../../../types';
 
 const {
@@ -96,6 +97,11 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const {
+    referenceNumber,
+    exportContract: { agent },
+  } = application;
+
   try {
     const countries = await api.keystone.countries.getAll();
     const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
@@ -109,10 +115,10 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(application.referenceNumber, supportedCurrencies),
+      ...pageVariables(referenceNumber, supportedCurrencies),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
-      countries: mapCountries(countries),
+      countries: mapCountries(countries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
       CONDITIONAL_FIXED_SUM_HTML,
       CONDITIONAL_PERCENTAGE_HTML,
     });
@@ -157,10 +163,10 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(application.referenceNumber, supportedCurrencies),
+        ...pageVariables(referenceNumber, supportedCurrencies),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
-        countries: mapCountries(countries),
+        countries: mapCountries(countries, payload[PAYABLE_COUNTRY_CODE]),
         CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
         submittedValues: sanitiseData(payload),
@@ -173,5 +179,16 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  try {
+    const saveResponse = await mapAndSave.exportContractAgentServiceCharge(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - agent charges %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

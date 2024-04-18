@@ -1,19 +1,20 @@
 import mapAndSave from '.';
-import save from '../../save-data/export-contract-agent-service';
+import save from '../../save-data/export-contract-agent-service-charge';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockApplication } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
+  AGENT_CHARGES: { CHARGE_PERCENTAGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
-describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service', () => {
+describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge', () => {
   jest.mock('../../save-data/export-contract-agent-service');
 
   let mockFormBody = {
     _csrf: '1234',
-    [IS_CHARGING]: mockApplication.exportContract.agent.service[IS_CHARGING],
+    [CHARGE_PERCENTAGE]: mockApplication.exportContract.agent.service.charge[CHARGE_PERCENTAGE],
   };
 
   const mockSave = jest.fn(() => Promise.resolve({}));

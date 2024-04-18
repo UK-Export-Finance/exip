@@ -410,6 +410,7 @@ var DEFAULT_RESOLVERS = [
   "updateExportContract",
   "updateExportContractAgent",
   "updateExportContractAgentService",
+  "updateExportContractAgentServiceCharge",
   "updatePrivateMarket",
   "updateSectionReview",
   "updateEligibility",
@@ -1324,14 +1325,14 @@ var lists = {
       service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
       chargePercentage: (0, import_fields.integer)(),
       fixedSumAmount: (0, import_fields.integer)(),
-      payableCountryCode: (0, import_fields.text)({
-        db: { nativeType: "VarChar(3)" }
-      }),
       method: (0, import_fields.select)({
         options: [
           { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },
           { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE }
         ]
+      }),
+      payableCountryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       })
     },
     access: import_access.allowAll

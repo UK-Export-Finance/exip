@@ -41,6 +41,25 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
+        {% set methodId = FIELDS.METHOD.ID %}
+
+        {% set fixedSumField = FIELDS.METHOD.OPTIONS.FIXED_SUM %}
+        {% set percentageField = FIELDS.METHOD.OPTIONS.PERCENTAGE %}
+
+        {% set fixedSumValue = fixedSumField.VALUE %}
+        {% set percentageValue = FIELDS.METHOD.OPTIONS.PERCENTAGE.VALUE %}
+
+        {% set methodSubmittedValue = submittedValues[methodId] %}
+        {% set methodApplicationAnswer = application.exportContract.agent.service.charge[methodId] %}
+
+        {% if methodSubmittedValue === fixedSumValue or methodApplicationAnswer === fixedSumValue %}
+          {% set methodIsFixedSum = true %}
+        {% endif %}
+
+        {% if methodSubmittedValue === percentageValue or methodApplicationAnswer === percentageValue %}
+          {% set methodIsPercentage = true %}
+        {% endif %}
+
         {% set conditionalFixedSumHtml %}
           {% include CONDITIONAL_FIXED_SUM_HTML %}
         {% endset %}
@@ -50,8 +69,8 @@
         {% endset %}
 
         {{ govukRadios({
-          idPrefix: FIELDS.METHOD.ID,
-          name: FIELDS.METHOD.ID,
+          idPrefix: methodId,
+          name: methodId,
           fieldset: {
             legend: {
               text: FIELDS.METHOD.LABEL,
@@ -62,15 +81,15 @@
             {
               label: {
                 attributes: {
-                  id: FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + '-label',
-                  'data-cy': FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + '-label'
+                  id: methodId + '-' + fixedSumField.ID + '-label',
+                  'data-cy': methodId + '-' + fixedSumField.ID + '-label'
                 }
               },
-              value: FIELDS.METHOD.OPTIONS.FIXED_SUM.VALUE,
-              text: FIELDS.METHOD.OPTIONS.FIXED_SUM.TEXT,
-              checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.FIXED_SUM.ID,
+              value: fixedSumField.VALUE,
+              text: fixedSumField.TEXT,
+              checked: methodIsFixedSum,
               attributes: {
-                "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + "-input"
+                "data-cy": methodId + '-' + fixedSumField.ID + "-input"
               },
               conditional: {
                 html: conditionalFixedSumHtml
@@ -79,25 +98,25 @@
             {
               label: {
                 attributes: {
-                  id: FIELDS.METHOD.OPTIONS.PERCENTAGE.ID  + '-label',
-                  'data-cy': FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.PERCENTAGE.ID + '-label'
+                  id: percentageField.ID  + '-label',
+                  'data-cy': methodId + '-' + percentageField.ID + '-label'
                 }
               },
-              value: FIELDS.METHOD.OPTIONS.PERCENTAGE.VALUE,
-              text: FIELDS.METHOD.OPTIONS.PERCENTAGE.TEXT,
-              checked: submittedValues[FIELDS.METHOD.ID] === FIELDS.METHOD.OPTIONS.PERCENTAGE.ID,
+              value: percentageField.VALUE,
+              text: percentageField.TEXT,
+              checked: methodIsPercentage,
               attributes: {
-                "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.PERCENTAGE.ID + "-input"
+                "data-cy": methodId + '-' + percentageField.ID + "-input"
               },
               conditional: {
                 html: conditionalPercentageHtml
               }
             }
           ],
-          errorMessage: validationErrors.errorList[FIELDS.METHOD.ID]and {
-            text: validationErrors.errorList[FIELDS.METHOD.ID].text,
+          errorMessage: validationErrors.errorList[methodId]and {
+            text: validationErrors.errorList[methodId].text,
             attributes: {
-              "data-cy": FIELDS.METHOD.ID + '-' + FIELDS.METHOD.OPTIONS.FIXED_SUM.ID + "-error-message"
+              "data-cy": methodId + '-' + fixedSumField.ID + "-error-message"
             }
           }
         }) }}

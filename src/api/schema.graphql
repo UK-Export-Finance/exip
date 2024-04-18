@@ -1097,8 +1097,8 @@ type ExportContractAgentServiceCharge {
   service: ExportContractAgentService
   chargePercentage: Int
   fixedSumAmount: Int
-  payableCountryCode: String
   method: String
+  payableCountryCode: String
 }
 
 input ExportContractAgentServiceChargeWhereUniqueInput {
@@ -1113,24 +1113,24 @@ input ExportContractAgentServiceChargeWhereInput {
   service: ExportContractAgentServiceWhereInput
   chargePercentage: IntNullableFilter
   fixedSumAmount: IntNullableFilter
-  payableCountryCode: StringFilter
   method: StringNullableFilter
+  payableCountryCode: StringFilter
 }
 
 input ExportContractAgentServiceChargeOrderByInput {
   id: OrderDirection
   chargePercentage: OrderDirection
   fixedSumAmount: OrderDirection
-  payableCountryCode: OrderDirection
   method: OrderDirection
+  payableCountryCode: OrderDirection
 }
 
 input ExportContractAgentServiceChargeUpdateInput {
   service: ExportContractAgentServiceRelateToOneForUpdateInput
   chargePercentage: Int
   fixedSumAmount: Int
-  payableCountryCode: String
   method: String
+  payableCountryCode: String
 }
 
 input ExportContractAgentServiceChargeUpdateArgs {
@@ -1142,8 +1142,8 @@ input ExportContractAgentServiceChargeCreateInput {
   service: ExportContractAgentServiceRelateToOneForCreateInput
   chargePercentage: Int
   fixedSumAmount: Int
-  payableCountryCode: String
   method: String
+  payableCountryCode: String
 }
 
 type PrivateMarket {

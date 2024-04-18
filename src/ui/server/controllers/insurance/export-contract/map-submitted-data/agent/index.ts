@@ -8,7 +8,7 @@ const {
 
 /**
  * mapSubmittedData
- * Map Private market fields
+ * Map agent fields
  * if USING_AGENT is false, delete AGENT_DETAILS fields
  * @param {Express.Request.body} formBody
  * @returns {Object} populatedData

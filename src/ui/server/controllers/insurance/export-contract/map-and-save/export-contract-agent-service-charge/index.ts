@@ -1,24 +1,24 @@
 import hasFormData from '../../../../../helpers/has-form-data';
-import save from '../../save-data/export-contract-agent-service';
+import save from '../../save-data/export-contract-agent-service-charge';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
  * mapAndSave
- * Map and save any valid "export contract agent service" fields
+ * Map and save any valid "export contract agent service charge" fields
  * @param {Express.Request.body} Express request body
  * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}
  */
-const exportContractAgentService = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const exportContractAgentServiceCharge = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exportContractAgentService(application, formBody, validationErrors.errorList);
+        saveResponse = await save.exportContractAgentServiceCharge(application, formBody, validationErrors.errorList);
       } else {
-        saveResponse = await save.exportContractAgentService(application, formBody);
+        saveResponse = await save.exportContractAgentServiceCharge(application, formBody);
       }
 
       if (!saveResponse) {
@@ -37,5 +37,5 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
 };
 
 export default {
-  exportContractAgentService,
+  exportContractAgentServiceCharge,
 };

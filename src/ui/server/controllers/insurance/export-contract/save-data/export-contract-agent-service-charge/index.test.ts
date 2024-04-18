@@ -68,7 +68,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
       try {
         await save.exportContractAgentServiceCharge(mockApplication, mockFormBody.valid);
       } catch (err) {
-        const expected = new Error("Updating application's exportContractAgentService");
+        const expected = new Error("Updating application's exportContractAgentServiceCharge");
         expect(err).toEqual(expected);
       }
     });

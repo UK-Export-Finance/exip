@@ -1,4 +1,4 @@
-import { MAXIMUM_CHARACTERS } from '../../../../constants';
+import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { FORM_TITLES } from '../../../form-titles';
 
@@ -125,12 +125,12 @@ export const EXPORT_CONTRACT_FIELDS = {
       OPTIONS: {
         FIXED_SUM: {
           ID: FIXED_SUM,
-          VALUE: FIXED_SUM,
+          VALUE: FIELD_VALUES.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM,
           TEXT: 'Fixed sum',
         },
         PERCENTAGE: {
           ID: PERCENTAGE,
-          VALUE: PERCENTAGE,
+          VALUE: FIELD_VALUES.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE,
           TEXT: 'Percentage',
         },
       },
