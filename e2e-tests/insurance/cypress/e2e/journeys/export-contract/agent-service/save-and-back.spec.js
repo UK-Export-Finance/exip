@@ -74,7 +74,7 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
     });
   });
 
-  describe(`when all fields are provided - agentIsCharging as false`, () => {
+  describe('when all fields are provided - agentIsCharging as false', () => {
     it('should update the `export contract` task status to `completed`', () => {
       cy.navigateToUrl(url);
 
@@ -101,7 +101,7 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
     });
   });
 
-  describe(`when all fields are provided - agentIsCharging as true`, () => {
+  describe('when all fields are provided - agentIsCharging as true', () => {
     it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
