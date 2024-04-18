@@ -12,7 +12,6 @@ const {
   },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION },
-    AGENT_CHARGES: { FIXED_SUM_AMOUNT },
   },
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME },
@@ -42,7 +41,6 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         ACCOUNT_NUMBER,
         SORT_CODE,
         PERCENTAGE_TURNOVER,
-        FIXED_SUM_AMOUNT,
       ];
 
       expect(STRING_NUMBER_FIELDS).toEqual(expected);
