@@ -60,6 +60,10 @@
           {% set methodIsPercentage = true %}
         {% endif %}
 
+        {% set legendHtml %}
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24" data-cy="{{ FIELDS.METHOD.ID }}-legend">{{ FIELDS.METHOD.LABEL }}</legend>
+        {% endset %}
+
         {% set conditionalFixedSumHtml %}
           {% include CONDITIONAL_FIXED_SUM_HTML %}
         {% endset %}
@@ -73,8 +77,7 @@
           name: methodId,
           fieldset: {
             legend: {
-              text: FIELDS.METHOD.LABEL,
-              classes: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24"
+              html: legendHtml
             }
           },
           items: [

@@ -79,6 +79,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
       },
     },
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
+    PROVIDE_ALTERNATIVE_CURRENCY_URL: '#',
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
   };
 };

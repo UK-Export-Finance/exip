@@ -148,8 +148,8 @@ export interface ApplicationExportContractAgentService extends Relationship {
 
 export interface ApplicationExportContractAgentServiceCharge extends Relationship {
   agentServiceId: string;
-  chargePercentage?: number;
-  fixedSumAmount?: number;
+  chargePercentage?: string;
+  fixedSumAmount?: string;
   payableCountryCode?: string;
   method?: string;
 }

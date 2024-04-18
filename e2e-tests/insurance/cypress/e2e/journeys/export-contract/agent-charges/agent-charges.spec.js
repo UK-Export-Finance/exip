@@ -1,3 +1,4 @@
+import partials from '../../../../../../partials';
 import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../pages/insurance/export-contract';
 import { SYMBOLS } from '../../../../../../constants';
@@ -70,7 +71,11 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
     });
 
     describe(`${METHOD} label and inputs`, () => {
-      const { OPTIONS } = FIELDS.AGENT_CHARGES[METHOD];
+      const { LABEL, OPTIONS } = FIELDS.AGENT_CHARGES[METHOD];
+
+      it(`renders a ${METHOD} legend`, () => {
+        cy.checkText(fieldSelector(METHOD).legend(), LABEL);
+      });
 
       it(`renders a ${FIXED_SUM} radio input with label`, () => {
         const field = agentChargesPage[METHOD][FIXED_SUM];
@@ -94,7 +99,7 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
       });
 
-      it(`should display conditional "${FIXED_SUM_AMOUNT}" field when selecting the ${FIXED_SUM} radio`, () => {
+      it(`should display conditional "${FIXED_SUM_AMOUNT}" field and 'provide alternative currency' link when selecting the ${FIXED_SUM} radio`, () => {
         agentChargesPage[METHOD][FIXED_SUM].label().click();
 
         const fieldId = FIXED_SUM_AMOUNT;
@@ -104,6 +109,12 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         field.input().should('be.visible');
         cy.checkText(field.label(), FIELDS.AGENT_CHARGES[fieldId].LABEL);
         cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
+
+        cy.checkLink(
+          partials.provideAlternativeCurrencyLink(),
+          '#',
+          CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
+        );
       });
 
       it(`should display conditional "${CHARGE_PERCENTAGE}" field when selecting the ${PERCENTAGE} radio`, () => {
