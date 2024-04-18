@@ -1,4 +1,5 @@
 import hasFormData from '../../../../../helpers/has-form-data';
+import mapSubmittedData from '../../map-submitted-data/agent-service-charge';
 import save from '../../save-data/export-contract-agent-service-charge';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
@@ -13,12 +14,14 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const exportContractAgentServiceCharge = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
+      const populatedData = mapSubmittedData(formBody);
+
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exportContractAgentServiceCharge(application, formBody, validationErrors.errorList);
+        saveResponse = await save.exportContractAgentServiceCharge(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.exportContractAgentServiceCharge(application, formBody);
+        saveResponse = await save.exportContractAgentServiceCharge(application, populatedData);
       }
 
       if (!saveResponse) {

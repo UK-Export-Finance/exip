@@ -1,4 +1,4 @@
-import { MINIMUM_CHARACTERS } from '../../../../../../../constants';
+import { FIELD_VALUES, MINIMUM_CHARACTERS } from '../../../../../../../constants';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
@@ -7,7 +7,16 @@ import emptyFieldValidation from '../../../../../../../shared-validation/empty-f
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  AGENT_CHARGES: { METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE },
+  EXPORT_CONTRACT:  {
+    AGENT_SERVICE_CHARGE_METHOD: {
+      FIXED_SUM,
+      PERCENTAGE,
+    },
+  },
+} = FIELD_VALUES;
+
+const {
+  AGENT_CHARGES: { METHOD, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
 } = FIELD_IDS;
 
 const {
