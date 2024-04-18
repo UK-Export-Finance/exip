@@ -143,7 +143,7 @@ describe('controllers/insurance/policy/different-name-on-policy', () => {
       it(`should redirect to ${PRE_CREDIT_PERIOD}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRE_CREDIT_PERIOD}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

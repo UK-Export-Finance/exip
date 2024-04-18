@@ -1,6 +1,6 @@
 import { APPLICATION } from '../../../../../../constants';
 
-context('Insurance - submit an application - Multiple policy type, attempted private market cover, using an agent', () => {
+context('Insurance - submit an application - Multiple policy type, attempted private market cover, using an agent, agent is charging', () => {
   let referenceNumber;
 
   before(() => {
@@ -9,6 +9,7 @@ context('Insurance - submit an application - Multiple policy type, attempted pri
       totalContractValueOverThreshold: true,
       attemptedPrivateMarketCover: true,
       isUsingAgent: true,
+      agentIsCharging: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

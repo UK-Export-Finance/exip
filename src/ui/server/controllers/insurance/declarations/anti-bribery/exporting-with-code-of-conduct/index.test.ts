@@ -115,7 +115,7 @@ describe('controllers/insurance/declarations/anti-bribery/exporting-with-a-code-
       it(`should redirect to ${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CONFIRMATION_AND_ACKNOWLEDGEMENTS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

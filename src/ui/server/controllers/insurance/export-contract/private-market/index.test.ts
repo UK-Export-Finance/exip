@@ -193,7 +193,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

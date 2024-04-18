@@ -27,7 +27,7 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
       const response = mapSubmittedData(mockBody);
 
       const expected = {
-        [PERCENTAGE_TURNOVER]: stripCommas(mockBody[PERCENTAGE_TURNOVER]),
+        [PERCENTAGE_TURNOVER]: Number(stripCommas(mockBody[PERCENTAGE_TURNOVER])),
         [ESTIMATED_ANNUAL_TURNOVER]: stripCommas(mockBody[ESTIMATED_ANNUAL_TURNOVER]),
       };
 
@@ -36,7 +36,7 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
   });
 
   describe('when all fields are provided and none contain a comma', () => {
-    it('should return the formBody', () => {
+    it(`should return the formBody with ${PERCENTAGE_TURNOVER} as a number`, () => {
       const mockBody = {
         _csrf: '1234',
         [ESTIMATED_ANNUAL_TURNOVER]: estimatedAnnualTurnover,
@@ -47,7 +47,7 @@ describe('controllers/insurance/business/turnover/map-submitted-data', () => {
 
       const expected = {
         [ESTIMATED_ANNUAL_TURNOVER]: mockBody[ESTIMATED_ANNUAL_TURNOVER],
-        [PERCENTAGE_TURNOVER]: mockBody[PERCENTAGE_TURNOVER],
+        [PERCENTAGE_TURNOVER]: Number(mockBody[PERCENTAGE_TURNOVER]),
       };
 
       expect(response).toEqual(expected);

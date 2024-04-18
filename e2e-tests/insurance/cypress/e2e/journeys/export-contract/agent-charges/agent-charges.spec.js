@@ -1,3 +1,4 @@
+import partials from '../../../../../../partials';
 import { field as fieldSelector, headingCaption } from '../../../../../../pages/shared';
 import { agentChargesPage } from '../../../../../../pages/insurance/export-contract';
 import { SYMBOLS } from '../../../../../../constants';
@@ -11,7 +12,7 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES },
+  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_SERVICE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -25,14 +26,22 @@ const baseUrl = Cypress.config('baseUrl');
 context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agen's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
   let referenceNumber;
   let url;
+  let checkYourAnswersUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
+      // go to the page we want to test.
+      cy.startInsuranceExportContractSection({});
+      cy.completeAndSubmitAboutGoodsOrServicesForm({});
+      cy.completeAndSubmitHowYouWillGetPaidForm({});
+      cy.completeAndSubmitAgentForm({ isUsingAgent: true });
+      cy.completeAndSubmitAgentDetailsForm({});
+      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
 
-      cy.navigateToUrl(url);
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
 
@@ -48,7 +57,7 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
-      backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}#`,
+      backLink: `${ROOT}/${referenceNumber}${AGENT_SERVICE}`,
     });
   });
 
@@ -62,7 +71,11 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
     });
 
     describe(`${METHOD} label and inputs`, () => {
-      const { OPTIONS } = FIELDS.AGENT_CHARGES[METHOD];
+      const { LABEL, OPTIONS } = FIELDS.AGENT_CHARGES[METHOD];
+
+      it(`renders a ${METHOD} legend`, () => {
+        cy.checkText(fieldSelector(METHOD).legend(), LABEL);
+      });
 
       it(`renders a ${FIXED_SUM} radio input with label`, () => {
         const field = agentChargesPage[METHOD][FIXED_SUM];
@@ -86,7 +99,7 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
       });
 
-      it(`should display conditional "${FIXED_SUM_AMOUNT}" field when selecting the ${FIXED_SUM} radio`, () => {
+      it(`should display conditional "${FIXED_SUM_AMOUNT}" field and 'provide alternative currency' link when selecting the ${FIXED_SUM} radio`, () => {
         agentChargesPage[METHOD][FIXED_SUM].label().click();
 
         const fieldId = FIXED_SUM_AMOUNT;
@@ -96,6 +109,12 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         field.input().should('be.visible');
         cy.checkText(field.label(), FIELDS.AGENT_CHARGES[fieldId].LABEL);
         cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
+
+        cy.checkLink(
+          partials.provideAlternativeCurrencyLink(),
+          '#',
+          CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
+        );
       });
 
       it(`should display conditional "${CHARGE_PERCENTAGE}" field when selecting the ${PERCENTAGE} radio`, () => {
@@ -117,6 +136,18 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
 
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
+    });
+  });
+
+  describe('form submission', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
+    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      cy.completeAndSubmitAgentChargesForm();
+
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 });

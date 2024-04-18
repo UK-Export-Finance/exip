@@ -58,6 +58,7 @@ const AGENT_SERVICE = {
 const AGENT_CHARGES = {
   ...SHARED,
   PAGE_TITLE: "Tell us about the agent's charges",
+  PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for agent fees',
 };
 
 const CHECK_YOUR_ANSWERS = {
