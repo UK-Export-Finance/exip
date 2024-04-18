@@ -2076,7 +2076,7 @@ var typeDefs = `
     email: String
   }
 
-  type ApplicationResponse {
+  type FullApplication {
     id: String!
     version: Int
     createdAt: DateTime!
@@ -2101,7 +2101,7 @@ var typeDefs = `
 
   type ApplicationSuccessResponse {
     success: Boolean!
-    application: ApplicationResponse
+    application: FullApplication
   }
 
   type Mutation {
@@ -2239,7 +2239,7 @@ var typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ gets application by id """
+    """ gets application by reference number """
     getApplicationByReferenceNumber(
       referenceNumber: Int
       decryptFinancialUk: Boolean
@@ -4153,16 +4153,23 @@ var createAnApplication = async (root, variables, context) => {
 };
 var create_an_application_default = createAnApplication;
 
+// helpers/get-ids-by-reference-number/index.ts
+var getIdsByReferenceNumber = async (referenceNumber, context) => {
+  const applications = await context.db.Application.findMany({
+    where: {
+      referenceNumber: { equals: referenceNumber }
+    }
+  });
+  return applications;
+};
+var get_ids_by_reference_number_default = getIdsByReferenceNumber;
+
 // custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const applications = await context.db.Application.findMany({
-      where: {
-        referenceNumber: { equals: referenceNumber }
-      }
-    });
+    const applications = await get_ids_by_reference_number_default(referenceNumber, context);
     if (applications.length) {
       const [{ id }] = applications;
       const deleteResponse = await context.db.Application.deleteOne({
@@ -5529,12 +5536,6 @@ var generate_initialisation_vector_default = generateInitialisationVector;
 // helpers/encrypt/index.ts
 var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
-  if (!dataToEncrypt) {
-    return {
-      value: "",
-      iv: ""
-    };
-  }
   const key2 = generate_key_default();
   const iv = generate_initialisation_vector_default();
   const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key2, iv);
@@ -5546,20 +5547,40 @@ var encrypt = (dataToEncrypt) => {
 };
 var encrypt_default = encrypt;
 
+// helpers/map-loss-payee-financial-details/index.ts
+var mapLossPayeeFinancialDetails = (variables) => {
+  const { accountNumber, sortCode, bankAddress } = variables;
+  let accountNumberData = {
+    value: "",
+    iv: ""
+  };
+  let sortCodeData = {
+    value: "",
+    iv: ""
+  };
+  if (accountNumber) {
+    accountNumberData = encrypt_default(accountNumber);
+  }
+  if (sortCode) {
+    sortCodeData = encrypt_default(sortCode);
+  }
+  const updateData = {
+    accountNumber: accountNumberData.value,
+    accountNumberVector: accountNumberData.iv,
+    sortCode: sortCodeData.value,
+    sortCodeVector: sortCodeData.iv,
+    bankAddress
+  };
+  return updateData;
+};
+var map_loss_payee_financial_details_default = mapLossPayeeFinancialDetails;
+
 // custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
 var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
   try {
     console.info("Updating loss payee financial details UK %s", variables.id);
-    const { id, accountNumber, sortCode, bankAddress } = variables;
-    const accountNumberEncrypted = encrypt_default(accountNumber);
-    const sortCodeEncrypted = encrypt_default(sortCode);
-    const updateData = {
-      accountNumber: accountNumberEncrypted.value,
-      accountNumberVector: accountNumberEncrypted.iv,
-      sortCode: sortCodeEncrypted.value,
-      sortCodeVector: sortCodeEncrypted.iv,
-      bankAddress
-    };
+    const { id } = variables;
+    const updateData = map_loss_payee_financial_details_default(variables);
     const response = await context.db.LossPayeeFinancialUk.updateOne({
       where: {
         id
@@ -6092,9 +6113,6 @@ var { ENCODING: ENCODING4, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAI
 var key = generate_key_default();
 var decryptData = (dataToDecrypt) => {
   const { value, iv } = dataToDecrypt;
-  if (!value || !iv) {
-    return "";
-  }
   const buffer = generate_buffer_default(value);
   const decipher = generate_decipher_default(key, iv);
   const decipherUpdate = decipher.update(buffer, ENCODING4, OUTPUT_ENCODING3);
@@ -6110,43 +6128,51 @@ var decrypt_default = decrypt;
 var decryptFinancialUk = (applicationFinancialUk) => {
   const updatedFinancialUk = applicationFinancialUk;
   const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
-  const decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
-  const decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
+  let decryptedAccountNumber = "";
+  let decryptedSortCode = "";
+  if (accountNumber && accountNumberVector) {
+    decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
+  }
+  if (sortCode && sortCodeVector) {
+    decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
+  }
   updatedFinancialUk.accountNumber = decryptedAccountNumber;
   updatedFinancialUk.sortCode = decryptedSortCode;
   return updatedFinancialUk;
 };
 var decrypt_financial_uk_default = decryptFinancialUk;
 
-// helpers/decrypt-application/index.ts
-var decryptApplication = (application2, decryptFinancialUk2) => {
-  const updatedApplication = application2;
-  const {
-    nominatedLossPayee: { financialUk }
-  } = updatedApplication;
+// helpers/decrypt-nominated-loss-payee/index.ts
+var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2) => {
+  let updatedNominatedLossPayee = nominatedLossPayee;
+  const { financialUk } = updatedNominatedLossPayee;
   if (decryptFinancialUk2) {
     const updatedFinancialUk = decrypt_financial_uk_default(financialUk);
-    updatedApplication.nominatedLossPayee.financialUk.accountNumber = updatedFinancialUk.accountNumber;
-    updatedApplication.nominatedLossPayee.financialUk.sortCode = updatedFinancialUk.sortCode;
+    updatedNominatedLossPayee = {
+      ...updatedNominatedLossPayee,
+      financialUk: updatedFinancialUk
+    };
   }
-  return updatedApplication;
+  return updatedNominatedLossPayee;
 };
-var decrypt_application_default = decryptApplication;
+var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 
 // custom-resolvers/queries/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Getting application by reference number");
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
-    const applicationIds = await context.db.Application.findOne({
-      where: {
-        referenceNumber
-      }
-    });
-    if (applicationIds) {
-      let populatedApplication = await get_populated_application_default(context, applicationIds);
+    const idsArray = await get_ids_by_reference_number_default(referenceNumber, context);
+    const [ids] = idsArray;
+    if (ids) {
+      let populatedApplication = await get_populated_application_default(context, ids);
       if (decryptFinancialUk2) {
-        populatedApplication = decrypt_application_default(populatedApplication, decryptFinancialUk2);
+        const { nominatedLossPayee } = populatedApplication;
+        const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2);
+        populatedApplication = {
+          ...populatedApplication,
+          nominatedLossPayee: decryptedNominatedLossPayee
+        };
       }
       return {
         success: true,

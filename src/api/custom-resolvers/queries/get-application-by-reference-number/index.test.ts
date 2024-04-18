@@ -5,7 +5,7 @@ import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import { createFullApplication } from '../../../test-helpers/create-full-application';
 import decrypt from '../../../helpers/decrypt';
 
-describe('custom-resolvers/get-application', () => {
+describe('custom-resolvers/get-application-by-reference-number', () => {
   let context: Context;
 
   jest.mock('../../../helpers/decrypt');
@@ -36,7 +36,7 @@ describe('custom-resolvers/get-application', () => {
     decrypt.decrypt = decryptSpy;
   });
 
-  describe('when "decryptFinancialUk" is not set', () => {
+  describe('when the decryptFinancialUk variable is not set', () => {
     it('should return success=true and application without decryption', async () => {
       const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber }, context);
 
@@ -54,7 +54,7 @@ describe('custom-resolvers/get-application', () => {
     });
   });
 
-  describe('when "decryptFinancialUk" is set to "true"', () => {
+  describe('when the decryptFinancialUk variable is set to "true"', () => {
     it('should return success=true and application without decryption', async () => {
       const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
@@ -65,7 +65,7 @@ describe('custom-resolvers/get-application', () => {
       expect(financialUk.accountNumber).toEqual(mockDecryptedValue);
     });
 
-    it('should not call decrypt', async () => {
+    it('should NOT call decrypt', async () => {
       await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
@@ -77,6 +77,18 @@ describe('custom-resolvers/get-application', () => {
       const result = await getApplicationByReferenceNumber({}, { referenceNumber: 123 }, context);
 
       expect(result.success).toEqual(false);
+    });
+  });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        await getApplicationByReferenceNumber();
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Get application by reference number (GetApplicationByReferenceNumber mutation)')).toEqual(true);
+      }
     });
   });
 });

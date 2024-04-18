@@ -1,5 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import encrypt from '../../../helpers/encrypt';
+import mapLossPayeeFinancialDetailsUk from '../../../helpers/map-loss-payee-financial-details-uk';
 import { ApplicationLossPayeeFinancialUk, SuccessResponse } from '../../../types';
 
 /**
@@ -15,23 +15,14 @@ const updateLossPayeeFinancialDetailsUk = async (root: any, variables: Applicati
   try {
     console.info('Updating loss payee financial details UK %s', variables.id);
 
-    const { id, accountNumber, sortCode, bankAddress } = variables;
-
-    const accountNumberEncrypted = encrypt(accountNumber);
-    const sortCodeEncrypted = encrypt(sortCode);
+    const { id } = variables;
 
     /**
      * object with encrypted data and initialisation vectors
      * encrypts accountNumber and sortCode
      * adds the initialisation vectors
      */
-    const updateData = {
-      accountNumber: accountNumberEncrypted.value,
-      accountNumberVector: accountNumberEncrypted.iv,
-      sortCode: sortCodeEncrypted.value,
-      sortCodeVector: sortCodeEncrypted.iv,
-      bankAddress,
-    };
+    const updateData = mapLossPayeeFinancialDetailsUk(variables);
 
     const response = await context.db.LossPayeeFinancialUk.updateOne({
       where: {

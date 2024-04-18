@@ -140,6 +140,17 @@ describe('api/helpers/get-populated-application', () => {
     }
   });
 
+  it('should throw an error when nominatedLossPayee does not exist', async () => {
+    const invalidId = applicationIds.nominatedLossPayeeId;
+
+    try {
+      await getPopulatedApplication(context, { ...applicationIds, nominatedLossPayeeId: invalidId });
+    } catch (err) {
+      const expected = new Error(generateErrorMessage('nominatedLossPayee', applicationIds.id));
+      expect(err).toEqual(expected);
+    }
+  });
+
   it('should throw an error when policy does not exist', async () => {
     const invalidId = applicationIds.id;
 

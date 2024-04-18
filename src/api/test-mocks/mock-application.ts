@@ -137,8 +137,8 @@ export const mockApplicationDeclaration = {
 export const mockLossPayeeFinancialDetailsUk = {
   accountNumber: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=',
   accountNumberVector: 'AAaaAAA1aA+1aaa1',
-  sortCode: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA',
-  sortCodeVector: 'AAaaAAA1aA+1aaa1',
+  sortCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
+  sortCodeVector: 'BBbbBBB2bB+2bbb2',
   bankAddress: 'Mock UK financial address',
 };
 

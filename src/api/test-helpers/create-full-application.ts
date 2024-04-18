@@ -211,7 +211,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
       id: updatedApplication.nominatedLossPayee.financialUk.id,
     },
     data: mockLossPayeeFinancialDetailsUk,
-    query: 'id accountNumber sortCode',
+    query: 'id',
   })) as ApplicationFinancialUk;
 
   return {

@@ -3148,7 +3148,7 @@ type Query {
   """ get companies house information """
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
-  """ gets application by id """
+  """ gets application by reference number """
   getApplicationByReferenceNumber(referenceNumber: Int, decryptFinancialUk: Boolean): ApplicationSuccessResponse
 
   """ get Ordnance Survey address """
@@ -3485,7 +3485,7 @@ type Owner {
   email: String
 }
 
-type ApplicationResponse {
+type FullApplication {
   id: String!
   version: Int
   createdAt: DateTime!
@@ -3510,5 +3510,5 @@ type ApplicationResponse {
 
 type ApplicationSuccessResponse {
   success: Boolean!
-  application: ApplicationResponse
+  application: FullApplication
 }

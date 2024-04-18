@@ -35,4 +35,16 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
       expect(success).toEqual(true);
     });
   });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        await updateLossPayeeFinancialDetailsUk();
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Updating loss payee financial details UK')).toEqual(true);
+      }
+    });
+  });
 });

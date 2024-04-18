@@ -1,5 +1,5 @@
 import { ApplicationFinancialUk } from '../../types';
-import decrypt from '../decrypt';
+import decryptData from '../decrypt';
 
 /**
  * decryptFinancialUk
@@ -13,9 +13,19 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationFinancialUk) => {
 
   const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
 
-  // decrypts account number and sort code using encrypted "value" and initialisation vector
-  const decryptedAccountNumber = decrypt.decrypt({ value: accountNumber, iv: accountNumberVector });
-  const decryptedSortCode = decrypt.decrypt({ value: sortCode, iv: sortCodeVector });
+  let decryptedAccountNumber = '';
+  let decryptedSortCode = '';
+
+  // decrypts accountNumber using encrypted "value" and initialisation vector if both accountNumber and accountNumberVector are defined
+  if (accountNumber && accountNumberVector) {
+    // decrypts account number using encrypted "value" and initialisation vector
+    decryptedAccountNumber = decryptData.decrypt({ value: accountNumber, iv: accountNumberVector });
+  }
+
+  // decrypts sortCode using encrypted "value" and initialisation vector if both sortCode and sortCodeVector are defined
+  if (sortCode && sortCodeVector) {
+    decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
+  }
 
   // updates financialUk data with decrypted data
   updatedFinancialUk.accountNumber = decryptedAccountNumber;

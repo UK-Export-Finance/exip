@@ -37,6 +37,8 @@ export const mockOTP = {
   expiry: new Date(),
 };
 
+export const mockIV = 'SVheFWN4nT+2pac4';
+
 export const mockApplication = application;
 
 export const mockCisCountries = cisCountries;

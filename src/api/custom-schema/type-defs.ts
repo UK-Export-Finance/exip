@@ -240,7 +240,7 @@ const typeDefs = `
     email: String
   }
 
-  type ApplicationResponse {
+  type FullApplication {
     id: String!
     version: Int
     createdAt: DateTime!
@@ -265,7 +265,7 @@ const typeDefs = `
 
   type ApplicationSuccessResponse {
     success: Boolean!
-    application: ApplicationResponse
+    application: FullApplication
   }
 
   type Mutation {
@@ -403,7 +403,7 @@ const typeDefs = `
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
 
-    """ gets application by id """
+    """ gets application by reference number """
     getApplicationByReferenceNumber(
       referenceNumber: Int
       decryptFinancialUk: Boolean

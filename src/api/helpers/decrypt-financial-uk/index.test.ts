@@ -1,14 +1,14 @@
 import decryptFinancialUk from '.';
 import mockApplication from '../../test-mocks/mock-application';
-import decrypt from '../decrypt';
+import decryptData from '../decrypt';
 
 const {
   nominatedLossPayee: { financialUk },
 } = mockApplication;
 
-const mock = '123456';
+const decryptSpyResponse = '123456';
 
-describe('api/helpers/decrypt-application', () => {
+describe('api/helpers/decrypt-financial-uk', () => {
   jest.mock('../decrypt');
 
   let decryptSpy = jest.fn();
@@ -16,9 +16,9 @@ describe('api/helpers/decrypt-application', () => {
   beforeEach(async () => {
     jest.resetAllMocks();
 
-    decryptSpy = jest.fn(() => mock);
+    decryptSpy = jest.fn(() => decryptSpyResponse);
 
-    decrypt.decrypt = decryptSpy;
+    decryptData.decrypt = decryptSpy;
   });
 
   it('should return decrypted sortCode and accountNumber', () => {
@@ -26,8 +26,8 @@ describe('api/helpers/decrypt-application', () => {
 
     const expected = {
       ...financialUk,
-      sortCode: mock,
-      accountNumber: mock,
+      sortCode: decryptSpyResponse,
+      accountNumber: decryptSpyResponse,
     };
 
     expect(result).toEqual(expected);

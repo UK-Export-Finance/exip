@@ -1,4 +1,4 @@
 export interface EncryptedData {
-  value?: string;
-  iv?: string;
+  value: string;
+  iv: string;
 }

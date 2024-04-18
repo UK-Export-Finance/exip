@@ -13,14 +13,7 @@ const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANC
  * @param dataToEncrypt
  * @returns {EncryptedData} value and initialisation vector
  */
-const encrypt = (dataToEncrypt?: string): EncryptedData => {
-  if (!dataToEncrypt) {
-    return {
-      value: '',
-      iv: '',
-    };
-  }
-
+const encrypt = (dataToEncrypt: string): EncryptedData => {
   // generate the key
   const key = generateKey();
   // generate the initialisation vector
