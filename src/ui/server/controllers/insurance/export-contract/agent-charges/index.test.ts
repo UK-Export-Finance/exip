@@ -68,7 +68,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE];
+      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE];
 
       expect(FIELD_IDS).toEqual(expected);
     });

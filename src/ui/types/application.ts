@@ -37,8 +37,8 @@ interface ApplicationPrivateMarket {
 
 interface ApplicationExportContractAgentServiceCharge {
   id: string;
-  chargePercentage?: number;
-  fixedSumAmount?: number;
+  chargePercentage?: string;
+  fixedSumAmount?: string;
   payableCountryCode?: string;
   method?: string;
 }

@@ -1,4 +1,5 @@
 import mapAndSave from '.';
+import mapSubmittedData from '../../map-submitted-data/agent-service-charge';
 import save from '../../save-data/export-contract-agent-service-charge';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -20,15 +21,17 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
   const mockSave = jest.fn(() => Promise.resolve({}));
   save.exportContractAgentServiceCharge = mockSave;
 
+  const populatedData = mapSubmittedData(mockFormBody);
+
   const mockValidationErrors = generateValidationErrors(IS_CHARGING, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {
-      it('should call save.exportContractAgentServiceCharge with application, submitted data and validationErrors.errorList', async () => {
+      it('should call save.exportContractAgentServiceCharge with application, populated submitted data and validationErrors.errorList', async () => {
         await mapAndSave.exportContractAgentServiceCharge(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-        expect(save.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+        expect(save.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication, populatedData, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -39,11 +42,11 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call save.exportContractAgentServiceCharge with application and submitted data', async () => {
+      it('should call save.exportContractAgentServiceCharge with application and populated submitted data', async () => {
         await mapAndSave.exportContractAgentServiceCharge(mockFormBody, mockApplication);
 
         expect(save.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-        expect(save.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication, mockFormBody);
+        expect(save.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication, populatedData);
       });
 
       it('should return true', async () => {
