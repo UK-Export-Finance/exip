@@ -151,6 +151,12 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         cy.assertUrl(checkYourAnswersUrl);
       });
 
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
       describe('when going back to the page', () => {
         beforeEach(() => {
           cy.navigateToUrl(url);
@@ -175,6 +181,12 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         cy.completeAndSubmitAgentChargesForm({ percentageMethod: true });
 
         cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsComplete();
       });
 
       describe('when going back to the page', () => {
