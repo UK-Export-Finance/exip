@@ -45,6 +45,8 @@ interface CreatePrepareApplicationTasksParams {
   totalContractValueOverThreshold?: boolean;
   attemptedPrivateMarketCover?: boolean;
   isUsingAgent?: boolean;
+  agentIsCharging?: boolean;
+  agentChargeMethod?: string;
 }
 
 export { CreatePrepareApplicationTasksParams, TaskListData, TaskListDataTask, TaskListDataGroup, TaskListGroup, TaskListTask, TaskList };

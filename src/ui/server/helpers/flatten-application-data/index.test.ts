@@ -99,6 +99,7 @@ describe('server/helpers/flatten-application-data', () => {
         ...mapExportContractAgentDetails(exportContract.agent),
         ...exportContract.agent.service,
         ...getTrueAndFalseAnswers(exportContract.agent.service),
+        ...exportContract.agent.service.charge,
         // TODO: EMS-2772, EMS-2815
         // ...nominatedLossPayee,
         ...getTrueAndFalseAnswers(nominatedLossPayee),
