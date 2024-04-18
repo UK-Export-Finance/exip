@@ -41,13 +41,14 @@
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        {% set methodId = FIELDS.METHOD.ID %}
+        {% set methodField = FIELDS.METHOD %}
+        {% set methodId = methodField.ID %}
 
-        {% set fixedSumField = FIELDS.METHOD.OPTIONS.FIXED_SUM %}
-        {% set percentageField = FIELDS.METHOD.OPTIONS.PERCENTAGE %}
+        {% set fixedSumField = methodField.OPTIONS.FIXED_SUM %}
+        {% set percentageField = methodField.OPTIONS.PERCENTAGE %}
 
         {% set fixedSumValue = fixedSumField.VALUE %}
-        {% set percentageValue = FIELDS.METHOD.OPTIONS.PERCENTAGE.VALUE %}
+        {% set percentageValue = percentageField.VALUE %}
 
         {% set methodSubmittedValue = submittedValues[methodId] %}
         {% set methodApplicationAnswer = application.exportContract.agent.service.charge[methodId] %}
@@ -61,7 +62,7 @@
         {% endif %}
 
         {% set legendHtml %}
-          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24" data-cy="{{ FIELDS.METHOD.ID }}-legend">{{ FIELDS.METHOD.LABEL }}</legend>
+          <legend class="govuk-fieldset__legend govuk-!-font-weight-bold govuk-!-font-size-24" data-cy="{{ methodId }}-legend">{{ methodField.LABEL }}</legend>
         {% endset %}
 
         {% set conditionalFixedSumHtml %}
