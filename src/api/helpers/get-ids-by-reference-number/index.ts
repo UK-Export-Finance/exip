@@ -15,7 +15,8 @@ const getIdsByReferenceNumber = async (referenceNumber: number, context: Context
   })) as Application;
 
   if (applications.length) {
-    return [applications];
+    const [application] = applications;
+    return application;
   }
 
   return {};

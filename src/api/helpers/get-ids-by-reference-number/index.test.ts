@@ -36,9 +36,11 @@ describe('api/helpers/get-ids-by-reference-number', () => {
         where: {
           referenceNumber: { equals: referenceNumber },
         },
-      })) as Application;
+      })) as Array<Application>;
 
-      expect(result).toEqual([expected]);
+      const [expectedApplication] = expected;
+
+      expect(result).toEqual(expectedApplication);
     });
   });
 });
