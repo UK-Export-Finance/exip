@@ -19,7 +19,7 @@ const getIdsByReferenceNumber = async (referenceNumber: number, context: Context
     return application;
   }
 
-  return {};
+  return null;
 };
 
 export default getIdsByReferenceNumber;

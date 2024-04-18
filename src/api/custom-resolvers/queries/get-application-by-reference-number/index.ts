@@ -28,7 +28,7 @@ const getApplicationByReferenceNumber = async (
     const ids = await getIdsByReferenceNumber(referenceNumber, context);
 
     // if object is populated
-    if (Object.keys(ids).length) {
+    if (ids) {
       // populates application based on applicationIds
       let populatedApplication = await getPopulatedApplication(context, ids);
 

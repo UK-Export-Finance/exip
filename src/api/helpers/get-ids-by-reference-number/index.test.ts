@@ -22,12 +22,12 @@ describe('api/helpers/get-ids-by-reference-number', () => {
     it('should return an empty object', async () => {
       const result = await getIdsByReferenceNumber(referenceNumber, context);
 
-      expect(result).toEqual({});
+      expect(result).toEqual(null);
     });
   });
 
   describe('when an application is found', () => {
-    it('should return an empty object', async () => {
+    it("should return the application's ids", async () => {
       const { referenceNumber } = application;
 
       const result = await getIdsByReferenceNumber(referenceNumber, context);
