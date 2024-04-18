@@ -28,16 +28,22 @@ const completeAndSubmitAgentChargesForm = ({
   if (fixedSumMethod) {
     agentChargesPage[METHOD][FIXED_SUM].input().click();
 
-    cy.keyboardInput(field(FIXED_SUM_AMOUNT).input(), fixedSumAmount);
+    if (fixedSumAmount) {
+      cy.keyboardInput(field(FIXED_SUM_AMOUNT).input(), fixedSumAmount);
+    }
   }
 
   if (percentageMethod) {
     agentChargesPage[METHOD][PERCENTAGE].input().click();
 
-    cy.keyboardInput(field(CHARGE_PERCENTAGE).input(), chargePercentage);
+    if (chargePercentage) {
+      cy.keyboardInput(field(CHARGE_PERCENTAGE).input(), chargePercentage);
+    }
   }
 
-  cy.keyboardInput(autoCompleteField(PAYABLE_COUNTRY_CODE).input(), payableCountry);
+  if (payableCountry) {
+    cy.keyboardInput(autoCompleteField(PAYABLE_COUNTRY_CODE).input(), payableCountry);
+  }
 
   cy.clickSubmitButton();
 };
