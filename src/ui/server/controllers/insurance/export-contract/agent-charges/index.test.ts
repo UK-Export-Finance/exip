@@ -14,8 +14,13 @@ import mapCountries from '../../../../helpers/mappings/map-countries';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse, mockExportContractAgentServiceCharge } from '../../../../test-mocks';
+
+const {
+  exportContract: { agent },
+} = mockApplication;
 
 const { supportedCurrencies } = mockCurrenciesResponse;
 
@@ -43,8 +48,11 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
   let req: Request;
   let res: Response;
 
+  jest.mock('../map-and-save/export-contract-agent-service-charge');
+
   let getCountriesSpy = jest.fn(() => Promise.resolve(mockCountries));
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+  mapAndSave.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -60,7 +68,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE];
+      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -145,7 +153,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         ...pageVariables(referenceNumber, supportedCurrencies),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
-        countries: mapCountries(mockCountries),
+        countries: mapCountries(mockCountries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
         CONDITIONAL_FIXED_SUM_HTML,
         CONDITIONAL_PERCENTAGE_HTML,
       };
@@ -256,7 +264,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           ...pageVariables(referenceNumber, supportedCurrencies),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
-          countries: mapCountries(mockCountries),
+          countries: mapCountries(mockCountries, payload[PAYABLE_COUNTRY_CODE]),
           CONDITIONAL_FIXED_SUM_HTML,
           CONDITIONAL_PERCENTAGE_HTML,
           submittedValues: sanitiseData(payload),
@@ -334,6 +342,18 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
       });
 
+      it('should call mapAndSave.exportContractAgentServiceCharge with data from constructPayload function and application', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
         await post(req, res);
 
@@ -346,6 +366,36 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
     describe('when there is no application', () => {
       beforeEach(() => {
         delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentServiceCharge does not return a true boolean', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentServiceCharge returns an error', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

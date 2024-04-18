@@ -9,7 +9,7 @@ const {
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service', () => {
-  jest.mock('../../save-data/export-contract-agent-service');
+  jest.mock('../../save-data/export-contract-agent-service-charge');
 
   let mockFormBody = {
     _csrf: '1234',

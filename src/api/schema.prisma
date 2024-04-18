@@ -225,8 +225,8 @@ model ExportContractAgentServiceCharge {
   service            ExportContractAgentService? @relation("ExportContractAgentService_charge")
   chargePercentage   Int?
   fixedSumAmount     Int?
-  payableCountryCode String                      @default("") @mysql.VarChar(3)
   method             String?
+  payableCountryCode String                      @default("") @mysql.VarChar(3)
 }
 
 model PrivateMarket {

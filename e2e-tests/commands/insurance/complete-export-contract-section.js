@@ -37,7 +37,7 @@ const completeExportContractSection = ({
     cy.completeAndSubmitAgentServiceForm({ agentIsCharging });
 
     if (agentIsCharging) {
-      cy.completeAndSubmitAgentChargesForm();
+      cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
     }
   }
 
