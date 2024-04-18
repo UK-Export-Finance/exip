@@ -54,6 +54,8 @@ const completeSignInAndSubmitAnApplication = ({
         attemptedPrivateMarketCover,
         isUsingAgent,
         agentIsCharging,
+        agentChargeMethodFixedSum,
+        agentChargeMethodPercentage,
         agentChargeMethod,
       });
     } else {

@@ -74,11 +74,38 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
     });
   });
 
-  describe('when all fields are provided', () => {
+  describe(`when all fields are provided - agentIsCharging as false`, () => {
+    it('should update the `export contract` task status to `completed`', () => {
+      cy.navigateToUrl(url);
+
+      cy.completeAgentServiceForm({ agentIsCharging: false });
+
+      cy.clickSaveAndBackButton();
+
+      cy.navigateToAllSectionsUrl(referenceNumber);
+
+      cy.checkTaskExportContractStatusIsComplete();
+    });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.startInsuranceExportContractSection({});
+
+        // go through 4 export contract forms.
+        cy.clickSubmitButtonMultipleTimes({ count: 4 });
+
+        cy.assertAgentServiceFieldValues({});
+      });
+    });
+  });
+
+  describe(`when all fields are provided - agentIsCharging as true`, () => {
     it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAgentServiceForm({});
+      cy.completeAgentServiceForm({ agentIsCharging: true });
 
       cy.clickSaveAndBackButton();
 
@@ -96,7 +123,7 @@ context('Insurance - Export contract - Agent service - Save and go back', () => 
         // go through 4 export contract forms.
         cy.clickSubmitButtonMultipleTimes({ count: 4 });
 
-        cy.assertAgentServiceFieldValues({});
+        cy.assertAgentServiceFieldValues({ agentIsCharging: true });
       });
     });
   });
