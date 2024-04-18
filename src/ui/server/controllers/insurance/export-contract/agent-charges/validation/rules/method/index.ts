@@ -7,11 +7,8 @@ import emptyFieldValidation from '../../../../../../../shared-validation/empty-f
 import { RequestBody } from '../../../../../../../../types';
 
 const {
-  EXPORT_CONTRACT:  {
-    AGENT_SERVICE_CHARGE_METHOD: {
-      FIXED_SUM,
-      PERCENTAGE,
-    },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE_METHOD: { FIXED_SUM, PERCENTAGE },
   },
 } = FIELD_VALUES;
 

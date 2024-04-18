@@ -2,7 +2,7 @@ import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 
 const {
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE }
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-submitted-data/agent-service-charge', () => {
@@ -15,7 +15,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
-        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT])
+        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
       };
 
       expect(result).toEqual(expected);
@@ -31,7 +31,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE])
+        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
       };
 
       expect(result).toEqual(expected);
@@ -49,7 +49,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
 
       const expected = {
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE])
+        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
       };
 
       expect(result).toEqual(expected);

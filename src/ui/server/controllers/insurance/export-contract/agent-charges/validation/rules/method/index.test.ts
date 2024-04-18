@@ -9,10 +9,7 @@ import { mockErrors } from '../../../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
-    AGENT_SERVICE_CHARGE_METHOD: {
-      FIXED_SUM,
-      PERCENTAGE,
-    },
+    AGENT_SERVICE_CHARGE_METHOD: { FIXED_SUM, PERCENTAGE },
   },
 } = FIELD_VALUES;
 
