@@ -47,10 +47,18 @@ export const mockPrivateMarket = {
   declinedDescription: 'Mock declined description',
 };
 
+export const mockExportContractAgentServiceCharge = {
+  chargePercentage: 10,
+  fixedSumAmount: 1500,
+  payableCountryCode: mockCountries[0].isoCode,
+  method: 'Fixed sum',
+};
+
 export const mockExportContractAgentService = {
   id: 'clldfm6pt000noqa6fs6cj5xl',
   agentIsCharging: true,
   serviceDescription: 'Mock export contract agent service decsription',
+  charge: mockExportContractAgentServiceCharge,
 };
 
 export const mockExportContractAgent = {

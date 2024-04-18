@@ -17,4 +17,12 @@ export const APPLICATION = {
     IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
   },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: {
+        FIXED_SUM: 'Fixed sum',
+        PERCENTAGE: 'Percentage',
+      },
+    },
+  },
 };

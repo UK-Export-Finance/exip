@@ -8,6 +8,20 @@ import { APPLICATION, FEEDBACK } from './constants';
 import updateApplication from './helpers/update-application';
 import nullableCheckbox from './nullable-checkbox';
 
+const {
+  DEAL_TYPE,
+  DEFAULT_CURRENCY,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
+  LATEST_VERSION,
+  POLICY,
+  POLICY_TYPE,
+  SUBMISSION_COUNT_DEFAULT,
+  SUBMISSION_DEADLINE_IN_MONTHS,
+  SUBMISSION_TYPE,
+  STATUS,
+} = APPLICATION;
+
 export const lists = {
   ReferenceNumber: {
     db: {
@@ -27,14 +41,14 @@ export const lists = {
         isIndexed: true,
       }),
       submissionCount: integer({
-        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true },
       }),
       submissionDate: timestamp(),
       submissionDeadline: timestamp(),
       submissionType: select({
-        options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
-        defaultValue: APPLICATION.SUBMISSION_TYPE.MIA,
+        options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
+        defaultValue: SUBMISSION_TYPE.MIA,
       }),
       status: text({
         validation: { isRequired: true },
@@ -55,11 +69,11 @@ export const lists = {
       policyContact: relationship({ ref: 'PolicyContact' }),
       sectionReview: relationship({ ref: 'SectionReview' }),
       version: text({
-        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        defaultValue: LATEST_VERSION.VERSION_NUMBER,
         validation: { isRequired: true },
       }),
       dealType: text({
-        defaultValue: APPLICATION.DEAL_TYPE,
+        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: 'VarChar(4)' },
       }),
@@ -127,13 +141,13 @@ export const lists = {
             const now = new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = addMonths(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = addMonths(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
 
             // add default submission type
-            modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
+            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
 
             // add default status
-            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
+            modifiedData.status = STATUS.IN_PROGRESS;
 
             return modifiedData;
           } catch (err) {
@@ -287,19 +301,19 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       jointlyInsuredParty: relationship({ ref: 'JointlyInsuredParty.policy' }),
-      needPreCreditPeriodCover: nullableCheckbox(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
+      needPreCreditPeriodCover: nullableCheckbox(DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: select({
         options: [
-          { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
-          { label: APPLICATION.POLICY_TYPE.MULTIPLE, value: APPLICATION.POLICY_TYPE.MULTIPLE },
+          { label: POLICY_TYPE.SINGLE, value: POLICY_TYPE.SINGLE },
+          { label: POLICY_TYPE.MULTIPLE, value: POLICY_TYPE.MULTIPLE },
         ],
       }),
       requestedStartDate: timestamp(),
       contractCompletionDate: timestamp(),
       totalValueOfContract: integer({
         validation: {
-          min: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
+          min: POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM,
         },
       }),
       creditPeriodWithBuyer: text(),
@@ -399,9 +413,27 @@ export const lists = {
   ExportContractAgentService: {
     fields: {
       agent: relationship({ ref: 'ExportContractAgent.service' }),
+      charge: relationship({ ref: 'ExportContractAgentServiceCharge.service' }),
       agentIsCharging: nullableCheckbox(),
       serviceDescription: text({
         db: { nativeType: 'VarChar(1000)' },
+      }),
+    },
+    access: allowAll,
+  },
+  ExportContractAgentServiceCharge: {
+    fields: {
+      service: relationship({ ref: 'ExportContractAgentService.charge' }),
+      chargePercentage: integer(),
+      fixedSumAmount: integer(),
+      method: select({
+        options: [
+          { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },
+          { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE },
+        ],
+      }),
+      payableCountryCode: text({
+        db: { nativeType: 'VarChar(3)' },
       }),
     },
     access: allowAll,
@@ -509,7 +541,7 @@ export const lists = {
       exportsTurnoverPercentage: integer(),
       turnoverCurrencyCode: text({
         db: { nativeType: 'VarChar(3)' },
-        defaultValue: APPLICATION.DEFAULT_CURRENCY,
+        defaultValue: DEFAULT_CURRENCY,
       }),
       hasCreditControlProcess: nullableCheckbox(),
     },

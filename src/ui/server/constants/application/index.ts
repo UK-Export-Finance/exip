@@ -24,4 +24,12 @@ export const APPLICATION = {
     },
     TOTAL_MONTHS_OF_COVER: 12,
   },
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: {
+        FIXED_SUM: 'Fixed sum',
+        PERCENTAGE: 'Percentage',
+      },
+    },
+  },
 };

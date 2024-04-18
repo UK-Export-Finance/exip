@@ -156,6 +156,14 @@ export interface ApplicationExportContractAgentService extends Relationship {
   serviceDescription?: string;
 }
 
+export interface ApplicationExportContractAgentServiceCharge extends Relationship {
+  agentServiceId: string;
+  chargePercentage?: string;
+  fixedSumAmount?: string;
+  payableCountryCode?: string;
+  method?: string;
+}
+
 export interface ApplicationOwner extends Relationship {
   email: string;
   firstName: string;
@@ -257,6 +265,7 @@ export interface CreateAnApplicationVariables {
 export interface CreateExportContractAgentResponse {
   agent: ApplicationExportContractAgent;
   agentService: ApplicationExportContractAgentService;
+  agentServiceCharge: ApplicationExportContractAgentServiceCharge;
 }
 
 export interface CreateExportContractResponse {
