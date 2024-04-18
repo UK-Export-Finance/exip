@@ -18,7 +18,9 @@ import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse, mockExportContractAgentServiceCharge } from '../../../../test-mocks';
 
-const { exportContract: { agent } } = mockApplication;
+const {
+  exportContract: { agent },
+} = mockApplication;
 
 const { supportedCurrencies } = mockCurrenciesResponse;
 

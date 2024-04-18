@@ -135,7 +135,7 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
 
     describe(`when submitting with ${METHOD} as ${FIXED_SUM}`, () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true  });
+        cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
 
         cy.assertUrl(checkYourAnswersUrl);
       });
