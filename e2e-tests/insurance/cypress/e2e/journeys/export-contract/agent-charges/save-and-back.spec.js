@@ -7,7 +7,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -42,6 +42,9 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
     cy.deleteApplication(referenceNumber);
   });
 
+  // TODO: partially submitted - country, no method.
+  //. should be populated when going back to the page.
+
   describe('when submitting an empty form via `save and go back` button', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
@@ -52,13 +55,11 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
     it('should redirect to `all sections`', () => {
       cy.assertAllSectionsUrl(referenceNumber);
     });
-  });
 
-  describe('when fields are partially completed', () => {
     it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAgentChargesForm({
+      cy.completeAgentChargesForm({
         fixedSumMethod: false,
         percentageMethod: false,
         fixedSumAmount: '',
@@ -72,38 +73,35 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
     });
 
     describe('when going back to the page', () => {
-      it('should have the submitted value', () => {
+      it('should have no submitted values', () => {
         cy.navigateToUrl(url);
 
-        cy.assertAgentChargesFieldValues({
-          fixedSumMethod: false,
-          percentageMethod: false,
-        });
+        cy.assertAgentChargesFieldValues({});
       });
     });
   });
 
-  describe('when all fields are provided', () => {
-    it('should update the `export contract` task status to `completed`', () => {
+  describe(`when submitting only a ${PAYABLE_COUNTRY_CODE} via 'save and go back' button`, () => {
+    it('should retain the status of task `export contract` as ` in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAgentChargesForm({});
+      cy.completeAgentChargesForm({
+        fixedSumMethod: false,
+        percentageMethod: false,
+        fixedSumAmount: '',
+        chargePercentage: '',
+      });
 
       cy.clickSaveAndBackButton();
 
-      cy.navigateToAllSectionsUrl(referenceNumber);
+      cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskExportContractStatusIsComplete();
+      cy.checkTaskExportContractStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
-      it('should have the submitted values', () => {
-        cy.navigateToAllSectionsUrl(referenceNumber);
-
-        cy.startInsuranceExportContractSection({});
-
-        // go through 5 export contract forms.
-        cy.clickSubmitButtonMultipleTimes({ count: 5 });
+      it('should have the submitted value', () => {
+        cy.navigateToUrl(url);
 
         cy.assertAgentChargesFieldValues({});
       });

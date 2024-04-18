@@ -48,7 +48,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
     it('should retain the status of task `export contract` as `in progress`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAgentChargesForm({
+      cy.completeAgentChargesForm({
         percentageMethod: true,
         chargePercentage: '',
         payableCountry: '',
@@ -67,8 +67,8 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
 
         cy.assertAgentChargesFieldValues({
           percentageMethod: true,
-          chargePercentage: '',
-          payableCountry: '',
+          expectedChargePercentage: '',
+          expectedPayableCountry: '',
         });
       });
     });
@@ -78,7 +78,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
     it('should update the `export contract` task status to `completed`', () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitAgentChargesForm({ percentageMethod: true });
+      cy.completeAgentChargesForm({ percentageMethod: true });
 
       cy.clickSaveAndBackButton();
 
@@ -96,7 +96,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
         // go through 5 export contract forms.
         cy.clickSubmitButtonMultipleTimes({ count: 5 });
 
-        cy.assertAgentChargesFieldValues({ fixedSumMethod: true });
+        cy.assertAgentChargesFieldValues({ percentageMethod: true });
       });
     });
   });
