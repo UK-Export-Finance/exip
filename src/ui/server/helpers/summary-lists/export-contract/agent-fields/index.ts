@@ -17,12 +17,20 @@ const {
 const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { SERVICE_DESCRIPTION },
+  AGENT_SERVICE: { SERVICE_DESCRIPTION, IS_CHARGING },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
-const { AGENT_CHANGE, AGENT_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
-const { AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
-const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const {
+  AGENT_CHANGE,
+  AGENT_CHECK_AND_CHANGE,
+  AGENT_DETAILS_CHANGE,
+  AGENT_DETAILS_CHECK_AND_CHANGE,
+  AGENT_SERVICE_CHANGE,
+  AGENT_SERVICE_CHECK_AND_CHANGE,
+  AGENT_CHARGES_CHANGE,
+  AGENT_CHARGES_CHECK_AND_CHANGE,
+} = EXPORT_CONTRACT_ROUTES;
 
 /**
  * agentDetailsFields
@@ -89,6 +97,69 @@ export const agentServiceFields = (answers: ApplicationExportContractAgentServic
 };
 
 /**
+ * agentServiceChargeFields
+ * Create all fields and values for the Insurance - "Export contract - agent charges" govukSummaryList
+ * @param {ApplicationExportContractAgentService} answers: All submitted agent data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array} countries: Countries
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} Agent charges fields
+ */
+export const agentServiceChargeFields = (
+  answers: ApplicationExportContractAgentService,
+  referenceNumber: number,
+  countries: Array<Country>,
+  checkAndChange: boolean,
+) => {
+  const fields = [
+    fieldGroupItem({
+      field: getFieldById(FIELDS.AGENT_SERVICE, IS_CHARGING),
+      data: answers,
+      href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${IS_CHARGING}-label`, referenceNumber, checkAndChange),
+      renderChangeLink: true,
+    }),
+  ];
+
+  if (answers[IS_CHARGING]) {
+    if (answers.charge[FIXED_SUM_AMOUNT]) {
+      fields.push(
+        fieldGroupItem({
+          field: getFieldById(FIELDS.AGENT_CHARGES, FIXED_SUM_AMOUNT),
+          data: answers.charge,
+          href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        }),
+      );
+    }
+
+    if (answers.charge[CHARGE_PERCENTAGE]) {
+      fields.push(
+        fieldGroupItem({
+          field: getFieldById(FIELDS.AGENT_CHARGES, CHARGE_PERCENTAGE),
+          data: answers.charge,
+          href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${CHARGE_PERCENTAGE}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        }),
+      );
+    }
+
+    fields.push(
+      fieldGroupItem(
+        {
+          field: getFieldById(FIELDS.AGENT_CHARGES, PAYABLE_COUNTRY_CODE),
+          data: answers.charge,
+          href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${PAYABLE_COUNTRY_CODE}-label`, referenceNumber, checkAndChange),
+          renderChangeLink: true,
+        },
+        getCountryByIsoCode(countries, answers.charge[PAYABLE_COUNTRY_CODE]).name,
+      ),
+    );
+  }
+
+  return fields;
+};
+
+/**
  * agentFields
  * Create all fields and values for the Insurance - "Export contract - agent" govukSummaryList
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
@@ -115,6 +186,7 @@ const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: n
       ...fields,
       ...agentDetailsFields(answers, referenceNumber, countries, checkAndChange),
       ...agentServiceFields(answers.service, referenceNumber, checkAndChange),
+      ...agentServiceChargeFields(answers.service, referenceNumber, countries, checkAndChange),
     ];
   }
 
