@@ -144,10 +144,68 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.completeAndSubmitAgentChargesForm();
+    describe(`when submitting with ${METHOD} as ${FIXED_SUM}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
 
-      cy.assertUrl(checkYourAnswersUrl);
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
+      describe('when going back to the page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
+
+        it('should have the submitted values', () => {
+          cy.assertAgentChargesFieldValues({ fixedSumMethod: true });
+        });
+
+        it(`should NOT display conditional "${CHARGE_PERCENTAGE}" field`, () => {
+          fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
+        });
+
+        it(`should display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
+          fieldSelector(FIXED_SUM_AMOUNT).input().should('be.visible');
+        });
+      });
+    });
+
+    describe(`when submitting with ${METHOD} as ${PERCENTAGE}`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.completeAndSubmitAgentChargesForm({ percentageMethod: true });
+
+        cy.assertUrl(checkYourAnswersUrl);
+      });
+
+      it('should update the `export contract` task status to `completed`', () => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
+
+        cy.checkTaskExportContractStatusIsComplete();
+      });
+
+      describe('when going back to the page', () => {
+        beforeEach(() => {
+          cy.navigateToUrl(url);
+        });
+
+        it('should have the submitted values', () => {
+          cy.assertAgentChargesFieldValues({ percentageMethod: true });
+        });
+
+        it(`should NOT display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
+          fieldSelector(FIXED_SUM_AMOUNT).input().should('not.be.visible');
+        });
+
+        it(`should display conditional "${CHARGE_PERCENTAGE}" field`, () => {
+          fieldSelector(CHARGE_PERCENTAGE).input().should('be.visible');
+        });
+      });
     });
   });
 });

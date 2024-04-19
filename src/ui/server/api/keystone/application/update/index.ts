@@ -9,6 +9,7 @@ import companyDifferentTradingAddress from './companyDifferentTradingAddress';
 import exportContract from './exportContract';
 import exportContractAgent from './exportContractAgent';
 import exportContractAgentService from './exportContractAgentService';
+import exportContractAgentServiceCharge from './exportContractAgentServiceCharge';
 import jointlyInsuredParty from './jointlyInsuredParty';
 import nominatedLossPayee from './nominatedLossPayee';
 import lossPayeeFinancialDetailsUk from './lossPayeeFinancialDetailsUk';
@@ -34,6 +35,7 @@ const update = {
   exportContract,
   exportContractAgent,
   exportContractAgentService,
+  exportContractAgentServiceCharge,
   jointlyInsuredParty,
   lossPayeeFinancialDetailsUk,
   nominatedLossPayee,

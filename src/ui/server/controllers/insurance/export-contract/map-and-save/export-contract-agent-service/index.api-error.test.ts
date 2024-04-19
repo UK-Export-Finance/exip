@@ -3,7 +3,7 @@ import save from '../../save-data/export-contract-agent-service';
 import { mockApplication } from '../../../../../test-mocks';
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service - api errors', () => {
-  jest.mock('../../save-data/export-contract-agent-service');
+  jest.mock('../../save-data/export-contract-agent-service-charge');
 
   const mockFormBody = {
     _csrf: '1234',

@@ -35,10 +35,19 @@ interface ApplicationPrivateMarket {
   declinedDescription?: string;
 }
 
+interface ApplicationExportContractAgentServiceCharge {
+  id: string;
+  chargePercentage?: string;
+  fixedSumAmount?: string;
+  payableCountryCode?: string;
+  method?: string;
+}
+
 interface ApplicationExportContractAgentService {
   id: string;
   agentIsCharging?: boolean;
   serviceDescription?: string;
+  charge: ApplicationExportContractAgentServiceCharge;
 }
 
 interface ApplicationExportContractAgent {
@@ -276,6 +285,7 @@ export {
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
+  ApplicationExportContractAgentServiceCharge,
   ApplicationPrivateMarket,
   ApplicationSectionReview,
   ApplicationDeclaration,

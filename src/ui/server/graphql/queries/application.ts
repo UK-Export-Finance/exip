@@ -97,6 +97,13 @@ const applicationQuery = gql`
               id
               serviceDescription
               agentIsCharging
+              charge {
+                id
+                chargePercentage
+                fixedSumAmount
+                method
+                payableCountryCode
+              }
             }
           }
         }

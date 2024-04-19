@@ -1,5 +1,6 @@
 import hasFormData from '../../../../../helpers/has-form-data';
-import save from '../../save-data/export-contract-agent-service';
+import mapSubmittedData from '../../map-submitted-data/agent-service-charge';
+import save from '../../save-data/export-contract-agent-service-charge';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
@@ -10,15 +11,17 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * @param {Object} Validation errors
  * @returns {Boolean}
  */
-const exportContractAgentService = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
+const exportContractAgentServiceCharge = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
+      const populatedData = mapSubmittedData(formBody);
+
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exportContractAgentService(application, formBody, validationErrors.errorList);
+        saveResponse = await save.exportContractAgentServiceCharge(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.exportContractAgentService(application, formBody);
+        saveResponse = await save.exportContractAgentServiceCharge(application, populatedData);
       }
 
       if (!saveResponse) {
@@ -37,5 +40,5 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
 };
 
 export default {
-  exportContractAgentService,
+  exportContractAgentServiceCharge,
 };
