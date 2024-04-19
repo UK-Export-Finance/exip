@@ -27,7 +27,7 @@ const { supportedCurrencies } = mockCurrenciesResponse;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES_ALTERNATIVE_CURRENCY },
+  EXPORT_CONTRACT: { AGENT_CHARGES_SAVE_AND_BACK, AGENT_CHARGES_ALTERNATIVE_CURRENCY, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -106,7 +106,6 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
             ID: FIXED_SUM,
             ...FIELDS.AGENT_CHARGES[FIXED_SUM],
           },
-          // TODO: should be amount, not currency code
           FIXED_SUM_AMOUNT: {
             ID: FIXED_SUM_AMOUNT,
             ...FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT],
@@ -122,7 +121,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
         },
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
         PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}/${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);

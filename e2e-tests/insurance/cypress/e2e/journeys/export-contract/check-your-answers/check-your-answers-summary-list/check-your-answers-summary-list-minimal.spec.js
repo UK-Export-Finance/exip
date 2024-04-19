@@ -13,7 +13,8 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { SERVICE_DESCRIPTION },
+  AGENT_SERVICE: { SERVICE_DESCRIPTION, IS_CHARGING },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -80,5 +81,21 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
 
   it(`should NOT render a ${SERVICE_DESCRIPTION} summary list row`, () => {
     checkSummaryList[SERVICE_DESCRIPTION]({ shouldRender: false });
+  });
+
+  it(`should NOT render an ${IS_CHARGING} summary list row`, () => {
+    checkSummaryList[IS_CHARGING]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${FIXED_SUM_AMOUNT} summary list row`, () => {
+    checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${CHARGE_PERCENTAGE} summary list row`, () => {
+    checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${PAYABLE_COUNTRY_CODE} summary list row`, () => {
+    checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: false });
   });
 });
