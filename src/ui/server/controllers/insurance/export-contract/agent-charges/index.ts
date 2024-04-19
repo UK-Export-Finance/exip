@@ -20,7 +20,7 @@ import { Currency, Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES_ALTERNATIVE_CURRENCY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -79,7 +79,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
       },
     },
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
-    PROVIDE_ALTERNATIVE_CURRENCY_URL: '#',
+    PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}/${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
   };
 };
