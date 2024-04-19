@@ -15,7 +15,9 @@ const {
 
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
-  AGENT_CHARGES: { FIXED_SUM, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE },
+  AGENT_CHARGES: {
+    FIXED_SUM, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE,
+  },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -82,7 +84,7 @@ context('Insurance - Export contract - Change your answers - Agent service - cha
       });
 
       describe(`when changing the answer again from no to yes and going back to ${AGENT_CHARGES}`, () => {
-        it(`should have an empty values`, () => {
+        it('should have an empty values', () => {
           summaryList.field(FIELD_ID).changeLink().click();
 
           cy.completeAndSubmitAgentServiceForm({
