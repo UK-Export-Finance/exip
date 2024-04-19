@@ -1,8 +1,13 @@
-import save from '.';
+import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import api from '../../../../../api';
 import generateValidationErrors from '../../../policy/type-of-policy/validation';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { mockApplication } from '../../../../../test-mocks';
+
+const {
+  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
+} = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/save-data/export-contract-agent-service-charge', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -20,6 +25,13 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
 
   beforeEach(() => {
     api.keystone.application.update.exportContractAgentServiceCharge = updateApplicationSpy;
+  });
+
+  describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
+    it('should have the relevant fieldIds', () => {
+      const expected = [CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE];
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual(expected);
+    });
   });
 
   describe('when errorList is provided', () => {

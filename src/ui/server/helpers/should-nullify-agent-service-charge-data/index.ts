@@ -1,4 +1,4 @@
-import { objectHasProperty, objectHasKeysAndValues } from '../object';
+import { objectHasKeysAndValues } from '../object';
 import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import { RequestBody, ApplicationExportContractAgentServiceCharge } from '../../../types';
 
@@ -15,13 +15,13 @@ const {
  * @returns {Boolean}
  */
 const shouldNullifyAgentServiceChargeData = (formBody: RequestBody, chargeData: ApplicationExportContractAgentServiceCharge) => {
-  const isCharging = objectHasProperty(formBody, IS_CHARGING);
+  const isNotCharging = formBody[IS_CHARGING] === 'false';
 
   const { id, ...otherFields } = chargeData;
 
   const hasAgentServiceChargeData = objectHasKeysAndValues(otherFields);
 
-  if (isCharging && hasAgentServiceChargeData) {
+  if (isNotCharging && hasAgentServiceChargeData) {
     return true;
   }
 
