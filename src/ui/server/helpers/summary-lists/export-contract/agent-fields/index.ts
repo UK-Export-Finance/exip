@@ -5,6 +5,7 @@ import { EXPORT_CONTRACT as EXPORT_CONTRACT_ROUTES } from '../../../../constants
 import fieldGroupItem from '../../generate-field-group-item';
 import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
+import mapPercentage from '../../../map-percentage';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
@@ -112,12 +113,15 @@ export const agentServiceChargeFields = (
   checkAndChange: boolean,
 ) => {
   const fields = [
-    fieldGroupItem({
-      field: getFieldById(FIELDS.AGENT_SERVICE, IS_CHARGING),
-      data: answers,
-      href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${IS_CHARGING}-label`, referenceNumber, checkAndChange),
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.AGENT_SERVICE, IS_CHARGING),
+        data: answers,
+        href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${IS_CHARGING}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      mapYesNoField(answers[IS_CHARGING]),
+    ),
   ];
 
   if (answers[IS_CHARGING]) {
@@ -134,12 +138,15 @@ export const agentServiceChargeFields = (
 
     if (answers.charge[CHARGE_PERCENTAGE]) {
       fields.push(
-        fieldGroupItem({
-          field: getFieldById(FIELDS.AGENT_CHARGES, CHARGE_PERCENTAGE),
-          data: answers.charge,
-          href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${CHARGE_PERCENTAGE}-label`, referenceNumber, checkAndChange),
-          renderChangeLink: true,
-        }),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, CHARGE_PERCENTAGE),
+            data: answers.charge,
+            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${CHARGE_PERCENTAGE}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          mapPercentage(answers.charge[CHARGE_PERCENTAGE]),
+        ),
       );
     }
 
