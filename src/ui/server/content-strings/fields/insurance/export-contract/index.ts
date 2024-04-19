@@ -105,6 +105,13 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
   },
   AGENT_SERVICE: {
+    [IS_CHARGING]: {
+      LABEL: 'Is the agent charging for their support in the export contract?',
+      SUMMARY: {
+        TITLE: 'Agent charging for support',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
+    },
     [SERVICE_DESCRIPTION]: {
       LABEL: 'Service the agent is providing',
       MAXIMUM: MAXIMUM_CHARACTERS.AGENT_SERVICE_DESCRIPTION,
@@ -132,13 +139,25 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [FIXED_SUM_AMOUNT]: {
       LABEL: 'How much are they charging in TODO?',
+      SUMMARY: {
+        TITLE: 'How much they are charging',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [CHARGE_PERCENTAGE]: {
       LABEL: 'What percentage are they charging?',
       SUFFIX: '%',
+      SUMMARY: {
+        TITLE: 'How much they are charging',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [PAYABLE_COUNTRY_CODE]: {
       LABEL: 'Country where charges are payable',
+      SUMMARY: {
+        TITLE: 'Country that commission is payable',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [IS_CHARGING]: {
       LABEL: 'Is the agent charging for their support in the export contract?',

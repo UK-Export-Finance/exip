@@ -13,6 +13,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**
@@ -207,6 +208,64 @@ const checkExportContractSummaryList = ({
         row.valueHtmlLineBreak(),
         expectedLineBreaks,
       );
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [IS_CHARGING]: ({ isYes = false, shouldRender = false }) => {
+    const fieldId = IS_CHARGING;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_SERVICE);
+
+      let expectedValue;
+
+      if (isYes) {
+        expectedValue = FIELD_VALUES.YES;
+      } else {
+        expectedValue = FIELD_VALUES.NO;
+      }
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [FIXED_SUM_AMOUNT]: ({ shouldRender = false }) => {
+    const fieldId = FIXED_SUM_AMOUNT;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
+
+      const expectedValue = application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [CHARGE_PERCENTAGE]: ({ shouldRender = false }) => {
+    const fieldId = CHARGE_PERCENTAGE;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
+
+      const expectedValue = `${application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId]}%`;
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
+  },
+  [PAYABLE_COUNTRY_CODE]: ({ shouldRender = false }) => {
+    const fieldId = PAYABLE_COUNTRY_CODE;
+
+    if (shouldRender) {
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
+
+      const expectedValue = application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId];
+
+      cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
