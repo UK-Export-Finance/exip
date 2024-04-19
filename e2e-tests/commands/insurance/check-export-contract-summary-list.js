@@ -172,21 +172,6 @@ const checkExportContractSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [IS_CHARGING]: ({ isYes = false }) => {
-    const fieldId = IS_CHARGING;
-
-    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_SERVICE);
-
-    let expectedValue;
-
-    if (isYes) {
-      expectedValue = FIELD_VALUES.YES;
-    } else {
-      expectedValue = FIELD_VALUES.NO;
-    }
-
-    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
-  },
   [SERVICE_DESCRIPTION]: ({ shouldRender = false }) => {
     const fieldId = SERVICE_DESCRIPTION;
 

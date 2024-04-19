@@ -1,4 +1,5 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { autoCompleteField, field, summaryList } from '../../../../../../../pages/shared';
+import { agentChargesPage } from '../../../../../../../pages/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
@@ -8,11 +9,13 @@ const {
   EXPORT_CONTRACT: {
     CHECK_YOUR_ANSWERS,
     AGENT_SERVICE_CHANGE,
+    AGENT_CHARGES,
   },
 } = INSURANCE_ROUTES;
 
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
+  AGENT_CHARGES: { FIXED_SUM, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -71,12 +74,29 @@ context('Insurance - Export contract - Change your answers - Agent service - cha
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
       });
 
-      it(`should render new ${FIELD_ID} answer and change link, with no other agent details fields`, () => {
-        checkSummaryList[FIELD_ID]({ isYes: false });
+      it(`should render new ${FIELD_ID} answer and change link, with no other agent service charge fields`, () => {
+        checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: false });
+        checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: false });
+        checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: false });
+        checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: false });
       });
 
-      // TODO:
-      // describe(`when changing the answer again from no to yes and
+      describe(`when changing the answer again from no to yes and going back to ${AGENT_CHARGES}`, () => {
+        it(`should have an empty values`, () => {
+          summaryList.field(FIELD_ID).changeLink().click();
+
+          cy.completeAndSubmitAgentServiceForm({
+            agentIsCharging: true,
+          });
+
+          cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][FIXED_SUM].input());
+          cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][PERCENTAGE].input());
+
+          cy.checkValue(field(FIXED_SUM_AMOUNT), '');
+          cy.checkValue(field(CHARGE_PERCENTAGE), '');
+          cy.checkValue(autoCompleteField(PAYABLE_COUNTRY_CODE), '');
+        });
+      });
     });
   });
 });
