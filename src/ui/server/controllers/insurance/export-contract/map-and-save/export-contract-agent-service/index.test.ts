@@ -7,16 +7,24 @@ import { mockApplication as application } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM, METHOD, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service', () => {
   jest.mock('../../save-data/export-contract-agent-service');
   jest.mock('../../save-data/export-contract-agent-service-charge');
 
+  const mockCsrf = '1234';
+
   const mockFormBody = {
-    _csrf: '1234',
-    [IS_CHARGING]: true,
+    isCharging: {
+      _csrf: mockCsrf,
+      [IS_CHARGING]: 'true',
+    },
+    isNotCharging: {
+      _csrf: mockCsrf,
+      [IS_CHARGING]: 'false',
+    },
   };
 
   const mockApplication = {
@@ -32,7 +40,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
             charge: {
               id: application.exportContract.agent.service.charge.id,
               [CHARGE_PERCENTAGE]: '',
-              [FIXED_SUM]: '',
+              [FIXED_SUM_AMOUNT]: '',
               [METHOD]: '',
               [PAYABLE_COUNTRY_CODE]: '',
             },
@@ -43,9 +51,9 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
   };
 
   const nullifiedAgentCharges = {
-    [CHARGE_PERCENTAGE]: '',
-    [FIXED_SUM]: '',
-    [METHOD]: '',
+    [CHARGE_PERCENTAGE]: null,
+    [FIXED_SUM_AMOUNT]: null,
+    [METHOD]: null,
     [PAYABLE_COUNTRY_CODE]: '',
   };
 
@@ -71,20 +79,24 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       });
 
       it('should call saveService.exportContractAgentService with application, submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.noChargeData, mockValidationErrors);
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
 
         expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
-        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.noChargeData, mockFormBody, mockValidationErrors?.errorList);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(
+          mockApplication.noChargeData,
+          mockFormBody.isCharging,
+          mockValidationErrors?.errorList,
+        );
       });
 
       it('should NOT call saveCharge.exportContractAgentServiceCharge with application, submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.noChargeData, mockValidationErrors);
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
 
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(0);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.noChargeData, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -96,48 +108,52 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       });
 
       it('should call saveService.exportContractAgentService with application and submitted data', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.noChargeData);
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData);
 
         expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
-        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.noChargeData, mockFormBody);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.noChargeData, mockFormBody.isCharging);
       });
 
       it('should NOT call saveCharge.exportContractAgentServiceCharge with application and submitted data', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.noChargeData);
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData);
 
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(0);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.noChargeData, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
     });
   });
 
-  describe('when the form has data, IS_CHARGING=true, has charge data', () => {
+  describe('when the form has data, IS_CHARGING=false, has charge data', () => {
     describe('when the form has validation errors', () => {
       beforeEach(() => {
         setupMocks();
       });
 
       it('should call saveService.exportContractAgentService with application, submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.withChargeData, mockValidationErrors);
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
 
         expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
-        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.withChargeData, mockFormBody, mockValidationErrors?.errorList);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(
+          mockApplication.withChargeData,
+          mockFormBody.isNotCharging,
+          mockValidationErrors?.errorList,
+        );
       });
 
       it('should call saveCharge.exportContractAgentServiceCharge with application and nullified agent charges data', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.withChargeData, mockValidationErrors);
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
 
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifiedAgentCharges);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.withChargeData, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -149,21 +165,21 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       });
 
       it('should call saveService.exportContractAgentService with application and submitted data', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.withChargeData);
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData);
 
         expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
-        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.withChargeData, mockFormBody);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.withChargeData, mockFormBody.isNotCharging);
       });
 
       it('should call saveCharge.exportContractAgentServiceCharge with application and nullified agent charges data', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.withChargeData);
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData);
 
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifiedAgentCharges);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication.withChargeData, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
