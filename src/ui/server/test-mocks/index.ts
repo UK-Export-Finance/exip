@@ -15,6 +15,7 @@ import mockApplication, {
   mockApplicationTotalContractValueThresholdFalse,
   mockBusiness,
   mockCompanyDifferentTradingAddress,
+  mockExportContractAgentService,
   mockExportContractAgentServiceCharge,
   referenceNumber,
 } from './mock-application';
@@ -141,6 +142,7 @@ export {
   mockEligibility,
   mockErrorMessagesObject,
   mockErrors,
+  mockExportContractAgentService,
   mockExportContractAgentServiceCharge,
   mockInsuranceFeedback,
   mockJointlyInsuredParty,
