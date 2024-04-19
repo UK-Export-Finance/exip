@@ -795,6 +795,10 @@ var ACCOUNT2 = {
    */
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
 };
+var DEFAULT_ENCRYPTION_SAVE_OBJECT = {
+  value: "",
+  iv: ""
+};
 var FINANCIAL_DETAILS = {
   ENCRYPTION: {
     CIPHER: {
@@ -2133,7 +2137,7 @@ var typeDefs = `
     financialUk: FinancialUk
   }
 
-  type FullApplication {
+  type PopulatedApplication {
     id: String!
     version: Int
     createdAt: DateTime!
@@ -2161,7 +2165,7 @@ var typeDefs = `
 
   type ApplicationSuccessResponse {
     success: Boolean!
-    application: FullApplication
+    application: PopulatedApplication
   }
 
   type Mutation {
@@ -4234,8 +4238,8 @@ var createAnApplication = async (root, variables, context) => {
 };
 var create_an_application_default = createAnApplication;
 
-// helpers/get-ids-by-reference-number/index.ts
-var getIdsByReferenceNumber = async (referenceNumber, context) => {
+// helpers/get-application-by-reference-number/index.ts
+var getApplicationByReferenceNumber = async (referenceNumber, context) => {
   const applications = await context.db.Application.findMany({
     where: {
       referenceNumber: { equals: referenceNumber }
@@ -4247,16 +4251,16 @@ var getIdsByReferenceNumber = async (referenceNumber, context) => {
   }
   return null;
 };
-var get_ids_by_reference_number_default = getIdsByReferenceNumber;
+var get_application_by_reference_number_default = getApplicationByReferenceNumber;
 
 // custom-resolvers/mutations/delete-application-by-reference-number/index.ts
 var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const ids = await get_ids_by_reference_number_default(referenceNumber, context);
-    if (ids) {
-      const { id } = ids;
+    const application2 = await get_application_by_reference_number_default(referenceNumber, context);
+    if (application2) {
+      const { id } = application2;
       const deleteResponse = await context.db.Application.deleteOne({
         where: {
           id
@@ -5635,14 +5639,8 @@ var encrypt_default = encrypt;
 // helpers/map-loss-payee-financial-details-uk/index.ts
 var mapLossPayeeFinancialDetailsUk = (variables) => {
   const { accountNumber, sortCode, bankAddress } = variables;
-  let accountNumberData = {
-    value: "",
-    iv: ""
-  };
-  let sortCodeData = {
-    value: "",
-    iv: ""
-  };
+  let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+  let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
   if (accountNumber) {
     accountNumberData = encrypt_default(accountNumber);
   }
@@ -6243,13 +6241,13 @@ var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2) => {
 var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 
 // custom-resolvers/queries/get-application-by-reference-number/index.ts
-var getApplicationByReferenceNumber = async (root, variables, context) => {
+var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
   try {
     console.info("Getting application by reference number");
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
-    const ids = await get_ids_by_reference_number_default(referenceNumber, context);
-    if (ids) {
-      let populatedApplication = await get_populated_application_default(context, ids);
+    const application2 = await get_application_by_reference_number_default(referenceNumber, context);
+    if (application2) {
+      let populatedApplication = await get_populated_application_default(context, application2);
       if (decryptFinancialUk2) {
         const { nominatedLossPayee } = populatedApplication;
         const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2);
@@ -6271,7 +6269,7 @@ var getApplicationByReferenceNumber = async (root, variables, context) => {
     throw new Error(`Get application by reference number (GetApplicationByReferenceNumber mutation) ${err}`);
   }
 };
-var get_application_by_reference_number_default = getApplicationByReferenceNumber;
+var get_application_by_reference_number_default2 = getApplicationByReferenceNumberQuery;
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
@@ -6437,7 +6435,7 @@ var customResolvers = {
     getApimCisCountries: get_APIM_CIS_countries_default,
     getApimCurrencies: get_APIM_currencies_default,
     getCompaniesHouseInformation: get_companies_house_information_default,
-    getApplicationByReferenceNumber: get_application_by_reference_number_default,
+    getApplicationByReferenceNumber: get_application_by_reference_number_default2,
     getOrdnanceSurveyAddress: get_ordnance_survey_address_default,
     verifyAccountPasswordResetToken: verify_account_password_reset_token_default
   }

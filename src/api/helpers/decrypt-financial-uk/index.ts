@@ -18,7 +18,6 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationFinancialUk) => {
 
   // decrypts accountNumber using encrypted "value" and initialisation vector if both accountNumber and accountNumberVector are defined
   if (accountNumber && accountNumberVector) {
-    // decrypts account number using encrypted "value" and initialisation vector
     decryptedAccountNumber = decryptData.decrypt({ value: accountNumber, iv: accountNumberVector });
   }
 

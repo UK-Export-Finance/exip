@@ -1,5 +1,5 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import getIdsByReferenceNumber from '../../../helpers/get-ids-by-reference-number';
+import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
 import { DeleteApplicationByReferenceNumberVariables, SuccessResponse } from '../../../types';
 
 /**
@@ -23,10 +23,10 @@ const deleteApplicationByReferenceNumber = async (
     const { referenceNumber } = variables;
 
     // ids in application from provided application reference number
-    const ids = await getIdsByReferenceNumber(referenceNumber, context);
+    const application = await getApplicationByReferenceNumber(referenceNumber, context);
 
-    if (ids) {
-      const { id } = ids;
+    if (application) {
+      const { id } = application;
 
       const deleteResponse = await context.db.Application.deleteOne({
         where: {

@@ -1,4 +1,5 @@
 import encrypt from '../encrypt';
+import { DEFAULT_ENCRYPTION_SAVE_OBJECT } from '../../constants';
 import { ApplicationLossPayeeFinancialUk } from '../../types';
 
 /**
@@ -10,15 +11,9 @@ import { ApplicationLossPayeeFinancialUk } from '../../types';
 const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancialUk) => {
   const { accountNumber, sortCode, bankAddress } = variables;
 
-  let accountNumberData = {
-    value: '',
-    iv: '',
-  };
+  let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
 
-  let sortCodeData = {
-    value: '',
-    iv: '',
-  };
+  let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
 
   if (accountNumber) {
     accountNumberData = encrypt(accountNumber);

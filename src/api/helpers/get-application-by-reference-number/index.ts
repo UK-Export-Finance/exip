@@ -1,14 +1,14 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
 
 /**
- * getIdsByReferenceNumber
- * get ids of application sections by application reference number
- * returns application ids or if not found, returns null
+ * getApplicationByReferenceNumber
+ * get ids of application sections by reference number
+ * returns application section ids or if not found, returns null
  * @param {Number} referenceNumber
  * @param {Context} context
- * @returns {Application} application ids or null
+ * @returns {Application} application section ids or null
  */
-const getIdsByReferenceNumber = async (referenceNumber: number, context: Context): Application => {
+const getApplicationByReferenceNumber = async (referenceNumber: number, context: Context): Application => {
   const applications = (await context.db.Application.findMany({
     where: {
       referenceNumber: { equals: referenceNumber },
@@ -23,4 +23,4 @@ const getIdsByReferenceNumber = async (referenceNumber: number, context: Context
   return null;
 };
 
-export default getIdsByReferenceNumber;
+export default getApplicationByReferenceNumber;

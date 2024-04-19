@@ -143,6 +143,11 @@ export const ACCOUNT = {
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST(),
 };
 
+export const DEFAULT_ENCRYPTION_SAVE_OBJECT = {
+  value: '',
+  iv: '',
+};
+
 export const FINANCIAL_DETAILS = {
   ENCRYPTION: {
     CIPHER: {

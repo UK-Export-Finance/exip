@@ -257,7 +257,7 @@ const typeDefs = `
     financialUk: FinancialUk
   }
 
-  type FullApplication {
+  type PopulatedApplication {
     id: String!
     version: Int
     createdAt: DateTime!
@@ -285,7 +285,7 @@ const typeDefs = `
 
   type ApplicationSuccessResponse {
     success: Boolean!
-    application: FullApplication
+    application: PopulatedApplication
   }
 
   type Mutation {

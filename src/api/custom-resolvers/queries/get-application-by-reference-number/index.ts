@@ -1,11 +1,11 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { GetApplicationByReferenceNumberResponse, GetApplicationByReferenceNumberVariables } from '../../../types';
-import getIdsByReferenceNumber from '../../../helpers/get-ids-by-reference-number';
+import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import decryptNominatedLossPayee from '../../../helpers/decrypt-nominated-loss-payee';
 
 /**
- * getApplicationByReferenceNumber
+ * getApplicationByReferenceNumberQuery
  * Gets an application by reference number
  * Based on decrypt variables, decrypts part of application
  * returns full application
@@ -14,7 +14,7 @@ import decryptNominatedLossPayee from '../../../helpers/decrypt-nominated-loss-p
  * @param {Object} KeystoneJS context API
  * @returns {Promise<GetApplicationByReferenceNumberResponse>} Application with success flag
  */
-const getApplicationByReferenceNumber = async (
+const getApplicationByReferenceNumberQuery = async (
   root: any,
   variables: GetApplicationByReferenceNumberVariables,
   context: Context,
@@ -25,12 +25,12 @@ const getApplicationByReferenceNumber = async (
     const { referenceNumber, decryptFinancialUk } = variables;
 
     // array of ids in application from provided application reference number
-    const ids = await getIdsByReferenceNumber(referenceNumber, context);
+    const application = await getApplicationByReferenceNumber(referenceNumber, context);
 
     // if object is populated
-    if (ids) {
+    if (application) {
       // populates application based on applicationIds
-      let populatedApplication = await getPopulatedApplication(context, ids);
+      let populatedApplication = await getPopulatedApplication(context, application);
 
       /**
        * if decrypt variables are set to true
@@ -63,4 +63,4 @@ const getApplicationByReferenceNumber = async (
   }
 };
 
-export default getApplicationByReferenceNumber;
+export default getApplicationByReferenceNumberQuery;

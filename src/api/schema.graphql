@@ -3580,7 +3580,7 @@ type ApplicationNominatedLossPayee {
   financialUk: FinancialUk
 }
 
-type FullApplication {
+type PopulatedApplication {
   id: String!
   version: Int
   createdAt: DateTime!
@@ -3608,5 +3608,5 @@ type FullApplication {
 
 type ApplicationSuccessResponse {
   success: Boolean!
-  application: FullApplication
+  application: PopulatedApplication
 }
