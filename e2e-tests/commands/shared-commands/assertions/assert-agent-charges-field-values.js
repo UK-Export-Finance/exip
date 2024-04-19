@@ -30,10 +30,12 @@ const assertAgentChargesFieldValues = ({
       agentChargesPage[METHOD][FIXED_SUM].input(),
     );
 
-    cy.checkValue(
-      field(FIXED_SUM_AMOUNT),
-      expectedFixedSumAmount,
-    );
+    if (expectedFixedSumAmount) {
+      cy.checkValue(
+        field(FIXED_SUM_AMOUNT),
+        expectedFixedSumAmount,
+      );
+    }
   }
 
   if (percentageMethod) {
@@ -41,13 +43,17 @@ const assertAgentChargesFieldValues = ({
       agentChargesPage[METHOD][PERCENTAGE].input(),
     );
 
-    cy.checkValue(
-      field(CHARGE_PERCENTAGE),
-      expectedChargePercentage,
-    );
+    if (expectedChargePercentage) {
+      cy.checkValue(
+        field(CHARGE_PERCENTAGE),
+        expectedChargePercentage,
+      );
+    }
   }
 
-  cy.keyboardInput(autoCompleteField(PAYABLE_COUNTRY_CODE).input(), expectedPayableCountry);
+  if (expectedPayableCountry) {
+    cy.checkValue(autoCompleteField(PAYABLE_COUNTRY_CODE), expectedPayableCountry);
+  }
 };
 
 export default assertAgentChargesFieldValues;
