@@ -2111,9 +2111,26 @@ var typeDefs = `
   }
 
   type Owner {
+    id: String
     firstName: String
     lastName: String
     email: String
+  }
+
+  type FinancialUk {
+    id: String
+    accountNumber: String
+    sortCode: String
+    bankAddress: String
+  }
+
+  type ApplicationNominatedLossPayee {
+    id: String
+    isAppointed: Boolean
+    isLocatedInUk: Boolean
+    isLocatedInternationally: Boolean
+    name: String
+    financialUk: FinancialUk
   }
 
   type FullApplication {
@@ -2126,10 +2143,13 @@ var typeDefs = `
     submissionDeadline: DateTime
     submissionType: String
     submissionDate: DateTime
+    referenceNumber: Int
     status: String!
     eligibility: Eligibility
-    nominatedLossPayee: NominatedLossPayee
+    exportContract: ExportContract
+    nominatedLossPayee: ApplicationNominatedLossPayee
     policyContact: PolicyContact
+    policy: Policy
     owner: Owner
     company: Company
     business: Business
@@ -4221,7 +4241,11 @@ var getIdsByReferenceNumber = async (referenceNumber, context) => {
       referenceNumber: { equals: referenceNumber }
     }
   });
-  return applications;
+  if (applications.length) {
+    const [application2] = applications;
+    return application2;
+  }
+  return null;
 };
 var get_ids_by_reference_number_default = getIdsByReferenceNumber;
 
@@ -4230,9 +4254,9 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Deleting application by reference number");
     const { referenceNumber } = variables;
-    const applications = await get_ids_by_reference_number_default(referenceNumber, context);
-    if (applications.length) {
-      const [{ id }] = applications;
+    const ids = await get_ids_by_reference_number_default(referenceNumber, context);
+    if (ids) {
+      const { id } = ids;
       const deleteResponse = await context.db.Application.deleteOne({
         where: {
           id
@@ -5608,8 +5632,8 @@ var encrypt = (dataToEncrypt) => {
 };
 var encrypt_default = encrypt;
 
-// helpers/map-loss-payee-financial-details/index.ts
-var mapLossPayeeFinancialDetails = (variables) => {
+// helpers/map-loss-payee-financial-details-uk/index.ts
+var mapLossPayeeFinancialDetailsUk = (variables) => {
   const { accountNumber, sortCode, bankAddress } = variables;
   let accountNumberData = {
     value: "",
@@ -5634,14 +5658,14 @@ var mapLossPayeeFinancialDetails = (variables) => {
   };
   return updateData;
 };
-var map_loss_payee_financial_details_default = mapLossPayeeFinancialDetails;
+var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
 
 // custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
 var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
   try {
     console.info("Updating loss payee financial details UK %s", variables.id);
     const { id } = variables;
-    const updateData = map_loss_payee_financial_details_default(variables);
+    const updateData = map_loss_payee_financial_details_uk_default(variables);
     const response = await context.db.LossPayeeFinancialUk.updateOne({
       where: {
         id
@@ -6223,8 +6247,7 @@ var getApplicationByReferenceNumber = async (root, variables, context) => {
   try {
     console.info("Getting application by reference number");
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
-    const idsArray = await get_ids_by_reference_number_default(referenceNumber, context);
-    const [ids] = idsArray;
+    const ids = await get_ids_by_reference_number_default(referenceNumber, context);
     if (ids) {
       let populatedApplication = await get_populated_application_default(context, ids);
       if (decryptFinancialUk2) {

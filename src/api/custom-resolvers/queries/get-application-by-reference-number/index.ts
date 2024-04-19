@@ -39,6 +39,7 @@ const getApplicationByReferenceNumber = async (
        */
       if (decryptFinancialUk) {
         const { nominatedLossPayee } = populatedApplication;
+
         const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk);
 
         populatedApplication = {

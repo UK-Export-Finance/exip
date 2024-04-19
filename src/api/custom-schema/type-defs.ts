@@ -235,9 +235,26 @@ const typeDefs = `
   }
 
   type Owner {
+    id: String
     firstName: String
     lastName: String
     email: String
+  }
+
+  type FinancialUk {
+    id: String
+    accountNumber: String
+    sortCode: String
+    bankAddress: String
+  }
+
+  type ApplicationNominatedLossPayee {
+    id: String
+    isAppointed: Boolean
+    isLocatedInUk: Boolean
+    isLocatedInternationally: Boolean
+    name: String
+    financialUk: FinancialUk
   }
 
   type FullApplication {
@@ -250,10 +267,13 @@ const typeDefs = `
     submissionDeadline: DateTime
     submissionType: String
     submissionDate: DateTime
+    referenceNumber: Int
     status: String!
     eligibility: Eligibility
-    nominatedLossPayee: NominatedLossPayee
+    exportContract: ExportContract
+    nominatedLossPayee: ApplicationNominatedLossPayee
     policyContact: PolicyContact
+    policy: Policy
     owner: Owner
     company: Company
     business: Business
