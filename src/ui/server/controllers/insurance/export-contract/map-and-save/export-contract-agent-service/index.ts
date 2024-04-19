@@ -1,11 +1,10 @@
 import hasFormData from '../../../../../helpers/has-form-data';
-import mapSubmittedData from '../../map-submitted-data/agent';
 import save from '../../save-data/export-contract-agent-service';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
  * mapAndSave
- * Map and save any valid "export contract agent service" fields
+ * Map and save any valid "export contract agent service charge" fields
  * @param {Express.Request.body} Express request body
  * @param {Application}
  * @param {Object} Validation errors
@@ -14,14 +13,12 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const exportContractAgentService = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      const populatedData = mapSubmittedData(formBody);
-
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exportContractAgentService(application, populatedData, validationErrors.errorList);
+        saveResponse = await save.exportContractAgentService(application, formBody, validationErrors.errorList);
       } else {
-        saveResponse = await save.exportContractAgentService(application, populatedData);
+        saveResponse = await save.exportContractAgentService(application, formBody);
       }
 
       if (!saveResponse) {

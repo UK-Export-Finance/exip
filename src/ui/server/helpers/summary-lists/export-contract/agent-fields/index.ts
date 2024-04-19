@@ -8,7 +8,7 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
-import { ApplicationExportContractAgent, Country, SummaryListItemData } from '../../../../../types';
+import { ApplicationExportContractAgent, ApplicationExportContractAgentService, Country, SummaryListItemData } from '../../../../../types';
 
 const {
   EXPORT_CONTRACT: { AGENT: FORM_TITLE },
@@ -17,9 +17,12 @@ const {
 const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
-const { AGENT_CHANGE, AGENT_CHECK_AND_CHANGE, AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { AGENT_CHANGE, AGENT_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { AGENT_DETAILS_CHANGE, AGENT_DETAILS_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
+const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
 
 /**
  * agentDetailsFields
@@ -62,6 +65,30 @@ export const agentDetailsFields = (answers: ApplicationExportContractAgent, refe
 };
 
 /**
+ * agentServiceFields
+ * Create all fields and values for the Insurance - "Export contract - agent service" govukSummaryList
+ * @param {ApplicationExportContractAgentService} answers: All submitted agent data
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: True if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} Agent service fields
+ */
+export const agentServiceFields = (answers: ApplicationExportContractAgentService, referenceNumber: number, checkAndChange: boolean) => {
+  const fields = [
+    fieldGroupItem(
+      {
+        field: getFieldById(FIELDS.AGENT_SERVICE, SERVICE_DESCRIPTION),
+        data: answers,
+        href: generateChangeLink(AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE, `#${SERVICE_DESCRIPTION}-label`, referenceNumber, checkAndChange),
+        renderChangeLink: true,
+      },
+      replaceNewLineWithLineBreak(answers[SERVICE_DESCRIPTION]),
+    ),
+  ];
+
+  return fields;
+};
+
+/**
  * agentFields
  * Create all fields and values for the Insurance - "Export contract - agent" govukSummaryList
  * @param {ApplicationExportContractAgent} answers: All submitted agent data
@@ -84,7 +111,11 @@ const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: n
   ] as Array<SummaryListItemData>;
 
   if (answers[USING_AGENT]) {
-    fields = [...fields, ...agentDetailsFields(answers, referenceNumber, countries, checkAndChange)];
+    fields = [
+      ...fields,
+      ...agentDetailsFields(answers, referenceNumber, countries, checkAndChange),
+      ...agentServiceFields(answers.service, referenceNumber, checkAndChange),
+    ];
   }
 
   return {

@@ -44,6 +44,9 @@ const applicationQuery = gql`
           isLocatedInUk
           isLocatedInternationally
           name
+          financialUk {
+            id
+          }
         }
         policy {
           id
@@ -94,6 +97,13 @@ const applicationQuery = gql`
               id
               serviceDescription
               agentIsCharging
+              charge {
+                id
+                chargePercentage
+                fixedSumAmount
+                method
+                payableCountryCode
+              }
             }
           }
         }

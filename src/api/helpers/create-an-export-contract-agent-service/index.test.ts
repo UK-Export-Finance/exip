@@ -12,7 +12,7 @@ const assertError = (err) => {
   expect(errorString.includes('Creating an export contract agent service')).toEqual(true);
 };
 
-describe('helpers/create-an-export-contract-agent', () => {
+describe('helpers/create-an-export-contract-agent-service', () => {
   let context: Context;
   let application: Application;
   let applicationExportContractAgent: ApplicationExportContractAgent;

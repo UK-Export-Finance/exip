@@ -1,0 +1,19 @@
+{% import '../../components/text-input.njk' as textInput %}
+
+<div class="govuk-grid-row">
+  {% set field = FIELDS.FIXED_SUM_AMOUNT %}
+  {% set fieldId = field.ID %}
+
+  {{ textInput.render({
+    id: fieldId,
+    labelText: field.LABEL,
+    inputClasses: "govuk-input--width-5",
+    prefixText: CURRENCY_PREFIX_SYMBOL,
+    errorMessage: validationErrors.errorList[fieldId],
+    value: submittedValues[fieldId] or application.exportContract.agent.service.charge[fieldId]
+  }) }}
+
+  <p class-"govuk-body">
+    <a class="govuk-link" data-cy="provide-alternative-currency-link" href="{{ PROVIDE_ALTERNATIVE_CURRENCY_URL }}">{{ CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY }}</a>
+  </p>
+</div>

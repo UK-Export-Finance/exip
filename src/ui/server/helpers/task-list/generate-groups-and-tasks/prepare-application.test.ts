@@ -32,6 +32,13 @@ describe('server/helpers/task-list/prepare-application', () => {
     exportContract: {
       finalDestinationKnown,
       privateMarket: { attempted: attemptedPrivateMarketCover },
+      agent: {
+        isUsingAgent,
+        service: {
+          agentIsCharging,
+          charge: { method: agentChargeMethod },
+        },
+      },
     },
     policy: { policyType, jointlyInsuredParty },
     referenceNumber,
@@ -110,6 +117,9 @@ describe('server/helpers/task-list/prepare-application', () => {
           finalDestinationKnown,
           attemptedPrivateMarketCover,
           totalContractValueOverThreshold,
+          isUsingAgent,
+          agentIsCharging,
+          agentChargeMethod,
         }),
         dependencies: expectedDependencies,
       };

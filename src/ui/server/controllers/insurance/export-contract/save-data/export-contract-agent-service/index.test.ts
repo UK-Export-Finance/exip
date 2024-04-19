@@ -50,7 +50,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
   });
 
   describe('when errorList is NOT provided', () => {
-    it('should call api.keystone.application.update.exportContractAgentService with exportContract.agent.service ID and sanitised data', async () => {
+    it('should call api.keystone.application.update.exportContractAgentService with exportContract.agent.service ID and stripped and sanitised data', async () => {
       await save.exportContractAgentService(mockApplication, mockFormBody.valid);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);

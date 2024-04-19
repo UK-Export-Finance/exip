@@ -1038,6 +1038,7 @@ input ExportContractAgentServiceRelateToOneForCreateInput {
 type ExportContractAgentService {
   id: ID!
   agent: ExportContractAgent
+  charge: ExportContractAgentServiceCharge
   agentIsCharging: Boolean
   serviceDescription: String
 }
@@ -1052,6 +1053,7 @@ input ExportContractAgentServiceWhereInput {
   NOT: [ExportContractAgentServiceWhereInput!]
   id: IDFilter
   agent: ExportContractAgentWhereInput
+  charge: ExportContractAgentServiceChargeWhereInput
   serviceDescription: StringFilter
 }
 
@@ -1062,8 +1064,15 @@ input ExportContractAgentServiceOrderByInput {
 
 input ExportContractAgentServiceUpdateInput {
   agent: ExportContractAgentRelateToOneForUpdateInput
+  charge: ExportContractAgentServiceChargeRelateToOneForUpdateInput
   agentIsCharging: Boolean
   serviceDescription: String
+}
+
+input ExportContractAgentServiceChargeRelateToOneForUpdateInput {
+  create: ExportContractAgentServiceChargeCreateInput
+  connect: ExportContractAgentServiceChargeWhereUniqueInput
+  disconnect: Boolean
 }
 
 input ExportContractAgentServiceUpdateArgs {
@@ -1073,8 +1082,68 @@ input ExportContractAgentServiceUpdateArgs {
 
 input ExportContractAgentServiceCreateInput {
   agent: ExportContractAgentRelateToOneForCreateInput
+  charge: ExportContractAgentServiceChargeRelateToOneForCreateInput
   agentIsCharging: Boolean
   serviceDescription: String
+}
+
+input ExportContractAgentServiceChargeRelateToOneForCreateInput {
+  create: ExportContractAgentServiceChargeCreateInput
+  connect: ExportContractAgentServiceChargeWhereUniqueInput
+}
+
+type ExportContractAgentServiceCharge {
+  id: ID!
+  service: ExportContractAgentService
+  chargePercentage: Int
+  fixedSumAmount: Int
+  method: String
+  payableCountryCode: String
+}
+
+input ExportContractAgentServiceChargeWhereUniqueInput {
+  id: ID
+}
+
+input ExportContractAgentServiceChargeWhereInput {
+  AND: [ExportContractAgentServiceChargeWhereInput!]
+  OR: [ExportContractAgentServiceChargeWhereInput!]
+  NOT: [ExportContractAgentServiceChargeWhereInput!]
+  id: IDFilter
+  service: ExportContractAgentServiceWhereInput
+  chargePercentage: IntNullableFilter
+  fixedSumAmount: IntNullableFilter
+  method: StringNullableFilter
+  payableCountryCode: StringFilter
+}
+
+input ExportContractAgentServiceChargeOrderByInput {
+  id: OrderDirection
+  chargePercentage: OrderDirection
+  fixedSumAmount: OrderDirection
+  method: OrderDirection
+  payableCountryCode: OrderDirection
+}
+
+input ExportContractAgentServiceChargeUpdateInput {
+  service: ExportContractAgentServiceRelateToOneForUpdateInput
+  chargePercentage: Int
+  fixedSumAmount: Int
+  method: String
+  payableCountryCode: String
+}
+
+input ExportContractAgentServiceChargeUpdateArgs {
+  where: ExportContractAgentServiceChargeWhereUniqueInput!
+  data: ExportContractAgentServiceChargeUpdateInput!
+}
+
+input ExportContractAgentServiceChargeCreateInput {
+  service: ExportContractAgentServiceRelateToOneForCreateInput
+  chargePercentage: Int
+  fixedSumAmount: Int
+  method: String
+  payableCountryCode: String
 }
 
 type PrivateMarket {
@@ -2800,6 +2869,12 @@ type Mutation {
   updateExportContractAgentServices(data: [ExportContractAgentServiceUpdateArgs!]!): [ExportContractAgentService]
   deleteExportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
   deleteExportContractAgentServices(where: [ExportContractAgentServiceWhereUniqueInput!]!): [ExportContractAgentService]
+  createExportContractAgentServiceCharge(data: ExportContractAgentServiceChargeCreateInput!): ExportContractAgentServiceCharge
+  createExportContractAgentServiceCharges(data: [ExportContractAgentServiceChargeCreateInput!]!): [ExportContractAgentServiceCharge]
+  updateExportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!, data: ExportContractAgentServiceChargeUpdateInput!): ExportContractAgentServiceCharge
+  updateExportContractAgentServiceCharges(data: [ExportContractAgentServiceChargeUpdateArgs!]!): [ExportContractAgentServiceCharge]
+  deleteExportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
+  deleteExportContractAgentServiceCharges(where: [ExportContractAgentServiceChargeWhereUniqueInput!]!): [ExportContractAgentServiceCharge]
   createPrivateMarket(data: PrivateMarketCreateInput!): PrivateMarket
   createPrivateMarkets(data: [PrivateMarketCreateInput!]!): [PrivateMarket]
   updatePrivateMarket(where: PrivateMarketWhereUniqueInput!, data: PrivateMarketUpdateInput!): PrivateMarket
@@ -2995,6 +3070,9 @@ type Mutation {
 
   """ create and send email for insurance feedback """
   createFeedbackAndSendEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
+
+  """ update loss payee financial details uk """
+  updateLossPayeeFinancialDetailsUk(id: String, bankAddress: String, accountNumber: String, sortCode: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -3054,6 +3132,9 @@ type Query {
   exportContractAgentServices(where: ExportContractAgentServiceWhereInput! = {}, orderBy: [ExportContractAgentServiceOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceWhereUniqueInput): [ExportContractAgentService!]
   exportContractAgentService(where: ExportContractAgentServiceWhereUniqueInput!): ExportContractAgentService
   exportContractAgentServicesCount(where: ExportContractAgentServiceWhereInput! = {}): Int
+  exportContractAgentServiceCharges(where: ExportContractAgentServiceChargeWhereInput! = {}, orderBy: [ExportContractAgentServiceChargeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ExportContractAgentServiceChargeWhereUniqueInput): [ExportContractAgentServiceCharge!]
+  exportContractAgentServiceCharge(where: ExportContractAgentServiceChargeWhereUniqueInput!): ExportContractAgentServiceCharge
+  exportContractAgentServiceChargesCount(where: ExportContractAgentServiceChargeWhereInput! = {}): Int
   privateMarkets(where: PrivateMarketWhereInput! = {}, orderBy: [PrivateMarketOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PrivateMarketWhereUniqueInput): [PrivateMarket!]
   privateMarket(where: PrivateMarketWhereUniqueInput!): PrivateMarket
   privateMarketsCount(where: PrivateMarketWhereInput! = {}): Int
@@ -3344,6 +3425,15 @@ input CompanyInput {
 
 input SectionReviewInput {
   eligibility: Boolean!
+}
+
+input LossPayeeFinancialDetailsUkInput {
+  id: String
+  accountNumber: String
+  accountNumberVector: String
+  sortCode: String
+  sortCodeVector: String
+  bankAddress: String
 }
 
 type OrdnanceSurveyResponse {

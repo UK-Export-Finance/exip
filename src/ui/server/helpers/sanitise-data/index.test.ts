@@ -8,6 +8,9 @@ const {
     NATURE_OF_YOUR_BUSINESS: { YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
   },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT },
+  },
   POLICY: {
     CONTRACT_POLICY: {
       SINGLE: { TOTAL_CONTRACT_VALUE },
@@ -31,6 +34,8 @@ describe('server/helpers/sanitise-data', () => {
         EMPLOYEES_UK,
         ESTIMATED_ANNUAL_TURNOVER,
         PERCENTAGE_TURNOVER,
+        CHARGE_PERCENTAGE,
+        FIXED_SUM_AMOUNT,
       ];
 
       expect(NUMBER_FIELDS).toEqual(expected);

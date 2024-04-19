@@ -12,7 +12,7 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { IS_CHARGING },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
 /**
@@ -185,6 +185,31 @@ const checkExportContractSummaryList = ({
     }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  [SERVICE_DESCRIPTION]: ({ shouldRender = false }) => {
+    const fieldId = SERVICE_DESCRIPTION;
+
+    if (shouldRender) {
+      const { expectedKey } = getSummaryListField(fieldId, FIELDS.AGENT_SERVICE);
+
+      const row = summaryList.field(fieldId);
+
+      cy.checkText(
+        row.key(),
+        expectedKey,
+      );
+
+      row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+
+      const expectedLineBreaks = 3;
+
+      cy.assertLength(
+        row.valueHtmlLineBreak(),
+        expectedLineBreaks,
+      );
+    } else {
+      cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+    }
   },
 });
 

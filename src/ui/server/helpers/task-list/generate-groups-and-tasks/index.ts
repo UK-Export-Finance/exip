@@ -23,6 +23,8 @@ const { INITIAL_CHECKS, PREPARE_APPLICATION, SUBMIT_APPLICATION } = TASKS.LIST;
  * @param {Boolean} totalContractValueOverThreshold: "Total contract value is over the threshold" flag
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
+ * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
+ * @param {Boolean} agentChargeMethod: Agent charge method
  * @returns {Array} Task list groups and tasks
  */
 const generateGroupsAndTasks = (
@@ -40,6 +42,8 @@ const generateGroupsAndTasks = (
   totalContractValueOverThreshold?: boolean,
   attemptedPrivateMarketCover?: boolean,
   isUsingAgent?: boolean,
+  agentIsCharging?: boolean,
+  agentChargeMethod?: string,
 ): TaskListData => {
   let groups = [
     {
@@ -70,6 +74,8 @@ const generateGroupsAndTasks = (
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,
+        agentIsCharging,
+        agentChargeMethod,
       }),
     },
   ] as TaskListData;

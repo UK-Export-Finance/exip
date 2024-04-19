@@ -160,7 +160,7 @@ describe('controllers/insurance/declarations/how-your-data-will-be-used', () => 
       it(`should redirect to ${APPLICATION_SUBMITTED}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${APPLICATION_SUBMITTED}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${APPLICATION_SUBMITTED}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

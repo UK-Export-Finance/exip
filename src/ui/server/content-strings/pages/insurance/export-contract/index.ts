@@ -7,12 +7,7 @@ const ROOT = {
   PAGE_TITLE: 'Tell us about your export contract',
   LIST: {
     INTRO: "We'll ask you questions about:",
-    ITEMS: [
-      'what goods and services you want to export',
-      "how you'll get paid",
-      'your commissioning agent (if you have one)',
-      'your end buyer (if you have one)',
-    ],
+    ITEMS: ['what goods and services you want to export', "how you'll get paid", 'your agent (if you have one)', 'your end buyer (if you have one)'],
   },
   OUTRO:
     "We may also ask you about your approach to the private insurance market. This is because we provide credit insurance for exporters who haven't been able to get a policy through the private market.",
@@ -55,6 +50,12 @@ const AGENT_SERVICE = {
   PAGE_TITLE: 'Tell us about the service the agent is providing',
 };
 
+const AGENT_CHARGES = {
+  ...SHARED,
+  PAGE_TITLE: "Tell us about the agent's charges",
+  PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for agent fees',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -69,5 +70,6 @@ export default {
   AGENT,
   AGENT_DETAILS,
   AGENT_SERVICE,
+  AGENT_CHARGES,
   CHECK_YOUR_ANSWERS,
 };

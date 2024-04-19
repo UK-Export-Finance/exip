@@ -163,7 +163,7 @@ describe('controllers/insurance/policy/another-company', () => {
         it(`should redirect to ${BROKER_ROOT}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -179,7 +179,7 @@ describe('controllers/insurance/policy/another-company', () => {
         it(`should redirect to ${OTHER_COMPANY_DETAILS}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${OTHER_COMPANY_DETAILS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

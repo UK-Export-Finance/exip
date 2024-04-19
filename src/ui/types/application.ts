@@ -35,10 +35,19 @@ interface ApplicationPrivateMarket {
   declinedDescription?: string;
 }
 
+interface ApplicationExportContractAgentServiceCharge {
+  id: string;
+  chargePercentage?: string;
+  fixedSumAmount?: string;
+  payableCountryCode?: string;
+  method?: string;
+}
+
 interface ApplicationExportContractAgentService {
   id: string;
   agentIsCharging?: boolean;
   serviceDescription?: string;
+  charge: ApplicationExportContractAgentServiceCharge;
 }
 
 interface ApplicationExportContractAgent {
@@ -201,9 +210,14 @@ interface ApplicationJointlyInsuredParty {
   country?: string;
 }
 
+interface ApplicationLossPayeeFinancialDetailsUk {
+  id: string;
+}
+
 interface ApplicationNominatedLossPayee {
   id: string;
   isAppointed?: boolean;
+  financialUk: ApplicationLossPayeeFinancialDetailsUk;
 }
 
 interface ApplicationPolicy {
@@ -271,6 +285,7 @@ export {
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
+  ApplicationExportContractAgentServiceCharge,
   ApplicationPrivateMarket,
   ApplicationSectionReview,
   ApplicationDeclaration,

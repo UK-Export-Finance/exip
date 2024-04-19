@@ -235,7 +235,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
       it(`should redirect to ${BROKER_ROOT}`, async () => {
         await post(req, res);
 
-        const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${BROKER_ROOT}`;
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });

@@ -1,6 +1,11 @@
-import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks, agentTasks } from '.';
+import requiredFields, { getAboutGoodsOrServicesTasks, privateCoverTasks, agentServiceChargeTasks, agentTasks } from '.';
+import { FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance/export-contract';
 import { mockApplication } from '../../../test-mocks';
+
+const {
+  EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE_METHOD },
+} = FIELD_VALUES;
 
 const {
   ABOUT_GOODS_OR_SERVICES,
@@ -8,6 +13,8 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -92,12 +99,58 @@ describe('server/helpers/required-fields/export-contract', () => {
     });
   });
 
+  describe('agentServiceChargeTasks', () => {
+    describe(`when agentIsCharging is true and agentChargeMethod is ${AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM}`, () => {
+      it('should return an array with required agent service charge field IDs', () => {
+        const result = agentServiceChargeTasks({
+          agentIsCharging: true,
+          agentChargeMethod: AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM,
+        });
+
+        const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when agentIsCharging is true and agentChargeMethod is ${AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE}`, () => {
+      it('should return an array with required agent service charge field IDs', () => {
+        const result = agentServiceChargeTasks({
+          agentIsCharging: true,
+          agentChargeMethod: AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE,
+        });
+
+        const expected = [METHOD, PAYABLE_COUNTRY_CODE, CHARGE_PERCENTAGE];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when agentIsCharging is false and agentChargeMethod is NOT provided', () => {
+      it('should return an array with required agent service charge field IDs', () => {
+        const result = agentServiceChargeTasks({ agentIsCharging: true });
+
+        const expected = [METHOD, PAYABLE_COUNTRY_CODE];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when agentIsCharging is false', () => {
+      it('should return an empty array', () => {
+        const result = agentServiceChargeTasks({ agentIsCharging: false });
+
+        expect(result).toEqual([]);
+      });
+    });
+  });
+
   describe('agentTasks', () => {
     describe('when isUsingAgent is true', () => {
       it('should return an array with required agent details field IDs', () => {
         const result = agentTasks({ isUsingAgent: true });
 
-        const expected = [AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE];
+        const expected = [AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, IS_CHARGING, SERVICE_DESCRIPTION];
 
         expect(result).toEqual(expected);
       });

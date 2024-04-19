@@ -45,6 +45,10 @@ export const PARTIALS = {
       PRIVATE_MARKET: {
         CUSTOM_CONTENT_HTML: 'partials/insurance/private-market-why-description.njk',
       },
+      AGENT_CHARGES: {
+        CONDITIONAL_FIXED_SUM_HTML: 'partials/insurance/export-contract-agent-charges-conditional-fixed-sum-html.njk',
+        CONDITIONAL_PERCENTAGE_HTML: 'partials/insurance/export-contract-agent-charges-conditional-percentage-html.njk',
+      },
     },
   },
   QUOTE: {

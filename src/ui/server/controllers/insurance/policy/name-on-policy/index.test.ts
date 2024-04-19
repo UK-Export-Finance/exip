@@ -137,7 +137,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         it(`should redirect to ${PRE_CREDIT_PERIOD}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${PRE_CREDIT_PERIOD}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
@@ -167,7 +167,7 @@ describe('controllers/insurance/policy/name-on-policy', () => {
         it(`should redirect to ${DIFFERENT_NAME_ON_POLICY}`, async () => {
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

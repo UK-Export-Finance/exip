@@ -172,7 +172,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${req.params.referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

@@ -1,14 +1,13 @@
-import { APPLICATION } from '../../../../../../constants';
-
-context('Insurance - submit an application - Multiple policy type, attempted private market cover, using an agent', () => {
+context('Insurance - submit an application - Single policy type, attempted private market cover, using an agent, agent is charging - percentage method', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
       totalContractValueOverThreshold: true,
       attemptedPrivateMarketCover: true,
       isUsingAgent: true,
+      agentIsCharging: true,
+      agentChargeMethodPercentage: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

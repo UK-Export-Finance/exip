@@ -10,7 +10,7 @@ const ROOT = {
     ITEMS: [
       'what goods and services you want to export',
       "how you'll get paid",
-      'your commissioning agent (if you have one)',
+      'your agent (if you have one)',
       'your end buyer (if you have one)',
     ],
   },
@@ -55,6 +55,12 @@ const AGENT_SERVICE = {
   PAGE_TITLE: 'Tell us about the service the agent is providing',
 };
 
+const AGENT_CHARGES = {
+  ...SHARED,
+  PAGE_TITLE: "Tell us about the agent's charges",
+  PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for agent fees',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -69,5 +75,6 @@ module.exports = {
   AGENT,
   AGENT_DETAILS,
   AGENT_SERVICE,
+  AGENT_CHARGES,
   CHECK_YOUR_ANSWERS,
 };

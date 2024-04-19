@@ -193,6 +193,25 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select if the agent is charging for their support',
         },
       },
+      AGENT_CHARGES: {
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.METHOD]: {
+          IS_EMPTY: 'Select if the agent is charging for their support',
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.FIXED_SUM_AMOUNT]: {
+          IS_EMPTY: 'Enter how much the agent is charging you',
+          INCORRECT_FORMAT: 'The value the agent is charging must not include any letters or special characters',
+          BELOW_MINIMUM: `The value the agent is charging must be ${MINIMUM_CHARACTERS.ONE} or more`,
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.CHARGE_PERCENTAGE]: {
+          IS_EMPTY: 'Enter the percentage the agent is charging',
+          INCORRECT_FORMAT: 'Enter the percentage the agent is charging you in the correct format, without special characters',
+          BELOW_MINIMUM: `The percentage the agent is charging you must be a number between ${MINIMUM_CHARACTERS.ONE} and ${MAXIMUM_CHARACTERS.PERCENTAGE}`,
+          ABOVE_MAXIMUM: `The percentage the agent is charging you must be a number between ${MINIMUM_CHARACTERS.ONE} and ${MAXIMUM_CHARACTERS.PERCENTAGE}`,
+        },
+        [FIELD_IDS.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.PAYABLE_COUNTRY_CODE]: {
+          IS_EMPTY: 'Select the country where charges are payable',
+        },
+      },
     },
     POLICY: {
       TYPE_OF_POLICY: {

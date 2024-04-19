@@ -212,10 +212,21 @@ model ExportContractAgent {
 }
 
 model ExportContractAgentService {
-  id                 String               @id @default(cuid())
-  agent              ExportContractAgent? @relation("ExportContractAgent_service")
+  id                 String                            @id @default(cuid())
+  agent              ExportContractAgent?              @relation("ExportContractAgent_service")
+  charge             ExportContractAgentServiceCharge? @relation("ExportContractAgentService_charge", fields: [chargeId], references: [id])
+  chargeId           String?                           @unique @map("charge")
   agentIsCharging    Boolean?
-  serviceDescription String               @default("") @mysql.VarChar(1000)
+  serviceDescription String                            @default("") @mysql.VarChar(1000)
+}
+
+model ExportContractAgentServiceCharge {
+  id                 String                      @id @default(cuid())
+  service            ExportContractAgentService? @relation("ExportContractAgentService_charge")
+  chargePercentage   Int?
+  fixedSumAmount     Int?
+  method             String?
+  payableCountryCode String                      @default("") @mysql.VarChar(3)
 }
 
 model PrivateMarket {

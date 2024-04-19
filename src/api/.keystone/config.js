@@ -309,6 +309,14 @@ var EXPORT_CONTRACT = {
   AGENT_SERVICE: {
     IS_CHARGING: "agentIsCharging",
     SERVICE_DESCRIPTION: "serviceDescription"
+  },
+  AGENT_CHARGES: {
+    METHOD: "method",
+    PAYABLE_COUNTRY_CODE: "payableCountryCode",
+    FIXED_SUM: "fixedSum",
+    FIXED_SUM_AMOUNT: "fixedSumAmount",
+    PERCENTAGE: "percentage",
+    CHARGE_PERCENTAGE: "chargePercentage"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;
@@ -402,6 +410,7 @@ var DEFAULT_RESOLVERS = [
   "updateExportContract",
   "updateExportContractAgent",
   "updateExportContractAgentService",
+  "updateExportContractAgentServiceCharge",
   "updatePrivateMarket",
   "updateSectionReview",
   "updateEligibility",
@@ -424,6 +433,7 @@ var CUSTOM_RESOLVERS = [
   "sendEmailConfirmEmailAddress",
   "sendEmailPasswordResetLink",
   "sendEmailReactivateAccountLink",
+  "updateLossPayeeFinancialDetailsUk",
   "verifyAccountEmailAddress",
   "verifyAccountPasswordResetToken",
   "verifyAccountReactivationToken",
@@ -523,7 +533,15 @@ var APPLICATION = {
   },
   DEFAULT_FINAL_DESTINATION_KNOWN: LATEST_VERSION.DEFAULT_FINAL_DESTINATION_KNOWN,
   DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER: LATEST_VERSION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
-  DEFAULT_CURRENCY: LATEST_VERSION.DEFAULT_CURRENCY
+  DEFAULT_CURRENCY: LATEST_VERSION.DEFAULT_CURRENCY,
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: {
+        FIXED_SUM: "Fixed sum",
+        PERCENTAGE: "Percentage"
+      }
+    }
+  }
 };
 var application_default = APPLICATION;
 
@@ -776,6 +794,28 @@ var ACCOUNT2 = {
    */
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST()
 };
+var FINANCIAL_DETAILS = {
+  ENCRYPTION: {
+    CIPHER: {
+      ENCODING: "hex",
+      STRING_ENCODING: "base64",
+      ENCRYPTION_METHOD: "aes-256-cbc",
+      OUTPUT_ENCODING: "utf-8"
+    },
+    KEY: {
+      ALGORITHM: "sha512",
+      SIGNATURE: String(process.env.LOSS_PAYEE_ENCRYPTION_KEY),
+      SUBSTRING_INDEX_START: 0,
+      SUBSTRING_INDEX_END: 32
+    },
+    IV: {
+      BYTES_SIZE: 16,
+      ENCODING: "base64",
+      SLICE_INDEX_START: 0,
+      SLICE_INDEX_END: 16
+    }
+  }
+};
 var EMAIL_TEMPLATE_IDS = {
   ACCOUNT: {
     CONFIRM_EMAIL: "24022e94-171c-4044-b0ee-d22418116575",
@@ -907,6 +947,19 @@ var nullableCheckbox = (defaultValue) => () => nullableCheckboxConfig(defaultVal
 var nullable_checkbox_default = nullableCheckbox;
 
 // schema.ts
+var {
+  DEAL_TYPE,
+  DEFAULT_CURRENCY,
+  DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER,
+  EXPORT_CONTRACT: { AGENT_SERVICE_CHARGE },
+  LATEST_VERSION: LATEST_VERSION2,
+  POLICY: POLICY3,
+  POLICY_TYPE: POLICY_TYPE3,
+  SUBMISSION_COUNT_DEFAULT,
+  SUBMISSION_DEADLINE_IN_MONTHS,
+  SUBMISSION_TYPE,
+  STATUS
+} = APPLICATION;
 var lists = {
   ReferenceNumber: {
     db: {
@@ -926,14 +979,14 @@ var lists = {
         isIndexed: true
       }),
       submissionCount: (0, import_fields.integer)({
-        defaultValue: APPLICATION.SUBMISSION_COUNT_DEFAULT,
+        defaultValue: SUBMISSION_COUNT_DEFAULT,
         validation: { isRequired: true }
       }),
       submissionDate: (0, import_fields.timestamp)(),
       submissionDeadline: (0, import_fields.timestamp)(),
       submissionType: (0, import_fields.select)({
-        options: [{ label: APPLICATION.SUBMISSION_TYPE.MIA, value: APPLICATION.SUBMISSION_TYPE.MIA }],
-        defaultValue: APPLICATION.SUBMISSION_TYPE.MIA
+        options: [{ label: SUBMISSION_TYPE.MIA, value: SUBMISSION_TYPE.MIA }],
+        defaultValue: SUBMISSION_TYPE.MIA
       }),
       status: (0, import_fields.text)({
         validation: { isRequired: true }
@@ -954,11 +1007,11 @@ var lists = {
       policyContact: (0, import_fields.relationship)({ ref: "PolicyContact" }),
       sectionReview: (0, import_fields.relationship)({ ref: "SectionReview" }),
       version: (0, import_fields.text)({
-        defaultValue: APPLICATION.LATEST_VERSION.VERSION_NUMBER,
+        defaultValue: LATEST_VERSION2.VERSION_NUMBER,
         validation: { isRequired: true }
       }),
       dealType: (0, import_fields.text)({
-        defaultValue: APPLICATION.DEAL_TYPE,
+        defaultValue: DEAL_TYPE,
         validation: { isRequired: true },
         db: { nativeType: "VarChar(4)" }
       })
@@ -1008,9 +1061,9 @@ var lists = {
             const now = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now;
             modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), APPLICATION.SUBMISSION_DEADLINE_IN_MONTHS);
-            modifiedData.submissionType = APPLICATION.SUBMISSION_TYPE.MIA;
-            modifiedData.status = APPLICATION.STATUS.IN_PROGRESS;
+            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionType = SUBMISSION_TYPE.MIA;
+            modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
           } catch (err) {
             console.error("Error adding default data to a new application. %O", err);
@@ -1147,19 +1200,19 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       jointlyInsuredParty: (0, import_fields.relationship)({ ref: "JointlyInsuredParty.policy" }),
-      needPreCreditPeriodCover: nullable_checkbox_default(APPLICATION.DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
+      needPreCreditPeriodCover: nullable_checkbox_default(DEFAULT_NEED_PRE_CREDIT_PERIOD_COVER),
       policyType: (0, import_fields.select)({
         options: [
-          { label: APPLICATION.POLICY_TYPE.SINGLE, value: APPLICATION.POLICY_TYPE.SINGLE },
-          { label: APPLICATION.POLICY_TYPE.MULTIPLE, value: APPLICATION.POLICY_TYPE.MULTIPLE }
+          { label: POLICY_TYPE3.SINGLE, value: POLICY_TYPE3.SINGLE },
+          { label: POLICY_TYPE3.MULTIPLE, value: POLICY_TYPE3.MULTIPLE }
         ]
       }),
       requestedStartDate: (0, import_fields.timestamp)(),
       contractCompletionDate: (0, import_fields.timestamp)(),
       totalValueOfContract: (0, import_fields.integer)({
         validation: {
-          min: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
-          max: APPLICATION.POLICY.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
+          min: POLICY3.TOTAL_VALUE_OF_CONTRACT.MINIMUM,
+          max: POLICY3.TOTAL_VALUE_OF_CONTRACT.MAXIMUM
         }
       }),
       creditPeriodWithBuyer: (0, import_fields.text)(),
@@ -1259,9 +1312,27 @@ var lists = {
   ExportContractAgentService: {
     fields: {
       agent: (0, import_fields.relationship)({ ref: "ExportContractAgent.service" }),
+      charge: (0, import_fields.relationship)({ ref: "ExportContractAgentServiceCharge.service" }),
       agentIsCharging: nullable_checkbox_default(),
       serviceDescription: (0, import_fields.text)({
         db: { nativeType: "VarChar(1000)" }
+      })
+    },
+    access: import_access.allowAll
+  },
+  ExportContractAgentServiceCharge: {
+    fields: {
+      service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
+      chargePercentage: (0, import_fields.integer)(),
+      fixedSumAmount: (0, import_fields.integer)(),
+      method: (0, import_fields.select)({
+        options: [
+          { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },
+          { label: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE, value: AGENT_SERVICE_CHARGE.METHOD.PERCENTAGE }
+        ]
+      }),
+      payableCountryCode: (0, import_fields.text)({
+        db: { nativeType: "VarChar(3)" }
       })
     },
     access: import_access.allowAll
@@ -1369,7 +1440,7 @@ var lists = {
       exportsTurnoverPercentage: (0, import_fields.integer)(),
       turnoverCurrencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" },
-        defaultValue: APPLICATION.DEFAULT_CURRENCY
+        defaultValue: DEFAULT_CURRENCY
       }),
       hasCreditControlProcess: nullable_checkbox_default()
     },
@@ -1907,6 +1978,15 @@ var typeDefs = `
     eligibility: Boolean!
   }
 
+  input LossPayeeFinancialDetailsUkInput {
+    id: String
+    accountNumber: String
+    accountNumberVector: String
+    sortCode: String
+    sortCodeVector: String
+    bankAddress: String
+  }
+
    type OrdnanceSurveyResponse {
     success: Boolean
     addresses: [OrdnanceSurveyAddress]
@@ -2124,6 +2204,14 @@ var typeDefs = `
       referralUrl: String
       product: String
       service: String
+    ): SuccessResponse
+
+    """ update loss payee financial details uk """
+    updateLossPayeeFinancialDetailsUk(
+      id: String
+      bankAddress: String
+      accountNumber: String
+      sortCode: String
     ): SuccessResponse
   }
 
@@ -3920,6 +4008,25 @@ var createAnExportContractAgentService = async (context, agentId) => {
 };
 var create_an_export_contract_agent_service_default = createAnExportContractAgentService;
 
+// helpers/create-an-export-contract-agent-service-charge/index.ts
+var createAnExportContractAgentServiceCharge = async (context, agentServiceId) => {
+  console.info("Creating an export contract agent service charge for ", agentServiceId);
+  try {
+    const agentService = await context.db.ExportContractAgentServiceCharge.createOne({
+      data: {
+        service: {
+          connect: { id: agentServiceId }
+        }
+      }
+    });
+    return agentService;
+  } catch (err) {
+    console.error("Error creating an export contract agent service charge %O", err);
+    throw new Error(`Creating an export contract agent service charge ${err}`);
+  }
+};
+var create_an_export_contract_agent_service_charge_default = createAnExportContractAgentServiceCharge;
+
 // helpers/create-an-export-contract-agent/index.ts
 var createAnExportContractAgent = async (context, exportContractId) => {
   console.info("Creating an export contract agent for ", exportContractId);
@@ -3932,9 +4039,11 @@ var createAnExportContractAgent = async (context, exportContractId) => {
       }
     });
     const agentService = await create_an_export_contract_agent_service_default(context, agent.id);
+    const agentServiceCharge = await create_an_export_contract_agent_service_charge_default(context, agentService.id);
     return {
       agent,
-      agentService
+      agentService,
+      agentServiceCharge
     };
   } catch (err) {
     console.error("Error creating an export contract agent %O", err);
@@ -4494,7 +4603,7 @@ var {
   POLICY: {
     CONTRACT_POLICY,
     EXPORT_VALUE,
-    POLICY_TYPE: POLICY_TYPE3,
+    POLICY_TYPE: POLICY_TYPE4,
     USING_BROKER: USING_BROKER2,
     BROKER_DETAILS: { NAME, EMAIL: EMAIL4, FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
@@ -4502,8 +4611,8 @@ var {
   }
 } = insurance_default;
 var POLICY_FIELDS = {
-  [POLICY_TYPE3]: {
-    ID: POLICY_TYPE3,
+  [POLICY_TYPE4]: {
+    ID: POLICY_TYPE4,
     SUMMARY: {
       TITLE: "Policy type"
     }
@@ -4899,7 +5008,7 @@ var {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
   },
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE4 }
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 }
   }
 } = insurance_default;
 var mapSecondaryKeyInformation = (application2) => {
@@ -4909,7 +5018,7 @@ var mapSecondaryKeyInformation = (application2) => {
     xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE4].SUMMARY?.TITLE), policy[POLICY_TYPE4])
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5])
   ];
   return mapped;
 };
@@ -4940,7 +5049,7 @@ var CONTENT_STRINGS2 = {
 };
 var {
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE6 },
     CONTRACT_POLICY: {
       REQUESTED_START_DATE: REQUESTED_START_DATE2,
       SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
@@ -4960,7 +5069,7 @@ var mapPolicyIntro = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(XLSX.SECTION_TITLES.POLICY, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5]),
+    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE6].SUMMARY?.TITLE), policy[POLICY_TYPE6]),
     xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE2].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE2], "dd-MMM-yy"))
   ];
   return mapped;
@@ -4992,7 +5101,7 @@ var mapPolicyOutro = (application2) => {
 };
 var mapPolicy = (application2) => {
   let mapped = mapPolicyIntro(application2);
-  const policyType = application2.policy[POLICY_TYPE5];
+  const policyType = application2.policy[POLICY_TYPE6];
   if (isSinglePolicyType(policyType)) {
     mapped = [...mapped, ...mapSinglePolicyFields(application2)];
   }
@@ -5408,6 +5517,67 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
   }
 };
 var verify_account_reactivation_token_default = verifyAccountReactivationToken;
+
+// helpers/encrypt/index.ts
+var import_crypto11 = __toESM(require("crypto"));
+
+// helpers/encrypt/generate-key/index.ts
+var import_crypto9 = __toESM(require("crypto"));
+var { ALGORITHM: ALGORITHM2, SIGNATURE: SIGNATURE2, SUBSTRING_INDEX_START, SUBSTRING_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.KEY;
+var generateKey = () => import_crypto9.default.createHash(ALGORITHM2).update(SIGNATURE2).digest("hex").substring(SUBSTRING_INDEX_START, SUBSTRING_INDEX_END);
+var generate_key_default = generateKey;
+
+// helpers/encrypt/generate-initialisation-vector/index.ts
+var import_crypto10 = __toESM(require("crypto"));
+var { BYTES_SIZE, ENCODING: ENCODING2, SLICE_INDEX_START, SLICE_INDEX_END } = FINANCIAL_DETAILS.ENCRYPTION.IV;
+var generateInitialisationVector = () => import_crypto10.default.randomBytes(BYTES_SIZE).toString(ENCODING2).slice(SLICE_INDEX_START, SLICE_INDEX_END);
+var generate_initialisation_vector_default = generateInitialisationVector;
+
+// helpers/encrypt/index.ts
+var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
+var encrypt = (dataToEncrypt) => {
+  const key = generate_key_default();
+  const iv = generate_initialisation_vector_default();
+  const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key, iv);
+  return {
+    value: Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2),
+    iv
+  };
+};
+var encrypt_default = encrypt;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
+var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial details UK %s", variables.id);
+    const { id, accountNumber, sortCode, bankAddress } = variables;
+    const updateData = {
+      accountNumber: encrypt_default(accountNumber).value,
+      accountNumberVector: encrypt_default(accountNumber).iv,
+      sortCode: encrypt_default(sortCode).value,
+      sortCodeVector: encrypt_default(sortCode).iv,
+      bankAddress
+    };
+    const response = await context.db.LossPayeeFinancialUk.updateOne({
+      where: {
+        id
+      },
+      data: updateData
+    });
+    if (response) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error updating loss payee financial details UK %O", err);
+    throw new Error(`Updating loss payee financial details UK ${err}`);
+  }
+};
+var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
 
 // custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
@@ -6060,7 +6230,8 @@ var customResolvers = {
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
-    verifyAccountReactivationToken: verify_account_reactivation_token_default
+    verifyAccountReactivationToken: verify_account_reactivation_token_default,
+    updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,

@@ -1,4 +1,4 @@
-import { MAXIMUM_CHARACTERS } from '../../../../constants';
+import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
 import { FORM_TITLES } from '../../../form-titles';
 
@@ -9,6 +9,9 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+  AGENT_CHARGES: {
+    METHOD, FIXED_SUM, PERCENTAGE, CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, PAYABLE_COUNTRY_CODE,
+  },
 } = FIELD_IDS;
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
@@ -107,6 +110,37 @@ export const EXPORT_CONTRACT_FIELDS = {
     [SERVICE_DESCRIPTION]: {
       LABEL: 'Service the agent is providing',
       MAXIMUM: MAXIMUM_CHARACTERS.AGENT_SERVICE_DESCRIPTION,
+      SUMMARY: {
+        TITLE: 'Service the agent is providing',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
+    },
+  },
+  AGENT_CHARGES: {
+    [METHOD]: {
+      LABEL: 'How is the agent charging you?',
+      OPTIONS: {
+        FIXED_SUM: {
+          ID: FIXED_SUM,
+          VALUE: FIELD_VALUES.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE_METHOD.FIXED_SUM,
+          TEXT: 'Fixed sum',
+        },
+        PERCENTAGE: {
+          ID: PERCENTAGE,
+          VALUE: FIELD_VALUES.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE,
+          TEXT: 'Percentage',
+        },
+      },
+    },
+    [FIXED_SUM_AMOUNT]: {
+      LABEL: 'How much are they charging in TODO?',
+    },
+    [CHARGE_PERCENTAGE]: {
+      LABEL: 'What percentage are they charging?',
+      SUFFIX: '%',
+    },
+    [PAYABLE_COUNTRY_CODE]: {
+      LABEL: 'Country where charges are payable',
     },
     [IS_CHARGING]: {
       LABEL: 'Is the agent charging for their support in the export contract?',

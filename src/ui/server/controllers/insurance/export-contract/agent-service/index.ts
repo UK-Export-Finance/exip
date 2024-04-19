@@ -16,7 +16,7 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES, AGENT_CHARGES_CHANGE },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -55,7 +55,7 @@ export const pageVariables = (referenceNumber: number) => ({
       ...FIELDS.AGENT_SERVICE[SERVICE_DESCRIPTION],
     },
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE_SAVE_AND_BACK}`,
 });
 
 /**
@@ -63,7 +63,7 @@ export const pageVariables = (referenceNumber: number) => ({
  * Get the application and render the "Agent service" page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} "Agent servic" page
+ * @returns {Express.Response.render} "Agent service" page
  */
 export const get = (req: Request, res: Response) => {
   const { application } = res.locals;
