@@ -36,7 +36,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     });
   });
 
-  describe('when the an error occurs', () => {
+  describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
         await updateLossPayeeFinancialDetailsUk();

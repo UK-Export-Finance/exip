@@ -3563,7 +3563,7 @@ type Owner {
   email: String
 }
 
-type FullApplication {
+type PopulatedApplication {
   id: String!
   version: Int
   createdAt: DateTime!
@@ -3588,5 +3588,5 @@ type FullApplication {
 
 type ApplicationSuccessResponse {
   success: Boolean!
-  application: FullApplication
+  application: PopulatedApplication
 }
