@@ -3,7 +3,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contr
 import saveService from '../../save-data/export-contract-agent-service';
 import saveCharge from '../../save-data/export-contract-agent-service-charge';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { mockApplication as application } from '../../../../../test-mocks';
+import { mockApplication as application, mockApplicationAgentServiceChargeEmpty } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
@@ -29,25 +29,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   const mockApplication = {
     withChargeData: application,
-    noChargeData: {
-      ...application,
-      exportContract: {
-        ...application.exportContract,
-        agent: {
-          ...application.exportContract.agent,
-          service: {
-            ...application.exportContract.agent.service,
-            charge: {
-              id: application.exportContract.agent.service.charge.id,
-              [CHARGE_PERCENTAGE]: '',
-              [FIXED_SUM_AMOUNT]: '',
-              [METHOD]: '',
-              [PAYABLE_COUNTRY_CODE]: '',
-            },
-          },
-        },
-      },
-    },
+    noChargeData: mockApplicationAgentServiceChargeEmpty,
   };
 
   const nullifiedAgentCharges = {
