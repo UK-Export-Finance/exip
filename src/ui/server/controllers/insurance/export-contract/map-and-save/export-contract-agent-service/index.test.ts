@@ -2,12 +2,12 @@ import mapAndSave from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import saveService from '../../save-data/export-contract-agent-service';
 import saveCharge from '../../save-data/export-contract-agent-service-charge';
+import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockApplication as application, mockApplicationAgentServiceChargeEmpty } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service', () => {
@@ -30,13 +30,6 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
   const mockApplication = {
     withChargeData: application,
     noChargeData: mockApplicationAgentServiceChargeEmpty,
-  };
-
-  const nullifiedAgentCharges = {
-    [CHARGE_PERCENTAGE]: null,
-    [FIXED_SUM_AMOUNT]: null,
-    [METHOD]: null,
-    [PAYABLE_COUNTRY_CODE]: '',
   };
 
   const mockValidationErrors = generateValidationErrors(IS_CHARGING, 'error', {});
@@ -131,7 +124,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
         await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
 
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifiedAgentCharges);
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifyAgentServiceChargeData());
       });
 
       it('should return true', async () => {
@@ -157,7 +150,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
         await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData);
 
         expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifiedAgentCharges);
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifyAgentServiceChargeData());
       });
 
       it('should return true', async () => {
