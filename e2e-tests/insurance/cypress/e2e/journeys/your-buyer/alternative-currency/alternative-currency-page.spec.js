@@ -34,6 +34,8 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
+      // TODO: cy.clickProvideAlternativeCurrencyLink();
+
       cy.navigateToUrl(url);
 
       cy.assertUrl(url);
