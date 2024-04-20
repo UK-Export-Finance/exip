@@ -7,7 +7,10 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 
 /**
  * mapAndSave
- * Map and save any valid "export contract agent service charge" fields
+ * Map and save any valid "export contract agent service charge" fields.
+ * If the form is submitted with the agent charging as false (IS_CHARGING),
+ * and AGENT_CHARGES data exists in the application,
+ * Nullify all AGENT_CHARGES data.
  * @param {Express.Request.body} Express request body
  * @param {Application}
  * @param {Object} Validation errors
@@ -18,6 +21,10 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
     if (hasFormData(formBody)) {
       let saveResponse;
 
+      /**
+       * If validation errors, save the data with only valid data.
+       * Otherwise, simply save all data.
+       */
       if (validationErrors) {
         saveResponse = await saveService.exportContractAgentService(application, formBody, validationErrors.errorList);
       } else {
@@ -28,15 +35,11 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
         return false;
       }
 
-      const {
-        exportContract: {
-          agent: {
-            service: { charge },
-          },
-        },
-      } = application;
-
-      if (shouldNullifyAgentServiceChargeData(formBody, charge)) {
+      /**
+       * If AGENT_CHARGES data should be nullified,
+       * Nullify and save the data.
+       */
+      if (shouldNullifyAgentServiceChargeData(formBody, application.exportContract.agent.service.charge)) {
         const nullifiedData = nullifyAgentServiceChargeData();
 
         saveResponse = await saveCharge.exportContractAgentServiceCharge(application, nullifiedData);
