@@ -57,7 +57,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     cy.corePageChecks({
       pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
-      backLink: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
+      backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
       submitButtonCopy: BUTTONS.CONFIRM,
     });
   });
