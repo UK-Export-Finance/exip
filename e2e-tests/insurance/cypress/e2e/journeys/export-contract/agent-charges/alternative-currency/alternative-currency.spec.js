@@ -31,6 +31,7 @@ context("Insurance - Export contract - Agent charges - Alternative currency page
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
       cy.completeAndSubmitAgentDetailsForm({});
       cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+      cy.completeAgentChargesForm({ fixedSumMethod: true });
 
       cy.clickProvideAlternativeCurrencyLink();
 
