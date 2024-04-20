@@ -8,7 +8,7 @@ import { Application } from '../types';
  * XLSX
  * Generate an XLSX file with exceljs
  * @param {Application}
- * @returns {String} File path
+ * @returns {Promise<String>} File path
  */
 const XLSX = (application: Application): Promise<string> => {
   try {

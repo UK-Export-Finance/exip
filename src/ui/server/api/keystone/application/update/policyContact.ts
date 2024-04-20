@@ -7,7 +7,7 @@ import { ApolloResponse } from '../../../../../types';
  * Update an application's policy contact
  * @param {String} PolicyContact ID
  * @param {Object} PolicyContact update
- * @returns {Object} Updated policy contact
+ * @returns {Promise<Object>} Updated policy contact
  */
 const updatePolicy = async (id: string, update: object) => {
   try {

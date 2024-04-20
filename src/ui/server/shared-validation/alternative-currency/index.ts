@@ -13,7 +13,7 @@ const {
  * If so, return emptyFieldValidation for the ALTERNATIVE_CURRENCY_CODE field.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const alternativeCurrencyValidation = (formBody: RequestBody, errors: object, errorMessage: string) => {
   if (objectHasProperty(formBody, CURRENCY_CODE) && formBody[CURRENCY_CODE] === FIELD_ID) {

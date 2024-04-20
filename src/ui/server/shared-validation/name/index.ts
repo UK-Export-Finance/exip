@@ -16,7 +16,7 @@ const {
  * @param {String} fieldId
  * @param {String} errorMessage message
  * @param {Object} errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const nameValidation = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) =>
   alphaCharactersAndMaxLengthValidation(formBody, fieldId, errorMessages, errors, MAX_CHARACTERS);

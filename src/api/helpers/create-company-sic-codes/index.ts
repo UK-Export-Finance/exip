@@ -8,7 +8,7 @@ import { Context } from '../../types';
  * @param {Array} SIC codes
  * @param {Array} Industry sector names
  * @param {String} Company ID
- * @returns {Object} Created company SIC codes
+ * @returns {Promise<Object>} Created company SIC codes
  */
 const createCompanySicCodes = async (context: Context, sicCodes: Array<string>, industrySectorNames: Array<string>, companyId: string) => {
   console.info('Creating company SIC codes for ', companyId);
