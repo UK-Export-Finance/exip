@@ -40,7 +40,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
 
     expect(agentServiceCharge.chargePercentage).toBeNull();
     expect(agentServiceCharge.fixedSumAmount).toBeNull();
-    expect(agentServiceCharge.fixedSumAmountCurrencyCode).toEqual(APPLICATION.DEFAULT_CURRENCY)
+    expect(agentServiceCharge.fixedSumAmountCurrencyCode).toEqual(APPLICATION.DEFAULT_CURRENCY);
     expect(agentServiceCharge.payableCountryCode).toEqual('');
     expect(agentServiceCharge.method).toBeNull();
   });

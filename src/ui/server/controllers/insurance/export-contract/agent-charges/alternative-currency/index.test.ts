@@ -25,7 +25,7 @@ const {
     agent: {
       service: { charge },
     },
-  }
+  },
 } = mockApplication;
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
