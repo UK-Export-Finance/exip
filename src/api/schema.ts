@@ -426,6 +426,10 @@ export const lists = {
       service: relationship({ ref: 'ExportContractAgentService.charge' }),
       chargePercentage: integer(),
       fixedSumAmount: integer(),
+      fixedSumAmountCurrencyCode: text({
+        db: { nativeType: 'VarChar(3)' },
+        defaultValue: DEFAULT_CURRENCY,
+      }),
       method: select({
         options: [
           { label: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM, value: AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM },

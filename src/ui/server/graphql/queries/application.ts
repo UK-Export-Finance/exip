@@ -101,6 +101,7 @@ const applicationQuery = gql`
                 id
                 chargePercentage
                 fixedSumAmount
+                fixedSumAmountCurrencyCode
                 method
                 payableCountryCode
               }

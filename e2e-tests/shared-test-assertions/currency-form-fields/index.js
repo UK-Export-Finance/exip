@@ -18,13 +18,14 @@ import prefixAssertions from './prefix';
  * @returns {Object} Rendering and form submission assertion functions
  */
 export const assertCurrencyFormFields = ({
-  legend, hint, errors, fieldId,
+  legend, hint, errors, fieldId, gbpCurrencyCheckedByDefault,
 }) => {
   const assertions = fieldAssertions({
     legend,
     hint,
     alternativeCurrencyText: FIELDS[ALTERNATIVE_CURRENCY_CODE].TEXT,
     errors,
+    gbpCurrencyCheckedByDefault,
   });
 
   return {

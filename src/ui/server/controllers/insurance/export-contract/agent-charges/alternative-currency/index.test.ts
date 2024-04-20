@@ -9,13 +9,24 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../../test-mocks';
 
 const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { FIXED_SUM_CURRENCY_CODE },
+  },
 } = INSURANCE_FIELD_IDS;
+
+const {
+  exportContract: {
+    agent: {
+      service: { charge },
+    },
+  }
+} = mockApplication;
 
 const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
@@ -91,7 +102,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         }),
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
-        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

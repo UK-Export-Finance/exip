@@ -71,7 +71,9 @@ context("Insurance - Export contract - Agent charges - Alternative currency page
       cy.navigateToUrl(url);
     });
 
-    const { rendering } = assertCurrencyFormFields({});
+    const { rendering } = assertCurrencyFormFields({
+      gbpCurrencyCheckedByDefault: true,
+    });
 
     rendering();
   });
