@@ -3,7 +3,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 
 const {
-  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE },
   EXPORT_CONTRACT: {
     ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
     HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
@@ -164,7 +164,7 @@ export const EXPORT_CONTRACT_FIELDS = {
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
       },
     },
-    [ALTERNATIVE_CURRENCY_CODE]: {
+    [CURRENCY_CODE]: {
       LEGEND: 'What currency is the agent charging you in?',
     },
   },

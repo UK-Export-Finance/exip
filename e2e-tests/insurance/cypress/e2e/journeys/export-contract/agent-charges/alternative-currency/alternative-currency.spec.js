@@ -5,11 +5,11 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { assertCurrencyFormFields } from '../../../../../../../shared-test-assertions';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES.ALTERNATIVE_CURRENCY;
+const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES_ALTERNATIVE_CURRENCY;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { ALTERNATIVE_CURRENCY, AGENT_CHARGES },
+  EXPORT_CONTRACT: { AGENT_CHARGES_ALTERNATIVE_CURRENCY, AGENT_CHARGES },
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
@@ -31,8 +31,9 @@ context("Insurance - Export contract - Agent charges - Alternative currency page
       cy.completeAndSubmitAgentForm({ isUsingAgent: true });
       cy.completeAndSubmitAgentDetailsForm({});
       cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
+      cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
+      url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
     });
   });
 
@@ -46,8 +47,8 @@ context("Insurance - Export contract - Agent charges - Alternative currency page
 
   it('renders core page elements', () => {
     cy.corePageChecks({
-      pageTitle: FIELDS[CURRENCY_CODE].LEGEND,
-      currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
+      pageTitle: FIELDS.AGENT_CHARGES[CURRENCY_CODE].LEGEND,
+      currentHref: `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
       backLink: `${ROOT}/${referenceNumber}${AGENT_CHARGES}`,
       submitButtonCopy: BUTTONS.CONFIRM,
     });

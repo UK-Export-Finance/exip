@@ -3,10 +3,11 @@ import { TEMPLATES } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { PAGES } from '../../../../../content-strings';
-import { FIELDS } from '../../../../../content-strings/fields/insurance';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/export-contract';
 import api from '../../../../../api';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockCurrenciesResponse, mockCurrenciesEmptyResponse } from '../../../../../test-mocks';
 
@@ -15,6 +16,8 @@ const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
 } = INSURANCE_FIELD_IDS;
+
+const { supportedCurrencies, alternativeCurrencies } = mockCurrenciesResponse;
 
 describe('controllers/insurance/export-contract/agent-charges/alternative-currency', () => {
   let req: Request;
@@ -59,7 +62,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         FIELDS: {
           CURRENCY_CODE: {
             ID: CURRENCY_CODE,
-            ...FIELDS[CURRENCY_CODE],
+            ...FIELDS.AGENT_CHARGES[CURRENCY_CODE],
           },
           ALTERNATIVE_CURRENCY_CODE: {
             ID: ALTERNATIVE_CURRENCY_CODE,
@@ -88,6 +91,7 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         }),
         ...PAGE_VARIABLES,
         userName: getUserNameFromSession(req.session.user),
+        ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies),
       };
 
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, expectedVariables);

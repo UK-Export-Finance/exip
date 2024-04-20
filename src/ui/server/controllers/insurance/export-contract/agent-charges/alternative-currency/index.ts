@@ -2,11 +2,12 @@ import { PAGES } from '../../../../../content-strings';
 import { TEMPLATES } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { FIELDS } from '../../../../../content-strings/fields/insurance';
+import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance/export-contract';
 import api from '../../../../../api';
 import { isPopulatedArray } from '../../../../../helpers/array';
 import insuranceCorePageVariables from '../../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
+import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import { Request, Response } from '../../../../../../types';
 
 const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
@@ -25,7 +26,7 @@ export const PAGE_VARIABLES = {
   FIELDS: {
     CURRENCY_CODE: {
       ID: CURRENCY_CODE,
-      ...FIELDS[CURRENCY_CODE],
+      ...FIELDS.AGENT_CHARGES[CURRENCY_CODE],
     },
     ALTERNATIVE_CURRENCY_CODE: {
       ID: ALTERNATIVE_CURRENCY_CODE,
@@ -60,6 +61,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies),
     });
   } catch (err) {
     console.error('Error getting Expport contract - Agent charges - Alternative currency %O', err);
