@@ -1,5 +1,5 @@
 import { headingCaption } from '../../../../../../../pages/shared';
-import { BUTTONS, PAGES } from '../../../../../../../content-strings';
+import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../../content-strings';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/export-contract';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -13,6 +13,14 @@ const {
 } = INSURANCE_ROUTES;
 
 const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+
+const {
+  INSURANCE: {
+    EXPORT_CONTRACT: {
+      AGENT_CHARGES_ALTERNATIVE_CURRENCY: CURRENCY_ERROR_MESSAGES,
+    },
+  },
+} = ERROR_MESSAGES;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -71,10 +79,18 @@ context("Insurance - Export contract - Agent charges - Alternative currency page
       cy.navigateToUrl(url);
     });
 
-    const { rendering } = assertCurrencyFormFields({
+    // TODO: make sure it's testing the legend
+
+    const { rendering, formSubmission } = assertCurrencyFormFields({
       gbpCurrencyCheckedByDefault: true,
+      errors: CURRENCY_ERROR_MESSAGES,
     });
 
     rendering();
+
+    formSubmission().selectAltRadioButNoAltCurrency({});
+
+    formSubmission().submitASupportedCurrency({ url: AGENT_CHARGES });
+    formSubmission().submitAlternativeCurrency({ url: AGENT_CHARGES });
   });
 });

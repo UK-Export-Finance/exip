@@ -20,7 +20,10 @@ import { get as agentServiceGet, post as agentServicePost } from '../../../contr
 import { post as agentServiceSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-service/save-and-back';
 import { get as agentChargesGet, post as agentChargesPost } from '../../../controllers/insurance/export-contract/agent-charges';
 import { post as agentChargesSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-charges/save-and-back';
-import { get as agentChargesAlternativeCurrencyGet } from '../../../controllers/insurance/export-contract/agent-charges/alternative-currency';
+import {
+  get as agentChargesAlternativeCurrencyGet,
+  post as agentChargesAlternativeCurrencyPost,
+} from '../../../controllers/insurance/export-contract/agent-charges/alternative-currency';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -63,7 +66,7 @@ describe('routes/insurance/export-contract', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(18);
-    expect(post).toHaveBeenCalledTimes(24);
+    expect(post).toHaveBeenCalledTimes(25);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -114,6 +117,7 @@ describe('routes/insurance/export-contract', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_SAVE_AND_BACK}`, agentChargesSaveAndBackPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
