@@ -2,7 +2,7 @@ import mapSubmittedData from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 
 const {
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-submitted-data/agent-service-charge', () => {
@@ -22,41 +22,41 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
     });
   });
 
-  describe(`when ${CHARGE_PERCENTAGE} is provided`, () => {
-    it(`should return the form body with mapped ${CHARGE_PERCENTAGE} as a number`, () => {
+  describe(`when ${PERCENTAGE_CHARGE} is provided`, () => {
+    it(`should return the form body with mapped ${PERCENTAGE_CHARGE} as a number`, () => {
       const mockFormBody = {
-        [CHARGE_PERCENTAGE]: '1',
+        [PERCENTAGE_CHARGE]: '1',
       };
 
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
+        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
       };
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when ${FIXED_SUM_AMOUNT} and ${CHARGE_PERCENTAGE} are provided`, () => {
+  describe(`when ${FIXED_SUM_AMOUNT} and ${PERCENTAGE_CHARGE} are provided`, () => {
     it('should return the form body with both fields mapped as a number', () => {
       const mockFormBody = {
         [FIXED_SUM_AMOUNT]: '0',
-        [CHARGE_PERCENTAGE]: '1',
+        [PERCENTAGE_CHARGE]: '1',
       };
 
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
+        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
       };
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when neither ${FIXED_SUM_AMOUNT} or ${CHARGE_PERCENTAGE} are provided`, () => {
+  describe(`when neither ${FIXED_SUM_AMOUNT} or ${PERCENTAGE_CHARGE} are provided`, () => {
     it('should return the form body as provided', () => {
       const mockFormBody = {
         mockField: true,

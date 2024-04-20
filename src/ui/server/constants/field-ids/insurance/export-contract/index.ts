@@ -33,7 +33,7 @@ export const EXPORT_CONTRACT = {
     FIXED_SUM: 'fixedSum',
     FIXED_SUM_AMOUNT: 'fixedSumAmount',
     PERCENTAGE: 'percentage',
-    CHARGE_PERCENTAGE: 'chargePercentage',
+    PERCENTAGE_CHARGE: 'percentageCharge',
   },
 };
 

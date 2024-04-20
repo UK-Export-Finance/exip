@@ -13,7 +13,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { SERVICE_DESCRIPTION, IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**
@@ -229,8 +229,8 @@ const checkExportContractSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [CHARGE_PERCENTAGE]: ({ shouldRender = false }) => {
-    const fieldId = CHARGE_PERCENTAGE;
+  [PERCENTAGE_CHARGE]: ({ shouldRender = false }) => {
+    const fieldId = PERCENTAGE_CHARGE;
 
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);

@@ -424,7 +424,7 @@ export const lists = {
   ExportContractAgentServiceCharge: {
     fields: {
       service: relationship({ ref: 'ExportContractAgentService.charge' }),
-      chargePercentage: integer(),
+      percentageCharge: integer(),
       fixedSumAmount: integer(),
       method: select({
         options: [

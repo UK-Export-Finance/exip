@@ -37,7 +37,7 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
   test('it should return empty agentServiceCharge fields', async () => {
     const agentServiceCharge = await createAnExportContractAgentServiceCharge(context, applicationExportContractAgentService.id);
 
-    expect(agentServiceCharge.chargePercentage).toBeNull();
+    expect(agentServiceCharge.percentageCharge).toBeNull();
     expect(agentServiceCharge.fixedSumAmount).toBeNull();
     expect(agentServiceCharge.payableCountryCode).toEqual('');
     expect(agentServiceCharge.method).toBeNull();

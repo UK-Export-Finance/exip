@@ -3,7 +3,7 @@ import { objectHasProperty } from '../../../../../helpers/object';
 import { RequestBody } from '../../../../../../types';
 
 const {
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 /**
@@ -19,8 +19,8 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     populatedData[FIXED_SUM_AMOUNT] = Number(populatedData[FIXED_SUM_AMOUNT]);
   }
 
-  if (objectHasProperty(populatedData, CHARGE_PERCENTAGE)) {
-    populatedData[CHARGE_PERCENTAGE] = Number(populatedData[CHARGE_PERCENTAGE]);
+  if (objectHasProperty(populatedData, PERCENTAGE_CHARGE)) {
+    populatedData[PERCENTAGE_CHARGE] = Number(populatedData[PERCENTAGE_CHARGE]);
   }
 
   return populatedData;
