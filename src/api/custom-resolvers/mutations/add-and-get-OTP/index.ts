@@ -11,7 +11,7 @@ import { AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from '../../.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AddOtpToAccount mutation
  * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag and OTP
+ * @returns {Promise<Object>} Object with success flag and OTP
  */
 const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context): Promise<AddAndGetOtpResponse> => {
   try {

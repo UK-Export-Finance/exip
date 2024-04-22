@@ -8,6 +8,7 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import agentChargesFields from './agent-charges';
 import { ApplicationExportContractAgent, ApplicationExportContractAgentService, Country, SummaryListItemData } from '../../../../../types';
 
 const {
@@ -115,6 +116,7 @@ const agentFields = (answers: ApplicationExportContractAgent, referenceNumber: n
       ...fields,
       ...agentDetailsFields(answers, referenceNumber, countries, checkAndChange),
       ...agentServiceFields(answers.service, referenceNumber, checkAndChange),
+      ...agentChargesFields(answers.service, referenceNumber, countries, checkAndChange),
     ];
   }
 

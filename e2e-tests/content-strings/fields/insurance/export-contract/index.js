@@ -1,18 +1,21 @@
 import { FIELD_VALUES, MAXIMUM_CHARACTERS } from '../../../../constants';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_FIELD_IDS } from '../../../../constants/field-ids/insurance';
 import { FORM_TITLES } from '../../../form-titles';
 
 const {
-  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
-  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
-  PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
-  USING_AGENT,
-  AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: {
-    METHOD, FIXED_SUM, PERCENTAGE, CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, PAYABLE_COUNTRY_CODE,
+  CURRENCY: { CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION_KNOWN, FINAL_DESTINATION },
+    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION },
+    PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
+    USING_AGENT,
+    AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+    AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
+    AGENT_CHARGES: {
+      METHOD, FIXED_SUM, PERCENTAGE, CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, PAYABLE_COUNTRY_CODE,
+    },
   },
-} = FIELD_IDS;
+} = INSURANCE_FIELD_IDS;
 
 const { EXPORT_CONTRACT: EXPORT_CONTRACT_FORM_TITLES } = FORM_TITLES;
 
@@ -109,6 +112,10 @@ export const EXPORT_CONTRACT_FIELDS = {
   AGENT_SERVICE: {
     [IS_CHARGING]: {
       LABEL: 'Is the agent charging for their support in the export contract?',
+      SUMMARY: {
+        TITLE: 'Agent charging for support',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [SERVICE_DESCRIPTION]: {
       LABEL: 'Service the agent is providing',
@@ -137,13 +144,35 @@ export const EXPORT_CONTRACT_FIELDS = {
     },
     [FIXED_SUM_AMOUNT]: {
       LABEL: 'How much are they charging in TODO?',
+      SUMMARY: {
+        TITLE: 'How much they are charging',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [CHARGE_PERCENTAGE]: {
       LABEL: 'What percentage are they charging?',
       SUFFIX: '%',
+      SUMMARY: {
+        TITLE: 'How much they are charging',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
     },
     [PAYABLE_COUNTRY_CODE]: {
       LABEL: 'Country where charges are payable',
+      SUMMARY: {
+        TITLE: 'Country that commission is payable',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
+    },
+    [IS_CHARGING]: {
+      LABEL: 'Is the agent charging for their support in the export contract?',
+      SUMMARY: {
+        TITLE: 'Agent charging for support',
+        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
+      },
+    },
+    [CURRENCY_CODE]: {
+      LEGEND: 'What currency is the agent charging you in?',
     },
   },
 };

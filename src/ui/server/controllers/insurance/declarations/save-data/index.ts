@@ -9,7 +9,7 @@ import { Application, RequestBody } from '../../../../../types';
  * This is used for any save functionality in the Declarations section of an application
  * @param {Application}
  * @param {Express.Request.body} Form data
- * @returns {Object} Saved data
+ * @returns {Promise<Object>} Saved data
  */
 const declaration = async (application: Application, formBody: RequestBody) => {
   // strip empty form fields.

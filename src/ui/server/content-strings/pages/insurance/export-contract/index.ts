@@ -56,6 +56,11 @@ const AGENT_CHARGES = {
   PROVIDE_ALTERNATIVE_CURRENCY: 'Use a different currency for agent fees',
 };
 
+const AGENT_CHARGES_ALTERNATIVE_CURRENCY = {
+  ...SHARED,
+  PAGE_TITLE: 'What currency is the agent charging you in?',
+};
+
 const CHECK_YOUR_ANSWERS = {
   ...SHARED,
   PAGE_TITLE: 'Check your answers for this section',
@@ -71,5 +76,6 @@ export default {
   AGENT_DETAILS,
   AGENT_SERVICE,
   AGENT_CHARGES,
+  AGENT_CHARGES_ALTERNATIVE_CURRENCY,
   CHECK_YOUR_ANSWERS,
 };

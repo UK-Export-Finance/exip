@@ -72,7 +72,7 @@ context('Insurance - Export contract - Change your answers - Private market - Ye
         checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
       });
 
-      describe(`when changing the answer again from no to yes and going back ${DECLINED_BY_PRIVATE_MARKET}`, () => {
+      describe(`when changing the answer again from no to yes and going back to ${DECLINED_BY_PRIVATE_MARKET}`, () => {
         it(`should have an empty ${DECLINED_DESCRIPTION} value`, () => {
           summaryList.field(FIELD_ID).changeLink().click();
 

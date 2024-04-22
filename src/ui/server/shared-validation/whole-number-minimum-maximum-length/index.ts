@@ -14,7 +14,7 @@ import { isNumberAboveMaximum, isNumberBelowMinimum } from '../../helpers/number
  * @param {Object} errors: Other validation errors for the same form
  * @param {Number} minimum minimum length to check against
  * @param {Number} maximum maximum length to check against
- * @returns {Object} Validation errors or null
+ * @returns {ValidationErrors} or null
  */
 const wholeNumberMinimumMaximumLength = (
   formBody: RequestBody,

@@ -8,7 +8,7 @@ import { ApplicationBuyerApiInput, ApplicationBuyerUiInput, ApolloResponse } fro
  * Update an application's "buyer"
  * @param {String} Buyer ID
  * @param {Object} Buyer update
- * @returns {Object} Updated buyer
+ * @returns {Promise<Object>} Updated buyer
  */
 const updateBuyer = async (id: string, update: ApplicationBuyerUiInput) => {
   try {

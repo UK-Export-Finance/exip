@@ -11,7 +11,7 @@ const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const [NAME] = FIELD_IDS;
 
-describe('controllers/insurance/export-contract/agent-service/save-and-back', () => {
+describe('controllers/insurance/export-contract/agent-charges/save-and-back', () => {
   let req: Request;
   let res: Response;
 

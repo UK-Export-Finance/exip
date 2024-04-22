@@ -9,6 +9,7 @@ import mapYesNoField from '../../../mappings/map-yes-no-field';
 import getCountryByIsoCode from '../../../get-country-by-iso-code';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import agentChargesFields from './agent-charges';
 import { mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
@@ -135,6 +136,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields', () => {
             ),
             ...agentDetailsFields(mockAnswersUsingAgentTrue, referenceNumber, mockCountries, checkAndChange),
             ...agentServiceFields(mockAnswersUsingAgentTrue.service, referenceNumber, checkAndChange),
+            ...agentChargesFields(mockAnswersUsingAgentTrue.service, referenceNumber, mockCountries, checkAndChange),
           ],
         };
 

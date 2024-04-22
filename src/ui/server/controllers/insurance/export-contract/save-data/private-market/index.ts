@@ -10,7 +10,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Application}
  * @param {Express.Request.body} Form data
  * @param {Object} Field error list
- * @returns {Object} Saved data
+ * @returns {Promise<Object>} Saved data
  */
 const privateMarket = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = getDataToSave(formBody, errorList);

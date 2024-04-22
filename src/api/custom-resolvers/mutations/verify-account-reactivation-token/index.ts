@@ -18,7 +18,7 @@ const {
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the VerifyAccountReactivationToken mutation
  * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success or expired flag.
+ * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountReactivationToken = async (
   root: any,

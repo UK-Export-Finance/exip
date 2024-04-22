@@ -15,7 +15,7 @@ const { MIN_LENGTH, MIN_LOWERCASE, MIN_UPPERCASE, MIN_NUMERIC, MIN_SPECIAL_CHARA
  * @param {String} Password
  * @param {String} Error message
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const passwordValidation = (fieldId: string, password: string, errorMessage: string, errors: object) => {
   try {
