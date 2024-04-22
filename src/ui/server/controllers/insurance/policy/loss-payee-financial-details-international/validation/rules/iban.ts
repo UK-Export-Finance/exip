@@ -17,7 +17,7 @@ const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
  * 3) Above the maximum length
  * @param {RequestBody} formBody: Form body
  * @param {Object} errors: Object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const ibanValidation = (formBody: RequestBody, errors: object) => {
   if (!objectHasProperty(formBody, FIELD_ID)) {

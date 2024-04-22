@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import save from '../../save-data/business';
-import mapBusinessSubmittedData from '../../map-submitted-data/your-business';
+import mapSubmittedData from '../../map-submitted-data/your-business';
 import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
@@ -32,7 +32,7 @@ describe('controllers/insurance/business/map-and-save/business', () => {
         await mapAndSave.business(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.business).toHaveBeenCalledTimes(1);
-        expect(save.business).toHaveBeenCalledWith(mockApplication, mapBusinessSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -55,7 +55,7 @@ describe('controllers/insurance/business/map-and-save/business', () => {
 
         expect(save.business).toHaveBeenCalledTimes(1);
 
-        expect(save.business).toHaveBeenCalledWith(mockApplication, mapBusinessSubmittedData(mockFormBody));
+        expect(save.business).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
       });
 
       it('should return true', async () => {

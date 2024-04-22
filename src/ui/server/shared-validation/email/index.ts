@@ -12,7 +12,7 @@ import { ErrorMessageObject } from '../../../types';
  * @param {String} email: Email
  * @param {Object} errorMessages: Error messages
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const emailValidation = (fieldId: string, email: string, errorMessages: ErrorMessageObject, errors: object) => {
   try {

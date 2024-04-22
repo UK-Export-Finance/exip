@@ -8,7 +8,7 @@ import { EmailResponse } from '../../types';
  * @param {String} Email address
  * @param {String} Name
  * @param {String} Password reset token
- * @returns {Object} callNotify response
+ * @returns {Promise<Object>} callNotify response
  */
 export const passwordResetLink = async (urlOrigin: string, emailAddress: string, name: string, passwordResetHash: string): Promise<EmailResponse> => {
   try {

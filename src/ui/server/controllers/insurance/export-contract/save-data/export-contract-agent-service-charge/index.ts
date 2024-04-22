@@ -11,7 +11,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Application}
  * @param {Express.Request.body} Form data
  * @param {Object} Field error list
- * @returns {Object} Saved data
+ * @returns {Promise<Object>} Saved data
  */
 const exportContractAgentServiceCharge = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList));

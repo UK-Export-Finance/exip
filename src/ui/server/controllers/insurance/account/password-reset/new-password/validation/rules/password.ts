@@ -19,7 +19,7 @@ const {
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const passwordRules = (formBody: RequestBody, errors: object) => {
   const fieldValue = formBody[FIELD_ID];

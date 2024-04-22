@@ -10,7 +10,7 @@ import { RequestBody } from '../../../types';
  * @param {String} Field ID
  * @param {String} Error message
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const emptyFieldValidation = (formBody: RequestBody, fieldId: string, errorMessage: string, errors: object) => {
   if (!objectHasProperty(formBody, fieldId)) {
