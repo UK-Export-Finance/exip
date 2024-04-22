@@ -20,18 +20,16 @@ export const RELEVANT_ROUTES = [
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
-  POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK,
   POLICY.CHECK_YOUR_ANSWERS,
   CHECK_YOUR_ANSWERS_APPLICATION_TYPE_OF_POLICY,
 ];
 
 /**
  * getApplicationByReferenceNumberMiddleware
- * If the route is a relevant insurance route, get the application via getApplicationByReferenceNumber mutation and add to res.locals
+ * If the route is a relevant insurance route, get the application via getApplicationByReferenceNumber query and add to res.locals
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Request.Next} request next or response redirect
@@ -43,7 +41,7 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
    * This middleware only needs to be run if we're in routes which need decryption.
    * If we are on a route which does not need decryption,
    * skip these checks by calling next(), so that the user flow continues.
-   * Irrelevant route examples: all sections apart from POLICY financial details.
+   * Irrelevant route examples: all routes apart from POLICY financial details.
    */
   if (!RELEVANT_ROUTES.some((route) => url.includes(route))) {
     return next();

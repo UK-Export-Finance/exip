@@ -6,17 +6,15 @@ import { referenceNumber } from '../../test-mocks';
 const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT } = LOSS_PAYEE_ROUTES;
 const { INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 
-const referenceNumberString = referenceNumber.toString();
-
 describe('server/helpers/generate-full-application-by-reference-number-variables', () => {
   describe(`when URL is not ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
     const url = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
     it('should return the referenceNumber and decryptFinancialUk as "undefined"', () => {
-      const result = generateFullApplicationByReferenceNumberVariables(referenceNumberString, url);
+      const result = generateFullApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
 
       const expected = {
-        referenceNumber: Number(referenceNumberString),
+        referenceNumber,
         decryptFinancialUk: undefined,
       };
 
@@ -28,10 +26,10 @@ describe('server/helpers/generate-full-application-by-reference-number-variables
     const url = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
 
     it('should return the referenceNumber and decryptFinancialUk as "true"', () => {
-      const result = generateFullApplicationByReferenceNumberVariables(referenceNumberString, url);
+      const result = generateFullApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
 
       const expected = {
-        referenceNumber: Number(referenceNumberString),
+        referenceNumber,
         decryptFinancialUk: true,
       };
 

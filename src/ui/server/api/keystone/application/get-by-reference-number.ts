@@ -2,6 +2,12 @@ import apollo from '../../../graphql/apollo';
 import applicationByReferenceNumberQuery from '../../../graphql/queries/application-by-reference-number';
 import { ApolloResponse, ApplicationByReferenceNumberVariables } from '../../../../types';
 
+/**
+ * getApplicationByReferenceNumber
+ * gets an application by reference number - decrypted if flag is set
+ * @param {ApplicationByReferenceNumberVariables} variables
+ * @returns {Application} encrypted/decrypted application
+ */
 const getApplicationByReferenceNumber = async (variables: ApplicationByReferenceNumberVariables) => {
   try {
     console.info('Getting application by referenceNumber: %s', variables.referenceNumber);

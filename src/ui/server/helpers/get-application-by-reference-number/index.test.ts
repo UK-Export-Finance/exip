@@ -1,14 +1,15 @@
 import getApplicationByReferenceNumber from '.';
+import generateFullApplicationByReferenceNumberVariables from '../generate-full-application-by-reference-number-variables';
 import api from '../../api';
 import { mockApplication, referenceNumber } from '../../test-mocks';
+import LOSS_PAYEE_ROUTES from '../../constants/routes/insurance/policy/loss-payee';
+
+const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT } = LOSS_PAYEE_ROUTES;
 
 describe('helpers/get-application-by-reference-number', () => {
   let getApplicationSpy;
 
-  const variables = {
-    referenceNumber,
-    decryptFinancialUk: true,
-  };
+  const variables = generateFullApplicationByReferenceNumberVariables(referenceNumber.toString(), LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT);
 
   it('should call api.keystone.application.getByReferenceNumber', async () => {
     getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));

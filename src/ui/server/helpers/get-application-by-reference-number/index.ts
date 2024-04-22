@@ -5,7 +5,7 @@ import { ApplicationByReferenceNumberVariables } from '../../../types';
  * getApplication
  * Get an application from the API/DB
  * @param {Number} Application reference number
- * @returns {Object} Application
+ * @returns {Application} Application
  */
 const getApplicationByReferenceNumber = async (variables: ApplicationByReferenceNumberVariables) => {
   try {
