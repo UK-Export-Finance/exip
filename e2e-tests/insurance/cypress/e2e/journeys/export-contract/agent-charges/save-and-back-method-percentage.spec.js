@@ -50,7 +50,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - ${METH
 
       cy.completeAgentChargesForm({
         percentageMethod: true,
-        chargePercentage: '',
+        percentageCharge: '',
         payableCountry: '',
       });
 

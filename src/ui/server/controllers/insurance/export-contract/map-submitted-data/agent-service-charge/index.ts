@@ -6,7 +6,7 @@ import { RequestBody } from '../../../../../../types';
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
   },
 } = FIELD_IDS;
 
@@ -19,8 +19,8 @@ const {
 const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
-  if (objectHasProperty(populatedData, CHARGE_PERCENTAGE)) {
-    populatedData[CHARGE_PERCENTAGE] = Number(populatedData[CHARGE_PERCENTAGE]);
+  if (objectHasProperty(populatedData, PERCENTAGE_CHARGE)) {
+    populatedData[PERCENTAGE_CHARGE] = Number(populatedData[PERCENTAGE_CHARGE]);
   }
 
   if (objectHasProperty(populatedData, FIXED_SUM_AMOUNT)) {

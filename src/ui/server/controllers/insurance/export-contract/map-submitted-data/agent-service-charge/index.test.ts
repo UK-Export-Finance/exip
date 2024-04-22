@@ -5,21 +5,21 @@ import { EUR } from '../../../../../test-mocks';
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
   },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-submitted-data/agent-service-charge', () => {
-  describe(`when ${CHARGE_PERCENTAGE} is provided`, () => {
-    it(`should return the form body with mapped ${CHARGE_PERCENTAGE} as a number`, () => {
+  describe(`when ${PERCENTAGE_CHARGE} is provided`, () => {
+    it(`should return the form body with mapped ${PERCENTAGE_CHARGE} as a number`, () => {
       const mockFormBody = {
-        [CHARGE_PERCENTAGE]: '1',
+        [PERCENTAGE_CHARGE]: '1',
       };
 
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
+        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
       };
 
       expect(result).toEqual(expected);
@@ -42,17 +42,17 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
     });
   });
 
-  describe(`when ${CHARGE_PERCENTAGE} and ${FIXED_SUM_AMOUNT} are provided`, () => {
+  describe(`when ${PERCENTAGE_CHARGE} and ${FIXED_SUM_AMOUNT} are provided`, () => {
     it('should return the form body with both fields mapped as a number', () => {
       const mockFormBody = {
-        [CHARGE_PERCENTAGE]: '0',
+        [PERCENTAGE_CHARGE]: '0',
         [FIXED_SUM_AMOUNT]: '1',
       };
 
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
+        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
       };
 
@@ -108,7 +108,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
     });
   });
 
-  describe(`when neither ${CHARGE_PERCENTAGE}, ${FIXED_SUM_AMOUNT} or ${METHOD} are provided`, () => {
+  describe(`when neither ${PERCENTAGE_CHARGE}, ${FIXED_SUM_AMOUNT} or ${METHOD} are provided`, () => {
     it('should return the form body as provided', () => {
       const mockFormBody = {
         mockField: true,

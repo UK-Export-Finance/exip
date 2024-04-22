@@ -809,7 +809,7 @@ DROP TABLE IF EXISTS `ExportContractAgentServiceCharge`;
 
 CREATE TABLE `ExportContractAgentServiceCharge` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `chargePercentage` int DEFAULT NULL,
+  `percentageCharge` int DEFAULT NULL,
   `fixedSumAmount` int DEFAULT NULL,
   `fixedSumCurrencyCode` varchar(3) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'GBP',
   `method` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,

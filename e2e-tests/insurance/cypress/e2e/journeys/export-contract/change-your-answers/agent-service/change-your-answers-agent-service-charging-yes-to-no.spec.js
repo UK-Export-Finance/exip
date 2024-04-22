@@ -16,7 +16,7 @@ const {
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
   AGENT_CHARGES: {
-    FIXED_SUM, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE,
+    FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE,
   },
 } = FIELD_IDS;
 
@@ -79,7 +79,7 @@ context('Insurance - Export contract - Change your answers - Agent service - cha
       it(`should render new ${FIELD_ID} answer and change link, with no other agent service charge fields`, () => {
         checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: false });
         checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: false });
-        checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: false });
+        checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
         checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: false });
       });
 
@@ -95,7 +95,7 @@ context('Insurance - Export contract - Change your answers - Agent service - cha
           cy.assertRadioOptionIsNotChecked(agentChargesPage[METHOD][PERCENTAGE].input());
 
           cy.checkValue(field(FIXED_SUM_AMOUNT), '');
-          cy.checkValue(field(CHARGE_PERCENTAGE), '');
+          cy.checkValue(field(PERCENTAGE_CHARGE), '');
           cy.checkValue(autoCompleteField(PAYABLE_COUNTRY_CODE), '');
         });
       });
