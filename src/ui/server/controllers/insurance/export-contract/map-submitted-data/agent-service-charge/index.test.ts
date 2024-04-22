@@ -5,7 +5,7 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contr
 const {
   EXPORT_CONTRACT: {
     AGENT_SERVICE_CHARGE: {
-      METHOD: { FIXED_SUM, PERCENTAGE }
+      METHOD: { FIXED_SUM, PERCENTAGE },
     },
   },
 } = APPLICATION;

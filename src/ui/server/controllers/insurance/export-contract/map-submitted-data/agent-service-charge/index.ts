@@ -6,7 +6,7 @@ import { RequestBody } from '../../../../../../types';
 const {
   EXPORT_CONTRACT: {
     AGENT_SERVICE_CHARGE: {
-      METHOD: { FIXED_SUM, PERCENTAGE }
+      METHOD: { FIXED_SUM, PERCENTAGE },
     },
   },
 } = APPLICATION;
