@@ -1,8 +1,12 @@
 import mapSubmittedData from '.';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import { EUR } from '../../../../../test-mocks';
 
 const {
-  AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, METHOD },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+  },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-submitted-data/agent-service-charge', () => {
@@ -50,6 +54,38 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const expected = {
         [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${CURRENCY_CODE} is provided`, () => {
+    it(`should return the form body with ${FIXED_SUM_CURRENCY_CODE} as ${CURRENCY_CODE}`, () => {
+      const mockFormBody = {
+        [CURRENCY_CODE]: EUR.isoCode,
+      };
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const expected = {
+        [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe(`when ${ALTERNATIVE_CURRENCY_CODE} is provided`, () => {
+    it(`should return the form body with ${FIXED_SUM_CURRENCY_CODE} as ${ALTERNATIVE_CURRENCY_CODE}`, () => {
+      const mockFormBody = {
+        [ALTERNATIVE_CURRENCY_CODE]: EUR.isoCode,
+      };
+
+      const result = mapSubmittedData(mockFormBody);
+
+      const expected = {
+        [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
       expect(result).toEqual(expected);

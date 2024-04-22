@@ -209,6 +209,14 @@ export const ERROR_MESSAGES = {
           IS_EMPTY: 'Select the country where charges are payable',
         },
       },
+      AGENT_CHARGES_ALTERNATIVE_CURRENCY: {
+        [FIELD_IDS.INSURANCE.CURRENCY.CURRENCY_CODE]: {
+          IS_EMPTY: 'You must select the currency the agent is charging you in',
+        },
+        [FIELD_IDS.INSURANCE.CURRENCY.ALTERNATIVE_CURRENCY_CODE]: {
+          IS_EMPTY: 'Enter the currency the agent is charging you in',
+        },
+      },
     },
     POLICY: {
       TYPE_OF_POLICY: {
