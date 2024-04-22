@@ -12,7 +12,7 @@ const {
 } = APPLICATION;
 
 const {
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, METHOD },
+  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
 } = FIELD_IDS;
 
 /**
@@ -26,17 +26,15 @@ const {
 const mapSubmittedData = (formBody: RequestBody): object => {
   const populatedData = formBody;
 
-  if (formBody[METHOD] === PERCENTAGE) {
-    populatedData[CHARGE_PERCENTAGE] = Number(populatedData[CHARGE_PERCENTAGE]);
-    populatedData[FIXED_SUM_AMOUNT] = null;
-
-    // TODO: when other PRs are merged
-    // TODO: FIXED_SUM_AMOUNT_CURRENCY_CODE
-  }
-
   if (formBody[METHOD] === FIXED_SUM) {
     populatedData[FIXED_SUM_AMOUNT] = Number(populatedData[FIXED_SUM_AMOUNT]);
     populatedData[CHARGE_PERCENTAGE] = null;
+  }
+
+  if (formBody[METHOD] === PERCENTAGE) {
+    populatedData[CHARGE_PERCENTAGE] = Number(populatedData[CHARGE_PERCENTAGE]);
+    populatedData[FIXED_SUM_AMOUNT] = null;
+    populatedData[FIXED_SUM_CURRENCY_CODE] = null;
   }
 
   if (isEmptyString(populatedData[METHOD])) {
