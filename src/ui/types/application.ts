@@ -39,6 +39,7 @@ interface ApplicationExportContractAgentServiceCharge {
   id: string;
   percentageCharge?: string;
   fixedSumAmount?: string;
+  fixedSumCurrencyCode?: string;
   payableCountryCode?: string;
   method?: string;
 }

@@ -40,6 +40,7 @@ const currencyRadio = ({ fieldId, currency, alternativeCurrencyFieldId = ALTERNA
  * - fieldId: Field ID for currency radios
  * - legend: Text for legend component
  * - hint: Text for hint
+ * - gbpCurrencyCheckedByDefault: Assert the GBP currency is checked by default.
  * - alternativeCurrencyText: Text for "another currency" input
  * - alternativeCurrencyFieldId: Field ID for "another currency" input
  * - errors: Error messages object
@@ -48,6 +49,7 @@ const assertCurrencyFormFields = ({
   fieldId = CURRENCY_CODE,
   legend,
   hint,
+  gbpCurrencyCheckedByDefault,
   alternativeCurrencyText,
   alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE,
   errors,
@@ -77,6 +79,7 @@ const assertCurrencyFormFields = ({
     cy.checkText(option5.label(), alternativeCurrencyText);
     cy.checkValue(option5, alternativeCurrencyFieldId);
   },
+  gbpCurrencyCheckedByDefault,
   assertGbpCurrencyCheckedByDefault: () => {
     const option = currencyRadio({ fieldId, currency: GBP.isoCode });
 
