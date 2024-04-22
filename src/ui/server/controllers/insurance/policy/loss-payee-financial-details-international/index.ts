@@ -7,6 +7,8 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
@@ -16,6 +18,7 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   POLICY: { CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
@@ -107,6 +110,16 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
+    const saveResponse = await mapAndSave.lossPayeeFinancialDetailsInternational(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
   } catch (err) {
     console.error('Error updating application - policy - loss payee financial details (international) %O', err);

@@ -8,8 +8,9 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockLossPayeeFinancialDetailsInternational, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockLossPayeeFinancialDetailsInternational, referenceNumber, mockApplication } from '../../../../test-mocks';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -17,7 +18,8 @@ const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS },
+  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS: FINANCIAL_ADDRESS_FIELD } = POLICY_FIELDS;
@@ -111,6 +113,10 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
   describe('post', () => {
     const validBody = mockLossPayeeFinancialDetailsInternational;
 
+    beforeEach(() => {
+      mapAndSave.lossPayeeFinancialDetailsInternational = jest.fn(() => Promise.resolve(true));
+    });
+
     describe('when there are validation errors', () => {
       it('should render template with validation errors', async () => {
         await post(req, res);
@@ -143,6 +149,30 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      it('should call mapAndSave.lossPayeeFinancialDetailsInternational once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.lossPayeeFinancialDetailsInternational).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.lossPayeeFinancialDetailsInternational).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

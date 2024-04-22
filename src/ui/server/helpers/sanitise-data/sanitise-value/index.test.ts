@@ -17,6 +17,7 @@ const {
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME },
     LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { IBAN, BIC_SWIFT_CODE },
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { NAME, REGISTRATION_NUMBER, ADDRESS, WEBSITE },
@@ -41,6 +42,8 @@ describe('server/helpers/sanitise-data/sanitise-value', () => {
         ADDRESS,
         ACCOUNT_NUMBER,
         SORT_CODE,
+        IBAN,
+        BIC_SWIFT_CODE,
         PERCENTAGE_TURNOVER,
         FIXED_SUM_AMOUNT,
         CHARGE_PERCENTAGE,

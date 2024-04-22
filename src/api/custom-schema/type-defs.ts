@@ -248,6 +248,13 @@ const typeDefs = `
     bankAddress: String
   }
 
+  type FinancialInternational {
+    id: String
+    iban: String
+    bicSwiftCode: String
+    bankAddress: String
+  }
+
   type ApplicationNominatedLossPayee {
     id: String
     isAppointed: Boolean
@@ -255,6 +262,7 @@ const typeDefs = `
     isLocatedInternationally: Boolean
     name: String
     financialUk: FinancialUk
+    financialInternational: FinancialInternational
   }
 
   type PopulatedApplication {
@@ -396,6 +404,14 @@ const typeDefs = `
       bankAddress: String
       accountNumber: String
       sortCode: String
+    ): SuccessResponse
+
+    """ update loss payee financial details international """
+    updateLossPayeeFinancialDetailsInternational(
+      id: String
+      bankAddress: String
+      iban: String
+      bicSwiftCode: String
     ): SuccessResponse
   }
 

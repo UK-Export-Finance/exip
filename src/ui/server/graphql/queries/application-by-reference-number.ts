@@ -51,6 +51,9 @@ const applicationByReferenceNumberQuery = gql`
             sortCode
             bankAddress
           }
+          financialInternational {
+            id
+          }
         }
         policy {
           id

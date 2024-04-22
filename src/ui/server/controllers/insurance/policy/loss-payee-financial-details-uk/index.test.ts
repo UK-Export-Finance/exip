@@ -147,7 +147,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
         req.body = validBody;
       });
 
-      it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
+      it('should call mapAndSave.lossPayeeFinancialDetailsUk once with data from constructPayload function', async () => {
         req.body = validBody;
 
         await post(req, res);

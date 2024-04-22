@@ -16,6 +16,7 @@ import {
   createFeedbackAndSendEmail,
   verifyAccountReactivationToken,
   updateLossPayeeFinancialDetailsUk,
+  updateLossPayeeFinancialDetailsInternational,
 } from './mutations';
 import {
   getAccountPasswordResetToken,
@@ -53,6 +54,7 @@ const customResolvers = {
     createFeedbackAndSendEmail,
     verifyAccountReactivationToken,
     updateLossPayeeFinancialDetailsUk,
+    updateLossPayeeFinancialDetailsInternational,
   },
   Query: {
     getAccountPasswordResetToken,

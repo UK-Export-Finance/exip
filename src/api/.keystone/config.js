@@ -435,6 +435,7 @@ var CUSTOM_RESOLVERS = [
   "sendEmailPasswordResetLink",
   "sendEmailReactivateAccountLink",
   "updateLossPayeeFinancialDetailsUk",
+  "updateLossPayeeFinancialDetailsInternational",
   "verifyAccountEmailAddress",
   "verifyAccountPasswordResetToken",
   "verifyAccountReactivationToken",
@@ -2133,6 +2134,13 @@ var typeDefs = `
     bankAddress: String
   }
 
+  type FinancialInternational {
+    id: String
+    iban: String
+    bicSwiftCode: String
+    bankAddress: String
+  }
+
   type ApplicationNominatedLossPayee {
     id: String
     isAppointed: Boolean
@@ -2140,6 +2148,7 @@ var typeDefs = `
     isLocatedInternationally: Boolean
     name: String
     financialUk: FinancialUk
+    financialInternational: FinancialInternational
   }
 
   type PopulatedApplication {
@@ -2281,6 +2290,14 @@ var typeDefs = `
       bankAddress: String
       accountNumber: String
       sortCode: String
+    ): SuccessResponse
+
+    """ update loss payee financial details international """
+    updateLossPayeeFinancialDetailsInternational(
+      id: String
+      bankAddress: String
+      iban: String
+      bicSwiftCode: String
     ): SuccessResponse
   }
 
@@ -5690,6 +5707,55 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
 };
 var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
 
+// helpers/map-loss-payee-financial-details-international/index.ts
+var mapLossPayeeFinancialDetailsInternational = (variables) => {
+  const { iban, bicSwiftCode, bankAddress } = variables;
+  let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+  let bicSwiftCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+  if (iban) {
+    ibanData = encrypt_default(iban);
+  }
+  if (bicSwiftCode) {
+    bicSwiftCodeData = encrypt_default(bicSwiftCode);
+  }
+  const updateData = {
+    iban: ibanData.value,
+    ibanVector: ibanData.iv,
+    bicSwiftCode: bicSwiftCodeData.value,
+    bicSwiftCodeVector: bicSwiftCodeData.iv,
+    bankAddress
+  };
+  return updateData;
+};
+var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-international/index.ts
+var updateLossPayeeFinancialDetailsInternational = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial details international %s", variables.id);
+    const { id } = variables;
+    const updateData = map_loss_payee_financial_details_international_default(variables);
+    const response = await context.db.LossPayeeFinancialInternational.updateOne({
+      where: {
+        id
+      },
+      data: updateData
+    });
+    if (response) {
+      return {
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error updating loss payee financial details international %O", err);
+    throw new Error(`Updating loss payee financial details international ${err}`);
+  }
+};
+var update_loss_payee_financial_details_international_default = updateLossPayeeFinancialDetailsInternational;
+
 // custom-resolvers/queries/get-account-password-reset-token/index.ts
 var getAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Getting account password reset token");
@@ -6433,7 +6499,8 @@ var customResolvers = {
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,
     verifyAccountReactivationToken: verify_account_reactivation_token_default,
-    updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default
+    updateLossPayeeFinancialDetailsUk: update_loss_payee_financial_details_uk_default,
+    updateLossPayeeFinancialDetailsInternational: update_loss_payee_financial_details_international_default
   },
   Query: {
     getAccountPasswordResetToken: get_account_password_reset_token_default,
