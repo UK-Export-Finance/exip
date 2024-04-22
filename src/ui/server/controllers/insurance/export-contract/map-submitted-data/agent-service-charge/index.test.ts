@@ -1,6 +1,7 @@
 import mapSubmittedData from '.';
 import { APPLICATION } from '../../../../../constants';
-import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance';
+import { EUR } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -11,7 +12,10 @@ const {
 } = APPLICATION;
 
 const {
-  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+  },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-submitted-data/agent-service-charge', () => {
@@ -20,6 +24,8 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const mockFormBody = {
         [METHOD]: FIXED_SUM,
         [FIXED_SUM_AMOUNT]: '1',
+        [ALTERNATIVE_CURRENCY_CODE]: EUR.isoCode,
+        [CURRENCY_CODE]: EUR.isoCode,
       };
 
       const result = mapSubmittedData(mockFormBody);
@@ -28,6 +34,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
         ...mockFormBody,
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
         [CHARGE_PERCENTAGE]: null,
+        [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
       expect(result).toEqual(expected);
@@ -39,6 +46,8 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const mockFormBody = {
         [METHOD]: PERCENTAGE,
         [CHARGE_PERCENTAGE]: '1',
+        [CURRENCY_CODE]: EUR.isoCode,
+        [ALTERNATIVE_CURRENCY_CODE]: EUR.isoCode,
       };
 
       const result = mapSubmittedData(mockFormBody);
@@ -47,15 +56,15 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
         ...mockFormBody,
         [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
         [FIXED_SUM_AMOUNT]: null,
-        [FIXED_SUM_CURRENCY_CODE]: null,
+        [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when ${METHOD} is an empty string`, () => {
-    it(`should return ${METHOD} as null`, () => {
+  describe(`when an empty ${METHOD} string is provided`, () => {
+    it(`should return the form body with ${METHOD} as null`, () => {
       const mockFormBody = {
         [METHOD]: '',
       };
