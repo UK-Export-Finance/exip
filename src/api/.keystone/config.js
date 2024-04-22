@@ -1326,11 +1326,7 @@ var lists = {
       service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
       chargePercentage: (0, import_fields.integer)(),
       fixedSumAmount: (0, import_fields.integer)(),
-<<<<<<< HEAD
-      fixedSumAmountCurrencyCode: (0, import_fields.text)({
-=======
       fixedSumCurrencyCode: (0, import_fields.text)({
->>>>>>> main-application-no-pdf
         db: { nativeType: "VarChar(3)" },
         defaultValue: DEFAULT_CURRENCY
       }),

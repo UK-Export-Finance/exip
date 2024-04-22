@@ -221,15 +221,6 @@ model ExportContractAgentService {
 }
 
 model ExportContractAgentServiceCharge {
-<<<<<<< HEAD
-  id                         String                      @id @default(cuid())
-  service                    ExportContractAgentService? @relation("ExportContractAgentService_charge")
-  chargePercentage           Int?
-  fixedSumAmount             Int?
-  fixedSumAmountCurrencyCode String                      @default("GBP") @mysql.VarChar(3)
-  method                     String?
-  payableCountryCode         String                      @default("") @mysql.VarChar(3)
-=======
   id                   String                      @id @default(cuid())
   service              ExportContractAgentService? @relation("ExportContractAgentService_charge")
   chargePercentage     Int?
@@ -237,7 +228,6 @@ model ExportContractAgentServiceCharge {
   fixedSumCurrencyCode String                      @default("GBP") @mysql.VarChar(3)
   method               String?
   payableCountryCode   String                      @default("") @mysql.VarChar(3)
->>>>>>> main-application-no-pdf
 }
 
 model PrivateMarket {
