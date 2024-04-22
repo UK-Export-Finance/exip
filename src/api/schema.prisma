@@ -221,12 +221,13 @@ model ExportContractAgentService {
 }
 
 model ExportContractAgentServiceCharge {
-  id                 String                      @id @default(cuid())
-  service            ExportContractAgentService? @relation("ExportContractAgentService_charge")
-  chargePercentage   Int?
-  fixedSumAmount     Int?
-  method             String?
-  payableCountryCode String                      @default("") @mysql.VarChar(3)
+  id                   String                      @id @default(cuid())
+  service              ExportContractAgentService? @relation("ExportContractAgentService_charge")
+  chargePercentage     Int?
+  fixedSumAmount       Int?
+  fixedSumCurrencyCode String                      @default("GBP") @mysql.VarChar(3)
+  method               String?
+  payableCountryCode   String                      @default("") @mysql.VarChar(3)
 }
 
 model PrivateMarket {

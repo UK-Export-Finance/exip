@@ -14,6 +14,9 @@ const { PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES: { FIXED_SUM_CURRENCY_CODE },
+  },
 } = INSURANCE_FIELD_IDS;
 
 export const FIELD_IDS = [CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE];
@@ -47,6 +50,13 @@ export const get = async (req: Request, res: Response) => {
     if (!application) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
+    const {
+      exportContract: {
+        agent: {
+          service: { charge },
+        },
+      },
+    } = application;
 
     const { alternativeCurrencies, supportedCurrencies } = await api.keystone.APIM.getCurrencies();
 
@@ -61,7 +71,7 @@ export const get = async (req: Request, res: Response) => {
       }),
       ...PAGE_VARIABLES,
       userName: getUserNameFromSession(req.session.user),
-      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies),
+      ...mapRadioAndSelectOptions(alternativeCurrencies, supportedCurrencies, charge[FIXED_SUM_CURRENCY_CODE]),
     });
   } catch (err) {
     console.error('Error getting Export contract - Agent charges - Alternative currency %O', err);

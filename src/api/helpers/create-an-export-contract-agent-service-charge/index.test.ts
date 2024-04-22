@@ -1,4 +1,5 @@
 import createAnExportContractAgentServiceCharge from '.';
+import { APPLICATION } from '../../constants';
 import createAnExportContract from '../create-an-export-contract';
 import { Application, ApplicationExportContractAgentService, Context } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
@@ -34,11 +35,12 @@ describe('helpers/create-an-export-contract-agent-service-charge', () => {
     expect(agentServiceCharge.id.length).toBeGreaterThan(0);
   });
 
-  test('it should return empty agentServiceCharge fields', async () => {
+  test('it should return empty agentServiceCharge fields with default currency code', async () => {
     const agentServiceCharge = await createAnExportContractAgentServiceCharge(context, applicationExportContractAgentService.id);
 
     expect(agentServiceCharge.chargePercentage).toBeNull();
     expect(agentServiceCharge.fixedSumAmount).toBeNull();
+    expect(agentServiceCharge.fixedSumCurrencyCode).toEqual(APPLICATION.DEFAULT_CURRENCY);
     expect(agentServiceCharge.payableCountryCode).toEqual('');
     expect(agentServiceCharge.method).toBeNull();
   });
