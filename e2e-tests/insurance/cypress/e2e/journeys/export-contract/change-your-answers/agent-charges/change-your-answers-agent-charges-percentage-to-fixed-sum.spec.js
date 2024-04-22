@@ -78,6 +78,16 @@ context('Insurance - Export contract - Change your answers - Agent charges - Per
         checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
         checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
       });
+
+      describe(`when going back to ${AGENT_CHARGES_CHANGE}`, () => {
+        it('should have empty field `fixed sum` values', () => {
+          summaryList.field(FIXED_SUM_AMOUNT).changeLink().click();
+
+          cy.assertAgentChargesFieldValues({
+            fixedSumMethod: true,
+          });
+        });
+      });
     });
   });
 });
