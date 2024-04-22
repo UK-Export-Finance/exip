@@ -2505,7 +2505,7 @@ var application = {
    * application.submittedEmail
    * Send "application submitted" email to an account
    * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
-   * @returns {Object} callNotify response
+   * @returns {Promise<Object>} callNotify response
    */
   submittedEmail: async (variables) => {
     try {
@@ -2525,7 +2525,7 @@ var application = {
    * Send "application submitted" email to the underwriting team with a link to CSV
    * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
    * @param {ApplicationSubmissionEmailVariables}
-   * @returns {Object} callNotify response
+   * @returns {Promise<Object>} callNotify response
    */
   underwritingTeam: async (variables, filePath, templateId) => {
     try {

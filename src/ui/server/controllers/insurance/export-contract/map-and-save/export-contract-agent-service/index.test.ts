@@ -1,52 +1,160 @@
 import mapAndSave from '.';
-import save from '../../save-data/export-contract-agent-service';
-import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
+import saveService from '../../save-data/export-contract-agent-service';
+import saveCharge from '../../save-data/export-contract-agent-service-charge';
+import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication as application, mockApplicationAgentServiceChargeEmpty } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-} = EXPORT_CONTRACT_FIELD_IDS;
+} = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service', () => {
+  jest.mock('../../save-data/export-contract-agent-service');
   jest.mock('../../save-data/export-contract-agent-service-charge');
 
-  let mockFormBody = {
-    _csrf: '1234',
-    [IS_CHARGING]: mockApplication.exportContract.agent.service[IS_CHARGING],
+  const mockCsrf = '1234';
+
+  const mockFormBody = {
+    isCharging: {
+      _csrf: mockCsrf,
+      [IS_CHARGING]: 'true',
+    },
+    isNotCharging: {
+      _csrf: mockCsrf,
+      [IS_CHARGING]: 'false',
+    },
   };
 
-  const mockSave = jest.fn(() => Promise.resolve({}));
-  save.exportContractAgentService = mockSave;
+  const mockApplication = {
+    withChargeData: application,
+    noChargeData: mockApplicationAgentServiceChargeEmpty,
+  };
 
   const mockValidationErrors = generateValidationErrors(IS_CHARGING, 'error', {});
 
-  describe('when the form has data', () => {
-    describe('when the form has validation errors', () => {
-      it('should call save.exportContractAgentService with application, submitted data and validationErrors.errorList', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication, mockValidationErrors);
+  let mockServiceSave;
+  let mockServiceChargeSave;
 
-        expect(save.exportContractAgentService).toHaveBeenCalledTimes(1);
-        expect(save.exportContractAgentService).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+  const setupMocks = () => {
+    jest.resetAllMocks();
+
+    mockServiceSave = jest.fn(() => Promise.resolve({}));
+    mockServiceChargeSave = jest.fn(() => Promise.resolve({}));
+
+    saveService.exportContractAgentService = mockServiceSave;
+    saveCharge.exportContractAgentServiceCharge = mockServiceChargeSave;
+  };
+
+  describe('when the form has data, IS_CHARGING=true, no charge data', () => {
+    describe('when the form has validation errors', () => {
+      beforeEach(() => {
+        setupMocks();
+      });
+
+      it('should call saveService.exportContractAgentService with application, submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
+
+        expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(
+          mockApplication.noChargeData,
+          mockFormBody.isCharging,
+          mockValidationErrors?.errorList,
+        );
+      });
+
+      it('should NOT call saveCharge.exportContractAgentServiceCharge with application, submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
+
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(0);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
     });
 
     describe('when the form does NOT have validation errors ', () => {
-      it('should call save.exportContractAgentService with application and submitted data', async () => {
-        await mapAndSave.exportContractAgentService(mockFormBody, mockApplication);
+      beforeEach(() => {
+        setupMocks();
+      });
 
-        expect(save.exportContractAgentService).toHaveBeenCalledTimes(1);
-        expect(save.exportContractAgentService).toHaveBeenCalledWith(mockApplication, mockFormBody);
+      it('should call saveService.exportContractAgentService with application and submitted data', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData);
+
+        expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.noChargeData, mockFormBody.isCharging);
+      });
+
+      it('should NOT call saveCharge.exportContractAgentServiceCharge with application and submitted data', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData);
+
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(0);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isCharging, mockApplication.noChargeData, mockValidationErrors);
+
+        expect(result).toEqual(true);
+      });
+    });
+  });
+
+  describe('when the form has data, IS_CHARGING=false, has charge data', () => {
+    describe('when the form has validation errors', () => {
+      beforeEach(() => {
+        setupMocks();
+      });
+
+      it('should call saveService.exportContractAgentService with application, submitted data and validationErrors.errorList', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
+
+        expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(
+          mockApplication.withChargeData,
+          mockFormBody.isNotCharging,
+          mockValidationErrors?.errorList,
+        );
+      });
+
+      it('should call saveCharge.exportContractAgentServiceCharge with application and nullified agent charges data', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
+
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifyAgentServiceChargeData());
+      });
+
+      it('should return true', async () => {
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
+
+        expect(result).toEqual(true);
+      });
+    });
+
+    describe('when the form does NOT have validation errors', () => {
+      beforeEach(() => {
+        setupMocks();
+      });
+
+      it('should call saveService.exportContractAgentService with application and submitted data', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData);
+
+        expect(saveService.exportContractAgentService).toHaveBeenCalledTimes(1);
+        expect(saveService.exportContractAgentService).toHaveBeenCalledWith(mockApplication.withChargeData, mockFormBody.isNotCharging);
+      });
+
+      it('should call saveCharge.exportContractAgentServiceCharge with application and nullified agent charges data', async () => {
+        await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData);
+
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
+        expect(saveCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication.withChargeData, nullifyAgentServiceChargeData());
+      });
+
+      it('should return true', async () => {
+        const result = await mapAndSave.exportContractAgentService(mockFormBody.isNotCharging, mockApplication.withChargeData, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -55,9 +163,9 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   describe('when the form does not have any data', () => {
     it('should return true', async () => {
-      mockFormBody = { _csrf: '1234' };
+      const mockEmptyFormBody = { _csrf: '1234' };
 
-      const result = await mapAndSave.exportContractAgentService(mockFormBody, mockApplication, mockValidationErrors);
+      const result = await mapAndSave.exportContractAgentService(mockEmptyFormBody, mockApplication.withChargeData, mockValidationErrors);
 
       expect(result).toEqual(true);
     });

@@ -10,6 +10,7 @@ import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCu
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
 import mockApplication, {
+  mockApplicationAgentServiceChargeEmpty,
   mockApplicationMultiplePolicy,
   mockApplicationTotalContractValueThresholdTrue,
   mockApplicationTotalContractValueThresholdFalse,
@@ -118,6 +119,7 @@ export {
   mockAccount,
   mockAnswers,
   mockApplication,
+  mockApplicationAgentServiceChargeEmpty,
   mockApplicationMultiplePolicy,
   mockApplications,
   mockApplicationTotalContractValueThresholdTrue,
