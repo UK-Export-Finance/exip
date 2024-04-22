@@ -7,7 +7,7 @@ import { Context, CreatePolicyResponse } from '../../types';
  * Create a policy with an application relationship.
  * @param {Object} KeystoneJS context API
  * @param {String} Application ID
- * @returns {Object} Created policy
+ * @returns {Promise<Object>} Created policy
  */
 const createAPolicy = async (context: Context, applicationId: string): Promise<CreatePolicyResponse> => {
   console.info('Creating a policy for ', applicationId);

@@ -9,7 +9,7 @@ import { Context } from '../../types';
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
  * @param {String} New password
- * @returns {Boolean}
+ * @returns {Promise<Boolean>}
  */
 const hasAccountUsedPasswordBefore = async (context: Context, accountId: string, newPassword: string) => {
   console.info('Checking if an account has used a password before');

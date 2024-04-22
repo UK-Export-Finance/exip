@@ -23,7 +23,7 @@ const {
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const websiteRule = (formBody: RequestBody, errors: object) => {
   // only validate website if field is not empty

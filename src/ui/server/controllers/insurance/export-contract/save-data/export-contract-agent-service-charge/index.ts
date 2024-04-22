@@ -22,7 +22,7 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT,
  * @param {Application}
  * @param {Express.Request.body} Form data
  * @param {Object} Field error list
- * @returns {Object} Saved data
+ * @returns {Promise<Object>} Saved data
  */
 const exportContractAgentServiceCharge = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);

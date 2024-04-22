@@ -11,7 +11,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * If the form is submitted with the agent charging as false (IS_CHARGING),
  * and AGENT_CHARGES data exists in the application,
  * Nullify all AGENT_CHARGES data.
- * @param {Express.Request.body} Express request body
+ * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}
