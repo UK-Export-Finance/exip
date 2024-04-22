@@ -10,7 +10,7 @@ import generateValidationErrors from '../../helpers/validation';
  * @param {String} errorMessageEmpty error message if postcode is empty
  * @param {String} errorMessageFormat error message if postcode is the incorrect format
  * @param {Object} errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const postCodeValidation = (fieldId: string, postcode: string, errorMessageEmpty: string, errorMessageFormat: string, errors: object) => {
   try {

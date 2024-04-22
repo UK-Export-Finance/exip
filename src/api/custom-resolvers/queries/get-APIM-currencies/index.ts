@@ -4,7 +4,7 @@ import mapCurrencies from '../../../helpers/map-currencies';
 /**
  * getApimCurrencies
  * Get currencies from APIM
- * @returns {Object} APIM response data
+ * @returns {Promise<Object>} APIM response data
  */
 const getApimCurrencies = async () => {
   try {

@@ -12,7 +12,7 @@ import wholeNumberValidation from '../../helpers/whole-number-validation';
  * @param {String} errorMessage
  * @param {Object} errors: Other validation errors for the same form
  * @param {Number} minimum minimum value to check against
- * @returns {Object} Validation errors or null
+ * @returns {ValidationErrors} or null
  */
 const wholeNumberAboveMinimumValidation = (formBody: RequestBody, fieldId: string, errorMessage: ErrorMessageObject, errors: object, minimum: number) => {
   let updatedErrors = errors;

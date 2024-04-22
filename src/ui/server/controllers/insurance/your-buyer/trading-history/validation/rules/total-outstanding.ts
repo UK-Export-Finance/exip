@@ -19,7 +19,7 @@ export const MINIMUM = 1;
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const totalOutstandingRules = (formBody: RequestBody, errors: object) => {
   if (formBody[OUTSTANDING_PAYMENTS] === 'true') {

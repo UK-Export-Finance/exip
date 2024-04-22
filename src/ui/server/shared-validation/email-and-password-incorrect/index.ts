@@ -13,7 +13,7 @@ const {
  * emailAndPasswordIncorrectValidationErrors
  * Return "incorrect" validation errors for both EMAIL and PASSWORD fields.
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const emailAndPasswordIncorrectValidationErrors = (errors: ValidationErrors) => {
   let emailError = errors;

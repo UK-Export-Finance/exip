@@ -5,7 +5,7 @@ import { Account, Context } from '../../types';
  * Get the account the ID is associated with.
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
- * @returns {Object} Account
+ * @returns {Promise<Object>} Account
  */
 const getAccountById = async (context: Context, accountId: string) => {
   try {

@@ -6,7 +6,7 @@ import { Context, SectionReview } from '../../types';
  * @param {Object} KeystoneJS context API
  * @param {String} Application ID
  * @param {Object} sectionReviewData data to create
- * @returns {Object}  Created section review
+ * @returns {Promise<Object>}  Created section review
  */
 const createASectionReview = async (context: Context, applicationId: string, sectionReviewData: SectionReview) => {
   console.info('Creating a section review for ', applicationId);

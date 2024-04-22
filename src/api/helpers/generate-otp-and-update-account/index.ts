@@ -7,7 +7,7 @@ import { AddAndGetOtpResponse, Context } from '../../types';
  * - Generate an OTP, save to the account
  * @param {Object} KeystoneJS context API
  * @param {String} Exporter account ID
- * @returns {Object} Object with success flag and access code
+ * @returns {Promise<Object>} Object with success flag and access code
  */
 const generateOTPAndUpdateAccount = async (context: Context, accountId: string): Promise<AddAndGetOtpResponse> => {
   try {

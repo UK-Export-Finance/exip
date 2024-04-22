@@ -12,7 +12,7 @@ const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
  * Return a flag indicating that the account should be blocked.
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
- * @returns {Boolean}
+ * @returns {Promise<Boolean>}
  */
 const shouldBlockAccount = async (context: Context, accountId: string): Promise<boolean> => {
   console.info('Checking account authentication retries %s', accountId);

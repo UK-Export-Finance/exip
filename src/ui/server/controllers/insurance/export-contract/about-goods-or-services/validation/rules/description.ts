@@ -26,7 +26,7 @@ export const MAXIMUM = 1000;
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const descriptionRules = (formBody: RequestBody, errors: object) => {
   const updatedErrors = errors;

@@ -13,7 +13,6 @@ import save from '../../save-data/broker';
 const broker = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
-      // maps through formBody and puts fields in correct format
       let saveResponse;
 
       if (validationErrors) {

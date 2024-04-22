@@ -9,7 +9,7 @@ const {
 /**
  * mapSubmittedData
  * Map agent service charge fields
- * @param {Express.Request.body} formBody
+ * @param {RequestBody} formBody: Form body
  * @returns {Object} populatedData
  */
 const mapSubmittedData = (formBody: RequestBody): object => {

@@ -29,7 +29,7 @@ export const MINIMUM = 1;
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) =>
   wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM);

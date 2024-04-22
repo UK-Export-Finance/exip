@@ -7,7 +7,7 @@ import isValidWebsiteAddress from '../../helpers/is-valid-website-address';
  * @param {String} fieldId
  * @param {String} errorMessage
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const validateWebsiteAddress = (website: string, fieldId: string, errorMessage: string, errors: object) => {
   let updatedErrors = errors;
