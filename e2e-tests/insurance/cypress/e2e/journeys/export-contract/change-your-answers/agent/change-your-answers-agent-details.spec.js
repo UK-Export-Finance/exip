@@ -1,5 +1,4 @@
 import { autoCompleteField, field, summaryList } from '../../../../../../../pages/shared';
-import { EXPECTED_SINGLE_LINE_STRING } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import application from '../../../../../../../fixtures/application';
@@ -116,7 +115,7 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
       it('should render the new answer', () => {
         const row = summaryList.field(fieldId);
 
-        row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+        row.value().contains(newAnswer);
       });
     });
   });
