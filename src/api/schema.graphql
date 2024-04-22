@@ -1097,7 +1097,7 @@ type ExportContractAgentServiceCharge {
   service: ExportContractAgentService
   chargePercentage: Int
   fixedSumAmount: Int
-  fixedSumAmountCurrencyCode: String
+  fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
 }
@@ -1114,7 +1114,7 @@ input ExportContractAgentServiceChargeWhereInput {
   service: ExportContractAgentServiceWhereInput
   chargePercentage: IntNullableFilter
   fixedSumAmount: IntNullableFilter
-  fixedSumAmountCurrencyCode: StringFilter
+  fixedSumCurrencyCode: StringFilter
   method: StringNullableFilter
   payableCountryCode: StringFilter
 }
@@ -1123,7 +1123,7 @@ input ExportContractAgentServiceChargeOrderByInput {
   id: OrderDirection
   chargePercentage: OrderDirection
   fixedSumAmount: OrderDirection
-  fixedSumAmountCurrencyCode: OrderDirection
+  fixedSumCurrencyCode: OrderDirection
   method: OrderDirection
   payableCountryCode: OrderDirection
 }
@@ -1132,7 +1132,7 @@ input ExportContractAgentServiceChargeUpdateInput {
   service: ExportContractAgentServiceRelateToOneForUpdateInput
   chargePercentage: Int
   fixedSumAmount: Int
-  fixedSumAmountCurrencyCode: String
+  fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
 }
@@ -1146,7 +1146,7 @@ input ExportContractAgentServiceChargeCreateInput {
   service: ExportContractAgentServiceRelateToOneForCreateInput
   chargePercentage: Int
   fixedSumAmount: Int
-  fixedSumAmountCurrencyCode: String
+  fixedSumCurrencyCode: String
   method: String
   payableCountryCode: String
 }

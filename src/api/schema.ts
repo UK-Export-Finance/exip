@@ -426,7 +426,7 @@ export const lists = {
       service: relationship({ ref: 'ExportContractAgentService.charge' }),
       chargePercentage: integer(),
       fixedSumAmount: integer(),
-      fixedSumAmountCurrencyCode: text({
+      fixedSumCurrencyCode: text({
         db: { nativeType: 'VarChar(3)' },
         defaultValue: DEFAULT_CURRENCY,
       }),
