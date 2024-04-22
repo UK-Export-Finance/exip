@@ -1,6 +1,7 @@
 import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
+import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -57,14 +58,15 @@ context('Insurance - Export contract - Change your answers - Agent service - des
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = `${application.EXPORT_CONTRACT.AGENT_SERVICE[fieldId]} additional text`;
+      const newAnswer = 'additional text';
+      const fullAnswer = `${application.EXPORT_CONTRACT.AGENT_SERVICE[fieldId]} ${newAnswer}`;
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).textarea(), newAnswer);
+        cy.keyboardInput(field(fieldId).textarea(), fullAnswer);
 
         cy.clickSubmitButton();
       });
@@ -74,9 +76,7 @@ context('Insurance - Export contract - Change your answers - Agent service - des
       });
 
       it('should render the new answer', () => {
-        const row = summaryList.field(fieldId);
-
-        row.value().contains(newAnswer);
+        checkSummaryList[fieldId]({ shouldRender: true, newAnswer });
       });
     });
   });
