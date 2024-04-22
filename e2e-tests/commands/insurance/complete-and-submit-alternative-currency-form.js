@@ -1,6 +1,5 @@
 import { NON_STANDARD_CURRENCY_CODE } from '../../fixtures/currencies';
 import { radios } from '../../pages/shared';
-import partials from '../../partials';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 
 const { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
@@ -15,17 +14,14 @@ const { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENC
  */
 const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency }) => {
   if (isoCode) {
-    // clicks alternative currency link
-    partials.provideAlternativeCurrencyLink().click();
+    cy.clickProvideAlternativeCurrencyLink();
 
-    // selects currency radio and submits form
     radios(CURRENCY_CODE, isoCode).option.label().click();
     cy.clickSubmitButton();
   }
 
   if (alternativeCurrency) {
-    // clicks alternative currency link
-    partials.provideAlternativeCurrencyLink().click();
+    cy.clickProvideAlternativeCurrencyLink();
 
     /**
      * clicks alternativeCurrency radio option

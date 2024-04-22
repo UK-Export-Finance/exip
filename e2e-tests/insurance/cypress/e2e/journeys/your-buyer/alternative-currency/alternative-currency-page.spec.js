@@ -30,11 +30,16 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
+      // go to the page we want to test.
       cy.startInsuranceYourBuyerSection({});
+      cy.completeAndSubmitCompanyOrOrganisationForm({});
+      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+
+      cy.clickYesRadioInput();
+      cy.clickProvideAlternativeCurrencyLink();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
-
-      cy.navigateToUrl(url);
 
       cy.assertUrl(url);
     });
@@ -52,7 +57,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
     cy.corePageChecks({
       pageTitle: YOUR_BUYER_FIELDS[CURRENCY_CODE].LEGEND,
       currentHref: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`,
-      backLink: `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}#`,
+      backLink: `${ROOT}/${referenceNumber}${TRADING_HISTORY}`,
       submitButtonCopy: BUTTONS.CONFIRM,
     });
   });

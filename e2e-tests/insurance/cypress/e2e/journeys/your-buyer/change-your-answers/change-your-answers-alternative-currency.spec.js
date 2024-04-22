@@ -4,7 +4,6 @@ import { summaryList } from '../../../../../../pages/shared';
 import application from '../../../../../../fixtures/application';
 import formatCurrency from '../../../../../../helpers/format-currency';
 import { EUR_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE, SYMBOLS } from '../../../../../../fixtures/currencies';
-import partials from '../../../../../../partials';
 
 const {
   CURRENCY: {
@@ -64,7 +63,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
-        partials.provideAlternativeCurrencyLink().click();
+        cy.clickProvideAlternativeCurrencyLink();
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHANGE });
       });
@@ -110,7 +109,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
-        partials.provideAlternativeCurrencyLink().click();
+        cy.clickProvideAlternativeCurrencyLink();
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_CURRENCY_CHANGE });
       });
