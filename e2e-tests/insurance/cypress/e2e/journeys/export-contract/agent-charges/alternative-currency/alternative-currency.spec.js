@@ -79,8 +79,6 @@ context("Insurance - Export contract - Agent charges - Alternative currency page
       cy.navigateToUrl(url);
     });
 
-    // TODO: make sure it's testing the legend
-
     const { rendering, formSubmission } = assertCurrencyFormFields({
       gbpCurrencyCheckedByDefault: true,
       errors: CURRENCY_ERROR_MESSAGES,
