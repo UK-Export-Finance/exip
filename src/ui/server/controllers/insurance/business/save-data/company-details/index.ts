@@ -9,7 +9,7 @@ import { Application, RequestBody } from '../../../../../../types';
  * @param {Application} application
  * @param {RequestBody} formBody
  * @param {Object} errorList
- * @returns {Object} saveResponse from api
+ * @returns {Promise<Object>} Saved data
  */
 const companyDetails = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save

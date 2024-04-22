@@ -15,7 +15,7 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
  * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {
   try {

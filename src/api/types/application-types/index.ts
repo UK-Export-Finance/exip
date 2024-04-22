@@ -150,7 +150,7 @@ export interface ApplicationExportContractAgentServiceCharge extends Relationshi
   agentServiceId: string;
   chargePercentage?: string;
   fixedSumAmount?: string;
-  fixedSumAmountCurrencyCode?: string;
+  fixedSumCurrencyCode?: string;
   payableCountryCode?: string;
   method?: string;
 }

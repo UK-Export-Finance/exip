@@ -20,7 +20,7 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [CREDIT_PERIOD_WITH_BUYER];
  * @param {Application} Application
  * @param {Express.Request.body} Form data
  * @param {Object} Field error list
- * @returns {Object} Saved data
+ * @returns {Promise<Object>} Saved data
  */
 const policy = async (application: Application, formBody: RequestBody, errorList?: object) => {
   // determines which fields to save

@@ -23,7 +23,7 @@ export const MAXIMUM = 1000;
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const creditPeriodWithBuyerRule = (formBody: RequestBody, errors: object) => {
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'true') {

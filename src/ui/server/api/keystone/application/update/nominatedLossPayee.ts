@@ -7,7 +7,7 @@ import { ApolloResponse } from '../../../../../types';
  * Update an application's "nominated loss payee"
  * @param {String} Nominated loss payee ID
  * @param {Object} Nominated loss payee update
- * @returns {Object} Updated nominated loss payee
+ * @returns {Promise<Object>} Updated nominated loss payee
  */
 const updateNominatedLossPayee = async (id: string, update: object) => {
   try {

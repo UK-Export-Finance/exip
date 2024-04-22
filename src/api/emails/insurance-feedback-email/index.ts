@@ -11,7 +11,7 @@ dotenv.config();
  * insuranceFeedbackEmail
  * sends email for insurance feedback
  * @param {InsuranceFeedbackVariables} variables
- * @returns {Object} callNotify response
+ * @returns {Promise<Object>} callNotify response
  */
 export const insuranceFeedbackEmail = async (variables: InsuranceFeedbackVariables): Promise<EmailResponse> => {
   try {

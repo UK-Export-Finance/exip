@@ -33,7 +33,7 @@ export const MAXIMUM = APPLICATION.POLICY.TOTAL_MONTHS_OF_COVER;
  * Returns the result of emptyFieldValidation
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const totalMonthsOfCoverRules = (formBody: RequestBody, errors: object) => {
   if (!objectHasProperty(formBody, FIELD_ID)) {

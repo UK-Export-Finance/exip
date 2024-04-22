@@ -7,7 +7,7 @@ import { ApolloResponse } from '../../../../../types';
  * Update an application's "buyerRelationship"
  * @param {String} buyerRelationship ID
  * @param {Object} buyerRelationship update
- * @returns {Object} Updated buyerRelationship
+ * @returns {Promise<Object>} Updated buyerRelationship
  */
 const updateBuyerRelationship = async (id: string, update: object) => {
   try {
