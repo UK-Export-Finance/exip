@@ -164,13 +164,6 @@ export const EXPORT_CONTRACT_FIELDS = {
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
       },
     },
-    [IS_CHARGING]: {
-      LABEL: 'Is the agent charging for their support in the export contract?',
-      SUMMARY: {
-        TITLE: 'Agent charging for support',
-        FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
-      },
-    },
     [CURRENCY_CODE]: {
       LEGEND: 'What currency is the agent charging you in?',
     },

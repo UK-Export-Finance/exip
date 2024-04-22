@@ -1,7 +1,7 @@
-import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import alternativeCurrencyValidation from '../../../../../../shared-validation/alternative-currency';
-import { RequestBody } from '../../../../../../../types';
+import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import alternativeCurrencyValidation from '../../../../../../../shared-validation/alternative-currency';
+import { RequestBody } from '../../../../../../../../types';
 
 const {
   CURRENCY: { ALTERNATIVE_CURRENCY_CODE: FIELD_ID },
@@ -9,7 +9,9 @@ const {
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
+    EXPORT_CONTRACT: {
+      AGENT_CHARGES_ALTERNATIVE_CURRENCY: { [FIELD_ID]: ERROR_MESSAGE },
+    },
   },
 } = ERROR_MESSAGES;
 
