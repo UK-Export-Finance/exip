@@ -47,6 +47,7 @@ const {
   AGENT_SERVICE_SAVE_AND_BACK,
   AGENT_CHARGES,
   AGENT_CHARGES_SAVE_AND_BACK,
+  AGENT_CHARGES_CHANGE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -60,8 +61,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(17);
-    expect(post).toHaveBeenCalledTimes(24);
+    expect(get).toHaveBeenCalledTimes(18);
+    expect(post).toHaveBeenCalledTimes(25);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -110,6 +111,8 @@ describe('routes/insurance/export-contract', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES}`, agentChargesGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES}`, agentChargesPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_SAVE_AND_BACK}`, agentChargesSaveAndBackPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

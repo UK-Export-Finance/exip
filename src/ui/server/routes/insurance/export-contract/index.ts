@@ -47,6 +47,7 @@ const {
   AGENT_SERVICE_SAVE_AND_BACK,
   AGENT_CHARGES,
   AGENT_CHARGES_SAVE_AND_BACK,
+  AGENT_CHARGES_CHANGE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -100,6 +101,8 @@ exportContractRoute.post(`/:referenceNumber${AGENT_SERVICE_SAVE_AND_BACK}`, agen
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES}`, agentChargesGet);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES}`, agentChargesPost);
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_SAVE_AND_BACK}`, agentChargesSaveAndBackPost);
+exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesPost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
