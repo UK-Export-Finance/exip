@@ -12,7 +12,7 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { SERVICE_DESCRIPTION, IS_CHARGING },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
@@ -172,7 +172,7 @@ const checkExportContractSummaryList = ({
       cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
     }
   },
-  [SERVICE_DESCRIPTION]: ({ shouldRender = false }) => {
+  [SERVICE_DESCRIPTION]: ({ shouldRender = false, newAnswer }) => {
     const fieldId = SERVICE_DESCRIPTION;
 
     if (shouldRender) {
@@ -186,6 +186,10 @@ const checkExportContractSummaryList = ({
       );
 
       row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+
+      if (newAnswer) {
+        row.value().contains(newAnswer);
+      }
 
       const expectedLineBreaks = 3;
 

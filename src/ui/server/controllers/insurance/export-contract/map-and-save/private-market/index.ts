@@ -6,7 +6,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 /**
  * mapAndSave
  * Map and save any valid private market fields
- * @param {Express.Request.body} Express request body
+ * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}

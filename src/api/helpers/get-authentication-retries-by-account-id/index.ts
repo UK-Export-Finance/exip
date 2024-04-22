@@ -5,7 +5,7 @@ import { Context } from '../../types';
  * Get Authentication retry table entries by account ID
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
- * @returns {Boolean}
+ * @returns {Promise<Boolean>}
  */
 const getAuthenticationRetriesByAccountId = async (context: Context, accountId: string) => {
   console.info('Getting authentication retries by account ID');

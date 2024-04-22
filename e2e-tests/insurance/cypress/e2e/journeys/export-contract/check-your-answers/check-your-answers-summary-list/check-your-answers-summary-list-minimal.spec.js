@@ -13,7 +13,7 @@ const {
   PRIVATE_MARKET: { ATTEMPTED, DECLINED_DESCRIPTION },
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { SERVICE_DESCRIPTION, IS_CHARGING },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
   AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
@@ -77,6 +77,10 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
 
   it(`should NOT render a ${COUNTRY_CODE} summary list row`, () => {
     checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
+  });
+
+  it(`should render an ${IS_CHARGING} summary list row`, () => {
+    checkSummaryList[IS_CHARGING]({ isYes: false });
   });
 
   it(`should NOT render a ${SERVICE_DESCRIPTION} summary list row`, () => {

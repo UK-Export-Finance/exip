@@ -7,7 +7,7 @@ import { ApolloResponse } from '../../../../../types';
  * Update an application's "exportContractAgentServiceCharge"
  * @param {String} ExportContractAgentServiceCharge ID
  * @param {Object} ExportContractAgentServiceCharge update
- * @returns {Object} Updated export contract agent service charge
+ * @returns {Promise<Object>} Updated export contract agent service charge
  */
 const updateExportContractAgentServiceCharge = async (id: string, update: object) => {
   try {

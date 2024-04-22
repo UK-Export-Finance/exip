@@ -5,7 +5,7 @@ import { Context, ApplicationPrivateMarket } from '../../types';
  * Create a private market with an export contract relationship.
  * @param {Object} context: KeystoneJS context API
  * @param {String} exportContractId: Export contract ID
- * @returns {Object} Created private market
+ * @returns {Promise<Object>} Created private market
  */
 const createAPrivateMarket = async (context: Context, exportContractId: string): Promise<ApplicationPrivateMarket> => {
   console.info('Creating a private market for ', exportContractId);

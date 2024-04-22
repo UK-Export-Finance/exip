@@ -15,7 +15,7 @@ import { ValidationErrors, ValidationMinAndMaxLengthParams } from '../../../type
  * @param {Object} errors: Object from previous validation errors
  * @param {Integer} minimum: Minimum length of characters
  * @param {Integer} maximum: Maximum length of characters
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const alphaCharactersAndMinMaxLength = ({ fieldId, value, errorMessages, errors, minimum, maximum }: ValidationMinAndMaxLengthParams): ValidationErrors => {
   const alphaCharactersOnlyError = alphaCharactersOnlyValidation(value, fieldId, errorMessages.INCORRECT_FORMAT, errors);

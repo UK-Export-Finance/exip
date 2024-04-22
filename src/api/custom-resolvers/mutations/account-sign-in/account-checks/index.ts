@@ -28,7 +28,7 @@ const { EMAIL } = ACCOUNT;
  * @param {Object} KeystoneJS context API
  * @param {Object} Account
  * @param {String} URL origin
- * @returns {Object} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const accountChecks = async (context: Context, account: Account, urlOrigin: string) => {
   try {

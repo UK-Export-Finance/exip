@@ -12,7 +12,7 @@ const ERROR_MESSAGE = ERROR_MESSAGES.ELIGIBILITY[FIELD_ID];
  * Check if the policy type is a valid type and not empty
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const policyTypeRules = (formBody: RequestBody, errors: object) => {
   const value = formBody[FIELD_ID];

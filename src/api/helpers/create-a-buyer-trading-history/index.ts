@@ -7,7 +7,7 @@ import { APPLICATION } from '../../constants';
  * @param {Object} KeystoneJS context API
  * @param {String} buyerId: Buyer ID
  * @param {String} applicationId: Application ID
- * @returns {Object} Created buyer trading history
+ * @returns {Promise<Object>} Created buyer trading history
  */
 const createABuyerTradingHistory = async (context: Context, buyerId: string, applicationId: string) => {
   console.info('Creating a buyer trading history for ', buyerId);

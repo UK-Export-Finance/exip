@@ -12,7 +12,7 @@ import createABuyerRelationship from '../create-a-buyer-relationship';
  * @param {Object} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
- * @returns {Object} Created buyer
+ * @returns {Promise<Object>} Created buyer
  */
 const createABuyer = async (context: Context, countryId: string, applicationId: string) => {
   console.info('Creating a buyer for ', applicationId);

@@ -10,12 +10,13 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -126,6 +127,25 @@ export const post = async (req: Request, res: Response) => {
 
     const agentIsCharging = payload[IS_CHARGING] === 'true';
 
+    /**
+     * If the route is a "change" route,
+     * the agent is IS_CHARGING,
+     * redirect to AGENT_CHARGES_CHANGE form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      if (agentIsCharging) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the agent is IS_CHARGING,
+     * redirect to AGENT_CHARGES form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (agentIsCharging) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
     }
