@@ -15,6 +15,7 @@ import prefixAssertions from './prefix';
  * @param {Function} hint: Hint selector
  * @param {Object} errors: Other validation errors for the same form
  * @param {String} fieldId: Field ID of input for prefix assertion
+ * @param {Boolean} gbpCurrencyCheckedByDefault: GBP currency should be checked by default
  * @returns {Object} Rendering and form submission assertion functions
  */
 export const assertCurrencyFormFields = ({
