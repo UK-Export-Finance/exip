@@ -47,7 +47,7 @@ const getDateInputValues = (formBody: RequestBody) => ({
  * Returns generateValidationErrors if there are any errors.
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const contractCompletionDateRules = (formBody: RequestBody, errors: object) => {
   const genericDataErrors = dateRules({

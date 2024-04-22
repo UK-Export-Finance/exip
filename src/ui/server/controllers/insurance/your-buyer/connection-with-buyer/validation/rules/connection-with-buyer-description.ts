@@ -26,7 +26,7 @@ const MAXIMUM = 1000;
  * Returns inputValidation if field is not empty
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const connectionWithBuyerDescriptionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[CONNECTION_WITH_BUYER] === 'true') {

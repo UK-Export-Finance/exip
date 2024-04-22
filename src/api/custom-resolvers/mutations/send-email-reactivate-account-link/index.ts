@@ -22,7 +22,7 @@ const {
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendReactivateAccountEmail mutation
  * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailReactivateAccountLink = async (
   root: any,

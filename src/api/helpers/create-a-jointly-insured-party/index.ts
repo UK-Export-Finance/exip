@@ -5,7 +5,7 @@ import { Context, ApplicationJointlyInsuredParty } from '../../types';
  * Create a jointly insured party with a policy relationship.
  * @param {Object} KeystoneJS context API
  * @param {String} Policy ID
- * @returns {Object} Created policy
+ * @returns {Promise<Object>} Created policy
  */
 const createAJointlyInsuredParty = async (context: Context, policyId: string): Promise<ApplicationJointlyInsuredParty> => {
   console.info('Creating a jointly insured party for ', policyId);

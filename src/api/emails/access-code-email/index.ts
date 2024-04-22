@@ -8,7 +8,7 @@ import { EmailResponse } from '../../types';
  * @param {String} Email address
  * @param {String} Name
  * @param {String} Security code
- * @returns {Object} callNotify response
+ * @returns {Promise<Object>} callNotify response
  */
 export const accessCodeEmail = async (emailAddress: string, name: string, securityCode: string): Promise<EmailResponse> => {
   try {

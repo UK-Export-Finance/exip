@@ -1,16 +1,22 @@
 /**
  * renderingAssertions
  * Rendering assertions for currency form fields.
+ * @param {Function} legend: Assert currency radio legend
  * @param {Function} radios: Assert currency radios
  * @param {Function} hint: Assert currency hint
+ * @param {Boolean} gbpCurrencyCheckedByDefault: Flag for if we should assert that the GBP currency is checked by default.
+ * @param {Function} assertGbpCurrencyCheckedByDefault: Assert the GBP currency is checked by default.
  * @param {Function} alternativeCurrencyInput: Assert the alternative currency input
  * @param {Function} doesNotRenderSupportedCurrencies: Assert that the alternative currency input does NOT render supported currencies.
+ * @param {Function} rendersAlternativeCurrencies: Assert that the alternative currency input renders valid alternate currencies
  * @returns {Function} Mocha describe block with assertions.
  */
 const renderingAssertions = ({
-  radios,
   legend,
+  radios,
   hint,
+  gbpCurrencyCheckedByDefault,
+  assertGbpCurrencyCheckedByDefault,
   alternativeCurrencyInput,
   doesNotRenderSupportedCurrencies,
   rendersAlternativeCurrencies,
@@ -31,6 +37,12 @@ const renderingAssertions = ({
     it('renders currency radios', () => {
       radios();
     });
+
+    if (gbpCurrencyCheckedByDefault) {
+      it('renders a checked default GBP currency', () => {
+        assertGbpCurrencyCheckedByDefault();
+      });
+    }
 
     it('renders alternative currency input', () => {
       alternativeCurrencyInput();

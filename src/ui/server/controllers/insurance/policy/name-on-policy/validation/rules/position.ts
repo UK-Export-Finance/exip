@@ -28,7 +28,7 @@ const MAXIMUM = Number(NAME_ON_POLICY[FIELD_ID].MAXIMUM);
  * else returns provided errors object
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const positionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[NAME] === SAME_NAME) {

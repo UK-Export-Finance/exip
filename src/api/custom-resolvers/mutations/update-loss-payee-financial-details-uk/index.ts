@@ -9,7 +9,7 @@ import { ApplicationLossPayeeFinancialUk, SuccessResponse } from '../../../types
  * @param {Object} GraphQL root variables
  * @param {ApplicationLossPayeeFinancialUk} GraphQL variables for the ApplicationLossPayeeFinancialUk mutation
  * @param {Object} KeystoneJS context API
- * @returns {Object} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const updateLossPayeeFinancialDetailsUk = async (root: any, variables: ApplicationLossPayeeFinancialUk, context: Context): Promise<SuccessResponse> => {
   try {

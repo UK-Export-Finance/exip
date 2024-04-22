@@ -1,5 +1,4 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import partials from '../../../../../../partials';
 import { BUTTONS, ERROR_MESSAGES, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
@@ -32,7 +31,7 @@ context('Insurance - Your business - Turnover - Alternative currency page - As a
       cy.completeAndSubmitCompanyDetails({});
       cy.completeAndSubmitNatureOfYourBusiness();
 
-      partials.provideAlternativeCurrencyLink().click();
+      cy.clickProvideAlternativeCurrencyLink();
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY}`;
 

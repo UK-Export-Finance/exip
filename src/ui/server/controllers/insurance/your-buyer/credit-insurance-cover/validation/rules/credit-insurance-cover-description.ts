@@ -22,7 +22,7 @@ const MAXIMUM = 1000;
  * Returns inputValidation if field is not empty
  * @param {RequestBody} formBody: Form body
  * @param {Object} Errors object from previous validation errors
- * @returns {Object} Validation errors
+ * @returns {ValidationErrors}
  */
 const creditInsuranceCoverDescriptionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] === 'true') {

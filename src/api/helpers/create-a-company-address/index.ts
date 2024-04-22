@@ -6,7 +6,7 @@ import { Context, ApplicationCompanyAddressCore } from '../../types';
  * @param {Object} KeystoneJS context API
  * @param {Object} Company address data
  * @param {String} Company ID
- * @returns {Object} Created company address
+ * @returns {Promise<Object>} Created company address
  */
 const createACompanyAddress = async (context: Context, addressData: ApplicationCompanyAddressCore, companyId: string) => {
   console.info('Creating a company address for ', companyId);

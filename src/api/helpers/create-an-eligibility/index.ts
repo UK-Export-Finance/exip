@@ -12,7 +12,7 @@ import { Context } from '../../types';
  * @param {String} Cover period value ID
  * @param {String} Total contract value ID
  * @param {Object} Optional eligibility data
- * @returns {Object} Created eligibility
+ * @returns {Promise<Object>} Created eligibility
  */
 const createAnEligibility = async (
   context: Context,

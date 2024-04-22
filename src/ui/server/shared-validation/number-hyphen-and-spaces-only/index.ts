@@ -16,7 +16,7 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * @param {Object} errors object from previous validation errors
  * @param {Number} minimum minimum length to check against
  * @param {Number} maximum maximum length to check against
- * @returns {Object} Validation errors or null
+ * @returns {ValidationErrors} or null
  */
 const numberHyphenSpacesOnlyValidation = (
   formBody: RequestBody,

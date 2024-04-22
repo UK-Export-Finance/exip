@@ -5,7 +5,7 @@ import { Context } from '../../types';
  * Create a new entry in the AuthenticationRetry table
  * @param {Object} KeystoneJS context API
  * @param {String} Account ID
- * @returns {Object} Object with success flag
+ * @returns {Promise<Object>} Object with success flag
  */
 const createAuthenticationRetryEntry = async (context: Context, accountId: string) => {
   try {

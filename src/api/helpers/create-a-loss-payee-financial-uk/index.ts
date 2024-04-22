@@ -5,7 +5,7 @@ import { ApplicationLossPayeeFinancialUk, Context } from '../../types';
  * Create a "loss payee financial UK" with a loss payee relationship
  * @param {Object} KeystoneJS context API
  * @param {String} Loss payee ID
- * @returns {Object} Created loss payee financial UK
+ * @returns {Promise<Object>} Created loss payee financial UK
  */
 const createALossPayeeFinancialUk = async (context: Context, lossPayeeId: string): Promise<ApplicationLossPayeeFinancialUk> => {
   console.info('Creating a loss payee financial (UK) for ', lossPayeeId);
