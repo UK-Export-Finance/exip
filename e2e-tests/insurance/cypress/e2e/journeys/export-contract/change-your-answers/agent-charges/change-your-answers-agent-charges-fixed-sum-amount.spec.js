@@ -1,7 +1,7 @@
-import { autoCompleteField, summaryList } from '../../../../../../../pages/shared';
+import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { XAD } from '../../../../../../../fixtures/countries';
+import application from '../../../../../../../fixtures/application';
 
 const {
   ROOT,
@@ -12,12 +12,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT },
 } = FIELD_IDS;
 
-const NEW_COUNTRY_INPUT = XAD.NAME;
-
-const fieldId = PAYABLE_COUNTRY_CODE;
+const fieldId = FIXED_SUM_AMOUNT;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -60,14 +58,14 @@ context('Insurance - Export contract - Change your answers - Agent charges - As 
   });
 
   describe('form submission with a new answer', () => {
+    const newValueInput = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT] + 1;
+
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.keyboardInput(autoCompleteField(fieldId).input(), NEW_COUNTRY_INPUT);
-
-      cy.clickSubmitButton();
+      cy.changeAnswerField({ newValueInput }, field(fieldId).input());
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -75,7 +73,7 @@ context('Insurance - Export contract - Change your answers - Agent charges - As 
     });
 
     it('should render the new answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, NEW_COUNTRY_INPUT);
+      cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
     });
   });
 });
