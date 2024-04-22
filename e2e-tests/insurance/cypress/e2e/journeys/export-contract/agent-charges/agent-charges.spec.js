@@ -12,7 +12,9 @@ const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_SERVICE, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES, AGENT_SERVICE, AGENT_CHARGES_ALTERNATIVE_CURRENCY, CHECK_YOUR_ANSWERS,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -26,6 +28,7 @@ const baseUrl = Cypress.config('baseUrl');
 context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agen's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
   let referenceNumber;
   let url;
+  let agentChargesAlternativeCurrencyUrl;
   let checkYourAnswersUrl;
 
   before(() => {
@@ -41,6 +44,7 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
       cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES}`;
+      agentChargesAlternativeCurrencyUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
     });
   });
@@ -112,9 +116,17 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
 
         cy.checkLink(
           partials.provideAlternativeCurrencyLink(),
-          '#',
+          `${ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
           CONTENT_STRINGS.PROVIDE_ALTERNATIVE_CURRENCY,
         );
+      });
+
+      it(`should redirect to ${AGENT_CHARGES_ALTERNATIVE_CURRENCY} when clicking the 'provide alternative currency' link`, () => {
+        agentChargesPage[METHOD][FIXED_SUM].label().click();
+
+        cy.clickProvideAlternativeCurrencyLink();
+
+        cy.assertUrl(agentChargesAlternativeCurrencyUrl);
       });
 
       it(`should display conditional "${CHARGE_PERCENTAGE}" field when selecting the ${PERCENTAGE} radio`, () => {

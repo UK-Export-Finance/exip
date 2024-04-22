@@ -315,6 +315,7 @@ var EXPORT_CONTRACT = {
     PAYABLE_COUNTRY_CODE: "payableCountryCode",
     FIXED_SUM: "fixedSum",
     FIXED_SUM_AMOUNT: "fixedSumAmount",
+    FIXED_SUM_CURRENCY_CODE: "fixedSumCurrencyCode",
     PERCENTAGE: "percentage",
     CHARGE_PERCENTAGE: "chargePercentage"
   }

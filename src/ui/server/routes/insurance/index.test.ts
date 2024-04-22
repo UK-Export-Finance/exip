@@ -21,7 +21,7 @@ describe('routes/insurance', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(183);
+    expect(get).toHaveBeenCalledTimes(184);
     expect(post).toHaveBeenCalledTimes(188);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.START, startGet);
