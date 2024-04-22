@@ -14,14 +14,14 @@ const {
 } = FIELD_VALUES;
 
 const {
-  AGENT_CHARGES: { METHOD, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { METHOD, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 const {
   AGENT_CHARGES: {
     [METHOD]: METHOD_ERROR_MESSAGES,
     [FIXED_SUM_AMOUNT]: FIXED_SUM_AMOUNT_ERROR_MESSAGES,
-    [CHARGE_PERCENTAGE]: CHARGE_PERCENTAGE_ERROR_MESSAGES,
+    [PERCENTAGE_CHARGE]: PERCENTAGE_CHARGE_ERROR_MESSAGES,
   },
 } = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT;
 
@@ -48,7 +48,7 @@ describe('controllers/insurance/export-contract/agent-charges/validation/rules/m
 
       const result = methodRule(mockBody, mockErrors);
 
-      const expected = percentageNumberValidation(mockBody, CHARGE_PERCENTAGE, mockErrors, CHARGE_PERCENTAGE_ERROR_MESSAGES);
+      const expected = percentageNumberValidation(mockBody, PERCENTAGE_CHARGE, mockErrors, PERCENTAGE_CHARGE_ERROR_MESSAGES);
 
       expect(result).toEqual(expected);
     });

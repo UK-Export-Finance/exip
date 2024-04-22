@@ -7,7 +7,7 @@ import { mockApplication } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent-service-charge', () => {
@@ -15,7 +15,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
 
   let mockFormBody = {
     _csrf: '1234',
-    [CHARGE_PERCENTAGE]: mockApplication.exportContract.agent.service.charge[CHARGE_PERCENTAGE],
+    [PERCENTAGE_CHARGE]: mockApplication.exportContract.agent.service.charge[PERCENTAGE_CHARGE],
   };
 
   const mockSave = jest.fn(() => Promise.resolve({}));

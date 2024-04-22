@@ -31,7 +31,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -68,7 +68,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('FIELD_IDS', () => {
     it('should have the correct FIELD_IDS', () => {
-      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE];
+      const expected = [METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE];
 
       expect(FIELD_IDS).toEqual(expected);
     });
@@ -114,9 +114,9 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
             ID: PERCENTAGE,
             ...FIELDS.AGENT_CHARGES[PERCENTAGE],
           },
-          CHARGE_PERCENTAGE: {
-            ID: CHARGE_PERCENTAGE,
-            ...FIELDS.AGENT_CHARGES[CHARGE_PERCENTAGE],
+          PERCENTAGE_CHARGE: {
+            ID: PERCENTAGE_CHARGE,
+            ...FIELDS.AGENT_CHARGES[PERCENTAGE_CHARGE],
           },
         },
         CURRENCY_PREFIX_SYMBOL: currency.symbol,

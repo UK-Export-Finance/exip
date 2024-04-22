@@ -89,7 +89,7 @@ context(`Insurance - Export contract - Agent charges - Save and go back - empty 
         fixedSumMethod: false,
         percentageMethod: false,
         fixedSumAmount: '',
-        chargePercentage: '',
+        percentageCharge: '',
       });
 
       cy.clickSaveAndBackButton();

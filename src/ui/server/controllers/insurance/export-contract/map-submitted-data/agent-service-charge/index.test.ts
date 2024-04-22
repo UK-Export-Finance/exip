@@ -14,7 +14,7 @@ const {
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
   },
 } = FIELD_IDS;
 
@@ -33,7 +33,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       const expected = {
         ...mockFormBody,
         [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
-        [CHARGE_PERCENTAGE]: null,
+        [PERCENTAGE_CHARGE]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
@@ -45,7 +45,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
     it('should return the form body with mapped data', () => {
       const mockFormBody = {
         [METHOD]: PERCENTAGE,
-        [CHARGE_PERCENTAGE]: '1',
+        [PERCENTAGE_CHARGE]: '1',
         [CURRENCY_CODE]: EUR.isoCode,
         [ALTERNATIVE_CURRENCY_CODE]: EUR.isoCode,
       };
@@ -54,7 +54,7 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
 
       const expected = {
         ...mockFormBody,
-        [CHARGE_PERCENTAGE]: Number(mockFormBody[CHARGE_PERCENTAGE]),
+        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
         [FIXED_SUM_AMOUNT]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };

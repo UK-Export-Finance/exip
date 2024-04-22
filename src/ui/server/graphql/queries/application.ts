@@ -99,7 +99,7 @@ const applicationQuery = gql`
               agentIsCharging
               charge {
                 id
-                chargePercentage
+                percentageCharge
                 fixedSumAmount
                 fixedSumCurrencyCode
                 method

@@ -15,7 +15,7 @@ const {
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   EXPORT_CONTRACT: {
-    AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
+    AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, METHOD },
   },
 } = FIELD_IDS;
 
@@ -32,11 +32,11 @@ const mapSubmittedData = (formBody: RequestBody): object => {
 
   if (formBody[METHOD] === FIXED_SUM) {
     populatedData[FIXED_SUM_AMOUNT] = Number(populatedData[FIXED_SUM_AMOUNT]);
-    populatedData[CHARGE_PERCENTAGE] = null;
+    populatedData[PERCENTAGE_CHARGE] = null;
   }
 
   if (formBody[METHOD] === PERCENTAGE) {
-    populatedData[CHARGE_PERCENTAGE] = Number(populatedData[CHARGE_PERCENTAGE]);
+    populatedData[PERCENTAGE_CHARGE] = Number(populatedData[PERCENTAGE_CHARGE]);
     populatedData[FIXED_SUM_AMOUNT] = null;
     populatedData[FIXED_SUM_CURRENCY_CODE] = null;
   }

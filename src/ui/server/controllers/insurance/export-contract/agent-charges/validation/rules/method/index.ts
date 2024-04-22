@@ -13,21 +13,21 @@ const {
 } = FIELD_VALUES;
 
 const {
-  AGENT_CHARGES: { METHOD, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { METHOD, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 const {
   AGENT_CHARGES: {
     [METHOD]: METHOD_ERROR_MESSAGES,
     [FIXED_SUM_AMOUNT]: FIXED_SUM_AMOUNT_ERROR_MESSAGES,
-    [CHARGE_PERCENTAGE]: CHARGE_PERCENTAGE_ERROR_MESSAGES,
+    [PERCENTAGE_CHARGE]: PERCENTAGE_CHARGE_ERROR_MESSAGES,
   },
 } = ERROR_MESSAGES.INSURANCE.EXPORT_CONTRACT;
 
 /**
  * validate the METHOD field
  * - If METHOD is FIXED_SUM, validate FIXED_SUM_AMOUNT via wholeNumberAboveMinimumValidation.
- * - If METHOD is PERCENTAGE, validate CHARGE_PERCENTAGE via percentageNumberValidation.
+ * - If METHOD is PERCENTAGE, validate PERCENTAGE_CHARGE via percentageNumberValidation.
  * - Otherwise, assert empty field validation.
  * @param {RequestBody} formBody: Form body
  * @param {Object} errors: Other validation errors for the same form
@@ -39,7 +39,7 @@ const method = (formBody: RequestBody, errors: object) => {
   }
 
   if (formBody[METHOD] === PERCENTAGE) {
-    return percentageNumberValidation(formBody, CHARGE_PERCENTAGE, errors, CHARGE_PERCENTAGE_ERROR_MESSAGES, MINIMUM_CHARACTERS.ONE);
+    return percentageNumberValidation(formBody, PERCENTAGE_CHARGE, errors, PERCENTAGE_CHARGE_ERROR_MESSAGES, MINIMUM_CHARACTERS.ONE);
   }
 
   return emptyFieldValidation(formBody, METHOD, METHOD_ERROR_MESSAGES.IS_EMPTY, errors);
