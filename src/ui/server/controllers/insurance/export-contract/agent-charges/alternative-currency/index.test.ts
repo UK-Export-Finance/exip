@@ -10,6 +10,7 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
 import { Request, Response } from '../../../../../../types';
 import {
   mockReq,
@@ -48,7 +49,10 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
   let req: Request;
   let res: Response;
 
+  jest.mock('../../map-and-save/export-contract-agent-service-charge');
+
   let getCurrenciesSpy = jest.fn(() => Promise.resolve(mockCurrenciesResponse));
+  mapAndSave.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve(true));
 
   beforeEach(() => {
     req = mockReq();
@@ -237,6 +241,18 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         expect(getCurrenciesSpy).toHaveBeenCalledTimes(0);
       });
 
+      it('should call mapAndSave.exportContractAgentServiceCharge with data from constructPayload function and application', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, FIELD_IDS);
+
+        expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.exportContractAgentServiceCharge).toHaveBeenCalledWith(payload, res.locals.application);
+      });
+
       it(`should redirect to ${AGENT_CHARGES}`, async () => {
         await post(req, res);
 
@@ -249,6 +265,36 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
     describe('when there is no application', () => {
       beforeEach(() => {
         delete res.locals.application;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentServiceCharge does not return a true boolean', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
+
+        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
+      });
+
+      it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+        await post(req, res);
+
+        expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('when mapAndSave.exportContractAgentServiceCharge returns an error', () => {
+      beforeEach(() => {
+        req.body = validBody;
+        const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
+
+        mapAndSave.exportContractAgentServiceCharge = mapAndSaveSpy;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

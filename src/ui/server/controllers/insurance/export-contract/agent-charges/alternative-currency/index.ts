@@ -10,6 +10,7 @@ import getUserNameFromSession from '../../../../../helpers/get-user-name-from-se
 import mapRadioAndSelectOptions from '../../../../../helpers/mappings/map-currencies/radio-and-select-options';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapAndSave from '../../map-and-save/export-contract-agent-service-charge';
 import { Request, Response } from '../../../../../../types';
 
 const {
@@ -131,5 +132,16 @@ export const post = async (req: Request, res: Response) => {
     }
   }
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
+  try {
+    const saveResponse = await mapAndSave.exportContractAgentServiceCharge(payload, application);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`);
+  } catch (err) {
+    console.error('Error updating application - export contract - agent charges - alternative currency %O', err);
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };
