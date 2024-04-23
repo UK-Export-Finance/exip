@@ -44,6 +44,10 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.submitCheckYourAnswersForm();
+      cy.submitCheckYourAnswersForm();
+
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;
       checkAndChangeTotalContractValueUrl = `${baseUrl}${ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE}`;
 

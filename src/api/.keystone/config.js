@@ -351,9 +351,10 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY: "policy",
   EXPORTER_BUSINESS: "business",
-  BUYER: "buyer"
+  BUYER: "buyer",
+  POLICY: "policy",
+  EXPORT_CONTRACT: "exportContract"
 };
 var check_your_answers_default = CHECK_YOUR_ANSWERS;
 

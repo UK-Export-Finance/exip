@@ -36,6 +36,10 @@ context('Insurance - Check your answers - Policy - Single contract policy - Same
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.submitCheckYourAnswersForm();
+      cy.submitCheckYourAnswersForm();
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);

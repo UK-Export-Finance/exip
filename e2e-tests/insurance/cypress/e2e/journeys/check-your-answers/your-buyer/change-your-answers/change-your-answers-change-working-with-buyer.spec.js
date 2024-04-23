@@ -50,9 +50,6 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
 
       task.link().click();
 
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Your business" check your answers page
       cy.submitCheckYourAnswersForm();
 

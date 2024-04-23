@@ -57,6 +57,10 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.submitCheckYourAnswersForm();
+      cy.submitCheckYourAnswersForm();
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);

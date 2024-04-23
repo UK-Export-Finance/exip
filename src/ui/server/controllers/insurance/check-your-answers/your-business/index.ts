@@ -39,10 +39,10 @@ export const pageVariables = (referenceNumber: number) => ({
 
 /**
  * get
- * Render the check your answers your buyer page
+ * Render the Check your answers - Your buyer page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} check your answers your buyer
+ * @returns {Express.Response.render} Check your answers - Your buyer page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -73,7 +73,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting check your answers - policy %O', err);
+    console.error('Error getting Check your answers - Your business %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -106,7 +106,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`);
   } catch (err) {
-    console.error('Error updating check your answers - your business %O', err);
+    console.error('Error updating Check your answers - Your business %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

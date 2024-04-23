@@ -31,9 +31,6 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
 
       task.link().click();
 
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Your business" check your answers page
       cy.submitCheckYourAnswersForm();
 
