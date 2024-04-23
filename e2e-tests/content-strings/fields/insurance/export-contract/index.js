@@ -143,7 +143,7 @@ export const EXPORT_CONTRACT_FIELDS = {
       },
     },
     [FIXED_SUM_AMOUNT]: {
-      LABEL: 'How much are they charging in TODO?',
+      LABEL: 'How much are they charging in',
       SUMMARY: {
         TITLE: 'How much they are charging',
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.AGENT,
