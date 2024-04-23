@@ -31,8 +31,6 @@ const {
 
 export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE;
 
-const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
-
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -55,7 +53,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
         ...FIELDS.EXPORT_VALUE.MULTIPLE[MAXIMUM_BUYER_WILL_OWE],
       },
     },
-    DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}`,
+    DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE_SAVE_AND_BACK}`,
   };

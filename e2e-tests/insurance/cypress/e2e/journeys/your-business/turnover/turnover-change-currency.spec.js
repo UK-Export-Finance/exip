@@ -45,7 +45,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to ch
     cy.deleteApplication(referenceNumber);
   });
 
-  describe('prefixes should be displayed based on currency chosen', () => {
+  describe('prefixes should be displayed based on the chosen currency', () => {
     const { prefixAssertions } = assertCurrencyFormFields({ fieldId: ESTIMATED_ANNUAL_TURNOVER });
 
     prefixAssertions();

@@ -7,6 +7,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-stri
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
+import { GBP } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
@@ -25,7 +26,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agen's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
+context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agent's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
   let referenceNumber;
   let url;
   let agentChargesAlternativeCurrencyUrl;
@@ -111,7 +112,11 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         const field = fieldSelector(fieldId);
 
         field.input().should('be.visible');
-        cy.checkText(field.label(), FIELDS.AGENT_CHARGES[fieldId].LABEL);
+
+        const expectedLabel = `${FIELDS.AGENT_CHARGES[fieldId].LABEL} ${GBP.name}?`;
+
+        cy.checkText(field.label(), expectedLabel);
+
         cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         cy.checkLink(

@@ -35,8 +35,6 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
-const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
-
 const {
   policy: { policyCurrencyCode },
   referenceNumber,
@@ -81,7 +79,7 @@ describe('controllers/insurance/policy/single-contract-policy/total-contract-val
           ID: FIELD_ID,
           ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
         },
-        DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}?`,
+        DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
         CURRENCY_PREFIX_SYMBOL: currency.symbol,
         SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
       };
