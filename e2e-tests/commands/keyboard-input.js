@@ -14,9 +14,9 @@ const keyboardInput = (selector, text, viaValue = false) => {
    * More information here: https://github.com/cypress-io/cypress/issues/1327
    */
   if (viaValue) {
-    selector.clear().invoke('val', text); 
+    selector.clear().invoke('val', text);
   } else {
-    selector.clear().type(text, { delay: 0 }); 
+    selector.clear().type(text, { delay: 0 });
   }
 };
 
