@@ -11,7 +11,7 @@ import { ApplicationExportContractAgentService, Country } from '../../../../../.
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
@@ -51,16 +51,16 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
       );
     }
 
-    if (answers.charge[CHARGE_PERCENTAGE]) {
+    if (answers.charge[PERCENTAGE_CHARGE]) {
       fields.push(
         fieldGroupItem(
           {
-            field: getFieldById(FIELDS.AGENT_CHARGES, CHARGE_PERCENTAGE),
+            field: getFieldById(FIELDS.AGENT_CHARGES, PERCENTAGE_CHARGE),
             data: answers.charge,
-            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${CHARGE_PERCENTAGE}-label`, referenceNumber, checkAndChange),
+            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${PERCENTAGE_CHARGE}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          mapPercentage(answers.charge[CHARGE_PERCENTAGE]),
+          mapPercentage(answers.charge[PERCENTAGE_CHARGE]),
         ),
       );
     }

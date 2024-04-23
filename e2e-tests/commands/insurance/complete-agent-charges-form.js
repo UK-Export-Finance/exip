@@ -5,7 +5,7 @@ import application from '../../fixtures/application';
 
 const {
   AGENT_CHARGES: {
-    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -15,14 +15,14 @@ const {
  * @param {Boolean} fixedSumMethod: Method as "Fixed sum"
  * @param {Boolean} percentageMethod: Method as "Percentage"
  * @param {String} fixedSumAmount: Fixed sum amount
- * @param {String} chargePercentage: Charge percentage
+ * @param {String} percentageCharge: Percentage charge
  * @param {String} payableCountry: Payable country
  */
 const completeAgentChargesForm = ({
   fixedSumMethod = false,
   percentageMethod = false,
   fixedSumAmount = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT],
-  chargePercentage = application.EXPORT_CONTRACT.AGENT_CHARGES[CHARGE_PERCENTAGE],
+  percentageCharge = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE],
   payableCountry = application.EXPORT_CONTRACT.AGENT_CHARGES[PAYABLE_COUNTRY_CODE],
 }) => {
   if (fixedSumMethod) {
@@ -36,8 +36,8 @@ const completeAgentChargesForm = ({
   if (percentageMethod) {
     agentChargesPage[METHOD][PERCENTAGE].input().click();
 
-    if (chargePercentage) {
-      cy.keyboardInput(field(CHARGE_PERCENTAGE).input(), chargePercentage);
+    if (percentageCharge) {
+      cy.keyboardInput(field(PERCENTAGE_CHARGE).input(), percentageCharge);
     }
   }
 

@@ -5,7 +5,7 @@ import application from '../../../fixtures/application';
 
 const {
   AGENT_CHARGES: {
-    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    METHOD, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -22,7 +22,7 @@ const assertAgentChargesFieldValues = ({
   fixedSumMethod = false,
   percentageMethod = false,
   expectedFixedSumAmount = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_AMOUNT],
-  expectedChargePercentage = application.EXPORT_CONTRACT.AGENT_CHARGES[CHARGE_PERCENTAGE],
+  expectedChargePercentage = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE],
   expectedPayableCountry = application.EXPORT_CONTRACT.AGENT_CHARGES[PAYABLE_COUNTRY_CODE],
 }) => {
   if (fixedSumMethod) {
@@ -45,7 +45,7 @@ const assertAgentChargesFieldValues = ({
 
     if (expectedChargePercentage) {
       cy.checkValue(
-        field(CHARGE_PERCENTAGE),
+        field(PERCENTAGE_CHARGE),
         expectedChargePercentage,
       );
     }
