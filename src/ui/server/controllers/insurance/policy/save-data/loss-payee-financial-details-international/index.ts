@@ -28,7 +28,7 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [IBAN, BIC_SWIFT_CODE, FINANCIAL_ADDR
  */
 const lossPayeeFinancialDetailsInternational = async (application: Application, formBody: RequestBody, errorList?: object) => {
   const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
-  // sanitise the form data.
+
   const sanitisedData = sanitiseData(dataToSave);
 
   // send the form data to the API for database update.

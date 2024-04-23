@@ -7,7 +7,7 @@ describe('api/helpers/map-loss-payee-financial-details-international', () => {
   describe('when iban, bicSwiftCode and bankDetails are not defined', () => {
     const variables = {} as ApplicationLossPayeeFinancialInternational;
 
-    it('should return variables as an empty string or null', () => {
+    it('should return variables as an empty string or undefined', () => {
       const result = mapLossPayeeFinancialDetailsInternational(variables);
 
       const expected = {
