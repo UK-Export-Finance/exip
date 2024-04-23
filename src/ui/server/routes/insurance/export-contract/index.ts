@@ -20,7 +20,10 @@ import { get as agentServiceGet, post as agentServicePost } from '../../../contr
 import { post as agentServiceSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-service/save-and-back';
 import { get as agentChargesGet, post as agentChargesPost } from '../../../controllers/insurance/export-contract/agent-charges';
 import { post as agentChargesSaveAndBackPost } from '../../../controllers/insurance/export-contract/agent-charges/save-and-back';
-import { get as agentChargesAlternativeCurrencyGet } from '../../../controllers/insurance/export-contract/agent-charges/alternative-currency';
+import {
+  get as agentChargesAlternativeCurrencyGet,
+  post as agentChargesAlternativeCurrencyPost,
+} from '../../../controllers/insurance/export-contract/agent-charges/alternative-currency';
 import { get as checkYourAnswersGet, post as checkYourAnswersPost } from '../../../controllers/insurance/export-contract/check-your-answers';
 
 const {
@@ -110,6 +113,9 @@ exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentCharges
 exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesPost);
 
 exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
+
+exportContractRoute.get(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
+exportContractRoute.post(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyPost);
 
 exportContractRoute.get(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
 exportContractRoute.post(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);

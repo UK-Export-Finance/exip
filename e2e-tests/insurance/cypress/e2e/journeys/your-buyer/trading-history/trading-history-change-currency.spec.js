@@ -43,13 +43,13 @@ context('Insurance - Your Buyer - Trading history page - Currency symbol when ch
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(`prefixes should be displayed based on currency chosen for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+  describe(`prefixes should be displayed based on the chosen currency for ${TOTAL_AMOUNT_OVERDUE}`, () => {
     const { prefixAssertions } = assertCurrencyFormFields({ fieldId: TOTAL_AMOUNT_OVERDUE });
 
     prefixAssertions();
   });
 
-  describe(`prefixes should be displayed based on currency chosen for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`prefixes should be displayed based on the chosen currency for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     before(() => {
       cy.saveSession();
       cy.navigateToUrl(url);

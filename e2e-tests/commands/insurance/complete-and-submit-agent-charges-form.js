@@ -4,21 +4,21 @@
  * @param {Boolean} fixedSumMethod: Method as "Fixed sum"
  * @param {Boolean} percentageMethod: Method as "Percentage"
  * @param {String} fixedSumAmount: Fixed sum amount
- * @param {String} chargePercentage: Charge percentage
+ * @param {String} percentageCharge: Percentage charge
  * @param {String} payableCountry: Payable country
  */
 const completeAndSubmitAgentChargesForm = ({
   fixedSumMethod,
   percentageMethod,
   fixedSumAmount,
-  chargePercentage,
+  percentageCharge,
   payableCountry,
 }) => {
   cy.completeAgentChargesForm({
     fixedSumMethod,
     percentageMethod,
     fixedSumAmount,
-    chargePercentage,
+    percentageCharge,
     payableCountry,
   });
 

@@ -15,7 +15,7 @@ const {
 const {
   AGENT_SERVICE: { IS_CHARGING: FIELD_ID },
   AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -87,7 +87,7 @@ context('Insurance - Export contract - Change your answers - Agent service - not
         checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: true });
         checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: true });
         checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
-        checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: false });
+        checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
         checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
       });
     });

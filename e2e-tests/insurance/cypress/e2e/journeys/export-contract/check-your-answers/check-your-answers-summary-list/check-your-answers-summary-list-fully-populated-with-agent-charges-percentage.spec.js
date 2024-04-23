@@ -9,7 +9,7 @@ const {
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -52,8 +52,8 @@ context('Insurance - Export contract - Check your answers - Summary list - appli
     checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: false });
   });
 
-  it(`should render a ${CHARGE_PERCENTAGE} summary list row`, () => {
-    checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: true });
+  it(`should render a ${PERCENTAGE_CHARGE} summary list row`, () => {
+    checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: true });
   });
 
   it(`should render a ${PAYABLE_COUNTRY_CODE} summary list row`, () => {

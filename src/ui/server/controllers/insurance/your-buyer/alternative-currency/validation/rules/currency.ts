@@ -1,7 +1,7 @@
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { RequestBody } from '../../../../../../../types';
 import emptyFieldValidation from '../../../../../../shared-validation/empty-field';
+import { RequestBody } from '../../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE: FIELD_ID },

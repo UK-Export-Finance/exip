@@ -6,14 +6,14 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
 
 const {
-  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 /**
  * string fields which are exempt from being stripped by stripEmptyFormFields
  * for example when a string field needs to be set to an empty string or null
  */
-export const NULL_OR_EMPTY_STRING_FIELDS = [CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE];
+export const NULL_OR_EMPTY_STRING_FIELDS = [PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE];
 
 /**
  * exportContractAgentServiceCharge
