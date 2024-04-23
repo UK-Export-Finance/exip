@@ -8,6 +8,7 @@ const {
   CHECK_YOUR_ANSWERS: {
     YOUR_BUSINESS,
     YOUR_BUYER,
+    TYPE_OF_POLICY,
   },
 } = INSURANCE_ROUTES;
 
@@ -75,12 +76,13 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
     });
 
     describe('form submission', () => {
-      it('should redirect to `all sections`', () => {
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         cy.navigateToUrl(url);
 
         cy.clickSubmitButton();
 
-        cy.assertAllSectionsUrl(referenceNumber);
+        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+        cy.assertUrl(expectedUrl);
       });
 
       describe('when going back to the all sections page', () => {
@@ -88,8 +90,8 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
           cy.navigateToAllSectionsUrl(referenceNumber);
         });
 
-        it('should change the status of task `check your answers` to `completed`', () => {
-          cy.checkTaskCheckAnswersStatusIsComplete();
+        it('should retain the status of task `check your answers` as `in progress`', () => {
+          cy.checkTaskCheckAnswersStatusIsInProgress();
         });
       });
     });

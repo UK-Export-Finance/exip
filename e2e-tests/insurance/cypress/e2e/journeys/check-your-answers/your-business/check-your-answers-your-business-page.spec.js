@@ -5,8 +5,8 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
     YOUR_BUSINESS,
     YOUR_BUYER,
   },
@@ -50,7 +50,7 @@ context('Insurance - Check your answers - Your business - I want to confirm my s
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });

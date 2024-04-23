@@ -47,9 +47,9 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
     cy.assertAllSectionsUrl(referenceNumber);
   });
 
-  it('should retain the status of task `check your answers` as `in progress`', () => {
+  it('should change the status of task `check your answers` to `completed`', () => {
     cy.navigateToAllSectionsUrl(referenceNumber);
 
-    cy.checkTaskCheckAnswersStatusIsInProgress();
+    cy.checkTaskCheckAnswersStatusIsComplete();
   });
 });
