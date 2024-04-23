@@ -7,7 +7,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * lossPayeeFinancialDetailsInternational
  * mapAndSave lossPayeeFinancialDetails
  * Map and save any valid nominatedLossPayee fields
- * @param {Express.Request.body} Express request body
+ * @param {Express.Request.body} Form data
  * @param {Application}
  * @param {Object} Validation errors
  * @returns {Boolean}

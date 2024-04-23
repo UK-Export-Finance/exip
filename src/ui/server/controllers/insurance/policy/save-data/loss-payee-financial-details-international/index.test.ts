@@ -30,7 +30,7 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-in
   describe('when errorList is provided', () => {
     const mockValidationErrors = generateValidationErrors(FINANCIAL_ADDRESS, 'error', {});
 
-    it(`should call api.keystone.application.update.lossPayeeFinancialDetailsInternational with all fields but not ${FINANCIAL_ADDRESS}`, async () => {
+    it('should call api.keystone.application.update.lossPayeeFinancialDetailsInternational', async () => {
       await save.lossPayeeFinancialDetailsInternational(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
@@ -49,7 +49,7 @@ describe('controllers/insurance/policy/save-data/loss-payee-financial-details-in
   });
 
   describe('when errorList is NOT provided', () => {
-    it('should call api.keystone.application.update.lossPayeeFinancialDetailsInternational with all fields', async () => {
+    it('should call api.keystone.application.update.lossPayeeFinancialDetailsInternational', async () => {
       await save.lossPayeeFinancialDetailsInternational(mockApplication, mockFormBody);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);

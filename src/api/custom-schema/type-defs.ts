@@ -241,14 +241,14 @@ const typeDefs = `
     email: String
   }
 
-  type FinancialUk {
+  type LossPayeeFinancialUk {
     id: String
     accountNumber: String
     sortCode: String
     bankAddress: String
   }
 
-  type FinancialInternational {
+  type LossPayeeFinancialInternational {
     id: String
     iban: String
     bicSwiftCode: String
@@ -261,8 +261,8 @@ const typeDefs = `
     isLocatedInUk: Boolean
     isLocatedInternationally: Boolean
     name: String
-    financialUk: FinancialUk
-    financialInternational: FinancialInternational
+    financialUk: LossPayeeFinancialUk
+    financialInternational: LossPayeeFinancialInternational
   }
 
   type PopulatedApplication {

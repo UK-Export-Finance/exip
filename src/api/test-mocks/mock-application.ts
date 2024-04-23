@@ -147,7 +147,7 @@ export const mockLossPayeeFinancialDetailsInternational = {
   ibanVector: 'AAaaAAA1aA+1aaa1',
   bicSwiftCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
   bicSwiftCodeVector: 'BBbbBBB2bB+2bbb2',
-  bankAddress: 'Mock UK financial address',
+  bankAddress: 'Mock international financial address',
 };
 
 export const mockNominatedLossPayee = {
