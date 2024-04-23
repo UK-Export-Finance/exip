@@ -1,4 +1,4 @@
-import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
 import { PARTIALS as PARTIAL_TEMPLATES } from '../../../../constants/templates/partials';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -24,7 +24,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -44,11 +44,13 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 /**
  * pageVariables
  * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Array<Currency>} currencies: Array of currencies
+ * @param {String} currencyCode: Provided currency code
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, currencies: Array<Currency>) => {
-  const currency = getCurrencyByCode(currencies, GBP_CURRENCY_CODE);
+export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
+  const currency = getCurrencyByCode(currencies, currencyCode);
 
   return {
     FIELDS: {
@@ -67,6 +69,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
       FIXED_SUM_AMOUNT: {
         ID: FIXED_SUM_AMOUNT,
         ...FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT],
+        LABEL: `${FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT].LABEL} ${currency.name}?`,
       },
       PERCENTAGE: {
         ID: PERCENTAGE,
@@ -104,9 +107,9 @@ export const get = async (req: Request, res: Response) => {
 
   try {
     const countries = await api.keystone.countries.getAll();
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(countries) || !isPopulatedArray(supportedCurrencies)) {
+    if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -115,7 +118,7 @@ export const get = async (req: Request, res: Response) => {
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(referenceNumber, supportedCurrencies),
+      ...pageVariables(referenceNumber, allCurrencies, agent.service.charge[FIXED_SUM_CURRENCY_CODE]),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       countries: mapCountries(countries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
@@ -143,7 +146,10 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = application;
+  const {
+    referenceNumber,
+    exportContract: { agent },
+  } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -152,9 +158,9 @@ export const post = async (req: Request, res: Response) => {
   if (validationErrors) {
     try {
       const countries = await api.keystone.countries.getAll();
-      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+      const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      if (!isPopulatedArray(countries) || !isPopulatedArray(supportedCurrencies)) {
+      if (!isPopulatedArray(countries) || !isPopulatedArray(allCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
@@ -163,7 +169,7 @@ export const post = async (req: Request, res: Response) => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, supportedCurrencies),
+        ...pageVariables(referenceNumber, allCurrencies, agent.service.charge[FIXED_SUM_CURRENCY_CODE]),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(application),
         countries: mapCountries(countries, payload[PAYABLE_COUNTRY_CODE]),

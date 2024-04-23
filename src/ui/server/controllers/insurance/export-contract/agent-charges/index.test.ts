@@ -1,5 +1,5 @@
 import { pageVariables, FIELD_IDS, PAGE_CONTENT_STRINGS, TEMPLATE, get, post } from '.';
-import { GBP_CURRENCY_CODE, TEMPLATES } from '../../../../constants';
+import { TEMPLATES } from '../../../../constants';
 import { PARTIALS as PARTIAL_TEMPLATES } from '../../../../constants/templates/partials';
 import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../constants/field-ids/insurance/export-contract';
@@ -16,11 +16,16 @@ import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, mockCurrenciesResponse, mockExportContractAgentServiceCharge } from '../../../../test-mocks';
-
-const {
-  exportContract: { agent },
-} = mockApplication;
+import {
+  mockReq,
+  mockRes,
+  mockApplication,
+  mockCountries,
+  mockCurrencies,
+  mockCurrenciesResponse,
+  mockExportContractAgentServiceCharge,
+  referenceNumber,
+} from '../../../../test-mocks';
 
 const { supportedCurrencies } = mockCurrenciesResponse;
 
@@ -31,7 +36,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, PERCENTAGE, PERCENTAGE_CHARGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 const {
@@ -42,7 +47,11 @@ const {
   },
 } = PARTIAL_TEMPLATES;
 
-const { referenceNumber } = mockApplication;
+const {
+  exportContract: { agent },
+} = mockApplication;
+
+const currencyCode = agent.service.charge[FIXED_SUM_CURRENCY_CODE];
 
 describe('controllers/insurance/export-contract/agent-charges', () => {
   let req: Request;
@@ -88,9 +97,9 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber, supportedCurrencies);
+      const result = pageVariables(referenceNumber, mockCurrencies, currencyCode);
 
-      const currency = getCurrencyByCode(supportedCurrencies, GBP_CURRENCY_CODE);
+      const currency = getCurrencyByCode(mockCurrencies, currencyCode);
 
       const expected = {
         FIELDS: {
@@ -109,6 +118,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           FIXED_SUM_AMOUNT: {
             ID: FIXED_SUM_AMOUNT,
             ...FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT],
+            LABEL: `${FIELDS.AGENT_CHARGES[FIXED_SUM_AMOUNT].LABEL} ${currency.name}?`,
           },
           PERCENTAGE: {
             ID: PERCENTAGE,
@@ -149,7 +159,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
           PAGE_CONTENT_STRINGS,
           BACK_LINK: req.headers.referer,
         }),
-        ...pageVariables(referenceNumber, supportedCurrencies),
+        ...pageVariables(referenceNumber, supportedCurrencies, currencyCode),
         userName: getUserNameFromSession(req.session.user),
         application: mapApplicationToFormFields(mockApplication),
         countries: mapCountries(mockCountries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
@@ -260,7 +270,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
             PAGE_CONTENT_STRINGS,
             BACK_LINK: req.headers.referer,
           }),
-          ...pageVariables(referenceNumber, supportedCurrencies),
+          ...pageVariables(referenceNumber, supportedCurrencies, currencyCode),
           userName: getUserNameFromSession(req.session.user),
           application: mapApplicationToFormFields(mockApplication),
           countries: mapCountries(mockCountries, payload[PAYABLE_COUNTRY_CODE]),
@@ -312,7 +322,7 @@ describe('controllers/insurance/export-contract/agent-charges', () => {
 
       describe('when the get currencies response does not return a populated array', () => {
         beforeEach(() => {
-          getCurrenciesSpy = jest.fn(() => Promise.resolve({ ...mockCurrenciesResponse, supportedCurrencies: [] }));
+          getCurrenciesSpy = jest.fn(() => Promise.resolve({ ...mockCurrenciesResponse, allCurrencies: [] }));
           api.keystone.APIM.getCurrencies = getCurrenciesSpy;
         });
 
