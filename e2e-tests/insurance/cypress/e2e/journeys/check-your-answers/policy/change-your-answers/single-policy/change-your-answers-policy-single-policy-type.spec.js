@@ -55,8 +55,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
       task.link().click();
 
       // To get past previous "Check your answers" pages
-      cy.submitCheckYourAnswersForm();
-      cy.submitCheckYourAnswersForm();
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 

@@ -53,8 +53,7 @@ context('Insurance - Change your answers - Policy - Change from same name to dif
       task.link().click();
 
       // To get past previous "Check your answers" pages
-      cy.submitCheckYourAnswersForm();
-      cy.submitCheckYourAnswersForm();
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
       differentNameUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE}`;

@@ -15,11 +15,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 const completeAndSubmitCheckYourAnswers = () => {
   task.link().click();
 
-  // TODO: submitMultiple command
-  cy.submitCheckYourAnswersForm();
-  cy.submitCheckYourAnswersForm();
-  cy.submitCheckYourAnswersForm();
-  cy.submitCheckYourAnswersForm();
+  cy.completeAndSubmitMultipleCheckYourAnswers({ count: 4 });
 };
 
 export default completeAndSubmitCheckYourAnswers;

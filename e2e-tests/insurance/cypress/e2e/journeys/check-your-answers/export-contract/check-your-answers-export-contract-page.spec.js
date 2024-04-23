@@ -1,17 +1,18 @@
-import { headingCaption, status } from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../pages/shared';
 import partials from '../../../../../../partials';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
+  ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
-    YOUR_BUSINESS,
-    YOUR_BUYER,
+    EXPORT_CONTRACT,
+    TYPE_OF_POLICY,
   },
 } = INSURANCE_ROUTES;
 
-const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_BUYER;
+const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.YOUR_EXPORT_CONTRACT;
 
 const { taskList } = partials.insurancePartials;
 
@@ -19,7 +20,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Your buyer page - I want to confirm my selection for the your buyer section of my credit insurance application', () => {
+context('Insurance - Check your answers - Export contract - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application', () => {
   let referenceNumber;
   let url;
 
@@ -31,10 +32,10 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
 
       task.link().click();
 
-      // To get past "Your business" check your answers page
-      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
 
-      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`;
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
 
       cy.assertUrl(url);
     });
@@ -51,8 +52,8 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
   it('renders core page elements', () => {
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
+      currentHref: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
@@ -66,31 +67,28 @@ context('Insurance - Check your answers - Your buyer page - I want to confirm my
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
     });
 
-    it('renders a `completed` status tag', () => {
-      cy.checkTaskStatusCompleted(status);
-    });
-
     it('renders a `save and back` button', () => {
       cy.assertSaveAndBackButton();
     });
+  });
 
-    describe('form submission', () => {
-      it('should redirect to `all sections`', () => {
-        cy.navigateToUrl(url);
+  describe('form submission', () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
+      cy.navigateToUrl(url);
 
-        cy.clickSubmitButton();
+      cy.clickSubmitButton();
 
-        cy.assertAllSectionsUrl(referenceNumber);
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      cy.assertUrl(expectedUrl);
+    });
+
+    describe('when going back to the all sections page', () => {
+      beforeEach(() => {
+        cy.navigateToAllSectionsUrl(referenceNumber);
       });
 
-      describe('when going back to the all sections page', () => {
-        beforeEach(() => {
-          cy.navigateToAllSectionsUrl(referenceNumber);
-        });
-
-        it('should change the status of task `check your answers` to `completed`', () => {
-          cy.checkTaskCheckAnswersStatusIsComplete();
-        });
+      it('should change the status of task `check your answers` to `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
       });
     });
   });

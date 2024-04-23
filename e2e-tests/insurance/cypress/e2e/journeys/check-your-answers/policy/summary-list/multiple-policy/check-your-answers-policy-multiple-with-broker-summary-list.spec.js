@@ -30,8 +30,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
       task.link().click();
 
       // To get past previous "Check your answers" pages
-      cy.submitCheckYourAnswersForm();
-      cy.submitCheckYourAnswersForm();
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
