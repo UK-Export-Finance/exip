@@ -21,7 +21,7 @@ const fieldId = PAYABLE_COUNTRY_CODE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Export contract - Change your answers - Agent charges - As an Exporter, I want to be able to review my input regarding the amount an agent is charging for helping me win my export contract, So that I can be assured I am providing UKEF with the right information', () => {
+context(`Insurance - Export contract - Change your answers - Agent charges - ${PAYABLE_COUNTRY_CODE} - As an Exporter, I want to be able to review my input regarding the amount an agent is charging for helping me win my export contract, So that I can be assured I am providing UKEF with the right information`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
