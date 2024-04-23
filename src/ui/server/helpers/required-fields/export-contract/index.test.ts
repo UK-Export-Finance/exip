@@ -14,7 +14,7 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
 describe('server/helpers/required-fields/export-contract', () => {
@@ -120,7 +120,7 @@ describe('server/helpers/required-fields/export-contract', () => {
           agentChargeMethod: AGENT_SERVICE_CHARGE_METHOD.PERCENTAGE,
         });
 
-        const expected = [METHOD, PAYABLE_COUNTRY_CODE, CHARGE_PERCENTAGE];
+        const expected = [METHOD, PAYABLE_COUNTRY_CODE, PERCENTAGE_CHARGE];
 
         expect(result).toEqual(expected);
       });
