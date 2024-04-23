@@ -1,23 +1,22 @@
 import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
 
-const { LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE }, FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
+const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN }, FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
-
 /**
  * completeAndSubmitLossPayeeFinancialDetailsInternationalForm
  * Complete and submit "loss payee bank details (international)" form
- * @param {String} sortCode: sortCode value - defaults to application fixture sort code.
- * @param {String} accountNumber: accountNumber value - defaults to application fixture account number.
- * @param {String} financialAddress: financialAddress value - defaults to application fixture financial address.
+ * @param {String} bicSwiftCode: BIC/Swift value - defaults to application fixture.
+ * @param {String} iban: IBAN value - defaults to application fixture.
+ * @param {String} financialAddress: financialAddress value - defaults to application fixture.
  */
 const completeAndSubmitLossPayeeFinancialDetailsInternationalForm = ({
-  sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
-  accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
-  financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[FINANCIAL_ADDRESS],
+  bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
+  iban = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[IBAN],
+  financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[FINANCIAL_ADDRESS],
 }) => {
-  cy.completeLossPayeeFinancialDetailsInternationalForm({ sortCode, accountNumber, financialAddress });
+  cy.completeLossPayeeFinancialDetailsInternationalForm({ bicSwiftCode, iban, financialAddress });
   cy.clickSubmitButton();
 };
 

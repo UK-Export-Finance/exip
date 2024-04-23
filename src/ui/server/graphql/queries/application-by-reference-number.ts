@@ -1,8 +1,12 @@
 import gql from 'graphql-tag';
 
 const applicationByReferenceNumberQuery = gql`
-  query getApplicationByReferenceNumber($referenceNumber: Int!, $decryptFinancialUk: Boolean) {
-    getApplicationByReferenceNumber(referenceNumber: $referenceNumber, decryptFinancialUk: $decryptFinancialUk) {
+  query getApplicationByReferenceNumber($referenceNumber: Int!, $decryptFinancialUk: Boolean, $decryptFinancialInternational: Boolean) {
+    getApplicationByReferenceNumber(
+      referenceNumber: $referenceNumber
+      decryptFinancialUk: $decryptFinancialUk
+      decryptFinancialInternational: $decryptFinancialInternational
+    ) {
       success
       application {
         id
@@ -53,6 +57,9 @@ const applicationByReferenceNumberQuery = gql`
           }
           financialInternational {
             id
+            iban
+            bicSwiftCode
+            bankAddress
           }
         }
         policy {

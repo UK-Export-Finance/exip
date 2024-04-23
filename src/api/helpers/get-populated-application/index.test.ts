@@ -5,7 +5,7 @@ import getCountryByField from '../get-country-by-field';
 import mockCountries from '../../test-mocks/mock-countries';
 import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
-import mockApplication, { mockLossPayeeFinancialDetailsUk } from '../../test-mocks/mock-application';
+import mockApplication, { mockLossPayeeFinancialDetailsUk, mockLossPayeeFinancialDetailsInternational } from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
@@ -91,6 +91,18 @@ describe('api/helpers/get-populated-application', () => {
     expect(financialUk.sortCode).toEqual(mockLossPayeeFinancialDetailsUk.sortCode);
     expect(financialUk.sortCodeVector).toEqual(mockLossPayeeFinancialDetailsUk.sortCodeVector);
     expect(financialUk.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
+  });
+
+  it('should return an application with populated financialInternational', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    const { financialInternational } = result.nominatedLossPayee;
+
+    expect(financialInternational.bicSwiftCodeVector).toEqual(mockLossPayeeFinancialDetailsInternational.bicSwiftCodeVector);
+    expect(financialInternational.bicSwiftCode).toEqual(mockLossPayeeFinancialDetailsInternational.bicSwiftCode);
+    expect(financialInternational.iban).toEqual(mockLossPayeeFinancialDetailsInternational.iban);
+    expect(financialInternational.ibanVector).toEqual(mockLossPayeeFinancialDetailsInternational.ibanVector);
+    expect(financialInternational.bankAddress).toEqual(mockLossPayeeFinancialDetailsInternational.bankAddress);
   });
 
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {

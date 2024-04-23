@@ -3235,7 +3235,7 @@ type Query {
   getCompaniesHouseInformation(companiesHouseNumber: String!): CompaniesHouseResponse
 
   """ gets application by reference number """
-  getApplicationByReferenceNumber(referenceNumber: Int, decryptFinancialUk: Boolean): ApplicationSuccessResponse
+  getApplicationByReferenceNumber(referenceNumber: Int, decryptFinancialUk: Boolean, decryptFinancialInternational: Boolean): ApplicationSuccessResponse
 
   """ get Ordnance Survey address """
   getOrdnanceSurveyAddress(postcode: String!, houseNameOrNumber: String!): OrdnanceSurveyResponse

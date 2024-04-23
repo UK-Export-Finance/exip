@@ -1,14 +1,14 @@
-import { ApplicationFinancialUk } from '../../types';
+import { ApplicationLossPayeeFinancialUk } from '../../types';
 import decryptData from '../decrypt';
 
 /**
  * decryptFinancialUk
  * decrypts the accountNumber and sortCode in the financialUk section of application
  * returns decrypted data
- * @param {ApplicationFinancialUk} applicationFinancialUk: financialUk data from application
- * @returns {ApplicationFinancialUk} decrypted accountNumber and sortCode in financialUk section
+ * @param {ApplicationLossPayeeFinancialUk} applicationFinancialUk: financialUk data from application
+ * @returns {ApplicationLossPayeeFinancialUk} decrypted accountNumber and sortCode in financialUk section
  */
-const decryptFinancialUk = (applicationFinancialUk: ApplicationFinancialUk) => {
+const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancialUk) => {
   const updatedFinancialUk = applicationFinancialUk;
 
   const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;

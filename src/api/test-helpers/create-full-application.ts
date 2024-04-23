@@ -16,6 +16,7 @@ import {
   mockBusiness,
   mockPolicyContact,
   mockLossPayeeFinancialDetailsUk,
+  mockLossPayeeFinancialDetailsInternational,
 } from '../test-mocks/mock-application';
 import { mockApplicationDeclaration, mockNominatedLossPayee } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
@@ -27,7 +28,8 @@ import {
   ApplicationExportContract,
   ApplicationPolicy,
   ApplicationPolicyContact,
-  ApplicationFinancialUk,
+  ApplicationLossPayeeFinancialUk,
+  ApplicationLossPayeeFinancialInternational,
   Context,
   ApplicationNominatedLossPayee,
 } from '../types';
@@ -193,7 +195,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // gets financialUk id from application for updating
   const updatedApplication = (await context.query.Application.findOne({
     where: { id: application.id },
-    query: 'id nominatedLossPayee { id isAppointed financialUk { id } }',
+    query: 'id nominatedLossPayee { id isAppointed financialUk { id } financialInternational { id } }',
   })) as Application;
 
   // updates nominatedLossPayee
@@ -212,7 +214,16 @@ export const createFullApplication = async (context: Context, policyType?: strin
     },
     data: mockLossPayeeFinancialDetailsUk,
     query: 'id',
-  })) as ApplicationFinancialUk;
+  })) as ApplicationLossPayeeFinancialUk;
+
+  // updates financialInternational table
+  (await context.query.LossPayeeFinancialInternational.updateOne({
+    where: {
+      id: updatedApplication.nominatedLossPayee.financialInternational.id,
+    },
+    data: mockLossPayeeFinancialDetailsInternational,
+    query: 'id',
+  })) as ApplicationLossPayeeFinancialInternational;
 
   return {
     ...application,

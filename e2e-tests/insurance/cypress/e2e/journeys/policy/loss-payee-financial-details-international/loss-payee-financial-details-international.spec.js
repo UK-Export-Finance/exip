@@ -127,4 +127,12 @@ context("Insurance - Policy - Loss Payee Financial Details - International page 
       cy.assertUrl(checkYourAnswersUrl);
     });
   });
+
+  describe('when going back to the page', () => {
+    it('should have the submitted values', () => {
+      cy.navigateToUrl(url);
+
+      cy.assertLossPayeeFinancialInternationalFieldValues({});
+    });
+  });
 });

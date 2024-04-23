@@ -1,10 +1,11 @@
 import decryptNominatedLossPayee from '.';
 import decryptFinancialUkData from '../decrypt-financial-uk';
+import decryptFinancialInternational from '../decrypt-financial-international';
 import mockApplication from '../../test-mocks/mock-application';
 import decrypt from '../decrypt';
 
 const { nominatedLossPayee } = mockApplication;
-const { financialUk } = nominatedLossPayee;
+const { financialUk, financialInternational } = nominatedLossPayee;
 
 describe('api/helpers/decrypt-nominated-loss-payee', () => {
   jest.mock('../decrypt');
@@ -56,6 +57,32 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
       expect(decryptSpy).toHaveBeenCalledTimes(2);
       expect(decryptSpy).toHaveBeenCalledWith({ iv: accountNumberVector, value: accountNumber });
       expect(decryptSpy).toHaveBeenCalledWith({ iv: sortCodeVector, value: sortCode });
+    });
+  });
+
+  describe('when "decryptFinancialInternational" is "true"', () => {
+    it('should return result of decryptFinancialInternationalData for financialInternational', () => {
+      const result = decryptNominatedLossPayee(nominatedLossPayee, false, true);
+
+      const expected = {
+        ...mockApplication.nominatedLossPayee,
+        financialInternational: {
+          ...financialInternational,
+          ...decryptFinancialInternational(financialInternational),
+        },
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should call the decrypt function twice (for iban and bicSwiftCodeVector)', () => {
+      decryptNominatedLossPayee(nominatedLossPayee, false, true);
+
+      const { bicSwiftCode, bicSwiftCodeVector, iban, ibanVector } = mockApplication.nominatedLossPayee.financialInternational;
+
+      expect(decryptSpy).toHaveBeenCalledTimes(2);
+      expect(decryptSpy).toHaveBeenCalledWith({ iv: ibanVector, value: iban });
+      expect(decryptSpy).toHaveBeenCalledWith({ iv: bicSwiftCodeVector, value: bicSwiftCode });
     });
   });
 });

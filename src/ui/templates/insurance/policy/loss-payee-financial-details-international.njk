@@ -59,7 +59,7 @@
           hintText: FIELDS.BIC_SWIFT_CODE.HINT,
           labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
-          value: submittedValues[FIELDS.BIC_SWIFT_CODE.ID] or application.policy[FIELDS.BIC_SWIFT_CODE.ID],
+          value: submittedValues[FIELDS.BIC_SWIFT_CODE.ID],
           errorMessage: validationErrors.errorList[FIELDS.BIC_SWIFT_CODE.ID]
         }) }}
 
@@ -69,7 +69,7 @@
           hintText: FIELDS.IBAN.HINT,
           labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-20",
-          value: submittedValues[FIELDS.IBAN.ID] or application.policy[FIELDS.IBAN.ID],
+          value: submittedValues[FIELDS.IBAN.ID],
           errorMessage: validationErrors.errorList[FIELDS.IBAN.ID]
         }) }}
 
@@ -89,7 +89,7 @@
           },
           maxlength: FIELDS.FINANCIAL_ADDRESS.MAXIMUM,
           classes: "govuk-input--width-20",
-          value: submittedValues[FIELDS.FINANCIAL_ADDRESS.ID] or application.policy[FIELDS.FINANCIAL_ADDRESS.ID],
+          value: submittedValues[FIELDS.FINANCIAL_ADDRESS.ID],
           errorMessage: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID] and {
             text: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID].text,
             attributes: {
