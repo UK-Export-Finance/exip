@@ -33,8 +33,6 @@ export const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.POLICY.SINGLE_CONTRACT_POLIC
 
 export const FIELD_ID = TOTAL_CONTRACT_VALUE;
 
-const { PAGE_TITLE } = PAGE_CONTENT_STRINGS;
-
 /**
  * pageVariables
  * Page fields and "save and go back" URL
@@ -51,7 +49,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
       ID: FIELD_ID,
       ...FIELDS.CONTRACT_POLICY.SINGLE[FIELD_ID],
     },
-    DYNAMIC_PAGE_TITLE: `${PAGE_TITLE} ${currency.name}?`,
+    DYNAMIC_PAGE_TITLE: `${PAGE_CONTENT_STRINGS.PAGE_TITLE} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_SAVE_AND_BACK}`,
   };

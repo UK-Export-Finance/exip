@@ -6,7 +6,7 @@ import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { mockApplication } from '../../../../../test-mocks';
 
 const {
-  AGENT_CHARGES: { CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/save-data/export-contract-agent-service-charge', () => {
@@ -29,7 +29,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
 
   describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
     it('should have the relevant fieldIds', () => {
-      const expected = [CHARGE_PERCENTAGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE];
+      const expected = [PERCENTAGE_CHARGE, FIXED_SUM_AMOUNT, METHOD, PAYABLE_COUNTRY_CODE];
       expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual(expected);
     });
   });

@@ -317,7 +317,7 @@ var EXPORT_CONTRACT = {
     FIXED_SUM_AMOUNT: "fixedSumAmount",
     FIXED_SUM_CURRENCY_CODE: "fixedSumCurrencyCode",
     PERCENTAGE: "percentage",
-    CHARGE_PERCENTAGE: "chargePercentage"
+    PERCENTAGE_CHARGE: "percentageCharge"
   }
 };
 var export_contract_default = EXPORT_CONTRACT;
@@ -1330,7 +1330,7 @@ var lists = {
   ExportContractAgentServiceCharge: {
     fields: {
       service: (0, import_fields.relationship)({ ref: "ExportContractAgentService.charge" }),
-      chargePercentage: (0, import_fields.integer)(),
+      percentageCharge: (0, import_fields.integer)(),
       fixedSumAmount: (0, import_fields.integer)(),
       fixedSumCurrencyCode: (0, import_fields.text)({
         db: { nativeType: "VarChar(3)" },

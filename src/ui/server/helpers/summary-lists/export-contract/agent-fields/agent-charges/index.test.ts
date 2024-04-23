@@ -12,7 +12,7 @@ import { mockExportContractAgentService, mockCountries, referenceNumber } from '
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
@@ -56,7 +56,7 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
       ...mockAnswersChargingTrue,
       charge: {
         ...mockAnswersChargingTrue.charge,
-        [CHARGE_PERCENTAGE]: null,
+        [PERCENTAGE_CHARGE]: null,
         [FIXED_SUM_AMOUNT]: 10,
       },
     };
@@ -95,13 +95,13 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
     });
   });
 
-  describe(`when ${IS_CHARGING} is true and ${CHARGE_PERCENTAGE} is provided`, () => {
+  describe(`when ${IS_CHARGING} is true and ${PERCENTAGE_CHARGE} is provided`, () => {
     const mockAnswers = {
       ...mockAnswersChargingTrue,
       charge: {
         ...mockAnswersChargingTrue.charge,
         [FIXED_SUM_AMOUNT]: null,
-        [CHARGE_PERCENTAGE]: 10,
+        [PERCENTAGE_CHARGE]: 10,
       },
     };
 
@@ -120,12 +120,12 @@ describe('server/helpers/summary-lists/export-contract/agent-fields/agent-charge
         ),
         fieldGroupItem(
           {
-            field: getFieldById(FIELDS.AGENT_CHARGES, CHARGE_PERCENTAGE),
+            field: getFieldById(FIELDS.AGENT_CHARGES, PERCENTAGE_CHARGE),
             data: mockAnswers.charge,
-            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${CHARGE_PERCENTAGE}-label`, referenceNumber, checkAndChange),
+            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${PERCENTAGE_CHARGE}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           },
-          mapPercentage(mockAnswers.charge[CHARGE_PERCENTAGE]),
+          mapPercentage(mockAnswers.charge[PERCENTAGE_CHARGE]),
         ),
         fieldGroupItem(
           {

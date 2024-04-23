@@ -7,6 +7,7 @@ import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../../../../../content-stri
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { assertCountryAutocompleteInput } from '../../../../../../shared-test-assertions';
+import { GBP } from '../../../../../../fixtures/currencies';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
 
@@ -19,13 +20,13 @@ const {
 
 const {
   AGENT_CHARGES: {
-    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE,
+    METHOD, FIXED_SUM, PERCENTAGE, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE,
   },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agen's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
+context("Insurance - Export contract - Agent charges page - As an Exporter, I want to state what my agent's charges are, So that UKEF, the legal team and the British Embassy are aware of expenses incurred in my export contract bid", () => {
   let referenceNumber;
   let url;
   let agentChargesAlternativeCurrencyUrl;
@@ -99,8 +100,8 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         fieldSelector(FIXED_SUM_AMOUNT).input().should('not.be.visible');
       });
 
-      it(`should NOT display conditional "${CHARGE_PERCENTAGE}" field`, () => {
-        fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
+      it(`should NOT display conditional "${PERCENTAGE_CHARGE}" field`, () => {
+        fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
       });
 
       it(`should display conditional "${FIXED_SUM_AMOUNT}" field and 'provide alternative currency' link when selecting the ${FIXED_SUM} radio`, () => {
@@ -111,7 +112,11 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         const field = fieldSelector(fieldId);
 
         field.input().should('be.visible');
-        cy.checkText(field.label(), FIELDS.AGENT_CHARGES[fieldId].LABEL);
+
+        const expectedLabel = `${FIELDS.AGENT_CHARGES[fieldId].LABEL} ${GBP.name}?`;
+
+        cy.checkText(field.label(), expectedLabel);
+
         cy.assertPrefix({ fieldId, value: SYMBOLS.GBP });
 
         cy.checkLink(
@@ -129,10 +134,10 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
         cy.assertUrl(agentChargesAlternativeCurrencyUrl);
       });
 
-      it(`should display conditional "${CHARGE_PERCENTAGE}" field when selecting the ${PERCENTAGE} radio`, () => {
+      it(`should display conditional "${PERCENTAGE_CHARGE}" field when selecting the ${PERCENTAGE} radio`, () => {
         agentChargesPage[METHOD][PERCENTAGE].label().click();
 
-        const fieldId = CHARGE_PERCENTAGE;
+        const fieldId = PERCENTAGE_CHARGE;
 
         const field = fieldSelector(fieldId);
 
@@ -178,8 +183,8 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
           cy.assertAgentChargesFieldValues({ fixedSumMethod: true });
         });
 
-        it(`should NOT display conditional "${CHARGE_PERCENTAGE}" field`, () => {
-          fieldSelector(CHARGE_PERCENTAGE).input().should('not.be.visible');
+        it(`should NOT display conditional "${PERCENTAGE_CHARGE}" field`, () => {
+          fieldSelector(PERCENTAGE_CHARGE).input().should('not.be.visible');
         });
 
         it(`should display conditional "${FIXED_SUM_AMOUNT}" field`, () => {
@@ -214,8 +219,8 @@ context("Insurance - Export contract - Agent charges page - As an Exporter, I wa
           fieldSelector(FIXED_SUM_AMOUNT).input().should('not.be.visible');
         });
 
-        it(`should display conditional "${CHARGE_PERCENTAGE}" field`, () => {
-          fieldSelector(CHARGE_PERCENTAGE).input().should('be.visible');
+        it(`should display conditional "${PERCENTAGE_CHARGE}" field`, () => {
+          fieldSelector(PERCENTAGE_CHARGE).input().should('be.visible');
         });
       });
     });
