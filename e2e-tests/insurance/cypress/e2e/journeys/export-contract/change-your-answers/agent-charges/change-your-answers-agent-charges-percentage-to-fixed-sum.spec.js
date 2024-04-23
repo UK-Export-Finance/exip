@@ -13,7 +13,7 @@ const {
 
 const {
   AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -47,8 +47,8 @@ context('Insurance - Export contract - Change your answers - Agent charges - Per
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(CHARGE_PERCENTAGE, () => {
-    const fieldId = CHARGE_PERCENTAGE;
+  describe(PERCENTAGE_CHARGE, () => {
+    const fieldId = PERCENTAGE_CHARGE;
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${AGENT_CHARGES_CHANGE}`, () => {
@@ -74,7 +74,7 @@ context('Insurance - Export contract - Change your answers - Agent charges - Per
       });
 
       it(`should render only ${FIXED_SUM_AMOUNT} and ${PAYABLE_COUNTRY_CODE} fields/values`, () => {
-        checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: false });
+        checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
         checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
         checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
       });

@@ -12,10 +12,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { CHARGE_PERCENTAGE },
+  AGENT_CHARGES: { PERCENTAGE_CHARGE },
 } = FIELD_IDS;
 
-const fieldId = CHARGE_PERCENTAGE;
+const fieldId = PERCENTAGE_CHARGE;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -58,7 +58,7 @@ context('Insurance - Export contract - Change your answers - Agent charges - As 
   });
 
   describe('form submission with a new answer', () => {
-    const newValueInput = application.EXPORT_CONTRACT.AGENT_CHARGES[CHARGE_PERCENTAGE] - 1;
+    const newValueInput = application.EXPORT_CONTRACT.AGENT_CHARGES[PERCENTAGE_CHARGE] - 1;
 
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);

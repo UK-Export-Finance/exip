@@ -13,7 +13,7 @@ const {
 
 const {
   AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT, CHARGE_PERCENTAGE, PAYABLE_COUNTRY_CODE,
+    FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
   },
 } = FIELD_IDS;
 
@@ -73,15 +73,15 @@ context('Insurance - Export contract - Change your answers - Agent charges - Fix
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
-      it(`should render only ${CHARGE_PERCENTAGE} and ${PAYABLE_COUNTRY_CODE} fields/values`, () => {
+      it(`should render only ${PERCENTAGE_CHARGE} and ${PAYABLE_COUNTRY_CODE} fields/values`, () => {
         checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: false });
-        checkSummaryList[CHARGE_PERCENTAGE]({ shouldRender: true });
+        checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: true });
         checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
       });
 
       describe(`when going back to ${AGENT_CHARGES_CHANGE}`, () => {
         it('should have empty field `fixed sum` values', () => {
-          summaryList.field(CHARGE_PERCENTAGE).changeLink().click();
+          summaryList.field(PERCENTAGE_CHARGE).changeLink().click();
 
           cy.assertAgentChargesFieldValues({
             percentageMethod: true,
