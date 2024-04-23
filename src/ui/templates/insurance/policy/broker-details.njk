@@ -55,6 +55,8 @@
           labelClasses: "govuk-body govuk-!-font-weight-bold govuk-!-font-size-24",
           inputClasses: "govuk-input--width-20",
           type: "email",
+          autocomplete: true,
+          spellcheck: false,
           value: submittedValues[FIELDS.EMAIL.ID] or application.broker[FIELDS.EMAIL.ID],
           errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID]
         }) }}

@@ -19,13 +19,14 @@ const submitAndAssertFieldErrors = ({
   expectedValue,
   assertExpectedValue = true,
   clearInput = true,
+  keyboardInputViaValueAttribute = false,
 }) => {
   /**
    * If a value is provided,
    * Enter the value into the field's input.
    */
   if (value) {
-    cy.keyboardInput(field.input(), value);
+    cy.keyboardInput(field.input(), value, keyboardInputViaValueAttribute);
   } else if (clearInput) {
     field.input().clear();
   }

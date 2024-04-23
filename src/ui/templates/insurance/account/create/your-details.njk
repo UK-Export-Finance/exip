@@ -58,6 +58,8 @@
           labelText: FIELDS.EMAIL.LABEL,
           labelClasses: "govuk-!-font-weight-bold govuk-!-font-size-24",
           type: "email",
+          autocomplete: true,
+          spellcheck: false,
           value: submittedValues[FIELDS.EMAIL.ID],
           errorMessage: validationErrors.errorList[FIELDS.EMAIL.ID]
         }) }}

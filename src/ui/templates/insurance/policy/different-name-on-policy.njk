@@ -77,6 +77,8 @@
             labelText: FIELDS.EMAIL_ADDRESS.LABEL,
             labelClasses: "govuk-label--s",
             type: "email",
+            autocomplete: true,
+            spellcheck: false,
             errorMessage: validationErrors.errorList[FIELDS.EMAIL_ADDRESS.ID],
             value: submittedValues[FIELDS.EMAIL_ADDRESS.ID]
           }) }}
