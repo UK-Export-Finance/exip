@@ -16,12 +16,18 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
   let decryptedAccountNumber = '';
   let decryptedSortCode = '';
 
-  // decrypts accountNumber using encrypted "value" and initialisation vector if both accountNumber and accountNumberVector are defined
+  /**
+   * If both accountNumber and accountNumberVector are defined,
+   * decrypt accountNumber using encrypted "value" and initialisation vector
+   */
   if (accountNumber && accountNumberVector) {
     decryptedAccountNumber = decryptData.decrypt({ value: accountNumber, iv: accountNumberVector });
   }
 
-  // decrypts sortCode using encrypted "value" and initialisation vector if both sortCode and sortCodeVector are defined
+  /**
+   * If both sortCode and sortCodeVector are defined,
+   * decrypt sortCode using encrypted "value" and initialisation vector
+   */
   if (sortCode && sortCodeVector) {
     decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
   }

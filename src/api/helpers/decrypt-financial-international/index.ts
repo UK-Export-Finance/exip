@@ -10,18 +10,23 @@ import decryptData from '../decrypt';
  */
 const decryptFinancialInternational = (applicationFinancialInternational: ApplicationLossPayeeFinancialInternational) => {
   const updatedFinancialInternational = applicationFinancialInternational;
-
   const { iban, ibanVector, bicSwiftCode, bicSwiftCodeVector } = updatedFinancialInternational;
 
   let decryptedIban = '';
   let decryptedBicSwiftCode = '';
 
-  // decrypts iban using encrypted "value" and initialisation vector if both iban and ibanVector are defined
+  /**
+   * If both iban and ibanVector are defined,
+   * decrypt iban using encrypted "value" and initialisation vector
+   */
   if (iban && ibanVector) {
     decryptedIban = decryptData.decrypt({ value: iban, iv: ibanVector });
   }
 
-  // decrypts bicSwiftCode using encrypted "value" and initialisation vector if both bicSwiftCode and bicSwiftCodeVector are defined
+  /**
+   * If both bicSwiftCode and bicSwiftCodeVector are defined,
+   * decrypt bicSwiftCode using encrypted "value" and initialisation vector
+   */
   if (bicSwiftCode && bicSwiftCodeVector) {
     decryptedBicSwiftCode = decryptData.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
   }

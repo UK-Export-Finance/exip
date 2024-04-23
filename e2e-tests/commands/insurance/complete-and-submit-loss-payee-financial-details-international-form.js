@@ -1,7 +1,8 @@
 import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
+import { EXPECTED_MULTI_LINE_STRING } from '../../constants';
 
-const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN }, FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
+const { LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN } } = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
 /**
@@ -14,7 +15,7 @@ const { POLICY } = application;
 const completeAndSubmitLossPayeeFinancialDetailsInternationalForm = ({
   bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
   iban = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[IBAN],
-  financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[FINANCIAL_ADDRESS],
+  financialAddress = EXPECTED_MULTI_LINE_STRING,
 }) => {
   cy.completeLossPayeeFinancialDetailsInternationalForm({ bicSwiftCode, iban, financialAddress });
   cy.clickSubmitButton();

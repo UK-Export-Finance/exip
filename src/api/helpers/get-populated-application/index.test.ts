@@ -86,11 +86,12 @@ describe('api/helpers/get-populated-application', () => {
 
     const { financialUk } = result.nominatedLossPayee;
 
-    expect(financialUk.accountNumber).toEqual(mockLossPayeeFinancialDetailsUk.accountNumber);
-    expect(financialUk.accountNumberVector).toEqual(mockLossPayeeFinancialDetailsUk.accountNumberVector);
-    expect(financialUk.sortCode).toEqual(mockLossPayeeFinancialDetailsUk.sortCode);
-    expect(financialUk.sortCodeVector).toEqual(mockLossPayeeFinancialDetailsUk.sortCodeVector);
-    expect(financialUk.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
+    const expected = {
+      ...mockLossPayeeFinancialDetailsUk,
+      id: financialUk.id,
+    };
+
+    expect(financialUk).toEqual(expected);
   });
 
   it('should return an application with populated financialInternational', async () => {
@@ -98,11 +99,12 @@ describe('api/helpers/get-populated-application', () => {
 
     const { financialInternational } = result.nominatedLossPayee;
 
-    expect(financialInternational.bicSwiftCodeVector).toEqual(mockLossPayeeFinancialDetailsInternational.bicSwiftCodeVector);
-    expect(financialInternational.bicSwiftCode).toEqual(mockLossPayeeFinancialDetailsInternational.bicSwiftCode);
-    expect(financialInternational.iban).toEqual(mockLossPayeeFinancialDetailsInternational.iban);
-    expect(financialInternational.ibanVector).toEqual(mockLossPayeeFinancialDetailsInternational.ibanVector);
-    expect(financialInternational.bankAddress).toEqual(mockLossPayeeFinancialDetailsInternational.bankAddress);
+    const expected = {
+      ...mockLossPayeeFinancialDetailsInternational,
+      id: financialInternational.id,
+    };
+
+    expect(financialInternational).toEqual(expected);
   });
 
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {

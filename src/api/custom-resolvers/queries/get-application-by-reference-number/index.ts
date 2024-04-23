@@ -35,6 +35,8 @@ const getApplicationByReferenceNumberQuery = async (
       /**
        * if decrypt variables are set to true
        * decrypts relevant nominatedLossPayee fields
+       * if decryptFinancialUk then decrypts financial uk
+       * if decryptFinancialInternational then decrypts financialInternational
        * returns decrypted application
        */
       if (decryptFinancialUk || decryptFinancialInternational) {

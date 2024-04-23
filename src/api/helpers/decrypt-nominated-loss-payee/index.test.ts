@@ -22,7 +22,7 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
 
   describe('when "decryptFinancialUk" is "false"', () => {
     it('should return provided nominatedLossPayee', () => {
-      const result = decryptNominatedLossPayee(nominatedLossPayee, false);
+      const result = decryptNominatedLossPayee(nominatedLossPayee, false, false);
 
       expect(result).toEqual(nominatedLossPayee);
     });
