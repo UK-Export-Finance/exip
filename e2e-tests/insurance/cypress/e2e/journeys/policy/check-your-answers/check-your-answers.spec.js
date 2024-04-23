@@ -1,7 +1,4 @@
-import {
-  headingCaption,
-  saveAndBackButton,
-} from '../../../../../../pages/shared';
+import { headingCaption } from '../../../../../../pages/shared';
 import {
   BUTTONS,
   PAGES,
@@ -10,7 +7,6 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  ALL_SECTIONS,
   POLICY: {
     CHECK_YOUR_ANSWERS,
     LOSS_PAYEE_ROOT,
@@ -25,7 +21,6 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Check your answers - As an exporter, I want to check my answers to the type of policy section', () => {
   let referenceNumber;
   let url;
-  let allSectionsUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,7 +29,6 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
       cy.completePolicySection({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      allSectionsUrl = `${ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       cy.assertUrl(url);
     });
@@ -53,7 +47,8 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`,
       backLink: `${ROOT}/${referenceNumber}${LOSS_PAYEE_ROOT}`,
-      submitButtonCopy: BUTTONS.CONTINUE_NEXT_SECTION,
+      submitButtonCopy: BUTTONS.SAVE_AND_BACK,
+      assertSaveAndBackButtonDoesNotExist: true,
     });
   });
 
@@ -64,14 +59,6 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
 
     it('renders a heading caption', () => {
       cy.checkText(headingCaption(), CONTENT_STRINGS.HEADING_CAPTION);
-    });
-
-    it('renders a `save and back` button/link', () => {
-      cy.checkLink(
-        saveAndBackButton(),
-        allSectionsUrl,
-        BUTTONS.SAVE_AND_BACK,
-      );
     });
 
     describe('form submission', () => {
