@@ -1,6 +1,15 @@
 import mapSubmittedData from '.';
+import { APPLICATION } from '../../../../../constants';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import { EUR } from '../../../../../test-mocks';
+
+const {
+  EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHARGE: {
+      METHOD: { FIXED_SUM, PERCENTAGE },
+    },
+  },
+} = APPLICATION;
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -10,65 +19,21 @@ const {
 } = FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-submitted-data/agent-service-charge', () => {
-  describe(`when ${PERCENTAGE_CHARGE} is provided`, () => {
-    it(`should return the form body with mapped ${PERCENTAGE_CHARGE} as a number`, () => {
+  describe(`when ${METHOD} is ${FIXED_SUM}`, () => {
+    it('should return the form body with mapped data', () => {
       const mockFormBody = {
-        [PERCENTAGE_CHARGE]: '1',
-      };
-
-      const result = mapSubmittedData(mockFormBody);
-
-      const expected = {
-        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when ${FIXED_SUM_AMOUNT} is provided`, () => {
-    it(`should return the form body with mapped ${FIXED_SUM_AMOUNT} as a number`, () => {
-      const mockFormBody = {
+        [METHOD]: FIXED_SUM,
         [FIXED_SUM_AMOUNT]: '1',
-      };
-
-      const result = mapSubmittedData(mockFormBody);
-
-      const expected = {
-        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when ${PERCENTAGE_CHARGE} and ${FIXED_SUM_AMOUNT} are provided`, () => {
-    it('should return the form body with both fields mapped as a number', () => {
-      const mockFormBody = {
-        [PERCENTAGE_CHARGE]: '0',
-        [FIXED_SUM_AMOUNT]: '1',
-      };
-
-      const result = mapSubmittedData(mockFormBody);
-
-      const expected = {
-        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
-        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when ${CURRENCY_CODE} is provided`, () => {
-    it(`should return the form body with ${FIXED_SUM_CURRENCY_CODE} as ${CURRENCY_CODE}`, () => {
-      const mockFormBody = {
+        [ALTERNATIVE_CURRENCY_CODE]: EUR.isoCode,
         [CURRENCY_CODE]: EUR.isoCode,
       };
 
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
+        ...mockFormBody,
+        [FIXED_SUM_AMOUNT]: Number(mockFormBody[FIXED_SUM_AMOUNT]),
+        [PERCENTAGE_CHARGE]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
@@ -76,15 +41,21 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
     });
   });
 
-  describe(`when ${ALTERNATIVE_CURRENCY_CODE} is provided`, () => {
-    it(`should return the form body with ${FIXED_SUM_CURRENCY_CODE} as ${ALTERNATIVE_CURRENCY_CODE}`, () => {
+  describe(`when ${METHOD} is ${PERCENTAGE}`, () => {
+    it('should return the form body with mapped data', () => {
       const mockFormBody = {
+        [METHOD]: PERCENTAGE,
+        [PERCENTAGE_CHARGE]: '1',
+        [CURRENCY_CODE]: EUR.isoCode,
         [ALTERNATIVE_CURRENCY_CODE]: EUR.isoCode,
       };
 
       const result = mapSubmittedData(mockFormBody);
 
       const expected = {
+        ...mockFormBody,
+        [PERCENTAGE_CHARGE]: Number(mockFormBody[PERCENTAGE_CHARGE]),
+        [FIXED_SUM_AMOUNT]: null,
         [FIXED_SUM_CURRENCY_CODE]: EUR.isoCode,
       };
 
@@ -105,18 +76,6 @@ describe('controllers/insurance/export-contract/map-submitted-data/agent-service
       };
 
       expect(result).toEqual(expected);
-    });
-  });
-
-  describe(`when neither ${PERCENTAGE_CHARGE}, ${FIXED_SUM_AMOUNT} or ${METHOD} are provided`, () => {
-    it('should return the form body as provided', () => {
-      const mockFormBody = {
-        mockField: true,
-      };
-
-      const result = mapSubmittedData(mockFormBody);
-
-      expect(result).toEqual(mockFormBody);
     });
   });
 });
