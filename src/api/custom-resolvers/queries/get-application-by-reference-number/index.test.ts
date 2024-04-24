@@ -80,7 +80,7 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
     });
   });
 
-  describe('when the an error occurs', () => {
+  describe('when an error occurs', () => {
     it('should throw an error', async () => {
       await expect(getApplicationByReferenceNumber()).rejects.toThrow('Get application by reference number (GetApplicationByReferenceNumber mutation)');
     });
