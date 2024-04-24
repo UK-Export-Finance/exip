@@ -9,6 +9,7 @@
  * @param {Number} expectedValue: Expected value after submission.
  * @param {Boolean} assertExpectedValue: Assert an expected value. Defaults to true.
  * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true.
+ * @param {Boolean} keyboardInputViaValueAttribute: Flag for whether to input the text via the input's value attribute, instead of .type().
  */
 const submitAndAssertFieldErrors = ({
   field,
