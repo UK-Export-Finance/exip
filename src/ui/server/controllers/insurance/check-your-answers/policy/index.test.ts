@@ -30,7 +30,7 @@ const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
+    CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT, TYPE_OF_POLICY_SAVE_AND_BACK },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -221,10 +221,10 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
     });
 
-    it(`should redirect to ${YOUR_BUSINESS}`, async () => {
+    it(`should redirect to ${EXPORT_CONTRACT}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

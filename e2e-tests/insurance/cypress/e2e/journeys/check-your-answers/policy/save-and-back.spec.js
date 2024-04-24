@@ -24,6 +24,9 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
@@ -44,9 +47,9 @@ context('Insurance - Check your answers - Policy page - Save and back', () => {
     cy.assertAllSectionsUrl(referenceNumber);
   });
 
-  it('should retain the status of task `check your answers` as `in progress`', () => {
+  it('should change the status of task `check your answers` to `completed`', () => {
     cy.navigateToAllSectionsUrl(referenceNumber);
 
-    cy.checkTaskCheckAnswersStatusIsInProgress();
+    cy.checkTaskCheckAnswersStatusIsComplete();
   });
 });

@@ -1,7 +1,8 @@
 const ROOT = '/check-your-answers';
-const TYPE_OF_POLICY_ROOT = `${ROOT}/type-of-policy`;
 const YOUR_BUSINESS_ROOT = `${ROOT}/your-business`;
 const YOUR_BUYER_ROOT = `${ROOT}/your-buyer`;
+const TYPE_OF_POLICY_ROOT = `${ROOT}/type-of-policy`;
+const EXPORT_CONTRACT_ROOT = `${ROOT}/export-contract`;
 
 export const CHECK_YOUR_ANSWERS = {
   ROOT,
@@ -11,4 +12,6 @@ export const CHECK_YOUR_ANSWERS = {
   YOUR_BUSINESS_SAVE_AND_BACK: `${YOUR_BUSINESS_ROOT}/save-and-back`,
   YOUR_BUYER: YOUR_BUYER_ROOT,
   YOUR_BUYER_SAVE_AND_BACK: `${YOUR_BUYER_ROOT}/save-and-back`,
+  EXPORT_CONTRACT: EXPORT_CONTRACT_ROOT,
+  EXPORT_CONTRACT_SAVE_AND_BACK: `${EXPORT_CONTRACT_ROOT}/save-and-back`,
 };

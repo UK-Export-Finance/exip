@@ -50,6 +50,9 @@ context('Insurance - Change your answers - Policy - Change single to multiple po
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
       const applicationRouteUrl = `${ROOT}/${referenceNumber}`;
 
       checkYourAnswersUrl = `${baseUrl}${applicationRouteUrl}${CHECK_YOUR_ANSWERS.TYPE_OF_POLICY}`;

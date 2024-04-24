@@ -58,6 +58,7 @@ export const assertEmailFieldValidation = ({
         ...assertions,
         value: INVALID_EMAILS.WITH_SPACE,
         expectedErrorMessage: expectedIncorrectErrorMessage,
+        keyboardInputViaValueAttribute: true,
       });
     });
 

@@ -86,11 +86,11 @@ context('Insurance - Account - Create - Your details page - As an exporter, I wa
 
     it('renders `email` label and input', () => {
       const fieldId = EMAIL;
-      const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), ACCOUNT_FIELDS[fieldId].LABEL);
-
-      field.input().should('exist');
+      cy.checkEmailFieldRendering({
+        fieldId,
+        contentStrings: ACCOUNT_FIELDS[fieldId],
+      });
     });
 
     describe('password', () => {
