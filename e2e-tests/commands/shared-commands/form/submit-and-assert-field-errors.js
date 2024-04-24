@@ -9,6 +9,7 @@
  * @param {Number} expectedValue: Expected value after submission.
  * @param {Boolean} assertExpectedValue: Assert an expected value. Defaults to true.
  * @param {Boolean} clearInput: Clear the input before text entry. Defaults to true.
+ * @param {Boolean} keyboardInputViaValueAttribute: Flag for whether to input the text via the input's value attribute, instead of .type().
  */
 const submitAndAssertFieldErrors = ({
   field,
@@ -19,13 +20,14 @@ const submitAndAssertFieldErrors = ({
   expectedValue,
   assertExpectedValue = true,
   clearInput = true,
+  keyboardInputViaValueAttribute = false,
 }) => {
   /**
    * If a value is provided,
    * Enter the value into the field's input.
    */
   if (value) {
-    cy.keyboardInput(field.input(), value);
+    cy.keyboardInput(field.input(), value, keyboardInputViaValueAttribute);
   } else if (clearInput) {
     field.input().clear();
   }
