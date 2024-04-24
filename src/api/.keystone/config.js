@@ -4262,16 +4262,21 @@ var create_an_application_default = createAnApplication;
 
 // helpers/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (referenceNumber, context) => {
-  const applications = await context.db.Application.findMany({
-    where: {
-      referenceNumber: { equals: referenceNumber }
+  try {
+    const applications = await context.db.Application.findMany({
+      where: {
+        referenceNumber: { equals: referenceNumber }
+      }
+    });
+    if (applications?.length) {
+      const [application2] = applications;
+      return application2;
     }
-  });
-  if (applications.length) {
-    const [application2] = applications;
-    return application2;
+    return null;
+  } catch (err) {
+    console.error("Error getting application by reference number %O", err);
+    throw new Error(`Error getting application by reference number ${err}`);
   }
-  return null;
 };
 var get_application_by_reference_number_default = getApplicationByReferenceNumber;
 
@@ -4403,6 +4408,7 @@ var getPopulatedApplication = async (context, application2) => {
     query: "id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id } isAppointed isLocatedInUk isLocatedInternationally name"
   });
   if (!nominatedLossPayee) {
+    console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
     throw new Error(generateErrorMessage("nominated loss payee", application2.id));
   }
   const buyerCountry = await context.db.Country.findOne({
@@ -5647,36 +5653,46 @@ var generate_initialisation_vector_default = generateInitialisationVector;
 // helpers/encrypt/index.ts
 var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
-  const key2 = generate_key_default();
-  const iv = generate_initialisation_vector_default();
-  const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key2, iv);
-  const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2);
-  return {
-    value,
-    iv
-  };
+  try {
+    const key2 = generate_key_default();
+    const iv = generate_initialisation_vector_default();
+    const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key2, iv);
+    const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING3).concat(cipher.final(ENCODING3))).toString(STRING_ENCODING2);
+    return {
+      value,
+      iv
+    };
+  } catch (err) {
+    console.error("Error encrypting data %O", err);
+    throw new Error(`Error encrypting data ${err}`);
+  }
 };
 var encrypt_default = encrypt;
 
 // helpers/map-loss-payee-financial-details-uk/index.ts
 var mapLossPayeeFinancialDetailsUk = (variables) => {
-  const { accountNumber, sortCode, bankAddress } = variables;
-  let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
-  let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
-  if (accountNumber) {
-    accountNumberData = encrypt_default(accountNumber);
+  try {
+    const { accountNumber, sortCode, bankAddress } = variables;
+    let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    if (accountNumber) {
+      accountNumberData = encrypt_default(accountNumber);
+    }
+    if (sortCode) {
+      sortCodeData = encrypt_default(sortCode);
+    }
+    const updateData = {
+      accountNumber: accountNumberData.value,
+      accountNumberVector: accountNumberData.iv,
+      sortCode: sortCodeData.value,
+      sortCodeVector: sortCodeData.iv,
+      bankAddress
+    };
+    return updateData;
+  } catch (err) {
+    console.error("Error mapping loss payee financial details UK %O", err);
+    throw new Error(`Error mapping loss payee financial details UK ${err}`);
   }
-  if (sortCode) {
-    sortCodeData = encrypt_default(sortCode);
-  }
-  const updateData = {
-    accountNumber: accountNumberData.value,
-    accountNumberVector: accountNumberData.iv,
-    sortCode: sortCodeData.value,
-    sortCodeVector: sortCodeData.iv,
-    bankAddress
-  };
-  return updateData;
 };
 var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
 
@@ -6254,24 +6270,43 @@ var get_companies_house_information_default = getCompaniesHouseInformation;
 // helpers/decrypt/generate-decipher/index.ts
 var import_crypto12 = __toESM(require("crypto"));
 var { ENCRYPTION_METHOD: ENCRYPTION_METHOD2 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
-var generateDecipher = (key2, iv) => import_crypto12.default.createDecipheriv(ENCRYPTION_METHOD2, key2, iv);
+var generateDecipher = (key2, iv) => {
+  try {
+    return import_crypto12.default.createDecipheriv(ENCRYPTION_METHOD2, key2, iv);
+  } catch (err) {
+    console.error("Error generating decipher %O", err);
+    throw new Error(`Error generating decipher ${err}`);
+  }
+};
 var generate_decipher_default = generateDecipher;
 
 // helpers/decrypt/generate-buffer/index.ts
 var { STRING_ENCODING: STRING_ENCODING3, OUTPUT_ENCODING: OUTPUT_ENCODING2 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
-var generateBufferInStringFormat = (value) => Buffer.from(value, STRING_ENCODING3).toString(OUTPUT_ENCODING2);
+var generateBufferInStringFormat = (value) => {
+  try {
+    return Buffer.from(value, STRING_ENCODING3).toString(OUTPUT_ENCODING2);
+  } catch (err) {
+    console.error("Error generating buffer %O", err);
+    throw new Error(`Error generating buffer ${err}`);
+  }
+};
 var generate_buffer_default = generateBufferInStringFormat;
 
 // helpers/decrypt/index.ts
 var { ENCODING: ENCODING4, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var key = generate_key_default();
 var decryptData = (dataToDecrypt) => {
-  const { value, iv } = dataToDecrypt;
-  const buffer = generate_buffer_default(value);
-  const decipher = generate_decipher_default(key, iv);
-  const decipherUpdate = decipher.update(buffer, ENCODING4, OUTPUT_ENCODING3);
-  const decipherFinal = decipher.final(OUTPUT_ENCODING3);
-  return decipherUpdate.concat(decipherFinal);
+  try {
+    const { value, iv } = dataToDecrypt;
+    const buffer = generate_buffer_default(value);
+    const decipher = generate_decipher_default(key, iv);
+    const decipherUpdate = decipher.update(buffer, ENCODING4, OUTPUT_ENCODING3);
+    const decipherFinal = decipher.final(OUTPUT_ENCODING3);
+    return decipherUpdate.concat(decipherFinal);
+  } catch (err) {
+    console.error("Error decrypting data %O", err);
+    throw new Error(`Error decrypting data ${err}`);
+  }
 };
 var decrypt = {
   decrypt: decryptData
@@ -6280,34 +6315,44 @@ var decrypt_default = decrypt;
 
 // helpers/decrypt-financial-uk/index.ts
 var decryptFinancialUk = (applicationFinancialUk) => {
-  const updatedFinancialUk = applicationFinancialUk;
-  const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
-  let decryptedAccountNumber = "";
-  let decryptedSortCode = "";
-  if (accountNumber && accountNumberVector) {
-    decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
+  try {
+    const updatedFinancialUk = applicationFinancialUk;
+    const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
+    let decryptedAccountNumber = "";
+    let decryptedSortCode = "";
+    if (accountNumber && accountNumberVector) {
+      decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
+    }
+    if (sortCode && sortCodeVector) {
+      decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
+    }
+    updatedFinancialUk.accountNumber = decryptedAccountNumber;
+    updatedFinancialUk.sortCode = decryptedSortCode;
+    return updatedFinancialUk;
+  } catch (err) {
+    console.error("Error decrypting financial uk %O", err);
+    throw new Error(`Error decrypting financial uk ${err}`);
   }
-  if (sortCode && sortCodeVector) {
-    decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
-  }
-  updatedFinancialUk.accountNumber = decryptedAccountNumber;
-  updatedFinancialUk.sortCode = decryptedSortCode;
-  return updatedFinancialUk;
 };
 var decrypt_financial_uk_default = decryptFinancialUk;
 
 // helpers/decrypt-nominated-loss-payee/index.ts
 var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2) => {
-  let updatedNominatedLossPayee = nominatedLossPayee;
-  const { financialUk } = updatedNominatedLossPayee;
-  if (decryptFinancialUk2) {
-    const updatedFinancialUk = decrypt_financial_uk_default(financialUk);
-    updatedNominatedLossPayee = {
-      ...updatedNominatedLossPayee,
-      financialUk: updatedFinancialUk
-    };
+  try {
+    let updatedNominatedLossPayee = nominatedLossPayee;
+    const { financialUk } = updatedNominatedLossPayee;
+    if (decryptFinancialUk2) {
+      const updatedFinancialUk = decrypt_financial_uk_default(financialUk);
+      updatedNominatedLossPayee = {
+        ...updatedNominatedLossPayee,
+        financialUk: updatedFinancialUk
+      };
+    }
+    return updatedNominatedLossPayee;
+  } catch (err) {
+    console.error("Error decrypting nominated loss payee %O", err);
+    throw new Error(`Error decrypting nominated loss payee ${err}`);
   }
-  return updatedNominatedLossPayee;
 };
 var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 
@@ -6318,14 +6363,11 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
-      let populatedApplication = await get_populated_application_default(context, application2);
+      const populatedApplication = await get_populated_application_default(context, application2);
       if (decryptFinancialUk2) {
         const { nominatedLossPayee } = populatedApplication;
         const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2);
-        populatedApplication = {
-          ...populatedApplication,
-          nominatedLossPayee: decryptedNominatedLossPayee
-        };
+        populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
       }
       return {
         success: true,

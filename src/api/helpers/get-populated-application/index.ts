@@ -139,6 +139,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   });
 
   if (!nominatedLossPayee) {
+    console.error('%s', generateErrorMessage('nominated loss payee', application.id));
     throw new Error(generateErrorMessage('nominated loss payee', application.id));
   }
 

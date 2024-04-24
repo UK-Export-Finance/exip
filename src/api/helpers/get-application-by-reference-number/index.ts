@@ -9,18 +9,24 @@ import { Application, Context } from '.keystone/types'; // eslint-disable-line
  * @returns {Application} application section ids or null
  */
 const getApplicationByReferenceNumber = async (referenceNumber: number, context: Context): Application => {
-  const applications = (await context.db.Application.findMany({
-    where: {
-      referenceNumber: { equals: referenceNumber },
-    },
-  })) as Application;
+  try {
+    const applications = (await context.db.Application.findMany({
+      where: {
+        referenceNumber: { equals: referenceNumber },
+      },
+    })) as Application;
 
-  if (applications.length) {
-    const [application] = applications;
-    return application;
+    if (applications?.length) {
+      const [application] = applications;
+      return application;
+    }
+
+    return null;
+  } catch (err) {
+    console.error('Error getting application by reference number %O', err);
+
+    throw new Error(`Error getting application by reference number ${err}`);
   }
-
-  return null;
 };
 
 export default getApplicationByReferenceNumber;

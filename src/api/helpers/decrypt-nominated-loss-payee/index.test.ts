@@ -58,4 +58,16 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
       expect(decryptSpy).toHaveBeenCalledWith({ iv: sortCodeVector, value: sortCode });
     });
   });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        decryptNominatedLossPayee();
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error decrypting nominated loss payee')).toEqual(true);
+      }
+    });
+  });
 });
