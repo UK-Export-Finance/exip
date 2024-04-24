@@ -4227,6 +4227,7 @@ var create_an_application_default = createAnApplication;
 // helpers/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (referenceNumber, context) => {
   try {
+    console.info("Getting application by reference number - getApplicationByReferenceNumber helper %s", referenceNumber);
     const applications = await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber }
