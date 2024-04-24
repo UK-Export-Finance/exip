@@ -33,26 +33,33 @@ const {
   ABOUT_GOODS_OR_SERVICES_CHANGE,
   ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
   HOW_WILL_YOU_GET_PAID,
-  HOW_WILL_YOU_GET_PAID_CHANGE,
   HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
+  HOW_WILL_YOU_GET_PAID_CHANGE,
+  HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
   PRIVATE_MARKET,
-  PRIVATE_MARKET_CHANGE,
   PRIVATE_MARKET_SAVE_AND_BACK,
+  PRIVATE_MARKET_CHANGE,
+  PRIVATE_MARKET_CHECK_AND_CHANGE,
   DECLINED_BY_PRIVATE_MARKET,
   DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK,
   DECLINED_BY_PRIVATE_MARKET_CHANGE,
+  DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE,
   AGENT,
   AGENT_SAVE_AND_BACK,
   AGENT_CHANGE,
+  AGENT_CHECK_AND_CHANGE,
   AGENT_DETAILS,
   AGENT_DETAILS_SAVE_AND_BACK,
   AGENT_DETAILS_CHANGE,
+  AGENT_DETAILS_CHECK_AND_CHANGE,
   AGENT_SERVICE,
   AGENT_SERVICE_SAVE_AND_BACK,
   AGENT_SERVICE_CHANGE,
+  AGENT_SERVICE_CHECK_AND_CHANGE,
   AGENT_CHARGES,
   AGENT_CHARGES_SAVE_AND_BACK,
   AGENT_CHARGES_CHANGE,
+  AGENT_CHARGES_CHECK_AND_CHANGE,
   AGENT_CHARGES_ALTERNATIVE_CURRENCY,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
@@ -67,8 +74,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(21);
-    expect(post).toHaveBeenCalledTimes(27);
+    expect(get).toHaveBeenCalledTimes(27);
+    expect(post).toHaveBeenCalledTimes(34);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -85,44 +92,56 @@ describe('routes/insurance/export-contract', () => {
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK}`, howWillYouGetPaidSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHANGE}`, howWillYouGetPaidGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHANGE}`, howWillYouGetPaidPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE}`, howWillYouGetPaidGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE}`, howWillYouGetPaidPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET}`, privateMarketPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_SAVE_AND_BACK}`, privateMarketSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_CHANGE}`, privateMarketPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_CHECK_AND_CHANGE}`, privateMarketGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${PRIVATE_MARKET_CHECK_AND_CHANGE}`, privateMarketPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET}`, declinedByPrivateMarketPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_SAVE_AND_BACK}`, declinedByPrivateMarketSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, declinedByPrivateMarketGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHANGE}`, declinedByPrivateMarketPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE}`, declinedByPrivateMarketGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE}`, declinedByPrivateMarketPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT}`, agentGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT}`, agentPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SAVE_AND_BACK}`, agentSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHANGE}`, agentGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHANGE}`, agentPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHECK_AND_CHANGE}`, agentGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHECK_AND_CHANGE}`, agentPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS}`, agentDetailsGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS}`, agentDetailsPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS_SAVE_AND_BACK}`, agentDetailsSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetailsGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS_CHANGE}`, agentDetailsPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS_CHECK_AND_CHANGE}`, agentDetailsGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_DETAILS_CHECK_AND_CHANGE}`, agentDetailsPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE}`, agentServiceGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE}`, agentServicePost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE_SAVE_AND_BACK}`, agentServiceSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE_CHANGE}`, agentServiceGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE_CHANGE}`, agentServicePost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE_CHECK_AND_CHANGE}`, agentServiceGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_SERVICE_CHECK_AND_CHANGE}`, agentServicePost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES}`, agentChargesGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES}`, agentChargesPost);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_SAVE_AND_BACK}`, agentChargesSaveAndBackPost);
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CHANGE}`, agentChargesPost);
-
-    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CHECK_AND_CHANGE}`, agentChargesGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_CHECK_AND_CHANGE}`, agentChargesPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyPost);
