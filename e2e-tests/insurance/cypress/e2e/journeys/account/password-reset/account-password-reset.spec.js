@@ -1,4 +1,3 @@
-import { field as fieldSelector } from '../../../../../../pages/shared';
 import { signInPage } from '../../../../../../pages/insurance/account/sign-in';
 import { yourDetailsPage } from '../../../../../../pages/insurance/account/create';
 import { BUTTONS, PAGES } from '../../../../../../content-strings';
@@ -70,11 +69,11 @@ context('Insurance - Account - Password reset page - As an Exporter, I want to r
 
     it('renders `email` label, hint and input', () => {
       const fieldId = EMAIL;
-      const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
-
-      field.input().should('exist');
+      cy.checkEmailFieldRendering({
+        fieldId,
+        contentStrings: FIELD_STRINGS[fieldId],
+      });
     });
   });
 
