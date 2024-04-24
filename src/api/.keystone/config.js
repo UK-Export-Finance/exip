@@ -351,9 +351,10 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY: "policy",
   EXPORTER_BUSINESS: "business",
-  BUYER: "buyer"
+  BUYER: "buyer",
+  POLICY: "policy",
+  EXPORT_CONTRACT: "exportContract"
 };
 var check_your_answers_default = CHECK_YOUR_ANSWERS;
 
@@ -5637,6 +5638,7 @@ var generate_initialisation_vector_default = generateInitialisationVector;
 var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
   try {
+    console.info("Encrypting data");
     const key2 = generate_key_default();
     const iv = generate_initialisation_vector_default();
     const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key2, iv);
@@ -5655,6 +5657,7 @@ var encrypt_default = encrypt;
 // helpers/map-loss-payee-financial-details-uk/index.ts
 var mapLossPayeeFinancialDetailsUk = (variables) => {
   try {
+    console.info("Mapping loss payee financial details UK");
     const { accountNumber, sortCode, bankAddress } = variables;
     let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
     let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
@@ -6231,6 +6234,7 @@ var { ENCODING: ENCODING4, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAI
 var key = generate_key_default();
 var decryptData = (dataToDecrypt) => {
   try {
+    console.info("Decrypting data");
     const { value, iv } = dataToDecrypt;
     const buffer = generate_buffer_default(value);
     const decipher = generate_decipher_default(key, iv);
@@ -6250,6 +6254,7 @@ var decrypt_default = decrypt;
 // helpers/decrypt-financial-uk/index.ts
 var decryptFinancialUk = (applicationFinancialUk) => {
   try {
+    console.info("Decrypting accountNumber and sortCode for financialUk");
     const updatedFinancialUk = applicationFinancialUk;
     const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
     let decryptedAccountNumber = "";
@@ -6273,6 +6278,7 @@ var decrypt_financial_uk_default = decryptFinancialUk;
 // helpers/decrypt-nominated-loss-payee/index.ts
 var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2) => {
   try {
+    console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
     let updatedNominatedLossPayee = nominatedLossPayee;
     const { financialUk } = updatedNominatedLossPayee;
     if (decryptFinancialUk2) {

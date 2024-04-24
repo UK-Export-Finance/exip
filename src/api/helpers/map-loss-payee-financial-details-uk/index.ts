@@ -10,6 +10,8 @@ import { ApplicationLossPayeeFinancialUk } from '../../types';
  */
 const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancialUk) => {
   try {
+    console.info('Mapping loss payee financial details UK');
+
     const { accountNumber, sortCode, bankAddress } = variables;
 
     let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;

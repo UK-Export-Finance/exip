@@ -56,9 +56,6 @@ context(`Insurance - Change your answers - ${TRADING_ADDRESS} and ${FULL_ADDRESS
 
       task.link().click();
 
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.assertUrl(url);

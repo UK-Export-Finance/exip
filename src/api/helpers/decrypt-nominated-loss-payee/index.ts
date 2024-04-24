@@ -12,6 +12,8 @@ import decryptFinancialUkData from '../decrypt-financial-uk';
  */
 const decryptNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLossPayee, decryptFinancialUk?: boolean) => {
   try {
+    console.info('Decrypting nominated loss payee %s', nominatedLossPayee.id);
+
     let updatedNominatedLossPayee = nominatedLossPayee;
 
     const { financialUk } = updatedNominatedLossPayee;

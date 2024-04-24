@@ -24,9 +24,6 @@ context('Insurance - Check your answers - Your business page - Save and back', (
 
       task.link().click();
 
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
 
       cy.assertUrl(url);

@@ -52,7 +52,7 @@ describe('api/helpers/decrypt', () => {
     expect(result).toEqual(dataToEncrypt);
   });
 
-  describe('when the an error occurs', () => {
+  describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
         cypher.decrypt();

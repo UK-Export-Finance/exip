@@ -47,7 +47,7 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
       expect(financialUk.accountNumber).toEqual(mockLossPayeeFinancialDetailsUk.accountNumber);
     });
 
-    it('should not call decrypt', async () => {
+    it('should NOT call decrypt', async () => {
       await getApplicationByReferenceNumber({}, { referenceNumber: refNumber }, context);
 
       expect(decryptSpy).toHaveBeenCalledTimes(0);
@@ -80,7 +80,7 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
     });
   });
 
-  describe('when the an error occurs', () => {
+  describe('when an error occurs', () => {
     it('should throw an error', async () => {
       await expect(getApplicationByReferenceNumber()).rejects.toThrow('Get application by reference number (GetApplicationByReferenceNumber mutation)');
     });
