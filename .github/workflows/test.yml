@@ -202,6 +202,7 @@ jobs:
             "application-submission/multiple-policy-type/**/*.spec.js",
             "application-submission/single-policy-type/**/*.spec.js",
             "cannot-skip-flow/**/*.spec.js",
+            "check-your-answers/export-contract/**/*.spec.js",
             "check-your-answers/policy/*.spec.js",
             "check-your-answers/policy/change-your-answers/broker/*.spec.js",
             "check-your-answers/policy/change-your-answers/multiple-policy/*.spec.js",
