@@ -13,7 +13,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Export contract - Summary list - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application - application over total contract value threshold, private insurance attempt, using an agent, agent is chraging - percentage method', () => {
+context('Insurance - Change your answers - Export contract - Summary list - As an exporter, I want to be able to review my input for the export contract again, So that I can do a final review of the information I previously input before submitting my application - application over total contract value threshold, private insurance attempt, using an agent, agent is chraging - percentage method', () => {
   let referenceNumber;
   let url;
 
