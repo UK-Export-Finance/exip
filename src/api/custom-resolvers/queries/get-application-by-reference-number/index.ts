@@ -10,7 +10,7 @@ import decryptNominatedLossPayee from '../../../helpers/decrypt-nominated-loss-p
  * Based on decrypt variables, decrypts part of application
  * returns full application
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the getApplicationByReferenceNumberVariables mutation
+ * @param {Object} GraphQL variables for the getApplicationByReferenceNumberVariables query
  * @param {Object} KeystoneJS context API
  * @returns {Promise<GetApplicationByReferenceNumberResponse>} Application with success flag
  */
@@ -20,7 +20,7 @@ const getApplicationByReferenceNumberQuery = async (
   context: Context,
 ): Promise<GetApplicationByReferenceNumberResponse> => {
   try {
-    console.info('Getting application by reference number');
+    console.info('Getting application by reference number %s', variables.referenceNumber);
 
     const { referenceNumber, decryptFinancialUk } = variables;
 

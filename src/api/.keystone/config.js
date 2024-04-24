@@ -6279,7 +6279,7 @@ var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 // custom-resolvers/queries/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
   try {
-    console.info("Getting application by reference number");
+    console.info("Getting application by reference number %s", variables.referenceNumber);
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
