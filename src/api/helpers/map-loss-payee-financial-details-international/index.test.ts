@@ -38,4 +38,16 @@ describe('api/helpers/map-loss-payee-financial-details-international', () => {
       expect(result.bankAddress).toEqual(mockLossPayeeFinancialDetailsInternational.bankAddress);
     });
   });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        mapLossPayeeFinancialDetailsInternational();
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error mapping loss payee financial details international')).toEqual(true);
+      }
+    });
+  });
 });

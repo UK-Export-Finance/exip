@@ -5725,23 +5725,28 @@ var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDet
 
 // helpers/map-loss-payee-financial-details-international/index.ts
 var mapLossPayeeFinancialDetailsInternational = (variables) => {
-  const { iban, bicSwiftCode, bankAddress } = variables;
-  let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
-  let bicSwiftCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
-  if (iban) {
-    ibanData = encrypt_default(iban);
+  try {
+    const { iban, bicSwiftCode, bankAddress } = variables;
+    let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let bicSwiftCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    if (iban) {
+      ibanData = encrypt_default(iban);
+    }
+    if (bicSwiftCode) {
+      bicSwiftCodeData = encrypt_default(bicSwiftCode);
+    }
+    const updateData = {
+      iban: ibanData.value,
+      ibanVector: ibanData.iv,
+      bicSwiftCode: bicSwiftCodeData.value,
+      bicSwiftCodeVector: bicSwiftCodeData.iv,
+      bankAddress
+    };
+    return updateData;
+  } catch (err) {
+    console.error("Error mapping loss payee financial details international %O", err);
+    throw new Error(`Error mapping loss payee financial details international ${err}`);
   }
-  if (bicSwiftCode) {
-    bicSwiftCodeData = encrypt_default(bicSwiftCode);
-  }
-  const updateData = {
-    iban: ibanData.value,
-    ibanVector: ibanData.iv,
-    bicSwiftCode: bicSwiftCodeData.value,
-    bicSwiftCodeVector: bicSwiftCodeData.iv,
-    bankAddress
-  };
-  return updateData;
 };
 var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
 
