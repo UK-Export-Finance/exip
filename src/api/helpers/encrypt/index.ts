@@ -15,6 +15,8 @@ const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANC
  */
 const encrypt = (dataToEncrypt: string): EncryptedData => {
   try {
+    console.info('Encrypting data');
+
     // generate the key
     const key = generateKey();
     // generate the initialisation vector
