@@ -16,4 +16,28 @@ describe('api/helpers/decrypt/generate-decipher', () => {
 
     expect(result.length).toEqual(decipher.length);
   });
+
+  describe('empty strings provided for key and vector', () => {
+    it('should return an error', () => {
+      try {
+        generateDecipher('', '');
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error generating decipher')).toEqual(true);
+      }
+    });
+  });
+
+  describe('Non-string key and iv provided', () => {
+    it('should return an error', () => {
+      try {
+        generateDecipher(123, 321);
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error generating decipher')).toEqual(true);
+      }
+    });
+  });
 });

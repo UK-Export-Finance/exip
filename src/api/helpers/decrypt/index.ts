@@ -18,21 +18,27 @@ const key = generateKey();
  * @returns {String} decrypted string
  */
 const decryptData = (dataToDecrypt: EncryptedData) => {
-  const { value, iv } = dataToDecrypt;
+  try {
+    const { value, iv } = dataToDecrypt;
 
-  // creates buffer in string format
-  const buffer = generateBufferInStringFormat(value);
+    // creates buffer in string format
+    const buffer = generateBufferInStringFormat(value);
 
-  // creates decipher in same format as the cipher used for encryption
-  const decipher = generateDecipher(key, iv);
+    // creates decipher in same format as the cipher used for encryption
+    const decipher = generateDecipher(key, iv);
 
-  // processes encrypted text in hex and produces utf-8 decrypted output
-  const decipherUpdate = decipher.update(buffer, ENCODING, OUTPUT_ENCODING);
+    // processes encrypted text in hex and produces utf-8 decrypted output
+    const decipherUpdate = decipher.update(buffer, ENCODING, OUTPUT_ENCODING);
 
-  // finalises decryption process for last portion of decrypted data in utf-8 format
-  const decipherFinal = decipher.final(OUTPUT_ENCODING);
+    // finalises decryption process for last portion of decrypted data in utf-8 format
+    const decipherFinal = decipher.final(OUTPUT_ENCODING);
 
-  return decipherUpdate.concat(decipherFinal);
+    return decipherUpdate.concat(decipherFinal);
+  } catch (err) {
+    console.error('Error decrypting data %O', err);
+
+    throw new Error(`Error decrypting data ${err}`);
+  }
 };
 
 const decrypt = {

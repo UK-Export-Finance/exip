@@ -14,19 +14,25 @@ const { ENCRYPTION_METHOD, ENCODING, STRING_ENCODING, OUTPUT_ENCODING } = FINANC
  * @returns {EncryptedData} value and initialisation vector
  */
 const encrypt = (dataToEncrypt: string): EncryptedData => {
-  // generate the key
-  const key = generateKey();
-  // generate the initialisation vector
-  const iv = generateInitialisationVector();
+  try {
+    // generate the key
+    const key = generateKey();
+    // generate the initialisation vector
+    const iv = generateInitialisationVector();
 
-  const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, iv);
+    const cipher = crypto.createCipheriv(ENCRYPTION_METHOD, key, iv);
 
-  const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING).concat(cipher.final(ENCODING))).toString(STRING_ENCODING);
+    const value = Buffer.from(cipher.update(dataToEncrypt, OUTPUT_ENCODING, ENCODING).concat(cipher.final(ENCODING))).toString(STRING_ENCODING);
 
-  return {
-    value,
-    iv,
-  };
+    return {
+      value,
+      iv,
+    };
+  } catch (err) {
+    console.error('Error encrypting data %O', err);
+
+    throw new Error(`Error encrypting data ${err}`);
+  }
 };
 
 export default encrypt;

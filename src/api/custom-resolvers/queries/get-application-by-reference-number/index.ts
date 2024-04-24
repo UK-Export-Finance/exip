@@ -30,7 +30,7 @@ const getApplicationByReferenceNumberQuery = async (
     // if object is populated
     if (application) {
       // populates application based on applicationIds
-      let populatedApplication = await getPopulatedApplication(context, application);
+      const populatedApplication = await getPopulatedApplication(context, application);
 
       /**
        * if decrypt variables are set to true
@@ -42,10 +42,7 @@ const getApplicationByReferenceNumberQuery = async (
 
         const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk);
 
-        populatedApplication = {
-          ...populatedApplication,
-          nominatedLossPayee: decryptedNominatedLossPayee,
-        };
+        populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
       }
 
       return {

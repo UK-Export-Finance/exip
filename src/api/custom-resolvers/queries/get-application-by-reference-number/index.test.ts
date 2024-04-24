@@ -82,13 +82,7 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
 
   describe('when the an error occurs', () => {
     it('should throw an error', async () => {
-      try {
-        await getApplicationByReferenceNumber();
-      } catch (err) {
-        const errorString = String(err);
-
-        expect(errorString.includes('Get application by reference number (GetApplicationByReferenceNumber mutation)')).toEqual(true);
-      }
+      await expect(getApplicationByReferenceNumber()).rejects.toThrow('Get application by reference number (GetApplicationByReferenceNumber mutation)');
     });
   });
 });
