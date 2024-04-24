@@ -9,34 +9,39 @@ import decryptData from '../decrypt';
  * @returns {ApplicationLossPayeeFinancialUk} decrypted accountNumber and sortCode in financialUk section
  */
 const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancialUk) => {
-  const updatedFinancialUk = applicationFinancialUk;
+  try {
+    const updatedFinancialUk = applicationFinancialUk;
 
-  const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
+    const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
 
-  let decryptedAccountNumber = '';
-  let decryptedSortCode = '';
+    let decryptedAccountNumber = '';
+    let decryptedSortCode = '';
 
-  /**
-   * If both accountNumber and accountNumberVector are defined,
-   * decrypt accountNumber using encrypted "value" and initialisation vector
-   */
-  if (accountNumber && accountNumberVector) {
-    decryptedAccountNumber = decryptData.decrypt({ value: accountNumber, iv: accountNumberVector });
+    /**
+     * If both accountNumber and accountNumberVector are defined,
+     * decrypt accountNumber using encrypted "value" and initialisation vector
+     */
+    if (accountNumber && accountNumberVector) {
+      decryptedAccountNumber = decryptData.decrypt({ value: accountNumber, iv: accountNumberVector });
+    }
+
+    /**
+     * If both sortCode and sortCodeVector are defined,
+     * decrypt sortCode using encrypted "value" and initialisation vector
+     */
+    if (sortCode && sortCodeVector) {
+      decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
+    }
+
+    // updates financialUk data with decrypted data
+    updatedFinancialUk.accountNumber = decryptedAccountNumber;
+    updatedFinancialUk.sortCode = decryptedSortCode;
+
+    return updatedFinancialUk;
+  } catch (err) {
+    console.error('Error decrypting financial uk %O', err);
+    throw new Error(`Error decrypting financial uk ${err}`);
   }
-
-  /**
-   * If both sortCode and sortCodeVector are defined,
-   * decrypt sortCode using encrypted "value" and initialisation vector
-   */
-  if (sortCode && sortCodeVector) {
-    decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
-  }
-
-  // updates financialUk data with decrypted data
-  updatedFinancialUk.accountNumber = decryptedAccountNumber;
-  updatedFinancialUk.sortCode = decryptedSortCode;
-
-  return updatedFinancialUk;
 };
 
 export default decryptFinancialUk;

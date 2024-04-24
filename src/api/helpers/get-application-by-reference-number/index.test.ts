@@ -43,4 +43,10 @@ describe('api/helpers/get-application-by-reference-number', () => {
       expect(result).toEqual(expectedApplication);
     });
   });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      await expect(getApplicationByReferenceNumber()).rejects.toThrow('Error getting application by reference number');
+    });
+  });
 });

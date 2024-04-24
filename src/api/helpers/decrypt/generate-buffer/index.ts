@@ -8,6 +8,13 @@ const { STRING_ENCODING, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER
  * @param {String} value
  * @returns {Buffer}
  */
-const generateBufferInStringFormat = (value: string) => Buffer.from(value, STRING_ENCODING).toString(OUTPUT_ENCODING);
+const generateBufferInStringFormat = (value: string) => {
+  try {
+    return Buffer.from(value, STRING_ENCODING).toString(OUTPUT_ENCODING);
+  } catch (err) {
+    console.error('Error generating buffer %O', err);
+    throw new Error(`Error generating buffer ${err}`);
+  }
+};
 
 export default generateBufferInStringFormat;

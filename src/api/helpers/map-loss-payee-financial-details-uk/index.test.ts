@@ -38,4 +38,16 @@ describe('api/helpers/map-loss-payee-financial-details-uk', () => {
       expect(result.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
     });
   });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        mapLossPayeeFinancialDetailsUk();
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error mapping loss payee financial details UK')).toEqual(true);
+      }
+    });
+  });
 });

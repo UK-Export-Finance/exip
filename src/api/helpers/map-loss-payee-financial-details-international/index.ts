@@ -9,34 +9,40 @@ import { ApplicationLossPayeeFinancialInternational } from '../../types';
  * @returns {Object} mapped data for saving
  */
 const mapLossPayeeFinancialDetailsInternational = (variables: ApplicationLossPayeeFinancialInternational) => {
-  const { iban, bicSwiftCode, bankAddress } = variables;
+  try {
+    const { iban, bicSwiftCode, bankAddress } = variables;
 
-  let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
 
-  let bicSwiftCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let bicSwiftCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
 
-  if (iban) {
-    ibanData = encrypt(iban);
+    if (iban) {
+      ibanData = encrypt(iban);
+    }
+
+    if (bicSwiftCode) {
+      bicSwiftCodeData = encrypt(bicSwiftCode);
+    }
+
+    /**
+     * object with encrypted data and initialisation vectors
+     * encrypts iban and bicSwiftCode
+     * adds the initialisation vectors
+     */
+    const updateData = {
+      iban: ibanData.value,
+      ibanVector: ibanData.iv,
+      bicSwiftCode: bicSwiftCodeData.value,
+      bicSwiftCodeVector: bicSwiftCodeData.iv,
+      bankAddress,
+    };
+
+    return updateData;
+  } catch (err) {
+    console.error('Error mapping loss payee financial details international %O', err);
+
+    throw new Error(`Error mapping loss payee financial details international ${err}`);
   }
-
-  if (bicSwiftCode) {
-    bicSwiftCodeData = encrypt(bicSwiftCode);
-  }
-
-  /**
-   * object with encrypted data and initialisation vectors
-   * encrypts iban and bicSwiftCode
-   * adds the initialisation vectors
-   */
-  const updateData = {
-    iban: ibanData.value,
-    ibanVector: ibanData.iv,
-    bicSwiftCode: bicSwiftCodeData.value,
-    bicSwiftCodeVector: bicSwiftCodeData.iv,
-    bankAddress,
-  };
-
-  return updateData;
 };
 
 export default mapLossPayeeFinancialDetailsInternational;

@@ -17,37 +17,42 @@ const decryptNominatedLossPayee = (
   decryptFinancialUk?: boolean,
   decryptFinancialInternational?: boolean,
 ) => {
-  let updatedNominatedLossPayee = nominatedLossPayee;
+  try {
+    let updatedNominatedLossPayee = nominatedLossPayee;
 
-  const { financialUk, financialInternational } = updatedNominatedLossPayee;
+    const { financialUk, financialInternational } = updatedNominatedLossPayee;
 
-  /**
-   * if decryptFinancialUk - decrypt accountNumber and sortCode in decryptFinancialUkData
-   * update updatedApplication with decrypted data
-   */
-  if (decryptFinancialUk) {
-    const updatedFinancialUk = decryptFinancialUkData(financialUk);
+    /**
+     * if decryptFinancialUk - decrypt accountNumber and sortCode in decryptFinancialUkData
+     * update updatedApplication with decrypted data
+     */
+    if (decryptFinancialUk) {
+      const updatedFinancialUk = decryptFinancialUkData(financialUk);
 
-    updatedNominatedLossPayee = {
-      ...updatedNominatedLossPayee,
-      financialUk: updatedFinancialUk,
-    };
+      updatedNominatedLossPayee = {
+        ...updatedNominatedLossPayee,
+        financialUk: updatedFinancialUk,
+      };
+    }
+
+    /**
+     * if decryptFinancialInternational - decrypt iban and bicSwiftCode in decryptFinancialInternationalData
+     * update updatedApplication with decrypted data
+     */
+    if (decryptFinancialInternational) {
+      const updatedFinancialInternational = decryptFinancialInternationalData(financialInternational);
+
+      updatedNominatedLossPayee = {
+        ...updatedNominatedLossPayee,
+        financialInternational: updatedFinancialInternational,
+      };
+    }
+
+    return updatedNominatedLossPayee;
+  } catch (err) {
+    console.error('Error decrypting nominated loss payee %O', err);
+    throw new Error(`Error decrypting nominated loss payee ${err}`);
   }
-
-  /**
-   * if decryptFinancialInternational - decrypt iban and bicSwiftCode in decryptFinancialInternationalData
-   * update updatedApplication with decrypted data
-   */
-  if (decryptFinancialInternational) {
-    const updatedFinancialInternational = decryptFinancialInternationalData(financialInternational);
-
-    updatedNominatedLossPayee = {
-      ...updatedNominatedLossPayee,
-      financialInternational: updatedFinancialInternational,
-    };
-  }
-
-  return updatedNominatedLossPayee;
 };
 
 export default decryptNominatedLossPayee;

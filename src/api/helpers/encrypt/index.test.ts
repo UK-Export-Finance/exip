@@ -28,4 +28,16 @@ describe('api/helpers/encrypt', () => {
 
     expect(result.iv.length).toEqual(iv.length);
   });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        encrypt();
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error encrypting data')).toEqual(true);
+      }
+    });
+  });
 });

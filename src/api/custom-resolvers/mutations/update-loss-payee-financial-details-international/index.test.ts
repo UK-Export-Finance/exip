@@ -40,13 +40,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
-      try {
-        await updateLossPayeeFinancialDetailsInternational();
-      } catch (err) {
-        const errorString = String(err);
-
-        expect(errorString.includes('Updating loss payee financial details international')).toEqual(true);
-      }
+      await expect(updateLossPayeeFinancialDetailsInternational()).rejects.toThrow('Updating loss payee financial details international');
     });
   });
 });
