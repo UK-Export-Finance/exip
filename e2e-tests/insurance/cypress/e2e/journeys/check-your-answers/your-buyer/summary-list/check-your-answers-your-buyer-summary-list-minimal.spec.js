@@ -48,11 +48,8 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
 
       task.link().click();
 
-      // To get past "Policy" check your answers page
-      cy.submitCheckYourAnswersForm();
-
       // To get past "Your business" check your answers page
-      cy.submitCheckYourAnswersForm();
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
 

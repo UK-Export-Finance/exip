@@ -10,7 +10,7 @@ const { SUBMIT_APPLICATION } = TASKS.LIST;
 const {
   INSURANCE_ROOT,
   DECLARATIONS: { CONFIDENTIALITY },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
+  CHECK_YOUR_ANSWERS: { YOUR_BUSINESS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -38,7 +38,7 @@ const createSubmitApplicationTasks = (
   const dependencies = [...initialChecksFields, ...prepareApplicationFields];
 
   const CHECK_ANSWERS = {
-    href: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
+    href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
     title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
     id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
     fields: [POLICY, EXPORTER_BUSINESS, BUYER],

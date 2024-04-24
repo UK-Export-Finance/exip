@@ -20,7 +20,7 @@ export const FIELD_ID = CHECK_YOUR_ANSWERS_FIELD_IDS.POLICY;
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    CHECK_YOUR_ANSWERS: { YOUR_BUSINESS, TYPE_OF_POLICY_SAVE_AND_BACK },
+    CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT, TYPE_OF_POLICY_SAVE_AND_BACK },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -41,10 +41,10 @@ export const pageVariables = (referenceNumber: number) => ({
 
 /**
  * get
- * Render the check your answers policy page
+ * Render the Check your answers - Policy page
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
- * @returns {Express.Response.render} check your answers policy page
+ * @returns {Express.Response.render} Check your answers - Policy page
  */
 export const get = async (req: Request, res: Response) => {
   try {
@@ -90,7 +90,7 @@ export const get = async (req: Request, res: Response) => {
       ...pageVariables(referenceNumber),
     });
   } catch (err) {
-    console.error('Error getting check your answers - policy %O', err);
+    console.error('Error getting Check your answers - Policy %O', err);
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 };
@@ -121,9 +121,9 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`);
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`);
   } catch (err) {
-    console.error('Error updating check your answers - policy %O', err);
+    console.error('Error updating Check your answers - Policy %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
