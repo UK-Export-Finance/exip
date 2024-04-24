@@ -32,4 +32,12 @@ describe('api/helpers/decrypt-financial-uk', () => {
 
     expect(result).toEqual(expected);
   });
+
+  try {
+    decryptFinancialUk();
+  } catch (err) {
+    const errorString = String(err);
+
+    expect(errorString.includes('Error decrypting financial uk')).toEqual(true);
+  }
 });

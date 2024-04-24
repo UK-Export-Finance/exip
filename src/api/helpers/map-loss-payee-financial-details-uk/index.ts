@@ -9,34 +9,40 @@ import { ApplicationLossPayeeFinancialUk } from '../../types';
  * @returns {Object} mapped data for saving
  */
 const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancialUk) => {
-  const { accountNumber, sortCode, bankAddress } = variables;
+  try {
+    const { accountNumber, sortCode, bankAddress } = variables;
 
-  let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
 
-  let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
+    let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
 
-  if (accountNumber) {
-    accountNumberData = encrypt(accountNumber);
+    if (accountNumber) {
+      accountNumberData = encrypt(accountNumber);
+    }
+
+    if (sortCode) {
+      sortCodeData = encrypt(sortCode);
+    }
+
+    /**
+     * object with encrypted data and initialisation vectors
+     * encrypts accountNumber and sortCode
+     * adds the initialisation vectors
+     */
+    const updateData = {
+      accountNumber: accountNumberData.value,
+      accountNumberVector: accountNumberData.iv,
+      sortCode: sortCodeData.value,
+      sortCodeVector: sortCodeData.iv,
+      bankAddress,
+    };
+
+    return updateData;
+  } catch (err) {
+    console.error('Error mapping loss payee financial details UK %O', err);
+
+    throw new Error(`Error mapping loss payee financial details UK ${err}`);
   }
-
-  if (sortCode) {
-    sortCodeData = encrypt(sortCode);
-  }
-
-  /**
-   * object with encrypted data and initialisation vectors
-   * encrypts accountNumber and sortCode
-   * adds the initialisation vectors
-   */
-  const updateData = {
-    accountNumber: accountNumberData.value,
-    accountNumberVector: accountNumberData.iv,
-    sortCode: sortCodeData.value,
-    sortCodeVector: sortCodeData.iv,
-    bankAddress,
-  };
-
-  return updateData;
 };
 
 export default mapLossPayeeFinancialDetailsUk;

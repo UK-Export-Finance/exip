@@ -1,4 +1,4 @@
-import decrypt from '.';
+import cypher from '.';
 import encrypt from '../encrypt';
 
 describe('api/helpers/decrypt', () => {
@@ -7,7 +7,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt.decrypt(encryptedValue);
+    const result = cypher.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -17,7 +17,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt.decrypt(encryptedValue);
+    const result = cypher.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -27,7 +27,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt.decrypt(encryptedValue);
+    const result = cypher.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -37,7 +37,7 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt.decrypt(encryptedValue);
+    const result = cypher.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
   });
@@ -47,8 +47,14 @@ describe('api/helpers/decrypt', () => {
 
     const encryptedValue = encrypt(dataToEncrypt);
 
-    const result = decrypt.decrypt(encryptedValue);
+    const result = cypher.decrypt(encryptedValue);
 
     expect(result).toEqual(dataToEncrypt);
+  });
+
+  describe('when the an error occurs', () => {
+    it('should throw an error', async () => {
+      await expect(cypher.decrypt()).rejects.toThrow('Error decrypting data');
+    });
   });
 });
