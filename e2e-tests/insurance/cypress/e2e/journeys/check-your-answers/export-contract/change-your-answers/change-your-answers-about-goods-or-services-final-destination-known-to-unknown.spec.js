@@ -75,7 +75,7 @@ context('Insurance - Check your answers - Export contract - About goods or servi
     it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`, () => {
       cy.navigateToUrl(url);
 
-      const fieldVariables = getFieldVariables(FIELD_ID, referenceNumber);
+      const fieldVariables = getFieldVariables(referenceNumber);
 
       cy.checkChangeLinkUrl(fieldVariables, referenceNumber, FIELD_ID);
     });
