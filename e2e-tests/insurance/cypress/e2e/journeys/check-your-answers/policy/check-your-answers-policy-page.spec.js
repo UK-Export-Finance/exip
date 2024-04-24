@@ -5,10 +5,10 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
   CHECK_YOUR_ANSWERS: {
+    YOUR_BUYER,
+    EXPORT_CONTRACT,
     TYPE_OF_POLICY,
-    YOUR_BUSINESS,
   },
 } = INSURANCE_ROUTES;
 
@@ -32,6 +32,9 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       cy.assertUrl(url);
@@ -50,7 +53,7 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
     cy.corePageChecks({
       pageTitle: CONTENT_STRINGS.PAGE_TITLE,
       currentHref: `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`,
-      backLink: `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`,
+      backLink: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUYER}`,
       submitButtonCopy: BUTTONS.CONFIRM_AND_CONTINUE,
     });
   });
@@ -74,12 +77,12 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
   });
 
   describe('form submission', () => {
-    it(`should redirect to ${YOUR_BUSINESS}`, () => {
+    it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       cy.navigateToUrl(url);
 
       cy.clickSubmitButton();
 
-      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`;
+      const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
       cy.assertUrl(expectedUrl);
     });
 
@@ -88,8 +91,8 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
         cy.navigateToAllSectionsUrl(referenceNumber);
       });
 
-      it('should retain the status of task `check your answers` as `in progress`', () => {
-        cy.checkTaskCheckAnswersStatusIsInProgress();
+      it('should change the status of task `check your answers` to `completed`', () => {
+        cy.checkTaskCheckAnswersStatusIsComplete();
       });
     });
   });

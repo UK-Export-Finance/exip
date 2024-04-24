@@ -28,12 +28,6 @@
     summaryLists: SUMMARY_LISTS
   }) }}
 
-  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
-
-    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
-
-    <a class="govuk-button" href="{{ SAVE_AND_BACK_URL }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK }}</a>
-
-  </form>
+  <a class="govuk-button" href="{{ SAVE_AND_BACK_URL }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK }}</a>
 
 {% endblock %}

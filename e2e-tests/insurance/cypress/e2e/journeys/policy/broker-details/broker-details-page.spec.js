@@ -94,10 +94,11 @@ context("Insurance - Policy - Broker details page - As an exporter, I want to pr
 
     it(`renders ${EMAIL} label and input`, () => {
       const fieldId = EMAIL;
-      const field = fieldSelector(fieldId);
 
-      cy.checkText(field.label(), FIELD_STRINGS[fieldId].LABEL);
-      field.input().should('exist');
+      cy.checkEmailFieldRendering({
+        fieldId,
+        contentStrings: FIELD_STRINGS[fieldId],
+      });
     });
 
     it(`renders ${FULL_ADDRESS} textarea`, () => {
