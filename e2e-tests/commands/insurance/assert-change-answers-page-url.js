@@ -29,9 +29,9 @@ const assertChangeAnswersPageUrl = ({
     expected = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${route}#${fieldId}`;
 
     /**
-   * if isInsuranceEligibility, then does not need reference number
-   * route will contain the full route including INSURANCE_ROUTE and fieldId needs to be added
-   */
+     * if isInsuranceEligibility, then does not need reference number
+     * route will contain the full route including INSURANCE_ROUTE and fieldId needs to be added
+     */
     if (isInsuranceEligibility) {
       expected = `${baseUrl}${route}#${fieldId}`;
     }

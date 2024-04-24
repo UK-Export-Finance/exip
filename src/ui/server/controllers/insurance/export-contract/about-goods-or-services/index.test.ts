@@ -19,7 +19,8 @@ import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } fro
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -227,7 +228,7 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
       });
 
       describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`, async () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES_CHANGE;
 
           await post(req, res);
@@ -239,12 +240,12 @@ describe('controllers/insurance/export-contract/about-goods-or-services', () => 
       });
 
       describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`, async () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.originalUrl = INSURANCE_ROUTES.EXPORT_CONTRACT.ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE;
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
