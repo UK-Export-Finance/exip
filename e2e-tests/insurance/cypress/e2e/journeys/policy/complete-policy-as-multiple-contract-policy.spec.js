@@ -29,8 +29,13 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
       cy.completeAndSubmitBrokerForm({});
       cy.completeAndSubmitLossPayeeForm({});
 
-      // go back to the all sections page
-      cy.clickSaveAndBackButton();
+      /**
+       * Submit the "Policy - check your answers" form,
+       * This proceeds to the next part of the flow - "Export contract - start"
+       * From here, we can get back to the "All sections" page.
+       */
+      cy.clickSubmitButton();
+      cy.clickAllSectionsLink();
     });
   });
 
