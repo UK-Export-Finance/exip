@@ -178,7 +178,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.countries.getAll = getCurrenciesSpy;
+          api.keystone.countries.getAll = getCountriesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -191,7 +191,7 @@ describe('controllers/insurance/check-your-answers/policy', () => {
       describe('when the get countries response does not return a populated array', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.resolve([]));
-          api.keystone.countries.getAll = getCurrenciesSpy;
+          api.keystone.countries.getAll = getCountriesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

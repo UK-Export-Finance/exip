@@ -76,9 +76,9 @@ describe('controllers/insurance/check-your-answers/your-business', () => {
       const checkAndChange = true;
       const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
 
-      const exporterFields = requiredFields(company.hasDifferentTradingName);
+      const businessFields = requiredFields(company.hasDifferentTradingName);
 
-      const status = sectionStatus(exporterFields, mockApplication);
+      const status = sectionStatus(businessFields, mockApplication);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

@@ -2,8 +2,12 @@ import { PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
+import api from '../../../../api';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
+import requiredFields from '../../../../helpers/required-fields/export-contract';
+import sectionStatus from '../../../../helpers/section-status';
 import { Request, Response } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
@@ -48,7 +52,36 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber } = application;
+    const { referenceNumber, exportContract, totalContractValueOverThreshold } = application;
+
+    const {
+      finalDestinationKnown,
+      privateMarket: { attempted: attemptedPrivateMarketCover },
+      agent: {
+        isUsingAgent,
+        service: {
+          agentIsCharging,
+          charge: { method: agentChargeMethod },
+        },
+      },
+    } = exportContract;
+
+    const checkAndChange = true;
+
+    const countries = await api.keystone.countries.getAll();
+
+    const summaryList = exportContractSummaryLists(exportContract, totalContractValueOverThreshold, referenceNumber, countries, checkAndChange);
+
+    const exportContractFields = requiredFields({
+      totalContractValueOverThreshold,
+      finalDestinationKnown,
+      attemptedPrivateMarketCover,
+      isUsingAgent,
+      agentIsCharging,
+      agentChargeMethod,
+    });
+
+    const status = sectionStatus(exportContractFields, application);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -57,6 +90,8 @@ export const get = async (req: Request, res: Response) => {
       }),
       userName: getUserNameFromSession(req.session.user),
       ...pageVariables(referenceNumber),
+      status,
+      SUMMARY_LISTS: summaryList,
     });
   } catch (err) {
     console.error('Error getting Check your answers - Export contract %O', err);
