@@ -83,7 +83,7 @@ describe('middleware/insurance/get-application', () => {
 
   describe(`when the route is not relevant - ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
     beforeEach(() => {
-      req.originalUrl = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
+      req.originalUrl = `${INSURANCE_ROOT}/${referenceNumber}/${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
       next = nextSpy;
     });
 
