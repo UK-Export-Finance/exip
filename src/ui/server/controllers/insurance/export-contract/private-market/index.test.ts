@@ -18,9 +18,12 @@ const {
     CHECK_YOUR_ANSWERS,
     DECLINED_BY_PRIVATE_MARKET,
     DECLINED_BY_PRIVATE_MARKET_CHANGE,
+    DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE,
     PRIVATE_MARKET_SAVE_AND_BACK,
     PRIVATE_MARKET_CHANGE,
+    PRIVATE_MARKET_CHECK_AND_CHANGE,
   },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -176,29 +179,6 @@ describe('controllers/insurance/export-contract/private-market', () => {
         expect(mapAndSave.privateMarket).toHaveBeenCalledWith(payload, res.locals.application);
       });
 
-      describe('when the answer is false', () => {
-        it(`should redirect to ${AGENT}`, async () => {
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
-      describe('when the answer is true', () => {
-        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET}`, async () => {
-          req.body = {
-            [FIELD_ID]: 'true',
-          };
-
-          await post(req, res);
-
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
-
-          expect(res.redirect).toHaveBeenCalledWith(expected);
-        });
-      });
-
       describe("when the answer is false and the url's last substring is `change`", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = PRIVATE_MARKET_CHANGE;
@@ -224,6 +204,59 @@ describe('controllers/insurance/export-contract/private-market', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the answer is false and the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = PRIVATE_MARKET_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when the answer is true, no ${DECLINED_DESCRIPTION} available and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          req.originalUrl = PRIVATE_MARKET_CHECK_AND_CHANGE;
+
+          delete res.locals.application?.exportContract.privateMarket[DECLINED_DESCRIPTION];
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the answer is false', () => {
+        it(`should redirect to ${AGENT}`, async () => {
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT}`;
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe('when the answer is true', () => {
+        it(`should redirect to ${DECLINED_BY_PRIVATE_MARKET}`, async () => {
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
