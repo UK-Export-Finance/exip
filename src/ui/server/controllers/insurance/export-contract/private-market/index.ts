@@ -8,11 +8,20 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/private-market';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { DECLINED_BY_PRIVATE_MARKET, DECLINED_BY_PRIVATE_MARKET_CHANGE, PRIVATE_MARKET_SAVE_AND_BACK, AGENT, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    DECLINED_BY_PRIVATE_MARKET,
+    DECLINED_BY_PRIVATE_MARKET_CHANGE,
+    DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE,
+    PRIVATE_MARKET_SAVE_AND_BACK,
+    AGENT,
+    CHECK_YOUR_ANSWERS,
+  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -136,6 +145,23 @@ export const post = async (req: Request, res: Response) => {
       }
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the URL is a "check and change" route,
+     * the exporter has ATTEMPTED (private market cover),
+     * and no DECLINED_DESCRIPTION has been submitted,
+     * redirect to DECLINED_BY_PRIVATE_MARKET with /check-and-change in URL.
+     * This ensures that the next page can consume /check-and-change in the URL
+     * and therefore correctly redirect on submission.
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (attemptedPrivateMarketCover && !hasDeclinedDescription) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     /**
