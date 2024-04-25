@@ -19,7 +19,7 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [FINANCIAL_ADDRESS];
  * Strip invalid fields from submitted form data and update the application.
  * This is used for any save functionality in the Policy - Loss payee financial details Uk part of the application.
  * @param {Application} Application
- * @param {Express.Request.body} Form data
+ * @param {RequestBody} Form data
  * @param {Object} Field error list
  * @returns {Promise<Object>} Saved data
  */

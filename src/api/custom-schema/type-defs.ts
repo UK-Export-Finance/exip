@@ -103,6 +103,11 @@ const typeDefs = `
     eligibility: Boolean!
   }
 
+  input ApplicationWhereUniqueInput {
+    id: ID
+    referenceNumber: Int
+  }
+
   input LossPayeeFinancialDetailsUkInput {
     id: String
     accountNumber: String
@@ -227,6 +232,40 @@ const typeDefs = `
     supportedCurrencies: [MappedCurrency]
     alternativeCurrencies: [MappedCurrency]
     allCurrencies: [MappedCurrency]
+  }
+
+  type Owner {
+    firstName: String
+    lastName: String
+    email: String
+  }
+
+  type PopulatedApplication {
+    id: String!
+    version: Int
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    dealType: String!
+    submissionCount: Int
+    submissionDeadline: DateTime
+    submissionType: String
+    submissionDate: DateTime
+    status: String!
+    eligibility: Eligibility
+    nominatedLossPayee: NominatedLossPayee
+    policyContact: PolicyContact
+    owner: Owner
+    company: Company
+    business: Business
+    broker: Broker
+    buyer: Buyer
+    sectionReview: SectionReview
+    declaration: Declaration
+  }
+
+  type ApplicationSuccessResponse {
+    success: Boolean!
+    application: PopulatedApplication
   }
 
   type Mutation {
@@ -363,6 +402,12 @@ const typeDefs = `
     getCompaniesHouseInformation(
       companiesHouseNumber: String!
     ): CompaniesHouseResponse
+
+    """ gets application by reference number """
+    getApplicationByReferenceNumber(
+      referenceNumber: Int
+      decryptFinancialUk: Boolean
+    ): ApplicationSuccessResponse
 
     """ get Ordnance Survey address """
     getOrdnanceSurveyAddress(

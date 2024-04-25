@@ -143,6 +143,18 @@ export const ACCOUNT = {
   MAX_AUTH_RETRIES_TIMEFRAME: DATE_24_HOURS_IN_THE_PAST(),
 };
 
+/**
+ * default object for data encryption
+ * if no data or initialisation vector provided
+ * then empty string for value and iv must be saved to database
+ * eg. if wiping field, then empty string will wipe data
+ * replaced by values if data and initalisation vector provided
+ */
+export const DEFAULT_ENCRYPTION_SAVE_OBJECT = {
+  value: '',
+  iv: '',
+};
+
 export const FINANCIAL_DETAILS = {
   ENCRYPTION: {
     CIPHER: {

@@ -22,6 +22,7 @@ import {
   getApimCisCountries,
   getApimCurrencies,
   getCompaniesHouseInformation,
+  getApplicationByReferenceNumber,
   getOrdnanceSurveyAddress,
   verifyAccountPasswordResetToken,
 } from './queries';
@@ -58,6 +59,7 @@ const customResolvers = {
     getApimCisCountries,
     getApimCurrencies,
     getCompaniesHouseInformation,
+    getApplicationByReferenceNumber,
     getOrdnanceSurveyAddress,
     verifyAccountPasswordResetToken,
   },

@@ -1,3 +1,4 @@
+import { SuccessResponse } from '../generic';
 import { Country } from '../country';
 import { Relationship } from '../relationship';
 
@@ -78,12 +79,21 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+export interface ApplicationFinancialUk extends Relationship {
+  accountNumber?: string;
+  accountNumberVector?: string;
+  sortCode?: string;
+  sortCodeVector?: string;
+  bankAddress?: string;
+}
+
 export interface ApplicationNominatedLossPayee extends Relationship {
   applicationId?: string;
   isAppointed?: boolean;
   name?: string;
   isLocatedInUk?: boolean;
   isLocatedInternationally?: boolean;
+  financialUk: ApplicationFinancialUk;
 }
 
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
@@ -273,6 +283,15 @@ export interface CreatePolicyResponse {
 
 export interface DeleteApplicationByReferenceNumberVariables {
   referenceNumber: number;
+}
+
+export interface GetApplicationByReferenceNumberVariables {
+  referenceNumber: number;
+  decryptFinancialUk?: boolean;
+}
+
+export interface GetApplicationByReferenceNumberResponse extends SuccessResponse {
+  application?: Application;
 }
 
 export interface SubmitApplicationVariables {
