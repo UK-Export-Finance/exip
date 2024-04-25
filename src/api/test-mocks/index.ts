@@ -6,6 +6,7 @@ import cisCountries from './mock-CIS-countries';
 import currencies from './mock-currencies';
 import company from './mock-company';
 import companySicCode from './mock-company-sic-code';
+import nominatedLossPayee from './mock-nominated-loss-payee';
 import { Account } from '../types';
 
 const {
@@ -36,12 +37,16 @@ export const mockOTP = {
   expiry: new Date(),
 };
 
+export const mockIV = 'SVheFWN4nT+2pac4';
+
 export const mockApplication = application;
 
 export const mockCisCountries = cisCountries;
 
 export const mockCompany = company;
 export const mockCompanySicCode = companySicCode;
+
+export const mockNominatedLossPayee = nominatedLossPayee;
 
 export const mockBuyer = {
   companyOrOrganisationName: 'Mock buyer',
