@@ -106,7 +106,7 @@ const applicationByReferenceNumberQuery = gql`
               agentIsCharging
               charge {
                 id
-                chargePercentage
+                percentageCharge
                 fixedSumAmount
                 method
                 payableCountryCode

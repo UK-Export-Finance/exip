@@ -3,13 +3,13 @@ import LOSS_PAYEE_ROUTES from '../../constants/routes/insurance/policy/loss-paye
 const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT } = LOSS_PAYEE_ROUTES;
 
 /**
- * generateFullApplicationByReferenceNumberVariables
+ * getApplicationByReferenceNumberVariables
  * generates variables for getApplicationByReferenceNumber
  * @param {String} referenceNumber
  * @param {String} url of the page
  * @returns {ApplicationByReferenceNumberVariables} variables in correct format
  */
-const generateFullApplicationByReferenceNumberVariables = (referenceNumber: string, url: string) => {
+const getApplicationByReferenceNumberVariables = (referenceNumber: string, url: string) => {
   let decryptFinancialUk;
 
   if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT)) {
@@ -22,4 +22,4 @@ const generateFullApplicationByReferenceNumberVariables = (referenceNumber: stri
   };
 };
 
-export default generateFullApplicationByReferenceNumberVariables;
+export default getApplicationByReferenceNumberVariables;

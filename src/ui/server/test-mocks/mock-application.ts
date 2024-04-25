@@ -228,7 +228,7 @@ export const mockApplicationAgentServiceChargeEmpty = {
         ...mockExportContractAgentService,
         charge: {
           ...mockExportContractAgentServiceCharge,
-          chargePercentage: '',
+          percentageCharge: '',
           fixedSumAmount: '',
           method: '',
           payableCountryCode: '',
