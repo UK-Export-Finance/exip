@@ -143,6 +143,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "check and change" route,
+     * the agent IS_CHARGING,
+     * redirect to AGENT_CHARGES_CHECK_AND_CHANGE form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (agentIsCharging) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHECK_AND_CHANGE}`);
