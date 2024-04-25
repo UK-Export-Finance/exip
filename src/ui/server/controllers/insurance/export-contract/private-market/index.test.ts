@@ -210,7 +210,7 @@ describe('controllers/insurance/export-contract/private-market', () => {
       });
 
       describe("when the answer is false and the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
           req.originalUrl = PRIVATE_MARKET_CHECK_AND_CHANGE;
 
           await post(req, res);
