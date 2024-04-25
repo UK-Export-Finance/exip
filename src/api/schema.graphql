@@ -3569,7 +3569,7 @@ type Owner {
   email: String
 }
 
-type FinancialUk {
+type ApplicationNominatedLossPayeeUk {
   id: String
   accountNumber: String
   sortCode: String
@@ -3582,7 +3582,7 @@ type ApplicationNominatedLossPayee {
   isLocatedInUk: Boolean
   isLocatedInternationally: Boolean
   name: String
-  financialUk: FinancialUk
+  financialUk: ApplicationNominatedLossPayeeUk
 }
 
 type PopulatedApplication {

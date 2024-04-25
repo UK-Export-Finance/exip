@@ -1,4 +1,4 @@
-import generateFullApplicationByReferenceNumberVariables from '.';
+import getApplicationByReferenceNumberVariables from '.';
 import LOSS_PAYEE_ROUTES from '../../constants/routes/insurance/policy/loss-payee';
 import { INSURANCE_ROUTES } from '../../constants/routes/insurance';
 import { referenceNumber } from '../../test-mocks';
@@ -11,7 +11,7 @@ describe('server/helpers/generate-full-application-by-reference-number-variables
     const url = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
     it('should return the referenceNumber and decryptFinancialUk as "undefined"', () => {
-      const result = generateFullApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
+      const result = getApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
 
       const expected = {
         referenceNumber,
@@ -26,7 +26,7 @@ describe('server/helpers/generate-full-application-by-reference-number-variables
     const url = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
 
     it('should return the referenceNumber and decryptFinancialUk as "true"', () => {
-      const result = generateFullApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
+      const result = getApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
 
       const expected = {
         referenceNumber,

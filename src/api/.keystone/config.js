@@ -2127,7 +2127,7 @@ var typeDefs = `
     email: String
   }
 
-  type FinancialUk {
+  type ApplicationNominatedLossPayeeUk {
     id: String
     accountNumber: String
     sortCode: String
@@ -2140,7 +2140,7 @@ var typeDefs = `
     isLocatedInUk: Boolean
     isLocatedInternationally: Boolean
     name: String
-    financialUk: FinancialUk
+    financialUk: ApplicationNominatedLossPayeeUk
   }
 
   type PopulatedApplication {
@@ -4301,7 +4301,20 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId, nominatedLossPayeeId } = application2;
+  const {
+    eligibilityId,
+    ownerId,
+    policyId,
+    policyContactId,
+    exportContractId,
+    companyId,
+    businessId,
+    brokerId,
+    buyerId,
+    declarationId,
+    nominatedLossPayeeId,
+    sectionReviewId
+  } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -4418,6 +4431,12 @@ var getPopulatedApplication = async (context, application2) => {
   if (!declaration) {
     throw new Error(generateErrorMessage("declaration", application2.id));
   }
+  const sectionReview = await context.db.SectionReview.findOne({
+    where: { id: sectionReviewId }
+  });
+  if (!sectionReview) {
+    throw new Error(generateErrorMessage("sectionReview", application2.id));
+  }
   const populatedApplication = {
     ...application2,
     eligibility: populatedEligibility,
@@ -4431,7 +4450,8 @@ var getPopulatedApplication = async (context, application2) => {
     owner: account2,
     policy,
     policyContact,
-    nominatedLossPayee
+    nominatedLossPayee,
+    sectionReview
   };
   return populatedApplication;
 };

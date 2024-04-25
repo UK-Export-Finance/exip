@@ -241,7 +241,7 @@ const typeDefs = `
     email: String
   }
 
-  type FinancialUk {
+  type ApplicationNominatedLossPayeeUk {
     id: String
     accountNumber: String
     sortCode: String
@@ -254,7 +254,7 @@ const typeDefs = `
     isLocatedInUk: Boolean
     isLocatedInternationally: Boolean
     name: String
-    financialUk: FinancialUk
+    financialUk: ApplicationNominatedLossPayeeUk
   }
 
   type PopulatedApplication {
