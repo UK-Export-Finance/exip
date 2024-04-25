@@ -40,7 +40,7 @@ const NEW_COUNTRY_INPUT = XAD.NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - About goods or services - Summary list', () => {
+context('Insurance - Change your answers - Export contract - Summary list - About goods or services', () => {
   let referenceNumber;
   let url;
 
