@@ -13,11 +13,12 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { AGENT_SERVICE, AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { AGENT_SERVICE, AGENT_SERVICE_CHECK_AND_CHANGE, AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -153,6 +154,10 @@ export const post = async (req: Request, res: Response) => {
 
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE_CHECK_AND_CHANGE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);

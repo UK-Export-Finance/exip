@@ -11,12 +11,14 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES_CHANGE },
+  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_CHARGES, AGENT_SERVICE_SAVE_AND_BACK, AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -139,6 +141,14 @@ export const post = async (req: Request, res: Response) => {
       }
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckChangeRoute(req.originalUrl)) {
+      if (agentIsCharging) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     /**
