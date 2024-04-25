@@ -2155,9 +2155,9 @@ var typeDefs = `
     submissionDate: DateTime
     referenceNumber: Int
     status: String!
+    eligibility: Eligibility
     exportContract: ExportContract
     policy: Policy
-    eligibility: Eligibility
     nominatedLossPayee: NominatedLossPayee
     policyContact: PolicyContact
     owner: Owner

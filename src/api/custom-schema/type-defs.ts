@@ -271,11 +271,7 @@ const typeDefs = `
     status: String!
     eligibility: Eligibility
     exportContract: ExportContract
-    nominatedLossPayee: ApplicationNominatedLossPayee
-    policyContact: PolicyContact
     policy: Policy
-    status: String!
-    eligibility: Eligibility
     nominatedLossPayee: NominatedLossPayee
     policyContact: PolicyContact
     owner: Owner
