@@ -17,6 +17,22 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
+// routes in policy that require a get-application-by-reference-number middleware
+const {
+  ROOT,
+  LOSS_PAYEE_ROOT,
+  LOSS_PAYEE_CHANGE,
+  LOSS_PAYEE_CHECK_AND_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+  CHECK_YOUR_ANSWERS,
+  ...POLICY_ROUTES
+} = POLICY;
+
 /**
  * RELEVANT_ROUTES
  * Routes that need to GET and consume an application.
@@ -24,7 +40,8 @@ const {
  */
 export const RELEVANT_ROUTES = [
   ALL_SECTIONS,
-  POLICY.ROOT,
+  // remaining policy routes which do not require get-application-by-reference-number middleware
+  ...Object.values(POLICY_ROUTES),
   EXPORTER_BUSINESS.ROOT,
   YOUR_BUYER.ROOT,
   EXPORT_CONTRACT.ROOT,

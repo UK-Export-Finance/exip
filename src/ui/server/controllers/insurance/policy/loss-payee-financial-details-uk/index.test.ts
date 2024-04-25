@@ -8,8 +8,9 @@ import insuranceCorePageVariables from '../../../../helpers/page-variables/core/
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-uk';
-import { Request, Response } from '../../../../../types';
+import { Application, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockLossPayeeFinancialDetailsUk, mockApplication, referenceNumber } from '../../../../test-mocks';
 
 const { SORT_CODE, ACCOUNT_NUMBER } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
@@ -87,6 +88,8 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
     it('should render template', () => {
       get(req, res);
 
+      const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;
+
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -94,6 +97,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk', () => {
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        submittedValues: mappedApplication.nominatedLossPayee.financialUk,
       });
     });
 

@@ -24,6 +24,21 @@ const {
   APPLICATION_SUBMITTED,
 } = INSURANCE_ROUTES;
 
+const {
+  ROOT,
+  LOSS_PAYEE_ROOT,
+  LOSS_PAYEE_CHANGE,
+  LOSS_PAYEE_CHECK_AND_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+  CHECK_YOUR_ANSWERS,
+  ...POLICY_ROUTES
+} = POLICY;
+
 describe('middleware/insurance/get-application', () => {
   let req: Request;
   let res: Response;
@@ -41,7 +56,7 @@ describe('middleware/insurance/get-application', () => {
     it('should return an array of routes', () => {
       const expected = [
         ALL_SECTIONS,
-        POLICY.ROOT,
+        ...Object.values(POLICY_ROUTES),
         EXPORTER_BUSINESS.ROOT,
         YOUR_BUYER.ROOT,
         EXPORT_CONTRACT.ROOT,
@@ -54,19 +69,6 @@ describe('middleware/insurance/get-application', () => {
       ];
 
       expect(RELEVANT_ROUTES).toEqual(expected);
-    });
-  });
-
-  describe('when the route is not relevant', () => {
-    beforeEach(() => {
-      req.originalUrl = `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}${CHECK_IF_ELIGIBLE}`;
-      next = nextSpy;
-    });
-
-    it('should call next()', async () => {
-      await getApplicationMiddleware(req, res, next);
-
-      expect(nextSpy).toHaveBeenCalledTimes(1);
     });
   });
 
@@ -133,6 +135,32 @@ describe('middleware/insurance/get-application', () => {
 
         expect(res.redirect).toHaveBeenCalledWith(INSURANCE_ROUTES.PAGE_NOT_FOUND);
       });
+    });
+  });
+
+  describe('when the route is not relevant', () => {
+    beforeEach(() => {
+      req.originalUrl = `${INSURANCE_ROOT}${ELIGIBILITY_ROOT}${CHECK_IF_ELIGIBLE}`;
+      next = nextSpy;
+    });
+
+    it('should call next()', async () => {
+      await getApplicationMiddleware(req, res, next);
+
+      expect(nextSpy).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe(`when the route is not relevant - ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
+    beforeEach(() => {
+      req.originalUrl = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
+      next = nextSpy;
+    });
+
+    it('should call next()', async () => {
+      await getApplicationMiddleware(req, res, next);
+
+      expect(nextSpy).toHaveBeenCalledTimes(1);
     });
   });
 });

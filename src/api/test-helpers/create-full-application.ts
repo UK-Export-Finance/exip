@@ -7,6 +7,7 @@ import createAPolicy from '../helpers/create-a-policy';
 import createACompany from '../helpers/create-a-company';
 import createAnExportContract from '../helpers/create-an-export-contract';
 import createANominatedLossPayee from '../helpers/create-a-nominated-loss-payee';
+import sectionReviewCreate from './sectionReview';
 import { FIELD_VALUES } from '../constants';
 import {
   mockApplicationEligibility,
@@ -60,7 +61,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } nominatedLossPayee { id } broker { id } declaration { id } buyer { id buyerTradingHistory { id } }',
+      'id referenceNumber submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } nominatedLossPayee { id } broker { id } declaration { id } sectionReview { id } buyer { id buyerTradingHistory { id } }',
     data: {
       owner: {
         connect: {
@@ -101,6 +102,8 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a nominatedLossPayee and associate with the application.
   const nominatedLossPayee = await createANominatedLossPayee(context, application.id);
 
+  const sectionReview = await sectionReviewCreate.create({ context });
+
   /**
    * update the application with:
    * 1) Buyer relationship ID
@@ -129,6 +132,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
       },
       nominatedLossPayee: {
         connect: { id: nominatedLossPayee.id },
+      },
+      sectionReview: {
+        connect: { id: sectionReview.id },
       },
     },
   });
@@ -193,7 +199,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // gets financialUk id from application for updating
   const updatedApplication = (await context.query.Application.findOne({
     where: { id: application.id },
-    query: 'id nominatedLossPayee { id isAppointed financialUk { id } }',
+    query: 'id nominatedLossPayee { id isAppointed financialUk { id } } sectionReview { id }',
   })) as Application;
 
   // updates nominatedLossPayee
@@ -226,6 +232,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     policy,
     policyContact,
     nominatedLossPayee: updatedApplication.nominatedLossPayee,
+    sectionReview: updatedApplication.sectionReview,
   };
 };
 
