@@ -2155,11 +2155,11 @@ var typeDefs = `
     submissionDate: DateTime
     referenceNumber: Int
     status: String!
-    eligibility: Eligibility
     exportContract: ExportContract
-    nominatedLossPayee: ApplicationNominatedLossPayee
-    policyContact: PolicyContact
     policy: Policy
+    eligibility: Eligibility
+    nominatedLossPayee: NominatedLossPayee
+    policyContact: PolicyContact
     owner: Owner
     company: Company
     business: Business
