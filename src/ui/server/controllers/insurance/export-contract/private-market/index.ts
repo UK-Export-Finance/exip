@@ -147,6 +147,24 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      /**
+       * If the URL is a "check and change" route
+       * the exporter has ATTEMPTED (private market cover),
+       * and no DECLINED_DESCRIPTION has been submitted,
+       * redirect to PRIVATE_MARKET with /check-and-change in URL.
+       * This ensures that the next page can consume /check-and-change in the URL
+       * and therefore correctly redirect on submission.
+       * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
+       */
+
+      if (attemptedPrivateMarketCover && !hasDeclinedDescription) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${DECLINED_BY_PRIVATE_MARKET_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
     /**
      * If the URL is a "check and change" route,
      * the exporter has ATTEMPTED (private market cover),
