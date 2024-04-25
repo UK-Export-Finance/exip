@@ -58,9 +58,9 @@ export const get = async (req: Request, res: Response) => {
 
     const summaryList = yourBusinessSummaryLists(company, business, referenceNumber, checkAndChange);
 
-    const exporterFields = requiredFields(company.hasDifferentTradingName);
+    const businessFields = requiredFields(company.hasDifferentTradingName);
 
-    const status = sectionStatus(exporterFields, application);
+    const status = sectionStatus(businessFields, application);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

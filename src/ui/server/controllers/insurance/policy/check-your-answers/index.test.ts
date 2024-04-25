@@ -151,7 +151,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
       describe('when the get countries API call fails', () => {
         beforeEach(() => {
           getCountriesSpy = jest.fn(() => Promise.reject(new Error('mock')));
-          api.keystone.countries.getAll = getCurrenciesSpy;
+          api.keystone.countries.getAll = getCountriesSpy;
         });
 
         it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
