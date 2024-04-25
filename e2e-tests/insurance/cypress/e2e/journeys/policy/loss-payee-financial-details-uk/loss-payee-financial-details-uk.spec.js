@@ -126,5 +126,13 @@ context("Insurance - Policy - Loss Payee Financial Details - UK page - As an exp
 
       cy.assertUrl(checkYourAnswersUrl);
     });
+
+    describe('when going back to the page', () => {
+      it('should have the submitted values', () => {
+        cy.navigateToUrl(url);
+
+        cy.assertLossPayeeFinancialUkFieldValues({});
+      });
+    });
   });
 });

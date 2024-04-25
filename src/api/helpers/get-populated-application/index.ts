@@ -15,8 +15,20 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
  */
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId, nominatedLossPayeeId } =
-    application;
+  const {
+    eligibilityId,
+    ownerId,
+    policyId,
+    policyContactId,
+    exportContractId,
+    companyId,
+    businessId,
+    brokerId,
+    buyerId,
+    declarationId,
+    nominatedLossPayeeId,
+    sectionReviewId,
+  } = application;
 
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId },
@@ -171,6 +183,14 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('declaration', application.id));
   }
 
+  const sectionReview = await context.db.SectionReview.findOne({
+    where: { id: sectionReviewId },
+  });
+
+  if (!sectionReview) {
+    throw new Error(generateErrorMessage('sectionReview', application.id));
+  }
+
   const populatedApplication = {
     ...application,
     eligibility: populatedEligibility,
@@ -185,6 +205,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     policy,
     policyContact,
     nominatedLossPayee,
+    sectionReview,
   };
 
   return populatedApplication;

@@ -59,7 +59,7 @@
           hintText: FIELDS.SORT_CODE.HINT,
           labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
-          value: submittedValues[FIELDS.SORT_CODE.ID] or application.policy[FIELDS.SORT_CODE.ID],
+          value: submittedValues[FIELDS.SORT_CODE.ID],
           errorMessage: validationErrors.errorList[FIELDS.SORT_CODE.ID]
         }) }}
 
@@ -69,7 +69,7 @@
           hintText: FIELDS.ACCOUNT_NUMBER.HINT,
           labelClasses: "govuk-label--s",
           inputClasses: "govuk-input--width-10",
-          value: submittedValues[FIELDS.ACCOUNT_NUMBER.ID] or application.policy[FIELDS.ACCOUNT_NUMBER.ID],
+          value: submittedValues[FIELDS.ACCOUNT_NUMBER.ID],
           errorMessage: validationErrors.errorList[FIELDS.ACCOUNT_NUMBER.ID]
         }) }}
 
@@ -89,7 +89,7 @@
           },
           maxlength: FIELDS.FINANCIAL_ADDRESS.MAXIMUM,
           classes: "govuk-input--width-20",
-          value: submittedValues[FIELDS.FINANCIAL_ADDRESS.ID] or application.policy[FIELDS.FINANCIAL_ADDRESS.ID],
+          value: submittedValues[FIELDS.FINANCIAL_ADDRESS.ID],
           errorMessage: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID] and {
             text: validationErrors.errorList[FIELDS.FINANCIAL_ADDRESS.ID].text,
             attributes: {

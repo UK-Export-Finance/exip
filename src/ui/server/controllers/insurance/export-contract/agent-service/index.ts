@@ -11,7 +11,7 @@ import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent-service';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import isChangeRoute from '../../../../helpers/is-change-route';
-import isCheckChangeRoute from '../../../../helpers/is-check-and-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -143,7 +143,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
-    if (isCheckChangeRoute(req.originalUrl)) {
+    if (isCheckAndChangeRoute(req.originalUrl)) {
       if (agentIsCharging) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHECK_AND_CHANGE}`);
       }

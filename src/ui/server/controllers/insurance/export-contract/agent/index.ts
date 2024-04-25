@@ -9,7 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/export-contract-agent';
 import isChangeRoute from '../../../../helpers/is-change-route';
-import isCheckChangeRoute from '../../../../helpers/is-check-and-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -134,7 +134,7 @@ export const post = async (req: Request, res: Response) => {
      * redirect to AGENT_DETAILS_CHECK_AND_CHANGE form.
      * Otherwise, redirect to CHECK_YOUR_ANSWERS.
      */
-    if (isCheckChangeRoute(req.originalUrl)) {
+    if (isCheckAndChangeRoute(req.originalUrl)) {
       if (isUsingAnAgent) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_DETAILS_CHECK_AND_CHANGE}`);
       }

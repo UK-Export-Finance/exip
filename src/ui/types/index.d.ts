@@ -24,6 +24,7 @@ import {
   ApplicationVersion,
   ApplicationOwner,
 } from './application';
+import { ApplicationByReferenceNumberVariables } from './application-by-reference-number-variables';
 import { ApolloResponse } from './apollo';
 import { Company } from './company';
 import { CompaniesHouseResponse } from './company-house-response';
@@ -103,6 +104,7 @@ export {
   ApplicationPolicyContact,
   ApplicationPrivateMarket,
   ApplicationVersion,
+  ApplicationByReferenceNumberVariables,
   ApolloResponse,
   ApplicationOwner,
   Company,

@@ -32,6 +32,7 @@ describe('api/helpers/get-populated-application', () => {
       policyId: application.policy.id,
       policyContactId: application.policyContact.id,
       nominatedLossPayeeId: application.nominatedLossPayee.id,
+      sectionReviewId: application.sectionReview.id,
     };
   });
 
@@ -52,6 +53,7 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.policy.id).toEqual(application.policy.id);
     expect(result.policyContact.id).toEqual(application.policyContact.id);
     expect(result.nominatedLossPayee.id).toEqual(application.nominatedLossPayee.id);
+    expect(result.sectionReview.id).toEqual(application.sectionReview.id);
   });
 
   it('should return an application with populated buyer country', async () => {
@@ -105,6 +107,12 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.exportContract.finalDestinationCountry).toEqual(expectedCountry);
     expect(result.exportContract.finalDestinationCountryCode).toEqual(exportContract.finalDestinationCountryCode);
     expect(result.exportContract.goodsOrServicesDescription).toEqual(exportContract.goodsOrServicesDescription);
+  });
+
+  it('should return an application with populated sectionReview', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    expect(result.sectionReview.id).toEqual(applicationIds.sectionReviewId);
   });
 
   it('should throw an error when eligibility does not exist', async () => {
@@ -246,5 +254,13 @@ describe('api/helpers/get-populated-application', () => {
       const expected = new Error(generateErrorMessage('declaration', applicationIds.id));
       expect(err).toEqual(expected);
     }
+  });
+
+  it('should throw an error when sectionReview does not exist', async () => {
+    const invalidId = applicationIds.id;
+
+    await expect(getPopulatedApplication(context, { ...applicationIds, sectionReviewId: invalidId })).rejects.toThrow(
+      new Error(generateErrorMessage('sectionReview', applicationIds.id)),
+    );
   });
 });
