@@ -1,8 +1,9 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
+import { checkAutocompleteInput } from '../../../../../../../shared-test-assertions';
 
 const {
   ROOT,
@@ -11,6 +12,7 @@ const {
   },
   EXPORT_CONTRACT: {
     AGENT_CHECK_AND_CHANGE,
+    AGENT_DETAILS,
     AGENT_DETAILS_CHECK_AND_CHANGE,
     AGENT_SERVICE_CHECK_AND_CHANGE,
   },
@@ -112,6 +114,25 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
 
     it('should retain a `completed` status tag', () => {
       cy.checkTaskStatusCompleted(status);
+    });
+
+    describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}`, () => {
+      it('should have empty field values', () => {
+        summaryList.field(FIELD_ID).changeLink().click();
+
+        cy.completeAndSubmitAgentForm({
+          isUsingAgent: true,
+        });
+
+        cy.checkValue(field(NAME), '');
+
+        cy.checkTextareaValue({
+          fieldId: FULL_ADDRESS,
+          expectedValue: '',
+        });
+
+        checkAutocompleteInput.checkEmptyResults(COUNTRY_CODE);
+      });
     });
   });
 });
