@@ -29,7 +29,7 @@ describe('api/helpers/encrypt', () => {
     expect(result.iv.length).toEqual(iv.length);
   });
 
-  describe('when the an error occurs', () => {
+  describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
         encrypt();

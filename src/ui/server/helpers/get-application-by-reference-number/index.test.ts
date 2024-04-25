@@ -46,7 +46,7 @@ describe('helpers/get-application-by-reference-number', () => {
   describe('when the api call fails', () => {
     it('should return false', async () => {
       const mockErrorMessage = 'Mock error';
-      getApplicationSpy = jest.fn(() => Promise.reject(mockErrorMessage));
+      getApplicationSpy = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
       api.keystone.application.getByReferenceNumber = getApplicationSpy;
 
       try {

@@ -52,7 +52,7 @@ const assertSectionStartContent = {
     linkRedirection: ({ currentUrl, expectedUrl }) => {
       cy.navigateToUrl(currentUrl);
 
-      allSectionsLink().click();
+      cy.clickAllSectionsLink();
 
       cy.assertUrl(expectedUrl);
     },

@@ -28,12 +28,14 @@ Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rende
 Cypress.Commands.add('assertDynamicCharacterCount', require('./assert-dynamic-character-count'));
 
 Cypress.Commands.add('checkAriaLabel', require('./check-aria-label'));
+Cypress.Commands.add('checkClassName', require('./check-class-name'));
+Cypress.Commands.add('checkEmailFieldRendering', require('./check-email-field-rendering'));
+Cypress.Commands.add('checkIntroText', require('./check-intro-text'));
 Cypress.Commands.add('checkLink', require('./check-link'));
 Cypress.Commands.add('checkText', require('./check-text'));
-Cypress.Commands.add('checkIntroText', require('./check-intro-text'));
-Cypress.Commands.add('checkValue', require('./check-value'));
 Cypress.Commands.add('checkTextareaValue', require('./check-textarea-value'));
-Cypress.Commands.add('checkClassName', require('./check-class-name'));
+Cypress.Commands.add('checkTypeAttribute', require('./check-type-attribute'));
+Cypress.Commands.add('checkValue', require('./check-value'));
 
 Cypress.Commands.add('checkAuthenticatedHeader', require('./check-authenticated-header'));
 

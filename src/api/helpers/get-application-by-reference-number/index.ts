@@ -10,6 +10,8 @@ import { Application, Context } from '.keystone/types'; // eslint-disable-line
  */
 const getApplicationByReferenceNumber = async (referenceNumber: number, context: Context): Application => {
   try {
+    console.info('Getting application by reference number - getApplicationByReferenceNumber helper %s', referenceNumber);
+
     const applications = (await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber },

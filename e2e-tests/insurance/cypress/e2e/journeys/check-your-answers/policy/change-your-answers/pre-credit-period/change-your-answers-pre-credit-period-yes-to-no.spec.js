@@ -54,6 +54,9 @@ context('Insurance - Change your answers - Policy - Pre-credit period - Change f
 
       task.link().click();
 
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
       url = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
       needPreCreditPeriodUrl = `${baseUrl}${ROOT}/${referenceNumber}${PRE_CREDIT_PERIOD}`;
 
