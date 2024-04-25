@@ -1,6 +1,5 @@
 import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
-import { DEFAULT } from '../../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
@@ -10,13 +9,13 @@ const {
     EXPORT_CONTRACT,
   },
   EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+    HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 const {
-  ABOUT_GOODS_OR_SERVICES: {
-    FINAL_DESTINATION: FIELD_ID,
+  HOW_WILL_YOU_GET_PAID: {
+    PAYMENT_TERMS_DESCRIPTION: FIELD_ID,
   },
 } = FIELD_IDS;
 
@@ -25,7 +24,7 @@ const { taskList } = partials.insurancePartials;
 const task = taskList.submitApplication.tasks.checkAnswers;
 
 const getFieldVariables = (referenceNumber) => ({
-  route: ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE,
+  route: HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
   checkYourAnswersRoute: EXPORT_CONTRACT,
   newValueInput: '',
   fieldId: FIELD_ID,
@@ -36,7 +35,7 @@ const getFieldVariables = (referenceNumber) => ({
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - About goods or services - Change Final destination known from `yes` to `no`', () => {
+context('Insurance - Change your answers - Export contract - Summary list - How will you get paid', () => {
   let referenceNumber;
   let url;
 
@@ -72,7 +71,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Abou
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`, () => {
+    it(`should redirect to ${HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE}`, () => {
       cy.navigateToUrl(url);
 
       const fieldVariables = getFieldVariables(referenceNumber);
@@ -81,21 +80,25 @@ context('Insurance - Change your answers - Export contract - Summary list - Abou
     });
   });
 
-  describe(`form submission with ${FIELD_ID} as 'unknown'`, () => {
+  describe('form submission with a new answer', () => {
+    const newAnswer = 'Mock new description';
+
     beforeEach(() => {
       cy.navigateToUrl(url);
 
       summaryList.field(FIELD_ID).changeLink().click();
 
-      cy.completeAndSubmitAboutGoodsOrServicesForm({ finalDestinationKnown: false });
+      cy.completeAndSubmitHowYouWillGetPaidForm({
+        paymentTermsDescription: newAnswer,
+      });
     });
 
     it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId: FIELD_ID });
     });
 
-    it('should render an empty destination/country and retain a `completed` status tag', () => {
-      cy.assertSummaryListRowValue(summaryList, FIELD_ID, DEFAULT.EMPTY);
+    it('should render the new answer and retain a `completed` status tag', () => {
+      cy.assertSummaryListRowValue(summaryList, FIELD_ID, newAnswer);
 
       cy.checkTaskStatusCompleted(status);
     });

@@ -259,11 +259,8 @@ describe('api/helpers/get-populated-application', () => {
   it('should throw an error when sectionReview does not exist', async () => {
     const invalidId = applicationIds.id;
 
-    try {
-      await getPopulatedApplication(context, { ...applicationIds, sectionReviewId: invalidId });
-    } catch (err) {
-      const expected = new Error(generateErrorMessage('sectionReview', applicationIds.id));
-      expect(err).toEqual(expected);
-    }
+    await expect(getPopulatedApplication(context, { ...applicationIds, sectionReviewId: invalidId })).rejects.toThrow(
+      new Error(generateErrorMessage('sectionReview', applicationIds.id)),
+    );
   });
 });

@@ -2167,7 +2167,7 @@ var typeDefs = `
     eligibility: Eligibility
     exportContract: ExportContract
     policy: Policy
-    nominatedLossPayee: NominatedLossPayee
+    nominatedLossPayee: ApplicationNominatedLossPayee
     policyContact: PolicyContact
     owner: Owner
     company: Company

@@ -6,7 +6,7 @@ import { referenceNumber } from '../../test-mocks';
 const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT } = LOSS_PAYEE_ROUTES;
 const { INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 
-describe('server/helpers/generate-full-application-by-reference-number-variables', () => {
+describe('server/helpers/get-application-by-reference-number-variables', () => {
   describe(`when URL is not ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
     const url = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 

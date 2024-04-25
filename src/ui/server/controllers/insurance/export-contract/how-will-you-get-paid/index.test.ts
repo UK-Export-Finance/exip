@@ -23,7 +23,17 @@ import {
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_CHANGE, HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, PRIVATE_MARKET_CHANGE, AGENT, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    HOW_WILL_YOU_GET_PAID_CHANGE,
+    HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE,
+    HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK,
+    PRIVATE_MARKET,
+    PRIVATE_MARKET_CHANGE,
+    PRIVATE_MARKET_CHECK_AND_CHANGE,
+    AGENT,
+    CHECK_YOUR_ANSWERS,
+  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -155,6 +165,32 @@ describe('controllers/insurance/export-contract/how-will-you-get-paid', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change` and application.totalContractValueOverThreshold is true", () => {
+        it(`should redirect to ${PRIVATE_MARKET_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE;
+          res.locals.application = mockApplicationTotalContractValueThresholdTrue;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change` and application.totalContractValueOverThreshold is false", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = HOW_WILL_YOU_GET_PAID_CHECK_AND_CHANGE;
+          res.locals.application = mockApplicationTotalContractValueThresholdFalse;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
