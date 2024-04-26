@@ -35,9 +35,10 @@ describe('api/helpers/decrypt-financial-uk', () => {
 
   describe('when an empty object is provided', () => {
     it('should return empty strings for sortCode and accountNumber', () => {
-      const result = decryptFinancialUk({});
+      const result = decryptFinancialUk({ id: '1', accountNumber: '', sortCode: '' });
 
       const expected = {
+        id: '1',
         sortCode: '',
         accountNumber: '',
       };

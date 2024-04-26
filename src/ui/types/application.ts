@@ -215,10 +215,15 @@ interface ApplicationLossPayeeFinancialDetailsUk {
   id: string;
 }
 
+interface ApplicationLossPayeeFinancialDetailsInternational {
+  id: string;
+}
+
 interface ApplicationNominatedLossPayee {
   id: string;
   isAppointed?: boolean;
   financialUk: ApplicationLossPayeeFinancialDetailsUk;
+  financialInternational: ApplicationLossPayeeFinancialDetailsInternational;
 }
 
 interface ApplicationPolicy {

@@ -47,6 +47,9 @@ const applicationQuery = gql`
           financialUk {
             id
           }
+          financialInternational {
+            id
+          }
         }
         policy {
           id

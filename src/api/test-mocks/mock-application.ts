@@ -142,12 +142,24 @@ export const mockLossPayeeFinancialDetailsUk = {
   bankAddress: 'Mock UK financial address',
 };
 
+export const mockLossPayeeFinancialDetailsInternational = {
+  iban: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=',
+  ibanVector: 'AAaaAAA1aA+1aaa1',
+  bicSwiftCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
+  bicSwiftCodeVector: 'BBbbBBB2bB+2bbb2',
+  bankAddress: 'Mock international financial address',
+};
+
 export const mockNominatedLossPayee = {
   id: '123',
   isAppointed: false,
   financialUk: {
     id: '2345',
     ...mockLossPayeeFinancialDetailsUk,
+  },
+  financialInternational: {
+    id: '2345',
+    ...mockLossPayeeFinancialDetailsInternational,
   },
 };
 

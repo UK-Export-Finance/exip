@@ -5,7 +5,7 @@ import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 
 const {
-  BROKER_DETAILS: { NAME },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-and-save/loss-payee-financial-details-uk', () => {
@@ -19,7 +19,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee-financial-details
   const mockLossPayeeFinancialDetails = jest.fn(() => Promise.resolve({}));
   save.lossPayeeFinancialDetailsUk = mockLossPayeeFinancialDetails;
 
-  const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
+  const mockValidationErrors = generateValidationErrors(SORT_CODE, 'error', {});
 
   describe('when the form has data', () => {
     describe('when the form has validation errors', () => {

@@ -3079,6 +3079,9 @@ type Mutation {
 
   """ update loss payee financial details uk """
   updateLossPayeeFinancialDetailsUk(id: String, bankAddress: String, accountNumber: String, sortCode: String): SuccessResponse
+
+  """ update loss payee financial details international """
+  updateLossPayeeFinancialDetailsInternational(id: String, bankAddress: String, iban: String, bicSwiftCode: String): SuccessResponse
 }
 
 union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
@@ -3576,6 +3579,13 @@ type ApplicationNominatedLossPayeeUk {
   bankAddress: String
 }
 
+type ApplicationNominatedLossPayeeInternational {
+  id: String
+  iban: String
+  bicSwiftCode: String
+  bankAddress: String
+}
+
 type ApplicationNominatedLossPayee {
   id: String
   isAppointed: Boolean
@@ -3583,6 +3593,7 @@ type ApplicationNominatedLossPayee {
   isLocatedInternationally: Boolean
   name: String
   financialUk: ApplicationNominatedLossPayeeUk
+  financialInternational: ApplicationNominatedLossPayeeInternational
 }
 
 type PopulatedApplication {
