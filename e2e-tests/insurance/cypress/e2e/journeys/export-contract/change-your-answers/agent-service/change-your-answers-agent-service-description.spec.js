@@ -28,6 +28,7 @@ context('Insurance - Export contract - Change your answers - Agent service - des
 
       cy.completeExportContractSection({
         isUsingAgent: true,
+        agentIsCharging: false,
       });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

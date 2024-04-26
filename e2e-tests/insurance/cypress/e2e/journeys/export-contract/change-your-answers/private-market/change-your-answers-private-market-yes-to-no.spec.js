@@ -67,7 +67,7 @@ context('Insurance - Export contract - Change your answers - Private market - Ye
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
       });
 
-      it(`should render the new answer and no ${DECLINED_DESCRIPTION} row`, () => {
+      it(`should render the new answer with no ${DECLINED_DESCRIPTION} row`, () => {
         checkSummaryList[FIELD_ID]({ shouldRender: true, isYes: false });
         checkSummaryList[DECLINED_DESCRIPTION]({ shouldRender: false });
       });
