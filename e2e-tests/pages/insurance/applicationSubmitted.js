@@ -15,7 +15,7 @@ const applicationSubmittedPage = {
     questions: {
       intro: () => cy.get('[data-cy="decision-from-us-questions-intro"]'),
       link: () => cy.get('[data-cy="decision-from-us-questions-link"]'),
-    }
+    },
   },
   helpUsImprove: {
     heading: () => cy.get('[data-cy="help-us-improve-heading"]'),

@@ -18,7 +18,7 @@ const APPLICATION_SUBMITTED = {
       LINK: {
         TEXT: CONTACT_DETAILS.EMAIL.UNDERWRITING,
         HREF: `mailto:${CONTACT_DETAILS.EMAIL.UNDERWRITING}`,
-      }
+      },
     },
   },
   HELP_US_IMPROVE: {

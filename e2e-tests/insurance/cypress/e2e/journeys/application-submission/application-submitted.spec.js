@@ -75,11 +75,9 @@ context('Insurance - application submitted page', () => {
         cy.checkText(whatHappensNext.intro(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO);
       });
 
-
       it('renders `we will send email` copy', () => {
         cy.checkText(whatHappensNext.willSendEmail(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.WILL_SEND_EMAIL);
       });
-
 
       it('renders `may also contact` copy', () => {
         cy.checkText(whatHappensNext.mayAlsoContact(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.MAY_ALSO_CONTACT);
