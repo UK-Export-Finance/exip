@@ -28,7 +28,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
       })) as ApplicationLossPayeeFinancialInternational;
 
       variables.id = lossPayeeFinancialDetailsInternational.id;
-      lossPayeeFinancialDetailsInternationalResponse = (await updateLossPayeeFinancialDetailsInternational({}, variables, context)) as SuccessResponse;
+      lossPayeeFinancialDetailsInternationalResponse = await updateLossPayeeFinancialDetailsInternational({}, variables, context);
     });
 
     it('should return success as true', () => {
@@ -40,7 +40,9 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
-      await expect(updateLossPayeeFinancialDetailsInternational()).rejects.toThrow('Updating loss payee financial details international');
+      await expect(updateLossPayeeFinancialDetailsInternational({}, { id: '1' }, context)).rejects.toThrow(
+        'Updating loss payee financial details international',
+      );
     });
   });
 });

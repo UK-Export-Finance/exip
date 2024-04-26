@@ -34,7 +34,7 @@ describe('api/helpers/map-loss-payee-financial-details-international', () => {
       expect(result.iban.length).toEqual(iban.value.length);
       expect(result.ibanVector.length).toEqual(iban.iv.length);
       expect(result.bicSwiftCode.length).toEqual(bicSwiftCode.value.length);
-      expect(result.bicSwiftCode.length).toEqual(bicSwiftCode.iv.length);
+      expect(result.bicSwiftCodeVector.length).toEqual(bicSwiftCode.iv.length);
       expect(result.bankAddress).toEqual(mockLossPayeeFinancialDetailsInternational.bankAddress);
     });
   });
