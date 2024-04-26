@@ -16,6 +16,7 @@ const {
   POLICY: {
     BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
     CREDIT_PERIOD_WITH_BUYER,
+    FINANCIAL_ADDRESS,
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { ADDRESS },
@@ -31,7 +32,7 @@ const {
  * @returns {Object} Application with mapped textarea field characters
  */
 const mapTextareaFields = (application: Application): Application => {
-  const { broker, business, buyer, company, exportContract, policy } = application;
+  const { broker, business, buyer, company, exportContract, policy, nominatedLossPayee } = application;
 
   broker[BROKER_ADDRESS] = replaceCharacterCodesWithCharacters(broker[BROKER_ADDRESS]);
 
@@ -54,6 +55,12 @@ const mapTextareaFields = (application: Application): Application => {
   exportContract.agent.service[SERVICE_DESCRIPTION] = replaceCharacterCodesWithCharacters(exportContract.agent.service[SERVICE_DESCRIPTION]);
 
   policy[CREDIT_PERIOD_WITH_BUYER] = replaceCharacterCodesWithCharacters(policy[CREDIT_PERIOD_WITH_BUYER]);
+
+  nominatedLossPayee.financialUk[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(nominatedLossPayee.financialUk[FINANCIAL_ADDRESS]);
+
+  nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS] = replaceCharacterCodesWithCharacters(
+    nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
+  );
 
   return application;
 };

@@ -22,7 +22,7 @@ const getApplicationByReferenceNumberQuery = async (
   try {
     console.info('Getting application by reference number %s', variables.referenceNumber);
 
-    const { referenceNumber, decryptFinancialUk } = variables;
+    const { referenceNumber, decryptFinancialUk, decryptFinancialInternational } = variables;
 
     // array of ids in application from provided application reference number
     const application = await getApplicationByReferenceNumber(referenceNumber, context);
@@ -35,12 +35,14 @@ const getApplicationByReferenceNumberQuery = async (
       /**
        * if decrypt variables are set to true
        * decrypts relevant nominatedLossPayee fields
+       * if decryptFinancialUk then decrypts financial uk
+       * if decryptFinancialInternational then decrypts financialInternational
        * returns decrypted application
        */
-      if (decryptFinancialUk) {
+      if (decryptFinancialUk || decryptFinancialInternational) {
         const { nominatedLossPayee } = populatedApplication;
 
-        const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk);
+        const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk, decryptFinancialInternational);
 
         populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
       }

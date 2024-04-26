@@ -8,6 +8,8 @@ const {
   ROOT: INSURANCE_ROOT,
   POLICY: {
     LOSS_PAYEE_DETAILS_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   },
 } = INSURANCE_ROUTES;
 
@@ -16,6 +18,7 @@ const {
     LOSS_PAYEE_DETAILS: {
       NAME,
     },
+    FINANCIAL_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -28,6 +31,8 @@ const nameValue = mockNameWithSpecialCharacters(POLICY[NAME]);
 context('Insurance - Name fields - Loss payee details - Name field should render special characters without character codes after submission', () => {
   let referenceNumber;
   let url;
+  let financialUkUrl;
+  let financialInternationalUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -45,6 +50,8 @@ context('Insurance - Name fields - Loss payee details - Name field should render
       cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
+      financialUkUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
+      financialInternationalUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;
 
       cy.assertUrl(url);
     });
@@ -76,6 +83,54 @@ context('Insurance - Name fields - Loss payee details - Name field should render
 
       it('should render special characters exactly as they were submitted', () => {
         cy.checkValue(field(NAME), nameValue);
+      });
+    });
+  });
+
+  describe(`${FINANCIAL_ADDRESS} - financial details UK`, () => {
+    describe('when submitting the name field with special characters and going back to the page', () => {
+      beforeEach(() => {
+        cy.saveSession();
+
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitLossPayeeDetailsForm({});
+        cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({ financialAddress: nameValue });
+
+        cy.clickBackLink();
+
+        cy.assertUrl(financialUkUrl);
+      });
+
+      it('should render special characters exactly as they were submitted', () => {
+        cy.checkTextareaValue({
+          fieldId: FINANCIAL_ADDRESS,
+          expectedValue: nameValue,
+        });
+      });
+    });
+  });
+
+  describe(`${FINANCIAL_ADDRESS} - financial details international`, () => {
+    describe('when submitting the name field with special characters and going back to the page', () => {
+      beforeEach(() => {
+        cy.saveSession();
+
+        cy.navigateToUrl(url);
+
+        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
+        cy.completeAndSubmitLossPayeeFinancialInternationalForm({ financialAddress: nameValue });
+
+        cy.clickBackLink();
+
+        cy.assertUrl(financialInternationalUrl);
+      });
+
+      it('should render special characters exactly as they were submitted', () => {
+        cy.checkTextareaValue({
+          fieldId: FINANCIAL_ADDRESS,
+          expectedValue: nameValue,
+        });
       });
     });
   });

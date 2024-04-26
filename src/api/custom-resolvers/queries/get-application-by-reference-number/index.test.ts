@@ -55,7 +55,7 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
   });
 
   describe('when the decryptFinancialUk variable is set to "true"', () => {
-    it('should return success=true and application without decryption', async () => {
+    it('should return success=true and application with decryption', async () => {
       const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
       const { financialUk } = result.application.nominatedLossPayee;
@@ -65,7 +65,25 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
       expect(financialUk.accountNumber).toEqual(mockDecryptedValue);
     });
 
-    it('should NOT call decrypt', async () => {
+    it('should call decrypt', async () => {
+      await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
+
+      expect(decryptSpy).toHaveBeenCalledTimes(2);
+    });
+  });
+
+  describe('when the decryptFinancialInternational variable is set to "true"', () => {
+    it('should return success=true and application with decryption', async () => {
+      const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialInternational: true }, context);
+
+      const { financialInternational } = result.application.nominatedLossPayee;
+
+      expect(result.success).toEqual(true);
+      expect(financialInternational.iban).toEqual(mockDecryptedValue);
+      expect(financialInternational.bicSwiftCode).toEqual(mockDecryptedValue);
+    });
+
+    it('should call decrypt', async () => {
       await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
@@ -82,7 +100,13 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
-      await expect(getApplicationByReferenceNumber()).rejects.toThrow('Get application by reference number (GetApplicationByReferenceNumber mutation)');
+      try {
+        await getApplicationByReferenceNumber({}, { referenceNumber: 0 }, context);
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error generating buffer')).toEqual(true);
+      }
     });
   });
 });

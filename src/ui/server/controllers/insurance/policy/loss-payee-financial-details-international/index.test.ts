@@ -6,10 +6,11 @@ import { INSURANCE_ROUTES } from '../../../../constants/routes/insurance';
 import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
-import { Request, Response } from '../../../../../types';
+import { Application, Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockLossPayeeFinancialDetailsInternational, referenceNumber, mockApplication } from '../../../../test-mocks';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
@@ -87,6 +88,8 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
     it('should render template', () => {
       get(req, res);
 
+      const mappedApplication = mapApplicationToFormFields(mockApplication) as Application;
+
       expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
         ...insuranceCorePageVariables({
           PAGE_CONTENT_STRINGS,
@@ -94,6 +97,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
         }),
         ...pageVariables(referenceNumber),
         userName: getUserNameFromSession(req.session.user),
+        submittedValues: mappedApplication.nominatedLossPayee.financialInternational,
       });
     });
 

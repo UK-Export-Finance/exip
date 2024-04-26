@@ -17,6 +17,7 @@ const {
   POLICY: {
     BROKER_DETAILS: { FULL_ADDRESS: BROKER_ADDRESS },
     CREDIT_PERIOD_WITH_BUYER,
+    FINANCIAL_ADDRESS,
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { ADDRESS },
@@ -25,7 +26,7 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
-const { broker, business, buyer, company, exportContract, policy } = mockApplication;
+const { broker, business, buyer, company, exportContract, policy, nominatedLossPayee } = mockApplication;
 
 describe('server/helpers/mappings/map-textarea-fields', () => {
   it('should return textarea fields with replaceCharacterCodesWithCharacters function', () => {
@@ -76,6 +77,17 @@ describe('server/helpers/mappings/map-textarea-fields', () => {
       policy: {
         ...policy,
         [CREDIT_PERIOD_WITH_BUYER]: replaceCharacterCodesWithCharacters(policy[CREDIT_PERIOD_WITH_BUYER]),
+      },
+      nominatedLossPayee: {
+        ...nominatedLossPayee,
+        financialUk: {
+          ...nominatedLossPayee.financialUk,
+          [FINANCIAL_ADDRESS]: replaceCharacterCodesWithCharacters(nominatedLossPayee.financialUk[FINANCIAL_ADDRESS]),
+        },
+        financialInternational: {
+          ...nominatedLossPayee.financialInternational,
+          [FINANCIAL_ADDRESS]: replaceCharacterCodesWithCharacters(nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS]),
+        },
       },
     };
 

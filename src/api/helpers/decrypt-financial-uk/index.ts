@@ -1,14 +1,14 @@
-import { ApplicationFinancialUk } from '../../types';
+import { ApplicationLossPayeeFinancialUk } from '../../types';
 import decryptData from '../decrypt';
 
 /**
  * decryptFinancialUk
  * decrypts the accountNumber and sortCode in the financialUk section of application
  * returns decrypted data
- * @param {ApplicationFinancialUk} applicationFinancialUk: financialUk data from application
- * @returns {ApplicationFinancialUk} decrypted accountNumber and sortCode in financialUk section
+ * @param {ApplicationLossPayeeFinancialUk} applicationFinancialUk: financialUk data from application
+ * @returns {ApplicationLossPayeeFinancialUk} decrypted accountNumber and sortCode in financialUk section
  */
-const decryptFinancialUk = (applicationFinancialUk: ApplicationFinancialUk) => {
+const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancialUk) => {
   try {
     console.info('Decrypting accountNumber and sortCode for financialUk');
 
@@ -19,12 +19,18 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationFinancialUk) => {
     let decryptedAccountNumber = '';
     let decryptedSortCode = '';
 
-    // decrypts accountNumber using encrypted "value" and initialisation vector if both accountNumber and accountNumberVector are defined
+    /**
+     * If both accountNumber and accountNumberVector are defined,
+     * decrypt accountNumber using encrypted "value" and initialisation vector
+     */
     if (accountNumber && accountNumberVector) {
       decryptedAccountNumber = decryptData.decrypt({ value: accountNumber, iv: accountNumberVector });
     }
 
-    // decrypts sortCode using encrypted "value" and initialisation vector if both sortCode and sortCodeVector are defined
+    /**
+     * If both sortCode and sortCodeVector are defined,
+     * decrypt sortCode using encrypted "value" and initialisation vector
+     */
     if (sortCode && sortCodeVector) {
       decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
     }

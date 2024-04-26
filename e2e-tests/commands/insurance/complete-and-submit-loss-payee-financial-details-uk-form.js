@@ -1,7 +1,8 @@
 import application from '../../fixtures/application';
 import { POLICY as POLICY_FIELD_IDS } from '../../constants/field-ids/insurance/policy';
+import { EXPECTED_MULTI_LINE_STRING } from '../../constants';
 
-const { LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE }, FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
+const { LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE } } = POLICY_FIELD_IDS;
 
 const { POLICY } = application;
 
@@ -15,7 +16,7 @@ const { POLICY } = application;
 const completeAndSubmitLossPayeeFinancialDetailsUkForm = ({
   accountNumber = POLICY.LOSS_PAYEE_FINANCIAL_UK[ACCOUNT_NUMBER],
   sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
-  financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[FINANCIAL_ADDRESS],
+  financialAddress = EXPECTED_MULTI_LINE_STRING,
 }) => {
   cy.completeLossPayeeFinancialDetailsUkForm({ sortCode, accountNumber, financialAddress });
   cy.clickSubmitButton();
