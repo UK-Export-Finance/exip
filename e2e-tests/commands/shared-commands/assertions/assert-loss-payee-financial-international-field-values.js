@@ -15,8 +15,8 @@ const {
 /**
  * assertLossPayeeFinancialInternationalFieldValues
  * Assert all field values in the "loss payee financial international" form.
- * @param {String} expectedAccountNumber: Account number
- * @param {String} expectedSortCode: Sort code
+ * @param {String} expectedIban: IBAN
+ * @param {String} expectedBicSwiftCode: BIC swift code
  * @param {String} expectedFinancialAddress: Financial address
  */
 const assertLossPayeeFinancialInternationalFieldValues = ({
