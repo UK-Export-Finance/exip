@@ -1,6 +1,5 @@
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { GBP_CURRENCY_CODE } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -11,6 +10,7 @@ import generateChangeLink from '../../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
+    POLICY_CURRENCY_CODE,
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
@@ -59,7 +59,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
           checkAndChange,
         ),
       },
-      answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE),
+      answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], answers[POLICY_CURRENCY_CODE]),
     ),
   ] as Array<SummaryListItemData>;
 
