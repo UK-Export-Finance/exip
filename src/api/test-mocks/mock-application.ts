@@ -143,10 +143,10 @@ export const mockLossPayeeFinancialDetailsUk = {
 };
 
 export const mockLossPayeeFinancialDetailsInternational = {
-  iban: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=',
-  ibanVector: 'AAaaAAA1aA+1aaa1',
-  bicSwiftCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
-  bicSwiftCodeVector: 'BBbbBBB2bB+2bbb2',
+  iban: 'Ccccc3C3CCccCCc3CcCcCcccCcCcccCcCCCcCcCcCcC=',
+  ibanVector: 'CCccCCC3cC+3ccc3',
+  bicSwiftCode: 'DDddd4D4DDddDDd4DdDdDdddDdDdddDdDDdDdDdDdD',
+  bicSwiftCodeVector: 'DDddDDD4dD+4ddd4',
   bankAddress: 'Mock international financial address',
 };
 
