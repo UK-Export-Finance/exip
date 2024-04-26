@@ -1,4 +1,5 @@
-import name, { MAXIMUM } from './name';
+import name from './name';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/policy';
 import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
@@ -19,7 +20,7 @@ describe('controllers/insurance/policy/loss-payee-details/validation/rules/name'
   it('should return the result of providedAndMaxLength', () => {
     const result = name(mockBody, mockErrors);
 
-    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM);
+    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME);
 
     expect(result).toEqual(expected);
   });
