@@ -282,6 +282,8 @@ describe('controllers/insurance/export-contract/agent-details', () => {
 
           req.originalUrl = AGENT_DETAILS_CHECK_AND_CHANGE;
 
+          res.locals.application = mockApplication;
+
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
