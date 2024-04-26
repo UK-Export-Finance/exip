@@ -9,6 +9,7 @@ const {
   EXPORT_CONTRACT: {
     CHECK_YOUR_ANSWERS,
     AGENT_DETAILS_CHANGE,
+    AGENT_SERVICE_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -23,6 +24,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Export contract - Change your answers - Agent details - As an Exporter, I want to be able to review my input regarding whether an agent helped me win the export contract, So that I can be assured I am providing UKEF with the right information', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
+  let agentServiceUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -33,6 +35,7 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
       });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -64,15 +67,19 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
+      });
 
+      it(`should redirect to ${AGENT_SERVICE_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) ${AGENT_SERVICE_CHANGE} fields`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
-      });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        cy.assertUrl(`${agentServiceUrl}#${fieldId}-label`);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
+
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
@@ -100,15 +107,20 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
+      });
 
+      it(`should redirect to ${AGENT_SERVICE_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) ${AGENT_SERVICE_CHANGE} fields`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(field(fieldId).textarea(), newAnswer);
 
         cy.clickSubmitButton();
-      });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        const expectedUrl = `${agentServiceUrl}#${fieldId}-label`;
+        cy.assertUrl(expectedUrl);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
+
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
@@ -134,15 +146,20 @@ context('Insurance - Export contract - Change your answers - Agent details - As 
     describe('form submission with a new destination/country answer', () => {
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
+      });
 
+      it(`should redirect to ${AGENT_SERVICE_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) ${AGENT_SERVICE_CHANGE} fields`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(autoCompleteField(fieldId).input(), NEW_COUNTRY_INPUT);
 
         cy.clickSubmitButton();
-      });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+        const expectedUrl = `${agentServiceUrl}#${fieldId}-label`;
+        cy.assertUrl(expectedUrl);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
+
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 

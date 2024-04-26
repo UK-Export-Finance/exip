@@ -218,21 +218,6 @@ export const mockApplicationTotalContractValueThresholdFalse = {
   totalContractValueOverThreshold: false,
 } as Application;
 
-export const mockApplicationAgentServiceEmpty = {
-  ...mockApplication,
-  exportContract: {
-    ...mockExportContract,
-    agent: {
-      ...mockExportContractAgent,
-      service: {
-        ...mockExportContractAgentService,
-        serviceDescription: '',
-        charge: mockExportContractAgentServiceCharge,
-      },
-    },
-  },
-} as Application;
-
 export const mockApplicationAgentServiceChargeEmpty = {
   ...mockApplication,
   exportContract: {
