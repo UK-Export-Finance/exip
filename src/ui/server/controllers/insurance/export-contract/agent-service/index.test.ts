@@ -17,7 +17,16 @@ import { mockReq, mockRes, mockApplication } from '../../../../test-mocks';
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES, AGENT_CHARGES_CHANGE, CHECK_YOUR_ANSWERS, AGENT_SERVICE_CHANGE, AGENT_SERVICE_SAVE_AND_BACK },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES,
+    AGENT_CHARGES_CHANGE,
+    AGENT_CHARGES_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+    AGENT_SERVICE_CHANGE,
+    AGENT_SERVICE_CHECK_AND_CHANGE,
+    AGENT_SERVICE_SAVE_AND_BACK,
+  },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -247,6 +256,40 @@ describe('controllers/insurance/export-contract/agent-service', () => {
         await post(req, res);
 
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe(`when ${IS_CHARGING} is true and the url's last substring is 'check-and-change'`, () => {
+      it(`should redirect to ${AGENT_CHARGES_CHECK_AND_CHANGE}`, async () => {
+        req.body = {
+          ...validBody,
+          [IS_CHARGING]: 'true',
+        };
+
+        req.originalUrl = AGENT_SERVICE_CHECK_AND_CHANGE;
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHECK_AND_CHANGE}`;
+
+        expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+    });
+
+    describe(`when ${IS_CHARGING} is false and the url's last substring is 'check-and-change'`, () => {
+      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        req.body = {
+          ...validBody,
+          [IS_CHARGING]: 'false',
+        };
+
+        req.originalUrl = AGENT_SERVICE_CHECK_AND_CHANGE;
+
+        await post(req, res);
+
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
