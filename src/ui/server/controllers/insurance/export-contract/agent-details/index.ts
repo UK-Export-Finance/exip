@@ -19,11 +19,13 @@ import { Request, Response } from '../../../../../types';
 const {
   INSURANCE_ROOT,
   EXPORT_CONTRACT: { AGENT_SERVICE, AGENT_SERVICE_CHECK_AND_CHANGE, AGENT_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
 const {
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = EXPORT_CONTRACT_FIELD_IDS;
 
 export const FIELD_IDS = [NAME, FULL_ADDRESS, COUNTRY_CODE];
@@ -110,7 +112,10 @@ export const post = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber } = application;
+  const {
+    referenceNumber,
+    exportContract: { agent },
+  } = application;
 
   const payload = constructPayload(req.body, FIELD_IDS);
 
@@ -152,12 +157,28 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const hasAgentServiceData = agent.service[SERVICE_DESCRIPTION] && agent.service[IS_CHARGING] !== null;
+
+    /**
+     * If the route is a "change" route,
+     * redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "check and change" route,
+     * no agent service data is available,
+     * redirect to AGENT_SERVICE_CHECK_AND_CHANGE form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE_CHECK_AND_CHANGE}`);
+      if (!hasAgentServiceData) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${AGENT_SERVICE}`);

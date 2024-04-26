@@ -11,6 +11,7 @@ import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
 import mockApplication, {
   mockApplicationAgentServiceChargeEmpty,
+  mockApplicationAgentServiceEmpty,
   mockApplicationMultiplePolicy,
   mockApplicationTotalContractValueThresholdTrue,
   mockApplicationTotalContractValueThresholdFalse,
@@ -120,6 +121,7 @@ export {
   mockAnswers,
   mockApplication,
   mockApplicationAgentServiceChargeEmpty,
+  mockApplicationAgentServiceEmpty,
   mockApplicationMultiplePolicy,
   mockApplications,
   mockApplicationTotalContractValueThresholdTrue,
