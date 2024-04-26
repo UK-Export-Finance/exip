@@ -1,8 +1,8 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import { DEFAULT } from '../../../../../../../content-strings';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { DEFAULT } from '../../../../../../../../content-strings';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
