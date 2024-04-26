@@ -9,6 +9,7 @@ const {
     CHECK_YOUR_ANSWERS,
     AGENT_CHANGE,
     AGENT_DETAILS_CHANGE,
+    AGENT_SERVICE_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -23,6 +24,7 @@ context('Insurance - Export contract - Change your answers - Agent - No to yes -
   let referenceNumber;
   let checkYourAnswersUrl;
   let agentDetailsUrl;
+  let agentServiceUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -34,6 +36,7 @@ context('Insurance - Export contract - Change your answers - Agent - No to yes -
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS_CHANGE}`;
+      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE_CHANGE}`;
 
       cy.assertUrl(checkYourAnswersUrl);
     });
@@ -63,17 +66,20 @@ context('Insurance - Export contract - Change your answers - Agent - No to yes -
         cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      it(`should redirect to ${AGENT_DETAILS_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) ${AGENT_DETAILS_CHANGE} fields`, () => {
+      it(`should redirect to ${AGENT_DETAILS_CHANGE}, ${AGENT_SERVICE_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) ${AGENT_DETAILS_CHANGE} fields`, () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.completeAndSubmitAgentForm({
           isUsingAgent: true,
         });
 
-        const expectedUrl = `${agentDetailsUrl}#${FIELD_ID}-label`;
-        cy.assertUrl(expectedUrl);
+        cy.assertUrl(`${agentDetailsUrl}#${FIELD_ID}-label`);
 
         cy.completeAndSubmitAgentDetailsForm({});
+
+        cy.assertUrl(`${agentServiceUrl}#${FIELD_ID}-label`);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
 
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
       });
