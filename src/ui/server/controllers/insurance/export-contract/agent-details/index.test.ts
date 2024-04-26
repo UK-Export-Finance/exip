@@ -13,7 +13,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract-agent';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockCountries, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockApplicationAgentServiceEmpty, mockCountries, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -25,6 +25,7 @@ const {
     AGENT_SERVICE_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -275,11 +276,27 @@ describe('controllers/insurance/export-contract/agent-details', () => {
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
+      describe("when the url's last substring is `check-and-change` and agent service data is available", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = AGENT_DETAILS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change` and no agent service data is available", () => {
         it(`should redirect to ${AGENT_SERVICE_CHECK_AND_CHANGE}`, async () => {
           req.body = validBody;
 
           req.originalUrl = AGENT_DETAILS_CHECK_AND_CHANGE;
+
+          res.locals.application = mockApplicationAgentServiceEmpty;
 
           await post(req, res);
 
