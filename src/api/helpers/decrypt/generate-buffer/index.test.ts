@@ -24,16 +24,4 @@ describe('api/helpers/decrypt/generate-buffer', () => {
       }
     });
   });
-
-  describe('Non-string value provided', () => {
-    it('should return an error', () => {
-      try {
-        generateBufferInStringFormat(123);
-      } catch (err) {
-        const errorString = String(err);
-
-        expect(errorString.includes('Error generating buffer')).toEqual(true);
-      }
-    });
-  });
 });

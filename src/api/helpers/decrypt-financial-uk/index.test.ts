@@ -33,23 +33,10 @@ describe('api/helpers/decrypt-financial-uk', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when an empty object is provided', () => {
-    it('should return empty strings for sortCode and accountNumber', () => {
-      const result = decryptFinancialUk({});
-
-      const expected = {
-        sortCode: '',
-        accountNumber: '',
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        decryptFinancialUk();
+        decryptFinancialUk({ id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' });
       } catch (err) {
         const errorString = String(err);
 

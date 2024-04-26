@@ -61,8 +61,13 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
+      const mockNominatedLossPayee = {
+        id: '1',
+        financialUk: { id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' },
+      };
+
       try {
-        decryptNominatedLossPayee();
+        decryptNominatedLossPayee(mockNominatedLossPayee, true);
       } catch (err) {
         const errorString = String(err);
 

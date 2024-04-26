@@ -42,7 +42,7 @@ describe('api/helpers/map-loss-payee-financial-details-international', () => {
   describe('when the an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        mapLossPayeeFinancialDetailsInternational();
+        mapLossPayeeFinancialDetailsInternational({ id: '1', iban: '1', ibanVector: '1', bicSwiftCode: '1', bicSwiftCodeVector: '1' });
       } catch (err) {
         const errorString = String(err);
 

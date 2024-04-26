@@ -55,7 +55,7 @@ describe('api/helpers/decrypt', () => {
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        cypher.decrypt();
+        cypher.decrypt({ value: '1', iv: '1' });
       } catch (err) {
         const errorString = String(err);
 
