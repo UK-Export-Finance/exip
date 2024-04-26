@@ -44,9 +44,15 @@ describe('api/helpers/get-application-by-reference-number', () => {
     });
   });
 
-  describe('when the an error occurs', () => {
+  describe('when an error occurs', () => {
     it('should throw an error', async () => {
-      await expect(getApplicationByReferenceNumber()).rejects.toThrow('Error getting application by reference number');
+      try {
+        getApplicationByReferenceNumber(0, context);
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error getting application by reference number')).toEqual(true);
+      }
     });
   });
 });

@@ -19,6 +19,10 @@ const {
 
 // routes in policy that require a get-application-by-reference-number middleware
 const {
+  ROOT,
+  LOSS_PAYEE_ROOT,
+  LOSS_PAYEE_CHANGE,
+  LOSS_PAYEE_CHECK_AND_CHANGE,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,

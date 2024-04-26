@@ -33,11 +33,15 @@ describe('api/helpers/decrypt-financial-uk', () => {
     expect(result).toEqual(expected);
   });
 
-  try {
-    decryptFinancialUk();
-  } catch (err) {
-    const errorString = String(err);
+  describe('when an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        decryptFinancialUk({ id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' });
+      } catch (err) {
+        const errorString = String(err);
 
-    expect(errorString.includes('Error decrypting financial uk')).toEqual(true);
-  }
+        expect(errorString.includes('Error decrypting financial uk')).toEqual(true);
+      }
+    });
+  });
 });

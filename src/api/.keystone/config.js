@@ -351,9 +351,10 @@ var declarations_default = DECLARATIONS;
 // constants/field-ids/insurance/check-your-answers/index.ts
 var CHECK_YOUR_ANSWERS = {
   ELIGIBILITY: "eligibility",
-  POLICY: "policy",
   EXPORTER_BUSINESS: "business",
-  BUYER: "buyer"
+  BUYER: "buyer",
+  POLICY: "policy",
+  EXPORT_CONTRACT: "exportContract"
 };
 var check_your_answers_default = CHECK_YOUR_ANSWERS;
 
@@ -2127,14 +2128,14 @@ var typeDefs = `
     email: String
   }
 
-  type FinancialUk {
+  type ApplicationNominatedLossPayeeUk {
     id: String
     accountNumber: String
     sortCode: String
     bankAddress: String
   }
 
-  type FinancialInternational {
+  type ApplicationNominatedLossPayeeInternational {
     id: String
     iban: String
     bicSwiftCode: String
@@ -2147,8 +2148,8 @@ var typeDefs = `
     isLocatedInUk: Boolean
     isLocatedInternationally: Boolean
     name: String
-    financialUk: FinancialUk
-    financialInternational: FinancialInternational
+    financialUk: ApplicationNominatedLossPayeeUk
+    financialInternational: ApplicationNominatedLossPayeeInternational
   }
 
   type PopulatedApplication {
@@ -2165,9 +2166,9 @@ var typeDefs = `
     status: String!
     eligibility: Eligibility
     exportContract: ExportContract
+    policy: Policy
     nominatedLossPayee: ApplicationNominatedLossPayee
     policyContact: PolicyContact
-    policy: Policy
     owner: Owner
     company: Company
     business: Business
@@ -4264,6 +4265,7 @@ var create_an_application_default = createAnApplication;
 // helpers/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (referenceNumber, context) => {
   try {
+    console.info("Getting application by reference number - getApplicationByReferenceNumber helper %s", referenceNumber);
     const applications = await context.db.Application.findMany({
       where: {
         referenceNumber: { equals: referenceNumber }
@@ -4317,7 +4319,20 @@ var import_date_fns8 = require("date-fns");
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
   console.info("Getting populated application");
-  const { eligibilityId, ownerId, policyId, policyContactId, exportContractId, companyId, businessId, brokerId, buyerId, declarationId, nominatedLossPayeeId } = application2;
+  const {
+    eligibilityId,
+    ownerId,
+    policyId,
+    policyContactId,
+    exportContractId,
+    companyId,
+    businessId,
+    brokerId,
+    buyerId,
+    declarationId,
+    nominatedLossPayeeId,
+    sectionReviewId
+  } = application2;
   const eligibility = await context.db.Eligibility.findOne({
     where: { id: eligibilityId }
   });
@@ -4434,6 +4449,12 @@ var getPopulatedApplication = async (context, application2) => {
   if (!declaration) {
     throw new Error(generateErrorMessage("declaration", application2.id));
   }
+  const sectionReview = await context.db.SectionReview.findOne({
+    where: { id: sectionReviewId }
+  });
+  if (!sectionReview) {
+    throw new Error(generateErrorMessage("sectionReview", application2.id));
+  }
   const populatedApplication = {
     ...application2,
     eligibility: populatedEligibility,
@@ -4447,7 +4468,8 @@ var getPopulatedApplication = async (context, application2) => {
     owner: account2,
     policy,
     policyContact,
-    nominatedLossPayee
+    nominatedLossPayee,
+    sectionReview
   };
   return populatedApplication;
 };
@@ -5655,6 +5677,7 @@ var generate_initialisation_vector_default = generateInitialisationVector;
 var { ENCRYPTION_METHOD, ENCODING: ENCODING3, STRING_ENCODING: STRING_ENCODING2, OUTPUT_ENCODING } = FINANCIAL_DETAILS.ENCRYPTION.CIPHER;
 var encrypt = (dataToEncrypt) => {
   try {
+    console.info("Encrypting data");
     const key2 = generate_key_default();
     const iv = generate_initialisation_vector_default();
     const cipher = import_crypto11.default.createCipheriv(ENCRYPTION_METHOD, key2, iv);
@@ -5673,6 +5696,7 @@ var encrypt_default = encrypt;
 // helpers/map-loss-payee-financial-details-uk/index.ts
 var mapLossPayeeFinancialDetailsUk = (variables) => {
   try {
+    console.info("Mapping loss payee financial details UK");
     const { accountNumber, sortCode, bankAddress } = variables;
     let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
     let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
@@ -6303,6 +6327,7 @@ var { ENCODING: ENCODING4, OUTPUT_ENCODING: OUTPUT_ENCODING3 } = FINANCIAL_DETAI
 var key = generate_key_default();
 var decryptData = (dataToDecrypt) => {
   try {
+    console.info("Decrypting data");
     const { value, iv } = dataToDecrypt;
     const buffer = generate_buffer_default(value);
     const decipher = generate_decipher_default(key, iv);
@@ -6322,6 +6347,7 @@ var decrypt_default = decrypt;
 // helpers/decrypt-financial-uk/index.ts
 var decryptFinancialUk = (applicationFinancialUk) => {
   try {
+    console.info("Decrypting accountNumber and sortCode for financialUk");
     const updatedFinancialUk = applicationFinancialUk;
     const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
     let decryptedAccountNumber = "";
@@ -6363,6 +6389,7 @@ var decrypt_financial_international_default = decryptFinancialInternational;
 // helpers/decrypt-nominated-loss-payee/index.ts
 var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2) => {
   try {
+    console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
     let updatedNominatedLossPayee = nominatedLossPayee;
     const { financialUk, financialInternational } = updatedNominatedLossPayee;
     if (decryptFinancialUk2) {
@@ -6390,7 +6417,7 @@ var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 // custom-resolvers/queries/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
   try {
-    console.info("Getting application by reference number");
+    console.info("Getting application by reference number %s", variables.referenceNumber);
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2, decryptFinancialInternational: decryptFinancialInternational2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {

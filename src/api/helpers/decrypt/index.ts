@@ -19,6 +19,8 @@ const key = generateKey();
  */
 const decryptData = (dataToDecrypt: EncryptedData) => {
   try {
+    console.info('Decrypting data');
+
     const { value, iv } = dataToDecrypt;
 
     // creates buffer in string format
@@ -36,7 +38,6 @@ const decryptData = (dataToDecrypt: EncryptedData) => {
     return decipherUpdate.concat(decipherFinal);
   } catch (err) {
     console.error('Error decrypting data %O', err);
-
     throw new Error(`Error decrypting data ${err}`);
   }
 };

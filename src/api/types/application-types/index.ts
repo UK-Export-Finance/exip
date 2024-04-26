@@ -242,7 +242,7 @@ export interface ApplicationVersion {
   BROKER_ADDRESS_AS_MULTIPLE_FIELDS: boolean;
 }
 
-export interface SectionReview {
+export interface SectionReview extends Relationship {
   eligibility: boolean;
   business?: boolean;
   policy?: boolean;

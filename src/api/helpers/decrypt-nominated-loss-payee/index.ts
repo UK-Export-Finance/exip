@@ -18,6 +18,8 @@ const decryptNominatedLossPayee = (
   decryptFinancialInternational?: boolean,
 ) => {
   try {
+    console.info('Decrypting nominated loss payee %s', nominatedLossPayee.id);
+
     let updatedNominatedLossPayee = nominatedLossPayee;
 
     const { financialUk, financialInternational } = updatedNominatedLossPayee;

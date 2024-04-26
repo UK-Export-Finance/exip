@@ -20,7 +20,8 @@ import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: { ABOUT_GOODS_OR_SERVICES_SAVE_AND_BACK, HOW_WILL_YOU_GET_PAID, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -187,7 +188,7 @@ export const post = async (req: Request, res: Response) => {
     }
 
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ABOUT_GOODS_OR_SERVICES_CHECK_AND_CHANGE}`);
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${HOW_WILL_YOU_GET_PAID}`);

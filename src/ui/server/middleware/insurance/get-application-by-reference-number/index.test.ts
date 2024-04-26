@@ -27,6 +27,10 @@ describe('middleware/insurance/get-application-by-reference-number', () => {
   describe('RELEVANT_ROUTES', () => {
     it('should return an array of routes', () => {
       const expected = [
+        POLICY.ROOT,
+        POLICY.LOSS_PAYEE_ROOT,
+        POLICY.LOSS_PAYEE_CHANGE,
+        POLICY.LOSS_PAYEE_CHECK_AND_CHANGE,
         POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
         POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
         POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,

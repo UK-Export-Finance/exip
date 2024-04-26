@@ -10,12 +10,14 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/export-contract';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
+  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, PRIVATE_MARKET_CHANGE, PRIVATE_MARKET_CHECK_AND_CHANGE, AGENT, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { HOW_WILL_YOU_GET_PAID_SAVE_AND_BACK, PRIVATE_MARKET, PRIVATE_MARKET_CHANGE, AGENT, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const {
@@ -124,6 +126,23 @@ export const post = async (req: Request, res: Response) => {
       }
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      /**
+       * If the URL is a "check and change" route
+       * and totalContractValue is over the threshold,
+       * redirect to PRIVATE_MARKET with /check-and-change in URL.
+       * This ensures that the next page can consume /check-and-change in the URL
+       * and therefore correctly redirect on submission.
+       * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
+       */
+
+      if (totalContractValueOverThreshold) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${PRIVATE_MARKET_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     /**

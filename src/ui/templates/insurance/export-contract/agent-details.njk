@@ -84,22 +84,33 @@
 
     <div class="govuk-grid-row">
       <div class="govuk-grid-column-two-thirds-from-desktop govuk-!-margin-bottom-8">
-        {{ govukLabel({
-          for: FIELDS.COUNTRY_CODE.ID,
-          classes: "govuk-!-font-weight-bold",
-          text: FIELDS.COUNTRY_CODE.LABEL,
-          attributes: {
-            id: FIELDS.COUNTRY_CODE.ID + "-label",
-            "data-cy": FIELDS.COUNTRY_CODE.ID + "-label"
-          }
-        }) }}
 
-        {{ accessibleAutoCompleteSelect.render({
-          errorMessage: validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text,
-          fieldId: FIELDS.COUNTRY_CODE.ID,
-          integrity: SRI.ACCESSIBILITY,
-          options: countries
-        }) }}
+        {% set containerClassName = "govuk-form-group" %}
+
+        {% set errorMessage = validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text %}
+
+        {% if errorMessage %}
+          {% set containerClassName = "govuk-form-group govuk-form-group--error" %}
+        {% endif %}
+
+        <div class="{{ containerClassName }}">
+          {{ govukLabel({
+            for: FIELDS.COUNTRY_CODE.ID,
+            classes: "govuk-!-font-weight-bold",
+            text: FIELDS.COUNTRY_CODE.LABEL,
+            attributes: {
+              id: FIELDS.COUNTRY_CODE.ID + "-label",
+              "data-cy": FIELDS.COUNTRY_CODE.ID + "-label"
+            }
+          }) }}
+
+          {{ accessibleAutoCompleteSelect.render({
+            errorMessage: validationErrors.errorList[FIELDS.COUNTRY_CODE.ID].text,
+            fieldId: FIELDS.COUNTRY_CODE.ID,
+            integrity: SRI.ACCESSIBILITY,
+            options: countries
+          }) }}
+        </div>
       </div>
     </div>
 

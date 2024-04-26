@@ -1,7 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../constants/routes/insurance';
 import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
 import mapTotalContractValueOverThreshold from '../map-total-contract-value-over-threshold';
-import generateFullApplicationByReferenceNumberVariables from '../../../helpers/generate-full-application-by-reference-number-variables';
+import getApplicationByReferenceNumberVariables from '../../../helpers/get-application-by-reference-number-variables';
 import { Next, Request, Response } from '../../../../types';
 
 const { PAGE_NOT_FOUND } = INSURANCE_ROUTES;
@@ -17,6 +17,10 @@ const {
  * @returns {Array} Routes
  */
 export const RELEVANT_ROUTES = [
+  POLICY.ROOT,
+  POLICY.LOSS_PAYEE_ROOT,
+  POLICY.LOSS_PAYEE_CHANGE,
+  POLICY.LOSS_PAYEE_CHECK_AND_CHANGE,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
   POLICY.LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
@@ -52,7 +56,7 @@ const getApplicationByReferenceNumberMiddleware = async (req: Request, res: Resp
   if (referenceNumber) {
     try {
       // generate variables for getting application, such as decryptFinancialUk
-      const variables = generateFullApplicationByReferenceNumberVariables(referenceNumber, url);
+      const variables = getApplicationByReferenceNumberVariables(referenceNumber, url);
 
       const application = await getApplicationByReferenceNumber(variables);
 

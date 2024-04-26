@@ -1,5 +1,5 @@
 import getApplicationByReferenceNumber from '.';
-import generateFullApplicationByReferenceNumberVariables from '../generate-full-application-by-reference-number-variables';
+import getApplicationByReferenceNumberVariables from '../get-application-by-reference-number-variables';
 import api from '../../api';
 import { mockApplication, referenceNumber } from '../../test-mocks';
 import LOSS_PAYEE_ROUTES from '../../constants/routes/insurance/policy/loss-payee';
@@ -9,7 +9,7 @@ const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT } = LOSS_PAYEE_ROUTES;
 describe('helpers/get-application-by-reference-number', () => {
   let getApplicationSpy;
 
-  const variables = generateFullApplicationByReferenceNumberVariables(referenceNumber.toString(), LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT);
+  const variables = getApplicationByReferenceNumberVariables(referenceNumber.toString(), LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT);
 
   it('should call api.keystone.application.getByReferenceNumber', async () => {
     getApplicationSpy = jest.fn(() => Promise.resolve(mockApplication));
@@ -46,14 +46,12 @@ describe('helpers/get-application-by-reference-number', () => {
   describe('when the api call fails', () => {
     it('should return false', async () => {
       const mockErrorMessage = 'Mock error';
-      getApplicationSpy = jest.fn(() => Promise.reject(mockErrorMessage));
+      getApplicationSpy = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
       api.keystone.application.getByReferenceNumber = getApplicationSpy;
 
-      try {
-        await getApplicationByReferenceNumber(variables);
-      } catch (err) {
-        expect(err).toEqual(new Error(`Getting application by reference number ${mockErrorMessage}`));
-      }
+      await expect(getApplicationByReferenceNumber(variables)).rejects.toThrow(
+        new Error(`Getting application by reference number ${new Error(mockErrorMessage)}`),
+      );
     });
   });
 

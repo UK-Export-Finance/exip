@@ -18,8 +18,7 @@ const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 const {
   INSURANCE: {
     INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK },
+    CHECK_YOUR_ANSWERS: { YOUR_BUYER_SAVE_AND_BACK, TYPE_OF_POLICY },
     PROBLEM_WITH_SERVICE,
   },
 } = ROUTES;
@@ -130,10 +129,10 @@ describe('controllers/insurance/check-your-answers/your-buyer', () => {
       expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
     });
 
-    it(`should redirect to ${ALL_SECTIONS}`, async () => {
+    it(`should redirect to ${TYPE_OF_POLICY}`, async () => {
       await post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

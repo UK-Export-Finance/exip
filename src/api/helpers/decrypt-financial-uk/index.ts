@@ -10,6 +10,8 @@ import decryptData from '../decrypt';
  */
 const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancialUk) => {
   try {
+    console.info('Decrypting accountNumber and sortCode for financialUk');
+
     const updatedFinancialUk = applicationFinancialUk;
 
     const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
