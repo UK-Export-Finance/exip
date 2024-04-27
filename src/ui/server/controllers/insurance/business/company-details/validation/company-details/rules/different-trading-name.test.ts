@@ -19,7 +19,7 @@ describe('controllers/insurance/business/company-details/validation/rules/differ
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it(`should return the result of emptyFieldValidation if ${HAS_DIFFERENT_TRADING_NAME} is true`, () => {
+  it(`should return the result of providedAndMaxLength if ${HAS_DIFFERENT_TRADING_NAME} is true`, () => {
     mockBody[HAS_DIFFERENT_TRADING_NAME] = 'true';
 
     const response = brokerName(mockBody, mockErrors);

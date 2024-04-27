@@ -53,7 +53,7 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     });
   });
 
-  describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.DECLINED_BY_PRIVATE_MARKET_DESCRIPTION} characters`, () => {
+  describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME} characters`, () => {
     it('should display validation errors and retain the submitted value', () => {
       const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME + 1);
 
