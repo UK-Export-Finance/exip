@@ -21,7 +21,7 @@ const {
  */
 const differentTradingName = (formBody: RequestBody, errors: object) => {
   if (formBody[HAS_DIFFERENT_TRADING_NAME] === 'true') {
-    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME);;
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME);
   }
 
   return errors;
