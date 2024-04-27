@@ -1,14 +1,15 @@
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/business';
+import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../../types';
-import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 
 const {
   YOUR_COMPANY: { DIFFERENT_TRADING_NAME: FIELD_ID, HAS_DIFFERENT_TRADING_NAME },
 } = FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE;
 
 /**
@@ -16,11 +17,11 @@ const {
  * checks if response has been provided
  * @param {RequestBody} formBody
  * @param {Object} errors: Other validation errors for the same form
- * @returns {Object} errors
+ * @returns {ValidationErrors} providedAndMaxLength
  */
 const differentTradingName = (formBody: RequestBody, errors: object) => {
   if (formBody[HAS_DIFFERENT_TRADING_NAME] === 'true') {
-    return emptyFieldValidation(formBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME);;
   }
 
   return errors;
