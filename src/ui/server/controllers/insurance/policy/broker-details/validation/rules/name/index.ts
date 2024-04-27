@@ -18,7 +18,7 @@ const {
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */
-const brokerName = (responseBody: RequestBody, errors: object) => 
+const brokerName = (responseBody: RequestBody, errors: object) =>
   providedAndMaxLength(responseBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BROKER_NAME);
 
 export default brokerName;
