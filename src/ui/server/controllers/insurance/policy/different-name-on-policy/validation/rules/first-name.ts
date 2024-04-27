@@ -17,7 +17,7 @@ const {
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} alphaCharactersAndMaxLengthValidation
  */
-const firstName = (formBody: RequestBody, errors: object) => 
+const firstName = (formBody: RequestBody, errors: object) =>
   alphaCharactersAndMaxLengthValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME);
 
 export default firstName;
