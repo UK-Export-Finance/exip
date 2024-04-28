@@ -57,6 +57,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
         field: fieldSelector(FIELD_ID),
         expectedErrorMessage: COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID].ABOVE_MAXIMUM,
         value: submittedValue,
+        expectedErrorsCount: 2,
       });
     });
   });
