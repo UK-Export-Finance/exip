@@ -7,7 +7,7 @@ const APPLICATION_SUBMITTED = {
   WHAT_HAPPENS_NEXT: {
     HEADING: 'What happens next?',
     INTRO: "We've emailed you a receipt of your application.",
-    WILL_SEND_EMAIL: "Next, we'll send you an email requesting your anti- bribery code of conduct and your trading history with the buyer.",
+    WILL_SEND_EMAIL: "Next, we'll send you an email requesting your anti-bribery code of conduct and your trading history with the buyer.",
     MAY_ALSO_CONTACT: 'We may also contact you with extra questions if we need to assess the environmental impact of your exports.',
   },
   DECISION_FROM_US: {
