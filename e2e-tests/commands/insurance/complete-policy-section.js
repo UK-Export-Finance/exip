@@ -8,6 +8,8 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} viaTaskList: Start the "policy" section from the task list.
  * @param {String} policyType: If single or multiple policy - defaults to single
  * @param {Boolean} policyValueOverMvpMaximum: If the value should be over the MVP maximum amount
+ * @param {String} isoCode: Policy currency ISO code
+ * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  * @param {Boolean} sameName: If name on policy is the same as the signed in user - defaults to true
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
@@ -18,6 +20,8 @@ const completePolicySection = ({
   viaTaskList,
   policyType = POLICY_TYPE.SINGLE,
   policyValueOverMvpMaximum = false,
+  isoCode,
+  alternativeCurrency = false,
   sameName = true,
   needPreCreditPeriod = false,
   usingBroker = false,
@@ -29,11 +33,17 @@ const completePolicySection = ({
   cy.completeAndSubmitPolicyTypeForm({ policyType });
 
   if (policyType === POLICY_TYPE.SINGLE) {
-    cy.completeAndSubmitSingleContractPolicyForm({});
+    cy.completeAndSubmitSingleContractPolicyForm({
+      isoCode,
+      alternativeCurrency,
+    });
 
     cy.completeAndSubmitTotalContractValueForm({ policyValueOverMvpMaximum });
   } else {
-    cy.completeAndSubmitMultipleContractPolicyForm({});
+    cy.completeAndSubmitMultipleContractPolicyForm({
+      isoCode,
+      alternativeCurrency,
+    });
 
     cy.completeAndSubmitExportValueForm({ policyType });
   }

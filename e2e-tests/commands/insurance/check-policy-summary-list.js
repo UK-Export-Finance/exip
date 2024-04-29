@@ -64,13 +64,20 @@ const checkPolicySummaryList = ({
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
-  [CURRENCY_CODE]: () => {
+  [CURRENCY_CODE]: (expectedCurrencyName) => {
     const fieldId = CURRENCY_CODE;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY);
 
-    const currency = CURRENCIES.find((c) => c.isoCode === application.POLICY[POLICY_CURRENCY_CODE]);
-    const expectedValue = currency.name;
+    let expectedValue;
+
+    if (expectedCurrencyName) {
+      expectedValue = expectedCurrencyName;
+    } else {
+      const currency = CURRENCIES.find((c) => c.isoCode === application.POLICY[POLICY_CURRENCY_CODE]);
+
+      expectedValue = currency.name;
+    }
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
@@ -120,12 +127,12 @@ const checkPolicySummaryList = ({
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [TOTAL_CONTRACT_VALUE]: () => {
+    [TOTAL_CONTRACT_VALUE]: (currencyCode) => {
       const fieldId = TOTAL_CONTRACT_VALUE;
 
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, CONTRACT_POLICY.SINGLE);
 
-      const expectedValue = formatCurrency(application.POLICY[fieldId]);
+      const expectedValue = formatCurrency(application.POLICY[fieldId], currencyCode);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
@@ -149,21 +156,21 @@ const checkPolicySummaryList = ({
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [TOTAL_SALES_TO_BUYER]: () => {
+    [TOTAL_SALES_TO_BUYER]: (currencyCode) => {
       const fieldId = TOTAL_SALES_TO_BUYER;
 
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.MULTIPLE);
 
-      const expectedValue = formatCurrency(application.POLICY[fieldId]);
+      const expectedValue = formatCurrency(application.POLICY[fieldId], currencyCode);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },
-    [MAXIMUM_BUYER_WILL_OWE]: () => {
+    [MAXIMUM_BUYER_WILL_OWE]: (currencyCode) => {
       const fieldId = MAXIMUM_BUYER_WILL_OWE;
 
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, EXPORT_VALUE.MULTIPLE);
 
-      const expectedValue = formatCurrency(application.POLICY[fieldId]);
+      const expectedValue = formatCurrency(application.POLICY[fieldId], currencyCode);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     },

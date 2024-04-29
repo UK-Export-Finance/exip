@@ -59,7 +59,7 @@ const generateSingleContractPolicyFields = (answers: ApplicationPolicy, referenc
           checkAndChange,
         ),
       },
-      answers[TOTAL_CONTRACT_VALUE] && formatCurrency(answers[TOTAL_CONTRACT_VALUE], answers[POLICY_CURRENCY_CODE]),
+      formatCurrency(answers[TOTAL_CONTRACT_VALUE], answers[POLICY_CURRENCY_CODE]),
     ),
   ] as Array<SummaryListItemData>;
 
