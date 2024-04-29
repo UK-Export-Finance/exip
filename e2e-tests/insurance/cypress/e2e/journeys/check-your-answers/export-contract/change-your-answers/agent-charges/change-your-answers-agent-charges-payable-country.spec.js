@@ -1,8 +1,8 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { XAD } from '../../../../../../../../fixtures/countries';
 
 const {
   ROOT,
@@ -13,20 +13,20 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: {
-    FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
-  },
+  AGENT_CHARGES: { PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const fieldId = PERCENTAGE_CHARGE;
+const NEW_COUNTRY_INPUT = XAD.NAME;
+
+const fieldId = PAYABLE_COUNTRY_CODE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - Percentage to Fixed sum', () => {
+context(`Insurance - Change your answers - Export contract - Summary list - Agent charges - ${PAYABLE_COUNTRY_CODE}`, () => {
   let referenceNumber;
   let url;
 
@@ -38,7 +38,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Perc
         referenceNumber,
         isUsingAgent: true,
         agentIsCharging: true,
-        agentChargeMethodPercentage: true,
+        agentChargeMethodFixedSum: true,
       });
 
       task.link().click();
@@ -80,15 +80,16 @@ context('Insurance - Change your answers - Export contract - Summary list - Perc
     it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
+      cy.completeAndSubmitAgentChargesForm({
+        percentageCharge: '',
+        payableCountry: NEW_COUNTRY_INPUT,
+      });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
     });
 
-    it(`should render only ${FIXED_SUM_AMOUNT} and ${PAYABLE_COUNTRY_CODE} fields/values`, () => {
-      checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
-      checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
-      checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
+    it('should render the new answer', () => {
+      cy.assertSummaryListRowValue(summaryList, fieldId, NEW_COUNTRY_INPUT);
     });
 
     it('should retain a `completed` status tag', () => {

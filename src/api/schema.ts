@@ -292,7 +292,7 @@ export const lists = {
       isLocatedInUk: nullableCheckbox(),
       isLocatedInternationally: nullableCheckbox(),
       name: text({
-        db: { nativeType: 'VarChar(100)' },
+        db: { nativeType: 'VarChar(200)' },
       }),
     },
     access: allowAll,

@@ -1,9 +1,9 @@
-import { field, status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import application from '../../../../../../../fixtures/application';
-import { XAD } from '../../../../../../../fixtures/countries';
+import { field, status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../../fixtures/application';
+import { XAD } from '../../../../../../../../fixtures/countries';
 
 const {
   ROOT,

@@ -133,7 +133,7 @@ model NominatedLossPayee {
   isAppointed                         Boolean?
   isLocatedInUk                       Boolean?
   isLocatedInternationally            Boolean?
-  name                                String                           @default("") @mysql.VarChar(100)
+  name                                String                           @default("") @mysql.VarChar(200)
   from_Application_nominatedLossPayee Application[]                    @relation("Application_nominatedLossPayee")
 
   @@index([applicationId])

@@ -372,7 +372,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.NAME]: {
         IS_EMPTY: 'Enter the name of the loss payee',
-        ABOVE_MAXIMUM: 'The name of the loss payee cannot be more than 100 characters',
+        ABOVE_MAXIMUM: `The name of the loss payee cannot be more than ${MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME} characters`,
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.LOCATION]: {
         IS_EMPTY: 'Select where your loss payee is located',
@@ -409,6 +409,7 @@ export const ERROR_MESSAGES = {
       COMPANY_OR_ORGANISATION: {
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.NAME]: {
           IS_EMPTY: "Enter the buyer's company or organisation name",
+          ABOVE_MAXIMUM: `The buyer's company or organisation name cannot be more than ${MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION} characters`,
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
           IS_EMPTY: "Enter the buyer's address",
