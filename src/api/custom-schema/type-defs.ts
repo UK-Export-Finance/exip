@@ -443,6 +443,7 @@ const typeDefs = `
     getApplicationByReferenceNumber(
       referenceNumber: Int
       decryptFinancialUk: Boolean
+      decryptFinancialInternational: Boolean
     ): ApplicationSuccessResponse
 
     """ get Ordnance Survey address """

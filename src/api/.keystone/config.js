@@ -1199,7 +1199,7 @@ var lists = {
       isLocatedInUk: nullable_checkbox_default(),
       isLocatedInternationally: nullable_checkbox_default(),
       name: (0, import_fields.text)({
-        db: { nativeType: "VarChar(100)" }
+        db: { nativeType: "VarChar(200)" }
       })
     },
     access: import_access.allowAll
@@ -2330,6 +2330,7 @@ var typeDefs = `
     getApplicationByReferenceNumber(
       referenceNumber: Int
       decryptFinancialUk: Boolean
+      decryptFinancialInternational: Boolean
     ): ApplicationSuccessResponse
 
     """ get Ordnance Survey address """
@@ -4420,7 +4421,7 @@ var getPopulatedApplication = async (context, application2) => {
   }
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
     where: { id: nominatedLossPayeeId },
-    query: "id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id } isAppointed isLocatedInUk isLocatedInternationally name"
+    query: "id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id iban ibanVector bicSwiftCode bicSwiftCodeVector bankAddress } isAppointed isLocatedInUk isLocatedInternationally name"
   });
   if (!nominatedLossPayee) {
     console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
@@ -6367,17 +6368,42 @@ var decryptFinancialUk = (applicationFinancialUk) => {
 };
 var decrypt_financial_uk_default = decryptFinancialUk;
 
+// helpers/decrypt-financial-international/index.ts
+var decryptFinancialInternational = (applicationFinancialInternational) => {
+  const updatedFinancialInternational = applicationFinancialInternational;
+  const { iban, ibanVector, bicSwiftCode, bicSwiftCodeVector } = updatedFinancialInternational;
+  let decryptedIban = "";
+  let decryptedBicSwiftCode = "";
+  if (iban && ibanVector) {
+    decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
+  }
+  if (bicSwiftCode && bicSwiftCodeVector) {
+    decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
+  }
+  updatedFinancialInternational.iban = decryptedIban;
+  updatedFinancialInternational.bicSwiftCode = decryptedBicSwiftCode;
+  return updatedFinancialInternational;
+};
+var decrypt_financial_international_default = decryptFinancialInternational;
+
 // helpers/decrypt-nominated-loss-payee/index.ts
-var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2) => {
+var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2) => {
   try {
     console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
     let updatedNominatedLossPayee = nominatedLossPayee;
-    const { financialUk } = updatedNominatedLossPayee;
+    const { financialUk, financialInternational } = updatedNominatedLossPayee;
     if (decryptFinancialUk2) {
       const updatedFinancialUk = decrypt_financial_uk_default(financialUk);
       updatedNominatedLossPayee = {
         ...updatedNominatedLossPayee,
         financialUk: updatedFinancialUk
+      };
+    }
+    if (decryptFinancialInternational2) {
+      const updatedFinancialInternational = decrypt_financial_international_default(financialInternational);
+      updatedNominatedLossPayee = {
+        ...updatedNominatedLossPayee,
+        financialInternational: updatedFinancialInternational
       };
     }
     return updatedNominatedLossPayee;
@@ -6392,13 +6418,13 @@ var decrypt_nominated_loss_payee_default = decryptNominatedLossPayee;
 var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
   try {
     console.info("Getting application by reference number %s", variables.referenceNumber);
-    const { referenceNumber, decryptFinancialUk: decryptFinancialUk2 } = variables;
+    const { referenceNumber, decryptFinancialUk: decryptFinancialUk2, decryptFinancialInternational: decryptFinancialInternational2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
       const populatedApplication = await get_populated_application_default(context, application2);
-      if (decryptFinancialUk2) {
+      if (decryptFinancialUk2 || decryptFinancialInternational2) {
         const { nominatedLossPayee } = populatedApplication;
-        const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2);
+        const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
         populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
       }
       return {

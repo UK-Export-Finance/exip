@@ -1,11 +1,11 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ROUTES, FIELD_IDS } from '../../../../../../../constants';
+import { FIELD_IDS, ROUTES, MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 
 const {
   EXPORTER_BUSINESS: {
     YOUR_COMPANY: {
-      DIFFERENT_TRADING_NAME,
+      DIFFERENT_TRADING_NAME: FIELD_ID,
     },
   },
 } = FIELD_IDS.INSURANCE;
@@ -46,10 +46,22 @@ describe("Insurance - Your business - Company details page - As an Exporter I wa
     cy.deleteApplication(referenceNumber);
   });
 
-  it('should display validation errors if trading name question is not answered', () => {
+  it(`should display validation errors if ${FIELD_ID} is left empty`, () => {
     cy.submitAndAssertFieldErrors({
-      field: fieldSelector(DIFFERENT_TRADING_NAME),
-      expectedErrorMessage: COMPANY_DETAILS_ERRORS[DIFFERENT_TRADING_NAME].IS_EMPTY,
+      field: fieldSelector(FIELD_ID),
+      expectedErrorMessage: COMPANY_DETAILS_ERRORS[FIELD_ID].IS_EMPTY,
+    });
+  });
+
+  describe(`when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME} characters`, () => {
+    it('should display validation errors and retain the submitted value', () => {
+      const submittedValue = 'a'.repeat(MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME + 1);
+
+      cy.submitAndAssertFieldErrors({
+        field: fieldSelector(FIELD_ID),
+        expectedErrorMessage: COMPANY_DETAILS_ERRORS[FIELD_ID].ABOVE_MAXIMUM,
+        value: submittedValue,
+      });
     });
   });
 });

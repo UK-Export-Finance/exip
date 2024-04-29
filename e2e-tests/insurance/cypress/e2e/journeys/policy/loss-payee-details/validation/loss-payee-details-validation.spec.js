@@ -1,6 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import mockNameWithSpecialCharacters from '../../../../../../../fixtures/name-with-special-characters';
@@ -23,12 +23,6 @@ const {
     },
   },
 } = INSURANCE_FIELD_IDS;
-
-const {
-  MAXIMUM: {
-    NAME: { CHARACTERS: MAX_NAME_CHARACTERS },
-  },
-} = ACCOUNT_FIELDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -80,8 +74,8 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
-    it(`should render validation errors when ${FIELD_ID} is over ${MAX_NAME_CHARACTERS} characters`, () => {
-      const value = 'a'.repeat(MAX_NAME_CHARACTERS + 1);
+    it(`should render validation errors when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME} characters`, () => {
+      const value = 'a'.repeat(MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME + 1);
 
       cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });

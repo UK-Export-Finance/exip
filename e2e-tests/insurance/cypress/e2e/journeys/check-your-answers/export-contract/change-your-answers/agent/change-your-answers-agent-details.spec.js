@@ -1,9 +1,9 @@
-import { field, status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import application from '../../../../../../../fixtures/application';
-import { XAD } from '../../../../../../../fixtures/countries';
+import { field, status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../../fixtures/application';
+import { XAD } from '../../../../../../../../fixtures/countries';
 
 const {
   ROOT,
@@ -11,6 +11,7 @@ const {
     EXPORT_CONTRACT,
   },
   EXPORT_CONTRACT: {
+    AGENT_SERVICE_CHECK_AND_CHANGE,
     AGENT_DETAILS_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
@@ -40,6 +41,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Change your answers - Export contract - Summary list - Agent details', () => {
   let referenceNumber;
   let url;
+  let agentServiceUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -56,6 +58,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
+      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE_CHECK_AND_CHANGE}`;
 
       cy.assertUrl(url);
     });
@@ -88,15 +91,19 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
 
       beforeEach(() => {
         cy.navigateToUrl(url);
+      });
 
+      it(`should redirect to ${AGENT_SERVICE_CHECK_AND_CHANGE} and then ${EXPORT_CONTRACT} after completing (now required) ${AGENT_SERVICE_CHECK_AND_CHANGE} fields`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.keyboardInput(field(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
-      });
 
-      it(`should redirect to ${EXPORT_CONTRACT}`, () => {
+        cy.assertUrl(`${agentServiceUrl}#${fieldId}-label`);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
+
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
       });
 
@@ -126,13 +133,19 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
 
       beforeEach(() => {
         cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.changeAnswerField(fieldVariables, field(fieldId).textarea());
       });
 
-      it(`should redirect to ${EXPORT_CONTRACT}`, () => {
+      it(`should redirect to ${AGENT_SERVICE_CHECK_AND_CHANGE} and then ${EXPORT_CONTRACT} after completing (now required) ${AGENT_SERVICE_CHECK_AND_CHANGE} fields`, () => {
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.keyboardInput(field(fieldId).textarea(), newAnswer);
+
+        cy.clickSubmitButton();
+
+        cy.assertUrl(`${agentServiceUrl}#${fieldId}-label`);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
+
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
       });
 
@@ -161,14 +174,19 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
 
       beforeEach(() => {
         cy.navigateToUrl(url);
+      });
 
+      it(`should redirect to ${AGENT_SERVICE_CHECK_AND_CHANGE} and then ${EXPORT_CONTRACT} after completing (now required) ${AGENT_SERVICE_CHECK_AND_CHANGE} fields`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.autocompleteKeyboardInput(fieldId, fieldVariables.newValue);
-        cy.clickSubmitButton();
-      });
 
-      it(`should redirect to ${EXPORT_CONTRACT}`, () => {
+        cy.clickSubmitButton();
+
+        cy.assertUrl(`${agentServiceUrl}#${fieldId}-label`);
+
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
+
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
       });
 

@@ -5,7 +5,7 @@ import getCountryByField from '../get-country-by-field';
 import mockCountries from '../../test-mocks/mock-countries';
 import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
-import mockApplication, { mockLossPayeeFinancialDetailsUk } from '../../test-mocks/mock-application';
+import mockApplication, { mockLossPayeeFinancialDetailsUk, mockLossPayeeFinancialDetailsInternational } from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
@@ -88,11 +88,25 @@ describe('api/helpers/get-populated-application', () => {
 
     const { financialUk } = result.nominatedLossPayee;
 
-    expect(financialUk.accountNumber).toEqual(mockLossPayeeFinancialDetailsUk.accountNumber);
-    expect(financialUk.accountNumberVector).toEqual(mockLossPayeeFinancialDetailsUk.accountNumberVector);
-    expect(financialUk.sortCode).toEqual(mockLossPayeeFinancialDetailsUk.sortCode);
-    expect(financialUk.sortCodeVector).toEqual(mockLossPayeeFinancialDetailsUk.sortCodeVector);
-    expect(financialUk.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
+    const expected = {
+      ...mockLossPayeeFinancialDetailsUk,
+      id: financialUk.id,
+    };
+
+    expect(financialUk).toEqual(expected);
+  });
+
+  it('should return an application with populated financialInternational', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    const { financialInternational } = result.nominatedLossPayee;
+
+    const expected = {
+      ...mockLossPayeeFinancialDetailsInternational,
+      id: financialInternational.id,
+    };
+
+    expect(financialInternational).toEqual(expected);
   });
 
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {

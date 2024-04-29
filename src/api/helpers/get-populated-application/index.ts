@@ -147,7 +147,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
     where: { id: nominatedLossPayeeId },
     query:
-      'id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id } isAppointed isLocatedInUk isLocatedInternationally name',
+      'id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id iban ibanVector bicSwiftCode bicSwiftCodeVector bankAddress } isAppointed isLocatedInUk isLocatedInternationally name',
   });
 
   if (!nominatedLossPayee) {

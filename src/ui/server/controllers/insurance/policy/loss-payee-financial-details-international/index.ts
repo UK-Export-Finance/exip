@@ -5,11 +5,12 @@ import POLICY_FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import insuranceCorePageVariables from '../../../../helpers/page-variables/core/insurance';
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
+import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/loss-payee-financial-details-international';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
-import { Request, Response } from '../../../../../types';
+import { Application, Request, Response } from '../../../../../types';
 
 const { BIC_SWIFT_CODE, IBAN } = POLICY_FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
 const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
@@ -66,6 +67,8 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
+  const mappedApplication = mapApplicationToFormFields(application) as Application;
+
   return res.render(TEMPLATE, {
     ...insuranceCorePageVariables({
       PAGE_CONTENT_STRINGS,
@@ -73,6 +76,7 @@ export const get = (req: Request, res: Response) => {
     }),
     ...pageVariables(application.referenceNumber),
     userName: getUserNameFromSession(req.session.user),
+    submittedValues: mappedApplication.nominatedLossPayee.financialInternational,
   });
 };
 

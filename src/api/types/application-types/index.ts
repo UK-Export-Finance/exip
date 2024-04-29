@@ -79,23 +79,6 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
-export interface ApplicationFinancialUk extends Relationship {
-  accountNumber?: string;
-  accountNumberVector?: string;
-  sortCode?: string;
-  sortCodeVector?: string;
-  bankAddress?: string;
-}
-
-export interface ApplicationNominatedLossPayee extends Relationship {
-  applicationId?: string;
-  isAppointed?: boolean;
-  name?: string;
-  isLocatedInUk?: boolean;
-  isLocatedInternationally?: boolean;
-  financialUk: ApplicationFinancialUk;
-}
-
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
   lossPayeeId?: string;
   bankAddress?: string;
@@ -112,6 +95,16 @@ export interface ApplicationLossPayeeFinancialUk extends Relationship {
   bankAddress?: string;
   sortCode?: string;
   sortCodeVector?: string;
+}
+
+export interface ApplicationNominatedLossPayee extends Relationship {
+  applicationId?: string;
+  isAppointed?: boolean;
+  name?: string;
+  isLocatedInUk?: boolean;
+  isLocatedInternationally?: boolean;
+  financialUk: ApplicationLossPayeeFinancialUk;
+  financialInternational: ApplicationLossPayeeFinancialInternational;
 }
 
 export interface TotalContractValue extends Relationship {
@@ -288,6 +281,7 @@ export interface DeleteApplicationByReferenceNumberVariables {
 export interface GetApplicationByReferenceNumberVariables {
   referenceNumber: number;
   decryptFinancialUk?: boolean;
+  decryptFinancialInternational?: boolean;
 }
 
 export interface GetApplicationByReferenceNumberResponse extends SuccessResponse {

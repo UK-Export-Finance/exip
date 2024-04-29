@@ -42,7 +42,7 @@ describe('api/helpers/map-loss-payee-financial-details-uk', () => {
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        mapLossPayeeFinancialDetailsUk();
+        mapLossPayeeFinancialDetailsUk({ id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' });
       } catch (err) {
         const errorString = String(err);
 
