@@ -21,7 +21,7 @@ const createALossPayeeFinancialUk = async (context: Context, lossPayeeId: string
 
     await context.db.LossPayeeFinancialUkVector.createOne({
       data: {
-        financialInternational: {
+        financialUk: {
           connect: { id: lossPayeeFinancialUk.id },
         },
       },

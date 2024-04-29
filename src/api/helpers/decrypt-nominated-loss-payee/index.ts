@@ -32,9 +32,9 @@ const decryptNominatedLossPayee = (
      * add to decrypted data mapping
      */
     if (decryptFinancialUk) {
-      const updatedFinancialUk = decryptFinancialUkData(financialUk);
+      const mappedFinancialUk = decryptFinancialUkData(financialUk);
 
-      mapped.financialUk = updatedFinancialUk;
+      mapped.financialUk = mappedFinancialUk;
     }
 
     /**
@@ -42,9 +42,9 @@ const decryptNominatedLossPayee = (
      * add to decrypted data mapping
      */
     if (decryptFinancialInternational) {
-      const updatedFinancialInternational = decryptFinancialInternationalData(financialInternational);
+      const mappedFinancialInternational = decryptFinancialInternationalData(financialInternational);
 
-      mapped.financialInternational = updatedFinancialInternational;
+      mapped.financialInternational = mappedFinancialInternational;
     }
 
     return mapped;

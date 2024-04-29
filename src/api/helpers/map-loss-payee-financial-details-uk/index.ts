@@ -32,11 +32,15 @@ const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancial
      * adds the initialisation vectors
      */
     const updateData = {
-      accountNumber: accountNumberData.value,
-      accountNumberVector: accountNumberData.iv,
-      sortCode: sortCodeData.value,
-      sortCodeVector: sortCodeData.iv,
-      bankAddress,
+      uk: {
+        accountNumber: accountNumberData.value,
+        sortCode: sortCodeData.value,
+        bankAddress,
+      },
+      vectors: {
+        accountNumberVector: accountNumberData.iv,
+        sortCodeVector: sortCodeData.iv,
+      },
     };
 
     return updateData;

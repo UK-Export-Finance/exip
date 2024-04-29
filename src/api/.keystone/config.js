@@ -2014,9 +2014,7 @@ var typeDefs = `
   input LossPayeeFinancialDetailsUkInput {
     id: String
     accountNumber: String
-    accountNumberVector: String
     sortCode: String
-    sortCodeVector: String
     bankAddress: String
   }
 
@@ -2301,7 +2299,7 @@ var typeDefs = `
       service: String
     ): SuccessResponse
 
-    """ update loss payee financial details uk """
+    """ update loss payee financial uk """
     updateLossPayeeFinancialDetailsUk(
       id: String
       bankAddress: String
@@ -2309,7 +2307,7 @@ var typeDefs = `
       sortCode: String
     ): SuccessResponse
 
-    """ update loss payee financial details international """
+    """ update loss payee financial international """
     updateLossPayeeFinancialDetailsInternational(
       id: String
       bankAddress: String
@@ -3930,6 +3928,32 @@ var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
 };
 var create_a_loss_payee_financial_international_default = createALossPayeeFinancialInternational;
 
+// helpers/create-a-loss-payee-financial-uk/index.ts
+var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
+  console.info("Creating a loss payee financial (UK) for ", lossPayeeId);
+  try {
+    const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
+      data: {
+        lossPayee: {
+          connect: { id: lossPayeeId }
+        }
+      }
+    });
+    await context.db.LossPayeeFinancialUkVector.createOne({
+      data: {
+        financialUk: {
+          connect: { id: lossPayeeFinancialUk.id }
+        }
+      }
+    });
+    return lossPayeeFinancialUk;
+  } catch (err) {
+    console.error("Error creating a loss payee financial (UK) for %O", err);
+    throw new Error(`Creating a loss payee financial (UK) for ${err}`);
+  }
+};
+var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
+
 // helpers/create-a-nominated-loss-payee/index.ts
 var createANominatedLossPayee = async (context, applicationId) => {
   console.info("Creating a nominated loss payee for ", applicationId);
@@ -3942,6 +3966,7 @@ var createANominatedLossPayee = async (context, applicationId) => {
       }
     });
     await create_a_loss_payee_financial_international_default(context, nominatedLossPayee.id);
+    await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
     return nominatedLossPayee;
   } catch (err) {
     console.error("Error creating a nominated loss payee for %O", err);
@@ -4426,7 +4451,6 @@ var getPopulatedApplication = async (context, application2) => {
     where: { id: nominatedLossPayeeId },
     query: "id financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } isAppointed isLocatedInUk isLocatedInternationally name"
   });
-  console.log("->>>>> nominatedLossPayee ", nominatedLossPayee);
   if (!nominatedLossPayee) {
     console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
     throw new Error(generateErrorMessage("nominated loss payee", application2.id));
@@ -5700,7 +5724,7 @@ var encrypt_default = encrypt;
 // helpers/map-loss-payee-financial-details-uk/index.ts
 var mapLossPayeeFinancialDetailsUk = (variables) => {
   try {
-    console.info("Mapping loss payee financial details UK");
+    console.info("Mapping loss payee financial UK");
     const { accountNumber, sortCode, bankAddress } = variables;
     let accountNumberData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
     let sortCodeData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
@@ -5711,33 +5735,69 @@ var mapLossPayeeFinancialDetailsUk = (variables) => {
       sortCodeData = encrypt_default(sortCode);
     }
     const updateData = {
-      accountNumber: accountNumberData.value,
-      accountNumberVector: accountNumberData.iv,
-      sortCode: sortCodeData.value,
-      sortCodeVector: sortCodeData.iv,
-      bankAddress
+      uk: {
+        accountNumber: accountNumberData.value,
+        sortCode: sortCodeData.value,
+        bankAddress
+      },
+      vectors: {
+        accountNumberVector: accountNumberData.iv,
+        sortCodeVector: sortCodeData.iv
+      }
     };
     return updateData;
   } catch (err) {
-    console.error("Error mapping loss payee financial details UK %O", err);
-    throw new Error(`Error mapping loss payee financial details UK ${err}`);
+    console.error("Error mapping loss payee financial UK %O", err);
+    throw new Error(`Error mapping loss payee financial UK ${err}`);
   }
 };
 var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
 
-// custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
-var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
+// helpers/update-loss-payee-financial-uk/index.ts
+var updateLossPayeeFinancialInternationalUk = async (context, id, data) => {
   try {
-    console.info("Updating loss payee financial details UK %s", variables.id);
-    const { id } = variables;
-    const updateData = map_loss_payee_financial_details_uk_default(variables);
-    const response = await context.db.LossPayeeFinancialUk.updateOne({
+    console.info("Updating loss payee financial uk (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialUk.updateOne({
       where: {
         id
       },
-      data: updateData
+      data
     });
-    if (response) {
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial uk (helper) %O", err);
+    throw new Error(`Updating loss payee financial uk (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_uk_default = updateLossPayeeFinancialInternationalUk;
+
+// helpers/update-loss-payee-financial-uk-vector/index.ts
+var updateLossPayeeFinancialUkVector = async (context, id, data) => {
+  try {
+    console.info("Updating loss payee financial uk vector (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialUkVector.updateOne({
+      where: {
+        id
+      },
+      data
+    });
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial uk vector (helper) %O", err);
+    throw new Error(`Updating loss payee financial uk vector (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_uk_vector_default = updateLossPayeeFinancialUkVector;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-uk/index.ts
+var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial UK %s", variables.id);
+    const { id } = variables;
+    const mappedData = map_loss_payee_financial_details_uk_default(variables);
+    const uk = await update_loss_payee_financial_uk_default(context, id, mappedData.uk);
+    const vector = await update_loss_payee_financial_uk_vector_default(context, uk.vectorId, mappedData.vectors);
+    if (uk && vector) {
       return {
         success: true
       };
@@ -5746,8 +5806,8 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
       success: false
     };
   } catch (err) {
-    console.error("Error updating loss payee financial details UK %O", err);
-    throw new Error(`Updating loss payee financial details UK ${err}`);
+    console.error("Error updating loss payee financial UK %O", err);
+    throw new Error(`Updating loss payee financial UK ${err}`);
   }
 };
 var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
@@ -5777,31 +5837,57 @@ var mapLossPayeeFinancialDetailsInternational = (variables) => {
     };
     return updateData;
   } catch (err) {
-    console.error("Error mapping loss payee financial details international %O", err);
-    throw new Error(`Error mapping loss payee financial details international ${err}`);
+    console.error("Error mapping loss payee financial international %O", err);
+    throw new Error(`Error mapping loss payee financial international ${err}`);
   }
 };
 var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
 
-// custom-resolvers/mutations/update-loss-payee-financial-details-international/index.ts
-var updateLossPayeeFinancialDetailsInternational = async (root, variables, context) => {
+// helpers/update-loss-payee-financial-international/index.ts
+var updateLossPayeeFinancialInternational = async (context, id, data) => {
   try {
-    console.info("Updating loss payee financial details international %s", variables.id);
-    const { id } = variables;
-    const updateData = map_loss_payee_financial_details_international_default(variables);
-    const response = await context.db.LossPayeeFinancialInternational.updateOne({
+    console.info("Updating loss payee financial international (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialInternational.updateOne({
       where: {
         id
       },
-      data: updateData.international
+      data
     });
-    await context.db.LossPayeeFinancialInternationalVector.updateOne({
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial international (helper) %O", err);
+    throw new Error(`Updating loss payee financial international (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_international_default = updateLossPayeeFinancialInternational;
+
+// helpers/update-loss-payee-financial-international-vector/index.ts
+var updateLossPayeeFinancialInternationalVector = async (context, id, data) => {
+  try {
+    console.info("Updating loss payee financial international vector (helper) %s", id);
+    const updated = await context.db.LossPayeeFinancialInternationalVector.updateOne({
       where: {
-        id: response.vectorId
+        id
       },
-      data: updateData.vectors
+      data
     });
-    if (response) {
+    return updated;
+  } catch (err) {
+    console.error("Error updating loss payee financial international vector (helper) %O", err);
+    throw new Error(`Updating loss payee financial international vector (helper) ${err}`);
+  }
+};
+var update_loss_payee_financial_international_vector_default = updateLossPayeeFinancialInternationalVector;
+
+// custom-resolvers/mutations/update-loss-payee-financial-details-international/index.ts
+var updateLossPayeeFinancialDetailsInternational = async (root, variables, context) => {
+  try {
+    console.info("Updating loss payee financial international %s", variables.id);
+    const { id } = variables;
+    const mappedData = map_loss_payee_financial_details_international_default(variables);
+    const international = await update_loss_payee_financial_international_default(context, id, mappedData.international);
+    const vector = await update_loss_payee_financial_international_vector_default(context, international.vectorId, mappedData.vectors);
+    if (international && vector) {
       return {
         success: true
       };
@@ -5810,8 +5896,8 @@ var updateLossPayeeFinancialDetailsInternational = async (root, variables, conte
       success: false
     };
   } catch (err) {
-    console.error("Error updating loss payee financial details international %O", err);
-    throw new Error(`Updating loss payee financial details international ${err}`);
+    console.error("Error updating loss payee financial international %O", err);
+    throw new Error(`Updating loss payee financial international ${err}`);
   }
 };
 var update_loss_payee_financial_details_international_default = updateLossPayeeFinancialDetailsInternational;
@@ -6361,20 +6447,24 @@ var decrypt_default = decrypt;
 // helpers/decrypt-financial-uk/index.ts
 var decryptFinancialUk = (applicationFinancialUk) => {
   try {
-    console.info("Decrypting accountNumber and sortCode for financialUk");
-    const updatedFinancialUk = applicationFinancialUk;
-    const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
-    let decryptedAccountNumber = "";
-    let decryptedSortCode = "";
+    console.info("Decrypting financial uk");
+    const mapped = applicationFinancialUk;
+    const {
+      accountNumber,
+      sortCode,
+      vector: { accountNumberVector, sortCodeVector }
+    } = mapped;
+    let decryptedAccountNumber;
+    let decryptedSortCode;
     if (accountNumber && accountNumberVector) {
       decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
     }
     if (sortCode && sortCodeVector) {
       decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
     }
-    updatedFinancialUk.accountNumber = decryptedAccountNumber;
-    updatedFinancialUk.sortCode = decryptedSortCode;
-    return updatedFinancialUk;
+    mapped.accountNumber = decryptedAccountNumber;
+    mapped.sortCode = decryptedSortCode;
+    return mapped;
   } catch (err) {
     console.error("Error decrypting financial uk %O", err);
     throw new Error(`Error decrypting financial uk ${err}`);
@@ -6384,26 +6474,29 @@ var decrypt_financial_uk_default = decryptFinancialUk;
 
 // helpers/decrypt-financial-international/index.ts
 var decryptFinancialInternational = (applicationFinancialInternational) => {
-  const updatedFinancialInternational = applicationFinancialInternational;
-  const {
-    iban,
-    bicSwiftCode,
-    vector: {
-      ibanVector,
-      bicSwiftCodeVector
+  try {
+    console.info("Decrypting financial international");
+    const mapped = applicationFinancialInternational;
+    const {
+      iban,
+      bicSwiftCode,
+      vector: { ibanVector, bicSwiftCodeVector }
+    } = mapped;
+    let decryptedIban;
+    let decryptedBicSwiftCode;
+    if (iban && ibanVector) {
+      decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
     }
-  } = updatedFinancialInternational;
-  let decryptedIban = "";
-  let decryptedBicSwiftCode = "";
-  if (iban && ibanVector) {
-    decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
+    if (bicSwiftCode && bicSwiftCodeVector) {
+      decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
+    }
+    mapped.iban = decryptedIban;
+    mapped.bicSwiftCode = decryptedBicSwiftCode;
+    return mapped;
+  } catch (err) {
+    console.error("Error decrypting international uk %O", err);
+    throw new Error(`Error decrypting international uk ${err}`);
   }
-  if (bicSwiftCode && bicSwiftCodeVector) {
-    decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
-  }
-  updatedFinancialInternational.iban = decryptedIban;
-  updatedFinancialInternational.bicSwiftCode = decryptedBicSwiftCode;
-  return updatedFinancialInternational;
 };
 var decrypt_financial_international_default = decryptFinancialInternational;
 
@@ -6411,23 +6504,20 @@ var decrypt_financial_international_default = decryptFinancialInternational;
 var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2) => {
   try {
     console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
-    let updatedNominatedLossPayee = nominatedLossPayee;
-    const { financialUk, financialInternational } = updatedNominatedLossPayee;
+    const mapped = {
+      financialUk: {},
+      financialInternational: {}
+    };
+    const { financialUk, financialInternational } = nominatedLossPayee;
     if (decryptFinancialUk2) {
-      const updatedFinancialUk = decrypt_financial_uk_default(financialUk);
-      updatedNominatedLossPayee = {
-        ...updatedNominatedLossPayee,
-        financialUk: updatedFinancialUk
-      };
+      const mappedFinancialUk = decrypt_financial_uk_default(financialUk);
+      mapped.financialUk = mappedFinancialUk;
     }
     if (decryptFinancialInternational2) {
-      const updatedFinancialInternational = decrypt_financial_international_default(financialInternational);
-      updatedNominatedLossPayee = {
-        ...updatedNominatedLossPayee,
-        financialInternational: updatedFinancialInternational
-      };
+      const mappedFinancialInternational = decrypt_financial_international_default(financialInternational);
+      mapped.financialInternational = mappedFinancialInternational;
     }
-    return updatedNominatedLossPayee;
+    return mapped;
   } catch (err) {
     console.error("Error decrypting nominated loss payee %O", err);
     throw new Error(`Error decrypting nominated loss payee ${err}`);
@@ -6444,9 +6534,7 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
     if (application2) {
       const populatedApplication = await get_populated_application_default(context, application2);
       if (decryptFinancialUk2 || decryptFinancialInternational2) {
-        console.log(">>>>>>>  populatedApplication > ", populatedApplication);
         const { nominatedLossPayee } = populatedApplication;
-        console.log(">>>>>>>  nominatedLossPayee > ", nominatedLossPayee);
         const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
         populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
       }

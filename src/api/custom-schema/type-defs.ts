@@ -111,9 +111,7 @@ const typeDefs = `
   input LossPayeeFinancialDetailsUkInput {
     id: String
     accountNumber: String
-    accountNumberVector: String
     sortCode: String
-    sortCodeVector: String
     bankAddress: String
   }
 

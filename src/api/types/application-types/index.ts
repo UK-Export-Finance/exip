@@ -84,6 +84,11 @@ export interface ApplicationLossPayeeFinancialInternationalVector extends Relati
   ibanVector?: string;
 }
 
+export interface ApplicationLossPayeeFinancialUkVector extends Relationship {
+  accountNumberVector?: string;
+  sortCodeVector?: string;
+}
+
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
   lossPayeeId?: string;
   vectorId: string;
@@ -95,11 +100,13 @@ export interface ApplicationLossPayeeFinancialInternational extends Relationship
 
 export interface ApplicationLossPayeeFinancialUk extends Relationship {
   lossPayeeId?: string;
+  vectorId: string;
   accountNumber?: string;
   accountNumberVector?: string;
   bankAddress?: string;
   sortCode?: string;
   sortCodeVector?: string;
+  vector: ApplicationLossPayeeFinancialUkVector;
 }
 
 export interface ApplicationNominatedLossPayee extends Relationship {

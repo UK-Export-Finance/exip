@@ -31,8 +31,8 @@ const updateLossPayeeFinancialDetailsInternational = async (
     const mappedData = mapLossPayeeFinancialDetailsInternational(variables);
 
     /**
-     * Update the international relationship
-     * Update the international vector relationship
+     * Update the international relationship.
+     * Update the international vector relationship.
      */
     const international = await updateLossPayeeFinancialInternational(context, id, mappedData.international);
 

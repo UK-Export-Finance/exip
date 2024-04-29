@@ -29,14 +29,6 @@ const mapLossPayeeFinancialDetailsInternational = (variables: ApplicationLossPay
      * encrypts iban and bicSwiftCode
      * adds the initialisation vectors
      */
-    // const updateData = {
-    //   iban: ibanData.value,
-    //   ibanVector: ibanData.iv,
-    //   bicSwiftCode: bicSwiftCodeData.value,
-    //   bicSwiftCodeVector: bicSwiftCodeData.iv,
-    //   bankAddress,
-    // };
-
     const updateData = {
       international: {
         iban: ibanData.value,

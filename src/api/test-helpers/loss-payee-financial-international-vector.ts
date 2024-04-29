@@ -3,7 +3,7 @@ import { ApplicationLossPayeeFinancialInternationalVector, TestHelperCreate } fr
 /**
  * createLossPayeeFinancialDetailsInternationalVector
  * create a nominated loss payee financial international helper
- * Creates a blank ApplicationLossPayeeFinancialInternational.
+ * Creates a blank ApplicationLossPayeeFinancialInternationalVector.
  * @param {Object} KeystoneJS context API
  * @returns {ApplicationLossPayeeFinancialInternationalVector} Created ApplicationLossPayeeFinancialInternationalVector
  */

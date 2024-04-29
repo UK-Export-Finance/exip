@@ -14,7 +14,11 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
 
     const mapped = applicationFinancialUk;
 
-    const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = mapped;
+    const {
+      accountNumber,
+      sortCode,
+      vector: { accountNumberVector, sortCodeVector },
+    } = mapped;
 
     let decryptedAccountNumber;
     let decryptedSortCode;
