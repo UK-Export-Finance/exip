@@ -1,7 +1,6 @@
 import generateSingleContractPolicyFields from '.';
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { GBP_CURRENCY_CODE } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -11,6 +10,7 @@ import { referenceNumber, mockSinglePolicy } from '../../../../../test-mocks/moc
 
 const {
   CONTRACT_POLICY: {
+    POLICY_CURRENCY_CODE,
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
   },
 } = FIELD_IDS;
@@ -42,7 +42,7 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/single-cont
 
     const expected = [
       fieldGroupItem(expectedBase[CONTRACT_COMPLETION_DATE], formatDate(mockAnswers[CONTRACT_COMPLETION_DATE])),
-      fieldGroupItem(expectedBase[TOTAL_CONTRACT_VALUE], formatCurrency(mockAnswers[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
+      fieldGroupItem(expectedBase[TOTAL_CONTRACT_VALUE], formatCurrency(mockAnswers[TOTAL_CONTRACT_VALUE], mockAnswers[POLICY_CURRENCY_CODE])),
     ];
 
     expect(result).toEqual(expected);

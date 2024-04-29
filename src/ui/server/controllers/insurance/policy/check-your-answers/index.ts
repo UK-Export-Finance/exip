@@ -38,10 +38,10 @@ export const get = async (req: Request, res: Response) => {
   const { referenceNumber, policy, exportContract, policyContact, broker } = application;
 
   try {
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
     const countries = await api.keystone.countries.getAll();
 
-    if (!isPopulatedArray(supportedCurrencies) || !isPopulatedArray(countries)) {
+    if (!isPopulatedArray(allCurrencies) || !isPopulatedArray(countries)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -50,7 +50,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, supportedCurrencies, countries);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, allCurrencies, countries);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
