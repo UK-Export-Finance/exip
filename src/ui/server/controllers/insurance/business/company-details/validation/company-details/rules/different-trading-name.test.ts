@@ -1,7 +1,8 @@
 import brokerName from './different-trading-name';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants/validation';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/business';
-import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
+import providedAndMaxLength from '../../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../../types';
 import { mockErrors } from '../../../../../../../test-mocks';
 
@@ -10,7 +11,7 @@ const {
 } = FIELD_IDS;
 
 const {
-  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE;
 
 describe('controllers/insurance/business/company-details/validation/rules/different-trading-name', () => {
@@ -18,12 +19,12 @@ describe('controllers/insurance/business/company-details/validation/rules/differ
     [FIELD_ID]: '',
   } as RequestBody;
 
-  it(`should return the result of emptyFieldValidation if ${HAS_DIFFERENT_TRADING_NAME} is true`, () => {
+  it(`should return the result of providedAndMaxLength if ${HAS_DIFFERENT_TRADING_NAME} is true`, () => {
     mockBody[HAS_DIFFERENT_TRADING_NAME] = 'true';
 
     const response = brokerName(mockBody, mockErrors);
 
-    const expected = emptyFieldValidation(mockBody, FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
+    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME);
 
     expect(response).toEqual(expected);
   });

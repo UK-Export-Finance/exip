@@ -90,7 +90,8 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select whether you use a different trading name for this company',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
-        IS_EMPTY: 'Select whether you use a different trading name for this company',
+        IS_EMPTY: 'Enter your alternative trading name',
+        ABOVE_MAXIMUM: `The alternative trading name cannot be more than ${MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME} characters`,
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
         IS_EMPTY: 'Select whether you use a different trading address for this company',
