@@ -5,10 +5,7 @@ import { ApplicationLossPayeeFinancialInternationalVector } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import createLossPayeeFinancialDetailsInternationalVector from '../../test-helpers/loss-payee-financial-international-vector';
 
-const {
-  bicSwiftCodeVector,
-  ibanVector,
-} = mockLossPayeeFinancialDetailsInternationalVector;
+const { bicSwiftCodeVector, ibanVector } = mockLossPayeeFinancialDetailsInternationalVector;
 
 describe('helpers/update-loss-payee-financial-international-vector', () => {
   let context: Context;

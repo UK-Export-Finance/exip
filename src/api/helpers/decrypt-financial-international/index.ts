@@ -17,10 +17,7 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
     const {
       iban,
       bicSwiftCode,
-      vector: {
-        ibanVector,
-        bicSwiftCodeVector,
-      },
+      vector: { ibanVector, bicSwiftCodeVector },
     } = mapped;
 
     let decryptedIban;
@@ -41,7 +38,6 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
     if (bicSwiftCode && bicSwiftCodeVector) {
       decryptedBicSwiftCode = decryptData.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
-    ;
     mapped.iban = decryptedIban;
     mapped.bicSwiftCode = decryptedBicSwiftCode;
 

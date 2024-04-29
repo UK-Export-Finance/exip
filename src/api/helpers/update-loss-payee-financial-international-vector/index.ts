@@ -8,7 +8,11 @@ import { ApplicationLossPayeeFinancialInternationalVector } from '../../types';
  * @param {LossPayeeFinancialInternationalVectorUpdateInput} data
  * @returns {Promise<ApplicationLossPayeeFinancialInternationalVector>}
  */
-const updateLossPayeeFinancialInternationalVector = async (context: Context, id: string, data: LossPayeeFinancialInternationalVectorUpdateInput): Promise<ApplicationLossPayeeFinancialInternationalVector> => {
+const updateLossPayeeFinancialInternationalVector = async (
+  context: Context,
+  id: string,
+  data: LossPayeeFinancialInternationalVectorUpdateInput,
+): Promise<ApplicationLossPayeeFinancialInternationalVector> => {
   try {
     console.info('Updating loss payee financial international vector (helper) %s', id);
 

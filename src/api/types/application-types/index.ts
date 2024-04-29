@@ -90,7 +90,7 @@ export interface ApplicationLossPayeeFinancialInternational extends Relationship
   bankAddress?: string;
   bicSwiftCode?: string;
   iban?: string;
-  vector: ApplicationLossPayeeFinancialInternationalVector,
+  vector: ApplicationLossPayeeFinancialInternationalVector;
 }
 
 export interface ApplicationLossPayeeFinancialUk extends Relationship {

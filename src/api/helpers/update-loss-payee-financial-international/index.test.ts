@@ -5,11 +5,7 @@ import { ApplicationLossPayeeFinancialInternational } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import createLossPayeeFinancialDetailsInternational from '../../test-helpers/loss-payee-financial-international';
 
-const {
-  iban,
-  bicSwiftCode,
-  bankAddress,
-} = mockLossPayeeFinancialDetailsInternational;
+const { iban, bicSwiftCode, bankAddress } = mockLossPayeeFinancialDetailsInternational;
 
 describe('helpers/update-loss-payee-financial-international', () => {
   let context: Context;

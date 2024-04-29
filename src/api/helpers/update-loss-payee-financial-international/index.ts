@@ -8,16 +8,20 @@ import { ApplicationLossPayeeFinancialInternational } from '../../types';
  * @param {LossPayeeFinancialInternationalUpdateInput} data
  * @returns {Promise<ApplicationLossPayeeFinancialInternational>}
  */
-const updateLossPayeeFinancialInternational = async (context: Context, id: string, data: LossPayeeFinancialInternationalUpdateInput): Promise<ApplicationLossPayeeFinancialInternational> => {
+const updateLossPayeeFinancialInternational = async (
+  context: Context,
+  id: string,
+  data: LossPayeeFinancialInternationalUpdateInput,
+): Promise<ApplicationLossPayeeFinancialInternational> => {
   try {
     console.info('Updating loss payee financial international (helper) %s', id);
 
-    const updated = await context.db.LossPayeeFinancialInternational.updateOne({
+    const updated = (await context.db.LossPayeeFinancialInternational.updateOne({
       where: {
         id,
       },
       data,
-    }) as ApplicationLossPayeeFinancialInternational;
+    })) as ApplicationLossPayeeFinancialInternational;
 
     return updated;
   } catch (err) {
