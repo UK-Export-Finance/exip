@@ -305,12 +305,12 @@ export const ERROR_MESSAGES = {
       DIFFERENT_NAME_ON_POLICY: {
         [FIELD_IDS.INSURANCE.ACCOUNT.FIRST_NAME]: {
           IS_EMPTY: "Enter the policy holder's first name",
-          ABOVE_MAXIMUM: "The policy holder's first name cannot be more than 300 characters",
+          ABOVE_MAXIMUM: `The policy holder's first name cannot be more than ${MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME} characters`,
           INCORRECT_FORMAT: "The policy holder's first name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
           IS_EMPTY: "Enter the policy holder's last name",
-          ABOVE_MAXIMUM: "The policy holder's last name cannot be more than 300 characters",
+          ABOVE_MAXIMUM: `The policy holder's last name cannot be more than ${MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME} characters`,
           INCORRECT_FORMAT: "The policy holder's last name must not include any numbers or symbols",
         },
         [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
@@ -352,7 +352,7 @@ export const ERROR_MESSAGES = {
       BROKER_DETAILS: {
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.NAME]: {
           IS_EMPTY: 'Enter the name of the broker or company',
-          ABOVE_MAXIMUM: 'The name of the broker or company cannot be more than 300 characters',
+          ABOVE_MAXIMUM: `The name of the broker or company cannot be more than ${MAXIMUM_CHARACTERS.BROKER_NAME} characters`,
         },
         [FIELD_IDS.INSURANCE.POLICY.BROKER_DETAILS.EMAIL]: {
           IS_EMPTY: 'Enter the email address of the broker or company',

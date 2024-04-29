@@ -1,6 +1,6 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import { ACCOUNT_FIELDS } from '../../../../../../../content-strings/fields/insurance/account';
 import { POLICY_FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -25,12 +25,6 @@ const {
     FIRST_NAME, LAST_NAME, EMAIL,
   },
 } = INSURANCE_FIELD_IDS;
-
-const {
-  MAXIMUM: {
-    NAME: { CHARACTERS: MAX_NAME_CHARACTERS },
-  },
-} = ACCOUNT_FIELDS;
 
 const {
   DIFFERENT_NAME_ON_POLICY: {
@@ -86,8 +80,8 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
-    it(`should render validation errors when ${FIELD_ID} is over ${MAX_NAME_CHARACTERS} characters`, () => {
-      const value = 'a'.repeat(MAX_NAME_CHARACTERS + 1);
+    it(`should render validation errors when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME} characters`, () => {
+      const value = 'a'.repeat(MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME + 1);
 
       cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });
@@ -125,10 +119,10 @@ context('Insurance - Policy - Different name on Policy page - Validation', () =>
       cy.submitAndAssertFieldErrors({ ...assertions, expectedErrorMessage: ERROR.IS_EMPTY });
     });
 
-    it(`should render validation errors when ${FIELD_ID} is over ${MAX_NAME_CHARACTERS} characters`, () => {
+    it(`should render validation errors when ${FIELD_ID} is over ${MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME} characters`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: 'a'.repeat(MAX_NAME_CHARACTERS + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.POLICY_CONTACT_NAME + 1),
         expectedErrorMessage: ERROR.ABOVE_MAXIMUM,
       });
     });

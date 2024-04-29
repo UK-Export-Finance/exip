@@ -1469,7 +1469,9 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       isUsingBroker: nullable_checkbox_default(),
-      name: (0, import_fields.text)(),
+      name: (0, import_fields.text)({
+        db: { nativeType: "VarChar(800)" }
+      }),
       addressLine1: (0, import_fields.text)(),
       addressLine2: (0, import_fields.text)(),
       town: (0, import_fields.text)(),
