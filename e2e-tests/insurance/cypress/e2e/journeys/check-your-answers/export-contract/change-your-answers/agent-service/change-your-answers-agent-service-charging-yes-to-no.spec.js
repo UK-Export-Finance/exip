@@ -3,12 +3,12 @@ import {
   field,
   status,
   summaryList,
-} from '../../../../../../../pages/shared';
-import { agentChargesPage } from '../../../../../../../pages/insurance/export-contract';
-import partials from '../../../../../../../partials';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
+} from '../../../../../../../../pages/shared';
+import { agentChargesPage } from '../../../../../../../../pages/insurance/export-contract';
+import partials from '../../../../../../../../partials';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
 
 const {
   ROOT,

@@ -1,8 +1,8 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import application from '../../../../../../../fixtures/application';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
 
 const {
   ROOT,
@@ -13,18 +13,20 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT },
+  AGENT_CHARGES: {
+    FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
+  },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
 
-const fieldId = FIXED_SUM_AMOUNT;
+const fieldId = PERCENTAGE_CHARGE;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Change your answers - Export contract - Summary list - Agent charges - ${FIXED_SUM_AMOUNT}`, () => {
+context('Insurance - Change your answers - Export contract - Summary list - Percentage to Fixed sum', () => {
   let referenceNumber;
   let url;
 
@@ -36,7 +38,7 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
         referenceNumber,
         isUsingAgent: true,
         agentIsCharging: true,
-        agentChargeMethodFixedSum: true,
+        agentChargeMethodPercentage: true,
       });
 
       task.link().click();
@@ -71,8 +73,6 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
   });
 
   describe('form submission with a new answer', () => {
-    const newValueInput = application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId] + 1;
-
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
@@ -80,16 +80,15 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
     it(`should redirect to ${EXPORT_CONTRACT}`, () => {
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitAgentChargesForm({
-        fixedSumMethod: true,
-        fixedSumAmount: newValueInput,
-      });
+      cy.completeAndSubmitAgentChargesForm({ fixedSumMethod: true });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId });
     });
 
-    it('should render the new answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+    it(`should render only ${FIXED_SUM_AMOUNT} and ${PAYABLE_COUNTRY_CODE} fields/values`, () => {
+      checkSummaryList[PERCENTAGE_CHARGE]({ shouldRender: false });
+      checkSummaryList[FIXED_SUM_AMOUNT]({ shouldRender: true });
+      checkSummaryList[PAYABLE_COUNTRY_CODE]({ shouldRender: true });
     });
 
     it('should retain a `completed` status tag', () => {

@@ -1199,7 +1199,7 @@ var lists = {
       isLocatedInUk: nullable_checkbox_default(),
       isLocatedInternationally: nullable_checkbox_default(),
       name: (0, import_fields.text)({
-        db: { nativeType: "VarChar(100)" }
+        db: { nativeType: "VarChar(200)" }
       })
     },
     access: import_access.allowAll
