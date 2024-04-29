@@ -90,7 +90,8 @@ export const ERROR_MESSAGES = {
         IS_EMPTY: 'Select whether you use a different trading name for this company',
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.DIFFERENT_TRADING_NAME]: {
-        IS_EMPTY: 'Select whether you use a different trading name for this company',
+        IS_EMPTY: 'Enter your alternative trading name',
+        ABOVE_MAXIMUM: `The alternative trading name cannot be more than ${MAXIMUM_CHARACTERS.COMPANY_DIFFERENT_TRADING_NAME} characters`,
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.YOUR_COMPANY.TRADING_ADDRESS]: {
         IS_EMPTY: 'Select whether you use a different trading address for this company',
@@ -371,7 +372,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.NAME]: {
         IS_EMPTY: 'Enter the name of the loss payee',
-        ABOVE_MAXIMUM: 'The name of the loss payee cannot be more than 100 characters',
+        ABOVE_MAXIMUM: `The name of the loss payee cannot be more than ${MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME} characters`,
       },
       [FIELD_IDS.INSURANCE.POLICY.LOSS_PAYEE_DETAILS.LOCATION]: {
         IS_EMPTY: 'Select where your loss payee is located',
