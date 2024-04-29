@@ -1167,12 +1167,19 @@ var lists = {
   LossPayeeFinancialInternational: {
     fields: {
       lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialInternational" }),
+      vector: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternationalVector.financialInternational" }),
       bankAddress: (0, import_fields.text)({
         db: { nativeType: "VarChar(500)" }
       }),
       bicSwiftCode: (0, import_fields.text)(),
+      iban: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  LossPayeeFinancialInternationalVector: {
+    fields: {
+      financialInternational: (0, import_fields.relationship)({ ref: "LossPayeeFinancialInternational.vector" }),
       bicSwiftCodeVector: (0, import_fields.text)(),
-      iban: (0, import_fields.text)(),
       ibanVector: (0, import_fields.text)()
     },
     access: import_access.allowAll
@@ -1180,12 +1187,19 @@ var lists = {
   LossPayeeFinancialUk: {
     fields: {
       lossPayee: (0, import_fields.relationship)({ ref: "NominatedLossPayee.financialUk" }),
+      vector: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUkVector.financialUk" }),
       accountNumber: (0, import_fields.text)(),
-      accountNumberVector: (0, import_fields.text)(),
       bankAddress: (0, import_fields.text)({
         db: { nativeType: "VarChar(500)" }
       }),
-      sortCode: (0, import_fields.text)(),
+      sortCode: (0, import_fields.text)()
+    },
+    access: import_access.allowAll
+  },
+  LossPayeeFinancialUkVector: {
+    fields: {
+      financialUk: (0, import_fields.relationship)({ ref: "LossPayeeFinancialUk.vector" }),
+      accountNumberVector: (0, import_fields.text)(),
       sortCodeVector: (0, import_fields.text)()
     },
     access: import_access.allowAll
@@ -3899,6 +3913,13 @@ var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
         }
       }
     });
+    await context.db.LossPayeeFinancialInternationalVector.createOne({
+      data: {
+        financialInternational: {
+          connect: { id: lossPayeeFinancialInternational.id }
+        }
+      }
+    });
     return lossPayeeFinancialInternational;
   } catch (err) {
     console.error("Error creating a loss payee financial (international) for %O", err);
@@ -3906,25 +3927,6 @@ var createALossPayeeFinancialInternational = async (context, lossPayeeId) => {
   }
 };
 var create_a_loss_payee_financial_international_default = createALossPayeeFinancialInternational;
-
-// helpers/create-a-loss-payee-financial-uk/index.ts
-var createALossPayeeFinancialUk = async (context, lossPayeeId) => {
-  console.info("Creating a loss payee financial (UK) for ", lossPayeeId);
-  try {
-    const lossPayeeFinancialUk = await context.db.LossPayeeFinancialUk.createOne({
-      data: {
-        lossPayee: {
-          connect: { id: lossPayeeId }
-        }
-      }
-    });
-    return lossPayeeFinancialUk;
-  } catch (err) {
-    console.error("Error creating a loss payee financial (UK) for %O", err);
-    throw new Error(`Creating a loss payee financial (UK) for ${err}`);
-  }
-};
-var create_a_loss_payee_financial_uk_default = createALossPayeeFinancialUk;
 
 // helpers/create-a-nominated-loss-payee/index.ts
 var createANominatedLossPayee = async (context, applicationId) => {
@@ -3938,7 +3940,6 @@ var createANominatedLossPayee = async (context, applicationId) => {
       }
     });
     await create_a_loss_payee_financial_international_default(context, nominatedLossPayee.id);
-    await create_a_loss_payee_financial_uk_default(context, nominatedLossPayee.id);
     return nominatedLossPayee;
   } catch (err) {
     console.error("Error creating a nominated loss payee for %O", err);
@@ -4421,8 +4422,9 @@ var getPopulatedApplication = async (context, application2) => {
   }
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
     where: { id: nominatedLossPayeeId },
-    query: "id financialUk { id accountNumber accountNumberVector sortCode sortCodeVector bankAddress } financialInternational { id iban ibanVector bicSwiftCode bicSwiftCodeVector bankAddress } isAppointed isLocatedInUk isLocatedInternationally name"
+    query: "id financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } isAppointed isLocatedInUk isLocatedInternationally name"
   });
+  console.log("->>>>> nominatedLossPayee ", nominatedLossPayee);
   if (!nominatedLossPayee) {
     console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
     throw new Error(generateErrorMessage("nominated loss payee", application2.id));
@@ -5761,11 +5763,15 @@ var mapLossPayeeFinancialDetailsInternational = (variables) => {
       bicSwiftCodeData = encrypt_default(bicSwiftCode);
     }
     const updateData = {
-      iban: ibanData.value,
-      ibanVector: ibanData.iv,
-      bicSwiftCode: bicSwiftCodeData.value,
-      bicSwiftCodeVector: bicSwiftCodeData.iv,
-      bankAddress
+      international: {
+        iban: ibanData.value,
+        bicSwiftCode: bicSwiftCodeData.value,
+        bankAddress
+      },
+      vectors: {
+        ibanVector: ibanData.iv,
+        bicSwiftCodeVector: bicSwiftCodeData.iv
+      }
     };
     return updateData;
   } catch (err) {
@@ -5785,7 +5791,13 @@ var updateLossPayeeFinancialDetailsInternational = async (root, variables, conte
       where: {
         id
       },
-      data: updateData
+      data: updateData.international
+    });
+    await context.db.LossPayeeFinancialInternationalVector.updateOne({
+      where: {
+        id: response.vectorId
+      },
+      data: updateData.vectors
     });
     if (response) {
       return {
@@ -6371,7 +6383,14 @@ var decrypt_financial_uk_default = decryptFinancialUk;
 // helpers/decrypt-financial-international/index.ts
 var decryptFinancialInternational = (applicationFinancialInternational) => {
   const updatedFinancialInternational = applicationFinancialInternational;
-  const { iban, ibanVector, bicSwiftCode, bicSwiftCodeVector } = updatedFinancialInternational;
+  const {
+    iban,
+    bicSwiftCode,
+    vector: {
+      ibanVector,
+      bicSwiftCodeVector
+    }
+  } = updatedFinancialInternational;
   let decryptedIban = "";
   let decryptedBicSwiftCode = "";
   if (iban && ibanVector) {
@@ -6423,7 +6442,9 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
     if (application2) {
       const populatedApplication = await get_populated_application_default(context, application2);
       if (decryptFinancialUk2 || decryptFinancialInternational2) {
+        console.log(">>>>>>>  populatedApplication > ", populatedApplication);
         const { nominatedLossPayee } = populatedApplication;
+        console.log(">>>>>>>  nominatedLossPayee > ", nominatedLossPayee);
         const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
         populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
       }

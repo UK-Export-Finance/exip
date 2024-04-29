@@ -20,7 +20,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     jest.resetAllMocks();
   });
 
-  describe('successfully updates loss payee financial details', () => {
+  describe('successfully updates loss payee financial', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
       const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
@@ -40,7 +40,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     it('should throw an error', async () => {
       variables.id = '';
 
-      await expect(updateLossPayeeFinancialDetailsUk({}, variables, context)).rejects.toThrow('Updating loss payee financial details UK');
+      await expect(updateLossPayeeFinancialDetailsUk({}, variables, context)).rejects.toThrow('Updating loss payee financial UK');
     });
   });
 });

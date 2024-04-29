@@ -260,12 +260,19 @@ export const lists = {
   LossPayeeFinancialInternational: {
     fields: {
       lossPayee: relationship({ ref: 'NominatedLossPayee.financialInternational' }),
+      vector: relationship({ ref: 'LossPayeeFinancialInternationalVector.financialInternational' }),
       bankAddress: text({
         db: { nativeType: 'VarChar(500)' },
       }),
       bicSwiftCode: text(),
-      bicSwiftCodeVector: text(),
       iban: text(),
+    },
+    access: allowAll,
+  },
+  LossPayeeFinancialInternationalVector: {
+    fields: {
+      financialInternational: relationship({ ref: 'LossPayeeFinancialInternational.vector' }),
+      bicSwiftCodeVector: text(),
       ibanVector: text(),
     },
     access: allowAll,
@@ -273,12 +280,19 @@ export const lists = {
   LossPayeeFinancialUk: {
     fields: {
       lossPayee: relationship({ ref: 'NominatedLossPayee.financialUk' }),
+      vector: relationship({ ref: 'LossPayeeFinancialUkVector.financialUk' }),
       accountNumber: text(),
-      accountNumberVector: text(),
       bankAddress: text({
         db: { nativeType: 'VarChar(500)' },
       }),
       sortCode: text(),
+    },
+    access: allowAll,
+  },
+  LossPayeeFinancialUkVector: {
+    fields: {
+      financialUk: relationship({ ref: 'LossPayeeFinancialUk.vector' }),
+      accountNumberVector: text(),
       sortCodeVector: text(),
     },
     access: allowAll,

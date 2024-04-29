@@ -10,14 +10,19 @@ import decryptData from '../decrypt';
  */
 const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancialUk) => {
   try {
-    console.info('Decrypting accountNumber and sortCode for financialUk');
+    console.info('Decrypting financial uk');
 
-    const updatedFinancialUk = applicationFinancialUk;
+    const mapped = applicationFinancialUk;
 
-    const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
+    const {
+      accountNumber,
+      accountNumberVector,
+      sortCode,
+      sortCodeVector,
+    } = mapped;
 
-    let decryptedAccountNumber = '';
-    let decryptedSortCode = '';
+    let decryptedAccountNumber;
+    let decryptedSortCode;
 
     /**
      * If both accountNumber and accountNumberVector are defined,
@@ -35,11 +40,10 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
       decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
     }
 
-    // updates financialUk data with decrypted data
-    updatedFinancialUk.accountNumber = decryptedAccountNumber;
-    updatedFinancialUk.sortCode = decryptedSortCode;
+    mapped.accountNumber = decryptedAccountNumber;
+    mapped.sortCode = decryptedSortCode;
 
-    return updatedFinancialUk;
+    return mapped;
   } catch (err) {
     console.error('Error decrypting financial uk %O', err);
     throw new Error(`Error decrypting financial uk ${err}`);

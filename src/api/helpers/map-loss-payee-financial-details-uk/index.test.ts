@@ -46,7 +46,7 @@ describe('api/helpers/map-loss-payee-financial-details-uk', () => {
       } catch (err) {
         const errorString = String(err);
 
-        expect(errorString.includes('Error mapping loss payee financial details UK')).toEqual(true);
+        expect(errorString.includes('Error mapping loss payee financial UK')).toEqual(true);
       }
     });
   });

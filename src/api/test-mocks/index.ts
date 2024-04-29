@@ -65,6 +65,11 @@ export const mockLossPayeeFinancialDetailsInternational = {
   bankAddress: 'Mock UK financial address',
 };
 
+export const mockLossPayeeFinancialDetailsInternationalVector = {
+  bicSwiftCodeVector: '3q4WRqCAFFLtGrot',
+  ibanVector: '4q4WRqCAFFLtGrep',
+};
+
 export const mockCountries = [
   {
     name: 'Abu Dhabi',

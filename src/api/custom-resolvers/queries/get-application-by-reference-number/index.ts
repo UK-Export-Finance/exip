@@ -24,12 +24,17 @@ const getApplicationByReferenceNumberQuery = async (
 
     const { referenceNumber, decryptFinancialUk, decryptFinancialInternational } = variables;
 
-    // array of ids in application from provided application reference number
+    /**
+     * Get the application,
+     * from the provided reference number
+     */
     const application = await getApplicationByReferenceNumber(referenceNumber, context);
 
-    // if object is populated
     if (application) {
-      // populates application based on applicationIds
+      /**
+       * Populate the application,
+       * with all relationships.
+       */
       const populatedApplication = await getPopulatedApplication(context, application);
 
       /**

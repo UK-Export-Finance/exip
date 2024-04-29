@@ -2,14 +2,14 @@ import { ApplicationLossPayeeFinancialInternational, TestHelperCreate } from '..
 
 /**
  * createLossPayeeFinancialDetailsInternational
- * create a nominated loss payee financial details international helper
+ * create a nominated loss payee financial international helper
  * Creates a blank ApplicationLossPayeeFinancialInternational.
  * @param {Object} KeystoneJS context API
  * @returns {ApplicationLossPayeeFinancialInternational} Created ApplicationLossPayeeFinancialInternational
  */
 const createLossPayeeFinancialDetailsInternational = async ({ context }: TestHelperCreate) => {
   try {
-    console.info('Creating a loss payee financial details international (test helpers)');
+    console.info('Creating a loss payee financial international (test helpers)');
     const lossPayeeFinancialDetailsInternational = (await context.query.LossPayeeFinancialInternational.createOne({
       data: {},
       query: 'id',
@@ -17,7 +17,7 @@ const createLossPayeeFinancialDetailsInternational = async ({ context }: TestHel
 
     return lossPayeeFinancialDetailsInternational;
   } catch (err) {
-    console.error('Error creating a loss payee financial details international %O', err);
+    console.error('Error creating a loss payee financial international (test helpers) %O', err);
     return err;
   }
 };

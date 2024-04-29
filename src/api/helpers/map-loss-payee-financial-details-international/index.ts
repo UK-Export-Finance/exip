@@ -4,7 +4,7 @@ import { ApplicationLossPayeeFinancialInternational } from '../../types';
 
 /**
  * mapLossPayeeFinancialDetailsInternational
- * maps loss payee financial details to generate object for saving
+ * maps loss payee financial to generate object for saving
  * @param {ApplicationLossPayeeFinancialInternational} variables: loss payee financial international variables
  * @returns {Object} mapped data for saving
  */
@@ -29,19 +29,31 @@ const mapLossPayeeFinancialDetailsInternational = (variables: ApplicationLossPay
      * encrypts iban and bicSwiftCode
      * adds the initialisation vectors
      */
+    // const updateData = {
+    //   iban: ibanData.value,
+    //   ibanVector: ibanData.iv,
+    //   bicSwiftCode: bicSwiftCodeData.value,
+    //   bicSwiftCodeVector: bicSwiftCodeData.iv,
+    //   bankAddress,
+    // };
+
     const updateData = {
-      iban: ibanData.value,
-      ibanVector: ibanData.iv,
-      bicSwiftCode: bicSwiftCodeData.value,
-      bicSwiftCodeVector: bicSwiftCodeData.iv,
-      bankAddress,
+      international: {
+        iban: ibanData.value,
+        bicSwiftCode: bicSwiftCodeData.value,
+        bankAddress,
+      },
+      vectors: {
+        ibanVector: ibanData.iv,
+        bicSwiftCodeVector: bicSwiftCodeData.iv,
+      },
     };
 
     return updateData;
   } catch (err) {
-    console.error('Error mapping loss payee financial details international %O', err);
+    console.error('Error mapping loss payee financial international %O', err);
 
-    throw new Error(`Error mapping loss payee financial details international ${err}`);
+    throw new Error(`Error mapping loss payee financial international ${err}`);
   }
 };
 

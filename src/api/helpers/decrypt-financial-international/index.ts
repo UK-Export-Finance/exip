@@ -9,33 +9,47 @@ import decryptData from '../decrypt';
  * @returns {ApplicationLossPayeeFinancialInternational} decrypted iban and bicSwiftCode in financialInternational section
  */
 const decryptFinancialInternational = (applicationFinancialInternational: ApplicationLossPayeeFinancialInternational) => {
-  const updatedFinancialInternational = applicationFinancialInternational;
-  const { iban, ibanVector, bicSwiftCode, bicSwiftCodeVector } = updatedFinancialInternational;
+  try {
+    console.info('Decrypting financial international');
 
-  let decryptedIban = '';
-  let decryptedBicSwiftCode = '';
+    const mapped = applicationFinancialInternational;
 
-  /**
-   * If both iban and ibanVector are defined,
-   * decrypt iban using encrypted "value" and initialisation vector
-   */
-  if (iban && ibanVector) {
-    decryptedIban = decryptData.decrypt({ value: iban, iv: ibanVector });
+    const {
+      iban,
+      bicSwiftCode,
+      vector: {
+        ibanVector,
+        bicSwiftCodeVector,
+      },
+    } = mapped;
+
+    let decryptedIban;
+    let decryptedBicSwiftCode;
+
+    /**
+     * If both iban and ibanVector are defined,
+     * decrypt iban using encrypted "value" and initialisation vector
+     */
+    if (iban && ibanVector) {
+      decryptedIban = decryptData.decrypt({ value: iban, iv: ibanVector });
+    }
+
+    /**
+     * If both bicSwiftCode and bicSwiftCodeVector are defined,
+     * decrypt bicSwiftCode using encrypted "value" and initialisation vector
+     */
+    if (bicSwiftCode && bicSwiftCodeVector) {
+      decryptedBicSwiftCode = decryptData.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
+    }
+    ;
+    mapped.iban = decryptedIban;
+    mapped.bicSwiftCode = decryptedBicSwiftCode;
+
+    return mapped;
+  } catch (err) {
+    console.error('Error decrypting international uk %O', err);
+    throw new Error(`Error decrypting international uk ${err}`);
   }
-
-  /**
-   * If both bicSwiftCode and bicSwiftCodeVector are defined,
-   * decrypt bicSwiftCode using encrypted "value" and initialisation vector
-   */
-  if (bicSwiftCode && bicSwiftCodeVector) {
-    decryptedBicSwiftCode = decryptData.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
-  }
-
-  // updates financialInternational data with decrypted data
-  updatedFinancialInternational.iban = decryptedIban;
-  updatedFinancialInternational.bicSwiftCode = decryptedBicSwiftCode;
-
-  return updatedFinancialInternational;
 };
 
 export default decryptFinancialInternational;

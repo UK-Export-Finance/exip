@@ -13,7 +13,7 @@ import { ApplicationLossPayeeFinancialUk, SuccessResponse } from '../../../types
  */
 const updateLossPayeeFinancialDetailsUk = async (root: any, variables: ApplicationLossPayeeFinancialUk, context: Context): Promise<SuccessResponse> => {
   try {
-    console.info('Updating loss payee financial details UK %s', variables.id);
+    console.info('Updating loss payee financial UK %s', variables.id);
 
     const { id } = variables;
 
@@ -41,8 +41,8 @@ const updateLossPayeeFinancialDetailsUk = async (root: any, variables: Applicati
       success: false,
     };
   } catch (err) {
-    console.error('Error updating loss payee financial details UK %O', err);
-    throw new Error(`Updating loss payee financial details UK ${err}`);
+    console.error('Error updating loss payee financial UK %O', err);
+    throw new Error(`Updating loss payee financial UK ${err}`);
   }
 };
 

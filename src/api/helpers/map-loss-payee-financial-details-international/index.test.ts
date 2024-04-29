@@ -46,7 +46,7 @@ describe('api/helpers/map-loss-payee-financial-details-international', () => {
       } catch (err) {
         const errorString = String(err);
 
-        expect(errorString.includes('Error mapping loss payee financial details international')).toEqual(true);
+        expect(errorString.includes('Error mapping loss payee financial international')).toEqual(true);
       }
     });
   });

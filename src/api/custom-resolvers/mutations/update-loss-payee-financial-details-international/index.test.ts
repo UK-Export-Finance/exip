@@ -20,7 +20,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
     jest.resetAllMocks();
   });
 
-  describe('successfully updates loss payee financial details', () => {
+  describe('successfully updates loss payee financial international', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
       const lossPayeeFinancialDetailsInternational = (await createLossPayeeFinancialDetailsInternational({
@@ -28,6 +28,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
       })) as ApplicationLossPayeeFinancialInternational;
 
       variables.id = lossPayeeFinancialDetailsInternational.id;
+
       lossPayeeFinancialDetailsInternationalResponse = await updateLossPayeeFinancialDetailsInternational({}, variables, context);
     });
 
@@ -38,10 +39,18 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
     });
   });
 
-  describe('when an error occurs', () => {
+  describe('when an error occurs when updating loss payee financial international', () => {
     it('should throw an error', async () => {
-      await expect(updateLossPayeeFinancialDetailsInternational({}, { id: '1' }, context)).rejects.toThrow(
-        'Updating loss payee financial details international',
+      await expect(updateLossPayeeFinancialDetailsInternational({}, { ...variables, id: '1' }, context)).rejects.toThrow(
+        'Updating loss payee financial international',
+      );
+    });
+  });
+
+  describe('when an error occurs when updating loss payee financial international vector', () => {
+    it('should throw an error', async () => {
+      await expect(updateLossPayeeFinancialDetailsInternational({}, { ...variables, vectorId: '1' }, context)).rejects.toThrow(
+        'Updating loss payee financial international',
       );
     });
   });

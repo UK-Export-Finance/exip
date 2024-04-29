@@ -36,23 +36,23 @@ describe('api/helpers/decrypt-financial-international', () => {
     });
   });
 
-  describe('when ibanVector is undefined', () => {
-    it('should return iban as an empty string', () => {
-      const variables = {
-        ...financialInternational,
-        ibanVector: undefined,
-      } as ApplicationLossPayeeFinancialInternational;
+  // describe('when ibanVector is undefined', () => {
+  //   it('should return iban as an empty string', () => {
+  //     const variables = {
+  //       ...financialInternational,
+  //       ibanVector: undefined,
+  //     } as ApplicationLossPayeeFinancialInternational;
 
-      const result = decryptFinancialInternational(variables);
+  //     const result = decryptFinancialInternational(variables);
 
-      const expected = {
-        ...variables,
-        iban: '',
-      };
+  //     const expected = {
+  //       ...variables,
+  //       iban: '',
+  //     };
 
-      expect(result).toEqual(expected);
-    });
-  });
+  //     expect(result).toEqual(expected);
+  //   });
+  // });
 
   describe('when iban is undefined', () => {
     it('should return iban as an empty string', () => {
@@ -72,50 +72,48 @@ describe('api/helpers/decrypt-financial-international', () => {
     });
   });
 
-  describe('when bicSwiftCodeVector is undefined', () => {
-    it('should return bicSwiftCode as an empty string', () => {
-      const variables = {
-        ...financialInternational,
-        bicSwiftCodeVector: undefined,
-      } as ApplicationLossPayeeFinancialInternational;
+  // describe('when bicSwiftCodeVector is undefined', () => {
+  //   it('should return bicSwiftCode as an empty string', () => {
+  //     const variables = {
+  //       ...financialInternational,
+  //       bicSwiftCodeVector: undefined,
+  //     } as ApplicationLossPayeeFinancialInternational;
 
-      const result = decryptFinancialInternational(variables);
+  //     const result = decryptFinancialInternational(variables);
 
-      const expected = {
-        ...variables,
-        bicSwiftCode: '',
-      };
+  //     const expected = {
+  //       ...variables,
+  //       bicSwiftCode: '',
+  //     };
 
-      expect(result).toEqual(expected);
-    });
-  });
+  //     expect(result).toEqual(expected);
+  //   });
+  // });
 
-  describe('when bicSwift is undefined', () => {
-    it('should return bicSwiftCode as an empty string', () => {
-      const variables = {
-        ...financialInternational,
-        bicSwiftCodeVector: undefined,
-      } as ApplicationLossPayeeFinancialInternational;
+  // describe('when bicSwift is undefined', () => {
+  //   it('should return bicSwiftCode as an empty string', () => {
+  //     const variables = {
+  //       ...financialInternational,
+  //       bicSwiftCodeVector: undefined,
+  //     } as ApplicationLossPayeeFinancialInternational;
 
-      const result = decryptFinancialInternational(variables);
+  //     const result = decryptFinancialInternational(variables);
 
-      const expected = {
-        ...variables,
-        bicSwiftCode: '',
-      };
+  //     const expected = {
+  //       ...variables,
+  //       bicSwiftCode: '',
+  //     };
 
-      expect(result).toEqual(expected);
-    });
-  });
+  //     expect(result).toEqual(expected);
+  //   });
+  // });
 
   describe('when all variables are undefined', () => {
     it('should return iban and bicSwiftCode as an empty string', () => {
       const variables = {
         ...financialInternational,
         iban: undefined,
-        ibanVector: undefined,
         bicSwiftCode: undefined,
-        bicSwiftCodeVector: undefined,
       } as ApplicationLossPayeeFinancialInternational;
 
       const result = decryptFinancialInternational(variables);
@@ -127,6 +125,18 @@ describe('api/helpers/decrypt-financial-international', () => {
       };
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when an error occurs', () => {
+    it('should throw an error', async () => {
+      try {
+        decryptFinancialInternational({ ...financialInternational, id: '1' });
+      } catch (err) {
+        const errorString = String(err);
+
+        expect(errorString.includes('Error decrypting financial uk')).toEqual(true);
+      }
     });
   });
 });

@@ -2,7 +2,7 @@ import { ApplicationLossPayeeFinancialUk, Context } from '../../types';
 
 /**
  * createALossPayeeFinancialUk
- * Create a "loss payee financial UK" with a loss payee relationship
+ * Create a "Loss payee financial UK" with a Loss payee relationship
  * @param {Object} KeystoneJS context API
  * @param {String} Loss payee ID
  * @returns {Promise<Object>} Created loss payee financial UK
@@ -15,6 +15,14 @@ const createALossPayeeFinancialUk = async (context: Context, lossPayeeId: string
       data: {
         lossPayee: {
           connect: { id: lossPayeeId },
+        },
+      },
+    });
+
+    await context.db.LossPayeeFinancialUkVector.createOne({
+      data: {
+        financialInternational: {
+          connect: { id: lossPayeeFinancialUk.id },
         },
       },
     });
