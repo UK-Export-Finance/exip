@@ -20,30 +20,37 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
     decrypt.decrypt = decryptSpy;
   });
 
-  describe('when "decryptFinancialUk" is "false"', () => {
-    it('should return provided nominatedLossPayee', () => {
+  describe('when "decryptFinancialUk" is false', () => {
+    it('should return empty objects', () => {
       const result = decryptNominatedLossPayee(nominatedLossPayee, false, false);
 
-      expect(result).toEqual(nominatedLossPayee);
+      const expected = {
+        financialUk: {},
+        financialInternational: {},
+      };
+
+      expect(result).toEqual(expected);
     });
 
-    it('should not call the decrypt function', () => {
+    it('should NOT call the decrypt function', () => {
       decryptNominatedLossPayee(nominatedLossPayee, false);
 
       expect(decryptSpy).toHaveBeenCalledTimes(0);
     });
   });
 
-  describe('when "decryptFinancialUk" is "true"', () => {
+  // TODO:
+  // TODO:
+  // TODO:
+  // describe('when "decryptFinancialUk" is false', () => {
+
+  describe('when "decryptFinancialUk" is true', () => {
     it('should return result of decryptFinancialUkData for financialUk', () => {
       const result = decryptNominatedLossPayee(nominatedLossPayee, true);
 
       const expected = {
-        ...mockApplication.nominatedLossPayee,
-        financialUk: {
-          ...financialUk,
-          ...decryptFinancialUkData(financialUk),
-        },
+        financialUk: decryptFinancialUkData(financialUk),
+        financialInternational: {},
       };
 
       expect(result).toEqual(expected);
@@ -52,7 +59,11 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
     it('should call the decrypt function twice (for account number and sort code)', () => {
       decryptNominatedLossPayee(nominatedLossPayee, true);
 
-      const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = mockApplication.nominatedLossPayee.financialUk;
+      const {
+        accountNumber,
+        sortCode,
+        vector: { accountNumberVector, sortCodeVector },
+      } = mockApplication.nominatedLossPayee.financialUk;
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
       expect(decryptSpy).toHaveBeenCalledWith({ iv: accountNumberVector, value: accountNumber });
@@ -60,12 +71,12 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
     });
   });
 
-  describe('when "decryptFinancialInternational" is "true"', () => {
+  describe('when "decryptFinancialInternational" is true', () => {
     it('should return result of decryptFinancialInternationalData for financialInternational', () => {
       const result = decryptNominatedLossPayee(nominatedLossPayee, false, true);
 
       const expected = {
-        ...mockApplication.nominatedLossPayee,
+        financialUk: {},
         financialInternational: {
           ...financialInternational,
           ...decryptFinancialInternational(financialInternational),
@@ -78,7 +89,11 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
     it('should call the decrypt function twice (for iban and bicSwiftCodeVector)', () => {
       decryptNominatedLossPayee(nominatedLossPayee, false, true);
 
-      const { bicSwiftCode, bicSwiftCodeVector, iban, ibanVector } = mockApplication.nominatedLossPayee.financialInternational;
+      const {
+        bicSwiftCode,
+        iban,
+        vector: { bicSwiftCodeVector, ibanVector },
+      } = mockApplication.nominatedLossPayee.financialInternational;
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
       expect(decryptSpy).toHaveBeenCalledWith({ iv: ibanVector, value: iban });
@@ -89,9 +104,10 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
   describe('when the an error occurs', () => {
     it('should throw an error', async () => {
       const mockNominatedLossPayee = {
+        ...nominatedLossPayee,
         id: '1',
-        financialUk: { id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' },
-        financialInternational: { id: '1' },
+        financialUk: { ...nominatedLossPayee.financialUk, id: '1' },
+        financialInternational: { ...nominatedLossPayee.financialInternational, id: '2' },
       };
 
       try {

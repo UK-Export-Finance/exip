@@ -91,7 +91,7 @@ export interface ApplicationLossPayeeFinancialUkVector extends Relationship {
 
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
   lossPayeeId?: string;
-  vectorId: string;
+  vectorId?: string;
   bankAddress?: string;
   bicSwiftCode?: string;
   iban?: string;
@@ -100,7 +100,7 @@ export interface ApplicationLossPayeeFinancialInternational extends Relationship
 
 export interface ApplicationLossPayeeFinancialUk extends Relationship {
   lossPayeeId?: string;
-  vectorId: string;
+  vectorId?: string;
   accountNumber?: string;
   accountNumberVector?: string;
   bankAddress?: string;

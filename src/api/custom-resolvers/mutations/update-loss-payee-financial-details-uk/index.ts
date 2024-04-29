@@ -31,7 +31,7 @@ const updateLossPayeeFinancialDetailsUk = async (root: any, variables: Applicati
      * Update the uk vector relationship.
      */
     const uk = await updateLossPayeeFinancialUk(context, id, mappedData.uk);
-    const vector = await updateLossPayeeFinancialUkVector(context, uk.vectorId, mappedData.vectors);
+    const vector = await updateLossPayeeFinancialUkVector(context, String(uk.vectorId), mappedData.vectors);
 
     if (uk && vector) {
       return {

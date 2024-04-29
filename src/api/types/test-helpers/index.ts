@@ -5,6 +5,12 @@ import { Account } from '../account';
 export interface TestHelperCreate {
   context: Context;
   companyId?: string;
+  // TODO
+  // TODO
+  // TODO
+  // TODO
+  // TODO: real type. for international/uk vector test helpers.
+  data?: object;
 }
 
 export interface TestHelperAccountCreate extends TestHelperCreate {

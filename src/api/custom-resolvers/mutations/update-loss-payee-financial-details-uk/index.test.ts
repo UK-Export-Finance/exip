@@ -3,6 +3,7 @@ import { mockLossPayeeFinancialDetailsUk } from '../../../test-mocks';
 import { Context, SuccessResponse, ApplicationLossPayeeFinancialUk } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import createLossPayeeFinancialDetailsUk from '../../../test-helpers/loss-payee-financial-uk';
+import createLossPayeeFinancialDetailsUkVector from '../../../test-helpers/loss-payee-financial-uk-vector';
 
 describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   let context: Context;
@@ -20,10 +21,19 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     jest.resetAllMocks();
   });
 
-  describe('successfully updates loss payee financial', () => {
+  describe('successfully updates loss payee financial uk', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
       const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
+
+      await createLossPayeeFinancialDetailsUkVector({
+        context,
+        data: {
+          financialUk: {
+            connect: { id: lossPayeeFinancialDetailsUk.id },
+          },
+        },
+      });
 
       variables.id = lossPayeeFinancialDetailsUk.id;
       lossPayeeFinancialDetailsUkResponse = (await updateLossPayeeFinancialDetailsUk({}, variables, context)) as SuccessResponse;
@@ -36,11 +46,13 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     });
   });
 
+  // TODO: same error handling as international.
+
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       variables.id = '';
 
-      await expect(updateLossPayeeFinancialDetailsUk({}, variables, context)).rejects.toThrow('Updating loss payee financial UK');
+      await expect(updateLossPayeeFinancialDetailsUk({}, { ...variables, id: '1' }, context)).rejects.toThrow('Updating loss payee financial UK');
     });
   });
 });

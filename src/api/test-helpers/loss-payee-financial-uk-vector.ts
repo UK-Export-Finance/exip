@@ -4,14 +4,15 @@ import { ApplicationLossPayeeFinancialUkVector, TestHelperCreate } from '../type
  * createLossPayeeFinancialDetailsUkVector
  * create a nominated loss payee financial uk helper
  * Creates a blank ApplicationLossPayeeFinancialUkVector.
- * @param {Object} KeystoneJS context API
+ * @param {Object} context: KeystoneJS context API
+ * @param {Object} data: Update object
  * @returns {ApplicationLossPayeeFinancialUkVector} Created ApplicationLossPayeeFinancialUkVector
  */
-const createLossPayeeFinancialDetailsUkVector = async ({ context }: TestHelperCreate) => {
+const createLossPayeeFinancialDetailsUkVector = async ({ context, data = {} }: TestHelperCreate) => {
   try {
     console.info('Creating a loss payee financial uk vector (test helpers)');
     const lossPayeeFinancialDetailsUk = (await context.query.LossPayeeFinancialUkVector.createOne({
-      data: {},
+      data,
       query: 'id',
     })) as ApplicationLossPayeeFinancialUkVector;
 

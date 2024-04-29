@@ -55,7 +55,7 @@ describe('api/helpers/decrypt-financial-international', () => {
   // });
 
   describe('when iban is undefined', () => {
-    it('should return iban as an empty string', () => {
+    it('should return the variables as provided', () => {
       const variables = {
         ...financialInternational,
         iban: undefined,
@@ -63,12 +63,7 @@ describe('api/helpers/decrypt-financial-international', () => {
 
       const result = decryptFinancialInternational(variables);
 
-      const expected = {
-        ...variables,
-        iban: '',
-      };
-
-      expect(result).toEqual(expected);
+      expect(result).toEqual(variables);
     });
   });
 
@@ -109,7 +104,7 @@ describe('api/helpers/decrypt-financial-international', () => {
   // });
 
   describe('when all variables are undefined', () => {
-    it('should return iban and bicSwiftCode as an empty string', () => {
+    it('should the variables as provided', () => {
       const variables = {
         ...financialInternational,
         iban: undefined,
@@ -118,13 +113,7 @@ describe('api/helpers/decrypt-financial-international', () => {
 
       const result = decryptFinancialInternational(variables);
 
-      const expected = {
-        ...variables,
-        iban: '',
-        bicSwiftCode: '',
-      };
-
-      expect(result).toEqual(expected);
+      expect(result).toEqual(variables);
     });
   });
 

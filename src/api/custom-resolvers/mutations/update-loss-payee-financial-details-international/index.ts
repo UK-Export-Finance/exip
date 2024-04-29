@@ -36,7 +36,7 @@ const updateLossPayeeFinancialDetailsInternational = async (
      */
     const international = await updateLossPayeeFinancialInternational(context, id, mappedData.international);
 
-    const vector = await updateLossPayeeFinancialInternationalVector(context, international.vectorId, mappedData.vectors);
+    const vector = await updateLossPayeeFinancialInternationalVector(context, String(international.vectorId), mappedData.vectors);
 
     if (international && vector) {
       return {

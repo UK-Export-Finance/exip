@@ -42,9 +42,22 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
   });
 
   test('it should create an empty loss payee financial international vector relationship', async () => {
-    const lossPayeeFinancialInternational = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
+    // create the Loss payee financial international
+    const created = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
-    const vectorRelationship = await context.query.LossPayeeFinanciaInternationalVector.findOne({
+    /**
+     * Get the Loss payee financial international,
+     * so that we can use vector.id
+     */
+    const lossPayeeFinancialInternational = await context.query.LossPayeeFinancialInternational.findOne({
+      where: {
+        id: created.id,
+      },
+      query: 'vector { id } ',
+    });
+
+    // get the vector relationship
+    const vectorRelationship = await context.query.LossPayeeFinancialInternationalVector.findOne({
       where: {
         id: lossPayeeFinancialInternational.vector.id,
       },

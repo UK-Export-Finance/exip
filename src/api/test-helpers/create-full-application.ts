@@ -17,7 +17,9 @@ import {
   mockBusiness,
   mockPolicyContact,
   mockLossPayeeFinancialDetailsUk,
+  mockLossPayeeFinancialDetailsUkVector,
   mockLossPayeeFinancialDetailsInternational,
+  mockLossPayeeFinancialDetailsInternationalVector,
 } from '../test-mocks/mock-application';
 import { mockApplicationDeclaration, mockNominatedLossPayee } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
@@ -201,7 +203,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // gets financialUk id from application for updating
   const updatedApplication = (await context.query.Application.findOne({
     where: { id: application.id },
-    query: 'id nominatedLossPayee { id isAppointed financialUk { id } financialInternational { id } } sectionReview { id }',
+    query: 'id nominatedLossPayee { id isAppointed financialUk { id vector { id } } financialInternational { id vector { id } } } sectionReview { id }',
   })) as Application;
 
   // updates nominatedLossPayee
@@ -213,7 +215,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationNominatedLossPayee;
 
-  // updates financialUk table
+  // updates LossPayeeFinancialUk table
   (await context.query.LossPayeeFinancialUk.updateOne({
     where: {
       id: updatedApplication.nominatedLossPayee.financialUk.id,
@@ -222,7 +224,16 @@ export const createFullApplication = async (context: Context, policyType?: strin
     query: 'id',
   })) as ApplicationLossPayeeFinancialUk;
 
-  // updates financialInternational table
+  // updates LossPayeeFinancialUkVector table
+  (await context.query.LossPayeeFinancialUkVector.updateOne({
+    where: {
+      id: updatedApplication.nominatedLossPayee.financialUk.vector.id,
+    },
+    data: mockLossPayeeFinancialDetailsUkVector,
+    query: 'id',
+  })) as ApplicationLossPayeeFinancialUk;
+
+  // updates LossPayeeFinancialInternational table
   (await context.query.LossPayeeFinancialInternational.updateOne({
     where: {
       id: updatedApplication.nominatedLossPayee.financialInternational.id,
@@ -230,6 +241,15 @@ export const createFullApplication = async (context: Context, policyType?: strin
     data: mockLossPayeeFinancialDetailsInternational,
     query: 'id',
   })) as ApplicationLossPayeeFinancialInternational;
+
+  // updates LossPayeeFinancialInternationalVector table
+  (await context.query.LossPayeeFinancialInternationalVector.updateOne({
+    where: {
+      id: updatedApplication.nominatedLossPayee.financialInternational.vector.id,
+    },
+    data: mockLossPayeeFinancialDetailsInternationalVector,
+    query: 'id',
+  })) as ApplicationLossPayeeFinancialUk;
 
   return {
     ...application,

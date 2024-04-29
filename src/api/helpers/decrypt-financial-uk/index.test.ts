@@ -33,14 +33,17 @@ describe('api/helpers/decrypt-financial-uk', () => {
     expect(result).toEqual(expected);
   });
 
-  describe('when an empty object is provided', () => {
+  describe('when an object that is not fully populated is provided', () => {
     it('should return empty strings for sortCode and accountNumber', () => {
-      const result = decryptFinancialUk({ id: '1', accountNumber: '', sortCode: '' });
+      const mockObject = { id: '1', accountNumber: '', sortCode: '', vector: { id: '2' } };
+
+      const result = decryptFinancialUk(mockObject);
 
       const expected = {
         id: '1',
-        sortCode: '',
-        accountNumber: '',
+        sortCode: undefined,
+        accountNumber: undefined,
+        vector: mockObject.vector,
       };
 
       expect(result).toEqual(expected);

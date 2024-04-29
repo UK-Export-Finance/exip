@@ -5,7 +5,12 @@ import getCountryByField from '../get-country-by-field';
 import mockCountries from '../../test-mocks/mock-countries';
 import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
-import mockApplication, { mockLossPayeeFinancialDetailsUk, mockLossPayeeFinancialDetailsInternational } from '../../test-mocks/mock-application';
+import mockApplication, {
+  mockLossPayeeFinancialDetailsUk,
+  mockLossPayeeFinancialDetailsUkVector,
+  mockLossPayeeFinancialDetailsInternational,
+  mockLossPayeeFinancialDetailsInternationalVector,
+} from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
@@ -91,6 +96,7 @@ describe('api/helpers/get-populated-application', () => {
     const expected = {
       ...mockLossPayeeFinancialDetailsUk,
       id: financialUk.id,
+      vector: mockLossPayeeFinancialDetailsUkVector,
     };
 
     expect(financialUk).toEqual(expected);
@@ -104,6 +110,7 @@ describe('api/helpers/get-populated-application', () => {
     const expected = {
       ...mockLossPayeeFinancialDetailsInternational,
       id: financialInternational.id,
+      vector: mockLossPayeeFinancialDetailsInternationalVector,
     };
 
     expect(financialInternational).toEqual(expected);

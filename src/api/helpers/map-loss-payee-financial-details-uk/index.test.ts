@@ -11,11 +11,15 @@ describe('api/helpers/map-loss-payee-financial-details-uk', () => {
       const result = mapLossPayeeFinancialDetailsUk(variables);
 
       const expected = {
-        accountNumber: '',
-        accountNumberVector: '',
-        sortCode: '',
-        sortCodeVector: '',
-        bankAddress: undefined,
+        uk: {
+          accountNumber: '',
+          sortCode: '',
+          bankAddress: undefined,
+        },
+        vectors: {
+          accountNumberVector: '',
+          sortCodeVector: '',
+        },
       };
 
       expect(result).toEqual(expected);
@@ -31,18 +35,18 @@ describe('api/helpers/map-loss-payee-financial-details-uk', () => {
       const accountNumber = encrypt(mockLossPayeeFinancialDetailsUk.accountNumber);
       const sortCode = encrypt(mockLossPayeeFinancialDetailsUk.sortCode);
 
-      expect(result.accountNumber.length).toEqual(accountNumber.value.length);
-      expect(result.accountNumberVector.length).toEqual(accountNumber.iv.length);
-      expect(result.sortCode.length).toEqual(sortCode.value.length);
-      expect(result.sortCodeVector.length).toEqual(sortCode.iv.length);
-      expect(result.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
+      expect(result.uk.accountNumber.length).toEqual(accountNumber.value.length);
+      expect(result.uk.sortCode.length).toEqual(sortCode.value.length);
+      expect(result.uk.bankAddress).toEqual(mockLossPayeeFinancialDetailsUk.bankAddress);
+      expect(result.vectors.sortCodeVector.length).toEqual(sortCode.iv.length);
+      expect(result.vectors.accountNumberVector.length).toEqual(accountNumber.iv.length);
     });
   });
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        mapLossPayeeFinancialDetailsUk({ id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' });
+        mapLossPayeeFinancialDetailsUk({ id: '1', vector: { id: '1' } });
       } catch (err) {
         const errorString = String(err);
 

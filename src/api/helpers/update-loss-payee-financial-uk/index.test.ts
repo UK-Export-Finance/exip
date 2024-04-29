@@ -1,16 +1,16 @@
 import { Context, LossPayeeFinancialUkUpdateInput } from '.keystone/types'; // eslint-disable-line
-import updateLossPayeeFinancialInternationalUk from '.';
+import updateLossPayeeFinancialUkUk from '.';
 import { mockLossPayeeFinancialDetailsUk } from '../../test-mocks';
 import { ApplicationLossPayeeFinancialUk } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
-import createLossPayeeFinancialDetailsInternational from '../../test-helpers/loss-payee-financial-international';
+import createLossPayeeFinancialDetailsUk from '../../test-helpers/loss-payee-financial-uk';
 
 const { accountNumber, sortCode } = mockLossPayeeFinancialDetailsUk;
 
 describe('helpers/update-loss-payee-financial-uk', () => {
   let context: Context;
   let result: ApplicationLossPayeeFinancialUk;
-  let lossPayeeFinancialInternationalId = '';
+  let lossPayeeFinancialUkId = '';
 
   const updateData = {
     accountNumber: `${accountNumber}a`,
@@ -28,13 +28,13 @@ describe('helpers/update-loss-payee-financial-uk', () => {
   describe('successfully updates loss payee financial uk', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
-      const lossPayeeFinancialInternational = (await createLossPayeeFinancialDetailsInternational({
+      const lossPayeeFinancialUk = (await createLossPayeeFinancialDetailsUk({
         context,
       })) as ApplicationLossPayeeFinancialUk;
 
-      lossPayeeFinancialInternationalId = lossPayeeFinancialInternational.id;
+      lossPayeeFinancialUkId = lossPayeeFinancialUk.id;
 
-      result = await updateLossPayeeFinancialInternationalUk(context, lossPayeeFinancialInternationalId, updateData);
+      result = await updateLossPayeeFinancialUkUk(context, lossPayeeFinancialUkId, updateData);
     });
 
     it('should return the updated data', () => {
@@ -45,8 +45,8 @@ describe('helpers/update-loss-payee-financial-uk', () => {
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
-      await expect(updateLossPayeeFinancialInternationalUk(context, '1', updateData)).rejects.toThrow(
-        'Updating loss payee financial uk (helper) Access denied: You cannot update that LossPayeeFinancialInternational - it may not exist',
+      await expect(updateLossPayeeFinancialUkUk(context, '1', updateData)).rejects.toThrow(
+        'Updating loss payee financial uk (helper) Access denied: You cannot update that LossPayeeFinancialUk - it may not exist',
       );
     });
   });
