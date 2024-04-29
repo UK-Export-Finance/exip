@@ -17,7 +17,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - multiple contract policy', () => {
+context('Insurance - Policy - Check your answers - Summary list - Multiple contract policy', () => {
   let referenceNumber;
   let url;
 

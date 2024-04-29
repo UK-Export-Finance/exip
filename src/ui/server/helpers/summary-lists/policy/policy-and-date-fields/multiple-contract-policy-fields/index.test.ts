@@ -1,7 +1,6 @@
 import generateMultipleContractPolicyFields from '.';
 import { POLICY_FIELDS as FIELDS } from '../../../../../content-strings/fields/insurance';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-import { GBP_CURRENCY_CODE } from '../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import fieldGroupItem from '../../../generate-field-group-item';
 import getFieldById from '../../../../get-field-by-id';
@@ -12,6 +11,7 @@ import generateChangeLink from '../../../../generate-change-link';
 
 const {
   CONTRACT_POLICY: {
+    POLICY_CURRENCY_CODE,
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
   },
   EXPORT_VALUE: {
@@ -73,8 +73,8 @@ describe('server/helpers/summary-lists/policy/policy-and-date-fields/multiple-co
 
     const expected = [
       fieldGroupItem(expectedBase[TOTAL_MONTHS_OF_COVER], mapMonthString(mockAnswers[TOTAL_MONTHS_OF_COVER])),
-      fieldGroupItem(expectedBase[TOTAL_SALES_TO_BUYER], formatCurrency(mockAnswers[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-      fieldGroupItem(expectedBase[MAXIMUM_BUYER_WILL_OWE], formatCurrency(mockAnswers[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
+      fieldGroupItem(expectedBase[TOTAL_SALES_TO_BUYER], formatCurrency(mockAnswers[TOTAL_SALES_TO_BUYER], mockAnswers[POLICY_CURRENCY_CODE])),
+      fieldGroupItem(expectedBase[MAXIMUM_BUYER_WILL_OWE], formatCurrency(mockAnswers[MAXIMUM_BUYER_WILL_OWE], mockAnswers[POLICY_CURRENCY_CODE])),
     ];
 
     expect(result).toEqual(expected);

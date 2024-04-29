@@ -73,7 +73,7 @@ const generatePolicyAndDateFields = (answers: ApplicationPolicy, referenceNumber
         data: answers,
         ...changeLink(answers[POLICY_TYPE], referenceNumber, CURRENCY_CODE, checkAndChange),
       },
-      answers[POLICY_CURRENCY_CODE] && getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name,
+      getCurrencyByCode(currencies, answers[POLICY_CURRENCY_CODE]).name,
     ),
   ];
 

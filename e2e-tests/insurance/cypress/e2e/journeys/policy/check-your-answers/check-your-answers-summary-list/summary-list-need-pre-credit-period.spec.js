@@ -16,7 +16,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - need pre-credit-period', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Need pre-credit-period', () => {
   let referenceNumber;
   let url;
 
