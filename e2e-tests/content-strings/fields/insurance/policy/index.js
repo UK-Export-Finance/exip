@@ -282,6 +282,7 @@ export const POLICY_FIELDS = {
   LOSS_PAYEE_DETAILS: {
     [LOSS_PAYEE_NAME]: {
       LABEL: 'Name of the loss payee',
+      MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
     },
     [LOCATION]: {
       LABEL: 'Where is the loss payee located?',
