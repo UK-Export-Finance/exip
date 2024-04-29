@@ -576,7 +576,9 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       isUsingBroker: nullableCheckbox(),
-      name: text(),
+      name: text({
+        db: { nativeType: 'VarChar(800)' },
+      }),
       addressLine1: text(),
       addressLine2: text(),
       town: text(),

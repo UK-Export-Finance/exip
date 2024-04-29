@@ -323,7 +323,7 @@ model Broker {
   application             Application?  @relation("Broker_application", fields: [applicationId], references: [id])
   applicationId           String?       @map("application")
   isUsingBroker           Boolean?
-  name                    String        @default("")
+  name                    String        @default("") @mysql.VarChar(800)
   addressLine1            String        @default("")
   addressLine2            String        @default("")
   town                    String        @default("")
