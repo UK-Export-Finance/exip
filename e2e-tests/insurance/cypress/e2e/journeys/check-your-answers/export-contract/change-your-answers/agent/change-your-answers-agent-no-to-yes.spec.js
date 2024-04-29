@@ -1,16 +1,19 @@
-import { field, status, summaryList } from '../../../../../../../pages/shared';
-import partials from '../../../../../../../partials';
-import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
-import { checkAutocompleteInput } from '../../../../../../../shared-test-assertions';
+import { status, summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
 
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: {
     EXPORT_CONTRACT,
   },
-  EXPORT_CONTRACT: { AGENT_CHECK_AND_CHANGE, AGENT_DETAILS },
+  EXPORT_CONTRACT: {
+    AGENT_CHECK_AND_CHANGE,
+    AGENT_DETAILS_CHECK_AND_CHANGE,
+    AGENT_SERVICE_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -25,9 +28,11 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Export contract - Summary list - Agent - Yes to no', () => {
+context('Insurance - Change your answers - Export contract - Summary list - Agent - No to yes', () => {
   let referenceNumber;
   let url;
+  let agentDetailsUrl;
+  let agentServiceUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -35,7 +40,7 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
 
       cy.completePrepareApplicationSinglePolicyType({
         referenceNumber,
-        isUsingAgent: true,
+        isUsingAgent: false,
       });
 
       task.link().click();
@@ -44,6 +49,8 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
       cy.completeAndSubmitMultipleCheckYourAnswers({ count: 3 });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT}`;
+      agentDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_DETAILS_CHECK_AND_CHANGE}`;
+      agentServiceUrl = `${baseUrl}${ROOT}/${referenceNumber}${AGENT_SERVICE_CHECK_AND_CHANGE}`;
 
       cy.assertUrl(url);
     });
@@ -69,51 +76,42 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
     });
   });
 
-  describe('after changing the answer from yes to no', () => {
+  describe('after changing the answer from no to yes', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${EXPORT_CONTRACT}`, () => {
+    it(`should redirect to ${AGENT_DETAILS_CHECK_AND_CHANGE}, ${AGENT_SERVICE_CHECK_AND_CHANGE} and then ${EXPORT_CONTRACT} after completing (now required) agent details and service fields`, () => {
       summaryList.field(FIELD_ID).changeLink().click();
 
       cy.completeAndSubmitAgentForm({
-        isUsingAgent: false,
+        isUsingAgent: true,
       });
+
+      let expectedUrl = `${agentDetailsUrl}#${FIELD_ID}-label`;
+      cy.assertUrl(expectedUrl);
+
+      cy.completeAndSubmitAgentDetailsForm({});
+
+      expectedUrl = `${agentServiceUrl}#${FIELD_ID}-label`;
+      cy.assertUrl(expectedUrl);
+
+      cy.completeAndSubmitAgentServiceForm({ agentIsCharging: false });
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: EXPORT_CONTRACT, fieldId: FIELD_ID });
     });
 
     it(`should render new answers and change links for ${FIELD_ID} and all agent details, agent service fields`, () => {
-      checkSummaryList[FIELD_ID]({ isYes: false });
-      checkSummaryList[NAME]({ shouldRender: false });
-      checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
-      checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
-      checkSummaryList[SERVICE_DESCRIPTION]({ shouldRender: false });
-      checkSummaryList[IS_CHARGING]({ shouldRender: false });
+      checkSummaryList[FIELD_ID]({ isYes: true });
+      checkSummaryList[NAME]({ shouldRender: true });
+      checkSummaryList[FULL_ADDRESS]({ shouldRender: true });
+      checkSummaryList[COUNTRY_CODE]({ shouldRender: true });
+      checkSummaryList[SERVICE_DESCRIPTION]({ shouldRender: true });
+      checkSummaryList[IS_CHARGING]({ shouldRender: true, isYes: false });
     });
 
     it('should retain a `completed` status tag', () => {
       cy.checkTaskStatusCompleted(status);
-    });
-
-    describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}`, () => {
-      it('should have empty field values', () => {
-        summaryList.field(FIELD_ID).changeLink().click();
-
-        cy.completeAndSubmitAgentForm({
-          isUsingAgent: true,
-        });
-
-        cy.checkValue(field(NAME), '');
-
-        cy.checkTextareaValue({
-          fieldId: FULL_ADDRESS,
-          expectedValue: '',
-        });
-
-        checkAutocompleteInput.checkEmptyResults(COUNTRY_CODE);
-      });
     });
   });
 });
