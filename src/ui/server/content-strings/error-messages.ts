@@ -406,6 +406,7 @@ export const ERROR_MESSAGES = {
       COMPANY_OR_ORGANISATION: {
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.NAME]: {
           IS_EMPTY: "Enter the buyer's company or organisation name",
+          ABOVE_MAXIMUM: `The buyer's company or organisation name cannot be more than ${MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION} characters`,
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
           IS_EMPTY: "Enter the buyer's address",
