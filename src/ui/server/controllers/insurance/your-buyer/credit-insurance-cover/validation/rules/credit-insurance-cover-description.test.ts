@@ -25,13 +25,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rul
 
       const response = creditInsuranceCoverDescriptionRule(mockBody, mockErrors);
 
-      const expected = providedAndMaxLength(
-        mockBody,
-        FIELD_ID,
-        ERROR_MESSAGES_OBJECT,
-        mockErrors,
-        MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
-      );
+      const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER);
 
       expect(response).toEqual(expected);
     });

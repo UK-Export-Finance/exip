@@ -18,13 +18,7 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/goo
   it('should return the result of providedAndMaxLength', () => {
     const response = goodsOrServices(mockBody, mockErrors);
 
-    const expected = providedAndMaxLength(
-      mockBody,
-      FIELD_ID,
-      ERROR_MESSAGES_OBJECT,
-      mockErrors,
-      MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION,
-    );
+    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION);
 
     expect(response).toEqual(expected);
   });

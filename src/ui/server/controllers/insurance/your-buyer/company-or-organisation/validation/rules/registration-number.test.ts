@@ -30,13 +30,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/validation/ru
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
       const response = registrationNumber(mockBody, mockErrors);
 
-      const expected = maxLengthValidation(
-        mockBody[FIELD_ID],
-        FIELD_ID,
-        ERROR_MESSAGE,
-        mockErrors,
-        MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER,
-      );
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER);
 
       expect(response).toEqual(expected);
     });
