@@ -12,13 +12,13 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
   try {
     console.info('Decrypting financial uk');
 
-    const mapped = applicationFinancialUk;
+    let mapped = {};
 
     const {
       accountNumber,
       sortCode,
       vector: { accountNumberVector, sortCodeVector },
-    } = mapped;
+    } = applicationFinancialUk;
 
     let decryptedAccountNumber;
     let decryptedSortCode;
@@ -39,8 +39,10 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
       decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
     }
 
-    mapped.accountNumber = decryptedAccountNumber;
-    mapped.sortCode = decryptedSortCode;
+    mapped = {
+      accountNumber: decryptedAccountNumber,
+      sortCode: decryptedSortCode,
+    };
 
     return mapped;
   } catch (err) {

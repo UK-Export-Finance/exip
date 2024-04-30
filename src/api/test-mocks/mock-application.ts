@@ -135,6 +135,7 @@ export const mockApplicationDeclaration = {
 };
 
 export const mockLossPayeeFinancialDetailsUkVector = {
+  // id: 'clcyyopna0158m8noaglyy9aa',
   accountNumberVector: 'AAaaAAA1aA+1aaa1',
   sortCodeVector: 'BBbbBBB2bB+2bbb2',
 };
@@ -143,10 +144,11 @@ export const mockLossPayeeFinancialDetailsUk = {
   accountNumber: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=',
   sortCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
   bankAddress: 'Mock UK financial address',
-  vector: mockLossPayeeFinancialDetailsUkVector,
+  // vector: mockLossPayeeFinancialDetailsUkVector,
 };
 
 export const mockLossPayeeFinancialDetailsInternationalVector = {
+  // id: 'clcyyopna0158m8noaglyy9ab',
   ibanVector: 'CCccCCC3cC+3ccc3',
   bicSwiftCodeVector: 'DDddDDD4dD+4ddd4',
 };
@@ -155,7 +157,7 @@ export const mockLossPayeeFinancialDetailsInternational = {
   iban: 'Ccccc3C3CCccCCc3CcCcCcccCcCcccCcCCCcCcCcCcC=',
   bicSwiftCode: 'DDddd4D4DDddDDd4DdDdDdddDdDdddDdDDdDdDdDdD',
   bankAddress: 'Mock international financial address',
-  vector: mockLossPayeeFinancialDetailsInternationalVector,
+  // vector: mockLossPayeeFinancialDetailsInternationalVector,
 };
 
 export const mockNominatedLossPayee = {

@@ -12,13 +12,13 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
   try {
     console.info('Decrypting financial international');
 
-    const mapped = applicationFinancialInternational;
+    let mapped = {};
 
     const {
       iban,
       bicSwiftCode,
       vector: { ibanVector, bicSwiftCodeVector },
-    } = mapped;
+    } = applicationFinancialInternational;
 
     let decryptedIban;
     let decryptedBicSwiftCode;
@@ -38,8 +38,11 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
     if (bicSwiftCode && bicSwiftCodeVector) {
       decryptedBicSwiftCode = decryptData.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
-    mapped.iban = decryptedIban;
-    mapped.bicSwiftCode = decryptedBicSwiftCode;
+
+    mapped = {
+      iban: decryptedIban,
+      bicSwiftCode: decryptedBicSwiftCode,
+    };
 
     return mapped;
   } catch (err) {

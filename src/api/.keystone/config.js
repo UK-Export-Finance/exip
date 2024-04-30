@@ -5796,7 +5796,7 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
     const { id } = variables;
     const mappedData = map_loss_payee_financial_details_uk_default(variables);
     const uk = await update_loss_payee_financial_uk_default(context, id, mappedData.uk);
-    const vector = await update_loss_payee_financial_uk_vector_default(context, uk.vectorId, mappedData.vectors);
+    const vector = await update_loss_payee_financial_uk_vector_default(context, String(uk.vectorId), mappedData.vectors);
     if (uk && vector) {
       return {
         success: true
@@ -5886,7 +5886,7 @@ var updateLossPayeeFinancialDetailsInternational = async (root, variables, conte
     const { id } = variables;
     const mappedData = map_loss_payee_financial_details_international_default(variables);
     const international = await update_loss_payee_financial_international_default(context, id, mappedData.international);
-    const vector = await update_loss_payee_financial_international_vector_default(context, international.vectorId, mappedData.vectors);
+    const vector = await update_loss_payee_financial_international_vector_default(context, String(international.vectorId), mappedData.vectors);
     if (international && vector) {
       return {
         success: true
@@ -6448,12 +6448,12 @@ var decrypt_default = decrypt;
 var decryptFinancialUk = (applicationFinancialUk) => {
   try {
     console.info("Decrypting financial uk");
-    const mapped = applicationFinancialUk;
+    let mapped = {};
     const {
       accountNumber,
       sortCode,
       vector: { accountNumberVector, sortCodeVector }
-    } = mapped;
+    } = applicationFinancialUk;
     let decryptedAccountNumber;
     let decryptedSortCode;
     if (accountNumber && accountNumberVector) {
@@ -6462,8 +6462,10 @@ var decryptFinancialUk = (applicationFinancialUk) => {
     if (sortCode && sortCodeVector) {
       decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
     }
-    mapped.accountNumber = decryptedAccountNumber;
-    mapped.sortCode = decryptedSortCode;
+    mapped = {
+      accountNumber: decryptedAccountNumber,
+      sortCode: decryptedSortCode
+    };
     return mapped;
   } catch (err) {
     console.error("Error decrypting financial uk %O", err);
@@ -6476,12 +6478,12 @@ var decrypt_financial_uk_default = decryptFinancialUk;
 var decryptFinancialInternational = (applicationFinancialInternational) => {
   try {
     console.info("Decrypting financial international");
-    const mapped = applicationFinancialInternational;
+    let mapped = {};
     const {
       iban,
       bicSwiftCode,
       vector: { ibanVector, bicSwiftCodeVector }
-    } = mapped;
+    } = applicationFinancialInternational;
     let decryptedIban;
     let decryptedBicSwiftCode;
     if (iban && ibanVector) {
@@ -6490,8 +6492,10 @@ var decryptFinancialInternational = (applicationFinancialInternational) => {
     if (bicSwiftCode && bicSwiftCodeVector) {
       decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
-    mapped.iban = decryptedIban;
-    mapped.bicSwiftCode = decryptedBicSwiftCode;
+    mapped = {
+      iban: decryptedIban,
+      bicSwiftCode: decryptedBicSwiftCode
+    };
     return mapped;
   } catch (err) {
     console.error("Error decrypting international uk %O", err);

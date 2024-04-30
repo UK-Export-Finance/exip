@@ -1,13 +1,16 @@
 import decryptFinancialInternational from '.';
-import mockApplication from '../../test-mocks/mock-application';
 import decryptData from '../decrypt';
-import { ApplicationLossPayeeFinancialInternational } from '../../types';
+import mockApplication, { mockLossPayeeFinancialDetailsInternationalVector } from '../../test-mocks/mock-application';
 
 const {
   nominatedLossPayee: { financialInternational },
 } = mockApplication;
 
 const decryptSpyResponse = '123456';
+
+const emptyVectorObj = {
+  id: mockLossPayeeFinancialDetailsInternationalVector.id,
+};
 
 describe('api/helpers/decrypt-financial-international', () => {
   jest.mock('../decrypt');
@@ -22,12 +25,14 @@ describe('api/helpers/decrypt-financial-international', () => {
     decryptData.decrypt = decryptSpy;
   });
 
-  describe('when all variables are provided', () => {
+  describe('when all fields are provided', () => {
     it('should return decrypted iban and bicSwiftCode', () => {
-      const result = decryptFinancialInternational(financialInternational);
+      const result = decryptFinancialInternational({
+        ...financialInternational,
+        vector: mockLossPayeeFinancialDetailsInternationalVector,
+      });
 
       const expected = {
-        ...financialInternational,
         iban: decryptSpyResponse,
         bicSwiftCode: decryptSpyResponse,
       };
@@ -36,91 +41,91 @@ describe('api/helpers/decrypt-financial-international', () => {
     });
   });
 
-  // describe('when ibanVector is undefined', () => {
-  //   it('should return iban as an empty string', () => {
-  //     const variables = {
-  //       ...financialInternational,
-  //       ibanVector: undefined,
-  //     } as ApplicationLossPayeeFinancialInternational;
-
-  //     const result = decryptFinancialInternational(variables);
-
-  //     const expected = {
-  //       ...variables,
-  //       iban: '',
-  //     };
-
-  //     expect(result).toEqual(expected);
-  //   });
-  // });
-
   describe('when iban is undefined', () => {
-    it('should return the variables as provided', () => {
-      const variables = {
+    it('should return decrypted bicSwiftCode', () => {
+      const result = decryptFinancialInternational({
         ...financialInternational,
         iban: undefined,
-      } as ApplicationLossPayeeFinancialInternational;
+        vector: mockLossPayeeFinancialDetailsInternationalVector,
+      });
 
-      const result = decryptFinancialInternational(variables);
+      const expected = {
+        bicSwiftCode: decryptSpyResponse,
+      };
 
-      expect(result).toEqual(variables);
+      expect(result).toEqual(expected);
     });
   });
 
-  // describe('when bicSwiftCodeVector is undefined', () => {
-  //   it('should return bicSwiftCode as an empty string', () => {
-  //     const variables = {
-  //       ...financialInternational,
-  //       bicSwiftCodeVector: undefined,
-  //     } as ApplicationLossPayeeFinancialInternational;
+  describe('when ibanVector is undefined', () => {
+    it('should return decrypted bicSwiftCode', () => {
+      const result = decryptFinancialInternational({
+        ...financialInternational,
+        vector: {
+          ...mockLossPayeeFinancialDetailsInternationalVector,
+          ibanVector: undefined,
+        },
+      });
 
-  //     const result = decryptFinancialInternational(variables);
+      const expected = {
+        bicSwiftCode: decryptSpyResponse,
+      };
 
-  //     const expected = {
-  //       ...variables,
-  //       bicSwiftCode: '',
-  //     };
+      expect(result).toEqual(expected);
+    });
+  });
 
-  //     expect(result).toEqual(expected);
-  //   });
-  // });
+  describe('when bicSwiftCode is undefined', () => {
+    it('should return decrypted iban', () => {
+      const result = decryptFinancialInternational({
+        ...financialInternational,
+        bicSwiftCode: undefined,
+        vector: mockLossPayeeFinancialDetailsInternationalVector,
+      });
 
-  // describe('when bicSwift is undefined', () => {
-  //   it('should return bicSwiftCode as an empty string', () => {
-  //     const variables = {
-  //       ...financialInternational,
-  //       bicSwiftCodeVector: undefined,
-  //     } as ApplicationLossPayeeFinancialInternational;
+      const expected = {
+        iban: decryptSpyResponse,
+      };
 
-  //     const result = decryptFinancialInternational(variables);
+      expect(result).toEqual(expected);
+    });
+  });
 
-  //     const expected = {
-  //       ...variables,
-  //       bicSwiftCode: '',
-  //     };
+  describe('when bicSwiftCodeVector is undefined', () => {
+    it('should return decrypted iban', () => {
+      const result = decryptFinancialInternational({
+        ...financialInternational,
+        vector: {
+          ...mockLossPayeeFinancialDetailsInternationalVector,
+          bicSwiftCodeVector: undefined,
+        },
+      });
 
-  //     expect(result).toEqual(expected);
-  //   });
-  // });
+      const expected = {
+        iban: decryptSpyResponse,
+      };
 
-  describe('when all variables are undefined', () => {
-    it('should the variables as provided', () => {
-      const variables = {
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when all fields are undefined', () => {
+    it('should return an empty object', () => {
+      const result = decryptFinancialInternational({
         ...financialInternational,
         iban: undefined,
         bicSwiftCode: undefined,
-      } as ApplicationLossPayeeFinancialInternational;
+        vector: emptyVectorObj,
+      });
 
-      const result = decryptFinancialInternational(variables);
-
-      expect(result).toEqual(variables);
+      expect(result).toEqual({});
     });
   });
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        decryptFinancialInternational({ ...financialInternational, id: '1' });
+        decryptFinancialInternational({ id: '1', vector: emptyVectorObj });
       } catch (err) {
         const errorString = String(err);
 

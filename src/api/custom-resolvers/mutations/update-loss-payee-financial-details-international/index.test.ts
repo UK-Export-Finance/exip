@@ -65,7 +65,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
     });
   });
 
-  describe('when an error occurs when updating loss payee financial international', () => {
+  describe('when an error occurs whilst updating loss payee financial international', () => {
     it('should throw an error', async () => {
       await expect(updateLossPayeeFinancialDetailsInternational({}, { id: '1', vector: { id: vector.id } }, context)).rejects.toThrow(
         'Updating loss payee financial international',
@@ -73,7 +73,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
     });
   });
 
-  describe('when an error occurs when updating loss payee financial international vector', () => {
+  describe('when an error occurs whilst updating loss payee financial international vector', () => {
     it('should throw an error', async () => {
       /**
        * Create a new LossPayeeFinancialDetailsInternational,

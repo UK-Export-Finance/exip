@@ -1,4 +1,4 @@
-import { ApplicationLossPayeeFinancialUkVector, TestHelperCreate } from '../types';
+import { ApplicationLossPayeeFinancialUkVector, TestHelperLossPayeeFinancialUkVectorCreate } from '../types';
 
 /**
  * createLossPayeeFinancialDetailsUkVector
@@ -8,7 +8,7 @@ import { ApplicationLossPayeeFinancialUkVector, TestHelperCreate } from '../type
  * @param {Object} data: Update object
  * @returns {ApplicationLossPayeeFinancialUkVector} Created ApplicationLossPayeeFinancialUkVector
  */
-const createLossPayeeFinancialDetailsUkVector = async ({ context, data = {} }: TestHelperCreate) => {
+const createLossPayeeFinancialDetailsUkVector = async ({ context, data = {} }: TestHelperLossPayeeFinancialUkVectorCreate) => {
   try {
     console.info('Creating a loss payee financial uk vector (test helpers)');
     const lossPayeeFinancialDetailsUk = (await context.query.LossPayeeFinancialUkVector.createOne({
