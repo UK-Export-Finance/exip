@@ -134,19 +134,25 @@ export const mockApplicationDeclaration = {
   agreeHowDataWillBeUsed: true,
 };
 
+export const mockLossPayeeFinancialDetailsUkVector = {
+  accountNumberVector: 'AAaaAAA1aA+1aaa1',
+  sortCodeVector: 'BBbbBBB2bB+2bbb2',
+};
+
 export const mockLossPayeeFinancialDetailsUk = {
   accountNumber: 'AAaaa1A1AAaaAAa1AaAaAaaaAaAaaaAaAAAaAaAaAaA=',
-  accountNumberVector: 'AAaaAAA1aA+1aaa1',
   sortCode: 'BBbbb2B1BBbbBBb2BbBbBbbbBbBbbbBbBBBbBbBbBbB',
-  sortCodeVector: 'BBbbBBB2bB+2bbb2',
   bankAddress: 'Mock UK financial address',
+};
+
+export const mockLossPayeeFinancialDetailsInternationalVector = {
+  ibanVector: 'CCccCCC3cC+3ccc3',
+  bicSwiftCodeVector: 'DDddDDD4dD+4ddd4',
 };
 
 export const mockLossPayeeFinancialDetailsInternational = {
   iban: 'Ccccc3C3CCccCCc3CcCcCcccCcCcccCcCCCcCcCcCcC=',
-  ibanVector: 'CCccCCC3cC+3ccc3',
   bicSwiftCode: 'DDddd4D4DDddDDd4DdDdDdddDdDdddDdDDdDdDdDdD',
-  bicSwiftCodeVector: 'DDddDDD4dD+4ddd4',
   bankAddress: 'Mock international financial address',
 };
 

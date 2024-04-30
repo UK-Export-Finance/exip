@@ -79,22 +79,34 @@ export interface ApplicationDeclaration extends Relationship {
   agreeHowDataWillBeUsed?: boolean;
 }
 
+export interface ApplicationLossPayeeFinancialInternationalVector extends Relationship {
+  bicSwiftCodeVector?: string;
+  ibanVector?: string;
+}
+
+export interface ApplicationLossPayeeFinancialUkVector extends Relationship {
+  accountNumberVector?: string;
+  sortCodeVector?: string;
+}
+
 export interface ApplicationLossPayeeFinancialInternational extends Relationship {
   lossPayeeId?: string;
+  vectorId?: string;
   bankAddress?: string;
   bicSwiftCode?: string;
-  bicSwiftCodeVector?: string;
   iban?: string;
-  ibanVector?: string;
+  vector: ApplicationLossPayeeFinancialInternationalVector;
 }
 
 export interface ApplicationLossPayeeFinancialUk extends Relationship {
   lossPayeeId?: string;
+  vectorId?: string;
   accountNumber?: string;
   accountNumberVector?: string;
   bankAddress?: string;
   sortCode?: string;
   sortCodeVector?: string;
+  vector: ApplicationLossPayeeFinancialUkVector;
 }
 
 export interface ApplicationNominatedLossPayee extends Relationship {

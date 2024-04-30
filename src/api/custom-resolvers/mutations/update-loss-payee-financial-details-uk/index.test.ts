@@ -1,16 +1,19 @@
 import updateLossPayeeFinancialDetailsUk from '.';
 import { mockLossPayeeFinancialDetailsUk } from '../../../test-mocks';
-import { Context, SuccessResponse, ApplicationLossPayeeFinancialUk } from '../../../types';
+import { Context, SuccessResponse, ApplicationLossPayeeFinancialUk, ApplicationLossPayeeFinancialUkVector } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import createLossPayeeFinancialDetailsUk from '../../../test-helpers/loss-payee-financial-uk';
+import createLossPayeeFinancialDetailsUkVector from '../../../test-helpers/loss-payee-financial-uk-vector';
 
 describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   let context: Context;
   let lossPayeeFinancialDetailsUkResponse: SuccessResponse;
+  let vector: ApplicationLossPayeeFinancialUkVector;
+
   const variables = {
     id: '1',
     ...mockLossPayeeFinancialDetailsUk,
-  };
+  } as ApplicationLossPayeeFinancialUk;
 
   beforeAll(() => {
     context = getKeystoneContext();
@@ -20,12 +23,23 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     jest.resetAllMocks();
   });
 
-  describe('successfully updates loss payee financial details', () => {
+  describe('successfully updates loss payee financial uk', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
       const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
 
+      vector = (await createLossPayeeFinancialDetailsUkVector({
+        context,
+        data: {
+          financialUk: {
+            connect: { id: lossPayeeFinancialDetailsUk.id },
+          },
+        },
+      })) as ApplicationLossPayeeFinancialUkVector;
+
       variables.id = lossPayeeFinancialDetailsUk.id;
+      variables.vector = vector;
+
       lossPayeeFinancialDetailsUkResponse = (await updateLossPayeeFinancialDetailsUk({}, variables, context)) as SuccessResponse;
     });
 
@@ -36,11 +50,27 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     });
   });
 
-  describe('when an error occurs', () => {
+  describe('when an error occurs whilst updating loss payee financial uk', () => {
     it('should throw an error', async () => {
-      variables.id = '';
+      await expect(updateLossPayeeFinancialDetailsUk({}, { id: '1', vector: { id: vector.id } }, context)).rejects.toThrow('Updating loss payee financial uk');
+    });
+  });
 
-      await expect(updateLossPayeeFinancialDetailsUk({}, variables, context)).rejects.toThrow('Updating loss payee financial details UK');
+  describe('when an error occurs whilst updating loss payee financial uk vector', () => {
+    it('should throw an error', async () => {
+      /**
+       * Create a new LossPayeeFinancialDetailsUk,
+       * Without a vector relationship.
+       * This will then cause the vector call to fail,
+       * because there is no associated vector ID.
+       */
+      const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({
+        context,
+      })) as ApplicationLossPayeeFinancialUk;
+
+      variables.id = lossPayeeFinancialDetailsUk.id;
+
+      await expect(updateLossPayeeFinancialDetailsUk({}, variables, context)).rejects.toThrow('Updating loss payee financial uk');
     });
   });
 });

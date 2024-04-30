@@ -20,37 +20,34 @@ const decryptNominatedLossPayee = (
   try {
     console.info('Decrypting nominated loss payee %s', nominatedLossPayee.id);
 
-    let updatedNominatedLossPayee = nominatedLossPayee;
+    const mapped = {
+      financialUk: {},
+      financialInternational: {},
+    };
 
-    const { financialUk, financialInternational } = updatedNominatedLossPayee;
+    const { financialUk, financialInternational } = nominatedLossPayee;
 
     /**
      * if decryptFinancialUk - decrypt accountNumber and sortCode in decryptFinancialUkData
-     * update updatedApplication with decrypted data
+     * add to decrypted data mapping
      */
     if (decryptFinancialUk) {
-      const updatedFinancialUk = decryptFinancialUkData(financialUk);
+      const mappedFinancialUk = decryptFinancialUkData(financialUk);
 
-      updatedNominatedLossPayee = {
-        ...updatedNominatedLossPayee,
-        financialUk: updatedFinancialUk,
-      };
+      mapped.financialUk = mappedFinancialUk;
     }
 
     /**
      * if decryptFinancialInternational - decrypt iban and bicSwiftCode in decryptFinancialInternationalData
-     * update updatedApplication with decrypted data
+     * add to decrypted data mapping
      */
     if (decryptFinancialInternational) {
-      const updatedFinancialInternational = decryptFinancialInternationalData(financialInternational);
+      const mappedFinancialInternational = decryptFinancialInternationalData(financialInternational);
 
-      updatedNominatedLossPayee = {
-        ...updatedNominatedLossPayee,
-        financialInternational: updatedFinancialInternational,
-      };
+      mapped.financialInternational = mappedFinancialInternational;
     }
 
-    return updatedNominatedLossPayee;
+    return mapped;
   } catch (err) {
     console.error('Error decrypting nominated loss payee %O', err);
     throw new Error(`Error decrypting nominated loss payee ${err}`);

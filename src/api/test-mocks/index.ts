@@ -59,10 +59,20 @@ export const mockLossPayeeFinancialDetailsUk = {
   bankAddress: 'Mock UK financial address',
 };
 
+export const mockLossPayeeFinancialDetailsUkVector = {
+  accountNumberVector: '1q4WRqCAFFLtGrot',
+  sortCodeVector: '2q4WRqCAFFLtGrep',
+};
+
 export const mockLossPayeeFinancialDetailsInternational = {
   iban: '12345678910111213',
   bicSwiftCode: 'BKENGB2L123',
   bankAddress: 'Mock UK financial address',
+};
+
+export const mockLossPayeeFinancialDetailsInternationalVector = {
+  bicSwiftCodeVector: '3q4WRqCAFFLtGrot',
+  ibanVector: '4q4WRqCAFFLtGrep',
 };
 
 export const mockCountries = [

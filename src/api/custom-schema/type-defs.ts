@@ -111,9 +111,7 @@ const typeDefs = `
   input LossPayeeFinancialDetailsUkInput {
     id: String
     accountNumber: String
-    accountNumberVector: String
     sortCode: String
-    sortCodeVector: String
     bankAddress: String
   }
 
@@ -398,7 +396,7 @@ const typeDefs = `
       service: String
     ): SuccessResponse
 
-    """ update loss payee financial details uk """
+    """ update loss payee financial uk """
     updateLossPayeeFinancialDetailsUk(
       id: String
       bankAddress: String
@@ -406,7 +404,7 @@ const typeDefs = `
       sortCode: String
     ): SuccessResponse
 
-    """ update loss payee financial details international """
+    """ update loss payee financial international """
     updateLossPayeeFinancialDetailsInternational(
       id: String
       bankAddress: String

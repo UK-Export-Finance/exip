@@ -3,7 +3,7 @@ import { Context, ApplicationExportContractAgentServiceCharge } from '../../type
 /**
  * createAnExportContractAgentServiceCharge
  * Create an agent service charge with agent service relationship.
- * @param {Object} context: KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} agentServiceId: Export contract agent service ID
  * @returns {Promise<Object>} Created export contract agent service
  */

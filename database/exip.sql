@@ -3,7 +3,7 @@
 # Version 0.3
 #
 # Database: exip
-# Generation Time: 2024-03-21 10:47:50 +0000
+# Generation Time: 2024-04-29 15:09:14 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -977,14 +977,30 @@ CREATE TABLE `LossPayeeFinancialInternational` (
   `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bankAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `bicSwiftCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bicSwiftCodeVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `iban` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `ibanVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `vector` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `LossPayeeFinancialInternational_lossPayee_key` (`lossPayee`),
+  UNIQUE KEY `LossPayeeFinancialInternational_vector_key` (`vector`),
   CONSTRAINT `LossPayeeFinancialInternational_lossPayee_fkey` FOREIGN KEY (`lossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE
   SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `LossPayeeFinancialInternational_vector_fkey` FOREIGN KEY (`vector`) REFERENCES `LossPayeeFinancialInternationalVector` (`id`) ON DELETE
+  SET
     NULL ON UPDATE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
+# Dump of table LossPayeeFinancialInternationalVector
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `LossPayeeFinancialInternationalVector`;
+
+CREATE TABLE `LossPayeeFinancialInternationalVector` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bicSwiftCodeVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `ibanVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
 
@@ -997,16 +1013,34 @@ CREATE TABLE `LossPayeeFinancialUk` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `accountNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `accountNumberVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `bankAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `sortCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `sortCodeVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `vector` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `LossPayeeFinancialUk_lossPayee_key` (`lossPayee`),
+  UNIQUE KEY `LossPayeeFinancialUk_vector_key` (`vector`),
   CONSTRAINT `LossPayeeFinancialUk_lossPayee_fkey` FOREIGN KEY (`lossPayee`) REFERENCES `NominatedLossPayee` (`id`) ON DELETE
+  SET
+    NULL ON UPDATE CASCADE,
+    CONSTRAINT `LossPayeeFinancialUk_vector_fkey` FOREIGN KEY (`vector`) REFERENCES `LossPayeeFinancialUkVector` (`id`) ON DELETE
   SET
     NULL ON UPDATE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
+
+# Dump of table LossPayeeFinancialUkVector
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `LossPayeeFinancialUkVector`;
+
+CREATE TABLE `LossPayeeFinancialUkVector` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `accountNumberVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sortCodeVector` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
+
 
 # Dump of table NominatedLossPayee
 # ------------------------------------------------------------

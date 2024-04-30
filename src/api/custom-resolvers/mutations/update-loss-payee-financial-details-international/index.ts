@@ -1,5 +1,7 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import mapLossPayeeFinancialDetailsInternational from '../../../helpers/map-loss-payee-financial-details-international';
+import updateLossPayeeFinancialInternational from '../../../helpers/update-loss-payee-financial-international';
+import updateLossPayeeFinancialInternationalVector from '../../../helpers/update-loss-payee-financial-international-vector';
 import { ApplicationLossPayeeFinancialInternational, SuccessResponse } from '../../../types';
 
 /**
@@ -17,25 +19,26 @@ const updateLossPayeeFinancialDetailsInternational = async (
   context: Context,
 ): Promise<SuccessResponse> => {
   try {
-    console.info('Updating loss payee financial details international %s', variables.id);
+    console.info('Updating loss payee financial international %s', variables.id);
 
     const { id } = variables;
 
     /**
-     * object with encrypted data and initialisation vectors
-     * encrypts iban and bicSwiftCode
+     * Map/generate an object with encrypted data.
+     * Encrypts iban and bicSwiftCode,
      * adds the initialisation vectors
      */
-    const updateData = mapLossPayeeFinancialDetailsInternational(variables);
+    const mappedData = mapLossPayeeFinancialDetailsInternational(variables);
 
-    const response = await context.db.LossPayeeFinancialInternational.updateOne({
-      where: {
-        id,
-      },
-      data: updateData,
-    });
+    /**
+     * Update the international relationship.
+     * Update the international vector relationship.
+     */
+    const international = await updateLossPayeeFinancialInternational(context, id, mappedData.international);
 
-    if (response) {
+    const vector = await updateLossPayeeFinancialInternationalVector(context, String(international.vectorId), mappedData.vectors);
+
+    if (international && vector) {
       return {
         success: true,
       };
@@ -45,8 +48,8 @@ const updateLossPayeeFinancialDetailsInternational = async (
       success: false,
     };
   } catch (err) {
-    console.error('Error updating loss payee financial details international %O', err);
-    throw new Error(`Updating loss payee financial details international ${err}`);
+    console.error('Error updating loss payee financial international %O', err);
+    throw new Error(`Updating loss payee financial international ${err}`);
   }
 };
 

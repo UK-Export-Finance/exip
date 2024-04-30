@@ -1,5 +1,5 @@
-import { ApplicationLossPayeeFinancialUk } from '../../types';
 import decryptData from '../decrypt';
+import { ApplicationLossPayeeFinancialUk } from '../../types';
 
 /**
  * decryptFinancialUk
@@ -10,11 +10,15 @@ import decryptData from '../decrypt';
  */
 const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancialUk) => {
   try {
-    console.info('Decrypting accountNumber and sortCode for financialUk');
+    console.info('Decrypting financial uk');
 
-    const updatedFinancialUk = applicationFinancialUk;
+    const mapped = applicationFinancialUk;
 
-    const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = updatedFinancialUk;
+    const {
+      accountNumber,
+      sortCode,
+      vector: { accountNumberVector, sortCodeVector },
+    } = applicationFinancialUk;
 
     let decryptedAccountNumber = '';
     let decryptedSortCode = '';
@@ -35,11 +39,10 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
       decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
     }
 
-    // updates financialUk data with decrypted data
-    updatedFinancialUk.accountNumber = decryptedAccountNumber;
-    updatedFinancialUk.sortCode = decryptedSortCode;
+    mapped.accountNumber = decryptedAccountNumber;
+    mapped.sortCode = decryptedSortCode;
 
-    return updatedFinancialUk;
+    return mapped;
   } catch (err) {
     console.error('Error decrypting financial uk %O', err);
     throw new Error(`Error decrypting financial uk ${err}`);

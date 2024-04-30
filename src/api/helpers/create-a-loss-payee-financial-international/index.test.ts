@@ -25,22 +25,51 @@ describe('helpers/create-a-loss-payee-financial-international', () => {
   });
 
   test('it should return a loss payee financial UK with ID', async () => {
-    const lossPayeeFinancialUk = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
+    const lossPayeeFinancialInternational = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
-    expect(lossPayeeFinancialUk.id).toBeDefined();
-    expect(typeof lossPayeeFinancialUk.id).toEqual('string');
-    expect(lossPayeeFinancialUk.id.length).toBeGreaterThan(0);
+    expect(lossPayeeFinancialInternational.id).toBeDefined();
+    expect(typeof lossPayeeFinancialInternational.id).toEqual('string');
+    expect(lossPayeeFinancialInternational.id.length).toBeGreaterThan(0);
   });
 
   test('it should return lossPayee ID and empty loss payee financial UK fields', async () => {
-    const lossPayeeFinancialUk = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
+    const lossPayeeFinancialInternational = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
 
-    expect(lossPayeeFinancialUk.lossPayeeId).toEqual(nominatedLossPayee.id);
-    expect(lossPayeeFinancialUk.bicSwiftCode).toEqual('');
-    expect(lossPayeeFinancialUk.bicSwiftCodeVector).toEqual('');
-    expect(lossPayeeFinancialUk.iban).toEqual('');
-    expect(lossPayeeFinancialUk.ibanVector).toEqual('');
-    expect(lossPayeeFinancialUk.bankAddress).toEqual('');
+    expect(lossPayeeFinancialInternational.lossPayeeId).toEqual(nominatedLossPayee.id);
+    expect(lossPayeeFinancialInternational.bicSwiftCode).toEqual('');
+    expect(lossPayeeFinancialInternational.iban).toEqual('');
+    expect(lossPayeeFinancialInternational.bankAddress).toEqual('');
+  });
+
+  test('it should create an empty loss payee financial international vector relationship', async () => {
+    // create the Loss payee financial international
+    const created = await createALossPayeeFinancialInternational(context, nominatedLossPayee.id);
+
+    /**
+     * Get the Loss payee financial international,
+     * so that we can use vector.id
+     */
+    const lossPayeeFinancialInternational = await context.query.LossPayeeFinancialInternational.findOne({
+      where: {
+        id: created.id,
+      },
+      query: 'vector { id } ',
+    });
+
+    // get the vector relationship
+    const vectorRelationship = await context.query.LossPayeeFinancialInternationalVector.findOne({
+      where: {
+        id: lossPayeeFinancialInternational.vector.id,
+      },
+      query: 'id bicSwiftCodeVector ibanVector',
+    });
+
+    expect(vectorRelationship.id).toBeDefined();
+    expect(typeof vectorRelationship.id).toEqual('string');
+    expect(vectorRelationship.id.length).toBeGreaterThan(0);
+
+    expect(vectorRelationship.bicSwiftCodeVector).toEqual('');
+    expect(vectorRelationship.ibanVector).toEqual('');
   });
 
   describe('when an invalid nominated loss payee ID is passed', () => {

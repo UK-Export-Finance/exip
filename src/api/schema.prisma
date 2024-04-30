@@ -103,25 +103,39 @@ model CoverPeriod {
 }
 
 model LossPayeeFinancialInternational {
-  id                 String              @id @default(cuid())
-  lossPayee          NominatedLossPayee? @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
-  lossPayeeId        String?             @unique @map("lossPayee")
-  bankAddress        String              @default("") @mysql.VarChar(500)
-  bicSwiftCode       String              @default("")
-  bicSwiftCodeVector String              @default("")
-  iban               String              @default("")
-  ibanVector         String              @default("")
+  id           String                                 @id @default(cuid())
+  lossPayee    NominatedLossPayee?                    @relation("LossPayeeFinancialInternational_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId  String?                                @unique @map("lossPayee")
+  vector       LossPayeeFinancialInternationalVector? @relation("LossPayeeFinancialInternational_vector", fields: [vectorId], references: [id])
+  vectorId     String?                                @unique @map("vector")
+  bankAddress  String                                 @default("") @mysql.VarChar(500)
+  bicSwiftCode String                                 @default("")
+  iban         String                                 @default("")
+}
+
+model LossPayeeFinancialInternationalVector {
+  id                     String                           @id @default(cuid())
+  financialInternational LossPayeeFinancialInternational? @relation("LossPayeeFinancialInternational_vector")
+  bicSwiftCodeVector     String                           @default("")
+  ibanVector             String                           @default("")
 }
 
 model LossPayeeFinancialUk {
-  id                  String              @id @default(cuid())
-  lossPayee           NominatedLossPayee? @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
-  lossPayeeId         String?             @unique @map("lossPayee")
-  accountNumber       String              @default("")
-  accountNumberVector String              @default("")
-  bankAddress         String              @default("") @mysql.VarChar(500)
-  sortCode            String              @default("")
-  sortCodeVector      String              @default("")
+  id            String                      @id @default(cuid())
+  lossPayee     NominatedLossPayee?         @relation("LossPayeeFinancialUk_lossPayee", fields: [lossPayeeId], references: [id])
+  lossPayeeId   String?                     @unique @map("lossPayee")
+  vector        LossPayeeFinancialUkVector? @relation("LossPayeeFinancialUk_vector", fields: [vectorId], references: [id])
+  vectorId      String?                     @unique @map("vector")
+  accountNumber String                      @default("")
+  bankAddress   String                      @default("") @mysql.VarChar(500)
+  sortCode      String                      @default("")
+}
+
+model LossPayeeFinancialUkVector {
+  id                  String                @id @default(cuid())
+  financialUk         LossPayeeFinancialUk? @relation("LossPayeeFinancialUk_vector")
+  accountNumberVector String                @default("")
+  sortCodeVector      String                @default("")
 }
 
 model NominatedLossPayee {

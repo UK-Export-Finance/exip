@@ -1,12 +1,17 @@
 import decryptFinancialUk from '.';
-import mockApplication from '../../test-mocks/mock-application';
 import decryptData from '../decrypt';
+import { ApplicationLossPayeeFinancialUk, ApplicationLossPayeeFinancialUkVector } from '../../types';
+import mockApplication, { mockLossPayeeFinancialDetailsUkVector } from '../../test-mocks/mock-application';
 
 const {
   nominatedLossPayee: { financialUk },
 } = mockApplication;
 
 const decryptSpyResponse = '123456';
+
+const emptyVectorObj = {
+  id: mockLossPayeeFinancialDetailsUkVector.id,
+} as ApplicationLossPayeeFinancialUkVector;
 
 describe('api/helpers/decrypt-financial-uk', () => {
   jest.mock('../decrypt');
@@ -21,26 +26,125 @@ describe('api/helpers/decrypt-financial-uk', () => {
     decryptData.decrypt = decryptSpy;
   });
 
-  it('should return decrypted sortCode and accountNumber', () => {
-    const result = decryptFinancialUk(financialUk);
-
-    const expected = {
-      ...financialUk,
-      sortCode: decryptSpyResponse,
-      accountNumber: decryptSpyResponse,
-    };
-
-    expect(result).toEqual(expected);
-  });
-
-  describe('when an empty object is provided', () => {
-    it('should return empty strings for sortCode and accountNumber', () => {
-      const result = decryptFinancialUk({ id: '1', accountNumber: '', sortCode: '' });
+  describe('when all fields are provided', () => {
+    it('should return decrypted accountNumber and sortCode', () => {
+      const result = decryptFinancialUk({
+        ...financialUk,
+        vector: mockLossPayeeFinancialDetailsUkVector,
+      } as ApplicationLossPayeeFinancialUk);
 
       const expected = {
-        id: '1',
-        sortCode: '',
+        ...financialUk,
+        vector: mockLossPayeeFinancialDetailsUkVector,
+        accountNumber: decryptSpyResponse,
+        sortCode: decryptSpyResponse,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when accountNumber is undefined', () => {
+    it('should return decrypted sortCode', () => {
+      const result = decryptFinancialUk({
+        ...financialUk,
+        accountNumber: undefined,
+        vector: mockLossPayeeFinancialDetailsUkVector,
+      } as ApplicationLossPayeeFinancialUk);
+
+      const expected = {
+        ...financialUk,
         accountNumber: '',
+        vector: mockLossPayeeFinancialDetailsUkVector,
+        sortCode: decryptSpyResponse,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when accountNumberVector is undefined', () => {
+    it('should return decrypted sortCode', () => {
+      const result = decryptFinancialUk({
+        ...financialUk,
+        vector: {
+          ...mockLossPayeeFinancialDetailsUkVector,
+          accountNumberVector: undefined,
+        },
+      } as ApplicationLossPayeeFinancialUk);
+
+      const expected = {
+        ...financialUk,
+        vector: {
+          ...mockLossPayeeFinancialDetailsUkVector,
+          accountNumberVector: undefined,
+        },
+        accountNumber: '',
+        sortCode: decryptSpyResponse,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when sortCode is undefined', () => {
+    it('should return decrypted accountNumber', () => {
+      const result = decryptFinancialUk({
+        ...financialUk,
+        sortCode: undefined,
+        vector: mockLossPayeeFinancialDetailsUkVector,
+      } as ApplicationLossPayeeFinancialUk);
+
+      const expected = {
+        ...financialUk,
+        sortCode: '',
+        vector: mockLossPayeeFinancialDetailsUkVector,
+        accountNumber: decryptSpyResponse,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when sortCodeVector is undefined', () => {
+    it('should return decrypted accountNumber', () => {
+      const result = decryptFinancialUk({
+        ...financialUk,
+        vector: {
+          ...mockLossPayeeFinancialDetailsUkVector,
+          sortCodeVector: undefined,
+        },
+      } as ApplicationLossPayeeFinancialUk);
+
+      const expected = {
+        ...financialUk,
+        vector: {
+          ...mockLossPayeeFinancialDetailsUkVector,
+          sortCodeVector: undefined,
+        },
+        accountNumber: decryptSpyResponse,
+        sortCode: '',
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when all fields are undefined', () => {
+    it('should return the provided object  with empty strings', () => {
+      const emptyFields = {
+        ...financialUk,
+        accountNumber: undefined,
+        sortCode: undefined,
+        vector: emptyVectorObj,
+      };
+
+      const result = decryptFinancialUk(emptyFields);
+
+      const expected = {
+        ...emptyFields,
+        accountNumber: '',
+        sortCode: '',
       };
 
       expect(result).toEqual(expected);
@@ -50,7 +154,7 @@ describe('api/helpers/decrypt-financial-uk', () => {
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        decryptFinancialUk({ id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' });
+        decryptFinancialUk({ id: '1', vector: emptyVectorObj });
       } catch (err) {
         const errorString = String(err);
 

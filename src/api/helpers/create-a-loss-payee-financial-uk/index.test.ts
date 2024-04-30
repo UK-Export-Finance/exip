@@ -37,10 +37,39 @@ describe('helpers/create-a-loss-payee-financial-uk', () => {
 
     expect(lossPayeeFinancialUk.lossPayeeId).toEqual(nominatedLossPayee.id);
     expect(lossPayeeFinancialUk.sortCode).toEqual('');
-    expect(lossPayeeFinancialUk.sortCodeVector).toEqual('');
     expect(lossPayeeFinancialUk.accountNumber).toEqual('');
-    expect(lossPayeeFinancialUk.accountNumberVector).toEqual('');
     expect(lossPayeeFinancialUk.bankAddress).toEqual('');
+  });
+
+  test('it should create an empty loss payee financial UK vector relationship', async () => {
+    // create the Loss payee financial uk
+    const created = await createALossPayeeFinancialUk(context, nominatedLossPayee.id);
+
+    /**
+     * Get the Loss payee financial uk,
+     * so that we can use vector.id
+     */
+    const lossPayeeFinancialUk = await context.query.LossPayeeFinancialUk.findOne({
+      where: {
+        id: created.id,
+      },
+      query: 'vector { id } ',
+    });
+
+    // get the vector relationship
+    const vectorRelationship = await context.query.LossPayeeFinancialUkVector.findOne({
+      where: {
+        id: lossPayeeFinancialUk.vector.id,
+      },
+      query: 'id sortCodeVector accountNumberVector',
+    });
+
+    expect(vectorRelationship.id).toBeDefined();
+    expect(typeof vectorRelationship.id).toEqual('string');
+    expect(vectorRelationship.id.length).toBeGreaterThan(0);
+
+    expect(vectorRelationship.sortCodeVector).toEqual('');
+    expect(vectorRelationship.accountNumberVector).toEqual('');
   });
 
   describe('when an invalid nominated loss payee ID is passed', () => {

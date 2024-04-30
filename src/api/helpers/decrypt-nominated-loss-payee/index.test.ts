@@ -1,11 +1,36 @@
 import decryptNominatedLossPayee from '.';
 import decryptFinancialUkData from '../decrypt-financial-uk';
 import decryptFinancialInternational from '../decrypt-financial-international';
-import mockApplication from '../../test-mocks/mock-application';
+import mockApplication, {
+  mockNominatedLossPayee,
+  mockLossPayeeFinancialDetailsInternationalVector,
+  mockLossPayeeFinancialDetailsUkVector,
+} from '../../test-mocks/mock-application';
 import decrypt from '../decrypt';
 
 const { nominatedLossPayee } = mockApplication;
-const { financialUk, financialInternational } = nominatedLossPayee;
+
+const mockFinancialUk = {
+  ...mockNominatedLossPayee.financialUk,
+  vector: {
+    id: '1',
+    ...mockLossPayeeFinancialDetailsUkVector,
+  },
+};
+
+const mockFinancialInternational = {
+  ...mockNominatedLossPayee.financialInternational,
+  vector: {
+    id: '2',
+    ...mockLossPayeeFinancialDetailsInternationalVector,
+  },
+};
+
+const populatedNominatedLossPayee = {
+  ...mockNominatedLossPayee,
+  financialUk: mockFinancialUk,
+  financialInternational: mockFinancialInternational,
+};
 
 describe('api/helpers/decrypt-nominated-loss-payee', () => {
   jest.mock('../decrypt');
@@ -20,39 +45,45 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
     decrypt.decrypt = decryptSpy;
   });
 
-  describe('when "decryptFinancialUk" is "false"', () => {
-    it('should return provided nominatedLossPayee', () => {
-      const result = decryptNominatedLossPayee(nominatedLossPayee, false, false);
-
-      expect(result).toEqual(nominatedLossPayee);
-    });
-
-    it('should not call the decrypt function', () => {
-      decryptNominatedLossPayee(nominatedLossPayee, false);
-
-      expect(decryptSpy).toHaveBeenCalledTimes(0);
-    });
-  });
-
-  describe('when "decryptFinancialUk" is "true"', () => {
-    it('should return result of decryptFinancialUkData for financialUk', () => {
-      const result = decryptNominatedLossPayee(nominatedLossPayee, true);
+  describe('when "decryptFinancialUk" and "decryptFinancialInternational" are false', () => {
+    it('should return empty objects', () => {
+      const result = decryptNominatedLossPayee(populatedNominatedLossPayee, false, false);
 
       const expected = {
-        ...mockApplication.nominatedLossPayee,
-        financialUk: {
-          ...financialUk,
-          ...decryptFinancialUkData(financialUk),
-        },
+        financialUk: {},
+        financialInternational: {},
       };
 
       expect(result).toEqual(expected);
     });
 
-    it('should call the decrypt function twice (for account number and sort code)', () => {
-      decryptNominatedLossPayee(nominatedLossPayee, true);
+    it('should NOT call the decrypt function', () => {
+      decryptNominatedLossPayee(populatedNominatedLossPayee, false);
 
-      const { accountNumber, accountNumberVector, sortCode, sortCodeVector } = mockApplication.nominatedLossPayee.financialUk;
+      expect(decryptSpy).toHaveBeenCalledTimes(0);
+    });
+  });
+
+  describe('when "decryptFinancialUk" is true', () => {
+    it('should return result of decryptFinancialUkData for financialUk', () => {
+      const result = decryptNominatedLossPayee(populatedNominatedLossPayee, true);
+
+      const expected = {
+        financialUk: decryptFinancialUkData(mockFinancialUk),
+        financialInternational: {},
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should call the decrypt function twice', () => {
+      decryptNominatedLossPayee(populatedNominatedLossPayee, true);
+
+      const {
+        accountNumber,
+        sortCode,
+        vector: { accountNumberVector, sortCodeVector },
+      } = mockFinancialUk;
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
       expect(decryptSpy).toHaveBeenCalledWith({ iv: accountNumberVector, value: accountNumber });
@@ -60,25 +91,26 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
     });
   });
 
-  describe('when "decryptFinancialInternational" is "true"', () => {
+  describe('when "decryptFinancialInternational" is true', () => {
     it('should return result of decryptFinancialInternationalData for financialInternational', () => {
-      const result = decryptNominatedLossPayee(nominatedLossPayee, false, true);
+      const result = decryptNominatedLossPayee(populatedNominatedLossPayee, false, true);
 
       const expected = {
-        ...mockApplication.nominatedLossPayee,
-        financialInternational: {
-          ...financialInternational,
-          ...decryptFinancialInternational(financialInternational),
-        },
+        financialUk: {},
+        financialInternational: decryptFinancialInternational(mockFinancialInternational),
       };
 
       expect(result).toEqual(expected);
     });
 
-    it('should call the decrypt function twice (for iban and bicSwiftCodeVector)', () => {
-      decryptNominatedLossPayee(nominatedLossPayee, false, true);
+    it('should call the decrypt function twice', () => {
+      decryptNominatedLossPayee(populatedNominatedLossPayee, false, true);
 
-      const { bicSwiftCode, bicSwiftCodeVector, iban, ibanVector } = mockApplication.nominatedLossPayee.financialInternational;
+      const {
+        bicSwiftCode,
+        iban,
+        vector: { bicSwiftCodeVector, ibanVector },
+      } = mockFinancialInternational;
 
       expect(decryptSpy).toHaveBeenCalledTimes(2);
       expect(decryptSpy).toHaveBeenCalledWith({ iv: ibanVector, value: iban });
@@ -88,14 +120,15 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
 
   describe('when the an error occurs', () => {
     it('should throw an error', async () => {
-      const mockNominatedLossPayee = {
+      const mockNominatedLossPayeeError = {
+        ...nominatedLossPayee,
         id: '1',
-        financialUk: { id: '1', accountNumber: '1', sortCode: '1', accountNumberVector: '1', sortCodeVector: '1' },
-        financialInternational: { id: '1' },
+        financialUk: { ...nominatedLossPayee.financialUk, id: '1' },
+        financialInternational: { ...nominatedLossPayee.financialInternational, id: '2' },
       };
 
       try {
-        decryptNominatedLossPayee(mockNominatedLossPayee, true);
+        decryptNominatedLossPayee(mockNominatedLossPayeeError, true);
       } catch (err) {
         const errorString = String(err);
 

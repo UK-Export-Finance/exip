@@ -488,11 +488,10 @@ input CoverPeriodCreateInput {
 type LossPayeeFinancialInternational {
   id: ID!
   lossPayee: NominatedLossPayee
+  vector: LossPayeeFinancialInternationalVector
   bankAddress: String
   bicSwiftCode: String
-  bicSwiftCodeVector: String
   iban: String
-  ibanVector: String
 }
 
 input LossPayeeFinancialInternationalWhereUniqueInput {
@@ -505,29 +504,31 @@ input LossPayeeFinancialInternationalWhereInput {
   NOT: [LossPayeeFinancialInternationalWhereInput!]
   id: IDFilter
   lossPayee: NominatedLossPayeeWhereInput
+  vector: LossPayeeFinancialInternationalVectorWhereInput
   bankAddress: StringFilter
   bicSwiftCode: StringFilter
-  bicSwiftCodeVector: StringFilter
   iban: StringFilter
-  ibanVector: StringFilter
 }
 
 input LossPayeeFinancialInternationalOrderByInput {
   id: OrderDirection
   bankAddress: OrderDirection
   bicSwiftCode: OrderDirection
-  bicSwiftCodeVector: OrderDirection
   iban: OrderDirection
-  ibanVector: OrderDirection
 }
 
 input LossPayeeFinancialInternationalUpdateInput {
   lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
+  vector: LossPayeeFinancialInternationalVectorRelateToOneForUpdateInput
   bankAddress: String
   bicSwiftCode: String
-  bicSwiftCodeVector: String
   iban: String
-  ibanVector: String
+}
+
+input LossPayeeFinancialInternationalVectorRelateToOneForUpdateInput {
+  create: LossPayeeFinancialInternationalVectorCreateInput
+  connect: LossPayeeFinancialInternationalVectorWhereUniqueInput
+  disconnect: Boolean
 }
 
 input LossPayeeFinancialInternationalUpdateArgs {
@@ -537,21 +538,79 @@ input LossPayeeFinancialInternationalUpdateArgs {
 
 input LossPayeeFinancialInternationalCreateInput {
   lossPayee: NominatedLossPayeeRelateToOneForCreateInput
+  vector: LossPayeeFinancialInternationalVectorRelateToOneForCreateInput
   bankAddress: String
   bicSwiftCode: String
-  bicSwiftCodeVector: String
   iban: String
+}
+
+input LossPayeeFinancialInternationalVectorRelateToOneForCreateInput {
+  create: LossPayeeFinancialInternationalVectorCreateInput
+  connect: LossPayeeFinancialInternationalVectorWhereUniqueInput
+}
+
+type LossPayeeFinancialInternationalVector {
+  id: ID!
+  financialInternational: LossPayeeFinancialInternational
+  bicSwiftCodeVector: String
   ibanVector: String
+}
+
+input LossPayeeFinancialInternationalVectorWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialInternationalVectorWhereInput {
+  AND: [LossPayeeFinancialInternationalVectorWhereInput!]
+  OR: [LossPayeeFinancialInternationalVectorWhereInput!]
+  NOT: [LossPayeeFinancialInternationalVectorWhereInput!]
+  id: IDFilter
+  financialInternational: LossPayeeFinancialInternationalWhereInput
+  bicSwiftCodeVector: StringFilter
+  ibanVector: StringFilter
+}
+
+input LossPayeeFinancialInternationalVectorOrderByInput {
+  id: OrderDirection
+  bicSwiftCodeVector: OrderDirection
+  ibanVector: OrderDirection
+}
+
+input LossPayeeFinancialInternationalVectorUpdateInput {
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForUpdateInput
+  bicSwiftCodeVector: String
+  ibanVector: String
+}
+
+input LossPayeeFinancialInternationalRelateToOneForUpdateInput {
+  create: LossPayeeFinancialInternationalCreateInput
+  connect: LossPayeeFinancialInternationalWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialInternationalVectorUpdateArgs {
+  where: LossPayeeFinancialInternationalVectorWhereUniqueInput!
+  data: LossPayeeFinancialInternationalVectorUpdateInput!
+}
+
+input LossPayeeFinancialInternationalVectorCreateInput {
+  financialInternational: LossPayeeFinancialInternationalRelateToOneForCreateInput
+  bicSwiftCodeVector: String
+  ibanVector: String
+}
+
+input LossPayeeFinancialInternationalRelateToOneForCreateInput {
+  create: LossPayeeFinancialInternationalCreateInput
+  connect: LossPayeeFinancialInternationalWhereUniqueInput
 }
 
 type LossPayeeFinancialUk {
   id: ID!
   lossPayee: NominatedLossPayee
+  vector: LossPayeeFinancialUkVector
   accountNumber: String
-  accountNumberVector: String
   bankAddress: String
   sortCode: String
-  sortCodeVector: String
 }
 
 input LossPayeeFinancialUkWhereUniqueInput {
@@ -564,29 +623,31 @@ input LossPayeeFinancialUkWhereInput {
   NOT: [LossPayeeFinancialUkWhereInput!]
   id: IDFilter
   lossPayee: NominatedLossPayeeWhereInput
+  vector: LossPayeeFinancialUkVectorWhereInput
   accountNumber: StringFilter
-  accountNumberVector: StringFilter
   bankAddress: StringFilter
   sortCode: StringFilter
-  sortCodeVector: StringFilter
 }
 
 input LossPayeeFinancialUkOrderByInput {
   id: OrderDirection
   accountNumber: OrderDirection
-  accountNumberVector: OrderDirection
   bankAddress: OrderDirection
   sortCode: OrderDirection
-  sortCodeVector: OrderDirection
 }
 
 input LossPayeeFinancialUkUpdateInput {
   lossPayee: NominatedLossPayeeRelateToOneForUpdateInput
+  vector: LossPayeeFinancialUkVectorRelateToOneForUpdateInput
   accountNumber: String
-  accountNumberVector: String
   bankAddress: String
   sortCode: String
-  sortCodeVector: String
+}
+
+input LossPayeeFinancialUkVectorRelateToOneForUpdateInput {
+  create: LossPayeeFinancialUkVectorCreateInput
+  connect: LossPayeeFinancialUkVectorWhereUniqueInput
+  disconnect: Boolean
 }
 
 input LossPayeeFinancialUkUpdateArgs {
@@ -596,11 +657,70 @@ input LossPayeeFinancialUkUpdateArgs {
 
 input LossPayeeFinancialUkCreateInput {
   lossPayee: NominatedLossPayeeRelateToOneForCreateInput
+  vector: LossPayeeFinancialUkVectorRelateToOneForCreateInput
   accountNumber: String
-  accountNumberVector: String
   bankAddress: String
   sortCode: String
+}
+
+input LossPayeeFinancialUkVectorRelateToOneForCreateInput {
+  create: LossPayeeFinancialUkVectorCreateInput
+  connect: LossPayeeFinancialUkVectorWhereUniqueInput
+}
+
+type LossPayeeFinancialUkVector {
+  id: ID!
+  financialUk: LossPayeeFinancialUk
+  accountNumberVector: String
   sortCodeVector: String
+}
+
+input LossPayeeFinancialUkVectorWhereUniqueInput {
+  id: ID
+}
+
+input LossPayeeFinancialUkVectorWhereInput {
+  AND: [LossPayeeFinancialUkVectorWhereInput!]
+  OR: [LossPayeeFinancialUkVectorWhereInput!]
+  NOT: [LossPayeeFinancialUkVectorWhereInput!]
+  id: IDFilter
+  financialUk: LossPayeeFinancialUkWhereInput
+  accountNumberVector: StringFilter
+  sortCodeVector: StringFilter
+}
+
+input LossPayeeFinancialUkVectorOrderByInput {
+  id: OrderDirection
+  accountNumberVector: OrderDirection
+  sortCodeVector: OrderDirection
+}
+
+input LossPayeeFinancialUkVectorUpdateInput {
+  financialUk: LossPayeeFinancialUkRelateToOneForUpdateInput
+  accountNumberVector: String
+  sortCodeVector: String
+}
+
+input LossPayeeFinancialUkRelateToOneForUpdateInput {
+  create: LossPayeeFinancialUkCreateInput
+  connect: LossPayeeFinancialUkWhereUniqueInput
+  disconnect: Boolean
+}
+
+input LossPayeeFinancialUkVectorUpdateArgs {
+  where: LossPayeeFinancialUkVectorWhereUniqueInput!
+  data: LossPayeeFinancialUkVectorUpdateInput!
+}
+
+input LossPayeeFinancialUkVectorCreateInput {
+  financialUk: LossPayeeFinancialUkRelateToOneForCreateInput
+  accountNumberVector: String
+  sortCodeVector: String
+}
+
+input LossPayeeFinancialUkRelateToOneForCreateInput {
+  create: LossPayeeFinancialUkCreateInput
+  connect: LossPayeeFinancialUkWhereUniqueInput
 }
 
 type NominatedLossPayee {
@@ -644,18 +764,6 @@ input NominatedLossPayeeUpdateInput {
   name: String
 }
 
-input LossPayeeFinancialUkRelateToOneForUpdateInput {
-  create: LossPayeeFinancialUkCreateInput
-  connect: LossPayeeFinancialUkWhereUniqueInput
-  disconnect: Boolean
-}
-
-input LossPayeeFinancialInternationalRelateToOneForUpdateInput {
-  create: LossPayeeFinancialInternationalCreateInput
-  connect: LossPayeeFinancialInternationalWhereUniqueInput
-  disconnect: Boolean
-}
-
 input NominatedLossPayeeUpdateArgs {
   where: NominatedLossPayeeWhereUniqueInput!
   data: NominatedLossPayeeUpdateInput!
@@ -669,16 +777,6 @@ input NominatedLossPayeeCreateInput {
   isLocatedInUk: Boolean
   isLocatedInternationally: Boolean
   name: String
-}
-
-input LossPayeeFinancialUkRelateToOneForCreateInput {
-  create: LossPayeeFinancialUkCreateInput
-  connect: LossPayeeFinancialUkWhereUniqueInput
-}
-
-input LossPayeeFinancialInternationalRelateToOneForCreateInput {
-  create: LossPayeeFinancialInternationalCreateInput
-  connect: LossPayeeFinancialInternationalWhereUniqueInput
 }
 
 type Policy {
@@ -2827,12 +2925,24 @@ type Mutation {
   updateLossPayeeFinancialInternationals(data: [LossPayeeFinancialInternationalUpdateArgs!]!): [LossPayeeFinancialInternational]
   deleteLossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
   deleteLossPayeeFinancialInternationals(where: [LossPayeeFinancialInternationalWhereUniqueInput!]!): [LossPayeeFinancialInternational]
+  createLossPayeeFinancialInternationalVector(data: LossPayeeFinancialInternationalVectorCreateInput!): LossPayeeFinancialInternationalVector
+  createLossPayeeFinancialInternationalVectors(data: [LossPayeeFinancialInternationalVectorCreateInput!]!): [LossPayeeFinancialInternationalVector]
+  updateLossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!, data: LossPayeeFinancialInternationalVectorUpdateInput!): LossPayeeFinancialInternationalVector
+  updateLossPayeeFinancialInternationalVectors(data: [LossPayeeFinancialInternationalVectorUpdateArgs!]!): [LossPayeeFinancialInternationalVector]
+  deleteLossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!): LossPayeeFinancialInternationalVector
+  deleteLossPayeeFinancialInternationalVectors(where: [LossPayeeFinancialInternationalVectorWhereUniqueInput!]!): [LossPayeeFinancialInternationalVector]
   createLossPayeeFinancialUk(data: LossPayeeFinancialUkCreateInput!): LossPayeeFinancialUk
   createLossPayeeFinancialUks(data: [LossPayeeFinancialUkCreateInput!]!): [LossPayeeFinancialUk]
   updateLossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!, data: LossPayeeFinancialUkUpdateInput!): LossPayeeFinancialUk
   updateLossPayeeFinancialUks(data: [LossPayeeFinancialUkUpdateArgs!]!): [LossPayeeFinancialUk]
   deleteLossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
   deleteLossPayeeFinancialUks(where: [LossPayeeFinancialUkWhereUniqueInput!]!): [LossPayeeFinancialUk]
+  createLossPayeeFinancialUkVector(data: LossPayeeFinancialUkVectorCreateInput!): LossPayeeFinancialUkVector
+  createLossPayeeFinancialUkVectors(data: [LossPayeeFinancialUkVectorCreateInput!]!): [LossPayeeFinancialUkVector]
+  updateLossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!, data: LossPayeeFinancialUkVectorUpdateInput!): LossPayeeFinancialUkVector
+  updateLossPayeeFinancialUkVectors(data: [LossPayeeFinancialUkVectorUpdateArgs!]!): [LossPayeeFinancialUkVector]
+  deleteLossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!): LossPayeeFinancialUkVector
+  deleteLossPayeeFinancialUkVectors(where: [LossPayeeFinancialUkVectorWhereUniqueInput!]!): [LossPayeeFinancialUkVector]
   createNominatedLossPayee(data: NominatedLossPayeeCreateInput!): NominatedLossPayee
   createNominatedLossPayees(data: [NominatedLossPayeeCreateInput!]!): [NominatedLossPayee]
   updateNominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!, data: NominatedLossPayeeUpdateInput!): NominatedLossPayee
@@ -3077,10 +3187,10 @@ type Mutation {
   """ create and send email for insurance feedback """
   createFeedbackAndSendEmail(satisfaction: String, improvement: String, otherComments: String, referralUrl: String, product: String, service: String): SuccessResponse
 
-  """ update loss payee financial details uk """
+  """ update loss payee financial uk """
   updateLossPayeeFinancialDetailsUk(id: String, bankAddress: String, accountNumber: String, sortCode: String): SuccessResponse
 
-  """ update loss payee financial details international """
+  """ update loss payee financial international """
   updateLossPayeeFinancialDetailsInternational(id: String, bankAddress: String, iban: String, bicSwiftCode: String): SuccessResponse
 }
 
@@ -3117,9 +3227,15 @@ type Query {
   lossPayeeFinancialInternationals(where: LossPayeeFinancialInternationalWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalWhereUniqueInput): [LossPayeeFinancialInternational!]
   lossPayeeFinancialInternational(where: LossPayeeFinancialInternationalWhereUniqueInput!): LossPayeeFinancialInternational
   lossPayeeFinancialInternationalsCount(where: LossPayeeFinancialInternationalWhereInput! = {}): Int
+  lossPayeeFinancialInternationalVectors(where: LossPayeeFinancialInternationalVectorWhereInput! = {}, orderBy: [LossPayeeFinancialInternationalVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialInternationalVectorWhereUniqueInput): [LossPayeeFinancialInternationalVector!]
+  lossPayeeFinancialInternationalVector(where: LossPayeeFinancialInternationalVectorWhereUniqueInput!): LossPayeeFinancialInternationalVector
+  lossPayeeFinancialInternationalVectorsCount(where: LossPayeeFinancialInternationalVectorWhereInput! = {}): Int
   lossPayeeFinancialUks(where: LossPayeeFinancialUkWhereInput! = {}, orderBy: [LossPayeeFinancialUkOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkWhereUniqueInput): [LossPayeeFinancialUk!]
   lossPayeeFinancialUk(where: LossPayeeFinancialUkWhereUniqueInput!): LossPayeeFinancialUk
   lossPayeeFinancialUksCount(where: LossPayeeFinancialUkWhereInput! = {}): Int
+  lossPayeeFinancialUkVectors(where: LossPayeeFinancialUkVectorWhereInput! = {}, orderBy: [LossPayeeFinancialUkVectorOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LossPayeeFinancialUkVectorWhereUniqueInput): [LossPayeeFinancialUkVector!]
+  lossPayeeFinancialUkVector(where: LossPayeeFinancialUkVectorWhereUniqueInput!): LossPayeeFinancialUkVector
+  lossPayeeFinancialUkVectorsCount(where: LossPayeeFinancialUkVectorWhereInput! = {}): Int
   nominatedLossPayees(where: NominatedLossPayeeWhereInput! = {}, orderBy: [NominatedLossPayeeOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NominatedLossPayeeWhereUniqueInput): [NominatedLossPayee!]
   nominatedLossPayee(where: NominatedLossPayeeWhereUniqueInput!): NominatedLossPayee
   nominatedLossPayeesCount(where: NominatedLossPayeeWhereInput! = {}): Int
@@ -3442,9 +3558,7 @@ input SectionReviewInput {
 input LossPayeeFinancialDetailsUkInput {
   id: String
   accountNumber: String
-  accountNumberVector: String
   sortCode: String
-  sortCodeVector: String
   bankAddress: String
 }
 

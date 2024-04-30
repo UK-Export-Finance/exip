@@ -4,13 +4,13 @@ import { ApplicationLossPayeeFinancialUk } from '../../types';
 
 /**
  * mapLossPayeeFinancialDetails
- * maps loss payee financial details to generate object for saving
+ * maps loss payee financial to generate object for saving
  * @param {ApplicationLossPayeeFinancialUk} variables: loss payee financial uk variables
  * @returns {Object} mapped data for saving
  */
 const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancialUk) => {
   try {
-    console.info('Mapping loss payee financial details UK');
+    console.info('Mapping loss payee financial UK');
 
     const { accountNumber, sortCode, bankAddress } = variables;
 
@@ -32,18 +32,22 @@ const mapLossPayeeFinancialDetailsUk = (variables: ApplicationLossPayeeFinancial
      * adds the initialisation vectors
      */
     const updateData = {
-      accountNumber: accountNumberData.value,
-      accountNumberVector: accountNumberData.iv,
-      sortCode: sortCodeData.value,
-      sortCodeVector: sortCodeData.iv,
-      bankAddress,
+      uk: {
+        accountNumber: accountNumberData.value,
+        sortCode: sortCodeData.value,
+        bankAddress,
+      },
+      vectors: {
+        accountNumberVector: accountNumberData.iv,
+        sortCodeVector: sortCodeData.iv,
+      },
     };
 
     return updateData;
   } catch (err) {
-    console.error('Error mapping loss payee financial details UK %O', err);
+    console.error('Error mapping loss payee financial UK %O', err);
 
-    throw new Error(`Error mapping loss payee financial details UK ${err}`);
+    throw new Error(`Error mapping loss payee financial UK ${err}`);
   }
 };
 
