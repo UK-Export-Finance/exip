@@ -163,7 +163,6 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: SPECIAL_CHARACTERS,
-        assertExpectedValue: false,
         errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT,
         errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT,
       });
