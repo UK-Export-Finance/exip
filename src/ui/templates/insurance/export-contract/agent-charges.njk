@@ -126,37 +126,39 @@
         }) }}
       </div>
     </div>
+    
+    {% set containerClassName = "govuk-form-group govuk-!-margin-bottom-8" %}
 
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-one-third-from-desktop govuk-!-margin-bottom-8">
+    {% set errorMessage = validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text %}
 
-        {% set containerClassName = "govuk-form-group" %}
+    {% if errorMessage %}
+      {% set containerClassName = "govuk-form-group govuk-!-margin-bottom-8 govuk-form-group--error" %}
+    {% endif %}
 
-        {% set errorMessage = validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text %}
+    <div class="{{ containerClassName }}">
+      {{ govukLabel({
+        for: FIELDS.PAYABLE_COUNTRY_CODE.ID,
+        classes: "govuk-!-font-weight-bold",
+        text: FIELDS.PAYABLE_COUNTRY_CODE.LABEL,
+        attributes: {
+          id: FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label",
+          "data-cy": FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label"
+        }
+      }) }}
 
-        {% if errorMessage %}
-          {% set containerClassName = "govuk-form-group govuk-form-group--error" %}
-        {% endif %}
-
-        <div class="{{ containerClassName }}">
-          {{ govukLabel({
-            for: FIELDS.PAYABLE_COUNTRY_CODE.ID,
-            classes: "govuk-!-font-weight-bold",
-            text: FIELDS.PAYABLE_COUNTRY_CODE.LABEL,
-            attributes: {
-              id: FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label",
-              "data-cy": FIELDS.PAYABLE_COUNTRY_CODE.ID + "-label"
-            }
-          }) }}
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
 
           {{ accessibleAutoCompleteSelect.render({
             errorMessage: validationErrors.errorList[FIELDS.PAYABLE_COUNTRY_CODE.ID].text,
             fieldId: FIELDS.PAYABLE_COUNTRY_CODE.ID,
             integrity: SRI.ACCESSIBILITY,
-            options: countries
+            options: countries,
+            inputContainerClasses: "govuk-input--width-20"
           }) }}
         </div>
       </div>
+
     </div>
 
     {{ formButtons.render({
