@@ -1,5 +1,5 @@
 import { Context, LossPayeeFinancialUkUpdateInput } from '.keystone/types'; // eslint-disable-line
-import updateLossPayeeFinancialUkUk from '.';
+import updateLossPayeeFinancialUk from '.';
 import { mockLossPayeeFinancialDetailsUk } from '../../test-mocks';
 import { ApplicationLossPayeeFinancialUk } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
@@ -34,7 +34,7 @@ describe('helpers/update-loss-payee-financial-uk', () => {
 
       lossPayeeFinancialUkId = lossPayeeFinancialUk.id;
 
-      result = await updateLossPayeeFinancialUkUk(context, lossPayeeFinancialUkId, updateData);
+      result = await updateLossPayeeFinancialUk(context, lossPayeeFinancialUkId, updateData);
     });
 
     it('should return the updated data', () => {
@@ -45,7 +45,7 @@ describe('helpers/update-loss-payee-financial-uk', () => {
 
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
-      await expect(updateLossPayeeFinancialUkUk(context, '1', updateData)).rejects.toThrow(
+      await expect(updateLossPayeeFinancialUk(context, '1', updateData)).rejects.toThrow(
         'Updating loss payee financial uk (helper) Access denied: You cannot update that LossPayeeFinancialUk - it may not exist',
       );
     });
