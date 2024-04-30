@@ -1,19 +1,16 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../types';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
 
 const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: FIELD_ID, HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
+    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
   },
 } = ERROR_MESSAGES;
-
-const MAXIMUM = 1000;
 
 /**
  * creditInsuranceCoverDescriptionRule
@@ -26,11 +23,7 @@ const MAXIMUM = 1000;
  */
 const creditInsuranceCoverDescriptionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] === 'true') {
-    if (objectHasProperty(formBody, FIELD_ID)) {
-      return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
-    }
-
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUYER_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
   }
 
   return errors;

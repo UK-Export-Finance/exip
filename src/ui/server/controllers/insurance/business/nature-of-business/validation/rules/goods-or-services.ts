@@ -1,18 +1,15 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../../../constants';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../types';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import generateValidationErrors from '../../../../../../helpers/validation';
 
 const {
   NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: FIELD_ID },
 } = FIELD_IDS.INSURANCE.EXPORTER_BUSINESS;
 
 const {
-  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGE },
+  EXPORTER_BUSINESS: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
 } = ERROR_MESSAGES.INSURANCE;
-
-export const MAXIMUM = 1000;
 
 /**
  * validates goods or services input
@@ -21,16 +18,7 @@ export const MAXIMUM = 1000;
  * @param {Object} errors: Other validation errors for the same form
  * @returns {Object} errors
  */
-const goodsOrServices = (formBody: RequestBody, errors: object) => {
-  if (!objectHasProperty(formBody, FIELD_ID)) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
-  }
-
-  if (formBody[FIELD_ID].length > MAXIMUM) {
-    return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors);
-  }
-
-  return errors;
-};
+const goodsOrServices = (formBody: RequestBody, errors: object) =>
+  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.NATURE_OF_BUSINESS_GOODS_OR_SERVICES_DESCRIPTION);
 
 export default goodsOrServices;
