@@ -40,7 +40,6 @@ export const YOUR_BUYER_FIELDS = {
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
       LABEL: 'Company registration number (optional)',
-      MAXIMUM: 100,
       SUMMARY: {
         TITLE: 'Registration number (optional)',
       },
@@ -97,7 +96,6 @@ export const YOUR_BUYER_FIELDS = {
     SUMMARY: {
       TITLE: 'Details of credit insurance',
     },
-    MAXIMUM: MAXIMUM_CHARACTERS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',

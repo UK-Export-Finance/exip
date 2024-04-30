@@ -54,7 +54,6 @@ export const EXPORT_CONTRACT_FIELDS = {
         LIST: ['payments that are due within 60 days from date of invoice', 'payments collected by a letter of credit', 'staged payments'],
         OUTRO: "If you use staged payments, explain their structure and whether they're monthly, in advance or something else.",
       },
-      MAXIMUM: MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION,
       SUMMARY: {
         TITLE: "How you'll be paid",
         FORM_TITLE: EXPORT_CONTRACT_FORM_TITLES.ABOUT_THE_EXPORT,
