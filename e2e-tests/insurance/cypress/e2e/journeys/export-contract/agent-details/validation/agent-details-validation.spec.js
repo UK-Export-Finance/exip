@@ -87,6 +87,16 @@ context('Insurance - Export contract - Agent details page - form validation', ()
 
       cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT });
     });
+
+    it('should retain all submitted values', () => {
+      cy.completeAndSubmitAgentDetailsForm({
+        name: null,
+      });
+
+      cy.assertAgentDetailsFieldValues({
+        expectedName: null,
+      });
+    });
   });
 
   describe(FULL_ADDRESS, () => {
@@ -122,17 +132,39 @@ context('Insurance - Export contract - Agent details page - form validation', ()
         expectedErrorMessage: ERROR_MESSAGES_OBJECT.ABOVE_MAXIMUM,
       });
     });
+
+    it('should retain all submitted values', () => {
+      cy.completeAndSubmitAgentDetailsForm({
+        fullAddress: null,
+      });
+
+      cy.assertAgentDetailsFieldValues({
+        expectedFullAddress: null,
+      });
+    });
   });
 
   describe(COUNTRY_CODE, () => {
-    it(`should render validation errors when ${COUNTRY_CODE} is left empty`, () => {
+    beforeEach(() => {
       cy.navigateToUrl(url);
+    });
 
+    it(`should render validation errors when ${COUNTRY_CODE} is left empty`, () => {
       cy.submitAndAssertFieldErrors({
         field: autoCompleteField(COUNTRY_CODE),
         errorIndex: 2,
         expectedErrorsCount,
         expectedErrorMessage: AGENT_DETAILS_ERROR_MESSAGES[COUNTRY_CODE].IS_EMPTY,
+      });
+    });
+
+    it('should retain all submitted values', () => {
+      cy.completeAndSubmitAgentDetailsForm({
+        countryCode: null,
+      });
+
+      cy.assertAgentDetailsFieldValues({
+        expectedCountryCode: null,
       });
     });
   });
