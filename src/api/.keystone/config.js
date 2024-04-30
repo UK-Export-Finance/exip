@@ -6478,20 +6478,20 @@ var decryptFinancialInternational = (applicationFinancialInternational) => {
     console.info("Decrypting financial international");
     const mapped = applicationFinancialInternational;
     const {
-      iban,
       bicSwiftCode,
-      vector: { ibanVector, bicSwiftCodeVector }
+      iban,
+      vector: { bicSwiftCodeVector, ibanVector }
     } = applicationFinancialInternational;
     let decryptedIban = "";
     let decryptedBicSwiftCode = "";
-    if (iban && ibanVector) {
-      decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
-    }
     if (bicSwiftCode && bicSwiftCodeVector) {
       decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
-    mapped.iban = decryptedIban;
+    if (iban && ibanVector) {
+      decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
+    }
     mapped.bicSwiftCode = decryptedBicSwiftCode;
+    mapped.iban = decryptedIban;
     return mapped;
   } catch (err) {
     console.error("Error decrypting international uk %O", err);

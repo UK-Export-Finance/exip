@@ -4,7 +4,7 @@ import { ApplicationLossPayeeFinancialInternationalVector, TestHelperLossPayeeFi
  * createLossPayeeFinancialDetailsInternationalVector
  * create a nominated loss payee financial international helper
  * Creates a blank ApplicationLossPayeeFinancialInternationalVector.
- * @param {Object} context: KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {Object} data: Update object
  * @returns {ApplicationLossPayeeFinancialInternationalVector} Created ApplicationLossPayeeFinancialInternationalVector
  */

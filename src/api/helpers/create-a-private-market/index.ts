@@ -3,7 +3,7 @@ import { Context, ApplicationPrivateMarket } from '../../types';
 /**
  * createAPrivateMarket
  * Create a private market with an export contract relationship.
- * @param {Object} context: KeystoneJS context API
+ * @param {Context} context: KeystoneJS context API
  * @param {String} exportContractId: Export contract ID
  * @returns {Promise<Object>} Created private market
  */
