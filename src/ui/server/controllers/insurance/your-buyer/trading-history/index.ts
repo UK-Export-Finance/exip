@@ -10,7 +10,6 @@ import generateValidationErrors from './validation';
 import { Request, Response, Currency } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/buyer-trading-history';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
@@ -250,7 +249,7 @@ export const post = async (req: Request, res: Response) => {
         ...generatedPageVariables,
         userName: getUserNameFromSession(req.session.user),
         validationErrors,
-        submittedValues: sanitiseData(payload),
+        submittedValues: payload,
       });
     }
 
