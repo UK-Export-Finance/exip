@@ -1,5 +1,6 @@
 import decryptFinancialUk from '.';
 import decryptData from '../decrypt';
+import { ApplicationLossPayeeFinancialUk, ApplicationLossPayeeFinancialUkVector } from '../../types';
 import mockApplication, { mockLossPayeeFinancialDetailsUkVector } from '../../test-mocks/mock-application';
 
 const {
@@ -10,7 +11,7 @@ const decryptSpyResponse = '123456';
 
 const emptyVectorObj = {
   id: mockLossPayeeFinancialDetailsUkVector.id,
-};
+} as ApplicationLossPayeeFinancialUkVector;
 
 describe('api/helpers/decrypt-financial-uk', () => {
   jest.mock('../decrypt');
@@ -30,9 +31,11 @@ describe('api/helpers/decrypt-financial-uk', () => {
       const result = decryptFinancialUk({
         ...financialUk,
         vector: mockLossPayeeFinancialDetailsUkVector,
-      });
+      } as ApplicationLossPayeeFinancialUk);
 
       const expected = {
+        ...financialUk,
+        vector: mockLossPayeeFinancialDetailsUkVector,
         accountNumber: decryptSpyResponse,
         sortCode: decryptSpyResponse,
       };
@@ -47,9 +50,12 @@ describe('api/helpers/decrypt-financial-uk', () => {
         ...financialUk,
         accountNumber: undefined,
         vector: mockLossPayeeFinancialDetailsUkVector,
-      });
+      } as ApplicationLossPayeeFinancialUk);
 
       const expected = {
+        ...financialUk,
+        accountNumber: '',
+        vector: mockLossPayeeFinancialDetailsUkVector,
         sortCode: decryptSpyResponse,
       };
 
@@ -65,9 +71,15 @@ describe('api/helpers/decrypt-financial-uk', () => {
           ...mockLossPayeeFinancialDetailsUkVector,
           accountNumberVector: undefined,
         },
-      });
+      } as ApplicationLossPayeeFinancialUk);
 
       const expected = {
+        ...financialUk,
+        vector: {
+          ...mockLossPayeeFinancialDetailsUkVector,
+          accountNumberVector: undefined,
+        },
+        accountNumber: '',
         sortCode: decryptSpyResponse,
       };
 
@@ -81,9 +93,12 @@ describe('api/helpers/decrypt-financial-uk', () => {
         ...financialUk,
         sortCode: undefined,
         vector: mockLossPayeeFinancialDetailsUkVector,
-      });
+      } as ApplicationLossPayeeFinancialUk);
 
       const expected = {
+        ...financialUk,
+        sortCode: '',
+        vector: mockLossPayeeFinancialDetailsUkVector,
         accountNumber: decryptSpyResponse,
       };
 
@@ -99,10 +114,16 @@ describe('api/helpers/decrypt-financial-uk', () => {
           ...mockLossPayeeFinancialDetailsUkVector,
           sortCodeVector: undefined,
         },
-      });
+      } as ApplicationLossPayeeFinancialUk);
 
       const expected = {
+        ...financialUk,
+        vector: {
+          ...mockLossPayeeFinancialDetailsUkVector,
+          sortCodeVector: undefined,
+        },
         accountNumber: decryptSpyResponse,
+        sortCode: '',
       };
 
       expect(result).toEqual(expected);
@@ -110,15 +131,23 @@ describe('api/helpers/decrypt-financial-uk', () => {
   });
 
   describe('when all fields are undefined', () => {
-    it('should return an empty object', () => {
-      const result = decryptFinancialUk({
+    it('should return the provided object  with empty strings', () => {
+      const emptyFields = {
         ...financialUk,
         accountNumber: undefined,
         sortCode: undefined,
         vector: emptyVectorObj,
-      });
+      };
 
-      expect(result).toEqual({});
+      const result = decryptFinancialUk(emptyFields);
+
+      const expected = {
+        ...emptyFields,
+        accountNumber: '',
+        sortCode: '',
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 

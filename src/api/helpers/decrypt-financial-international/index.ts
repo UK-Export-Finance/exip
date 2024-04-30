@@ -12,24 +12,16 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
   try {
     console.info('Decrypting financial international');
 
-    let mapped = {};
+    const mapped = applicationFinancialInternational;
 
     const {
-      iban,
       bicSwiftCode,
-      vector: { ibanVector, bicSwiftCodeVector },
+      iban,
+      vector: { bicSwiftCodeVector, ibanVector },
     } = applicationFinancialInternational;
 
-    let decryptedIban;
-    let decryptedBicSwiftCode;
-
-    /**
-     * If both iban and ibanVector are defined,
-     * decrypt iban using encrypted "value" and initialisation vector
-     */
-    if (iban && ibanVector) {
-      decryptedIban = decryptData.decrypt({ value: iban, iv: ibanVector });
-    }
+    let decryptedIban = '';
+    let decryptedBicSwiftCode = '';
 
     /**
      * If both bicSwiftCode and bicSwiftCodeVector are defined,
@@ -39,10 +31,16 @@ const decryptFinancialInternational = (applicationFinancialInternational: Applic
       decryptedBicSwiftCode = decryptData.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
 
-    mapped = {
-      iban: decryptedIban,
-      bicSwiftCode: decryptedBicSwiftCode,
-    };
+    /**
+     * If both iban and ibanVector are defined,
+     * decrypt iban using encrypted "value" and initialisation vector
+     */
+    if (iban && ibanVector) {
+      decryptedIban = decryptData.decrypt({ value: iban, iv: ibanVector });
+    }
+
+    mapped.bicSwiftCode = decryptedBicSwiftCode;
+    mapped.iban = decryptedIban;
 
     return mapped;
   } catch (err) {

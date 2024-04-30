@@ -6448,24 +6448,22 @@ var decrypt_default = decrypt;
 var decryptFinancialUk = (applicationFinancialUk) => {
   try {
     console.info("Decrypting financial uk");
-    let mapped = {};
+    const mapped = applicationFinancialUk;
     const {
       accountNumber,
       sortCode,
       vector: { accountNumberVector, sortCodeVector }
     } = applicationFinancialUk;
-    let decryptedAccountNumber;
-    let decryptedSortCode;
+    let decryptedAccountNumber = "";
+    let decryptedSortCode = "";
     if (accountNumber && accountNumberVector) {
       decryptedAccountNumber = decrypt_default.decrypt({ value: accountNumber, iv: accountNumberVector });
     }
     if (sortCode && sortCodeVector) {
       decryptedSortCode = decrypt_default.decrypt({ value: sortCode, iv: sortCodeVector });
     }
-    mapped = {
-      accountNumber: decryptedAccountNumber,
-      sortCode: decryptedSortCode
-    };
+    mapped.accountNumber = decryptedAccountNumber;
+    mapped.sortCode = decryptedSortCode;
     return mapped;
   } catch (err) {
     console.error("Error decrypting financial uk %O", err);
@@ -6478,24 +6476,22 @@ var decrypt_financial_uk_default = decryptFinancialUk;
 var decryptFinancialInternational = (applicationFinancialInternational) => {
   try {
     console.info("Decrypting financial international");
-    let mapped = {};
+    const mapped = applicationFinancialInternational;
     const {
       iban,
       bicSwiftCode,
       vector: { ibanVector, bicSwiftCodeVector }
     } = applicationFinancialInternational;
-    let decryptedIban;
-    let decryptedBicSwiftCode;
+    let decryptedIban = "";
+    let decryptedBicSwiftCode = "";
     if (iban && ibanVector) {
       decryptedIban = decrypt_default.decrypt({ value: iban, iv: ibanVector });
     }
     if (bicSwiftCode && bicSwiftCodeVector) {
       decryptedBicSwiftCode = decrypt_default.decrypt({ value: bicSwiftCode, iv: bicSwiftCodeVector });
     }
-    mapped = {
-      iban: decryptedIban,
-      bicSwiftCode: decryptedBicSwiftCode
-    };
+    mapped.iban = decryptedIban;
+    mapped.bicSwiftCode = decryptedBicSwiftCode;
     return mapped;
   } catch (err) {
     console.error("Error decrypting international uk %O", err);

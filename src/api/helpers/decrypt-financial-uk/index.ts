@@ -1,5 +1,5 @@
-import { ApplicationLossPayeeFinancialUk } from '../../types';
 import decryptData from '../decrypt';
+import { ApplicationLossPayeeFinancialUk } from '../../types';
 
 /**
  * decryptFinancialUk
@@ -12,7 +12,7 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
   try {
     console.info('Decrypting financial uk');
 
-    let mapped = {};
+    const mapped = applicationFinancialUk;
 
     const {
       accountNumber,
@@ -20,8 +20,8 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
       vector: { accountNumberVector, sortCodeVector },
     } = applicationFinancialUk;
 
-    let decryptedAccountNumber;
-    let decryptedSortCode;
+    let decryptedAccountNumber = '';
+    let decryptedSortCode = '';
 
     /**
      * If both accountNumber and accountNumberVector are defined,
@@ -39,10 +39,8 @@ const decryptFinancialUk = (applicationFinancialUk: ApplicationLossPayeeFinancia
       decryptedSortCode = decryptData.decrypt({ value: sortCode, iv: sortCodeVector });
     }
 
-    mapped = {
-      accountNumber: decryptedAccountNumber,
-      sortCode: decryptedSortCode,
-    };
+    mapped.accountNumber = decryptedAccountNumber;
+    mapped.sortCode = decryptedSortCode;
 
     return mapped;
   } catch (err) {
