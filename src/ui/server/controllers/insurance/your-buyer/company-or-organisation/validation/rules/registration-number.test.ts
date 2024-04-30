@@ -23,9 +23,9 @@ describe('controllers/insurance/your-buyer/company-or-organisation/validation/ru
     [FIELD_ID]: '',
   } as RequestBody;
 
-  describe(`when the ${FIELD_ID} input is over ${MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION_REGISTRATION_NUMBER} characters`, () => {
+  describe(`when the ${FIELD_ID} input is over ${MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER} characters`, () => {
     it('should return the result of maxLengthValidation', () => {
-      const mockValue = Number(MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION_REGISTRATION_NUMBER) + 1;
+      const mockValue = Number(MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER) + 1;
 
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
       const response = registrationNumber(mockBody, mockErrors);
@@ -35,7 +35,7 @@ describe('controllers/insurance/your-buyer/company-or-organisation/validation/ru
         FIELD_ID,
         ERROR_MESSAGE,
         mockErrors,
-        MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION_REGISTRATION_NUMBER,
+        MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER,
       );
 
       expect(response).toEqual(expected);

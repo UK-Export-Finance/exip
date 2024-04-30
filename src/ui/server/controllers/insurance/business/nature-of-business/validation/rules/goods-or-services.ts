@@ -19,6 +19,6 @@ const {
  * @returns {Object} errors
  */
 const goodsOrServices = (formBody: RequestBody, errors: object) =>
-  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.NATURE_OF_BUSINESS_GOODS_OR_SERVICES_DESCRIPTION);
+  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION);
 
 export default goodsOrServices;

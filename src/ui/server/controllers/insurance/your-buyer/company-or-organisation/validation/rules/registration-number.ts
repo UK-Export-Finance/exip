@@ -26,7 +26,7 @@ const {
  */
 const registrationNumber = (formBody: RequestBody, errors: object) => {
   if (objectHasProperty(formBody, FIELD_ID)) {
-    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION_REGISTRATION_NUMBER);
+    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER);
   }
 
   return errors;

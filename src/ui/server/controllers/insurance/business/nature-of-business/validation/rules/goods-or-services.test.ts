@@ -23,7 +23,7 @@ describe('controllers/insurance/business/nature-of-business/validation/rules/goo
       FIELD_ID,
       ERROR_MESSAGES_OBJECT,
       mockErrors,
-      MAXIMUM_CHARACTERS.NATURE_OF_BUSINESS_GOODS_OR_SERVICES_DESCRIPTION,
+      MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION,
     );
 
     expect(response).toEqual(expected);

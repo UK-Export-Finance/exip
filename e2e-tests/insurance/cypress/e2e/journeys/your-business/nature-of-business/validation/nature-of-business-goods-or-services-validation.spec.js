@@ -76,7 +76,7 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     it('should display validation errors', () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: 'a'.repeat(MAXIMUM_CHARACTERS.NATURE_OF_BUSINESS_GOODS_OR_SERVICES_DESCRIPTION + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION + 1),
         expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].ABOVE_MAXIMUM,
       });
     });

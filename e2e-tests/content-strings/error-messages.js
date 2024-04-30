@@ -108,7 +108,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.GOODS_OR_SERVICES]: {
         IS_EMPTY: 'Enter the information about your business and the products or services you distribute',
-        ABOVE_MAXIMUM: `The description of your business cannot be more than ${MAXIMUM_CHARACTERS.NATURE_OF_BUSINESS_GOODS_OR_SERVICES_DESCRIPTION} characters`,
+        ABOVE_MAXIMUM: `The description of your business cannot be more than ${MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION} characters`,
       },
       [FIELD_IDS.INSURANCE.EXPORTER_BUSINESS.NATURE_OF_YOUR_BUSINESS.YEARS_EXPORTING]: {
         IS_EMPTY: 'Enter how many years you have been exporting for as a whole number',
@@ -409,7 +409,7 @@ export const ERROR_MESSAGES = {
       COMPANY_OR_ORGANISATION: {
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.NAME]: {
           IS_EMPTY: "Enter the buyer's company or organisation name",
-          ABOVE_MAXIMUM: `The buyer's company or organisation name cannot be more than ${MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION} characters`,
+          ABOVE_MAXIMUM: `The buyer's company or organisation name cannot be more than ${MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER} characters`,
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.ADDRESS]: {
           IS_EMPTY: "Enter the buyer's address",
@@ -419,7 +419,7 @@ export const ERROR_MESSAGES = {
           INCORRECT_FORMAT: "Enter the buyer's website in the correct format, like www.example.com",
         },
         [FIELD_IDS.INSURANCE.YOUR_BUYER.COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
-          ABOVE_MAXIMUM: `Your buyer's company registration number cannot be more than ${MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION_REGISTRATION_NUMBER} characters`,
+          ABOVE_MAXIMUM: `Your buyer's company registration number cannot be more than ${MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER} characters`,
         },
       },
       [FIELD_IDS.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER]: {
@@ -449,7 +449,7 @@ export const ERROR_MESSAGES = {
       },
       [FIELD_IDS.INSURANCE.YOUR_BUYER.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
         IS_EMPTY: 'Enter a description about the credit insurance cover you had on the buyer',
-        ABOVE_MAXIMUM: `The description of your previous credit insurance cover on the buyer cannot be more than ${MAXIMUM_CHARACTERS.BUYER_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} characters`,
+        ABOVE_MAXIMUM: `The description of your previous credit insurance cover on the buyer cannot be more than ${MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER} characters`,
       },
       [FIELD_IDS.INSURANCE.YOUR_BUYER.TOTAL_OUTSTANDING_PAYMENTS]: {
         IS_EMPTY: 'Enter the total outstanding payments from the buyer',

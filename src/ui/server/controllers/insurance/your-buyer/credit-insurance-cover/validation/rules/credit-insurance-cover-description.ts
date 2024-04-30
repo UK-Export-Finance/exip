@@ -23,7 +23,7 @@ const {
  */
 const creditInsuranceCoverDescriptionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER] === 'true') {
-    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUYER_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER);
   }
 
   return errors;

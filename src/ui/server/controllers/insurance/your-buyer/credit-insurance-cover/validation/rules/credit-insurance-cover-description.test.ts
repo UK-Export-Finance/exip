@@ -30,7 +30,7 @@ describe('controllers/insurance/your-buyer/credit-insurance-cover/validation/rul
         FIELD_ID,
         ERROR_MESSAGES_OBJECT,
         mockErrors,
-        MAXIMUM_CHARACTERS.BUYER_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+        MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
       );
 
       expect(response).toEqual(expected);

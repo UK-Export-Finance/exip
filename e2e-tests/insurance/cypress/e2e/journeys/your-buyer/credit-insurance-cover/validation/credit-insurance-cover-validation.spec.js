@@ -93,7 +93,7 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
     it(`should render a validation error when ${FIELD_ID} is above the maximum`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: 'a'.repeat(MAXIMUM_CHARACTERS.BUYER_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER + 1),
         expectedErrorMessage: ERRORS[FIELD_ID].ABOVE_MAXIMUM,
       });
     });

@@ -54,7 +54,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   it('should render a validation error and retain the submitted value when address is above the maximum', () => {
     cy.submitAndAssertFieldErrors({
       field: fieldSelector(FIELD_ID),
-      value: 'a'.repeat(MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION_REGISTRATION_NUMBER + 1),
+      value: 'a'.repeat(MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER + 1),
       errorIndex: 2,
       expectedErrorsCount: 3,
       expectedErrorMessage: COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID].ABOVE_MAXIMUM,
