@@ -130,7 +130,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: '1,250.5',
-        expectedValue: '1250.5',
+        expectedValue: '1,250.5',
         errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].INCORRECT_FORMAT,
         errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].INCORRECT_FORMAT,
       });
@@ -147,7 +147,6 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     it('should render validation errors', () => {
       submitAndAssertBothFields({
         value: '0',
-        assertExpectedValue: false,
         errorTotalOutstanding: ERRORS[TOTAL_OUTSTANDING_PAYMENTS].BELOW_MINIMUM,
         errorAmountOverdue: ERRORS[TOTAL_AMOUNT_OVERDUE].BELOW_MINIMUM,
       });
@@ -171,7 +170,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
     });
   });
 
-  describe(`when entering valid values  for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+  describe(`when entering valid values for ${TOTAL_AMOUNT_OVERDUE} and ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
     });
