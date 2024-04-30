@@ -1,4 +1,4 @@
-import { get30minutesFromNow, getTomorrowDay, getYesterdayDay } from '.';
+import { get30minutesFromNow, getTomorrowDay, getYesterdayDay, getThirtyDaysBefore } from '.';
 
 describe('api/helpers/date', () => {
   describe('get30minutesFromNow', () => {
@@ -38,6 +38,18 @@ describe('api/helpers/date', () => {
       const now = new Date();
 
       const expected = new Date(now.setDate(now.getDate() - 1)).getDate();
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('getThirtyDaysBefore', () => {
+    it('should return a timestamp for 30 days before', () => {
+      const result = getThirtyDaysBefore();
+
+      const now = new Date();
+
+      const expected = new Date(now.setDate(now.getDate() - 30));
 
       expect(result).toEqual(expected);
     });
