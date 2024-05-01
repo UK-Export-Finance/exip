@@ -2,7 +2,7 @@ import mapAndSave from '.';
 import mapSubmittedData from '../../map-submitted-data/export-contract';
 import save from '../../save-data/export-contract';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import { mockApplication, mockCountries } from '../../../../../test-mocks';
+import { mockApplication, mockCountries, mockSpyPromise } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
 const {
@@ -20,7 +20,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract', (
     [FINAL_DESTINATION]: mockApplication.exportContract[FINAL_DESTINATION],
   };
 
-  const mockSaveExportContract = jest.fn(() => Promise.resolve({}));
+  const mockSaveExportContract = mockSpyPromise;
   save.exportContract = mockSaveExportContract;
 
   const mockValidationErrors = generateValidationErrors(DESCRIPTION, 'error', {});

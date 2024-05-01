@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-different-trading-address';
-import { mockApplication } from '../../../../../test-mocks';
 import { FIELD_IDS } from '../../../../../constants';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS },
@@ -15,7 +15,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
     [FULL_ADDRESS]: 'mock address',
   };
 
-  const mockSaveDifferentTradingAddress = jest.fn(() => Promise.resolve({}));
+  const mockSaveDifferentTradingAddress = mockSpyPromise;
   save.companyDifferentTradingAddress = mockSaveDifferentTradingAddress;
 
   describe('when save application differentTradingAddress call does not return anything', () => {

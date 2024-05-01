@@ -3,7 +3,7 @@ import mapSubmittedData from '../../map-submitted-data/agent-service-charge';
 import save from '../../save-data/export-contract-agent-service-charge';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
@@ -18,7 +18,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     [PERCENTAGE_CHARGE]: mockApplication.exportContract.agent.service.charge[PERCENTAGE_CHARGE],
   };
 
-  const mockSave = jest.fn(() => Promise.resolve({}));
+  const mockSave = mockSpyPromise;
   save.exportContractAgentServiceCharge = mockSave;
 
   const populatedData = mapSubmittedData(mockFormBody);

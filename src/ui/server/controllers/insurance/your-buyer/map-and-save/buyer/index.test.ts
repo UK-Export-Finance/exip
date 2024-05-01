@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import { FIELD_IDS } from '../../../../../constants';
 import save from '../../save-data/buyer';
-import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS },
@@ -18,7 +18,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer', () => {
       [NAME]: 'Test',
     };
 
-    const mockSaveBuyer = jest.fn(() => Promise.resolve({}));
+    const mockSaveBuyer = mockSpyPromise;
     save.buyer = mockSaveBuyer;
 
     const mockValidationErrors = generateValidationErrors(ADDRESS, 'error', {});

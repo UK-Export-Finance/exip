@@ -1,8 +1,8 @@
 import mapAndSave from '.';
 import save from '../../save-data/broker';
-import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
+import { mockApplication, mockBroker, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { NAME },
@@ -16,7 +16,7 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
     ...mockBroker,
   };
 
-  const mockSaveBroker = jest.fn(() => Promise.resolve({}));
+  const mockSaveBroker = mockSpyPromise;
   save.broker = mockSaveBroker;
 
   const mockValidationErrors = generateValidationErrors(NAME, 'error', {});

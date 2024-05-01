@@ -1,8 +1,8 @@
 import mapAndSave from '.';
 import save from '../../save-data/loss-payee-financial-details-international';
-import { mockApplication, mockLossPayeeFinancialDetailsInternational } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
+import { mockApplication, mockLossPayeeFinancialDetailsInternational, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE },
@@ -16,7 +16,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee-financial-details
     ...mockLossPayeeFinancialDetailsInternational,
   };
 
-  const mockLossPayeeFinancialDetails = jest.fn(() => Promise.resolve({}));
+  const mockLossPayeeFinancialDetails = mockSpyPromise;
   save.lossPayeeFinancialDetailsInternational = mockLossPayeeFinancialDetails;
 
   const mockValidationErrors = generateValidationErrors(BIC_SWIFT_CODE, 'error', {});

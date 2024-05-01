@@ -1,6 +1,6 @@
 import getApplication from '.';
 import api from '../../api';
-import { mockApplication, referenceNumber } from '../../test-mocks';
+import { mockApplication, mockSpyPromise, referenceNumber } from '../../test-mocks';
 
 describe('helpers/get-application', () => {
   let getApplicationSpy;
@@ -28,7 +28,7 @@ describe('helpers/get-application', () => {
 
   describe('when there is no application.policy', () => {
     it('should return false', async () => {
-      getApplicationSpy = jest.fn(() => Promise.resolve({}));
+      getApplicationSpy = mockSpyPromise;
       api.keystone.application.get = getApplicationSpy;
 
       const result = await getApplication(referenceNumber);
@@ -39,7 +39,7 @@ describe('helpers/get-application', () => {
 
   describe('when there is no application.id', () => {
     it('should return false', async () => {
-      getApplicationSpy = jest.fn(() => Promise.resolve({}));
+      getApplicationSpy = mockSpyPromise;
       api.keystone.application.get = getApplicationSpy;
 
       const result = await getApplication(referenceNumber);

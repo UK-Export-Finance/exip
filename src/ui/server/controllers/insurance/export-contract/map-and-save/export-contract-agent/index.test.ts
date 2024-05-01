@@ -3,7 +3,7 @@ import save from '../../save-data/export-contract-agent';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import mapSubmittedData from '../../map-submitted-data/agent';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
@@ -15,7 +15,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     [USING_AGENT]: mockApplication.exportContract.agent[USING_AGENT],
   };
 
-  const mockSaveExportContract = jest.fn(() => Promise.resolve({}));
+  const mockSaveExportContract = mockSpyPromise;
   save.exportContractAgent = mockSaveExportContract;
 
   const populatedData = mapSubmittedData(mockFormBody);

@@ -44,6 +44,8 @@ import { Request, Response } from '../../types';
 
 const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
 
+const mockNext = jest.fn();
+
 const mockReq = () => {
   const req = {
     body: {},
@@ -108,7 +110,7 @@ const mockRes = () => {
   return res;
 };
 
-const mockNext = jest.fn();
+const mockSpyPromise = jest.fn(() => Promise.resolve({}));
 
 export {
   EUR,
@@ -160,6 +162,7 @@ export {
   mockPhoneNumbers,
   mockReq,
   mockRes,
+  mockSpyPromise,
   mockValidEmail,
   referenceNumber,
 };

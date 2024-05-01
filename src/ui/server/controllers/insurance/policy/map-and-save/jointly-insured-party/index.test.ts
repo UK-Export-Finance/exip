@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import mapSubmittedData from '../../map-submitted-data/jointly-insured-party';
 import save from '../../save-data/jointly-insured-party';
-import { mockApplication, mockJointlyInsuredParty } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
+import { mockApplication, mockJointlyInsuredParty, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
@@ -17,7 +17,7 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
     [REQUESTED]: mockJointlyInsuredParty[REQUESTED],
   };
 
-  const mockSaveJointlyInsuredParty = jest.fn(() => Promise.resolve({}));
+  const mockSaveJointlyInsuredParty = mockSpyPromise;
   save.jointlyInsuredParty = mockSaveJointlyInsuredParty;
 
   const mockValidationErrors = generateValidationErrors(REQUESTED, 'error', {});

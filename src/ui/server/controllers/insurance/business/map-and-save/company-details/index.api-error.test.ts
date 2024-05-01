@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-details';
-import { mockApplication } from '../../../../../test-mocks';
 import { FIELD_IDS } from '../../../../../constants';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
@@ -21,7 +21,7 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
   };
 
-  const mockSaveCompanyDetails = jest.fn(() => Promise.resolve({}));
+  const mockSaveCompanyDetails = mockSpyPromise;
   save.companyDetails = mockSaveCompanyDetails;
 
   beforeEach(() => {

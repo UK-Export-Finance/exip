@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import save from '../../save-data/buyer-relationship';
-import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer-relationship';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   YOUR_BUYER: { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION },
@@ -18,7 +18,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-relationship', () 
     [CONNECTION_WITH_BUYER_DESCRIPTION]: 'mock description',
   };
 
-  const mockSaveBuyer = jest.fn(() => Promise.resolve({}));
+  const mockSaveBuyer = mockSpyPromise;
   save.buyerRelationship = mockSaveBuyer;
 
   const mockValidationErrors = generateValidationErrors(CONNECTION_WITH_BUYER_DESCRIPTION, 'error', {});

@@ -4,7 +4,7 @@ import saveService from '../../save-data/export-contract-agent-service';
 import saveCharge from '../../save-data/export-contract-agent-service-charge';
 import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { mockApplication as application, mockApplicationAgentServiceChargeEmpty } from '../../../../../test-mocks';
+import { mockApplication as application, mockApplicationAgentServiceChargeEmpty, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
@@ -40,8 +40,8 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
   const setupMocks = () => {
     jest.resetAllMocks();
 
-    mockServiceSave = jest.fn(() => Promise.resolve({}));
-    mockServiceChargeSave = jest.fn(() => Promise.resolve({}));
+    mockServiceSave = mockSpyPromise;
+    mockServiceChargeSave = mockSpyPromise;
 
     saveService.exportContractAgentService = mockServiceSave;
     saveCharge.exportContractAgentServiceCharge = mockServiceChargeSave;

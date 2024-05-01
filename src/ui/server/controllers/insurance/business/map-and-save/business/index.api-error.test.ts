@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import save from '../../save-data/business';
-import { mockApplication } from '../../../../../test-mocks';
 import { FIELD_IDS } from '../../../../../constants';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
@@ -19,7 +19,7 @@ describe('controllers/insurance/business/map-and-save/business - API error', () 
     [EMPLOYEES_UK]: '3',
   };
 
-  const mockSaveBusiness = jest.fn(() => Promise.resolve({}));
+  const mockSaveBusiness = mockSpyPromise;
   save.business = mockSaveBusiness;
 
   describe('when save application business call does not return anything', () => {

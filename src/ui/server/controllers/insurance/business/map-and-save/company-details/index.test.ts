@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import save from '../../save-data/company-details';
-import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
 import mapSubmittedData from '../../map-submitted-data/company-details';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   COMPANIES_HOUSE: { COMPANY_NUMBER },
@@ -23,7 +23,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
   };
 
-  const mockSaveCompanyDetails = jest.fn(() => Promise.resolve({}));
+  const mockSaveCompanyDetails = mockSpyPromise;
   save.companyDetails = mockSaveCompanyDetails;
 
   const mockValidationErrors = generateValidationErrors(PHONE_NUMBER, 'error', {});
