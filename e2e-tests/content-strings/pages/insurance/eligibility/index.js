@@ -17,7 +17,7 @@ export const CHECK_IF_ELIGIBLE = {
 
 export const TOTAL_VALUE_INSURED = {
   PAGE_TITLE: 'What is the total value you want to insure?',
-  HINT: `We offer polices for both single and multiple contracts. We'll ask you for more information if your export is ${THRESHOLD} or above.`
+  HINT: `We offer polices for both single and multiple contracts. We'll ask you for more information if your export is ${THRESHOLD} or above.`,
 };
 
 export const COVER_PERIOD = {
