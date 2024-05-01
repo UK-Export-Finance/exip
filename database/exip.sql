@@ -973,11 +973,11 @@ CREATE TABLE `JointlyInsuredParty` (
 DROP TABLE IF EXISTS `LossPayeeFinancialInternational`;
 
 CREATE TABLE `LossPayeeFinancialInternational` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bankAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bicSwiftCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `iban` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lossPayee` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bankAddress` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bicSwiftCode` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `iban` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `vector` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `LossPayeeFinancialInternational_lossPayee_key` (`lossPayee`),
@@ -1010,11 +1010,11 @@ CREATE TABLE `LossPayeeFinancialInternationalVector` (
 DROP TABLE IF EXISTS `LossPayeeFinancialUk`;
 
 CREATE TABLE `LossPayeeFinancialUk` (
-  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lossPayee` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `accountNumber` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `bankAddress` varchar(500) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `sortCode` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lossPayee` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `accountNumber` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `bankAddress` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `sortCode` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `vector` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `LossPayeeFinancialUk_lossPayee_key` (`lossPayee`),
