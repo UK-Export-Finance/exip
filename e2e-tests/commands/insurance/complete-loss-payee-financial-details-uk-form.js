@@ -18,9 +18,17 @@ const completeLossPayeeFinancialDetailsUkForm = ({
   sortCode = POLICY.LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
   financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_UK[FINANCIAL_ADDRESS],
 }) => {
-  cy.keyboardInput(field(ACCOUNT_NUMBER).input(), accountNumber);
-  cy.keyboardInput(field(SORT_CODE).input(), sortCode);
-  cy.keyboardInput(field(FINANCIAL_ADDRESS).textarea(), financialAddress);
+  if (accountNumber) {
+    cy.keyboardInput(field(ACCOUNT_NUMBER).input(), accountNumber);
+  }
+
+  if (sortCode) {
+    cy.keyboardInput(field(SORT_CODE).input(), sortCode);
+  }
+
+  if (financialAddress) {
+    cy.keyboardInput(field(FINANCIAL_ADDRESS).textarea(), financialAddress);
+  }
 };
 
 export default completeLossPayeeFinancialDetailsUkForm;
