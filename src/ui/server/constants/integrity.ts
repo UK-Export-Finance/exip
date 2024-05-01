@@ -1,7 +1,6 @@
 export const INTEGRITY = {
   JS: 'sha512-BFOXngFJ+9msC1y5Q1LD6AG+LG635vp8Lfv/+HVCUU8w/N8VWH13wdTyZeLGvu4d7zoTz83nfz329ENYfe9x5Q==',
   ACCESSIBILITY: 'sha512-+7iHxg+GAStsu3dNSm9llhRRnjOvuU10+1sbYjZlkCUd5wH9iaCWV9fY+33BtUQHafrjWU/rM42x3QlAj68Z2g==',
-  MOJ: 'sha512-22CV/XdUlNtp8y5eMr7TbzFtyMn37SUhOBta5uTF2sHduNOFbbAJlcWxznStDqiNJyrR3WmLfRD0FJ4T5EJFOQ==',
   GOVUK: 'sha512-uJMQPUeUnIWtgcgNotPpY4KqFrwRUF37sk+lFhznPIixtx6YLkppurGiruUaJx3s12jd2vZ0eaow4QQdeE0ANg==',
   FORM: 'sha512-iLw/Pa746ZmhA0V+1Vj107wkJKKnTwS5EggladAAm+onBFlgZBTRGA4xf3bVGU40qPKP6Fjn16JW6G+g3tnj7A==',
   COOKIES: 'sha512-mdioDv38Cx1nkVD8oPXoJxvie9wf/339EE8g8+jlsVaDrJeJiwUkYBwweF3fqQMZfZzO8ivTXAEyithgBzeEpw==',
