@@ -1,11 +1,11 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-import mapAndGenerateInactiveApplicationsSaveArray from '../map-and-generate-inactive-applications-save-array';
+import mapInactiveApplications from '../map-inactive-applications';
 
 /**
  * mapAndUpdateInactiveApplications
  * maps and generates save object for inactive applications
  * updates application statuses to abandoned
- * @param {Array<Application>} applications: array of application ids and statuses
+ * @param {Array<Application>} applications: array of applications
  * @param {Context} context
  */
 const mapAndUpdateInactiveApplications = async (applications: Array<Application>, context: Context) => {
@@ -16,7 +16,7 @@ const mapAndUpdateInactiveApplications = async (applications: Array<Application>
      * generates data array for database saving
      * contains where and data (status change)
      */
-    const updateData = mapAndGenerateInactiveApplicationsSaveArray(applications);
+    const updateData = mapInactiveApplications(applications);
 
     await context.db.Application.updateMany({
       data: updateData,

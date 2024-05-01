@@ -1,13 +1,13 @@
-interface ApplicationWhereUpdate {
+interface CronApplicationWhereUpdate {
   id: string;
 }
 
-interface ApplicationDataUpdate {
+interface CronApplicationDataUpdate {
   status: string;
   previousStatus: string;
 }
 
-export interface InactiveApplicationUpdate {
-  where: ApplicationWhereUpdate;
-  data: ApplicationDataUpdate;
+export interface CronApplicationInactiveUpdate {
+  where: CronApplicationWhereUpdate;
+  data: CronApplicationDataUpdate;
 }

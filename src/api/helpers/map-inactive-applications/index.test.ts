@@ -3,7 +3,7 @@ import { APPLICATION } from '../../constants';
 
 const { IN_PROGRESS, ABANDONED } = APPLICATION.STATUS;
 
-describe('helpers/map-and-generate-inactive-applications-save-array', () => {
+describe('helpers/map-inactive-applications', () => {
   describe('when an empty array is passed', () => {
     it('should return an empty array', () => {
       const result = mapAndGenerateInactiveApplicationsSaveArray([]);

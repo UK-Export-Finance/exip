@@ -1,7 +1,8 @@
 import updateInactiveApplicationsMutation from '.';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import { createFullApplication } from '../../../test-helpers';
-import { APPLICATION } from '../../../constants';
+import { APPLICATION, DATE_2_MONTHS_IN_THE_PAST } from '../../../constants';
+import applications from '../../../test-helpers/applications';
 import { Application, Context } from '../../../types';
 
 const { IN_PROGRESS, ABANDONED } = APPLICATION.STATUS;
@@ -10,9 +11,6 @@ describe('custom-resolvers/update-inactive-applications', () => {
   let context: Context;
   let application: Application;
 
-  const now = new Date();
-  const twoMonthsAgo = new Date(now.setDate(now.getDate() - 60));
-
   beforeAll(async () => {
     context = getKeystoneContext();
   });
@@ -20,12 +18,7 @@ describe('custom-resolvers/update-inactive-applications', () => {
   beforeEach(async () => {
     application = await createFullApplication(context);
 
-    await context.db.Application.updateOne({
-      where: { id: application.id },
-      data: {
-        updatedAt: twoMonthsAgo,
-      },
-    });
+    await applications.update({ context, applicationId: application.id, data: { updatedAt: DATE_2_MONTHS_IN_THE_PAST() } });
   });
 
   afterAll(() => {

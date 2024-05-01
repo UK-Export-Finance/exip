@@ -1,22 +1,17 @@
 import getInactiveApplications from '.';
-import { createFullApplication, getKeystoneContext } from '../../test-helpers';
+import { createMultipleFullApplications, getKeystoneContext } from '../../test-helpers';
+import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
-
-import { APPLICATION } from '../../constants';
+import { APPLICATION, DATE_2_MONTHS_IN_THE_PAST } from '../../constants';
 
 const { IN_PROGRESS, ABANDONED } = APPLICATION.STATUS;
 
 describe('api/helpers/get-inactive-applications', () => {
   let context: Context;
-  let application4: Application;
-  let application5: Application;
-  let application6: Application;
-
-  const now = new Date();
-  const twoMonthsAgo = new Date(now.setDate(now.getDate() - 60));
+  let applicationArray: Array<Application>;
 
   const updateData = {
-    updatedAt: twoMonthsAgo,
+    updatedAt: DATE_2_MONTHS_IN_THE_PAST(),
   };
 
   beforeAll(async () => {
@@ -24,12 +19,7 @@ describe('api/helpers/get-inactive-applications', () => {
   });
 
   beforeEach(async () => {
-    await createFullApplication(context);
-    await createFullApplication(context);
-    await createFullApplication(context);
-    application4 = await createFullApplication(context);
-    application5 = await createFullApplication(context);
-    application6 = await createFullApplication(context);
+    applicationArray = await createMultipleFullApplications(context);
   });
 
   describe('no inactive applications', () => {
@@ -42,15 +32,8 @@ describe('api/helpers/get-inactive-applications', () => {
 
   describe('when inactive applications are present', () => {
     beforeEach(async () => {
-      await context.db.Application.updateOne({
-        where: { id: application4.id },
-        data: updateData,
-      });
-
-      await context.db.Application.updateOne({
-        where: { id: application5.id },
-        data: updateData,
-      });
+      await applications.update({ context, applicationId: applicationArray[3].id, data: updateData });
+      await applications.update({ context, applicationId: applicationArray[4].id, data: updateData });
     });
 
     it('should return an array with the inactive applications', async () => {
@@ -58,11 +41,11 @@ describe('api/helpers/get-inactive-applications', () => {
 
       const expected = [
         {
-          id: application4.id,
+          id: applicationArray[3].id,
           status: IN_PROGRESS,
         },
         {
-          id: application5.id,
+          id: applicationArray[4].id,
           status: IN_PROGRESS,
         },
       ];
@@ -73,13 +56,12 @@ describe('api/helpers/get-inactive-applications', () => {
 
   describe(`when one inactive application already has the status set as ${ABANDONED}`, () => {
     beforeEach(async () => {
-      await context.db.Application.updateOne({
-        where: { id: application6.id },
-        data: {
-          ...updateData,
-          status: ABANDONED,
-        },
-      });
+      const update = {
+        ...updateData,
+        status: ABANDONED,
+      };
+
+      await applications.update({ context, applicationId: applicationArray[5].id, data: update });
     });
 
     it('should return an array with the 2 inactive applications', async () => {

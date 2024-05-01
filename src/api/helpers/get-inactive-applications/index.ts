@@ -1,5 +1,5 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-import { getThirtyDaysBefore } from '../date';
+import { getThirtyDaysBeforeNow } from '../date';
 import { APPLICATION } from '../../constants';
 
 const { IN_PROGRESS } = APPLICATION.STATUS;
@@ -15,8 +15,7 @@ const getInactiveApplications = async (context: Context): Promise<Application[]>
   try {
     console.info('Getting inactive applications - getInactiveApplications helper');
 
-    // timestamp of 30 days ago
-    const thirtyDaysLimit = getThirtyDaysBefore();
+    const thirtyDaysLimit = getThirtyDaysBeforeNow();
 
     /**
      * queries in progress applications which are older than 30 days from the db

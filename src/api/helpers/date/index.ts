@@ -44,11 +44,11 @@ export const getYesterdayDay = (): number => {
 };
 
 /**
- * getThirtyDaysBefore
+ * getThirtyDaysBeforeNow
  * Get 30 days before now and return the timestamp
  * @returns {Date} 30 days before today
  */
-export const getThirtyDaysBefore = (): Date => {
+export const getThirtyDaysBeforeNow = (): Date => {
   const now = new Date();
 
   const result = now.setDate(now.getDate() - 30);

@@ -9,17 +9,14 @@ import mapAndUpdateInactiveApplications from '../../../helpers/map-and-update-in
  * Sets their status to Abandoned
  * returns success flag
  * @param {Object} GraphQL root variables
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
 const updateInactiveApplicationsMutation = async (root: any, context: Context): Promise<SuccessResponse> => {
   try {
     console.info('Getting and updating inactive applications');
 
-    /**
-     * gets inactive applications based on status and updatedAt
-     * returns array of application ids and statuses
-     */
+    // gets inactive applications
     const applications = await getInactiveApplications(context);
 
     /**
