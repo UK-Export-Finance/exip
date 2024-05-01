@@ -23,7 +23,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
   };
 
-  const mockSaveCompanyDetails = mockSpyPromise;
+  const mockSaveCompanyDetails = mockSpyPromise();
   save.companyDetails = mockSaveCompanyDetails;
 
   const mockValidationErrors = generateValidationErrors(PHONE_NUMBER, 'error', {});

@@ -40,8 +40,8 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
   const setupMocks = () => {
     jest.resetAllMocks();
 
-    mockServiceSave = mockSpyPromise;
-    mockServiceChargeSave = mockSpyPromise;
+    mockServiceSave = mockSpyPromise();
+    mockServiceChargeSave = mockSpyPromise();
 
     saveService.exportContractAgentService = mockServiceSave;
     saveCharge.exportContractAgentServiceCharge = mockServiceChargeSave;

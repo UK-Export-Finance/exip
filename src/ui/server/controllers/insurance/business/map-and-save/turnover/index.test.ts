@@ -20,7 +20,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
     [ESTIMATED_ANNUAL_TURNOVER]: '35000',
   };
 
-  const mockSaveBusiness = mockSpyPromise;
+  const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;
 
   const mockValidationErrors = generateValidationErrors(PERCENTAGE_TURNOVER, 'error', {});

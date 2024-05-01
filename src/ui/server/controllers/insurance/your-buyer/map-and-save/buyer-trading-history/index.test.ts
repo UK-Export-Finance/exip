@@ -21,7 +21,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', 
     [FAILED_PAYMENTS]: true,
   };
 
-  const mockSaveBuyer = mockSpyPromise;
+  const mockSaveBuyer = mockSpyPromise();
   save.buyerTradingHistory = mockSaveBuyer;
 
   const mockValidationErrors = generateValidationErrors(CURRENCY_CODE, 'error', {});

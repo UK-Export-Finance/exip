@@ -15,7 +15,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     [USING_AGENT]: mockApplication.exportContract.agent[USING_AGENT],
   };
 
-  const mockSaveExportContract = mockSpyPromise;
+  const mockSaveExportContract = mockSpyPromise();
   save.exportContractAgent = mockSaveExportContract;
 
   const populatedData = mapSubmittedData(mockFormBody);

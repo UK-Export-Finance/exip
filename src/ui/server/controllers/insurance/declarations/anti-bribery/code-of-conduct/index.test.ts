@@ -32,7 +32,7 @@ const PAGE_CONTENT_STRINGS = PAGES.INSURANCE.DECLARATIONS.ANTI_BRIBERY_CODE_OF_C
 describe('controllers/insurance/declarations/anti-bribery/code-of-conduct', () => {
   jest.mock('../../save-data');
 
-  let mockSaveDeclaration = mockSpyPromise;
+  let mockSaveDeclaration = mockSpyPromise();
 
   save.declaration = mockSaveDeclaration;
 

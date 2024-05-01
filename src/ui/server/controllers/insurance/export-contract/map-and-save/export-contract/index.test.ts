@@ -20,7 +20,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract', (
     [FINAL_DESTINATION]: mockApplication.exportContract[FINAL_DESTINATION],
   };
 
-  const mockSaveExportContract = mockSpyPromise;
+  const mockSaveExportContract = mockSpyPromise();
   save.exportContract = mockSaveExportContract;
 
   const mockValidationErrors = generateValidationErrors(DESCRIPTION, 'error', {});

@@ -18,7 +18,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-relationship', () 
     [CONNECTION_WITH_BUYER_DESCRIPTION]: 'mock description',
   };
 
-  const mockSaveBuyer = mockSpyPromise;
+  const mockSaveBuyer = mockSpyPromise();
   save.buyerRelationship = mockSaveBuyer;
 
   const mockValidationErrors = generateValidationErrors(CONNECTION_WITH_BUYER_DESCRIPTION, 'error', {});

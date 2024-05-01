@@ -24,7 +24,7 @@ const {
 describe('controllers/insurance/declarations/anti-bribery', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = mockSpyPromise;
+  let mockSaveDeclaration = mockSpyPromise();
 
   save.declaration = mockSaveDeclaration;
 

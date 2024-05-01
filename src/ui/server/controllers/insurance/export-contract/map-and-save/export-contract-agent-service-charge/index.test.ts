@@ -18,7 +18,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     [PERCENTAGE_CHARGE]: mockApplication.exportContract.agent.service.charge[PERCENTAGE_CHARGE],
   };
 
-  const mockSave = mockSpyPromise;
+  const mockSave = mockSpyPromise();
   save.exportContractAgentServiceCharge = mockSave;
 
   const populatedData = mapSubmittedData(mockFormBody);

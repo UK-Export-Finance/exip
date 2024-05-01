@@ -20,7 +20,7 @@ describe('controllers/insurance/export-contract/map-and-save/private-market', ()
     [DECLINED_DESCRIPTION]: mockApplication.exportContract.privateMarket[DECLINED_DESCRIPTION],
   };
 
-  const mockSaveExportContract = mockSpyPromise;
+  const mockSaveExportContract = mockSpyPromise();
   save.privateMarket = mockSaveExportContract;
 
   const populatedData = mapSubmittedData(mockFormBody);

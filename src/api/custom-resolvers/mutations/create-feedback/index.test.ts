@@ -59,7 +59,7 @@ describe('custom-resolvers/create-feedback', () => {
   describe('when the feedback email does not return a response', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
-      sendInsuranceFeedbackEmailSpy = mockSpyPromise;
+      sendInsuranceFeedbackEmailSpy = mockSpyPromise();
 
       sendEmail.insuranceFeedbackEmail = sendInsuranceFeedbackEmailSpy;
 

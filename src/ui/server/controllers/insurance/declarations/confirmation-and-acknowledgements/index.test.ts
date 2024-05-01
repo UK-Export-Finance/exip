@@ -22,7 +22,7 @@ const {
 describe('controllers/insurance/declarations/confirmation-and-acknowledgements', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = mockSpyPromise;
+  let mockSaveDeclaration = mockSpyPromise();
 
   save.declaration = mockSaveDeclaration;
 

@@ -41,7 +41,7 @@ const { policy, exportContract } = mockApplication;
 describe('controllers/insurance/check-your-answers/policy', () => {
   jest.mock('../save-data');
 
-  let mockSaveSectionReview = mockSpyPromise;
+  let mockSaveSectionReview = mockSpyPromise();
 
   save.sectionReview = mockSaveSectionReview;
 

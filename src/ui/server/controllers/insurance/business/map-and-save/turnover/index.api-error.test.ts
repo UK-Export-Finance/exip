@@ -18,7 +18,7 @@ describe('controllers/insurance/business/map-and-save/turnover - API error', () 
     [ESTIMATED_ANNUAL_TURNOVER]: '35000',
   };
 
-  const mockSaveBusiness = mockSpyPromise;
+  const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;
 
   describe('when save application business call does not return anything', () => {

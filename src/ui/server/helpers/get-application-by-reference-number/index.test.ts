@@ -34,7 +34,7 @@ describe('helpers/get-application-by-reference-number', () => {
 
   describe('when there is no application.id', () => {
     it('should return false', async () => {
-      getApplicationSpy = mockSpyPromise;
+      getApplicationSpy = mockSpyPromise();
       api.keystone.application.get = getApplicationSpy;
 
       const result = await getApplicationByReferenceNumber(variables);

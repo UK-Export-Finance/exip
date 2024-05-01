@@ -16,7 +16,7 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
     ...mockBroker,
   };
 
-  const mockSaveBroker = mockSpyPromise;
+  const mockSaveBroker = mockSpyPromise();
   save.broker = mockSaveBroker;
 
   const mockValidationErrors = generateValidationErrors(NAME, 'error', {});

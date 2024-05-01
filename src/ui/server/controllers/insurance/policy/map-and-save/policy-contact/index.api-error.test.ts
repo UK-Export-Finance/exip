@@ -14,7 +14,7 @@ describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
     [NAME]: SAME_NAME,
   };
 
-  const mockSavePolicyContactData = mockSpyPromise;
+  const mockSavePolicyContactData = mockSpyPromise();
 
   save.policyContact = mockSavePolicyContactData;
 

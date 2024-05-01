@@ -28,7 +28,7 @@ describe('helpers/get-application', () => {
 
   describe('when there is no application.policy', () => {
     it('should return false', async () => {
-      getApplicationSpy = mockSpyPromise;
+      getApplicationSpy = mockSpyPromise();
       api.keystone.application.get = getApplicationSpy;
 
       const result = await getApplication(referenceNumber);
@@ -39,7 +39,7 @@ describe('helpers/get-application', () => {
 
   describe('when there is no application.id', () => {
     it('should return false', async () => {
-      getApplicationSpy = mockSpyPromise;
+      getApplicationSpy = mockSpyPromise();
       api.keystone.application.get = getApplicationSpy;
 
       const result = await getApplication(referenceNumber);

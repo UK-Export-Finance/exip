@@ -18,7 +18,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer', () => {
       [NAME]: 'Test',
     };
 
-    const mockSaveBuyer = mockSpyPromise;
+    const mockSaveBuyer = mockSpyPromise();
     save.buyer = mockSaveBuyer;
 
     const mockValidationErrors = generateValidationErrors(ADDRESS, 'error', {});

@@ -16,7 +16,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee-financial-details
     ...mockLossPayeeFinancialDetailsUk,
   };
 
-  const mockLossPayeeFinancialDetails = mockSpyPromise;
+  const mockLossPayeeFinancialDetails = mockSpyPromise();
   save.lossPayeeFinancialDetailsUk = mockLossPayeeFinancialDetails;
 
   const mockValidationErrors = generateValidationErrors(SORT_CODE, 'error', {});

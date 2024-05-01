@@ -15,7 +15,7 @@ describe('controllers/insurance/business/map-and-save/company-different-trading-
     [FULL_ADDRESS]: 'mock address',
   };
 
-  const mockSaveDifferentTradingAddress = mockSpyPromise;
+  const mockSaveDifferentTradingAddress = mockSpyPromise();
   save.companyDifferentTradingAddress = mockSaveDifferentTradingAddress;
 
   describe('when save application differentTradingAddress call does not return anything', () => {

@@ -10,7 +10,7 @@ describe('controllers/insurance/policy/map-and-save/broker - API error', () => {
     ...mockBroker,
   };
 
-  const mockSaveBroker = mockSpyPromise;
+  const mockSaveBroker = mockSpyPromise();
   save.broker = mockSaveBroker;
 
   describe('when save application broker call does not return anything', () => {

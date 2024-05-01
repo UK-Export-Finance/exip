@@ -21,7 +21,7 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
     [COMPANY_NUMBER]: mockApplication.company.companyNumber,
   };
 
-  const mockSaveCompanyDetails = mockSpyPromise;
+  const mockSaveCompanyDetails = mockSpyPromise();
   save.companyDetails = mockSaveCompanyDetails;
 
   beforeEach(() => {

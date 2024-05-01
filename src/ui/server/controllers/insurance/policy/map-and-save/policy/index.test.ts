@@ -21,7 +21,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 
-  const mockSavePolicyData = mockSpyPromise;
+  const mockSavePolicyData = mockSpyPromise();
 
   save.policy = mockSavePolicyData;
 

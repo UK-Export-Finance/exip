@@ -110,7 +110,7 @@ const mockRes = () => {
   return res;
 };
 
-const mockSpyPromise = jest.fn(() => Promise.resolve({}));
+const mockSpyPromise = () => jest.fn(() => Promise.resolve({}));
 
 export {
   EUR,

@@ -19,7 +19,7 @@ describe('controllers/insurance/business/map-and-save/business - API error', () 
     [EMPLOYEES_UK]: '3',
   };
 
-  const mockSaveBusiness = mockSpyPromise;
+  const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;
 
   describe('when save application business call does not return anything', () => {

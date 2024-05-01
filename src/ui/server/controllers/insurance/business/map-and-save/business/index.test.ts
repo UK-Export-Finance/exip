@@ -21,7 +21,7 @@ describe('controllers/insurance/business/map-and-save/business', () => {
     [EMPLOYEES_UK]: '3',
   };
 
-  const mockSaveBusiness = mockSpyPromise;
+  const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;
 
   const mockValidationErrors = generateValidationErrors(YEARS_EXPORTING, 'error', {});

@@ -26,7 +26,7 @@ const {
 describe('controllers/insurance/check-your-answers/your-buyer', () => {
   jest.mock('../save-data');
 
-  let mockSaveSectionReview = mockSpyPromise;
+  let mockSaveSectionReview = mockSpyPromise();
 
   save.sectionReview = mockSaveSectionReview;
 
