@@ -398,3 +398,5 @@ To calculate file hash use the following Bash command with reference to the file
 cat FILENAME.js | openssl dgst -sha512 -binary | openssl base64 -A
 ```
 
+
+
