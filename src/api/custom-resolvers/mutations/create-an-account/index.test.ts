@@ -6,9 +6,6 @@ import accounts from '../../../test-helpers/accounts';
 import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 const { ENCRYPTION } = ACCOUNT;
 
@@ -46,10 +43,6 @@ describe('custom-resolvers/create-an-account', () => {
   });
 
   beforeEach(async () => {
-
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', String(process.env.DATABASE_URL_LOCAL))
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', String(process.env.DATABASE_URL))
-
     jest.resetAllMocks();
 
     sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
