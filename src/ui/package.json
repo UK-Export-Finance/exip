@@ -66,7 +66,7 @@
     "optimize-css-assets-webpack-plugin": "^6.0.1",
     "path": "0.12.7",
     "postcode-validator": "^3.8.20",
-    "sass": "^1.75.0",
+    "sass": "^1.76.0",
     "sass-loader": "^14.2.1",
     "terser-webpack-plugin": "^5.3.10",
     "ts-node": "^10.9.2",
