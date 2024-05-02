@@ -12,10 +12,12 @@ on:
     branches: [main, main-*]
     paths:
       - ".github/workflows/test.yml"
+      - "docker-compose.yml"
+      - "package*.json"
       - "src/**"
       - "e2e-tests/**"
       - "generate-exip-pricing-grid/**"
-      - "package*.json"
+      - "database/**"
 
 env:
   environment: "qa"
