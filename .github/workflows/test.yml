@@ -16,6 +16,7 @@ on:
       - "e2e-tests/**"
       - "generate-exip-pricing-grid/**"
       - "package*.json"
+      - "docker-compose.yml"
 
 env:
   environment: "qa"
