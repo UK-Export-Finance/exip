@@ -30,7 +30,7 @@ export const mockAccount = {
     isBlocked: false,
     isVerified: true,
     isInactivated: false,
-  }
+  },
 } as Account;
 
 export const mockOTP = {
