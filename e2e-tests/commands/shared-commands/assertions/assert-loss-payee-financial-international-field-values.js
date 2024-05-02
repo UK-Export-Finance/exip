@@ -24,12 +24,20 @@ const assertLossPayeeFinancialInternationalFieldValues = ({
   expectedBicSwiftCode = LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
   expectedFinancialAddress = EXPECTED_MULTI_LINE_STRING,
 }) => {
-  cy.checkValue(fieldSelector(IBAN), expectedIban);
-  cy.checkValue(autoCompleteField(BIC_SWIFT_CODE), expectedBicSwiftCode);
-  cy.checkTextareaValue({
-    fieldId: FINANCIAL_ADDRESS,
-    expectedValue: expectedFinancialAddress,
-  });
+  if (expectedIban) {
+    cy.checkValue(fieldSelector(IBAN), expectedIban);
+  }
+
+  if (expectedBicSwiftCode) {
+    cy.checkValue(autoCompleteField(BIC_SWIFT_CODE), expectedBicSwiftCode);
+  }
+
+  if (expectedFinancialAddress) {
+    cy.checkTextareaValue({
+      fieldId: FINANCIAL_ADDRESS,
+      expectedValue: expectedFinancialAddress,
+    });
+  }
 };
 
 export default assertLossPayeeFinancialInternationalFieldValues;

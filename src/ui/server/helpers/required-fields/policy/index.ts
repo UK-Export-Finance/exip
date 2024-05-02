@@ -21,6 +21,7 @@ const {
   LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
   LOSS_PAYEE_FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
 } = POLICY_FIELD_IDS;
 
 const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
@@ -87,10 +88,14 @@ export const getBrokerTasks = (isUsingBroker?: boolean) => {
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @returns {Array} Array of tasks
  */
-export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocatedInUk?: boolean) => {
+export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocatedInUk?: boolean, lossPayeeIsLocatedInternationally?: boolean) => {
   if (isAppointingLossPayee) {
     if (lossPayeeIsLocatedInUk) {
       return [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
+    }
+
+    if (lossPayeeIsLocatedInternationally) {
+      return [BIC_SWIFT_CODE, IBAN, LOSS_PAYEE_FINANCIAL_ADDRESS];
     }
 
     return [LOSS_PAYEE_NAME];
@@ -105,6 +110,7 @@ interface RequiredFields {
   isUsingBroker?: boolean;
   isAppointingLossPayee?: boolean;
   lossPayeeIsLocatedInUk?: boolean;
+  lossPayeeIsLocatedInternationally?: boolean;
 }
 
 /**
@@ -115,7 +121,14 @@ interface RequiredFields {
  * @param {Boolean} isUsingBroker: "Is using broker"
  * @returns {Array} Required field IDs
  */
-const requiredFields = ({ policyType, jointlyInsuredParty, isUsingBroker, isAppointingLossPayee, lossPayeeIsLocatedInUk }: RequiredFields): Array<string> => [
+const requiredFields = ({
+  policyType,
+  jointlyInsuredParty,
+  isUsingBroker,
+  isAppointingLossPayee,
+  lossPayeeIsLocatedInUk,
+  lossPayeeIsLocatedInternationally,
+}: RequiredFields): Array<string> => [
   ...Object.values(TYPE_OF_POLICY),
   REQUESTED_START_DATE,
   POLICY_CURRENCY_CODE,
@@ -128,7 +141,7 @@ const requiredFields = ({ policyType, jointlyInsuredParty, isUsingBroker, isAppo
   POSITION,
   USING_BROKER,
   ...getBrokerTasks(isUsingBroker),
-  ...lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk),
+  ...lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk, lossPayeeIsLocatedInternationally),
 ];
 
 export default requiredFields;

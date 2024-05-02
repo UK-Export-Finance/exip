@@ -3,13 +3,13 @@ import { FIELD_IDS } from '..';
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save/loss-payee-financial-details-uk';
+import mapAndSave from '../../map-and-save/loss-payee-financial-details-international';
 import { Request, Response } from '../../../../../../types';
-import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsUk } from '../../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockLossPayeeFinancialDetailsInternational } from '../../../../../test-mocks';
 
 const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = ROUTES.INSURANCE;
 
-describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-back', () => {
+describe('controllers/insurance/policy/loss-payee-financial-details-international/save-and-back', () => {
   let req: Request;
   let res: Response;
 
@@ -19,14 +19,14 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.lossPayeeFinancialDetailsUk = updateMapAndSave;
+    mapAndSave.lossPayeeFinancialDetailsInternational = updateMapAndSave;
   });
 
   afterAll(() => {
     jest.resetAllMocks();
   });
 
-  const validBody = mockLossPayeeFinancialDetailsUk;
+  const validBody = mockLossPayeeFinancialDetailsInternational;
 
   describe('when there are no validation errors', () => {
     it('should redirect to all sections page', async () => {
@@ -37,7 +37,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.lossPayeeFinancialDetailsUk once with data from constructPayload function', async () => {
+    it('should call mapAndSave.lossPayeeFinancialDetailsInternational once with data from constructPayload function', async () => {
       req.body = validBody;
 
       await post(req, res);
@@ -62,7 +62,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.lossPayeeFinancialDetailsUk once', async () => {
+    it('should call mapAndSave.lossPayeeFinancialDetailsInternational once', async () => {
       req.body = mockInvalidBody;
 
       await post(req, res);
@@ -91,11 +91,11 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
   });
 
   describe('api error handling', () => {
-    describe('when mapAndSave.lossPayeeFinancialDetailsUk returns false', () => {
+    describe('when mapAndSave.lossPayeeFinancialDetailsInternational returns false', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        mapAndSave.lossPayeeFinancialDetailsUk = jest.fn(() => Promise.resolve(false));
+        mapAndSave.lossPayeeFinancialDetailsInternational = jest.fn(() => Promise.resolve(false));
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -105,12 +105,12 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/save-and-
       });
     });
 
-    describe('when mapAndSave.lossPayeeFinancialDetailsUk fails', () => {
+    describe('when mapAndSave.lossPayeeFinancialDetailsInternational fails', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
-        mapAndSave.lossPayeeFinancialDetailsUk = updateMapAndSave;
+        mapAndSave.lossPayeeFinancialDetailsInternational = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

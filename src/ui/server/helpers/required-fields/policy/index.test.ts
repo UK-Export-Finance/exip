@@ -25,6 +25,7 @@ const {
   LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
   LOSS_PAYEE_FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
 } = POLICY_FIELD_IDS;
 
 const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
@@ -167,6 +168,34 @@ describe('server/helpers/required-fields/policy', () => {
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
 
         const expected = [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isAppointingLossPayee is true, lossPayeeIsLocatedInUk is false, lossPayeeIsLocatedInternationally is true', () => {
+      it('should return multiple field ids in an array', () => {
+        const isAppointingLossPayee = true;
+        const lossPayeeIsLocatedInUk = false;
+        const lossPayeeIsLocatedInternationally = true;
+
+        const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk, lossPayeeIsLocatedInternationally);
+
+        const expected = [BIC_SWIFT_CODE, IBAN, LOSS_PAYEE_FINANCIAL_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isAppointingLossPayee is true, lossPayeeIsLocatedInUk is false, lossPayeeIsLocatedInternationally is false', () => {
+      it('should return a field id in an array', () => {
+        const isAppointingLossPayee = true;
+        const lossPayeeIsLocatedInUk = false;
+        const lossPayeeIsLocatedInternationally = true;
+
+        const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk, lossPayeeIsLocatedInternationally);
+
+        const expected = [LOSS_PAYEE_NAME];
 
         expect(result).toEqual(expected);
       });

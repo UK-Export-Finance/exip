@@ -40,7 +40,11 @@ describe('server/helpers/task-list/prepare-application', () => {
         },
       },
     },
-    nominatedLossPayee: { isAppointed: isAppointingLossPayee, isLocatedInUk: lossPayeeIsLocatedInUk },
+    nominatedLossPayee: {
+      isAppointed: isAppointingLossPayee,
+      isLocatedInUk: lossPayeeIsLocatedInUk,
+      isLocatedInternationally: lossPayeeIsLocatedInternationally,
+    },
     policy: { policyType, jointlyInsuredParty },
     referenceNumber,
     totalContractValueOverThreshold,
@@ -67,6 +71,7 @@ describe('server/helpers/task-list/prepare-application', () => {
         isUsingBroker,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
+        lossPayeeIsLocatedInternationally,
         hasDifferentTradingName,
         connectionWithBuyer: exporterIsConnectedWithBuyer,
         tradedWithBuyer: exporterHasTradedWithBuyer,
@@ -110,6 +115,7 @@ describe('server/helpers/task-list/prepare-application', () => {
           isUsingBroker,
           isAppointingLossPayee,
           lossPayeeIsLocatedInUk,
+          lossPayeeIsLocatedInternationally,
         }),
         dependencies: expectedDependencies,
       };

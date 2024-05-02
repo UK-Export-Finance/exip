@@ -9,7 +9,7 @@ const {
     USING_BROKER,
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
     FINANCIAL_ADDRESS,
-    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
     LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
   EXPORT_CONTRACT: {
@@ -74,19 +74,45 @@ describe('server/helpers/flatten-application-data', () => {
   });
 
   describe('mapNominatedLossPayee', () => {
-    it('should return mapped policy contact IDs', () => {
-      const result = mapNominatedLossPayee(nominatedLossPayee);
+    const expectedGenericIds = {
+      ...nominatedLossPayee,
+      [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
+      ...nominatedLossPayee.financialUk,
+      ...nominatedLossPayee.financialInternational,
+      ...getTrueAndFalseAnswers(nominatedLossPayee),
+    };
 
-      const expected = {
-        ...nominatedLossPayee,
-        [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
-        ...nominatedLossPayee.financialUk,
-        [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
-        ...nominatedLossPayee.financialInternational,
-        ...getTrueAndFalseAnswers(nominatedLossPayee),
-      };
+    describe(`when ${IS_LOCATED_IN_UK} is true`, () => {
+      it('should return mapped loss payee contact IDs', () => {
+        const result = mapNominatedLossPayee({
+          ...nominatedLossPayee,
+          [IS_LOCATED_IN_UK]: true,
+        });
 
-      expect(result).toEqual(expected);
+        const expected = {
+          ...expectedGenericIds,
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
+      it('should return mapped loss payee contact IDs', () => {
+        const result = mapNominatedLossPayee({
+          ...nominatedLossPayee,
+          [IS_LOCATED_IN_UK]: false,
+          [IS_LOCATED_INTERNATIONALLY]: true,
+        });
+
+        const expected = {
+          ...expectedGenericIds,
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
+        };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
