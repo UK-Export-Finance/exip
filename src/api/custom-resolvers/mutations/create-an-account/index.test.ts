@@ -46,6 +46,10 @@ describe('custom-resolvers/create-an-account', () => {
   });
 
   beforeEach(async () => {
+
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', String(process.env.DATABASE_URL_LOCAL))
+    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', String(process.env.DATABASE_URL))
+
     jest.resetAllMocks();
 
     sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
@@ -56,10 +60,6 @@ describe('custom-resolvers/create-an-account', () => {
 
     // create an account
     account = (await createAnAccount({}, variables, context)) as Account;
-
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', String(process.env.DATABASE_URL_LOCAL))
-    console.log('!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!', String(process.env.DATABASE_URL))
-
   });
 
   it('should generate and return the created account with added salt and hashes', () => {
