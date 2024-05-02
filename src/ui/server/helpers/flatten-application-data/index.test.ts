@@ -74,7 +74,7 @@ describe('server/helpers/flatten-application-data', () => {
   });
 
   describe('mapNominatedLossPayee', () => {
-    it('should return mapped policy contact IDs', () => {
+    it('should return mapped loss payee IDs', () => {
       const result = mapNominatedLossPayee(nominatedLossPayee);
 
       const expected = {
