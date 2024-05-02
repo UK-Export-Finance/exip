@@ -19,7 +19,7 @@
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
     "start": "keystone start --no-ui",
-    "test": "jest --runInBand --verbose --silent --coverage --config=jest.config.js"
+    "test": "jest --runInBand --verbose --coverage --config=jest.config.js"
   },
   "dependencies": {
     "@babel/core": "^7.23.7",
