@@ -16,6 +16,7 @@ on:
       - "e2e-tests/**"
       - "generate-exip-pricing-grid/**"
       - "package*.json"
+      - "database/exip.sql"
 
 env:
   environment: "qa"
