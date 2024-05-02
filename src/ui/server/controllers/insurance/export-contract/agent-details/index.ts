@@ -120,7 +120,8 @@ export const post = async (req: Request, res: Response) => {
     try {
       const countries = await api.keystone.countries.getAll();
 
-      const mappedCountries = mapCountries(countries);
+      const mappedCountries = mapCountries(countries, payload[COUNTRY_CODE]);
+      
 
       if (!isPopulatedArray(countries)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
