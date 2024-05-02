@@ -65,11 +65,6 @@ context('Insurance - Change your answers - Policy - Summary list - Broker - Yes 
     cy.deleteApplication(referenceNumber);
   });
 
-  // describe(NAME, () => {
-  //   const fieldId = NAME;
-
-  //   const fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
   describe('when clicking the `change` link', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
