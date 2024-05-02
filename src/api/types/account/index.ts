@@ -87,6 +87,19 @@ export interface AccountSignInVariables {
   password: string;
 }
 
+export interface AccountStatus {
+  id: string;
+  isVerified?: boolean;
+  isBlocked?: boolean;
+  isInactivated?: boolean;
+}
+
+export interface AccountStatusUpdate {
+  isVerified?: boolean;
+  isBlocked?: boolean;
+  isInactivated?: boolean;
+}
+
 export interface AccountCreationCore {
   email: string;
   firstName: string;
@@ -101,7 +114,6 @@ export interface AccountCreationCore {
   sessionIdentifier?: string;
   passwordResetHash?: string;
   passwordResetExpiry?: Date;
-  isVerified: boolean;
   reactivationHash?: string;
   reactivationExpiry?: Date;
   createdAt: Date;
@@ -110,6 +122,8 @@ export interface AccountCreationCore {
 
 export interface Account extends AccountCreationCore {
   id: string;
+  accountStatusId: AccountStatus;
+  accountStatus: AccountStatus;
 }
 
 export interface GetAccountPasswordResetTokenVariables {

@@ -27,7 +27,23 @@ const getAccountByField = async (context: Context, field: string, value: string)
 
     const account = accountsArray[0] as Account;
 
-    return account;
+    const accountStatus = await context.db.AccountStatus.findOne({
+      where: { id: account.accountStatusId },
+      take: 1,
+    });
+
+    /**
+     * constructs full account object
+     * adds accountStatus data
+     */
+    const fullAccount = {
+      ...account,
+      accountStatus: {
+        ...accountStatus,
+      },
+    };
+
+    return fullAccount;
   } catch (err) {
     console.error('Error getting account by field/value %O', err);
     throw new Error(`Getting account by field/value ${err}`);

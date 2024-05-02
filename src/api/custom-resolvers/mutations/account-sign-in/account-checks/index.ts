@@ -36,7 +36,7 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
 
     const { id: accountId, email } = account;
 
-    if (!account.isVerified) {
+    if (!account.accountStatus.isVerified) {
       console.info('Unable to sign in account - account has not been verified yet');
 
       const now = new Date();

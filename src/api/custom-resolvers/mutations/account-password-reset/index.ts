@@ -31,7 +31,9 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * Check if the account is blocked
      * If so, return success=false
      */
-    const { isBlocked } = account;
+    const {
+      accountStatus: { isBlocked },
+    } = account;
 
     if (isBlocked) {
       console.info('Unable to reset account password - account is blocked');

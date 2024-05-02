@@ -47,7 +47,6 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
       email,
       salt,
       hash,
-      isVerified: false,
       verificationHash,
       verificationExpiry,
       createdAt: now,
@@ -56,6 +55,17 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     const creationResponse = await context.db.Account.createOne({
       data: accountData,
+    });
+
+    // creates account status with links to account
+    await context.db.AccountStatus.createOne({
+      data: {
+        account: {
+          connect: {
+            id: creationResponse.id,
+          },
+        },
+      },
     });
 
     // send "confirm email address" email

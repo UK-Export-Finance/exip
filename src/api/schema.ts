@@ -492,13 +492,6 @@ export const lists = {
       salt: text({ validation: { isRequired: true } }),
       hash: text({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
-      isVerified: checkbox({ defaultValue: false }),
-      /**
-       * isBlocked flag will only be true if the account has:
-       * - repeatedly attempted sign in
-       * - repeatedly attempted password reset request
-       */
-      isBlocked: checkbox({ defaultValue: false }),
       verificationHash: text(),
       verificationExpiry: timestamp(),
       otpSalt: text(),
@@ -522,9 +515,24 @@ export const lists = {
         ref: 'Application',
         many: true,
       }),
+      accountStatus: relationship({ ref: 'AccountStatus.account' }),
     },
     access: allowAll,
   }),
+  AccountStatus: {
+    fields: {
+      account: relationship({ ref: 'Account.accountStatus' }),
+      isVerified: checkbox({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: checkbox({ defaultValue: false }),
+      isInactivated: checkbox({ defaultValue: false }),
+    },
+    access: allowAll,
+  },
   AuthenticationRetry: list({
     fields: {
       account: relationship({

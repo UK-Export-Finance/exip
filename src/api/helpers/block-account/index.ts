@@ -8,13 +8,13 @@ import { Account, Context } from '../../types';
  * @param {String} Account ID
  * @returns {Promise<Boolean>}
  */
-const blockAccount = async (context: Context, accountId: string) => {
-  console.info('Blocking account %s', accountId);
+const blockAccount = async (context: Context, accountStatusId: string) => {
+  console.info('Blocking account %s', accountStatusId);
 
   try {
-    const accountUpdate = { isBlocked: true };
+    const accountStatusUpdate = { isBlocked: true };
 
-    const result = (await update.account(context, accountId, accountUpdate)) as Account;
+    const result = (await update.accountStatus(context, accountStatusId, accountStatusUpdate)) as Account;
 
     if (result.id) {
       return true;

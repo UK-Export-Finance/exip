@@ -67,6 +67,18 @@ CREATE TABLE `_AuthenticationRetry_account` (
   CONSTRAINT `_AuthenticationRetry_account_B_fkey` FOREIGN KEY (`B`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+# Dump of table AccountStatus
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `AccountStatus`;
+
+CREATE TABLE `AccountStatus` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
+  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
+  `isInactivated` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
 
 
 # Dump of table Account
@@ -83,7 +95,6 @@ CREATE TABLE `Account` (
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
   `verificationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `verificationExpiry` datetime(3) DEFAULT NULL,
   `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -95,16 +106,19 @@ CREATE TABLE `Account` (
   `passwordResetExpiry` datetime(3) DEFAULT NULL,
   `authentication` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
 	`reactivationExpiry` datetime(3) DEFAULT NULL,
   `reactivationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `accountStatus` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Account_authentication_key` (`authentication`),
   UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),
+  UNIQUE KEY `Account_accountStatus_key` (`accountStatus`),
   KEY `Account_authentication_idx` (`authentication`),
   KEY `Account_authenticationRetry_idx` (`authenticationRetry`),
+  KEY `Account_accountStatus_idx` (`accountStatus`),
   CONSTRAINT `Account_authentication_fkey` FOREIGN KEY (`authentication`) REFERENCES `Authentication` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Account_accountStatus_fkey` FOREIGN KEY (`accountStatus`) REFERENCES `AccountStatus` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 

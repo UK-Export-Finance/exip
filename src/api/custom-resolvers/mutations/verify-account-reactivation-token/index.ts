@@ -59,13 +59,17 @@ const verifyAccountReactivationToken = async (
       console.info('Reactivating account %s', account.id);
 
       const accountUpdate = {
-        isBlocked: false,
-        isVerified: true,
         reactivationHash: '',
         reactivationExpiry: null,
       };
 
+      const accountStatusUpdate = {
+        isBlocked: false,
+        isVerified: true,
+      };
+
       await update.account(context, account.id, accountUpdate);
+      await update.accountStatus(context, account.accountStatus.id, accountStatusUpdate);
 
       /**
        * Wipe the retry entries

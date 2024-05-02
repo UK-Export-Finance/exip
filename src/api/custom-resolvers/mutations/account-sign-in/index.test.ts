@@ -5,6 +5,7 @@ import generate from '../../../helpers/generate-otp';
 import sendEmail from '../../../emails';
 import accountChecks from './account-checks';
 import accounts from '../../../test-helpers/accounts';
+import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../types';
@@ -13,6 +14,8 @@ import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 const { PASSWORD } = FIELD_IDS.INSURANCE.ACCOUNT;
 
 const { MAX_AUTH_RETRIES } = ACCOUNT;
+
+const { accountStatus, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/account-sign-in', () => {
   let context: Context;
@@ -76,7 +79,7 @@ describe('custom-resolvers/account-sign-in', () => {
       // get the latest account
       account = await accounts.get(context, account.id);
 
-      expect(account.isBlocked).toEqual(false);
+      expect(account.accountStatus.isBlocked).toEqual(false);
     });
   });
 
@@ -119,11 +122,12 @@ describe('custom-resolvers/account-sign-in', () => {
 
         // create a new account and ensure it is not blocked so that we have a clean slate.
         const unblockedAccount = {
-          ...mockAccount,
-          isBlocked: false,
+          ...mockAccountUpdate,
         };
 
         account = await accounts.create({ context, data: unblockedAccount });
+        account = await accounts.get(context, account.id);
+        await accountStatusHelper.update(context, account.accountStatus.id, { isBlocked: false });
 
         // wipe the AuthenticationRetry table so we have a clean slate.
         await authRetries.deleteAll(context);
@@ -150,7 +154,7 @@ describe('custom-resolvers/account-sign-in', () => {
         // get the latest account
         account = await accounts.get(context, account.id);
 
-        expect(account.isBlocked).toEqual(true);
+        expect(account.accountStatus.isBlocked).toEqual(true);
       });
     });
 
@@ -159,13 +163,8 @@ describe('custom-resolvers/account-sign-in', () => {
         await accounts.deleteAll(context);
 
         account = await accounts.create({ context });
-
-        account = (await context.query.Account.updateOne({
-          where: { id: account.id },
-          data: {
-            isBlocked: true,
-          },
-        })) as Account;
+        account = await accounts.get(context, account.id);
+        await accountStatusHelper.update(context, account.accountStatus.id, { isBlocked: true });
 
         result = await accountSignIn({}, variables, context);
       });

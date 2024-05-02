@@ -12,6 +12,12 @@ export interface TestHelperAccountCreate extends TestHelperCreate {
   deleteAccounts?: boolean;
 }
 
+export interface TestHelperAccountStatusCreate extends TestHelperCreate {
+  data?: Account;
+  deleteAccountStatus?: boolean;
+  accountId: string;
+}
+
 export interface TestHelperApplicationCreate extends TestHelperCreate {
   data: ApplicationCreateInput;
 }

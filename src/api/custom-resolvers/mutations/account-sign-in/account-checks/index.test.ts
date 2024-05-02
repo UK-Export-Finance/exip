@@ -6,6 +6,7 @@ import generate from '../../../../helpers/generate-otp';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
+import accountStatusHelper from '../../../../test-helpers/account-status';
 import authRetries from '../../../../test-helpers/auth-retries';
 import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
@@ -48,6 +49,9 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
     // create an account
     account = await accounts.create({ context });
+    await accountStatusHelper.update(context, account.accountStatus.id, { isVerified: true });
+    // gets updated account
+    account = await accounts.get(context, account.id);
 
     jest.resetAllMocks();
 
@@ -90,8 +94,6 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       jest.resetAllMocks();
 
       const accountUpdate = {
-        isVerified: false,
-        isBlocked: false,
         verificationHash: mockAccount.verificationHash,
       };
 
@@ -99,10 +101,12 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
       confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
 
+      await accountStatusHelper.update(context, account.accountStatus.id, { isVerified: false, isBlocked: false });
+
       const updatedAccount = await context.query.Account.updateOne({
         where: { id: account.id },
         data: accountUpdate,
-        query: 'id firstName lastName email verificationHash',
+        query: 'id firstName lastName email verificationHash accountStatus { isVerified isBlocked }',
       });
 
       result = await accountChecks(context, updatedAccount, mockUrlOrigin);

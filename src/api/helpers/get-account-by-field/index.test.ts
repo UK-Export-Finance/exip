@@ -28,6 +28,14 @@ describe('helpers/get-account-by-field', () => {
     expect(result.firstName).toEqual(account.firstName);
   });
 
+  it('should return an accountStatus', async () => {
+    const result = (await getAccountByField(context, field, value)) as Account;
+
+    expect(result.accountStatus.isBlocked).toEqual(false);
+    expect(result.accountStatus.isVerified).toEqual(false);
+    expect(result.accountStatus.isInactivated).toEqual(false);
+  });
+
   describe('when an account is not found', () => {
     beforeEach(async () => {
       // delete the account so it will not be found

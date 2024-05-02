@@ -12,11 +12,11 @@ describe('helpers/update-account', () => {
     context = getKeystoneContext();
   });
 
+  const { accountStatus: accountStatusData, ...mockAccountUpdate } = mockAccount;
+
   beforeEach(async () => {
     // create a new account
-    const accountData = mockAccount;
-
-    account = (await accounts.create({ context, data: accountData })) as Account;
+    account = (await accounts.create({ context, data: mockAccountUpdate })) as Account;
   });
 
   it('should update the account', async () => {
@@ -55,6 +55,44 @@ describe('helpers/update-account', () => {
         const expectedKeystoneError = 'Access denied: You cannot update that Account - it may not exist';
 
         const expected = new Error(`Updating account ${expectedKeystoneError}`);
+
+        expect(err).toEqual(expected);
+      }
+    });
+  });
+
+  it('should update the accountStatus', async () => {
+    const accountUpdate = {
+      isVerified: true,
+      isBlocked: true,
+    };
+
+    await update.accountStatus(context, account.accountStatus.id, accountUpdate);
+
+    account = await accounts.get(context, account.id);
+
+    const { accountStatus } = account;
+
+    expect(accountStatus.isBlocked).toEqual(true);
+    expect(accountStatus.isVerified).toEqual(true);
+    expect(accountStatus.isInactivated).toEqual(false);
+  });
+
+  describe('when an accountStatus is not found', () => {
+    beforeEach(async () => {
+      // delete the account so it will not be found
+      await context.query.AccountStatus.deleteOne({
+        where: { id: account.accountStatus.id },
+      });
+    });
+
+    it('should throw an error', async () => {
+      try {
+        await update.accountStatus(context, account.accountStatus.id, {});
+      } catch (err) {
+        const expectedKeystoneError = 'Access denied: You cannot update that AccountStatus - it may not exist';
+
+        const expected = new Error(`Updating account status ${expectedKeystoneError}`);
 
         expect(err).toEqual(expected);
       }
