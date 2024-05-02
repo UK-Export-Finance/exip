@@ -46,9 +46,15 @@ const applicationQuery = gql`
           name
           financialUk {
             id
+            accountNumber
+            sortCode
+            bankAddress
           }
           financialInternational {
             id
+            iban
+            bicSwiftCode
+            bankAddress
           }
         }
         policy {

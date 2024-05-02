@@ -67,6 +67,7 @@ export const POLICY = {
   },
   LOSS_PAYEE_DETAILS: {
     NAME: 'name',
+    LOSS_PAYEE_NAME: 'lossPayee.name',
     LOCATION: 'location',
     IS_LOCATED_IN_UK: 'isLocatedInUk',
     IS_LOCATED_INTERNATIONALLY: 'isLocatedInternationally',
@@ -80,6 +81,7 @@ export const POLICY = {
     IBAN: 'iban',
   },
   FINANCIAL_ADDRESS: 'bankAddress',
+  LOSS_PAYEE_FINANCIAL_ADDRESS: 'lossPayee.bankAddress',
 };
 
 export default POLICY;

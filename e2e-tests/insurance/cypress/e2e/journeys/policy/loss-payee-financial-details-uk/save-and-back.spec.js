@@ -35,7 +35,7 @@ context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exp
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
       cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;
@@ -53,19 +53,19 @@ context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exp
   });
 
   describe('when submitting an empty form', () => {
-    it('should redirect to `all sections` and retain the `insurance policy` task status as `completed`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickSaveAndBackButton();
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
   describe(`when submitting a form with only ${ACCOUNT_NUMBER} via 'save and go back' button`, () => {
-    it('should redirect to `all sections` and retain the `insurance policy` task status as `completed`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeLossPayeeFinancialDetailsUkForm({
@@ -75,7 +75,7 @@ context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exp
 
       cy.clickSaveAndBackButton();
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -91,17 +91,18 @@ context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exp
   });
 
   describe(`when submitting a form with only ${SORT_CODE} via 'save and go back' button`, () => {
-    it('should redirect to `all sections` and retain the `insurance policy` task status as `completed`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeLossPayeeFinancialDetailsUkForm({
         accountNumber: null,
         financialAddress: null,
+        clearInputs: true,
       });
 
       cy.clickSaveAndBackButton();
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -111,23 +112,25 @@ context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exp
         cy.assertLossPayeeFinancialUkFieldValues({
           expectedAccountNumber: null,
           expectedFinancialAddress: null,
+          clearInputs: true,
         });
       });
     });
   });
 
   describe(`when submitting a form with only ${FINANCIAL_ADDRESS} via 'save and go back' button`, () => {
-    it('should redirect to `all sections` and retain the `insurance policy` task status as `completed`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.completeLossPayeeFinancialDetailsUkForm({
         accountNumber: null,
         sortCode: null,
+        clearInputs: true,
       });
 
       cy.clickSaveAndBackButton();
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     describe('when going back to the page', () => {
@@ -137,6 +140,7 @@ context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exp
         cy.assertLossPayeeFinancialUkFieldValues({
           expectedAccountNumber: null,
           expectedSortCode: null,
+          clearInputs: true,
         });
       });
     });

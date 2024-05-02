@@ -37,6 +37,8 @@ interface CreatePrepareApplicationTasksParams {
   finalDestinationKnown?: boolean;
   jointlyInsuredParty?: boolean;
   isUsingBroker?: boolean;
+  isAppointingLossPayee?: boolean;
+  lossPayeeIsLocatedInUk?: boolean;
   hasDifferentTradingName?: boolean;
   connectionWithBuyer?: boolean;
   tradedWithBuyer?: boolean;

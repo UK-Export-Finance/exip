@@ -211,19 +211,28 @@ interface ApplicationJointlyInsuredParty {
   country?: string;
 }
 
-interface ApplicationLossPayeeFinancialDetailsUk {
-  id: string;
-}
-
 interface ApplicationLossPayeeFinancialDetailsInternational {
   id: string;
+  bankAddress?: string;
+  bicSwiftCode?: string;
+  iban?: string;
+}
+
+interface ApplicationLossPayeeFinancialDetailsUk {
+  id: string;
+  accountNumber?: string;
+  bankAddress?: string;
+  sortCode?: string;
 }
 
 interface ApplicationNominatedLossPayee {
   id: string;
-  isAppointed?: boolean;
-  financialUk: ApplicationLossPayeeFinancialDetailsUk;
   financialInternational: ApplicationLossPayeeFinancialDetailsInternational;
+  financialUk: ApplicationLossPayeeFinancialDetailsUk;
+  isAppointed?: boolean;
+  isLocatedInUk?: boolean;
+  isLocatedInternationally?: boolean;
+  name?: string;
 }
 
 interface ApplicationPolicy {
@@ -274,13 +283,6 @@ interface ApplicationVersion {
 
 export {
   Application,
-  ApplicationCompany,
-  ApplicationFlat,
-  ApplicationPolicy,
-  ApplicationPolicyContact,
-  ApplicationJointlyInsuredParty,
-  ApplicationNominatedLossPayee,
-  ApplicationExporterIndustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
   ApplicationBuyer,
@@ -288,11 +290,20 @@ export {
   ApplicationBuyerTradingHistory,
   ApplicationBuyerUiInput,
   ApplicationBuyerApiInput,
+  ApplicationCompany,
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
   ApplicationExportContractAgentServiceCharge,
+  ApplicationExporterIndustrySectorNames,
+  ApplicationFlat,
+  ApplicationJointlyInsuredParty,
+  ApplicationLossPayeeFinancialDetailsInternational,
+  ApplicationLossPayeeFinancialDetailsUk,
+  ApplicationNominatedLossPayee,
   ApplicationPrivateMarket,
+  ApplicationPolicy,
+  ApplicationPolicyContact,
   ApplicationSectionReview,
   ApplicationDeclaration,
   ApplicationVersion,

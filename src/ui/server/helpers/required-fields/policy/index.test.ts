@@ -1,4 +1,4 @@
-import requiredFields, { getContractPolicyTasks, getJointlyInsuredPartyTasks, getBrokerTasks } from '.';
+import requiredFields, { getContractPolicyTasks, getJointlyInsuredPartyTasks, getBrokerTasks, lossPayeeTasks } from '.';
 import { FIELD_VALUES } from '../../../constants';
 import POLICY_FIELD_IDS, { SHARED_CONTRACT_POLICY } from '../../../constants/field-ids/insurance/policy';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
@@ -9,6 +9,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
 const { REQUESTED_START_DATE, POLICY_CURRENCY_CODE } = SHARED_CONTRACT_POLICY;
 
 const {
+  BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
   CONTRACT_POLICY: {
     SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
     MULTIPLE: { TOTAL_MONTHS_OF_COVER },
@@ -16,12 +17,14 @@ const {
   EXPORT_VALUE: {
     MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
-  TYPE_OF_POLICY,
   NAME_ON_POLICY,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COUNTRY_CODE },
+  TYPE_OF_POLICY,
   USING_BROKER,
-  BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
-  LOSS_PAYEE,
+  LOSS_PAYEE: { IS_APPOINTED },
+  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+  LOSS_PAYEE_FINANCIAL_ADDRESS,
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
 } = POLICY_FIELD_IDS;
 
 const { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL } = NAME_ON_POLICY;
@@ -32,6 +35,7 @@ describe('server/helpers/required-fields/policy', () => {
   const {
     policy: { policyType, jointlyInsuredParty },
     broker: { isUsingBroker },
+    nominatedLossPayee: { isAppointed, isLocatedInUk },
   } = mockApplication;
 
   describe('getContractPolicyTasks', () => {
@@ -141,6 +145,56 @@ describe('server/helpers/required-fields/policy', () => {
     });
   });
 
+  describe('lossPayeeTasks', () => {
+    describe('when isAppointingLossPayee is true, lossPayeeIsLocatedInUk is false', () => {
+      it('should return multiple field ids in an array', () => {
+        const isAppointingLossPayee = true;
+        const lossPayeeIsLocatedInUk = false;
+
+        const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
+
+        const expected = [LOSS_PAYEE_NAME];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isAppointingLossPayee is true, lossPayeeIsLocatedInUk is true', () => {
+      it('should return multiple field ids in an array', () => {
+        const isAppointingLossPayee = true;
+        const lossPayeeIsLocatedInUk = true;
+
+        const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
+
+        const expected = [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isAppointingLossPayee is false', () => {
+      it('should return a field id in an array', () => {
+        const isAppointingLossPayee = false;
+
+        const result = lossPayeeTasks(isAppointingLossPayee);
+
+        const expected = [IS_APPOINTED];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe('when isAppointingLossPayee is undefined', () => {
+      it('should return a field id in an array', () => {
+        const result = lossPayeeTasks();
+
+        const expected = [IS_APPOINTED];
+
+        expect(result).toEqual(expected);
+      });
+    });
+  });
+
   describe('requiredFields', () => {
     it('should return array of required fields', () => {
       const result = requiredFields({
@@ -162,7 +216,7 @@ describe('server/helpers/required-fields/policy', () => {
         POSITION,
         USING_BROKER,
         ...getBrokerTasks(isUsingBroker),
-        LOSS_PAYEE.IS_APPOINTED,
+        ...lossPayeeTasks(isAppointed, isLocatedInUk),
       ];
 
       expect(result).toEqual(expected);

@@ -24,8 +24,13 @@ export const get = (req: Request, res: Response) => {
     return res.redirect(ROUTES.INSURANCE.PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber, policy, exportContract, broker, company, declaration, buyer, totalContractValueOverThreshold } = application;
+  const { broker, buyer, company, declaration, exportContract } = application;
+  const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = application;
+
   const { policyType, jointlyInsuredParty } = policy;
+
+  const { isAppointed: isAppointingLossPayee, isLocatedInUk: lossPayeeIsLocatedInUk } = nominatedLossPayee;
+
   const {
     finalDestinationKnown,
     privateMarket: { attempted: attemptedPrivateMarketCover },
@@ -37,6 +42,7 @@ export const get = (req: Request, res: Response) => {
       },
     },
   } = exportContract;
+
   const { isUsingBroker } = broker;
   const { hasDifferentTradingName } = company;
   const { hasAntiBriberyCodeOfConduct } = declaration;
@@ -52,6 +58,8 @@ export const get = (req: Request, res: Response) => {
     finalDestinationKnown,
     jointlyInsuredParty.requested,
     isUsingBroker,
+    isAppointingLossPayee,
+    lossPayeeIsLocatedInUk,
     hasDifferentTradingName,
     hasAntiBriberyCodeOfConduct,
     exporterIsConnectedWithBuyer,
