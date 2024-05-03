@@ -143,7 +143,7 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
 
     describe(`when selecting no for ${FIELD_ID}`, () => {
       it(`should redirect to ${CHECK_YOUR_ANSWERS} page`, () => {
-        cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: false });
+        cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: false });
 
         cy.assertUrl(checkYourAnswersUrl);
       });
@@ -159,7 +159,7 @@ context('Insurance - Policy - Loss payee page - As an exporter, I want to inform
 
     describe(`when selecting yes for ${FIELD_ID}`, () => {
       it(`should redirect to ${LOSS_PAYEE_DETAILS_ROOT} page`, () => {
-        cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+        cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
 
         cy.assertUrl(lossPayeeDetailsUrl);
       });

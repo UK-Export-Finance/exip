@@ -60,7 +60,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
   });
 
   describe(`when selecting yes for ${FIELD_ID}`, () => {
-    it('should redirect to `all sections` and change the `insurance policy` task status to `in progress`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status to `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.clickYesRadioInput();
@@ -69,7 +69,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the fields on the page', () => {
@@ -85,7 +85,7 @@ context('Insurance - Policy - Loss payee page - Save and back', () => {
   });
 
   describe(`when selecting no for ${FIELD_ID}`, () => {
-    it('should redirect to `all sections` and change the `insurance policy` task status to `Completed`', () => {
+    it('should redirect to `all sections` and change the `insurance policy` task status to `completed`', () => {
       cy.navigateToUrl(url);
 
       cy.clickNoRadioInput();
