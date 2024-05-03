@@ -41,4 +41,16 @@ describe('controllers/insurance/policy/map-submitted-data/broker', () => {
       expect(result).toEqual(expected);
     });
   });
+
+  describe(`when ${USING_BROKER} is provided with an empty string`, () => {
+    it(`should delete ${USING_BROKER}`, () => {
+      const mockFormBody = {
+        [USING_BROKER]: '',
+      };
+
+      const result = mapSubmittedData(mockFormBody);
+
+      expect(result).toEqual({});
+    });
+  });
 });

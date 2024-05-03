@@ -1,4 +1,5 @@
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import { isEmptyString } from '../../../../../helpers/string';
 import { RequestBody } from '../../../../../../types';
 
 const {
@@ -20,6 +21,14 @@ const mapSubmittedData = (formBody: RequestBody): object => {
     populatedData[NAME] = '';
     populatedData[EMAIL] = '';
     populatedData[FULL_ADDRESS] = '';
+  }
+
+  /**
+   * If USING_BROKER is an empty string,
+   * Delete the field.
+   */
+  if (isEmptyString(formBody[USING_BROKER])) {
+    delete populatedData[USING_BROKER];
   }
 
   return populatedData;
