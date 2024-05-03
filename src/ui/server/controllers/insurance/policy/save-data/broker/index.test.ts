@@ -2,7 +2,6 @@ import save from '.';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
-import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -28,7 +27,7 @@ describe('controllers/insurance/policy/save-data/broker', () => {
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);
 
-      const dataToSave = stripEmptyFormFields(getDataToSave(mockFormBody, mockValidationErrors.errorList));
+      const dataToSave = getDataToSave(mockFormBody, mockValidationErrors.errorList);
       const expectedSanitisedData = sanitiseData(dataToSave);
       expect(updateApplicationSpy).toHaveBeenCalledWith(mockApplication.broker.id, expectedSanitisedData);
     });

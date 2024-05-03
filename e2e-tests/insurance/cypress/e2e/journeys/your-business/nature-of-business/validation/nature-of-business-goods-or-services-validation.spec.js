@@ -1,8 +1,8 @@
 import partials from '../../../../../../../partials';
 import { field as fieldSelector } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
-import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const NATURE_OF_BUSINESS_ERRORS = ERROR_MESSAGES.INSURANCE.EXPORTER_BUSINESS;
@@ -12,12 +12,6 @@ const {
     GOODS_OR_SERVICES: FIELD_ID,
   },
 } = FIELD_IDS;
-
-const {
-  NATURE_OF_YOUR_BUSINESS: {
-    [FIELD_ID]: { MAXIMUM },
-  },
-} = FIELDS;
 
 const {
   ROOT,
@@ -78,16 +72,11 @@ describe('Insurance - Your business - Nature of your business page - As an Expor
     });
   });
 
-  describe(`when ${FIELD_ID} has over ${MAXIMUM} characters`, () => {
-    beforeEach(() => {
-      cy.keyboardInput(field.textarea(), 'a'.repeat(MAXIMUM + 1));
-      cy.clickSubmitButton();
-    });
-
+  describe(`when ${FIELD_ID} has over the maximum`, () => {
     it('should display validation errors', () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: 'a'.repeat(MAXIMUM + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION + 1),
         expectedErrorMessage: NATURE_OF_BUSINESS_ERRORS[FIELD_ID].ABOVE_MAXIMUM,
       });
     });

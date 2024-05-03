@@ -17,7 +17,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Loss Payee Financial Details - UK page - As an Exporter, I want to be able to save my entries on the page, So that I can continue the application at a later date without losing progress', () => {
+context('Insurance - Policy - Loss Payee Financial Details - UK page - Save and go back - As an Exporter, I want to be able to save my entries on the page, So that I can continue the application at a later date without losing progress', () => {
   let referenceNumber;
   let url;
 

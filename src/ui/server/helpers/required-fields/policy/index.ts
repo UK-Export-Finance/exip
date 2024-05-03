@@ -18,7 +18,7 @@ const {
   TYPE_OF_POLICY,
   USING_BROKER,
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
   LOSS_PAYEE_FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
@@ -86,6 +86,7 @@ export const getBrokerTasks = (isUsingBroker?: boolean) => {
  * Get "Loss payee" section tasks depending on the isUsingBroker field
  * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
+ * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
  * @returns {Array} Array of tasks
  */
 export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocatedInUk?: boolean, lossPayeeIsLocatedInternationally?: boolean) => {
@@ -98,7 +99,7 @@ export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocat
       return [BIC_SWIFT_CODE, IBAN, LOSS_PAYEE_FINANCIAL_ADDRESS];
     }
 
-    return [LOSS_PAYEE_NAME];
+    return [LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK];
   }
 
   return [IS_APPOINTED];

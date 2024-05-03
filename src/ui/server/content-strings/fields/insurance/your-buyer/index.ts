@@ -40,10 +40,10 @@ export const YOUR_BUYER_FIELDS = {
     },
     [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
       LABEL: 'Company registration number (optional)',
-      MAXIMUM: 100,
       SUMMARY: {
         TITLE: 'Registration number (optional)',
       },
+      MAXIMUM: MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER,
     },
     [COMPANY_OR_ORGANISATION.WEBSITE]: {
       LABEL: 'Enter their website (optional)',
@@ -61,6 +61,7 @@ export const YOUR_BUYER_FIELDS = {
   },
   [CONNECTION_WITH_BUYER_DESCRIPTION]: {
     LABEL: 'Describe the connection with the buyer',
+    MAXIMUM: MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION,
     SUMMARY: {
       TITLE: 'Details of connection',
     },
@@ -97,7 +98,7 @@ export const YOUR_BUYER_FIELDS = {
     SUMMARY: {
       TITLE: 'Details of credit insurance',
     },
-    MAXIMUM: MAXIMUM_CHARACTERS.PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER,
   },
   [TOTAL_OUTSTANDING_PAYMENTS]: {
     HEADING: 'Tell us about the outstanding or overdue payments',

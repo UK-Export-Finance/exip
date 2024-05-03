@@ -199,7 +199,7 @@ describe('controllers/insurance/export-contract/agent-details', () => {
           application: mapApplicationToFormFields(mockApplication),
           submittedValues: payload,
           validationErrors,
-          countries: mapCountries(mockCountries),
+          countries: mapCountries(mockCountries, payload[COUNTRY_CODE]),
         });
       });
 

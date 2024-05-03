@@ -67,7 +67,7 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
   });
 
   describe(`when entering a value for ${NAME}`, () => {
-    it('should redirect to `all sections` and retain the `insurance policy` task status to `in progress`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field(NAME).input(), POLICY[NAME]);

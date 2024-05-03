@@ -1,4 +1,5 @@
 import mapAndSave from '.';
+import mapSubmittedData from '../../map-submitted-data/broker';
 import save from '../../save-data/broker';
 import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
@@ -19,6 +20,8 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
   const mockSaveBroker = jest.fn(() => Promise.resolve({}));
   save.broker = mockSaveBroker;
 
+  const populatedData = mapSubmittedData(mockFormBody);
+
   const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
 
   describe('when the form has data', () => {
@@ -27,11 +30,11 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
         await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.broker).toHaveBeenCalledTimes(1);
-        expect(save.broker).toHaveBeenCalledWith(mockApplication, mockFormBody, mockValidationErrors?.errorList);
+        expect(save.broker).toHaveBeenCalledWith(mockApplication, populatedData, mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.broker(populatedData, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
@@ -39,14 +42,14 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
 
     describe('when the form does NOT have validation errors ', () => {
       it('should call save.broker with application and populated submitted data', async () => {
-        await mapAndSave.broker(mockFormBody, mockApplication);
+        await mapAndSave.broker(populatedData, mockApplication);
 
         expect(save.broker).toHaveBeenCalledTimes(1);
-        expect(save.broker).toHaveBeenCalledWith(mockApplication, mockFormBody);
+        expect(save.broker).toHaveBeenCalledWith(mockApplication, populatedData);
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.broker(mockFormBody, mockApplication, mockValidationErrors);
+        const result = await mapAndSave.broker(populatedData, mockApplication, mockValidationErrors);
 
         expect(result).toEqual(true);
       });
