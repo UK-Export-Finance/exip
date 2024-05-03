@@ -85,11 +85,11 @@ export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLo
       [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
       ...nominatedLossPayee.financialInternational,
       ...getTrueAndFalseAnswers(nominatedLossPayee),
-    }; 
+    };
   }
 
   return {
-    [IS_APPOINTED]: nominatedLossPayee[IS_APPOINTED]
+    [IS_APPOINTED]: nominatedLossPayee[IS_APPOINTED],
   };
 };
 
