@@ -18,7 +18,7 @@ const {
   TYPE_OF_POLICY,
   USING_BROKER,
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, LOCATION },
+  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
   LOSS_PAYEE_FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
 } = POLICY_FIELD_IDS;
@@ -90,10 +90,10 @@ export const getBrokerTasks = (isUsingBroker?: boolean) => {
 export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocatedInUk?: boolean) => {
   if (isAppointingLossPayee) {
     if (lossPayeeIsLocatedInUk) {
-      return [LOSS_PAYEE_NAME, LOCATION, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
+      return [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
     }
 
-    return [LOSS_PAYEE_NAME, LOCATION];
+    return [LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK];
   }
 
   return [IS_APPOINTED];

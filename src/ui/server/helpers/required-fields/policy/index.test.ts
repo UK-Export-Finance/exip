@@ -22,7 +22,7 @@ const {
   TYPE_OF_POLICY,
   USING_BROKER,
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, LOCATION },
+  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
   LOSS_PAYEE_FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
 } = POLICY_FIELD_IDS;
@@ -153,7 +153,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
 
-        const expected = [LOSS_PAYEE_NAME, LOCATION];
+        const expected = [LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK];
 
         expect(result).toEqual(expected);
       });
@@ -166,7 +166,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
 
-        const expected = [LOSS_PAYEE_NAME, LOCATION, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
+        const expected = [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
 
         expect(result).toEqual(expected);
       });
