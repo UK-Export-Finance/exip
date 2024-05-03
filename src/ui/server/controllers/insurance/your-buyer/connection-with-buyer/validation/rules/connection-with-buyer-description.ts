@@ -1,9 +1,7 @@
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { RequestBody } from '../../../../../../../types';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
 
 const {
   INSURANCE: {
@@ -13,11 +11,9 @@ const {
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
+    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
   },
 } = ERROR_MESSAGES;
-
-const MAXIMUM = 1000;
 
 /**
  * connectionWithBuyerDescriptionRule
@@ -30,11 +26,7 @@ const MAXIMUM = 1000;
  */
 const connectionWithBuyerDescriptionRule = (formBody: RequestBody, errors: object) => {
   if (formBody[CONNECTION_WITH_BUYER] === 'true') {
-    if (!objectHasProperty(formBody, FIELD_ID)) {
-      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
-    }
-
-    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION);
   }
 
   return errors;

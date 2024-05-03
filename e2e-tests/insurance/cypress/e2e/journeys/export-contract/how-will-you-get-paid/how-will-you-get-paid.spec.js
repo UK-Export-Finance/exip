@@ -72,19 +72,19 @@ context('Insurance - Export contract - How will you get paid page - As an export
     });
 
     it(`renders ${FIELD_ID} hint and textarea`, () => {
-      const fieldStrings = FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[FIELD_ID];
+      const { HINT } = FIELD_STRINGS.HOW_WILL_YOU_GET_PAID[FIELD_ID];
 
-      cy.checkText(field.hint.intro(), fieldStrings.HINT.INTRO);
+      cy.checkText(field.hint.intro(), HINT.INTRO);
 
-      cy.checkText(field.hint.list.item1(), fieldStrings.HINT.LIST[0]);
-      cy.checkText(field.hint.list.item2(), fieldStrings.HINT.LIST[1]);
-      cy.checkText(field.hint.list.item3(), fieldStrings.HINT.LIST[2]);
+      cy.checkText(field.hint.list.item1(), HINT.LIST[0]);
+      cy.checkText(field.hint.list.item2(), HINT.LIST[1]);
+      cy.checkText(field.hint.list.item3(), HINT.LIST[2]);
 
-      cy.checkText(field.hint.outro(), fieldStrings.HINT.OUTRO);
+      cy.checkText(field.hint.outro(), HINT.OUTRO);
 
       cy.assertTextareaRendering({
         fieldId: FIELD_ID,
-        maximumCharacters: fieldStrings.MAXIMUM,
+        maximumCharacters: MAXIMUM_CHARACTERS.PAYMENT_TERMS_DESCRIPTION,
       });
     });
 
