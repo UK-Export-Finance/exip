@@ -61,6 +61,7 @@ const update = async ({ context, applicationId, data }: TestHelperApplicationUpd
     const application = (await context.query.Application.updateOne({
       where: { id: applicationId },
       data,
+      query: 'id updatedAt',
     })) as Application;
 
     return application;

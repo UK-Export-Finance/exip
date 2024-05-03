@@ -23,6 +23,7 @@ const mapInactiveApplications = (applications: Array<Application>) => {
       data: {
         status: APPLICATION.STATUS.ABANDONED,
         previousStatus: application.status,
+        updatedAt: new Date(),
       },
     } as CronApplicationInactiveUpdate;
 
