@@ -25,7 +25,7 @@ describe('controllers/insurance/your-buyer/validation/organisation-name', () => 
   it('should return the result of providedAndMaxLength', () => {
     const result = companyOrOrganisationNameRules(mockBody, mockErrors);
 
-    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.BUYER_COMPANY_OR_ORGANISATION);
+    const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER);
 
     expect(result).toEqual(expected);
   });

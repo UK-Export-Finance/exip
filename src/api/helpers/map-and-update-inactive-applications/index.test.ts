@@ -30,11 +30,13 @@ describe('helpers/map-and-update-inactive-applications', () => {
 
       const expected = await context.query.Application.findOne({
         where: { id: application.id },
-        query: 'id status previousStatus',
+        query: 'id status previousStatus updatedAt',
       });
 
       expect(expected.status).toEqual(ABANDONED);
       expect(expected.previousStatus).toEqual(IN_PROGRESS);
+      expect(expected.updatedAt).not.toEqual(application.updatedAt);
+      expect(new Date(expected.updatedAt).getTime()).toBeGreaterThan(new Date(application.updatedAt).getTime());
     });
   });
 });

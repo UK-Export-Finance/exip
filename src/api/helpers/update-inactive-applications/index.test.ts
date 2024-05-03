@@ -1,13 +1,13 @@
 import updateInactiveApplicationsMutation from '.';
-import getKeystoneContext from '../../../test-helpers/get-keystone-context';
-import { createFullApplication } from '../../../test-helpers';
-import { APPLICATION, DATE_2_MONTHS_IN_THE_PAST } from '../../../constants';
-import applications from '../../../test-helpers/applications';
-import { Application, Context } from '../../../types';
+import getKeystoneContext from '../../test-helpers/get-keystone-context';
+import { createFullApplication } from '../../test-helpers';
+import { APPLICATION, DATE_2_MONTHS_IN_THE_PAST } from '../../constants';
+import applications from '../../test-helpers/applications';
+import { Application, Context } from '../../types';
 
 const { IN_PROGRESS, ABANDONED } = APPLICATION.STATUS;
 
-describe('custom-resolvers/update-inactive-applications', () => {
+describe('helpers/update-inactive-applications', () => {
   let context: Context;
   let application: Application;
 
@@ -18,7 +18,7 @@ describe('custom-resolvers/update-inactive-applications', () => {
   beforeEach(async () => {
     application = await createFullApplication(context);
 
-    await applications.update({ context, applicationId: application.id, data: { updatedAt: DATE_2_MONTHS_IN_THE_PAST() } });
+    application = await applications.update({ context, applicationId: application.id, data: { updatedAt: DATE_2_MONTHS_IN_THE_PAST() } });
   });
 
   afterAll(() => {
@@ -37,11 +37,13 @@ describe('custom-resolvers/update-inactive-applications', () => {
 
       const expected = await context.query.Application.findOne({
         where: { id: application.id },
-        query: 'id status previousStatus',
+        query: 'id status previousStatus updatedAt',
       });
 
       expect(expected.status).toEqual(ABANDONED);
       expect(expected.previousStatus).toEqual(IN_PROGRESS);
+      expect(expected.updatedAt).not.toEqual(application.updatedAt);
+      expect(new Date(expected.updatedAt).getTime()).toBeGreaterThan(new Date(application.updatedAt).getTime());
     });
   });
 

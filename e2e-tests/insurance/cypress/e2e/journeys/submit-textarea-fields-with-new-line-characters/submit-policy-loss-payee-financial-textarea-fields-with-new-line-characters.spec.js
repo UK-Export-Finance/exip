@@ -35,7 +35,7 @@ context('Insurance - Textarea fields - Loss payee financial details textarea fie
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
       cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
       nominatedLossPayeeUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;

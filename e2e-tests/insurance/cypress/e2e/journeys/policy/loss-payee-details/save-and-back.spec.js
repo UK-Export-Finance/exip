@@ -38,7 +38,7 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 
@@ -62,12 +62,12 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
   });
 
   describe(`when entering a value for ${NAME}`, () => {
-    it('should redirect to `all sections` and keep the `insurance policy` task status to `in progress`', () => {
+    it('should redirect to `all sections` and retain the `insurance policy` task status as `in progress`', () => {
       cy.navigateToUrl(url);
 
       cy.keyboardInput(field(NAME).input(), POLICY[NAME]);
@@ -76,7 +76,7 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {
@@ -107,7 +107,7 @@ context('Insurance - Policy - Loss payee details page - Save and back', () => {
 
       cy.assertAllSectionsUrl(referenceNumber);
 
-      cy.checkTaskPolicyStatusIsComplete();
+      cy.checkTaskPolicyStatusIsInProgress();
     });
 
     it('should retain all the relevant fields on the page', () => {

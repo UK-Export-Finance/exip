@@ -27,19 +27,23 @@ describe('helpers/map-inactive-applications', () => {
     it('should return a populated array', () => {
       const result = mapAndGenerateInactiveApplicationsSaveArray(applications);
 
+      const [application0, application1] = applications;
+
       const expected = [
         {
-          where: { id: applications[0].id },
+          where: { id: application0.id },
           data: {
             status: ABANDONED,
-            previousStatus: applications[0].status,
+            previousStatus: application0.status,
+            updatedAt: new Date(),
           },
         },
         {
-          where: { id: applications[1].id },
+          where: { id: application1.id },
           data: {
             status: ABANDONED,
-            previousStatus: applications[1].status,
+            previousStatus: application1.status,
+            updatedAt: new Date(),
           },
         },
       ];

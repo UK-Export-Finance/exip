@@ -1,6 +1,7 @@
 import hasFormData from '../../../../../helpers/has-form-data';
-import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
+import mapSubmittedData from '../../map-submitted-data/broker';
 import save from '../../save-data/broker';
+import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
  * maps broker request and calls save function
@@ -13,12 +14,14 @@ import save from '../../save-data/broker';
 const broker = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
+      const populatedData = mapSubmittedData(formBody);
+
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.broker(application, formBody, validationErrors.errorList);
+        saveResponse = await save.broker(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.broker(application, formBody);
+        saveResponse = await save.broker(application, populatedData);
       }
 
       if (!saveResponse) {

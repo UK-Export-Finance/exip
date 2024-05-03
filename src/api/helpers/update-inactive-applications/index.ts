@@ -1,10 +1,10 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { SuccessResponse } from '../../../types';
-import getInactiveApplications from '../../../helpers/get-inactive-applications';
-import mapAndUpdateInactiveApplications from '../../../helpers/map-and-update-inactive-applications';
+import { SuccessResponse } from '../../types';
+import getInactiveApplications from '../get-inactive-applications';
+import mapAndUpdateInactiveApplications from '../map-and-update-inactive-applications';
 
 /**
- * getInactiveApplications
+ * updateInactiveApplications
  * Gets inactive applications which have not been updated for 30 days
  * Sets their status to Abandoned
  * returns success flag
@@ -12,7 +12,7 @@ import mapAndUpdateInactiveApplications from '../../../helpers/map-and-update-in
  * @param {Context} KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
-const updateInactiveApplicationsMutation = async (root: any, context: Context): Promise<SuccessResponse> => {
+const updateInactiveApplications = async (root: any, context: Context): Promise<SuccessResponse> => {
   try {
     console.info('Getting and updating inactive applications');
 
@@ -37,4 +37,4 @@ const updateInactiveApplicationsMutation = async (root: any, context: Context): 
   }
 };
 
-export default updateInactiveApplicationsMutation;
+export default updateInactiveApplications;

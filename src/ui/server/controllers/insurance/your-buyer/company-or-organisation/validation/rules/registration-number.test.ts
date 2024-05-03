@@ -1,7 +1,8 @@
-import registrationNumber, { MAXIMUM } from './registration-number';
+import registrationNumber from './registration-number';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { mockErrors } from '../../../../../../test-mocks';
 import { RequestBody } from '../../../../../../../types';
 
@@ -22,14 +23,14 @@ describe('controllers/insurance/your-buyer/company-or-organisation/validation/ru
     [FIELD_ID]: '',
   } as RequestBody;
 
-  describe(`when the ${FIELD_ID} input is over ${MAXIMUM} characters`, () => {
-    it('should return the result of "maxLengthValidation"', () => {
-      const mockValue = Number(MAXIMUM) + 1;
+  describe(`when the ${FIELD_ID} input is over ${MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER} characters`, () => {
+    it('should return the result of maxLengthValidation', () => {
+      const mockValue = Number(MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER) + 1;
 
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
       const response = registrationNumber(mockBody, mockErrors);
 
-      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM);
+      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, mockErrors, MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER);
 
       expect(response).toEqual(expected);
     });

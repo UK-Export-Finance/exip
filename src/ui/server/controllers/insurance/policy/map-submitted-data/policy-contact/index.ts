@@ -2,6 +2,7 @@ import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/polic
 import ACCOUNT_FIELD_IDS from '../../../../../constants/field-ids/insurance/account';
 import hasPolicyContactChanged from '../../../../../helpers/has-policy-contact-changed';
 import isPolicyContactDataSameAsOwner from '../../../../../helpers/is-policy-contact-data-same-as-owner';
+import { isEmptyString } from '../../../../../helpers/string';
 import { RequestBody, Application, ApplicationPolicyContact } from '../../../../../../types';
 
 const {
@@ -66,7 +67,7 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
    * If NAME is an empty string,
    * Delete the field.
    */
-  if (populatedData[NAME] === '') {
+  if (isEmptyString(populatedData[NAME])) {
     delete populatedData[NAME];
   }
 
