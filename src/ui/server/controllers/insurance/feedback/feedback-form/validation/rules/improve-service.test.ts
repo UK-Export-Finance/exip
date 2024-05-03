@@ -17,7 +17,7 @@ describe('controllers/insurance/feedback/feedback-form/validation/rules/improve-
   } as RequestBody;
 
   describe(`when the ${FIELD_ID} input is over ${MAXIMUM} characters`, () => {
-    it('should return the result of "maxLengthValidation"', () => {
+    it('should return the result of maxLengthValidation', () => {
       const mockValue = Number(MAXIMUM) + 1;
 
       mockBody[FIELD_ID] = 'a'.repeat(mockValue);
