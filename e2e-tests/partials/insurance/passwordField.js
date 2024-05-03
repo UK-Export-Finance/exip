@@ -12,7 +12,7 @@ const passwordField = {
     listItem3: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-3"]`),
     listItem4: () => cy.get(`[data-cy="${PASSWORD}-hint-list-item-4"]`),
   },
-  revealButton: () => cy.get('.moj-password-reveal__button'),
+  revealButton: () => cy.get('.govuk-js-password-input-toggle'),
 };
 
 export default passwordField;

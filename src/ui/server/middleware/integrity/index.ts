@@ -1,7 +1,7 @@
 import { Request, Response } from '../../../types';
 import { INTEGRITY } from '../../constants';
 
-const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, ACCESSIBILITY } = INTEGRITY;
 
 /**
  * Middleware function that adds integrity values to the res.locals.SRI object.
@@ -15,7 +15,6 @@ export const integrity = (req: Request, res: Response, next: () => void) => {
   const SRI = {
     JS,
     ACCESSIBILITY,
-    MOJ,
     GOVUK,
     FORM,
     COOKIES,
