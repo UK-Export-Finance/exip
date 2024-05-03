@@ -134,4 +134,4 @@ export const mockRes = () => {
   return res;
 };
 
-export const mockSpyPromise = jest.fn(() => Promise.resolve({}));
+export const mockSpyPromise = jest.fn().mockResolvedValue({});
