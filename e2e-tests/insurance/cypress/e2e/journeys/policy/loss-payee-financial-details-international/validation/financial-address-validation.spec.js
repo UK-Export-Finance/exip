@@ -27,7 +27,7 @@ context('Insurance - Policy - Loss Payee Financial Details International - Finan
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
       cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`;

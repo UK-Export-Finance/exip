@@ -231,10 +231,21 @@ var POLICY = {
   },
   LOSS_PAYEE_DETAILS: {
     NAME: "name",
+    LOSS_PAYEE_NAME: "lossPayee.name",
     LOCATION: "location",
     IS_LOCATED_IN_UK: "isLocatedInUk",
     IS_LOCATED_INTERNATIONALLY: "isLocatedInternationally"
-  }
+  },
+  LOSS_PAYEE_FINANCIAL_UK: {
+    SORT_CODE: "sortCode",
+    ACCOUNT_NUMBER: "accountNumber"
+  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    BIC_SWIFT_CODE: "bicSwiftCode",
+    IBAN: "iban"
+  },
+  FINANCIAL_ADDRESS: "bankAddress",
+  LOSS_PAYEE_FINANCIAL_ADDRESS: "lossPayee.bankAddress"
 };
 var policy_default = POLICY;
 

@@ -43,7 +43,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
 

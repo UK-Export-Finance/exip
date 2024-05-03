@@ -24,6 +24,8 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {Array} otherGroups: Task list groups
  * @param {String} policyType: Application "Policy type"
  * @param {Boolean} isUsingBroker: "Is using broker" flag
+ * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
+ * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
@@ -37,6 +39,8 @@ const createPrepareApplicationTasks = ({
   finalDestinationKnown,
   jointlyInsuredParty,
   isUsingBroker,
+  isAppointingLossPayee,
+  lossPayeeIsLocatedInUk,
   hasDifferentTradingName,
   connectionWithBuyer,
   tradedWithBuyer,
@@ -80,7 +84,13 @@ const createPrepareApplicationTasks = ({
     href: `${INSURANCE_ROOT}/${referenceNumber}${POLICY_ROOT}`,
     title: TASKS.LIST.PREPARE_APPLICATION.TASKS.POLICY,
     id: TASK_IDS.PREPARE_APPLICATION.POLICY,
-    fields: policyRequiredFields({ policyType, jointlyInsuredParty, isUsingBroker }),
+    fields: policyRequiredFields({
+      policyType,
+      jointlyInsuredParty,
+      isUsingBroker,
+      isAppointingLossPayee,
+      lossPayeeIsLocatedInUk,
+    }),
     dependencies,
   };
 

@@ -47,7 +47,7 @@ context('Insurance - Name fields - Loss payee details - Name field should render
       cy.completeAndSubmitPreCreditPeriodForm({});
       cy.completeAndSubmitAnotherCompanyForm({});
       cy.completeAndSubmitBrokerForm({ usingBroker: false });
-      cy.completeAndSubmitLossPayeeForm({ appointingLossPayee: true });
+      cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`;
       financialUkUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`;

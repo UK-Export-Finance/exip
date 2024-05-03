@@ -31,9 +31,13 @@ describe('controllers/insurance/all-sections', () => {
     it('should render template', () => {
       get(req, res);
 
-      const { referenceNumber, policy, exportContract, broker, declaration, company, buyer, totalContractValueOverThreshold } = mockApplication;
+      const { broker, buyer, company, declaration, exportContract } = mockApplication;
+      const { nominatedLossPayee, policy, referenceNumber, totalContractValueOverThreshold } = mockApplication;
 
       const { policyType, jointlyInsuredParty } = policy;
+
+      const { isAppointed: isAppointingLossPayee, isLocatedInUk: lossPayeeIsLocatedInUk } = nominatedLossPayee;
+
       const {
         finalDestinationKnown,
         privateMarket: { attempted: attemptedPrivateMarketCover },
@@ -45,6 +49,7 @@ describe('controllers/insurance/all-sections', () => {
           },
         },
       } = exportContract;
+
       const { isUsingBroker } = broker;
       const { hasDifferentTradingName } = company;
       const { hasAntiBriberyCodeOfConduct } = declaration;
@@ -60,6 +65,8 @@ describe('controllers/insurance/all-sections', () => {
         finalDestinationKnown,
         jointlyInsuredParty.requested,
         isUsingBroker,
+        isAppointingLossPayee,
+        lossPayeeIsLocatedInUk,
         hasDifferentTradingName,
         hasAntiBriberyCodeOfConduct,
         exporterIsConnectedWithBuyer,

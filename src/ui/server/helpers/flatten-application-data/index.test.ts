@@ -1,4 +1,4 @@
-import flattenApplicationData, { mapPolicyContact, mapBroker, mapExportContractAgentDetails } from '.';
+import flattenApplicationData, { mapBroker, mapExportContractAgentDetails, mapPolicyContact, mapNominatedLossPayee } from '.';
 import INSURANCE_FIELD_IDS from '../../constants/field-ids/insurance';
 import getTrueAndFalseAnswers from '../get-true-and-false-answers';
 import { mockApplication, referenceNumber } from '../../test-mocks';
@@ -8,6 +8,10 @@ const {
     NAME_ON_POLICY: { IS_SAME_AS_OWNER, POSITION, POLICY_CONTACT_EMAIL },
     USING_BROKER,
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
+    FINANCIAL_ADDRESS,
+    LOSS_PAYEE: { IS_APPOINTED },
+    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+    LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
   EXPORT_CONTRACT: {
     AGENT_DETAILS: { AGENT_NAME, AGENT_FULL_ADDRESS, AGENT_COUNTRY_CODE, COUNTRY_CODE },
@@ -15,29 +19,14 @@ const {
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-const { broker, business, buyer, company, declaration, exportContract, nominatedLossPayee, policy, policyContact, sectionReview } = mockApplication;
+const { broker, business, buyer, company, declaration, exportContract } = mockApplication;
+const { nominatedLossPayee, policy, policyContact, sectionReview } = mockApplication;
+
 const { buyerTradingHistory, contact, relationship } = mockApplication.buyer;
 
 describe('server/helpers/flatten-application-data', () => {
-  describe('mapPolicyContact', () => {
-    it('should return mapped policy contact fields', () => {
-      const result = mapPolicyContact(policyContact);
-
-      const expected = {
-        id: policyContact.id,
-        [IS_SAME_AS_OWNER]: policyContact[IS_SAME_AS_OWNER],
-        [FIRST_NAME]: policyContact[FIRST_NAME],
-        [LAST_NAME]: policyContact[LAST_NAME],
-        [POLICY_CONTACT_EMAIL]: policyContact[EMAIL],
-        [POSITION]: policyContact[POSITION],
-      };
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   describe('mapBroker', () => {
-    it('should return mapped broker fields', () => {
+    it('should return mapped broker IDs', () => {
       const result = mapBroker(broker);
 
       const expected = {
@@ -53,7 +42,7 @@ describe('server/helpers/flatten-application-data', () => {
   });
 
   describe('mapExportContractAgentDetails', () => {
-    it('should return mapped export contract agent fields', () => {
+    it('should return mapped export contract agent IDs', () => {
       const result = mapExportContractAgentDetails(exportContract.agent);
 
       const expected = {
@@ -65,6 +54,61 @@ describe('server/helpers/flatten-application-data', () => {
       };
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('mapPolicyContact', () => {
+    it('should return mapped policy contact IDs', () => {
+      const result = mapPolicyContact(policyContact);
+
+      const expected = {
+        id: policyContact.id,
+        [IS_SAME_AS_OWNER]: policyContact[IS_SAME_AS_OWNER],
+        [FIRST_NAME]: policyContact[FIRST_NAME],
+        [LAST_NAME]: policyContact[LAST_NAME],
+        [POLICY_CONTACT_EMAIL]: policyContact[EMAIL],
+        [POSITION]: policyContact[POSITION],
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('mapNominatedLossPayee', () => {
+    describe(`when ${IS_APPOINTED} is true`, () => {
+      it('should return mapped loss payee IDs', () => {
+        const nominatedLossPayeeAppointedTrue = {
+          ...nominatedLossPayee,
+          [IS_APPOINTED]: true,
+        };
+
+        const result = mapNominatedLossPayee(nominatedLossPayeeAppointedTrue);
+
+        const expected = {
+          ...nominatedLossPayeeAppointedTrue,
+          [IS_APPOINTED]: true,
+          [LOSS_PAYEE_NAME]: nominatedLossPayeeAppointedTrue[NAME],
+          ...nominatedLossPayeeAppointedTrue.financialUk,
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayeeAppointedTrue.financialUk[FINANCIAL_ADDRESS],
+          ...nominatedLossPayeeAppointedTrue.financialInternational,
+          ...getTrueAndFalseAnswers(nominatedLossPayeeAppointedTrue),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_APPOINTED} is false`, () => {
+      it(`should return an object with only ${IS_APPOINTED}`, () => {
+        const result = mapNominatedLossPayee({
+          ...nominatedLossPayee,
+          [IS_APPOINTED]: false,
+        });
+
+        const expected = { [IS_APPOINTED]: false };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
@@ -100,9 +144,7 @@ describe('server/helpers/flatten-application-data', () => {
         ...exportContract.agent.service,
         ...getTrueAndFalseAnswers(exportContract.agent.service),
         ...exportContract.agent.service.charge,
-        // TODO: EMS-2772, EMS-2815
-        // ...nominatedLossPayee,
-        ...getTrueAndFalseAnswers(nominatedLossPayee),
+        ...mapNominatedLossPayee(nominatedLossPayee),
         ...relationship,
         ...policy,
         ...policy.jointlyInsuredParty,
