@@ -22,7 +22,7 @@ const {
   TYPE_OF_POLICY,
   USING_BROKER,
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+  LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, LOCATION },
   LOSS_PAYEE_FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
 } = POLICY_FIELD_IDS;
@@ -147,13 +147,13 @@ describe('server/helpers/required-fields/policy', () => {
 
   describe('lossPayeeTasks', () => {
     describe('when isAppointingLossPayee is true, lossPayeeIsLocatedInUk is false', () => {
-      it('should return a field id in an array', () => {
+      it('should return multiple field ids in an array', () => {
         const isAppointingLossPayee = true;
         const lossPayeeIsLocatedInUk = false;
 
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
 
-        const expected = [IS_APPOINTED];
+        const expected = [LOSS_PAYEE_NAME, LOCATION];
 
         expect(result).toEqual(expected);
       });
@@ -166,7 +166,7 @@ describe('server/helpers/required-fields/policy', () => {
 
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
 
-        const expected = [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
+        const expected = [LOSS_PAYEE_NAME, LOCATION, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
 
         expect(result).toEqual(expected);
       });
