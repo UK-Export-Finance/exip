@@ -77,7 +77,6 @@ export const mapPolicyContact = (policyContact: ApplicationPolicyContact) => ({
  * @returns {Object} ApplicationNominatedLossPayee with slightly different field IDs
  */
 export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLossPayee) => {
-
   if (nominatedLossPayee[IS_APPOINTED]) {
     const mapped = {
       ...nominatedLossPayee,
