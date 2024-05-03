@@ -18,6 +18,7 @@ import {
   mockCountries,
   mockCurrenciesResponse,
   mockCurrenciesEmptyResponse,
+  mockNominatedLossPayee,
   referenceNumber,
 } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
@@ -81,7 +82,7 @@ describe('controllers/insurance/policy/check-your-answers', () => {
         ...exportContract,
       };
 
-      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, referenceNumber, mockCurrencies, mockCountries);
+      const summaryLists = policySummaryLists(answers, mockContact, mockBroker, mockNominatedLossPayee, referenceNumber, mockCurrencies, mockCountries);
 
       const expectedVariables = {
         ...insuranceCorePageVariables({

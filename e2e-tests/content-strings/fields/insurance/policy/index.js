@@ -277,12 +277,20 @@ export const POLICY_FIELDS = {
           'A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.',
         OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant.",
       },
+      SUMMARY: {
+        TITLE: 'Appointed a loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
   },
   LOSS_PAYEE_DETAILS: {
     [LOSS_PAYEE_NAME]: {
       LABEL: 'Name of the loss payee',
       MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
+      SUMMARY: {
+        TITLE: 'Name of the loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [LOCATION]: {
       LABEL: 'Where is the loss payee located?',

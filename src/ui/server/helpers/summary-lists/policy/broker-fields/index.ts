@@ -27,7 +27,7 @@ const {
 
 /**
  * optionalBrokerFields
- * if yes selected for broker, populates and returns optional fields in an array
+ * If USING_BROKER is true, populates and return optional fields.
  * @param {ApplicationBroker} answers: Broker answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section

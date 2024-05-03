@@ -18,6 +18,7 @@ import mockApplication, {
   mockCompanyDifferentTradingAddress,
   mockExportContractAgentService,
   mockExportContractAgentServiceCharge,
+  mockNominatedLossPayee,
   referenceNumber,
 } from './mock-application';
 import mockApplications from './mock-applications';
@@ -37,7 +38,6 @@ import mockJointlyInsuredParty from './mock-jointly-insured-party';
 import mockLossPayeeDetails from './mock-loss-payee-details';
 import mockLossPayeeFinancialDetailsInternational from './mock-loss-payee-financial-details-international';
 import mockLossPayeeFinancialDetailsUk from './mock-loss-payee-financial-details-uk';
-import mockNominatedLossPayee from './mock-nominated-loss-payee';
 import mockContact from './mock-contact';
 import mockValidEmail from './mock-valid-email';
 import { Request, Response } from '../../types';
