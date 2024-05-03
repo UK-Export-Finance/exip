@@ -108,12 +108,15 @@ describe('server/helpers/flatten-application-data', () => {
       it('should return mapped loss payee contact IDs', () => {
         const result = mapNominatedLossPayee({
           ...nominatedLossPayee,
+          [IS_APPOINTED]: true,
           [IS_LOCATED_IN_UK]: false,
           [IS_LOCATED_INTERNATIONALLY]: true,
         });
 
         const expected = {
           ...expectedGenericIds,
+          [IS_APPOINTED]: true,
+          [IS_LOCATED_INTERNATIONALLY]: true,
           [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
         };
 

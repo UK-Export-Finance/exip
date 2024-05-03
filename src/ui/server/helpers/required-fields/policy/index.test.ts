@@ -191,11 +191,11 @@ describe('server/helpers/required-fields/policy', () => {
       it('should return a field id in an array', () => {
         const isAppointingLossPayee = true;
         const lossPayeeIsLocatedInUk = false;
-        const lossPayeeIsLocatedInternationally = true;
+        const lossPayeeIsLocatedInternationally = false;
 
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk, lossPayeeIsLocatedInternationally);
 
-        const expected = [LOSS_PAYEE_NAME];
+        const expected = [LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK];
 
         expect(result).toEqual(expected);
       });
