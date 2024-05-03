@@ -42,7 +42,7 @@ import mockContact from './mock-contact';
 import mockValidEmail from './mock-valid-email';
 import { Request, Response } from '../../types';
 
-const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, MOJ, ACCESSIBILITY } = INTEGRITY;
+const { JS, GOVUK, FORM, COOKIES, GA, GA_TAG_MANAGER, ACCESSIBILITY } = INTEGRITY;
 
 const mockNext = jest.fn();
 
@@ -98,7 +98,6 @@ const mockRes = () => {
     SRI: {
       JS,
       ACCESSIBILITY,
-      MOJ,
       GOVUK,
       FORM,
       COOKIES,
