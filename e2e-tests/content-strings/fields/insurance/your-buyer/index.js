@@ -73,6 +73,7 @@ export const YOUR_BUYER_FIELDS = {
   },
   [CONNECTION_WITH_BUYER_DESCRIPTION]: {
     LABEL: 'Describe the connection with the buyer',
+    MAXIMUM: MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION,
     SUMMARY: {
       TITLE: 'Details of connection',
       FORM_TITLE: CONNECTION_TO_BUYER,
