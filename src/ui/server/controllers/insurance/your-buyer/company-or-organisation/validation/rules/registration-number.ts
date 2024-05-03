@@ -1,8 +1,8 @@
-import { ERROR_MESSAGES } from '../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { YOUR_BUYER_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/your-buyer';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { objectHasProperty } from '../../../../../../helpers/object';
+import maxLengthValidation from '../../../../../../shared-validation/max-length';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -17,8 +17,6 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE;
 
-export const MAXIMUM = Number(FIELDS.COMPANY_OR_ORGANISATION[FIELD_ID].MAXIMUM);
-
 /**
  * validate the REGISTRATION_NUMBER field
  * check if answer has been provided and if so, check it is not over a maximum length.
@@ -28,7 +26,7 @@ export const MAXIMUM = Number(FIELDS.COMPANY_OR_ORGANISATION[FIELD_ID].MAXIMUM);
  */
 const registrationNumber = (formBody: RequestBody, errors: object) => {
   if (objectHasProperty(formBody, FIELD_ID)) {
-    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM);
+    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE, errors, MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER);
   }
 
   return errors;
