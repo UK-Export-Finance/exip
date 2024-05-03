@@ -1,8 +1,8 @@
 import { noRadio, field as fieldSelector } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 
 const {
   ROOT,
@@ -12,10 +12,6 @@ const {
 const {
   NEED_PRE_CREDIT_PERIOD, CREDIT_PERIOD_WITH_BUYER: FIELD_ID,
 } = POLICY_FIELD_IDS;
-
-const {
-  [FIELD_ID]: { MAXIMUM },
-} = FIELDS;
 
 const POLICY_ERROR_MESSAGES = ERROR_MESSAGES.INSURANCE.POLICY;
 
@@ -90,7 +86,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
     it(`should render a validation error when ${FIELD_ID} is above the maximum`, () => {
       cy.submitAndAssertFieldErrors({
         field: textareaField,
-        value: 'a'.repeat(MAXIMUM + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER + 1),
         expectedErrorMessage: POLICY_ERROR_MESSAGES[FIELD_ID].ABOVE_MAXIMUM,
       });
     });

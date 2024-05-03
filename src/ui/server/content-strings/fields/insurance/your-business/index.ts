@@ -65,7 +65,7 @@ export const FIELDS = {
     [GOODS_OR_SERVICES]: {
       LABEL: 'Tell us about your business',
       HINT: "Give us an overview of the work you do, as well as the products or services you're getting credit insurance for.",
-      MAXIMUM: 1000,
+      MAXIMUM: MAXIMUM_CHARACTERS.BUSINESS.GOODS_OR_SERVICES_DESCRIPTION,
       SUMMARY: {
         TITLE: 'Goods or services your business supplies',
         FORM_TITLE: NATURE_OF_BUSINESS,

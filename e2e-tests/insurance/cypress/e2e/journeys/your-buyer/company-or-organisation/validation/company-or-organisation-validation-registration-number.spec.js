@@ -1,8 +1,8 @@
 import { field as fieldSelector } from '../../../../../../../pages/shared';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
-import { YOUR_BUYER_FIELDS as FIELD_STRINGS } from '../../../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
   COMPANY_OR_ORGANISATION: {
@@ -22,8 +22,6 @@ const {
   ROOT: INSURANCE_ROOT,
   YOUR_BUYER: { COMPANY_OR_ORGANISATION },
 } = INSURANCE_ROUTES;
-
-const { MAXIMUM } = FIELD_STRINGS.COMPANY_OR_ORGANISATION[FIELD_ID];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -56,7 +54,7 @@ context('Insurance - Your Buyer - Company or organisation page - form validation
   it('should render a validation error and retain the submitted value when address is above the maximum', () => {
     cy.submitAndAssertFieldErrors({
       field: fieldSelector(FIELD_ID),
-      value: 'a'.repeat(MAXIMUM + 1),
+      value: 'a'.repeat(MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER + 1),
       errorIndex: 2,
       expectedErrorsCount: 3,
       expectedErrorMessage: COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID].ABOVE_MAXIMUM,

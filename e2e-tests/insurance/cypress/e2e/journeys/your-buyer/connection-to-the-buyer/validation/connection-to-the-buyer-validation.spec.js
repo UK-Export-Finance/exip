@@ -1,8 +1,8 @@
 import { field, noRadioInput } from '../../../../../../../pages/shared';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
-import { YOUR_BUYER_FIELDS } from '../../../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
   CONNECTION_WITH_BUYER,
@@ -19,8 +19,6 @@ const {
   ROOT: INSURANCE_ROOT,
   YOUR_BUYER: { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER_ROUTE },
 } = INSURANCE_ROUTES;
-
-const { MAXIMUM } = YOUR_BUYER_FIELDS[CONNECTION_WITH_BUYER_DESCRIPTION];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -89,7 +87,7 @@ context('Insurance - Your Buyer - Connection to the buyer page - form validation
     it(`should render a validation error and retain the submitted value when ${fieldId} is above the maximum`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: 'a'.repeat(MAXIMUM + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION + 1),
         expectedErrorMessage: ERRORS[fieldId].ABOVE_MAXIMUM,
       });
     });
