@@ -19,7 +19,7 @@ describe('api/helpers/get-inactive-applications', () => {
   });
 
   beforeEach(async () => {
-    applicationArray = await createMultipleFullApplications(context);
+    applicationArray = await createMultipleFullApplications(context, 6);
   });
 
   describe('no inactive applications', () => {
