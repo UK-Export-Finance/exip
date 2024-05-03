@@ -57,7 +57,7 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
       data: accountData,
     });
 
-    // creates account status with links to account
+    // creates account status relationship
     await context.db.AccountStatus.createOne({
       data: {
         account: {

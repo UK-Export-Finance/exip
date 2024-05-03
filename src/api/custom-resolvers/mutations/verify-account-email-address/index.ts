@@ -35,7 +35,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
      * Without this, if this resolver is called more than once,
      * and an account becomes verified, it would return success=false.
      */
-    if (account.accountStatus.isVerified) {
+    if (account.status.isVerified) {
       console.info('Account email address is already verified');
 
       return {
@@ -44,7 +44,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     }
 
     const { id } = account;
-    const { id: accountStatusId } = account.accountStatus;
+    const { id: statusId } = account.status;
 
     /**
      * Check if the verification period has expired.
@@ -74,12 +74,12 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       verificationExpiry: null,
     };
 
-    const accountStatusUpdate = {
+    const statusUpdate = {
       isVerified: true,
     };
 
     await update.account(context, id, accountUpdate);
-    await update.accountStatus(context, accountStatusId, accountStatusUpdate);
+    await update.accountStatus(context, statusId, statusUpdate);
 
     return {
       success: true,

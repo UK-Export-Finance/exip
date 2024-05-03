@@ -12,7 +12,7 @@ describe('helpers/update-account', () => {
     context = getKeystoneContext();
   });
 
-  const { accountStatus: accountStatusData, ...mockAccountUpdate } = mockAccount;
+  const { status: accountStatusData, ...mockAccountUpdate } = mockAccount;
 
   beforeEach(async () => {
     // create a new account
@@ -67,35 +67,31 @@ describe('helpers/update-account', () => {
       isBlocked: true,
     };
 
-    await update.accountStatus(context, account.accountStatus.id, accountUpdate);
+    await update.accountStatus(context, account.status.id, accountUpdate);
 
     account = await accounts.get(context, account.id);
 
-    const { accountStatus } = account;
+    const { status } = account;
 
-    expect(accountStatus.isBlocked).toEqual(true);
-    expect(accountStatus.isVerified).toEqual(true);
-    expect(accountStatus.isInactivated).toEqual(false);
+    expect(status.isBlocked).toEqual(true);
+    expect(status.isVerified).toEqual(true);
+    expect(status.isInactive).toEqual(false);
+    expect(new Date(status.updatedAt).getHours()).toEqual(new Date().getHours());
+    expect(new Date(status.updatedAt).getMinutes()).toEqual(new Date().getMinutes());
   });
 
   describe('when an accountStatus is not found', () => {
     beforeEach(async () => {
       // delete the account so it will not be found
       await context.query.AccountStatus.deleteOne({
-        where: { id: account.accountStatus.id },
+        where: { id: account.status.id },
       });
     });
 
     it('should throw an error', async () => {
-      try {
-        await update.accountStatus(context, account.accountStatus.id, {});
-      } catch (err) {
-        const expectedKeystoneError = 'Access denied: You cannot update that AccountStatus - it may not exist';
+      const expectedKeystoneError = 'Access denied: You cannot update that AccountStatus - it may not exist';
 
-        const expected = new Error(`Updating account status ${expectedKeystoneError}`);
-
-        expect(err).toEqual(expected);
-      }
+      await expect(update.accountStatus(context, account.status.id, {})).rejects.toThrow(new Error(`Updating account status ${expectedKeystoneError}`));
     });
   });
 });

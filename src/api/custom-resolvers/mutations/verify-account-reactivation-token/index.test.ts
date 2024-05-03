@@ -25,7 +25,7 @@ const {
   },
 } = FIELD_IDS;
 
-const { accountStatus, ...mockAccountUpdate } = mockAccount;
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/verify-account-reactivation-token', () => {
   let context: Context;
@@ -63,11 +63,11 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     };
 
     account = await accounts.create({ context, data: unverifiedAndBlockedAccount });
-    await accountStatusHelper.update(context, account.accountStatus.id, { [IS_VERIFIED]: false, [IS_BLOCKED]: true });
+    await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: false, [IS_BLOCKED]: true });
     account = await accounts.get(context, account.id);
 
-    expect(account.accountStatus.isVerified).toEqual(false);
-    expect(account.accountStatus.isBlocked).toEqual(true);
+    expect(account.status.isVerified).toEqual(false);
+    expect(account.status.isBlocked).toEqual(true);
 
     /**
      * Create an authentication entry
@@ -97,11 +97,11 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   test(`should update the account to be ${IS_BLOCKED}=false`, () => {
-    expect(account.accountStatus[IS_BLOCKED]).toEqual(false);
+    expect(account.status[IS_BLOCKED]).toEqual(false);
   });
 
   test(`should update the account to be ${IS_VERIFIED}=true`, () => {
-    expect(account.accountStatus[IS_VERIFIED]).toEqual(true);
+    expect(account.status[IS_VERIFIED]).toEqual(true);
   });
 
   test(`should remove ${REACTIVATION_HASH} from the account`, () => {
@@ -129,7 +129,7 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       };
 
       account = await accounts.create({ context, data: accountBlockedAndReactivationExpired });
-      await accountStatusHelper.update(context, account.accountStatus.id, { [IS_BLOCKED]: true });
+      await accountStatusHelper.update(context, account.status.id, { [IS_BLOCKED]: true });
       // get updated account
       account = await accounts.get(context, account.id);
 

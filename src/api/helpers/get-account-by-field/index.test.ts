@@ -31,9 +31,9 @@ describe('helpers/get-account-by-field', () => {
   it('should return an accountStatus', async () => {
     const result = (await getAccountByField(context, field, value)) as Account;
 
-    expect(result.accountStatus.isBlocked).toEqual(false);
-    expect(result.accountStatus.isVerified).toEqual(false);
-    expect(result.accountStatus.isInactivated).toEqual(false);
+    expect(result.status.isBlocked).toEqual(false);
+    expect(result.status.isVerified).toEqual(false);
+    expect(result.status.isInactive).toEqual(false);
   });
 
   describe('when an account is not found', () => {

@@ -276,8 +276,8 @@ model Account {
   reactivationHash                 String                @default("")
   reactivationExpiry               DateTime?
   applications                     Application[]         @relation("Account_applications")
-  accountStatus                    AccountStatus?        @relation("Account_accountStatus", fields: [accountStatusId], references: [id])
-  accountStatusId                  String?               @unique @map("accountStatus")
+  status                           AccountStatus?        @relation("Account_status", fields: [statusId], references: [id])
+  statusId                         String?               @unique @map("status")
   from_Application_owner           Application[]         @relation("Application_owner")
   from_AuthenticationRetry_account AuthenticationRetry[] @relation("AuthenticationRetry_account")
   from_Authentication_account      Authentication[]      @relation("Authentication_account")
@@ -287,11 +287,12 @@ model Account {
 }
 
 model AccountStatus {
-  id            String   @id @default(cuid())
-  account       Account? @relation("Account_accountStatus")
-  isVerified    Boolean  @default(false)
-  isBlocked     Boolean  @default(false)
-  isInactivated Boolean  @default(false)
+  id         String    @id @default(cuid())
+  account    Account?  @relation("Account_status")
+  isVerified Boolean   @default(false)
+  isBlocked  Boolean   @default(false)
+  isInactive Boolean   @default(false)
+  updatedAt  DateTime?
 }
 
 model AuthenticationRetry {

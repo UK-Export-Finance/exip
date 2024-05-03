@@ -26,10 +26,10 @@ export const mockAccount = {
   updatedAt: new Date().toISOString(),
   [PASSWORD_RESET_HASH]: 'mockResetHash',
   passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
-  accountStatus: {
+  status: {
     isBlocked: false,
     isVerified: true,
-    isInactivated: false,
+    isInactive: false,
   },
 } as Account;
 

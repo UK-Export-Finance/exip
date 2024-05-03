@@ -26,7 +26,7 @@ const {
   },
 } = FIELD_IDS;
 
-const { accountStatus, ...mockAccountUpdate } = mockAccount;
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/verify-account-email-address', () => {
   let context: Context;
@@ -70,7 +70,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
 
     account = await accounts.create({ context, data: unverifiedAccount });
 
-    expect(account.accountStatus.isVerified).toEqual(false);
+    expect(account.status.isVerified).toEqual(false);
 
     variables.token = verificationHash;
 
@@ -91,7 +91,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   });
 
   test(`should update the account to be ${IS_VERIFIED}=true`, () => {
-    expect(account.accountStatus[IS_VERIFIED]).toEqual(true);
+    expect(account.status[IS_VERIFIED]).toEqual(true);
   });
 
   test(`should remove ${VERIFICATION_HASH} from the account`, () => {
@@ -119,7 +119,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
       };
 
       account = await accounts.create({ context, data: accountVerificationExpired });
-      await accountStatusHelper.update(context, account.accountStatus.id, { [IS_VERIFIED]: false });
+      await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: false });
       // get updated account
       account = await accounts.get(context, account.id);
 
@@ -138,7 +138,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   describe('when an account is already verified', () => {
     test('it should return success=true', async () => {
       account = await accounts.create({ context, data: mockAccountUpdate });
-      await accountStatusHelper.update(context, account.accountStatus.id, { [IS_VERIFIED]: true });
+      await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: true });
       // get updated account
       account = await accounts.get(context, account.id);
 

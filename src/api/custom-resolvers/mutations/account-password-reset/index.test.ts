@@ -18,7 +18,7 @@ const {
   },
 } = ENCRYPTION;
 
-const { accountStatus, ...mockAccountUpdate } = mockAccount;
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/account-password-reset', () => {
   let context: Context;
@@ -107,7 +107,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when the account is blocked', () => {
     test('it should return success=false', async () => {
-      await accountStatusHelper.update(context, account.accountStatus.id, { isBlocked: true });
+      await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
 
       result = await accountPasswordReset({}, variables, context);
 
@@ -129,7 +129,7 @@ describe('custom-resolvers/account-password-reset', () => {
         },
       })) as Account;
 
-      await accountStatusHelper.update(context, account.accountStatus.id, { isBlocked: false });
+      await accountStatusHelper.update(context, account.status.id, { isBlocked: false });
 
       result = await accountPasswordReset({}, variables, context);
 

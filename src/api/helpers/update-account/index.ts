@@ -30,9 +30,9 @@ const account = async (context: Context, accountId: string, updateData: object) 
 /**
  * accountStatus
  * Update an accountStatus
- * @param {Object} KeystoneJS context API
- * @param {String} AccountStatus ID
- * @param {Object} AccountStatus update data
+ * @param {Context} context: KeystoneJS context API
+ * @param {String} accountStatusId: Account status ID
+ * @param {Object} updateData: Update data
  * @returns {Promise<Object>} Updated account
  */
 const accountStatus = async (context: Context, accountStatusId: string, updateData: object) => {
@@ -43,7 +43,10 @@ const accountStatus = async (context: Context, accountStatusId: string, updateDa
       where: {
         id: accountStatusId,
       },
-      data: updateData,
+      data: {
+        ...updateData,
+        updatedAt: new Date(),
+      },
     });
 
     return updatedAccountStatus;

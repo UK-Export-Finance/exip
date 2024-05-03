@@ -1316,7 +1316,7 @@ type Account {
   reactivationExpiry: DateTime
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
-  accountStatus: AccountStatus
+  status: AccountStatus
 }
 
 input AccountWhereUniqueInput {
@@ -1349,7 +1349,7 @@ input AccountWhereInput {
   reactivationHash: StringFilter
   reactivationExpiry: DateTimeNullableFilter
   applications: ApplicationManyRelationFilter
-  accountStatus: AccountStatusWhereInput
+  status: AccountStatusWhereInput
 }
 
 input ApplicationManyRelationFilter {
@@ -1402,7 +1402,7 @@ input AccountUpdateInput {
   reactivationHash: String
   reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForUpdateInput
-  accountStatus: AccountStatusRelateToOneForUpdateInput
+  status: AccountStatusRelateToOneForUpdateInput
 }
 
 input AuthenticationRelateToOneForUpdateInput {
@@ -1457,7 +1457,7 @@ input AccountCreateInput {
   reactivationHash: String
   reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForCreateInput
-  accountStatus: AccountStatusRelateToOneForCreateInput
+  status: AccountStatusRelateToOneForCreateInput
 }
 
 input AuthenticationRelateToOneForCreateInput {
@@ -1485,7 +1485,8 @@ type AccountStatus {
   account: Account
   isVerified: Boolean
   isBlocked: Boolean
-  isInactivated: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
 }
 
 input AccountStatusWhereUniqueInput {
@@ -1500,7 +1501,8 @@ input AccountStatusWhereInput {
   account: AccountWhereInput
   isVerified: BooleanFilter
   isBlocked: BooleanFilter
-  isInactivated: BooleanFilter
+  isInactive: BooleanFilter
+  updatedAt: DateTimeNullableFilter
 }
 
 input BooleanFilter {
@@ -1512,14 +1514,16 @@ input AccountStatusOrderByInput {
   id: OrderDirection
   isVerified: OrderDirection
   isBlocked: OrderDirection
-  isInactivated: OrderDirection
+  isInactive: OrderDirection
+  updatedAt: OrderDirection
 }
 
 input AccountStatusUpdateInput {
   account: AccountRelateToOneForUpdateInput
   isVerified: Boolean
   isBlocked: Boolean
-  isInactivated: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
 }
 
 input AccountStatusUpdateArgs {
@@ -1531,7 +1535,8 @@ input AccountStatusCreateInput {
   account: AccountRelateToOneForCreateInput
   isVerified: Boolean
   isBlocked: Boolean
-  isInactivated: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
 }
 
 type AuthenticationRetry {

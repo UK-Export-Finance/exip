@@ -38,9 +38,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
      */
     const fullAccount = {
       ...account,
-      accountStatus: {
-        ...accountStatus,
-      },
+      status: accountStatus,
     };
 
     return fullAccount;

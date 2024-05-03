@@ -515,13 +515,13 @@ export const lists = {
         ref: 'Application',
         many: true,
       }),
-      accountStatus: relationship({ ref: 'AccountStatus.account' }),
+      status: relationship({ ref: 'AccountStatus.account' }),
     },
     access: allowAll,
   }),
   AccountStatus: {
     fields: {
-      account: relationship({ ref: 'Account.accountStatus' }),
+      account: relationship({ ref: 'Account.status' }),
       isVerified: checkbox({ defaultValue: false }),
       /**
        * isBlocked flag will only be true if the account has:
@@ -529,7 +529,8 @@ export const lists = {
        * - repeatedly attempted password reset request
        */
       isBlocked: checkbox({ defaultValue: false }),
-      isInactivated: checkbox({ defaultValue: false }),
+      isInactive: checkbox({ defaultValue: false }),
+      updatedAt: timestamp(),
     },
     access: allowAll,
   },

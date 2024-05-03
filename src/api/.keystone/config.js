@@ -1434,13 +1434,13 @@ var lists = {
         ref: "Application",
         many: true
       }),
-      accountStatus: (0, import_fields.relationship)({ ref: "AccountStatus.account" })
+      status: (0, import_fields.relationship)({ ref: "AccountStatus.account" })
     },
     access: import_access.allowAll
   }),
   AccountStatus: {
     fields: {
-      account: (0, import_fields.relationship)({ ref: "Account.accountStatus" }),
+      account: (0, import_fields.relationship)({ ref: "Account.status" }),
       isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
       /**
        * isBlocked flag will only be true if the account has:
@@ -1448,7 +1448,8 @@ var lists = {
        * - repeatedly attempted password reset request
        */
       isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
-      isInactivated: (0, import_fields.checkbox)({ defaultValue: false })
+      isInactive: (0, import_fields.checkbox)({ defaultValue: false }),
+      updatedAt: (0, import_fields.timestamp)()
     },
     access: import_access.allowAll
   },
@@ -2403,9 +2404,7 @@ var getAccountByField = async (context, field, value) => {
     });
     const fullAccount = {
       ...account2,
-      accountStatus: {
-        ...accountStatus2
-      }
+      status: accountStatus2
     };
     return fullAccount;
   } catch (err) {
@@ -2881,7 +2880,10 @@ var accountStatus = async (context, accountStatusId, updateData) => {
       where: {
         id: accountStatusId
       },
-      data: updateData
+      data: {
+        ...updateData,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
     });
     return updatedAccountStatus;
   } catch (err) {
@@ -2908,14 +2910,14 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         invalid: true
       };
     }
-    if (account2.accountStatus.isVerified) {
+    if (account2.status.isVerified) {
       console.info("Account email address is already verified");
       return {
         success: true
       };
     }
     const { id } = account2;
-    const { id: accountStatusId } = account2.accountStatus;
+    const { id: statusId } = account2.status;
     const now = /* @__PURE__ */ new Date();
     const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
@@ -2931,11 +2933,11 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
       verificationHash: "",
       verificationExpiry: null
     };
-    const accountStatusUpdate = {
+    const statusUpdate = {
       isVerified: true
     };
     await update_account_default.account(context, id, accountUpdate);
-    await update_account_default.accountStatus(context, accountStatusId, accountStatusUpdate);
+    await update_account_default.accountStatus(context, statusId, statusUpdate);
     return {
       success: true,
       accountId: id,
@@ -3107,11 +3109,11 @@ var shouldBlockAccount = async (context, accountId) => {
 var should_block_account_default = shouldBlockAccount;
 
 // helpers/block-account/index.ts
-var blockAccount = async (context, accountStatusId) => {
-  console.info("Blocking account %s", accountStatusId);
+var blockAccount = async (context, statusId) => {
+  console.info("Blocking account %s", statusId);
   try {
-    const accountStatusUpdate = { isBlocked: true };
-    const result = await update_account_default.accountStatus(context, accountStatusId, accountStatusUpdate);
+    const statusUpdate = { isBlocked: true };
+    const result = await update_account_default.accountStatus(context, statusId, statusUpdate);
     if (result.id) {
       return true;
     }
@@ -3191,7 +3193,7 @@ var accountChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
     const { id: accountId, email } = account2;
-    if (!account2.accountStatus.isVerified) {
+    if (!account2.status.isVerified) {
       console.info("Unable to sign in account - account has not been verified yet");
       const now = /* @__PURE__ */ new Date();
       const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account2.verificationExpiry);
@@ -3240,14 +3242,13 @@ var accountSignIn = async (root, variables, context) => {
     console.info("Signing in account");
     const { urlOrigin, email, password: password2 } = variables;
     const accountData = await get_account_by_field_default(context, account_default.EMAIL, email);
-    console.log(accountData);
     if (!accountData) {
       console.info("Unable to validate account - no account found");
       return { success: false };
     }
     const account2 = accountData;
     const { id: accountId } = account2;
-    const { isBlocked } = account2.accountStatus;
+    const { isBlocked } = account2.status;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
       return { success: false, isBlocked: true, accountId };
@@ -3263,7 +3264,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
-      const blocked = await block_account_default(context, accountId);
+      const blocked = await block_account_default(context, account2.status.id);
       if (blocked) {
         return {
           success: false,
@@ -3496,7 +3497,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       return { success: false };
     }
     const { id: accountId } = account2;
-    const { id: accountStatusId } = account2.accountStatus;
+    const { id: statusId } = account2.status;
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
     if (!newRetriesEntry.success) {
       return { success: false };
@@ -3504,7 +3505,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
       try {
-        const blocked = await block_account_default(context, accountStatusId);
+        const blocked = await block_account_default(context, statusId);
         if (blocked) {
           return {
             success: false,
@@ -3601,7 +3602,7 @@ var accountPasswordReset = async (root, variables, context) => {
       return { success: false };
     }
     const {
-      accountStatus: { isBlocked }
+      status: { isBlocked }
     } = account2;
     if (isBlocked) {
       console.info("Unable to reset account password - account is blocked");
@@ -5728,12 +5729,12 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
         reactivationHash: "",
         reactivationExpiry: null
       };
-      const accountStatusUpdate = {
+      const statusUpdate = {
         isBlocked: false,
         isVerified: true
       };
       await update_account_default.account(context, account2.id, accountUpdate);
-      await update_account_default.accountStatus(context, account2.accountStatus.id, accountStatusUpdate);
+      await update_account_default.accountStatus(context, account2.status.id, statusUpdate);
       await delete_authentication_retries_default(context, account2.id);
       return {
         success: true

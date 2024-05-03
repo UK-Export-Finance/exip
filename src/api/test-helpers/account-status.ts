@@ -1,10 +1,10 @@
 import { mockAccount } from '../test-mocks';
-import { AccountStatus, AccountStatusUpdate, Context, TestHelperAccountStatusCreate } from '../types';
+import { AccountStatus, AccountStatusCore, Context, TestHelperAccountStatusCreate } from '../types';
 
 /**
  * deleteAll test helper
  * Get all account-status and delete them.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */
 const deleteAll = async (context: Context) => {
@@ -31,7 +31,10 @@ const deleteAll = async (context: Context) => {
 /**
  * create account status test helper
  * Create an account with mock accountStatus data and any connections to account
- * @param {Object} KeystoneJS context API, accountStatus data, accountId and deleteAccountStatus flag
+ * @param {Context} KeystoneJS context API, accountStatus data, accountId and deleteAccountStatus flag
+ * @param {AccountStatusCore} data update data
+ * @param {String} accountId
+ * @param {Boolean} deleteAccountStatus: should delete account statuses
  * @returns {TestHelperAccountStatusCreate} Created accountStatus
  */
 const create = async ({ context, data, accountId, deleteAccountStatus = true }: TestHelperAccountStatusCreate) => {
@@ -53,13 +56,13 @@ const create = async ({ context, data, accountId, deleteAccountStatus = true }: 
     if (data) {
       accountInput = {
         ...accountInput,
-        ...mockAccount.accountStatus,
+        ...mockAccount.status,
       };
     }
 
     const accountStatus = (await context.query.AccountStatus.createOne({
       data: accountInput,
-      query: 'id isVerified isBlocked isInactivated',
+      query: 'id isVerified isBlocked isInactive updatedAt',
     })) as AccountStatus;
 
     return accountStatus;
@@ -82,7 +85,7 @@ const get = async (context: Context, accountStatusId: string) => {
 
     const accountStatus = (await context.query.AccountStatus.findOne({
       where: { id: accountStatusId },
-      query: 'id isVerified isBlocked isInactive',
+      query: 'id isVerified isBlocked isInactive updatedAt',
     })) as AccountStatus;
 
     return accountStatus;
@@ -97,9 +100,10 @@ const get = async (context: Context, accountStatusId: string) => {
  * Updates an accountStatus by accountStatus ID
  * @param {Object} KeystoneJS context API
  * @param {String} AccountStatus ID
+ * @param {AccountStatusCore} data
  * @returns {AccountStatus} Account
  */
-const update = async (context: Context, accountStatusId: string, data: AccountStatusUpdate) => {
+const update = async (context: Context, accountStatusId: string, data: AccountStatusCore) => {
   try {
     console.info('Updating an accountStatus by ID (test helpers)');
 

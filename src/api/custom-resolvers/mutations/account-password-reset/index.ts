@@ -32,7 +32,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * If so, return success=false
      */
     const {
-      accountStatus: { isBlocked },
+      status: { isBlocked },
     } = account;
 
     if (isBlocked) {

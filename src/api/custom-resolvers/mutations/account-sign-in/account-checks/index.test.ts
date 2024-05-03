@@ -49,7 +49,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
     // create an account
     account = await accounts.create({ context });
-    await accountStatusHelper.update(context, account.accountStatus.id, { isVerified: true });
+    await accountStatusHelper.update(context, account.status.id, { isVerified: true });
     // gets updated account
     account = await accounts.get(context, account.id);
 
@@ -101,12 +101,12 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
       confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
 
-      await accountStatusHelper.update(context, account.accountStatus.id, { isVerified: false, isBlocked: false });
+      await accountStatusHelper.update(context, account.status.id, { isVerified: false, isBlocked: false });
 
       const updatedAccount = await context.query.Account.updateOne({
         where: { id: account.id },
         data: accountUpdate,
-        query: 'id firstName lastName email verificationHash accountStatus { isVerified isBlocked }',
+        query: 'id firstName lastName email verificationHash status { isVerified isBlocked }',
       });
 
       result = await accountChecks(context, updatedAccount, mockUrlOrigin);

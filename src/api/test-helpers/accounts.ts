@@ -47,7 +47,7 @@ const get = async (context: Context, accountId: string) => {
     const account = (await context.query.Account.findOne({
       where: { id: accountId },
       query:
-        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry accountStatus { id isBlocked isVerified isInactivated }',
+        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry status { id isBlocked isVerified isInactive updatedAt }',
     })) as Account;
 
     return account;
@@ -71,7 +71,7 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
       await deleteAll(context);
     }
 
-    const { accountStatus, ...mockAccountData } = mockAccount;
+    const { status, ...mockAccountData } = mockAccount;
 
     let accountInput = mockAccountData;
 
@@ -82,12 +82,12 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
     const account = (await context.query.Account.createOne({
       data: accountInput,
       query:
-        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry passwordResetHash passwordResetExpiry accountStatus { id isBlocked isVerified isInactivated }',
+        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry passwordResetHash passwordResetExpiry status { id isBlocked isVerified isInactive updatedAt }',
     })) as Account;
 
     await accountStatusHelper.create({ context, accountId: account.id });
 
-    // returns updated account with accountStatus data
+    // returns updated account with status data
     const updatedAccount = await get(context, account.id);
 
     return updatedAccount;

@@ -75,7 +75,8 @@ CREATE TABLE `AccountStatus` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
   `isVerified` tinyint(1) NOT NULL DEFAULT '0',
-  `isInactivated` tinyint(1) NOT NULL DEFAULT '0',
+  `isInactive` tinyint(1) NOT NULL DEFAULT '0',
+  `updatedAt` datetime(3) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
 
@@ -108,17 +109,17 @@ CREATE TABLE `Account` (
   `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
 	`reactivationExpiry` datetime(3) DEFAULT NULL,
   `reactivationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `accountStatus` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Account_authentication_key` (`authentication`),
   UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),
-  UNIQUE KEY `Account_accountStatus_key` (`accountStatus`),
+  UNIQUE KEY `Account_status_key` (`status`),
   KEY `Account_authentication_idx` (`authentication`),
   KEY `Account_authenticationRetry_idx` (`authenticationRetry`),
-  KEY `Account_accountStatus_idx` (`accountStatus`),
+  KEY `Account_status_idx` (`status`),
   CONSTRAINT `Account_authentication_fkey` FOREIGN KEY (`authentication`) REFERENCES `Authentication` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Account_accountStatus_fkey` FOREIGN KEY (`accountStatus`) REFERENCES `AccountStatus` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Account_status_fkey` FOREIGN KEY (`status`) REFERENCES `AccountStatus` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
