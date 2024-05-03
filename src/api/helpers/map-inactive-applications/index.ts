@@ -14,11 +14,11 @@ const mapInactiveApplications = (applications: Array<Application>) => {
   /**
    * loops through applications array
    * adds id to where object
-   * adds abandoned status to status and previous status
-   * pushes to updateArray
+   * adds abandoned status to status, previous status and updatedAt
+   * pushes to mappedArray
    */
-  const updateArray = applications.map((application: Application) => {
-    const update = {
+  const mappedArray = applications.map((application: Application) => {
+    const mapped = {
       where: { id: application.id },
       data: {
         status: APPLICATION.STATUS.ABANDONED,
@@ -27,10 +27,10 @@ const mapInactiveApplications = (applications: Array<Application>) => {
       },
     } as CronApplicationInactiveUpdate;
 
-    return update;
+    return mapped;
   });
 
-  return updateArray;
+  return mappedArray;
 };
 
 export default mapInactiveApplications;

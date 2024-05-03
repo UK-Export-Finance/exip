@@ -8,11 +8,10 @@ import mapAndUpdateInactiveApplications from '../map-and-update-inactive-applica
  * Gets inactive applications which have not been updated for 30 days
  * Sets their status to Abandoned
  * returns success flag
- * @param {Object} GraphQL root variables
  * @param {Context} KeystoneJS context API
  * @returns {Promise<SuccessResponse>} success flag
  */
-const updateInactiveApplications = async (root: any, context: Context): Promise<SuccessResponse> => {
+const updateInactiveApplications = async (context: Context): Promise<SuccessResponse> => {
   try {
     console.info('Getting and updating inactive applications');
 
