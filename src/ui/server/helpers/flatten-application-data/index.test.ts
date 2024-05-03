@@ -9,6 +9,7 @@ const {
     USING_BROKER,
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
     FINANCIAL_ADDRESS,
+    LOSS_PAYEE: { IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
     LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
@@ -74,19 +75,40 @@ describe('server/helpers/flatten-application-data', () => {
   });
 
   describe('mapNominatedLossPayee', () => {
-    it('should return mapped loss payee IDs', () => {
-      const result = mapNominatedLossPayee(nominatedLossPayee);
+    describe(`when ${IS_APPOINTED} is true`, () => {
+      it('should return mapped loss payee IDs', () => {
+        const nominatedLossPayeeAppointedTrue = {
+          ...nominatedLossPayee,
+          [IS_APPOINTED]: true,
+        };
 
-      const expected = {
-        ...nominatedLossPayee,
-        [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
-        ...nominatedLossPayee.financialUk,
-        [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
-        ...nominatedLossPayee.financialInternational,
-        ...getTrueAndFalseAnswers(nominatedLossPayee),
-      };
+        const result = mapNominatedLossPayee(nominatedLossPayeeAppointedTrue);
 
-      expect(result).toEqual(expected);
+        const expected = {
+          ...nominatedLossPayeeAppointedTrue,
+          [IS_APPOINTED]: true,
+          [LOSS_PAYEE_NAME]: nominatedLossPayeeAppointedTrue[NAME],
+          ...nominatedLossPayeeAppointedTrue.financialUk,
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayeeAppointedTrue.financialUk[FINANCIAL_ADDRESS],
+          ...nominatedLossPayeeAppointedTrue.financialInternational,
+          ...getTrueAndFalseAnswers(nominatedLossPayeeAppointedTrue),
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_APPOINTED} is false`, () => {
+      it(`should return an object with only ${IS_APPOINTED}`, () => {
+        const result = mapNominatedLossPayee({
+          ...nominatedLossPayee,
+          [IS_APPOINTED]: false,
+        });
+
+        const expected = { [IS_APPOINTED]: false };
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 

@@ -147,13 +147,13 @@ describe('server/helpers/required-fields/policy', () => {
 
   describe('lossPayeeTasks', () => {
     describe('when isAppointingLossPayee is true, lossPayeeIsLocatedInUk is false', () => {
-      it('should return multiple field ids in an array', () => {
+      it('should return a field id in an array', () => {
         const isAppointingLossPayee = true;
         const lossPayeeIsLocatedInUk = false;
 
         const result = lossPayeeTasks(isAppointingLossPayee, lossPayeeIsLocatedInUk);
 
-        const expected = [LOSS_PAYEE_NAME];
+        const expected = [IS_APPOINTED];
 
         expect(result).toEqual(expected);
       });

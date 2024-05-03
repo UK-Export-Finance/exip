@@ -15,6 +15,7 @@ const {
     USING_BROKER,
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
     FINANCIAL_ADDRESS,
+    LOSS_PAYEE: { IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
     LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
@@ -75,14 +76,22 @@ export const mapPolicyContact = (policyContact: ApplicationPolicyContact) => ({
  * @param {ApplicationNominatedLossPayee} nominatedLossPayee
  * @returns {Object} ApplicationNominatedLossPayee with slightly different field IDs
  */
-export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLossPayee) => ({
-  ...nominatedLossPayee,
-  [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
-  ...nominatedLossPayee.financialUk,
-  [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
-  ...nominatedLossPayee.financialInternational,
-  ...getTrueAndFalseAnswers(nominatedLossPayee),
-});
+export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLossPayee) => {
+  if (nominatedLossPayee[IS_APPOINTED]) {
+    return {
+      ...nominatedLossPayee,
+      [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
+      ...nominatedLossPayee.financialUk,
+      [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
+      ...nominatedLossPayee.financialInternational,
+      ...getTrueAndFalseAnswers(nominatedLossPayee),
+    }; 
+  }
+
+  return {
+    [IS_APPOINTED]: nominatedLossPayee[IS_APPOINTED]
+  };
+};
 
 /**
  * flattenApplicationData

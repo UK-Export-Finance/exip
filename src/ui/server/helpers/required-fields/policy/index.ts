@@ -92,8 +92,6 @@ export const lossPayeeTasks = (isAppointingLossPayee?: boolean, lossPayeeIsLocat
     if (lossPayeeIsLocatedInUk) {
       return [LOSS_PAYEE_NAME, SORT_CODE, ACCOUNT_NUMBER, LOSS_PAYEE_FINANCIAL_ADDRESS];
     }
-
-    return [LOSS_PAYEE_NAME];
   }
 
   return [IS_APPOINTED];
