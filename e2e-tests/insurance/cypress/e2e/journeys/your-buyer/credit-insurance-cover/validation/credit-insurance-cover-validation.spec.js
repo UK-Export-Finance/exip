@@ -1,8 +1,8 @@
 import { field as fieldSelector, noRadioInput } from '../../../../../../../pages/shared';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
+import { MAXIMUM_CHARACTERS } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
-import { YOUR_BUYER_FIELDS } from '../../../../../../../content-strings/fields/insurance/your-buyer';
 
 const {
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
@@ -19,8 +19,6 @@ const {
   ROOT,
   YOUR_BUYER: { CREDIT_INSURANCE_COVER },
 } = INSURANCE_ROUTES;
-
-const { MAXIMUM } = YOUR_BUYER_FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -95,7 +93,7 @@ context('Insurance - Your Buyer - Credit insurance cover - form validation', () 
     it(`should render a validation error when ${FIELD_ID} is above the maximum`, () => {
       cy.submitAndAssertFieldErrors({
         ...assertions,
-        value: 'a'.repeat(MAXIMUM + 1),
+        value: 'a'.repeat(MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER + 1),
         expectedErrorMessage: ERRORS[FIELD_ID].ABOVE_MAXIMUM,
       });
     });

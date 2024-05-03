@@ -24,12 +24,20 @@ const assertLossPayeeFinancialUkFieldValues = ({
   expectedSortCode = LOSS_PAYEE_FINANCIAL_UK[SORT_CODE],
   expectedFinancialAddress = EXPECTED_MULTI_LINE_STRING,
 }) => {
-  cy.checkValue(fieldSelector(ACCOUNT_NUMBER), expectedAccountNumber);
-  cy.checkValue(autoCompleteField(SORT_CODE), expectedSortCode);
-  cy.checkTextareaValue({
-    fieldId: FINANCIAL_ADDRESS,
-    expectedValue: expectedFinancialAddress,
-  });
+  if (expectedAccountNumber) {
+    cy.checkValue(fieldSelector(ACCOUNT_NUMBER), expectedAccountNumber);
+  }
+
+  if (expectedSortCode) {
+    cy.checkValue(autoCompleteField(SORT_CODE), expectedSortCode);
+  }
+
+  if (expectedFinancialAddress) {
+    cy.checkTextareaValue({
+      fieldId: FINANCIAL_ADDRESS,
+      expectedValue: expectedFinancialAddress,
+    });
+  }
 };
 
 export default assertLossPayeeFinancialUkFieldValues;

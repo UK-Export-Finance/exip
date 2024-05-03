@@ -1,8 +1,7 @@
+import { MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import INSURANCE_FIELD_IDS from '../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import { objectHasProperty } from '../../../../../../helpers/object';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
-import generateValidationErrors from '../../../../../../helpers/validation';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../types';
 
 const {
@@ -11,11 +10,9 @@ const {
 
 const {
   INSURANCE: {
-    POLICY: { [FIELD_ID]: ERROR_MESSAGE },
+    POLICY: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
   },
 } = ERROR_MESSAGES;
-
-export const MAXIMUM = 1000;
 
 /**
  * creditPeriodWithBuyerRule
@@ -27,11 +24,7 @@ export const MAXIMUM = 1000;
  */
 const creditPeriodWithBuyerRule = (formBody: RequestBody, errors: object) => {
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'true') {
-    if (!objectHasProperty(formBody, FIELD_ID)) {
-      return generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, errors);
-    }
-
-    return maxLengthValidation(formBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, errors, MAXIMUM);
+    return providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER);
   }
 
   return errors;

@@ -118,7 +118,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
     });
   });
 
-  describe('Address', () => {
+  describe(FULL_ADDRESS, () => {
     const fieldId = FULL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
