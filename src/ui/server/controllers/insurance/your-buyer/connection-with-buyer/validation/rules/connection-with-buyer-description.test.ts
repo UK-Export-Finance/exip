@@ -1,8 +1,7 @@
 import connectionWithBuyerDescriptionRule from './connection-with-buyer-description';
-import { FIELD_IDS } from '../../../../../../constants';
+import { FIELD_IDS, MAXIMUM_CHARACTERS } from '../../../../../../constants';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../helpers/validation';
-import maxLengthValidation from '../../../../../../shared-validation/max-length';
+import providedAndMaxLength from '../../../../../../shared-validation/provided-and-max-length';
 import { RequestBody } from '../../../../../../../types';
 import { mockErrors } from '../../../../../../test-mocks';
 
@@ -14,11 +13,9 @@ const {
 
 const {
   INSURANCE: {
-    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGE },
+    YOUR_BUYER: { [FIELD_ID]: ERROR_MESSAGES_OBJECT },
   },
 } = ERROR_MESSAGES;
-
-const MAXIMUM = 1000;
 
 describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rules/connection-with-buyer-description', () => {
   const mockBody = {
@@ -37,34 +34,12 @@ describe('controllers/insurance/your-buyer/connection-with-buyer/validation/rule
   });
 
   describe(`${CONNECTION_WITH_BUYER} is true`, () => {
-    it(`should return "IS_EMPTY" error message when ${FIELD_ID} is not provided`, () => {
+    it('should return the result of providedAndMaxLength', () => {
       mockBody[CONNECTION_WITH_BUYER] = 'true';
 
       const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
 
-      const expected = generateValidationErrors(FIELD_ID, ERROR_MESSAGE.IS_EMPTY, mockErrors);
-
-      expect(result).toEqual(expected);
-    });
-
-    it(`should return the result of inputValidation when ${FIELD_ID} is over the maximum`, () => {
-      mockBody[CONNECTION_WITH_BUYER] = 'true';
-      mockBody[FIELD_ID] = 'a'.repeat(MAXIMUM + 1);
-
-      const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
-
-      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
-
-      expect(result).toEqual(expected);
-    });
-
-    it(`should return the result of inputValidation when ${FIELD_ID} is valid`, () => {
-      mockBody[CONNECTION_WITH_BUYER] = 'true';
-      mockBody[FIELD_ID] = 'test';
-
-      const result = connectionWithBuyerDescriptionRule(mockBody, mockErrors);
-
-      const expected = maxLengthValidation(mockBody[FIELD_ID], FIELD_ID, ERROR_MESSAGE.ABOVE_MAXIMUM, mockErrors, MAXIMUM);
+      const expected = providedAndMaxLength(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION);
 
       expect(result).toEqual(expected);
     });

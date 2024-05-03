@@ -167,5 +167,19 @@ context('Insurance - Export contract - Agent details page - form validation', ()
         expectedCountryCode: null,
       });
     });
+
+    describe(`when ${COUNTRY_CODE} is provided, but there are other validation errors`, () => {
+      it(`should retain the submitted ${COUNTRY_CODE}`, () => {
+        cy.completeAndSubmitAgentDetailsForm({
+          name: null,
+          fullAddress: null,
+        });
+
+        cy.assertAgentDetailsFieldValues({
+          expectedName: null,
+          expectedFullAddress: null,
+        });
+      });
+    });
   });
 });
