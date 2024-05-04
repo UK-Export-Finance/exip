@@ -3,7 +3,7 @@ import { FIELD_IDS } from '../../../../../constants';
 import mapSubmittedData from '../../map-submitted-data/policy';
 import save from '../../save-data/policy';
 import generateValidationErrors from '../../single-contract-policy/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   POLICY: {
@@ -21,7 +21,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 
-  const mockSavePolicyData = jest.fn(() => Promise.resolve({}));
+  const mockSavePolicyData = mockSpyPromise();
 
   save.policy = mockSavePolicyData;
 

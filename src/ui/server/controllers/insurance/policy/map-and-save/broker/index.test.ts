@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import mapSubmittedData from '../../map-submitted-data/broker';
 import save from '../../save-data/broker';
-import { mockApplication, mockBroker } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
+import { mockApplication, mockBroker, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   BROKER_DETAILS: { NAME },
@@ -17,7 +17,7 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
     ...mockBroker,
   };
 
-  const mockSaveBroker = jest.fn(() => Promise.resolve({}));
+  const mockSaveBroker = mockSpyPromise();
   save.broker = mockSaveBroker;
 
   const populatedData = mapSubmittedData(mockFormBody);
