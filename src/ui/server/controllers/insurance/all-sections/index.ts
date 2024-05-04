@@ -29,7 +29,11 @@ export const get = (req: Request, res: Response) => {
 
   const { policyType, jointlyInsuredParty } = policy;
 
-  const { isAppointed: isAppointingLossPayee, isLocatedInUk: lossPayeeIsLocatedInUk } = nominatedLossPayee;
+  const {
+    isAppointed: isAppointingLossPayee,
+    isLocatedInUk: lossPayeeIsLocatedInUk,
+    isLocatedInternationally: lossPayeeIsLocatedInternationally,
+  } = nominatedLossPayee;
 
   const {
     finalDestinationKnown,
@@ -60,6 +64,7 @@ export const get = (req: Request, res: Response) => {
     isUsingBroker,
     isAppointingLossPayee,
     lossPayeeIsLocatedInUk,
+    lossPayeeIsLocatedInternationally,
     hasDifferentTradingName,
     hasAntiBriberyCodeOfConduct,
     exporterIsConnectedWithBuyer,

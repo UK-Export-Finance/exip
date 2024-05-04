@@ -10,7 +10,7 @@ const {
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
     FINANCIAL_ADDRESS,
     LOSS_PAYEE: { IS_APPOINTED },
-    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
     LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
   EXPORT_CONTRACT: {
@@ -75,6 +75,16 @@ describe('server/helpers/flatten-application-data', () => {
   });
 
   describe('mapNominatedLossPayee', () => {
+    const expectedGenericIds = {
+      ...nominatedLossPayee,
+      [IS_APPOINTED]: true,
+      [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
+      ...nominatedLossPayee.financialUk,
+      [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
+      ...nominatedLossPayee.financialInternational,
+      ...getTrueAndFalseAnswers(nominatedLossPayee),
+    };
+
     describe(`when ${IS_APPOINTED} is true`, () => {
       it('should return mapped loss payee IDs', () => {
         const nominatedLossPayeeAppointedTrue = {
@@ -85,13 +95,29 @@ describe('server/helpers/flatten-application-data', () => {
         const result = mapNominatedLossPayee(nominatedLossPayeeAppointedTrue);
 
         const expected = {
-          ...nominatedLossPayeeAppointedTrue,
+          ...expectedGenericIds,
           [IS_APPOINTED]: true,
-          [LOSS_PAYEE_NAME]: nominatedLossPayeeAppointedTrue[NAME],
-          ...nominatedLossPayeeAppointedTrue.financialUk,
-          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayeeAppointedTrue.financialUk[FINANCIAL_ADDRESS],
-          ...nominatedLossPayeeAppointedTrue.financialInternational,
-          ...getTrueAndFalseAnswers(nominatedLossPayeeAppointedTrue),
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialUk[FINANCIAL_ADDRESS],
+        };
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
+      it('should return mapped loss payee contact IDs', () => {
+        const result = mapNominatedLossPayee({
+          ...nominatedLossPayee,
+          [IS_APPOINTED]: true,
+          [IS_LOCATED_IN_UK]: false,
+          [IS_LOCATED_INTERNATIONALLY]: true,
+        });
+
+        const expected = {
+          ...expectedGenericIds,
+          [IS_APPOINTED]: true,
+          [IS_LOCATED_INTERNATIONALLY]: true,
+          [LOSS_PAYEE_FINANCIAL_ADDRESS]: nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS],
         };
 
         expect(result).toEqual(expected);

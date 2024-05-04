@@ -5,6 +5,7 @@ const mockNominatedLossPayee = {
   id: '123',
   isAppointed: false,
   isLocatedInUk: false,
+  isLocatedInternationally: undefined,
   financialUk: {
     id: '2345',
     ...mockLossPayeeFinancialDetailsUk,

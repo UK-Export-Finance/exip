@@ -36,7 +36,11 @@ describe('controllers/insurance/all-sections', () => {
 
       const { policyType, jointlyInsuredParty } = policy;
 
-      const { isAppointed: isAppointingLossPayee, isLocatedInUk: lossPayeeIsLocatedInUk } = nominatedLossPayee;
+      const {
+        isAppointed: isAppointingLossPayee,
+        isLocatedInUk: lossPayeeIsLocatedInUk,
+        isLocatedInternationally: lossPayeeIsLocatedInternationally,
+      } = nominatedLossPayee;
 
       const {
         finalDestinationKnown,
@@ -67,6 +71,7 @@ describe('controllers/insurance/all-sections', () => {
         isUsingBroker,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUk,
+        lossPayeeIsLocatedInternationally,
         hasDifferentTradingName,
         hasAntiBriberyCodeOfConduct,
         exporterIsConnectedWithBuyer,

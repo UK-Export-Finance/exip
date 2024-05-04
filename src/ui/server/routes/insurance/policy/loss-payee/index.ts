@@ -13,6 +13,7 @@ import {
   get as getLossPayeeFinancialInternational,
   post as postLossPayeeFinancialInternational,
 } from '../../../../controllers/insurance/policy/loss-payee-financial-details-international';
+import { post as postLossPayeeFinancialInternationalSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee-financial-details-international/save-and-back';
 
 const {
   LOSS_PAYEE_ROOT,
@@ -26,6 +27,7 @@ const {
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK,
   LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK,
 } = POLICY;
 
 // @ts-ignore
@@ -53,5 +55,6 @@ router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK}`,
 
 router.get(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, getLossPayeeFinancialInternational);
 router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, postLossPayeeFinancialInternational);
+router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK}`, postLossPayeeFinancialInternationalSaveAndBack);
 
 export default router;
