@@ -21,6 +21,7 @@ import {
   mockCurrenciesEmptyResponse,
   mockContact,
   mockCountries,
+  mockNominatedLossPayee,
   referenceNumber,
   mockSpyPromise,
 } from '../../../../test-mocks';
@@ -99,7 +100,16 @@ describe('controllers/insurance/check-your-answers/policy', () => {
         ...exportContract,
       };
 
-      const summaryList = policySummaryLists(answers, mockContact, mockBroker, referenceNumber, mockCurrencies, mockCountries, checkAndChange);
+      const summaryList = policySummaryLists(
+        answers,
+        mockContact,
+        mockBroker,
+        mockNominatedLossPayee,
+        referenceNumber,
+        mockCurrencies,
+        mockCountries,
+        checkAndChange,
+      );
 
       const { policyType } = policy;
       const { isUsingBroker } = mockBroker;

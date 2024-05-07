@@ -22,6 +22,7 @@ const {
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+    FINANCIAL_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -294,10 +295,24 @@ export const POLICY_FIELDS = {
     [SORT_CODE]: {
       LABEL: 'Sort code',
       HINT: 'Must be 6 digits long',
+      SUMMARY: {
+        TITLE: 'Sort code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [ACCOUNT_NUMBER]: {
       LABEL: 'Account number',
       HINT: 'Must be between 6 and 8 digits long',
+      SUMMARY: {
+        TITLE: 'Account number',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: 'Loss payee’s bank based in the UK',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
   },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {

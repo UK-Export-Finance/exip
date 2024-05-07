@@ -12,6 +12,10 @@ const {
   CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
   USING_BROKER,
+  LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
+  LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -58,5 +62,25 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   it(`should render a ${USING_BROKER} summary list row`, () => {
     checkSummaryList[USING_BROKER]({ usingBroker: false });
+  });
+
+  it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
+    checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: false });
+  });
+
+  it(`should NOT render a ${LOSS_PAYEE_NAME} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[LOSS_PAYEE_NAME]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${FINANCIAL_ADDRESS} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${SORT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: false });
+  });
+
+  it(`should NOT render a ${ACCOUNT_NUMBER} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: false });
   });
 });

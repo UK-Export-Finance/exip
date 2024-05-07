@@ -38,6 +38,10 @@ const {
       COMPANY_NUMBER,
       COUNTRY_CODE,
     },
+    LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+    FINANCIAL_ADDRESS,
   },
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
 } = INSURANCE_FIELD_IDS;
@@ -309,6 +313,98 @@ const checkPolicySummaryList = ({
 
       if (shouldRender) {
         const expectedValue = country;
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+  },
+  [LOSS_PAYEE_IS_APPOINTED]: ({ isAppointingLossPayee = false }) => {
+    const fieldId = LOSS_PAYEE_IS_APPOINTED;
+
+    const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE);
+
+    let expectedValue = FIELD_VALUES.NO;
+
+    if (isAppointingLossPayee) {
+      expectedValue = FIELD_VALUES.YES;
+    }
+
+    cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+  },
+  LOSS_PAYEE: {
+    [LOSS_PAYEE_NAME]: ({ shouldRender = false }) => {
+      const fieldId = LOSS_PAYEE_NAME;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_DETAILS);
+
+      if (shouldRender) {
+        const expectedValue = application.POLICY[fieldId];
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [LOSS_PAYEE_NAME]: ({ shouldRender = false }) => {
+      const fieldId = LOSS_PAYEE_NAME;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_DETAILS);
+
+      if (shouldRender) {
+        const expectedValue = application.POLICY[fieldId];
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [FINANCIAL_ADDRESS]: ({ shouldRender = false }) => {
+      const fieldId = FINANCIAL_ADDRESS;
+
+      const expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_UK[fieldId].SUMMARY.TITLE;
+
+      if (shouldRender) {
+        const row = summaryList.field(fieldId);
+
+        cy.checkText(
+          row.key(),
+          expectedKey,
+        );
+
+        row.value().contains(EXPECTED_SINGLE_LINE_STRING);
+
+        const expectedLineBreaks = 3;
+
+        cy.assertLength(
+          row.valueHtmlLineBreak(),
+          expectedLineBreaks,
+        );
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [SORT_CODE]: ({ shouldRender = false }) => {
+      const fieldId = SORT_CODE;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_FINANCIAL_UK);
+
+      if (shouldRender) {
+        const expectedValue = application.POLICY.LOSS_PAYEE_FINANCIAL_UK[fieldId];
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [ACCOUNT_NUMBER]: ({ shouldRender = false }) => {
+      const fieldId = ACCOUNT_NUMBER;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_FINANCIAL_UK);
+
+      if (shouldRender) {
+        const expectedValue = application.POLICY.LOSS_PAYEE_FINANCIAL_UK[fieldId];
 
         cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
       } else {
