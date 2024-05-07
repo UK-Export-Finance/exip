@@ -28,7 +28,7 @@ const getAccountByField = async (context: Context, field: string, value: string)
     const account = accountsArray[0] as Account;
 
     const accountStatus = await context.db.AccountStatus.findOne({
-      where: { id: account.accountStatusId },
+      where: { id: account.statusId },
       take: 1,
     });
 

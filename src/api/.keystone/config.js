@@ -2399,7 +2399,7 @@ var getAccountByField = async (context, field, value) => {
     }
     const account2 = accountsArray[0];
     const accountStatus2 = await context.db.AccountStatus.findOne({
-      where: { id: account2.accountStatusId },
+      where: { id: account2.statusId },
       take: 1
     });
     const fullAccount = {
