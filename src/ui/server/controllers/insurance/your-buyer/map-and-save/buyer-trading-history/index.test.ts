@@ -1,10 +1,10 @@
 import mapAndSave from '.';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import save from '../../save-data/buyer-trading-history';
-import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import mapSubmittedData from '../../map-submitted-data/buyer-trading-history';
 import { GBP } from '../../../../../constants';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
@@ -21,7 +21,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', 
     [FAILED_PAYMENTS]: true,
   };
 
-  const mockSaveBuyer = jest.fn(() => Promise.resolve({}));
+  const mockSaveBuyer = mockSpyPromise();
   save.buyerTradingHistory = mockSaveBuyer;
 
   const mockValidationErrors = generateValidationErrors(CURRENCY_CODE, 'error', {});

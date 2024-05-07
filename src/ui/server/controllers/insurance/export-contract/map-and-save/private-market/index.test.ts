@@ -3,7 +3,7 @@ import save from '../../save-data/private-market';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
 import mapSubmittedData from '../../map-submitted-data/private-market';
 import generateValidationErrors from '../../../../../helpers/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   EXPORT_CONTRACT: {
@@ -20,7 +20,7 @@ describe('controllers/insurance/export-contract/map-and-save/private-market', ()
     [DECLINED_DESCRIPTION]: mockApplication.exportContract.privateMarket[DECLINED_DESCRIPTION],
   };
 
-  const mockSaveExportContract = jest.fn(() => Promise.resolve({}));
+  const mockSaveExportContract = mockSpyPromise();
   save.privateMarket = mockSaveExportContract;
 
   const populatedData = mapSubmittedData(mockFormBody);

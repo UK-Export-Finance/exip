@@ -26,6 +26,7 @@ const { PREPARE_APPLICATION } = TASKS.LIST;
  * @param {Boolean} isUsingBroker: "Is using broker" flag
  * @param {Boolean} isAppointingLossPayee: "Is using loss payee" flag
  * @param {Boolean} lossPayeeIsLocatedInUk: "Loss payee is located in the UK" flag
+ * @param {Boolean} lossPayeeIsLocatedInternationally: "Loss payee is located internationally" flag
  * @param {Boolean} attemptedPrivateMarketCover: "Attempted cover via the private market" flag
  * @param {Boolean} isUsingAgent: "Is using an agent to help win the export contract" flag
  * @param {Boolean} agentIsCharging: "Is the agent charging for their support in the export contract?" flag
@@ -41,6 +42,7 @@ const createPrepareApplicationTasks = ({
   isUsingBroker,
   isAppointingLossPayee,
   lossPayeeIsLocatedInUk,
+  lossPayeeIsLocatedInternationally,
   hasDifferentTradingName,
   connectionWithBuyer,
   tradedWithBuyer,
@@ -90,6 +92,7 @@ const createPrepareApplicationTasks = ({
       isUsingBroker,
       isAppointingLossPayee,
       lossPayeeIsLocatedInUk,
+      lossPayeeIsLocatedInternationally,
     }),
     dependencies,
   };

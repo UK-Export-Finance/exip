@@ -1,4 +1,4 @@
-import updateInactiveApplicationsMutation from '.';
+import updateInactiveApplications from '.';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { createFullApplication } from '../../test-helpers';
 import { APPLICATION, DATE_2_MONTHS_IN_THE_PAST } from '../../constants';
@@ -27,13 +27,13 @@ describe('helpers/update-inactive-applications', () => {
 
   describe(`successfully updates inactive application to ${ABANDONED}`, () => {
     it('should return success as true', async () => {
-      const { success } = await updateInactiveApplicationsMutation({}, context);
+      const { success } = await updateInactiveApplications(context);
 
       expect(success).toEqual(true);
     });
 
     it(`should set the application status to ${ABANDONED}`, async () => {
-      await updateInactiveApplicationsMutation({}, context);
+      await updateInactiveApplications(context);
 
       const expected = await context.query.Application.findOne({
         where: { id: application.id },
@@ -49,7 +49,7 @@ describe('helpers/update-inactive-applications', () => {
 
   describe('when an error occurs whilst getting and updating inactive applications', () => {
     it('should throw an error', async () => {
-      await expect(updateInactiveApplicationsMutation()).rejects.toThrow('Error getting and updating inactive applications');
+      await expect(updateInactiveApplications()).rejects.toThrow('Error getting and updating inactive applications');
     });
   });
 });
