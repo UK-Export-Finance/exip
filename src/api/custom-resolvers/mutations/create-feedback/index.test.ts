@@ -1,7 +1,7 @@
 import { format } from 'date-fns';
 import createInsuranceFeedbackAndEmail from '.';
 import sendEmail from '../../../emails';
-import { mockInsuranceFeedback, mockSendEmailResponse } from '../../../test-mocks';
+import { mockInsuranceFeedback, mockSendEmailResponse, mockSpyPromise } from '../../../test-mocks';
 import { Context, Feedback } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
@@ -59,7 +59,7 @@ describe('custom-resolvers/create-feedback', () => {
   describe('when the feedback email does not return a response', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
-      sendInsuranceFeedbackEmailSpy = jest.fn(() => Promise.resolve({}));
+      sendInsuranceFeedbackEmailSpy = mockSpyPromise();
 
       sendEmail.insuranceFeedbackEmail = sendInsuranceFeedbackEmailSpy;
 

@@ -165,7 +165,7 @@ const application = {
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
       [BIC_SWIFT_CODE]: 'BKENGB2L123',
       [IBAN]: 'GB33BUKB20201555555555',
-      [FINANCIAL_ADDRESS]: 'Mock international bank address',
+      [FINANCIAL_ADDRESS]: MULTI_LINE_STRING,
     },
     [LOSS_PAYEE_NAME]: 'Mock name',
   },

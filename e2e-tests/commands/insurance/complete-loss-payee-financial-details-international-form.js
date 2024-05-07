@@ -12,15 +12,31 @@ const { POLICY } = application;
  * @param {String} bicSwiftCode: BIC/Swift value - defaults to application fixture.
  * @param {String} iban: IBAN value - defaults to application fixture.
  * @param {String} financialAddress: financialAddress value - defaults to application fixture.
+ * @param {Boolean} clearInputs: Clear all inputs before submitting new values
  */
 const completeLossPayeeFinancialDetailsInternationalForm = ({
   bicSwiftCode = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[BIC_SWIFT_CODE],
   iban = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[IBAN],
   financialAddress = POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[FINANCIAL_ADDRESS],
+  clearInputs = false,
 }) => {
-  cy.keyboardInput(field(BIC_SWIFT_CODE).input(), bicSwiftCode);
-  cy.keyboardInput(field(IBAN).input(), iban);
-  cy.keyboardInput(field(FINANCIAL_ADDRESS).textarea(), financialAddress);
+  if (clearInputs) {
+    field(BIC_SWIFT_CODE).input().clear();
+    field(IBAN).input().clear();
+    field(FINANCIAL_ADDRESS).textarea().clear();
+  }
+
+  if (bicSwiftCode) {
+    cy.keyboardInput(field(BIC_SWIFT_CODE).input(), bicSwiftCode);
+  }
+
+  if (iban) {
+    cy.keyboardInput(field(IBAN).input(), iban);
+  }
+
+  if (financialAddress) {
+    cy.keyboardInput(field(FINANCIAL_ADDRESS).textarea(), financialAddress);
+  }
 };
 
 export default completeLossPayeeFinancialDetailsInternationalForm;

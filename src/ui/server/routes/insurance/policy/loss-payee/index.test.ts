@@ -9,6 +9,11 @@ import {
 import { post as postLossPayeeFinancialDetailsUkSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee-financial-details-uk/save-and-back';
 import { get as getLossPayeeDetails, post as postLossPayeeDetails } from '../../../../controllers/insurance/policy/loss-payee-details';
 import { post as postLossPayeeDetailsSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee-details/save-and-back';
+import {
+  get as getLossPayeeFinancialInternational,
+  post as postLossPayeeFinancialInternational,
+} from '../../../../controllers/insurance/policy/loss-payee-financial-details-international';
+import { post as postLossPayeeFinancialInternationalSaveAndBack } from '../../../../controllers/insurance/policy/loss-payee-financial-details-international/save-and-back';
 
 const {
   LOSS_PAYEE_ROOT,
@@ -21,6 +26,8 @@ const {
   LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK,
 } = POLICY;
 
 describe('routes/insurance/policy/loss-payee', () => {
@@ -34,7 +41,7 @@ describe('routes/insurance/policy/loss-payee', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(8);
-    expect(post).toHaveBeenCalledTimes(11);
+    expect(post).toHaveBeenCalledTimes(12);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_ROOT}`, getLossPayee);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_ROOT}`, postLossPayee);
@@ -55,5 +62,12 @@ describe('routes/insurance/policy/loss-payee', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, getLossPayeeFinancialDetailsUk);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, postLossPayeeFinancialDetailsUk);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK}`, postLossPayeeFinancialDetailsUkSaveAndBack);
+
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, getLossPayeeFinancialInternational);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, postLossPayeeFinancialInternational);
+    expect(post).toHaveBeenCalledWith(
+      `/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK}`,
+      postLossPayeeFinancialInternationalSaveAndBack,
+    );
   });
 });

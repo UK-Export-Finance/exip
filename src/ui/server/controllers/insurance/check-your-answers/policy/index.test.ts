@@ -22,6 +22,7 @@ import {
   mockContact,
   mockCountries,
   referenceNumber,
+  mockSpyPromise,
 } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
@@ -40,7 +41,7 @@ const { policy, exportContract } = mockApplication;
 describe('controllers/insurance/check-your-answers/policy', () => {
   jest.mock('../save-data');
 
-  let mockSaveSectionReview = jest.fn(() => Promise.resolve({}));
+  let mockSaveSectionReview = mockSpyPromise();
 
   save.sectionReview = mockSaveSectionReview;
 

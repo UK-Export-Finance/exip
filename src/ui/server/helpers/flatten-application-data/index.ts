@@ -16,7 +16,7 @@ const {
     BROKER_DETAILS: { NAME, BROKER_EMAIL, FULL_ADDRESS },
     FINANCIAL_ADDRESS,
     LOSS_PAYEE: { IS_APPOINTED },
-    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME },
+    LOSS_PAYEE_DETAILS: { LOSS_PAYEE_NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
     LOSS_PAYEE_FINANCIAL_ADDRESS,
   },
   EXPORT_CONTRACT: {
@@ -78,7 +78,7 @@ export const mapPolicyContact = (policyContact: ApplicationPolicyContact) => ({
  */
 export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLossPayee) => {
   if (nominatedLossPayee[IS_APPOINTED]) {
-    return {
+    const mapped = {
       ...nominatedLossPayee,
       [LOSS_PAYEE_NAME]: nominatedLossPayee[NAME],
       ...nominatedLossPayee.financialUk,
@@ -86,6 +86,16 @@ export const mapNominatedLossPayee = (nominatedLossPayee: ApplicationNominatedLo
       ...nominatedLossPayee.financialInternational,
       ...getTrueAndFalseAnswers(nominatedLossPayee),
     };
+
+    if (nominatedLossPayee[IS_LOCATED_IN_UK]) {
+      mapped[LOSS_PAYEE_FINANCIAL_ADDRESS] = nominatedLossPayee.financialUk[FINANCIAL_ADDRESS];
+    }
+
+    if (nominatedLossPayee[IS_LOCATED_INTERNATIONALLY]) {
+      mapped[LOSS_PAYEE_FINANCIAL_ADDRESS] = nominatedLossPayee.financialInternational[FINANCIAL_ADDRESS];
+    }
+
+    return mapped;
   }
 
   return {
