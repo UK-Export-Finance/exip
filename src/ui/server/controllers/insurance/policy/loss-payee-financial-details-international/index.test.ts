@@ -19,7 +19,7 @@ const { FINANCIAL_ADDRESS } = POLICY_FIELD_IDS;
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE },
+  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE, LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -77,7 +77,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
             ...FINANCIAL_ADDRESS_FIELD,
           },
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}#`,
+        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK}`,
       };
 
       expect(result).toEqual(expected);
@@ -169,7 +169,7 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
 
       describe("when the url's last substring is `check-and-change`", () => {
         it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
-          req.originalUrl = LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE;
+          req.originalUrl = LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE;
 
           await post(req, res);
 

@@ -3,7 +3,7 @@ import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/polic
 import mapSubmittedData from '../../map-submitted-data/policy-contact';
 import save from '../../save-data/policy-contact';
 import generateValidationErrors from '../../name-on-policy/validation';
-import { mockApplication } from '../../../../../test-mocks';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   NAME_ON_POLICY: { NAME, SAME_NAME },
@@ -18,7 +18,7 @@ describe('controllers/insurance/policy/map-and-save/policy-contact', () => {
 
   const mockValidationErrors = generateValidationErrors(mockFormBody);
 
-  const mockSavePolicyContactData = jest.fn(() => Promise.resolve({}));
+  const mockSavePolicyContactData = mockSpyPromise();
 
   save.policyContact = mockSavePolicyContactData;
 

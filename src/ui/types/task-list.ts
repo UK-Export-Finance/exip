@@ -39,6 +39,7 @@ interface CreatePrepareApplicationTasksParams {
   isUsingBroker?: boolean;
   isAppointingLossPayee?: boolean;
   lossPayeeIsLocatedInUk?: boolean;
+  lossPayeeIsLocatedInternationally?: boolean;
   hasDifferentTradingName?: boolean;
   connectionWithBuyer?: boolean;
   tradedWithBuyer?: boolean;

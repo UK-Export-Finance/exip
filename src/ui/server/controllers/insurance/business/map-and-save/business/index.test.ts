@@ -1,9 +1,9 @@
 import mapAndSave from '.';
 import save from '../../save-data/business';
 import mapSubmittedData from '../../map-submitted-data/your-business';
-import { mockApplication } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { FIELD_IDS } from '../../../../../constants';
+import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
   EXPORTER_BUSINESS: {
@@ -21,7 +21,7 @@ describe('controllers/insurance/business/map-and-save/business', () => {
     [EMPLOYEES_UK]: '3',
   };
 
-  const mockSaveBusiness = jest.fn(() => Promise.resolve({}));
+  const mockSaveBusiness = mockSpyPromise();
   save.business = mockSaveBusiness;
 
   const mockValidationErrors = generateValidationErrors(YEARS_EXPORTING, 'error', {});

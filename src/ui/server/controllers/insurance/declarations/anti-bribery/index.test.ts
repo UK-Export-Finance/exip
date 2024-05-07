@@ -11,7 +11,7 @@ import keystoneDocumentRendererConfig from '../../../../helpers/keystone-documen
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, mockApplication, mockDeclarations, referenceNumber } from '../../../../test-mocks';
+import { mockReq, mockRes, mockApplication, mockDeclarations, mockSpyPromise, referenceNumber } from '../../../../test-mocks';
 
 const {
   INSURANCE_ROOT,
@@ -24,7 +24,7 @@ const {
 describe('controllers/insurance/declarations/anti-bribery', () => {
   jest.mock('../save-data');
 
-  let mockSaveDeclaration = jest.fn(() => Promise.resolve({}));
+  let mockSaveDeclaration = mockSpyPromise();
 
   save.declaration = mockSaveDeclaration;
 

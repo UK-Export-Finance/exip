@@ -4,6 +4,7 @@ import mockLossPayeeFinancialDetailsInternational from './mock-loss-payee-financ
 const mockNominatedLossPayee = {
   isAppointed: false,
   isLocatedInUk: false,
+  isLocatedInternationally: undefined,
   financialUk: {
     id: '2345',
     ...mockLossPayeeFinancialDetailsUk,
