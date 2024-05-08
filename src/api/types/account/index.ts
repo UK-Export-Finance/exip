@@ -120,7 +120,7 @@ export interface AccountCreationCore {
 
 export interface Account extends AccountCreationCore {
   id: string;
-  statusId: AccountStatus;
+  statusId: string;
   status: AccountStatus;
 }
 
