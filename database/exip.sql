@@ -3,7 +3,7 @@
 # Version 0.3
 #
 # Database: exip
-# Generation Time: 2024-04-29 15:09:14 +0000
+# Generation Time: 2024-05-08 17:02:29 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -828,7 +828,7 @@ CREATE TABLE `Broker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isUsingBroker` tinyint(1) DEFAULT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(800) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
