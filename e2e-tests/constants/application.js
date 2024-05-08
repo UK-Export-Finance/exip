@@ -16,6 +16,7 @@ export const APPLICATION = {
   STATUS: {
     IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
+    ABANDONED: 'Abandoned',
   },
   EXPORT_CONTRACT: {
     AGENT_SERVICE_CHARGE: {
