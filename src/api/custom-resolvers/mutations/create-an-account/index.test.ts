@@ -64,7 +64,9 @@ describe('custom-resolvers/create-an-account', () => {
     expect(account.verificationHash.length).toEqual(KEY_LENGTH * 2);
   });
 
-  it('should generate status fields', () => {
+  it('should generate status fields', async () => {
+    account = await accounts.get(context, account.id);
+
     const { status } = account;
 
     expect(status.isBlocked).toEqual(false);
