@@ -6,6 +6,7 @@ export * from './application-types';
 export * from './companies-house';
 export * from './company';
 export * from './country';
+export * from './cron';
 export * from './currency';
 export * from './email';
 export * from './encryption';

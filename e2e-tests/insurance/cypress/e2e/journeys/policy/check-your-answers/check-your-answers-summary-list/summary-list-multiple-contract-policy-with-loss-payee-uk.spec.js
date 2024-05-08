@@ -46,7 +46,7 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
   });
 
   it('should render generic policy summary list rows', () => {
-    cy.assertGenericSinglePolicySummaryListRows();
+    cy.assertGenericMultiplePolicySummaryListRows();
   });
 
   it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
