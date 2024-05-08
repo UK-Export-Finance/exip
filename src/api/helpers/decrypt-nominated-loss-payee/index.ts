@@ -33,6 +33,8 @@ const decryptNominatedLossPayee = (
      * add to decrypted data mapping
      */
     if (decryptFinancialUk) {
+      console.info('Decrypting nominated loss payee - financial - UK data %s', nominatedLossPayee.id);
+
       const mappedFinancialUk = decryptFinancialUkData(financialUk);
 
       mapped.financialUk = mappedFinancialUk;
@@ -43,6 +45,8 @@ const decryptNominatedLossPayee = (
      * add to decrypted data mapping
      */
     if (decryptFinancialInternational) {
+      console.info('Decrypting nominated loss payee - financial - international data %s', nominatedLossPayee.id);
+
       const mappedFinancialInternational = decryptFinancialInternationalData(financialInternational);
 
       mapped.financialInternational = mappedFinancialInternational;

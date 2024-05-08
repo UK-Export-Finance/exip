@@ -7,7 +7,7 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
-import { ApplicationNominatedLossPayee, ApplicationLossPayeeFinancialDetailsUk, SummaryListItemData } from '../../../../../types';
+import { ApplicationNominatedLossPayee, ApplicationLossPayeeFinancialDetailsUk, ApplicationLossPayeeFinancialDetailsInternational, SummaryListItemData } from '../../../../../types';
 
 const {
   POLICY: { LOSS_PAYEE: FORM_TITLE },
@@ -15,9 +15,10 @@ const {
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { NAME, IS_LOCATED_IN_UK },
+  LOSS_PAYEE_DETAILS: { NAME, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
   FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -28,13 +29,15 @@ const {
     LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
 /**
  * lossPayeeLocatedInUkFields
  * Populate and return Loss payee financial UK fields
- * @param {ApplicationLossPayeeFinancialDetailsUk} answers: Loss payee answers
+ * @param {ApplicationLossPayeeFinancialDetailsUk} answers: Loss payee - financial details - UK answers
  * @param {Number} referenceNumber: Application reference number
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
@@ -62,7 +65,7 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
       href: generateChangeLink(
         LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
         LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-        `#${NAME}-label`,
+        `#${SORT_CODE}-label`,
         referenceNumber,
         checkAndChange,
       ),
@@ -75,6 +78,60 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
         LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
         LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
         `#${ACCOUNT_NUMBER}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
+      renderChangeLink: true,
+    }),
+  ];
+
+  return fields;
+};
+
+/**
+ * lossPayeeLocatedInternationallyFields
+ * Populate and return Loss payee financial international fields
+ * @param {ApplicationLossPayeeFinancialDetailsInternational} answers: Loss payee - financial details - international answers
+ * @param {Number} referenceNumber: Application reference number
+ * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
+ * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
+ */
+export const lossPayeeLocatedInternationallyFields = (answers: ApplicationLossPayeeFinancialDetailsInternational, referenceNumber: number, checkAndChange: boolean) => {
+  const fields = [
+    fieldGroupItem(
+      {
+        field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS),
+        data: answers,
+        href: generateChangeLink(
+          LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+          LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+          `#${FINANCIAL_ADDRESS}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+        renderChangeLink: true,
+      },
+      replaceNewLineWithLineBreak(answers[FINANCIAL_ADDRESS]),
+    ),
+    fieldGroupItem({
+      field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, BIC_SWIFT_CODE),
+      data: answers,
+      href: generateChangeLink(
+        LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+        LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+        `#${BIC_SWIFT_CODE}-label`,
+        referenceNumber,
+        checkAndChange,
+      ),
+      renderChangeLink: true,
+    }),
+    fieldGroupItem({
+      field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, IBAN),
+      data: answers,
+      href: generateChangeLink(
+        LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+        LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+        `#${IBAN}-label`,
         referenceNumber,
         checkAndChange,
       ),
@@ -112,6 +169,10 @@ export const lossPayeeFields = (answers: ApplicationNominatedLossPayee, referenc
 
     if (answers[IS_LOCATED_IN_UK]) {
       fields = [...fields, ...lossPayeeLocatedInUkFields(answers.financialUk, referenceNumber, checkAndChange)];
+    }
+
+    if (answers[IS_LOCATED_INTERNATIONALLY]) {
+      fields = [...fields, ...lossPayeeLocatedInternationallyFields(answers.financialInternational, referenceNumber, checkAndChange)];
     }
   }
 

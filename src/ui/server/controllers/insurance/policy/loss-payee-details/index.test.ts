@@ -19,12 +19,12 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   POLICY: {
-    CHECK_YOUR_ANSWERS,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
     LOSS_PAYEE_CHANGE,
     LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
     LOSS_PAYEE_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -186,7 +186,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
       });
 
       describe(`when ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY} and the url's last substring is 'change'`, () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, async () => {
           req.originalUrl = LOSS_PAYEE_CHANGE;
 
           req.body = {
@@ -196,7 +196,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

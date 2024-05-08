@@ -19,10 +19,10 @@ const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
   POLICY: {
-    CHECK_YOUR_ANSWERS,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
     LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -132,16 +132,19 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If the route is a "change" route,
-     * if LOCATION has been submitted as IS_LOCATED_IN_UK,
+     * - if LOCATION has been submitted as IS_LOCATED_IN_UK,
      * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_UK form.
-     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     * - if LOCATION has been submitted as IS_LOCATED_INTERNATIONALLY,
+     * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL form.
      */
     if (isChangeRoute(req.originalUrl)) {
       if (locationAnswer === IS_LOCATED_IN_UK) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`);
       }
 
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+      if (locationAnswer === IS_LOCATED_INTERNATIONALLY) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`);
+      }
     }
 
     /**
