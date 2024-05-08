@@ -34,6 +34,7 @@ const {
     },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+    FINANCIAL_ADDRESS,
   },
 } = INSURANCE_FIELD_IDS;
 
@@ -277,12 +278,20 @@ export const POLICY_FIELDS = {
           'A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.',
         OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant.",
       },
+      SUMMARY: {
+        TITLE: 'Appointed a loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
   },
   LOSS_PAYEE_DETAILS: {
     [LOSS_PAYEE_NAME]: {
       LABEL: 'Name of the loss payee',
       MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
+      SUMMARY: {
+        TITLE: 'Name of the loss payee',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [LOCATION]: {
       LABEL: 'Where is the loss payee located?',
@@ -304,10 +313,24 @@ export const POLICY_FIELDS = {
     [SORT_CODE]: {
       LABEL: 'Sort code',
       HINT: 'Must be 6 digits long',
+      SUMMARY: {
+        TITLE: 'Sort code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [ACCOUNT_NUMBER]: {
       LABEL: 'Account number',
       HINT: 'Must be between 6 and 8 digits long',
+      SUMMARY: {
+        TITLE: 'Account number',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: 'Loss payee’s bank based in the UK',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
   },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {

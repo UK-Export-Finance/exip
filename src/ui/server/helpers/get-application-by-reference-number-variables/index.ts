@@ -1,6 +1,6 @@
-import LOSS_PAYEE_ROUTES from '../../constants/routes/insurance/policy/loss-payee';
+import { POLICY } from '../../constants/routes/insurance/policy';
 
-const { LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT, LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT } = LOSS_PAYEE_ROUTES;
+const { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT, LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT } = POLICY;
 
 /**
  * getApplicationByReferenceNumberVariables
@@ -17,7 +17,7 @@ const getApplicationByReferenceNumberVariables = (referenceNumber: string, url: 
    * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT
    * then decryptFinancialUk should be set to true
    */
-  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT)) {
+  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT) || url.includes(CHECK_YOUR_ANSWERS)) {
     decryptFinancialUk = true;
   }
 

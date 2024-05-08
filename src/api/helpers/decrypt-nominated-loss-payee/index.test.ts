@@ -50,6 +50,7 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
       const result = decryptNominatedLossPayee(populatedNominatedLossPayee, false, false);
 
       const expected = {
+        ...nominatedLossPayee,
         financialUk: {},
         financialInternational: {},
       };
@@ -69,6 +70,7 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
       const result = decryptNominatedLossPayee(populatedNominatedLossPayee, true);
 
       const expected = {
+        ...nominatedLossPayee,
         financialUk: decryptFinancialUkData(mockFinancialUk),
         financialInternational: {},
       };
@@ -96,6 +98,7 @@ describe('api/helpers/decrypt-nominated-loss-payee', () => {
       const result = decryptNominatedLossPayee(populatedNominatedLossPayee, false, true);
 
       const expected = {
+        ...nominatedLossPayee,
         financialUk: {},
         financialInternational: decryptFinancialInternational(mockFinancialInternational),
       };

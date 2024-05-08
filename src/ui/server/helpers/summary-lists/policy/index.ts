@@ -2,8 +2,17 @@ import generatePolicyAndDateFields from './policy-and-date-fields';
 import generatePolicyContactFields from './policy-contact-fields';
 import { generateOtherCompanyFields } from './other-company-fields';
 import { generateBrokerFields } from './broker-fields';
+import { generateLossPayeeFields } from './loss-payee-fields';
 import generateGroupsOfSummaryLists from '../generate-groups-of-summary-lists';
-import { ApplicationPolicy, ApplicationPolicyContact, ApplicationBroker, Currency, Country, SummaryListGroupData } from '../../../../types';
+import {
+  ApplicationPolicy,
+  ApplicationPolicyContact,
+  ApplicationBroker,
+  ApplicationNominatedLossPayee,
+  Currency,
+  Country,
+  SummaryListGroupData,
+} from '../../../../types';
 
 /**
  * generateFields
@@ -21,6 +30,7 @@ const generateFields = (
   answers: ApplicationPolicy,
   answersPolicyContact: ApplicationPolicyContact,
   answersBroker: ApplicationBroker,
+  answersLossPayee: ApplicationNominatedLossPayee,
   referenceNumber: number,
   currencies: Array<Currency>,
   countries: Array<Country>,
@@ -31,6 +41,7 @@ const generateFields = (
     generatePolicyContactFields(answersPolicyContact, referenceNumber, checkAndChange),
     generateOtherCompanyFields(answers.jointlyInsuredParty, referenceNumber, countries, checkAndChange),
     generateBrokerFields(answersBroker, referenceNumber, checkAndChange),
+    generateLossPayeeFields(answersLossPayee, referenceNumber, checkAndChange),
   ] as Array<SummaryListGroupData>;
 
   return fields;
@@ -52,12 +63,13 @@ const policySummaryLists = (
   answers: ApplicationPolicy,
   answersPolicyContact: ApplicationPolicyContact,
   answersBroker: ApplicationBroker,
+  answersLossPayee: ApplicationNominatedLossPayee,
   referenceNumber: number,
   currencies: Array<Currency>,
   countries: Array<Country>,
   checkAndChange = false,
 ) => {
-  const fields = generateFields(answers, answersPolicyContact, answersBroker, referenceNumber, currencies, countries, checkAndChange);
+  const fields = generateFields(answers, answersPolicyContact, answersBroker, answersLossPayee, referenceNumber, currencies, countries, checkAndChange);
 
   const summaryList = generateGroupsOfSummaryLists(fields);
 

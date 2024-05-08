@@ -35,7 +35,7 @@ export const get = async (req: Request, res: Response) => {
     return res.redirect(PROBLEM_WITH_SERVICE);
   }
 
-  const { referenceNumber, policy, exportContract, policyContact, broker } = application;
+  const { referenceNumber, policy, exportContract, policyContact, broker, nominatedLossPayee } = application;
 
   try {
     const { allCurrencies } = await api.keystone.APIM.getCurrencies();
@@ -50,7 +50,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, allCurrencies, countries);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, nominatedLossPayee, referenceNumber, allCurrencies, countries);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({

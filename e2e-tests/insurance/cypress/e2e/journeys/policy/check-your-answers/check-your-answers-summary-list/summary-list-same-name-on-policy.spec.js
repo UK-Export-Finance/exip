@@ -13,6 +13,7 @@ const {
   CREDIT_PERIOD_WITH_BUYER,
   NAME_ON_POLICY: { NAME },
   USING_BROKER,
+  LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
 } = POLICY_FIELD_IDS;
 
 const { ACCOUNT: { EMAIL } } = INSURANCE_FIELD_IDS;
@@ -65,5 +66,9 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   it(`should render a ${USING_BROKER} summary list row`, () => {
     checkSummaryList[USING_BROKER]({ usingBroker: false });
+  });
+
+  it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
+    checkSummaryList[LOSS_PAYEE_IS_APPOINTED]({ isAppointingLossPayee: false });
   });
 });
