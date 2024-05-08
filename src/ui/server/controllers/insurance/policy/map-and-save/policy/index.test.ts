@@ -41,7 +41,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.policy with application and populated submitted data', async () => {
         await mapAndSave.policy(mockFormBody, mockApplication);
 

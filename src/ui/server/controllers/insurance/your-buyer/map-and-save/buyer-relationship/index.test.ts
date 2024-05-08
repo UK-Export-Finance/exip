@@ -39,7 +39,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-relationship', () 
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.buyerRelationship with application and submitted data', async () => {
         await mapAndSave.buyerRelationship(mockFormBody, mockApplication);
 

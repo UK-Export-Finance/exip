@@ -1,7 +1,7 @@
 import { ROUTES } from '../../../../../constants';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../validation';
-import mapAndSave from '../../map-and-save/nominated-loss-payee';
+import mapAndSave from '../../map-and-save/loss-payee';
 import { FIELD_IDS } from '..';
 import { Request, Response } from '../../../../../../types';
 
@@ -31,7 +31,7 @@ const post = async (req: Request, res: Response) => {
     const validationErrors = generateValidationErrors(payload);
 
     // runs save and go back command
-    const saveResponse = await mapAndSave.nominatedLossPayee(payload, application, validationErrors);
+    const saveResponse = await mapAndSave.lossPayee(payload, application, validationErrors);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

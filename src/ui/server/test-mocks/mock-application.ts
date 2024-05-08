@@ -192,6 +192,26 @@ const mockApplication = {
   totalContractValueOverThreshold: false,
 };
 
+export const mockApplicationAgentServiceChargeEmpty = {
+  ...mockApplication,
+  exportContract: {
+    ...mockExportContract,
+    agent: {
+      ...mockExportContractAgent,
+      service: {
+        ...mockExportContractAgentService,
+        charge: {
+          ...mockExportContractAgentServiceCharge,
+          percentageCharge: '',
+          fixedSumAmount: '',
+          method: '',
+          payableCountryCode: '',
+        },
+      },
+    },
+  },
+} as Application;
+
 export const mockApplicationMultiplePolicy = {
   ...mockApplication,
   policy: mockMultiplePolicy,
@@ -213,6 +233,34 @@ export const mockApplicationMultiplePolicyWithoutCurrencyCode = {
   },
 } as Application;
 
+export const mockApplicationNominatedLossPayeeAppointedEmptyData = {
+  ...mockApplication,
+  nominatedLossPayee: {
+    ...mockNominatedLossPayee,
+    isAppointed: true,
+    financialUk: {
+      ...mockNominatedLossPayee.financialUk,
+      accountNumber: '',
+      sortCode: '',
+      financialAddress: '',
+    },
+    financialInternational: {
+      ...mockNominatedLossPayee.financialInternational,
+      bicSwiftCode: '',
+      iban: '',
+      financialAddress: '',
+    },
+  },
+} as Application;
+
+export const mockApplicationNominatedLossPayeeNotAppointedFullData = {
+  ...mockApplication,
+  nominatedLossPayee: {
+    ...mockNominatedLossPayee,
+    isAppointed: false,
+  },
+} as Application;
+
 export const mockApplicationTotalContractValueThresholdTrue = {
   ...mockApplication,
   totalContractValueOverThreshold: true,
@@ -221,26 +269,6 @@ export const mockApplicationTotalContractValueThresholdTrue = {
 export const mockApplicationTotalContractValueThresholdFalse = {
   ...mockApplication,
   totalContractValueOverThreshold: false,
-} as Application;
-
-export const mockApplicationAgentServiceChargeEmpty = {
-  ...mockApplication,
-  exportContract: {
-    ...mockExportContract,
-    agent: {
-      ...mockExportContractAgent,
-      service: {
-        ...mockExportContractAgentService,
-        charge: {
-          ...mockExportContractAgentServiceCharge,
-          percentageCharge: '',
-          fixedSumAmount: '',
-          method: '',
-          payableCountryCode: '',
-        },
-      },
-    },
-  },
 } as Application;
 
 export default mockApplication;

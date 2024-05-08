@@ -77,7 +77,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       beforeEach(() => {
         setupMocks();
       });

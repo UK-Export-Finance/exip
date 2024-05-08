@@ -42,7 +42,7 @@ describe('controllers/insurance/your-buyer/map-and-save/buyer-trading-history', 
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.buyer with application and submitted data', async () => {
         await mapAndSave.buyerTradingHistory(mockFormBody, mockApplication);
 

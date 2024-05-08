@@ -213,6 +213,7 @@ jobs:
             "check-your-answers/export-contract/change-your-answers/private-market/*.spec.js",
             "check-your-answers/policy/*.spec.js",
             "check-your-answers/policy/change-your-answers/broker/*.spec.js",
+            "check-your-answers/policy/change-your-answers/loss-payee/*.spec.js",
             "check-your-answers/policy/change-your-answers/multiple-policy/*.spec.js",
             "check-your-answers/policy/change-your-answers/name-on-policy/*.spec.js",
             "check-your-answers/policy/change-your-answers/pre-credit-period/*.spec.js",

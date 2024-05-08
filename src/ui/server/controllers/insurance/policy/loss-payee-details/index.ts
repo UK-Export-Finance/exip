@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import mapAndSave from '../map-and-save/nominated-loss-payee';
+import mapAndSave from '../map-and-save/loss-payee';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Application, Request, Response } from '../../../../../types';
@@ -118,7 +118,7 @@ export const post = async (req: Request, res: Response) => {
   try {
     const locationAnswer = payload[LOCATION];
 
-    const saveResponse = await mapAndSave.nominatedLossPayee(payload, application);
+    const saveResponse = await mapAndSave.lossPayee(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

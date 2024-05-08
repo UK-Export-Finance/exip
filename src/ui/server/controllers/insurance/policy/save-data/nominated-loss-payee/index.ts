@@ -1,18 +1,17 @@
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { Application, RequestBody } from '../../../../../../types';
 
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-
-const { NAME } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
+const { NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
 /**
  * string fields which are exempt from being stripped by stripEmptyFormFields
  * for example when a string field needs to be set to an empty string or null
  */
-export const NULL_OR_EMPTY_STRING_FIELDS = [NAME];
+export const NULL_OR_EMPTY_STRING_FIELDS = [NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK];
 
 /**
  * nominatedLossPayee

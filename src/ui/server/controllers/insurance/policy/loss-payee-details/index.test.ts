@@ -10,7 +10,7 @@ import { Application, Request, Response } from '../../../../../types';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import mapAndSave from '../map-and-save/nominated-loss-payee';
+import mapAndSave from '../map-and-save/loss-payee';
 import { mockReq, mockRes, mockApplication, mockLossPayeeDetails, referenceNumber } from '../../../../test-mocks';
 
 const { NAME, LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
@@ -126,7 +126,7 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
     const validBody = mockLossPayeeDetails;
 
     beforeEach(() => {
-      mapAndSave.nominatedLossPayee = jest.fn(() => Promise.resolve(true));
+      mapAndSave.lossPayee = jest.fn(() => Promise.resolve(true));
     });
 
     describe('when there are validation errors', () => {
@@ -155,16 +155,16 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
         req.body = validBody;
       });
 
-      it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
+      it('should call mapAndSave.lossPayee once with data from constructPayload function', async () => {
         req.body = validBody;
 
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
 
-        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledTimes(1);
+        expect(mapAndSave.lossPayee).toHaveBeenCalledTimes(1);
 
-        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledWith(payload, mockApplication);
+        expect(mapAndSave.lossPayee).toHaveBeenCalledWith(payload, mockApplication);
       });
 
       describe("when the url's last substring is `change`", () => {

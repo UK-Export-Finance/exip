@@ -41,7 +41,7 @@ describe('controllers/insurance/business/map-and-save/turnover', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       mockFormBody = {
         _csrf: '1234',
         [PERCENTAGE_TURNOVER]: '25',

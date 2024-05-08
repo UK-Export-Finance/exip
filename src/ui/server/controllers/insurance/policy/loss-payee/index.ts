@@ -7,7 +7,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import mapAndSave from '../map-and-save/nominated-loss-payee';
+import mapAndSave from '../map-and-save/loss-payee';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -112,7 +112,7 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
-    const saveResponse = await mapAndSave.nominatedLossPayee(payload, application);
+    const saveResponse = await mapAndSave.lossPayee(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);

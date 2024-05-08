@@ -40,7 +40,7 @@ describe('controllers/insurance/policy/map-and-save/jointly-insured-party', () =
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.jointlyInsuredParty with application and populated submitted data', async () => {
         await mapAndSave.jointlyInsuredParty(mockFormBody, mockApplication);
 

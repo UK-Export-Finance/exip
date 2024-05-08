@@ -3,13 +3,13 @@ import mapSubmittedData from '.';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { LOCATION, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK },
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK, LOCATION, NAME },
 } = POLICY_FIELD_IDS;
 
 describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
   describe(`when form body ${IS_APPOINTED} is true`, () => {
     const mockBody = {
-      [IS_APPOINTED]: true,
+      [IS_APPOINTED]: 'true',
     };
 
     it('should return form data as provided', () => {
@@ -23,13 +23,17 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
 
   describe(`when form body ${IS_APPOINTED} is false`, () => {
     const mockBody = {
-      [IS_APPOINTED]: false,
+      [IS_APPOINTED]: 'false',
     };
 
-    it('should return form data as provided', () => {
+    it('should return form data with nullified fields', () => {
       const result = mapSubmittedData(mockBody);
 
-      const expected = mockBody;
+      const expected = {
+        [NAME]: '',
+        [IS_LOCATED_INTERNATIONALLY]: null,
+        [IS_LOCATED_IN_UK]: null,
+      };
 
       expect(result).toEqual(expected);
     });

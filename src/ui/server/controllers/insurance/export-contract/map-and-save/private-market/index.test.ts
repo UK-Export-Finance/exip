@@ -43,7 +43,7 @@ describe('controllers/insurance/export-contract/map-and-save/private-market', ()
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.privateMarket with application and populated submitted data', async () => {
         await mapAndSave.privateMarket(mockFormBody, mockApplication);
 
