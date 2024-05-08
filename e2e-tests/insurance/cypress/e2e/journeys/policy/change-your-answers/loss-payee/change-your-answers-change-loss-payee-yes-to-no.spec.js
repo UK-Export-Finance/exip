@@ -95,7 +95,7 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
         describe(`going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_UK}`, () => {
           it('should have empty field values', () => {
             cy.checkValue(field(NAME), '');
-            
+
             cy.assertRadioOptionIsNotChecked(field(`location-${IS_LOCATED_IN_UK}`).input());
             cy.assertRadioOptionIsNotChecked(field(`location-${IS_LOCATED_INTERNATIONALLY}`).input());
 
