@@ -338,7 +338,7 @@ export const POLICY_FIELDS = {
       LABEL: 'BIC or SWIFT code',
       HINT: 'Must be between 8 and 11 characters long',
       SUMMARY: {
-        TITLE: "BIC or SWIFT code",
+        TITLE: 'BIC or SWIFT code',
         FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
       },
     },
@@ -346,7 +346,7 @@ export const POLICY_FIELDS = {
       LABEL: 'IBAN',
       HINT: 'Must be between 16 and 34 characters long',
       SUMMARY: {
-        TITLE: "IBAN",
+        TITLE: 'IBAN',
         FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
       },
     },

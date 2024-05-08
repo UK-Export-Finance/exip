@@ -76,7 +76,7 @@ context('Insurance - Textarea fields - Loss payee financial details textarea fie
         cy.navigateToUrl(nominatedLossPayeeUrl);
 
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
-        cy.completeAndSubmitLossPayeeFinancialInternationalForm({});
+        cy.completeAndSubmitLossPayeeFinancialDetailsInternationalForm({});
 
         cy.clickBackLink();
       });

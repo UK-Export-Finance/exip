@@ -10,6 +10,7 @@ const {
 const {
   LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
   LOSS_PAYEE_DETAILS: { NAME },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
@@ -56,7 +57,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should render a ${FINANCIAL_ADDRESS} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true });
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
   });
 
   it(`should render a ${SORT_CODE} summary list row`, () => {
@@ -65,5 +66,13 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
   it(`should render a ${ACCOUNT_NUMBER} summary list row`, () => {
     checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: true });
+  });
+
+  it(`should NOT render a ${BIC_SWIFT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: false });
+  });
+
+  it(`should NOT render an ${IBAN} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: false });
   });
 });

@@ -84,6 +84,8 @@ const completePolicySection = ({
 
     if (lossPayeeIsLocatedInUK) {
       cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({});
+    } else {
+      cy.completeAndSubmitLossPayeeFinancialDetailsInternationalForm({});
     }
   }
 

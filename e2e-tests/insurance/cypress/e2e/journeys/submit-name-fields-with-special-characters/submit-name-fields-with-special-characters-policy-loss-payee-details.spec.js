@@ -119,7 +119,7 @@ context('Insurance - Name fields - Loss payee details - Name field should render
         cy.navigateToUrl(url);
 
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
-        cy.completeAndSubmitLossPayeeFinancialInternationalForm({ financialAddress: nameValue });
+        cy.completeAndSubmitLossPayeeFinancialDetailsInternationalForm({ financialAddress: nameValue });
 
         cy.clickBackLink();
 

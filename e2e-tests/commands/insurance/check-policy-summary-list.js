@@ -41,6 +41,7 @@ const {
     LOSS_PAYEE: { IS_APPOINTED: LOSS_PAYEE_IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
     LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
     FINANCIAL_ADDRESS,
   },
   ACCOUNT: { EMAIL, FIRST_NAME, LAST_NAME },
@@ -360,10 +361,18 @@ const checkPolicySummaryList = ({
         cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
       }
     },
-    [FINANCIAL_ADDRESS]: ({ shouldRender = false }) => {
+    [FINANCIAL_ADDRESS]: ({ shouldRender = false, isUk = false, isInternational = false }) => {
       const fieldId = FINANCIAL_ADDRESS;
 
-      const expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_UK[fieldId].SUMMARY.TITLE;
+      let expectedKey;
+
+      if (isUk) {
+        expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_UK[fieldId].SUMMARY.TITLE;
+      }
+
+      if (isInternational) {
+        expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].SUMMARY.TITLE;
+      }
 
       if (shouldRender) {
         const row = summaryList.field(fieldId);
@@ -405,6 +414,32 @@ const checkPolicySummaryList = ({
 
       if (shouldRender) {
         const expectedValue = application.POLICY.LOSS_PAYEE_FINANCIAL_UK[fieldId];
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [BIC_SWIFT_CODE]: ({ shouldRender = false }) => {
+      const fieldId = BIC_SWIFT_CODE;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL);
+
+      if (shouldRender) {
+        const expectedValue = application.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId];
+
+        cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
+      } else {
+        cy.assertSummaryListRowDoesNotExist(summaryList, fieldId);
+      }
+    },
+    [IBAN]: ({ shouldRender = false }) => {
+      const fieldId = IBAN;
+
+      const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL);
+
+      if (shouldRender) {
+        const expectedValue = application.POLICY.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId];
 
         cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
       } else {

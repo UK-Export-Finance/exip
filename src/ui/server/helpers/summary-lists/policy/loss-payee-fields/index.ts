@@ -7,7 +7,12 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
-import { ApplicationNominatedLossPayee, ApplicationLossPayeeFinancialDetailsUk, ApplicationLossPayeeFinancialDetailsInternational, SummaryListItemData } from '../../../../../types';
+import {
+  ApplicationNominatedLossPayee,
+  ApplicationLossPayeeFinancialDetailsUk,
+  ApplicationLossPayeeFinancialDetailsInternational,
+  SummaryListItemData,
+} from '../../../../../types';
 
 const {
   POLICY: { LOSS_PAYEE: FORM_TITLE },
@@ -96,7 +101,11 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
  * @param {Boolean} checkAndChange: true if coming from check your answers section in submit application section
  * @returns {Array<SummaryListItemData>} optional broker fields if yes selected
  */
-export const lossPayeeLocatedInternationallyFields = (answers: ApplicationLossPayeeFinancialDetailsInternational, referenceNumber: number, checkAndChange: boolean) => {
+export const lossPayeeLocatedInternationallyFields = (
+  answers: ApplicationLossPayeeFinancialDetailsInternational,
+  referenceNumber: number,
+  checkAndChange: boolean,
+) => {
   const fields = [
     fieldGroupItem(
       {

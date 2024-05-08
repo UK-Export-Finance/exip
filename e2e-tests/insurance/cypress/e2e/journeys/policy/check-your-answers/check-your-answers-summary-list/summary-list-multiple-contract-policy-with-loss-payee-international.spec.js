@@ -1,3 +1,4 @@
+import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
@@ -17,7 +18,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Using loss payee based internationally', () => {
+context('Insurance - Policy - Check your answers - Summary list - Multiple contract policy - Using loss payee based internationally', () => {
   let referenceNumber;
   let url;
 
@@ -26,6 +27,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
       referenceNumber = refNumber;
 
       cy.completePolicySection({
+        policyType: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
         isAppointingLossPayee: true,
         lossPayeeIsLocatedInUK: false,
       });
@@ -45,7 +47,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it('should render generic policy summary list rows', () => {
-    cy.assertGenericSinglePolicySummaryListRows();
+    cy.assertGenericMultiplePolicySummaryListRows();
   });
 
   it(`should render a ${LOSS_PAYEE_IS_APPOINTED} summary list row`, () => {
@@ -57,7 +59,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should render a ${FINANCIAL_ADDRESS} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isInternational: true });
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
   });
 
   it(`should render a ${BIC_SWIFT_CODE} summary list row`, () => {
