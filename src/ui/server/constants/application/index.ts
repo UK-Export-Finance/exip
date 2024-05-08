@@ -13,6 +13,7 @@ export const APPLICATION = {
   STATUS: {
     IN_PROGRESS: 'In progress',
     SUBMITTED: 'Submitted to UKEF',
+    ABANDONED: 'Abandoned',
   },
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',

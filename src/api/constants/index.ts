@@ -82,6 +82,22 @@ export const DATE_ONE_MINUTE_IN_THE_PAST = () => {
   return oneMinuteInThePast;
 };
 
+/**
+ * DATE_2_MONTHS_IN_THE_PAST
+ * Generate a date that is 2  months in the past
+ * @returns {Date}
+ */
+export const DATE_2_MONTHS_IN_THE_PAST = () => {
+  const now = new Date();
+
+  const day = now.getDate();
+
+  // subtract 1 day from the current day.
+  const twoMonths = new Date(now.setDate(day - 60));
+
+  return twoMonths;
+};
+
 export const ACCOUNT = {
   EMAIL: {
     VERIFICATION_EXPIRY: DATE_24_HOURS_FROM_NOW,
