@@ -54,7 +54,7 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { referenceNumber, policy, exportContract, policyContact, broker } = application;
+    const { referenceNumber, policy, exportContract, policyContact, broker, nominatedLossPayee } = application;
 
     const { policyType } = policy;
     const { isUsingBroker } = broker;
@@ -73,7 +73,7 @@ export const get = async (req: Request, res: Response) => {
       ...exportContract,
     };
 
-    const summaryLists = policySummaryLists(answers, policyContact, broker, referenceNumber, allCurrencies, countries, checkAndChange);
+    const summaryLists = policySummaryLists(answers, policyContact, broker, nominatedLossPayee, referenceNumber, allCurrencies, countries, checkAndChange);
 
     const fields = requiredFields({ policyType, isUsingBroker });
 

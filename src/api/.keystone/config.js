@@ -6571,6 +6571,7 @@ var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryp
   try {
     console.info("Decrypting nominated loss payee %s", nominatedLossPayee.id);
     const mapped = {
+      ...nominatedLossPayee,
       financialUk: {},
       financialInternational: {}
     };

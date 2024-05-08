@@ -157,6 +157,7 @@ const application = {
     [MAXIMUM_BUYER_WILL_OWE]: '500',
     [NEED_PRE_CREDIT_PERIOD]: 'false',
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
+    [LOSS_PAYEE_NAME]: 'Mock name',
     LOSS_PAYEE_FINANCIAL_UK: {
       [SORT_CODE]: '102030',
       [ACCOUNT_NUMBER]: '12345678',
@@ -167,7 +168,6 @@ const application = {
       [IBAN]: 'GB33BUKB20201555555555',
       [FINANCIAL_ADDRESS]: MULTI_LINE_STRING,
     },
-    [LOSS_PAYEE_NAME]: 'Mock name',
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
     [COMPANY_NAME]: 'Mock jointly insured company name',

@@ -10,7 +10,7 @@ import { Application } from '../../types';
 import broker from './mock-broker';
 import buyer from './mock-buyer';
 import mockJointlyInsuredParty from './mock-jointly-insured-party';
-import mockNominatedLossPayee from './mock-nominated-loss-payee';
+import nominatedLossPayee from './mock-nominated-loss-payee';
 import { GBP, EUR } from '../constants/supported-currencies';
 
 dotenv.config();
@@ -137,6 +137,11 @@ export const mockBroker = {
 
 export const mockApplicationBuyer = {
   ...buyer,
+};
+
+export const mockNominatedLossPayee = {
+  id: 'clcyyopna0158m8noaglyy9gh',
+  ...nominatedLossPayee,
 };
 
 export const mockSectionReview = {

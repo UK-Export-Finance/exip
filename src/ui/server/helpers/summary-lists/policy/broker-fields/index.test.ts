@@ -30,7 +30,7 @@ describe('server/helpers/summary-lists/policy/broker-fields', () => {
   describe('optionalBrokerFields', () => {
     const checkAndChange = false;
 
-    describe(`${USING_BROKER} is Yes`, () => {
+    describe(`when ${USING_BROKER} is true`, () => {
       it('should return fields from the submitted data/answers', () => {
         mockBroker[USING_BROKER] = true;
 
@@ -64,7 +64,7 @@ describe('server/helpers/summary-lists/policy/broker-fields', () => {
       });
     });
 
-    describe(`${USING_BROKER} is false`, () => {
+    describe(`when ${USING_BROKER} is false`, () => {
       it('should return an empty array', () => {
         mockBroker[USING_BROKER] = false;
 

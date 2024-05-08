@@ -14,6 +14,8 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false
  * @param {Boolean} usingBroker: If "using broker" on  - defaults to false
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on  - defaults to false
+ * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
+ * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
  * @param {Boolean} submitCheckYourAnswers: Click policy "check your answers" submit button
  */
 const completePolicySection = ({
@@ -26,6 +28,8 @@ const completePolicySection = ({
   needPreCreditPeriod = false,
   usingBroker = false,
   otherCompanyInvolved = false,
+  isAppointingLossPayee = false,
+  lossPayeeIsLocatedInUK = false,
   submitCheckYourAnswers = false,
 }) => {
   cy.startInsurancePolicySection({ viaTaskList });
@@ -71,7 +75,17 @@ const completePolicySection = ({
     cy.clickSubmitButton();
   }
 
-  cy.completeAndSubmitLossPayeeForm({});
+  cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee });
+
+  if (isAppointingLossPayee) {
+    cy.completeAndSubmitLossPayeeDetailsForm({
+      locatedInUK: lossPayeeIsLocatedInUK,
+    });
+
+    if (lossPayeeIsLocatedInUK) {
+      cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({});
+    }
+  }
 
   if (submitCheckYourAnswers) {
     cy.clickSubmitButton();
