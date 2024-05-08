@@ -18,7 +18,7 @@ const {
 
 const {
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_CHANGE, LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, LOSS_PAYEE_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -151,6 +151,18 @@ describe('controllers/insurance/policy/loss-payee', () => {
     });
 
     describe('when there are no validation errors', () => {
+      it('should call mapAndSave.lossPayee once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.lossPayee).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.lossPayee).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
       describe('when the answer is false', () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
@@ -178,16 +190,20 @@ describe('controllers/insurance/policy/loss-payee', () => {
         });
       });
 
-      it('should call mapAndSave.lossPayee once with data from constructPayload function', async () => {
-        req.body = validBody;
+      describe(`when ${FIELD_ID} is true and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${LOSS_PAYEE_DETAILS_CHANGE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHANGE;
 
-        await post(req, res);
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
 
-        const payload = constructPayload(req.body, [FIELD_ID]);
+          await post(req, res);
 
-        expect(mapAndSave.lossPayee).toHaveBeenCalledTimes(1);
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
 
-        expect(mapAndSave.lossPayee).toHaveBeenCalledWith(payload, mockApplication);
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

@@ -22,8 +22,9 @@ const {
     CHECK_YOUR_ANSWERS,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
-    LOSS_PAYEE_DETAILS_CHANGE,
+    LOSS_PAYEE_CHANGE,
     LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
     LOSS_PAYEE_CHECK_AND_CHANGE,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
@@ -167,13 +168,36 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
         expect(mapAndSave.lossPayee).toHaveBeenCalledWith(payload, mockApplication);
       });
 
-      describe("when the url's last substring is `change`", () => {
+      describe(`when ${LOCATION} is ${IS_LOCATED_IN_UK} and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHANGE;
+
+          req.body = {
+            ...validBody,
+            [LOCATION]: IS_LOCATED_IN_UK,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY} and the url's last substring is 'change'`, () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
-          req.originalUrl = LOSS_PAYEE_DETAILS_CHANGE;
+          req.originalUrl = LOSS_PAYEE_CHANGE;
+
+          req.body = {
+            ...validBody,
+            [LOCATION]: IS_LOCATED_INTERNATIONALLY,
+          };
 
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
       });

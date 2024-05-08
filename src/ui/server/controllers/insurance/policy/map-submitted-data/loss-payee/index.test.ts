@@ -1,5 +1,6 @@
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import mapSubmittedData from '.';
+import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
+import sanitiseValue from '../../../../../helpers/sanitise-data/sanitise-value';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
@@ -12,10 +13,16 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
       [IS_APPOINTED]: 'true',
     };
 
-    it('should return form data as provided', () => {
+    it(`should return form data with sanitised ${IS_APPOINTED}`, () => {
       const result = mapSubmittedData(mockBody);
 
-      const expected = mockBody;
+      const expected = {
+        ...mockBody,
+        [IS_APPOINTED]: sanitiseValue({
+          key: IS_APPOINTED,
+          value: mockBody[IS_APPOINTED],
+        }),
+      };
 
       expect(result).toEqual(expected);
     });
@@ -26,10 +33,14 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
       [IS_APPOINTED]: 'false',
     };
 
-    it('should return form data with nullified fields', () => {
+    it(`should return form data with nullified fields and sanitised ${IS_APPOINTED}`, () => {
       const result = mapSubmittedData(mockBody);
 
       const expected = {
+        [IS_APPOINTED]: sanitiseValue({
+          key: IS_APPOINTED,
+          value: mockBody[IS_APPOINTED],
+        }),
         [NAME]: '',
         [IS_LOCATED_INTERNATIONALLY]: null,
         [IS_LOCATED_IN_UK]: null,

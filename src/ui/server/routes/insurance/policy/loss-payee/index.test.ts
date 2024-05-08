@@ -26,8 +26,10 @@ const {
   LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
   LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
 } = POLICY;
 
 describe('routes/insurance/policy/loss-payee', () => {
@@ -40,8 +42,8 @@ describe('routes/insurance/policy/loss-payee', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(8);
-    expect(post).toHaveBeenCalledTimes(12);
+    expect(get).toHaveBeenCalledTimes(10);
+    expect(post).toHaveBeenCalledTimes(14);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_ROOT}`, getLossPayee);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_ROOT}`, postLossPayee);
@@ -62,6 +64,8 @@ describe('routes/insurance/policy/loss-payee', () => {
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, getLossPayeeFinancialDetailsUk);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, postLossPayeeFinancialDetailsUk);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK}`, postLossPayeeFinancialDetailsUkSaveAndBack);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`, getLossPayeeFinancialDetailsUk);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`, postLossPayeeFinancialDetailsUk);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, getLossPayeeFinancialInternational);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, postLossPayeeFinancialInternational);
@@ -69,5 +73,7 @@ describe('routes/insurance/policy/loss-payee', () => {
       `/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK}`,
       postLossPayeeFinancialInternationalSaveAndBack,
     );
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, getLossPayeeFinancialInternational);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, postLossPayeeFinancialInternational);
   });
 });

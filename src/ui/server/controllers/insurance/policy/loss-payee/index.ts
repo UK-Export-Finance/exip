@@ -8,6 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/loss-payee';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -16,7 +17,7 @@ const {
 
 const {
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -112,15 +113,34 @@ export const post = async (req: Request, res: Response) => {
   }
 
   try {
+    const isAppointingALossPayee = payload[FIELD_ID] === 'true';
+
     const saveResponse = await mapAndSave.lossPayee(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = payload[FIELD_ID];
+    /**
+     * If the route is a "change" route,
+     * the exporter IS_APPOINTING a loss payee,
+     * redirect to LOSS_PAYEE_DETAILS form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      if (isAppointingALossPayee) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`);
+      }
 
-    if (answer === 'true') {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * the exporter IS_APPOINTING a loss payee,
+     * redirect to LOSS_PAYEE_DETAILS form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isAppointingALossPayee) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_ROOT}`);
     }
 
