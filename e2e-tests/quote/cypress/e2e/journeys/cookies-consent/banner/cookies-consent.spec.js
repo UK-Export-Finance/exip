@@ -62,7 +62,7 @@ context('Cookies consent - initial/default', () => {
       );
     });
 
-    it('should redirect to cookies page when clicking cookies link', () => {
+    it(`should redirect to ${COOKIES} when clicking cookies link`, () => {
       partials.cookieBanner.cookiesLink().click();
 
       const expectedUrl = `${baseUrl}${COOKIES}`;

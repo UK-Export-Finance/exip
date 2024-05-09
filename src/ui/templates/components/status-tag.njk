@@ -21,6 +21,10 @@
     {% set classes = tagClasses.TURQUOISE %}
   {% endif %}
 
+  {% if status === "Completed" %}
+    {% set classes = "govuk-tag--green" %}
+  {% endif %}
+
   {% if status === "Submitted to UKEF" %}
     {% set classes = tagClasses.GREEN %}
   {% endif %}

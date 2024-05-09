@@ -48,14 +48,14 @@ describe('server/helpers/page-variables/core', () => {
           BUTTONS,
           COOKIES_CONSENT,
           ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-          HEADER,
           FOOTER: INSURANCE_FOOTER,
+          HEADER,
           LINKS,
           PHASE_BANNER,
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.APPLICATION },
         },
         BACK_LINK: mock.BACK_LINK,
-        START_ROUTE: insuranceStart,
+        COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
         ATTRIBUTES,
         DATA_CY: {
@@ -63,6 +63,7 @@ describe('server/helpers/page-variables/core', () => {
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
+        START_ROUTE: insuranceStart,
       };
 
       expect(result).toEqual(expected);
@@ -84,8 +85,8 @@ describe('server/helpers/page-variables/core', () => {
           BUTTONS,
           COOKIES_CONSENT,
           ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-          HEADER,
           FOOTER: INSURANCE_FOOTER,
+          HEADER,
           LINKS,
           PHASE_BANNER,
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.APPLICATION },
@@ -105,7 +106,7 @@ describe('server/helpers/page-variables/core', () => {
     });
   });
 
-  describe('when ORIGINAL_URL does not contain "insurance"', () => {
+  describe('when ORIGINAL_URL does NOT contain "insurance"', () => {
     it('should return an object with provided data and additional content strings, footer, startRoute and product for quote', () => {
       const quoteMock = {
         ...mock,
@@ -120,8 +121,8 @@ describe('server/helpers/page-variables/core', () => {
           BUTTONS,
           COOKIES_CONSENT,
           ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-          HEADER,
           FOOTER: QUOTE_FOOTER,
+          HEADER,
           LINKS,
           PHASE_BANNER,
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.QUOTE },
@@ -157,8 +158,8 @@ describe('server/helpers/page-variables/core', () => {
           BUTTONS,
           COOKIES_CONSENT,
           ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-          HEADER,
           FOOTER: QUOTE_FOOTER,
+          HEADER,
           LINKS,
           PHASE_BANNER,
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.GENERIC },

@@ -1,23 +1,32 @@
-# Introduction
-# ***************
-# This code snippet is a GitHub Actions workflow file that automates the setup and configuration of the EXIP project's infrastructure using Azure CLI commands.
-# It creates various Azure resources such as resource groups, app service plans, log analytics workspaces, container registries, virtual networks, subnets, VNET peerings,
-# web apps, front doors, private endpoints, DNS configurations, and diagnostic settings. It also sets environment variables and configures the web apps with app settings and logging options.
+# This code snippet is a YAML configuration file for a GitHub Actions workflow. It defines a series of jobs and steps to set up infrastructure, create base
+# infrastructure resources, configure security settings, configure a web app, enable logging and diagnostic settings, and set up health check alerts.
+# The workflow is triggered on pushes to the 'infrastructure' and 'EMS-2898-database-tier' branches. It uses environment variables to define the product, environment,
+# timezone, and target. The jobs are organized into sections for setup, base infrastructure creation, security configuration, web app configuration, logging and diagnostic settings, and health check alerts.
+# Each step in the workflow performs a specific task using the Azure CLI, such as creating resource groups, app service plans, log analytics workspaces, container registries,
+# virtual networks, subnets, VNET peering, databases, web apps, front doors, WAF policies, private endpoints, DNS configurations, and more.
+# The workflow also includes conditional steps based on the target environment, such as different configurations for pre-production and production environments.
+# Overall, this code snippet provides a comprehensive configuration for setting up infrastructure and configuring various resources in an Azure environment using GitHub Actions.
 #
-# Naming conventions
-# ******************
-# Standard Azure naming convention has been followed:
-# https://learn.microsoft.com/en-us/azure/cloud-adoption-framework/ready/azure-best-practices/resource-naming
-# A minor modification to standard naming convention has been made to not include the region.
+# Inputs
+# ------
+# The inputs for this code snippet include the environment, target, and various variables such as region, database SKU, database tier, app service plan SKU, log quota, log retention day, log plan,
+# VNET address prefix, VNET subnet database prefix, VNET subnet web app prefix, VNET subnet private prefix, health probe path, health probe protocol, health probe HTTP method, health probe latency,
+# load balancing sample size, load balancing samples, load balancing interval, TLS version, web app log level, web app log destination, action group email, and various secrets.
 #
-# Execution
-# *********
-# GHA is only invoked when following conditions are satisfied:
-# 1. Push to the `infrastructure` branch only.
+# Flow
+# ----
+# The code starts by setting up infrastructure variables and outputs the environment and timezone.
+# It then creates the base infrastructure, including the resource group, app service plan, log analytics workspace, container registry, virtual network,
+# subnets, VNET peering, database, web app, and front door.
+# Next, it sets up security measures such as private endpoints, private DNS, and WAF policies.
+# It then configures the web app, including enabling continuous deployment, setting configuration variables, and creating a database connection.
+# The code sets up diagnostic settings for logging and monitoring of various resources.
+# Finally, it creates an alert for health checks on the front door.
 #
-# Note
-# ****
-# Azure CLI will merely ignore the new resource creation if already exist with the same name.
+# Outputs
+# -------
+# The outputs of this code snippet include the environment and various resources created, such as the resource group, app service plan, log analytics workspace, container
+# registry, virtual network, subnets, database, web app, front door, and security policies.
 #
 
 name: Infrastructure 🔨
@@ -61,11 +70,17 @@ jobs:
     steps:
       - name: Pre-production 💫
         if: contains('["dev", "feature", "staging"]', env.TARGET)
-        run: echo "TYPE=Preproduction" >> $GITHUB_ENV
+        run: |
+          echo "TYPE=Preproduction"  >> $GITHUB_ENV
+          echo "DB_SKU=${{ VARS.DB_NON_PROD_SKU }}"  >> $GITHUB_ENV
+          echo "DB_TIER=${{ VARS.DB_NON_PROD_TIER }}" >> $GITHUB_ENV
 
       - name: Production 💫
         if: ${{ 'production' == env.TARGET }}
-        run: echo "TYPE=Production" >> $GITHUB_ENV
+        run: |
+          echo "TYPE=Production"  >> $GITHUB_ENV
+          echo "DB_SKU=${{ VARS.DB_PROD_SKU }}"  >> $GITHUB_ENV
+          echo "DB_TIER=${{ VARS.DB_PROD_TIER }}" >> $GITHUB_ENV
 
       - name: Tags 🏷️
         run: echo TAGS='Environment=${{ env.TYPE }}' \
@@ -243,13 +258,16 @@ jobs:
             --admin-user ${{ secrets.MYSQL_USER }} \
             --admin-password ${{ secrets.MYSQL_PASSWORD }} \
             --database-name ${{ env.PRODUCT }} \
-            --sku-name Standard_B1ms \
-            --tier Burstable \
+            --storage-size ${{ vars.DB_STORAGE_SIZE_GB }} \
+            --sku-name ${{ env.DB_SKU }} \
+            --tier ${{ env.DB_TIER }} \
             --vnet vnet-${{ env.PRODUCT }}-${{ env.TARGET }}-${{ vars.VERSION }} \
             --subnet snet-database-${{ env.PRODUCT }}-${{ vars.VERSION }} \
             --address-prefixes ${{ vars.VNET_ADDRESS_PREFIX }} \
             --subnet-prefix ${{ vars.VNET_SUBNET_DATABASE_PREFIX }} \
-            --backup-retention 30 \
+            --backup-retention ${{ vars.DB_DR_DAYS }} \
+            --auto-scale-iops Enabled \
+            --storage-auto-grow Enabled \
             --yes \
             --tags ${{ env.TAGS }}
 
