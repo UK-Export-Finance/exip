@@ -13,10 +13,6 @@ const getApplicationByReferenceNumberVariables = (referenceNumber: string, url: 
   let decryptFinancialUk;
   let decryptFinancialInternational;
 
-  // TODO:
-  // TODO: pass variables here so that:
-  // in addition to the URL, we check for UK or international in the data.
-
   /**
    * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
    * set decryptFinancialUk to true.
@@ -29,7 +25,7 @@ const getApplicationByReferenceNumberVariables = (referenceNumber: string, url: 
    * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
    * set decryptFinancialInternational to to true.
    */
-  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT) || url.includes(CHECK_YOUR_ANSWERS)) {
+  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT)) {
     decryptFinancialInternational = true;
   }
 
