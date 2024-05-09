@@ -3,7 +3,7 @@
 # Version 0.3
 #
 # Database: exip
-# Generation Time: 2024-04-29 15:09:14 +0000
+# Generation Time: 2024-05-09 09:59:30 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;
@@ -67,6 +67,19 @@ CREATE TABLE `_AuthenticationRetry_account` (
   CONSTRAINT `_AuthenticationRetry_account_B_fkey` FOREIGN KEY (`B`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+# Dump of table AccountStatus
+# ------------------------------------------------------------
+DROP TABLE IF EXISTS `AccountStatus`;
+
+CREATE TABLE `AccountStatus` (
+  `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
+  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
+  `isInactive` tinyint(1) NOT NULL DEFAULT '0',
+  `updatedAt` datetime(3) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_unicode_ci;
+
 
 
 # Dump of table Account
@@ -83,7 +96,6 @@ CREATE TABLE `Account` (
   `email` varchar(300) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `salt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `hash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `isVerified` tinyint(1) NOT NULL DEFAULT '0',
   `verificationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `verificationExpiry` datetime(3) DEFAULT NULL,
   `otpSalt` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
@@ -95,16 +107,19 @@ CREATE TABLE `Account` (
   `passwordResetExpiry` datetime(3) DEFAULT NULL,
   `authentication` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `authenticationRetry` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `isBlocked` tinyint(1) NOT NULL DEFAULT '0',
 	`reactivationExpiry` datetime(3) DEFAULT NULL,
   `reactivationHash` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `Account_authentication_key` (`authentication`),
   UNIQUE KEY `Account_authenticationRetry_key` (`authenticationRetry`),
+  UNIQUE KEY `Account_status_key` (`status`),
   KEY `Account_authentication_idx` (`authentication`),
   KEY `Account_authenticationRetry_idx` (`authenticationRetry`),
+  KEY `Account_status_idx` (`status`),
   CONSTRAINT `Account_authentication_fkey` FOREIGN KEY (`authentication`) REFERENCES `Authentication` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `Account_authenticationRetry_fkey` FOREIGN KEY (`authenticationRetry`) REFERENCES `AuthenticationRetry` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `Account_status_fkey` FOREIGN KEY (`status`) REFERENCES `AccountStatus` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 
@@ -828,7 +843,7 @@ CREATE TABLE `Broker` (
   `id` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `application` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `isUsingBroker` tinyint(1) DEFAULT NULL,
-  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `name` varchar(800) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine1` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `addressLine2` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
   `town` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',

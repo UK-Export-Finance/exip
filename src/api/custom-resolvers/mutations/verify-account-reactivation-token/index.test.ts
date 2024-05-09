@@ -3,6 +3,7 @@ import verifyAccountReactivationToken from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
+import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';
 import { mockAccount } from '../../../test-mocks';
 import { Account, Context, SuccessResponse, VerifyAccountReactivationTokenVariables } from '../../../types';
@@ -23,6 +24,8 @@ const {
     ACCOUNT: { IS_VERIFIED, IS_BLOCKED, REACTIVATION_HASH, REACTIVATION_EXPIRY },
   },
 } = FIELD_IDS;
+
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/verify-account-reactivation-token', () => {
   let context: Context;
@@ -54,17 +57,17 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
     const reactivationExpiry = ACCOUNT.REACTIVATION_EXPIRY();
 
     const unverifiedAndBlockedAccount = {
-      ...mockAccount,
-      [IS_VERIFIED]: false,
-      [IS_BLOCKED]: true,
+      ...mockAccountUpdate,
       reactivationHash,
       reactivationExpiry,
     };
 
     account = await accounts.create({ context, data: unverifiedAndBlockedAccount });
+    await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: false, [IS_BLOCKED]: true });
+    account = await accounts.get(context, account.id);
 
-    expect(account.isVerified).toEqual(false);
-    expect(account.isBlocked).toEqual(true);
+    expect(account.status.isVerified).toEqual(false);
+    expect(account.status.isBlocked).toEqual(true);
 
     /**
      * Create an authentication entry
@@ -94,11 +97,11 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
   });
 
   test(`should update the account to be ${IS_BLOCKED}=false`, () => {
-    expect(account[IS_BLOCKED]).toEqual(false);
+    expect(account.status[IS_BLOCKED]).toEqual(false);
   });
 
   test(`should update the account to be ${IS_VERIFIED}=true`, () => {
-    expect(account[IS_VERIFIED]).toEqual(true);
+    expect(account.status[IS_VERIFIED]).toEqual(true);
   });
 
   test(`should remove ${REACTIVATION_HASH} from the account`, () => {
@@ -120,13 +123,15 @@ describe('custom-resolvers/verify-account-reactivation-token', () => {
       const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
       const accountBlockedAndReactivationExpired = {
-        ...mockAccount,
+        ...mockAccountUpdate,
         reactivationHash,
-        [IS_BLOCKED]: true,
         [REACTIVATION_EXPIRY]: oneMinuteInThePast,
       };
 
       account = await accounts.create({ context, data: accountBlockedAndReactivationExpired });
+      await accountStatusHelper.update(context, account.status.id, { [IS_BLOCKED]: true });
+      // get updated account
+      account = await accounts.get(context, account.id);
 
       result = await verifyAccountReactivationToken({}, variables, context);
 

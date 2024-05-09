@@ -260,8 +260,6 @@ model Account {
   email                            String                @default("") @mysql.VarChar(300)
   salt                             String                @default("")
   hash                             String                @default("")
-  isVerified                       Boolean               @default(false)
-  isBlocked                        Boolean               @default(false)
   verificationHash                 String                @default("")
   verificationExpiry               DateTime?
   otpSalt                          String                @default("")
@@ -278,12 +276,23 @@ model Account {
   reactivationHash                 String                @default("")
   reactivationExpiry               DateTime?
   applications                     Application[]         @relation("Account_applications")
+  status                           AccountStatus?        @relation("Account_status", fields: [statusId], references: [id])
+  statusId                         String?               @unique @map("status")
   from_Application_owner           Application[]         @relation("Application_owner")
   from_AuthenticationRetry_account AuthenticationRetry[] @relation("AuthenticationRetry_account")
   from_Authentication_account      Authentication[]      @relation("Authentication_account")
 
   @@index([authenticationId])
   @@index([authenticationRetryId])
+}
+
+model AccountStatus {
+  id         String    @id @default(cuid())
+  account    Account?  @relation("Account_status")
+  isVerified Boolean   @default(false)
+  isBlocked  Boolean   @default(false)
+  isInactive Boolean   @default(false)
+  updatedAt  DateTime?
 }
 
 model AuthenticationRetry {
