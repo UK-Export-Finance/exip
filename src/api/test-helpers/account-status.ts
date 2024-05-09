@@ -75,7 +75,7 @@ const create = async ({ context, data, accountId, deleteAccountStatus = true }: 
 /**
  * get account status test helper
  * Get an accountStatus by ID
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} AccountStatus ID
  * @returns {AccountStatus} Account
  */
@@ -98,7 +98,7 @@ const get = async (context: Context, accountStatusId: string) => {
 /**
  * update account-status test helper
  * Updates an accountStatus by accountStatus ID
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} AccountStatus ID
  * @param {AccountStatusCore} data
  * @returns {AccountStatus} Account
