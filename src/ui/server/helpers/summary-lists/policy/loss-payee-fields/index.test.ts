@@ -1,4 +1,4 @@
-import { lossPayeeLocatedInUkFields, lossPayeeFields, generateLossPayeeFields } from '.';
+import { lossPayeeLocatedInUkFields, lossPayeeLocatedInternationallyFields, lossPayeeFields, generateLossPayeeFields } from '.';
 import { FORM_TITLES } from '../../../../content-strings/form-titles';
 import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../constants/field-ids/insurance/policy';
@@ -16,9 +16,10 @@ const {
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { NAME, IS_LOCATED_IN_UK },
+  LOSS_PAYEE_DETAILS: { NAME, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
   FINANCIAL_ADDRESS,
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
 } = POLICY_FIELD_IDS;
 
 const {
@@ -29,6 +30,8 @@ const {
     LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
@@ -63,7 +66,7 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
           href: generateChangeLink(
             LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
             LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-            `#${NAME}-label`,
+            `#${SORT_CODE}-label`,
             referenceNumber,
             checkAndChange,
           ),
@@ -76,6 +79,58 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
             LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
             LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
             `#${ACCOUNT_NUMBER}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        }),
+      ];
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('lossPayeeLocatedInternationallyFields', () => {
+    it('should return fields from the submitted data/answers', () => {
+      const mockAnswers = mockNominatedLossPayee.financialInternational;
+
+      const result = lossPayeeLocatedInternationallyFields(mockAnswers, referenceNumber, checkAndChange);
+
+      const expected = [
+        fieldGroupItem(
+          {
+            field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, FINANCIAL_ADDRESS),
+            data: mockAnswers,
+            href: generateChangeLink(
+              LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+              LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+              `#${FINANCIAL_ADDRESS}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          replaceNewLineWithLineBreak(mockAnswers[FINANCIAL_ADDRESS]),
+        ),
+        fieldGroupItem({
+          field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, BIC_SWIFT_CODE),
+          data: mockAnswers,
+          href: generateChangeLink(
+            LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+            LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+            `#${BIC_SWIFT_CODE}-label`,
+            referenceNumber,
+            checkAndChange,
+          ),
+          renderChangeLink: true,
+        }),
+        fieldGroupItem({
+          field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL, IBAN),
+          data: mockAnswers,
+          href: generateChangeLink(
+            LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+            LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+            `#${IBAN}-label`,
             referenceNumber,
             checkAndChange,
           ),
@@ -123,6 +178,28 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
             href: generateChangeLink(LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
             renderChangeLink: true,
           }),
+        ];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
+      it('should return fields from the submitted data/answers', () => {
+        mockNominatedLossPayee[IS_APPOINTED] = true;
+        mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
+        mockNominatedLossPayee[IS_LOCATED_INTERNATIONALLY] = true;
+
+        const result = lossPayeeFields(mockNominatedLossPayee, referenceNumber, checkAndChange);
+
+        const expected = [
+          fieldGroupItem({
+            field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_DETAILS, NAME),
+            data: mockNominatedLossPayee,
+            href: generateChangeLink(LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          }),
+          ...lossPayeeLocatedInternationallyFields(mockNominatedLossPayee.financialInternational, referenceNumber, checkAndChange),
         ];
 
         expect(result).toEqual(expected);

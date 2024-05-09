@@ -17,7 +17,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Using loss payee based in the UK', () => {
+context('Insurance - Policy - Check your answers - Summary list - Single contract policy - Using loss payee based internationally', () => {
   let referenceNumber;
   let url;
 
@@ -27,7 +27,7 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
 
       cy.completePolicySection({
         isAppointingLossPayee: true,
-        lossPayeeIsLocatedInUK: true,
+        lossPayeeIsLocatedInUK: false,
       });
 
       url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${POLICY.CHECK_YOUR_ANSWERS}`;
@@ -57,22 +57,22 @@ context('Insurance - Policy - Check your answers - Summary list - Single contrac
   });
 
   it(`should render a ${FINANCIAL_ADDRESS} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isInternational: true });
   });
 
-  it(`should render a ${SORT_CODE} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: true });
+  it(`should render a ${BIC_SWIFT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: true });
   });
 
-  it(`should render a ${ACCOUNT_NUMBER} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: true });
+  it(`should render an ${IBAN} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: true });
   });
 
-  it(`should NOT render a ${BIC_SWIFT_CODE} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: false });
+  it(`should NOT render a ${SORT_CODE} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: false });
   });
 
-  it(`should NOT render an ${IBAN} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: false });
+  it(`should NOT render a ${ACCOUNT_NUMBER} summary list row`, () => {
+    checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: false });
   });
 });

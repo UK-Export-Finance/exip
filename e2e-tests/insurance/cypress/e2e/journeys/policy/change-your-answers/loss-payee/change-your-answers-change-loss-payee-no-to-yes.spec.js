@@ -82,7 +82,7 @@ context('Insurance - Policy - Change your answers - Loss payee - No to yes - As 
       it(`should render new answers and change links for ${FIELD_ID} and all loss payee details fields`, () => {
         checkSummaryList[FIELD_ID]({ isAppointingLossPayee: true });
         checkSummaryList.LOSS_PAYEE[NAME]({ shouldRender: true });
-        checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true });
+        checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
         checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: true });
         checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: true });
       });

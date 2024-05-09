@@ -122,7 +122,7 @@ context("Insurance - Policy - Loss Payee Financial Details - International page 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.navigateToUrl(url);
 
-      cy.completeAndSubmitLossPayeeFinancialInternationalForm({});
+      cy.completeAndSubmitLossPayeeFinancialDetailsInternationalForm({});
 
       cy.assertUrl(checkYourAnswersUrl);
     });

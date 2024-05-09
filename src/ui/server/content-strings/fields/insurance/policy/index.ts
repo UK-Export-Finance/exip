@@ -310,7 +310,7 @@ export const POLICY_FIELDS = {
     },
     [FINANCIAL_ADDRESS]: {
       SUMMARY: {
-        TITLE: 'Loss payee’s bank based in the UK',
+        TITLE: "Loss payee's bank based in the UK",
         FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
       },
     },
@@ -319,10 +319,24 @@ export const POLICY_FIELDS = {
     [BIC_SWIFT_CODE]: {
       LABEL: 'BIC or SWIFT code',
       HINT: 'Must be between 8 and 11 characters long',
+      SUMMARY: {
+        TITLE: 'BIC or SWIFT code',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
     [IBAN]: {
       LABEL: 'IBAN',
       HINT: 'Must be between 16 and 34 characters long',
+      SUMMARY: {
+        TITLE: 'IBAN',
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based internationally",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE,
+      },
     },
   },
   FINANCIAL_ADDRESS: {

@@ -18,6 +18,7 @@ const completeAndSubmitLossPayeeFinancialDetailsInternationalForm = ({
   financialAddress = EXPECTED_MULTI_LINE_STRING,
 }) => {
   cy.completeLossPayeeFinancialDetailsInternationalForm({ bicSwiftCode, iban, financialAddress });
+
   cy.clickSubmitButton();
 };
 
