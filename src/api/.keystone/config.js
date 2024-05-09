@@ -6523,10 +6523,12 @@ var decryptNominatedLossPayee = (nominatedLossPayee, decryptFinancialUk2, decryp
     };
     const { financialUk, financialInternational } = nominatedLossPayee;
     if (decryptFinancialUk2) {
+      console.info("Decrypting nominated loss payee - financial - UK data %s", nominatedLossPayee.id);
       const mappedFinancialUk = decrypt_financial_uk_default(financialUk);
       mapped.financialUk = mappedFinancialUk;
     }
     if (decryptFinancialInternational2) {
+      console.info("Decrypting nominated loss payee - financial - international data %s", nominatedLossPayee.id);
       const mappedFinancialInternational = decrypt_financial_international_default(financialInternational);
       mapped.financialInternational = mappedFinancialInternational;
     }
