@@ -41,7 +41,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.exportContractAgentServiceCharge with application and populated submitted data', async () => {
         await mapAndSave.exportContractAgentServiceCharge(mockFormBody, mockApplication);
 

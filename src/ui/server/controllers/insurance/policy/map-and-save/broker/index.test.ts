@@ -40,7 +40,7 @@ describe('controllers/insurance/policy/map-and-save/broker', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.broker with application and populated submitted data', async () => {
         await mapAndSave.broker(populatedData, mockApplication);
 

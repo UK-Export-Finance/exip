@@ -37,7 +37,7 @@ describe('controllers/insurance/policy/map-and-save/loss-payee-financial-details
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.lossPayeeFinancialDetailsInternational with application and populated submitted data', async () => {
         await mapAndSave.lossPayeeFinancialDetailsInternational(mockFormBody, mockApplication);
 

@@ -4,7 +4,7 @@ import { ROUTES } from '../../../../../constants';
 import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import constructPayload from '../../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../../shared-validation/yes-no-radios-form';
-import mapAndSave from '../../map-and-save/nominated-loss-payee';
+import mapAndSave from '../../map-and-save/loss-payee';
 import { Request, Response } from '../../../../../../types';
 import { mockReq, mockRes, mockApplication } from '../../../../../test-mocks';
 
@@ -24,7 +24,7 @@ describe('controllers/insurance/policy/loss-payee/save-and-back', () => {
     req = mockReq();
     res = mockRes();
 
-    mapAndSave.nominatedLossPayee = updateMapAndSave;
+    mapAndSave.lossPayee = updateMapAndSave;
   });
 
   afterAll(() => {
@@ -44,7 +44,7 @@ describe('controllers/insurance/policy/loss-payee/save-and-back', () => {
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
+    it('should call mapAndSave.lossPayee once with data from constructPayload function', async () => {
       req.body = validBody;
 
       await post(req, res);
@@ -69,7 +69,7 @@ describe('controllers/insurance/policy/loss-payee/save-and-back', () => {
       expect(res.redirect).toHaveBeenCalledWith(`${INSURANCE_ROOT}/${req.params.referenceNumber}${ALL_SECTIONS}`);
     });
 
-    it('should call mapAndSave.nominatedLossPayee once', async () => {
+    it('should call mapAndSave.lossPayee once', async () => {
       req.body = mockInvalidBody;
 
       await post(req, res);
@@ -98,11 +98,11 @@ describe('controllers/insurance/policy/loss-payee/save-and-back', () => {
   });
 
   describe('api error handling', () => {
-    describe('when mapAndSave.nominatedLossPayee returns false', () => {
+    describe('when mapAndSave.lossPayee returns false', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
-        mapAndSave.nominatedLossPayee = jest.fn(() => Promise.resolve(false));
+        mapAndSave.lossPayee = jest.fn(() => Promise.resolve(false));
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -112,12 +112,12 @@ describe('controllers/insurance/policy/loss-payee/save-and-back', () => {
       });
     });
 
-    describe('when mapAndSave.nominatedLossPayee fails', () => {
+    describe('when mapAndSave.lossPayee fails', () => {
       beforeEach(() => {
         req.body = validBody;
         res.locals = mockRes().locals;
         updateMapAndSave = jest.fn(() => Promise.reject(new Error('mock')));
-        mapAndSave.nominatedLossPayee = updateMapAndSave;
+        mapAndSave.lossPayee = updateMapAndSave;
       });
 
       it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

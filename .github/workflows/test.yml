@@ -269,6 +269,7 @@ jobs:
             "policy/broker-details/**/*.spec.js",
             "policy/broker-confirm-address/**/*.spec.js",
             "policy/change-your-answers/broker/**/*.spec.js",
+            "policy/change-your-answers/loss-payee/**/*.spec.js",
             "policy/change-your-answers/multiple-policy/**/*.spec.js",
             "policy/change-your-answers/name-on-policy/**/*.spec.js",
             "policy/change-your-answers/pre-credit-period/**/*.spec.js",

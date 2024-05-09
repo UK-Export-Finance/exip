@@ -8,7 +8,7 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import mapApplicationToFormFields from '../../../../helpers/mappings/map-application-to-form-fields';
-import mapAndSave from '../map-and-save/nominated-loss-payee';
+import mapAndSave from '../map-and-save/loss-payee';
 import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Application, Request, Response } from '../../../../../types';
@@ -18,7 +18,13 @@ const { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY } = POLICY_
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT, LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT, LOSS_PAYEE_DETAILS_SAVE_AND_BACK },
+  POLICY: {
+    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+    LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -118,16 +124,30 @@ export const post = async (req: Request, res: Response) => {
   try {
     const locationAnswer = payload[LOCATION];
 
-    const saveResponse = await mapAndSave.nominatedLossPayee(payload, application);
+    const saveResponse = await mapAndSave.lossPayee(payload, application);
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    /**
+     * If the route is a "change" route,
+     * if LOCATION has been submitted as IS_LOCATED_IN_UK,
+     * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_UK form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isChangeRoute(req.originalUrl)) {
+      if (locationAnswer === IS_LOCATED_IN_UK) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "check and change" route,
+     * redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }

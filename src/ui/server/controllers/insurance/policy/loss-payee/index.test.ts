@@ -8,7 +8,7 @@ import singleInputPageVariables from '../../../../helpers/page-variables/single-
 import getUserNameFromSession from '../../../../helpers/get-user-name-from-session';
 import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
-import mapAndSave from '../map-and-save/nominated-loss-payee';
+import mapAndSave from '../map-and-save/loss-payee';
 import { Request, Response } from '../../../../../types';
 import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../test-mocks';
 
@@ -18,7 +18,7 @@ const {
 
 const {
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_CHANGE, LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, LOSS_PAYEE_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -123,7 +123,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
       [FIELD_ID]: 'true',
     };
 
-    mapAndSave.nominatedLossPayee = jest.fn(() => Promise.resolve(true));
+    mapAndSave.lossPayee = jest.fn(() => Promise.resolve(true));
 
     describe('when there are validation errors', () => {
       it('should render template with validation errors and submitted values', async () => {
@@ -151,6 +151,18 @@ describe('controllers/insurance/policy/loss-payee', () => {
     });
 
     describe('when there are no validation errors', () => {
+      it('should call mapAndSave.lossPayee once with data from constructPayload function', async () => {
+        req.body = validBody;
+
+        await post(req, res);
+
+        const payload = constructPayload(req.body, [FIELD_ID]);
+
+        expect(mapAndSave.lossPayee).toHaveBeenCalledTimes(1);
+
+        expect(mapAndSave.lossPayee).toHaveBeenCalledWith(payload, mockApplication);
+      });
+
       describe('when the answer is false', () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.body = {
@@ -178,16 +190,20 @@ describe('controllers/insurance/policy/loss-payee', () => {
         });
       });
 
-      it('should call mapAndSave.nominatedLossPayee once with data from constructPayload function', async () => {
-        req.body = validBody;
+      describe(`when ${FIELD_ID} is true and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${LOSS_PAYEE_DETAILS_CHANGE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHANGE;
 
-        await post(req, res);
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
 
-        const payload = constructPayload(req.body, [FIELD_ID]);
+          await post(req, res);
 
-        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledTimes(1);
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
 
-        expect(mapAndSave.nominatedLossPayee).toHaveBeenCalledWith(payload, mockApplication);
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 
@@ -204,7 +220,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
     });
 
     describe('api error handling', () => {
-      describe('mapAndSave.nominatedLossPayee call', () => {
+      describe('mapAndSave.lossPayee call', () => {
         beforeEach(() => {
           req.body = validBody;
         });
@@ -213,7 +229,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.resolve(false));
 
-            mapAndSave.nominatedLossPayee = mapAndSaveSpy;
+            mapAndSave.lossPayee = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
@@ -227,7 +243,7 @@ describe('controllers/insurance/policy/loss-payee', () => {
           beforeEach(() => {
             const mapAndSaveSpy = jest.fn(() => Promise.reject(new Error('mock')));
 
-            mapAndSave.nominatedLossPayee = mapAndSaveSpy;
+            mapAndSave.lossPayee = mapAndSaveSpy;
           });
 
           it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {

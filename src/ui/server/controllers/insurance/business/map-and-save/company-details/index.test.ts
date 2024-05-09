@@ -44,7 +44,7 @@ describe('controllers/insurance/business/map-and-save/company-details', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.companyDetails with application and mapped submitted data', async () => {
         await mapAndSave.companyDetails(mockFormBody, mockApplication);
 

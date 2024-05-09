@@ -12,6 +12,8 @@ import mockCompany from './mock-company';
 import mockApplication, {
   mockApplicationAgentServiceChargeEmpty,
   mockApplicationMultiplePolicy,
+  mockApplicationNominatedLossPayeeAppointedEmptyData,
+  mockApplicationNominatedLossPayeeNotAppointedFullData,
   mockApplicationTotalContractValueThresholdTrue,
   mockApplicationTotalContractValueThresholdFalse,
   mockBusiness,
@@ -122,6 +124,8 @@ export {
   mockApplication,
   mockApplicationAgentServiceChargeEmpty,
   mockApplicationMultiplePolicy,
+  mockApplicationNominatedLossPayeeAppointedEmptyData,
+  mockApplicationNominatedLossPayeeNotAppointedFullData,
   mockApplications,
   mockApplicationTotalContractValueThresholdTrue,
   mockApplicationTotalContractValueThresholdFalse,

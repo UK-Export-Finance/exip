@@ -1,16 +1,13 @@
 import save, { NULL_OR_EMPTY_STRING_FIELDS } from '.';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import api from '../../../../../api';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
 import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../constants/field-ids/insurance/policy';
 import { mockApplication, mockNominatedLossPayee } from '../../../../../test-mocks';
 import generateValidationErrors from '../../../../../helpers/validation';
 
-const {
-  LOSS_PAYEE: { IS_APPOINTED },
-  LOSS_PAYEE_DETAILS: { NAME },
-} = POLICY_FIELD_IDS;
+const { NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK } = POLICY_FIELD_IDS.LOSS_PAYEE_DETAILS;
 
 describe('controllers/insurance/policy/save-data/nominated-loss-payee', () => {
   const mockUpdateApplicationResponse = mockApplication;
@@ -23,14 +20,14 @@ describe('controllers/insurance/policy/save-data/nominated-loss-payee', () => {
 
   describe('NULL_OR_EMPTY_STRING_FIELDS', () => {
     it('should have the relevant fieldIds', () => {
-      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([NAME]);
+      expect(NULL_OR_EMPTY_STRING_FIELDS).toEqual([NAME, IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK]);
     });
   });
 
   describe('when errorList is provided', () => {
-    const mockValidationErrors = generateValidationErrors(IS_APPOINTED, 'error', {});
+    const mockValidationErrors = generateValidationErrors(NAME, 'error', {});
 
-    it(`should call api.keystone.application.update.nominatedLossPayee with all fields but not ${IS_APPOINTED}`, async () => {
+    it(`should call api.keystone.application.update.nominatedLossPayee with all fields but not ${NAME}`, async () => {
       await save.nominatedLossPayee(mockApplication, mockFormBody, mockValidationErrors.errorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);

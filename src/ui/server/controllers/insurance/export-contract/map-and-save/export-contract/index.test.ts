@@ -41,7 +41,7 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract', (
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       it('should call save.exportContract with application and submitted data', async () => {
         await mapAndSave.exportContract(mockFormBody, mockApplication);
 

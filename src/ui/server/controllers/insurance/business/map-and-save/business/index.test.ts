@@ -42,7 +42,7 @@ describe('controllers/insurance/business/map-and-save/business', () => {
       });
     });
 
-    describe('when the form does NOT have validation errors ', () => {
+    describe('when the form does NOT have validation errors', () => {
       mockFormBody = {
         _csrf: '1234',
         [GOODS_OR_SERVICES]: 'test',
