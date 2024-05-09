@@ -59,7 +59,7 @@ context('Insurance - Policy - Check your answers - Summary list - Multiple contr
   });
 
   it(`should render a ${FINANCIAL_ADDRESS} summary list row`, () => {
-    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
+    checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isInternational: true });
   });
 
   it(`should render a ${BIC_SWIFT_CODE} summary list row`, () => {
