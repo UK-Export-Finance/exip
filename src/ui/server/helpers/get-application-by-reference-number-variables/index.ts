@@ -14,18 +14,30 @@ const getApplicationByReferenceNumberVariables = (referenceNumber: string, url: 
   let decryptFinancialInternational;
 
   /**
-   * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT
-   * then decryptFinancialUk should be set to true
+   * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
+   * set decryptFinancialUk to true.
    */
-  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT) || url.includes(CHECK_YOUR_ANSWERS)) {
+  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT)) {
     decryptFinancialUk = true;
   }
 
   /**
-   * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT
-   * then decryptFinancialInternational should be set to true
+   * if url includes LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
+   * set decryptFinancialInternational to to true.
    */
-  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT) || url.includes(CHECK_YOUR_ANSWERS)) {
+  if (url.includes(LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT)) {
+    decryptFinancialInternational = true;
+  }
+
+  /**
+   * if url includes CHECK_YOUR_ANSWERS,
+   * set decryptFinancialUk and decryptFinancialInternational to true.
+   * Although the data would only have either UK or international data;
+   * At this stage, it is not possible to determine which piece of data is available,
+   * because we do not have the application data available.
+   */
+  if (url.includes(CHECK_YOUR_ANSWERS)) {
+    decryptFinancialUk = true;
     decryptFinancialInternational = true;
   }
 
