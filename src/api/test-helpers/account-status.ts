@@ -3,7 +3,7 @@ import { AccountStatus, AccountStatusCore, Context, TestHelperAccountStatusCreat
 
 /**
  * deleteAll test helper
- * Get all account-status and delete them.
+ * Get all AccountStatus and delete them.
  * @param {Context} KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */
@@ -96,7 +96,7 @@ const get = async (context: Context, accountStatusId: string) => {
 };
 
 /**
- * update account-status test helper
+ * update account status test helper
  * Updates an accountStatus by accountStatus ID
  * @param {Context} KeystoneJS context API
  * @param {String} AccountStatus ID
