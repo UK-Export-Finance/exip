@@ -55,7 +55,7 @@ describe('server/helpers/page-variables/core', () => {
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.APPLICATION },
         },
         BACK_LINK: mock.BACK_LINK,
-        COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
+        START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
         ATTRIBUTES,
         DATA_CY: {
@@ -63,7 +63,6 @@ describe('server/helpers/page-variables/core', () => {
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
-        START_ROUTE: insuranceStart,
       };
 
       expect(result).toEqual(expected);
