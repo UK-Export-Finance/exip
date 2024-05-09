@@ -33,10 +33,10 @@ interface PageVariablesHTMLFlags {
 interface CorePageVariablesInitialInput {
   PAGE_CONTENT_STRINGS: PageContentStrings;
   BACK_LINK?: string;
-  START_ROUTE?: string;
   FEEDBACK_ROUTE?: string;
-  ORIGINAL_URL?: string;
   HTML_FLAGS?: PageVariablesHTMLFlags;
+  START_ROUTE?: string;
+  ORIGINAL_URL?: string;
 }
 
 interface CorePageVariablesInput extends CorePageVariablesInitialInput {
@@ -48,10 +48,11 @@ interface CorePageVariables {
   ATTRIBUTES: object;
   BACK_LINK?: string;
   CONTENT_STRINGS: PageVariablesContentStrings;
-  START_ROUTE?: string;
-  FEEDBACK_ROUTE?: string;
+  COOKIES_ROUTE?: string;
   DATA_CY: PageVariablesDataCy;
+  FEEDBACK_ROUTE?: string;
   HTML_FLAGS?: PageVariablesHTMLFlags;
+  START_ROUTE?: string;
 }
 
 interface SectionStartPageVariables extends CorePageVariables {
