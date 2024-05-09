@@ -7,10 +7,11 @@ const {
   LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK, LOCATION, NAME },
 } = POLICY_FIELD_IDS;
 
-const sanitisedIsAppointed = (value: string) => sanitiseValue({
-  key: IS_APPOINTED,
-  value,
-});
+const sanitisedIsAppointed = (value: string) =>
+  sanitiseValue({
+    key: IS_APPOINTED,
+    value,
+  });
 
 describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
   describe(`when form body ${IS_APPOINTED} is true`, () => {
