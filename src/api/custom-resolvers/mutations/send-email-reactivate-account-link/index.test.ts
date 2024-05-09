@@ -3,6 +3,7 @@ import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import { ACCOUNT, DATE_24_HOURS_FROM_NOW } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
+import accountStatus from '../../../test-helpers/account-status';
 import { mockAccount, mockUrlOrigin, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, Context, SuccessResponse, AccountSendEmailReactivateLinkVariables } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -14,6 +15,8 @@ const {
     },
   },
 } = ACCOUNT;
+
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/send-email-reactivate-account-link', () => {
   let context: Context;
@@ -39,9 +42,10 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
   beforeEach(async () => {
     await accounts.deleteAll(context);
 
-    const blockedAccount = { ...mockAccount, isBlocked: true };
+    const blockedAccount = { isBlocked: true };
 
-    account = await accounts.create({ context, data: blockedAccount });
+    account = await accounts.create({ context, data: mockAccountUpdate });
+    await accountStatus.update(context, account.status.id, blockedAccount);
 
     jest.resetAllMocks();
 
