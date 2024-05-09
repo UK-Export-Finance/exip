@@ -57,7 +57,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
     // get the latest account
     account = await accounts.get(context, account.id);
 
-    expect(account.isBlocked).toEqual(false);
+    expect(account.status.isBlocked).toEqual(false);
   });
 
   it('should return the email response', () => {
@@ -172,7 +172,7 @@ describe('custom-resolvers/send-email-password-reset-link', () => {
       // get the latest account
       account = await accounts.get(context, account.id);
 
-      expect(account.isBlocked).toEqual(true);
+      expect(account.status.isBlocked).toEqual(true);
     });
   });
 

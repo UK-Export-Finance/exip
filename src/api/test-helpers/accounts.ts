@@ -1,4 +1,5 @@
 import authRetries from './auth-retries';
+import accountStatusHelper from './account-status';
 import { mockAccount } from '../test-mocks';
 import { Account, Context, TestHelperAccountCreate } from '../types';
 
@@ -13,6 +14,7 @@ const deleteAll = async (context: Context) => {
     console.info('Getting and deleting accounts (test helpers)');
 
     await authRetries.deleteAll(context);
+    await accountStatusHelper.deleteAll(context);
 
     const accounts = await context.query.Account.findMany();
 
@@ -32,39 +34,6 @@ const deleteAll = async (context: Context) => {
 };
 
 /**
- * create account test helper
- * Create an account with mock account data and any provied custom account data.
- * @param {Object} KeystoneJS context API, account data, deleteAccounts flag
- * @returns {Object} Created account
- */
-const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
-  try {
-    console.info('Creating an account (test helpers)');
-
-    if (deleteAccounts) {
-      await deleteAll(context);
-    }
-
-    let accountInput = mockAccount;
-
-    if (data) {
-      accountInput = data;
-    }
-
-    const account = (await context.query.Account.createOne({
-      data: accountInput,
-      query:
-        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry isVerified isBlocked passwordResetHash passwordResetExpiry',
-    })) as Account;
-
-    return account;
-  } catch (err) {
-    console.error(err);
-    return err;
-  }
-};
-
-/**
  * get account test helper
  * Get an account by ID
  * @param {Object} KeystoneJS context API
@@ -78,13 +47,53 @@ const get = async (context: Context, accountId: string) => {
     const account = (await context.query.Account.findOne({
       where: { id: accountId },
       query:
-        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry isVerified isBlocked reactivationHash reactivationExpiry',
+        'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry status { id isBlocked isVerified isInactive updatedAt }',
     })) as Account;
 
     return account;
   } catch (err) {
     console.error(err);
     throw new Error(`Getting an account by ID (test helpers) ${err}`);
+  }
+};
+
+/**
+ * create account test helper
+ * Create an account with mock account data and any provided custom account data.
+ * @param {Object} KeystoneJS context API, account data, deleteAccounts flag
+ * @returns {Object} Created account
+ */
+const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
+  try {
+    console.info('Creating an account (test helpers)');
+
+    if (deleteAccounts) {
+      await deleteAll(context);
+    }
+
+    const { status, ...mockAccountData } = mockAccount;
+
+    let accountInput = mockAccountData;
+
+    if (data) {
+      accountInput = data;
+    }
+
+    const account = (await context.query.Account.createOne({
+      data: accountInput,
+      query:
+        'id email firstName lastName email salt hash verificationHash sessionExpiry otpExpiry reactivationHash reactivationExpiry passwordResetHash passwordResetExpiry status { id isBlocked isVerified isInactive updatedAt }',
+    })) as Account;
+
+    await accountStatusHelper.create({ context, accountId: account.id });
+
+    // returns updated account with status data
+    const updatedAccount = await get(context, account.id);
+
+    return updatedAccount;
+  } catch (err) {
+    console.error(err);
+    return err;
   }
 };
 

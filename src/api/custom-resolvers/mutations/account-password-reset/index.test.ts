@@ -3,6 +3,7 @@ import createAuthenticationEntry from '../../../helpers/create-authentication-en
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import { ACCOUNT, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
 import accounts from '../../../test-helpers/accounts';
+import accountStatusHelper from '../../../test-helpers/account-status';
 import { mockAccount } from '../../../test-mocks';
 import { Account, AccountPasswordResetVariables, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -16,6 +17,8 @@ const {
     PBKDF2: { KEY_LENGTH },
   },
 } = ENCRYPTION;
+
+const { status, ...mockAccountUpdate } = mockAccount;
 
 describe('custom-resolvers/account-password-reset', () => {
   let context: Context;
@@ -104,13 +107,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when the account is blocked', () => {
     test('it should return success=false', async () => {
-      account = (await context.query.Account.updateOne({
-        where: { id: account.id },
-        data: {
-          isBlocked: true,
-        },
-        query: 'id isBlocked',
-      })) as Account;
+      await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
 
       result = await accountPasswordReset({}, variables, context);
 
@@ -124,14 +121,15 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when the account does not have a password reset expiry', () => {
     test('it should return success=false', async () => {
-      account = (await context.query.Account.updateOne({
+      (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
-          isBlocked: false,
           passwordResetHash: mockAccount.passwordResetHash,
           passwordResetExpiry: null,
         },
       })) as Account;
+
+      await accountStatusHelper.update(context, account.status.id, { isBlocked: false });
 
       result = await accountPasswordReset({}, variables, context);
 
@@ -145,7 +143,7 @@ describe('custom-resolvers/account-password-reset', () => {
 
   describe('when the account does not have a password reset hash', () => {
     test('it should return success=false', async () => {
-      account = (await context.query.Account.updateOne({
+      (await context.query.Account.updateOne({
         where: { id: account.id },
         data: {
           passwordResetHash: '',
@@ -192,7 +190,7 @@ describe('custom-resolvers/account-password-reset', () => {
       // update the account to have default test password (MOCK_ACCOUNT_PASSWORD)
       await context.query.Account.updateOne({
         where: { id: account.id },
-        data: mockAccount,
+        data: mockAccountUpdate,
       });
 
       // change the variables to have the same password

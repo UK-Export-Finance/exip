@@ -6,6 +6,7 @@ import mapPolicy from './map-policy';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
 import mapEligibility from './map-eligibility';
+import mapDeclarations from './map-declarations';
 import { Application } from '../../types';
 
 /**
@@ -42,6 +43,10 @@ const mapApplicationToXLSX = (application: Application) => {
       ROW_SEPERATOR,
 
       ...mapEligibility(application),
+
+      ROW_SEPERATOR,
+
+      ...mapDeclarations(application),
     ];
 
     return mapped;

@@ -64,7 +64,7 @@ export const ERROR_MESSAGES = {
   INSURANCE: {
     ELIGIBILITY: {
       [FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE]: {
-        IS_EMPTY: `Select if the the total value of your contract exceeds ${THRESHOLD} or not`,
+        IS_EMPTY: `Select if the total value of your contract exceeds ${THRESHOLD} and above or not`,
       },
       [FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD]: {
         IS_EMPTY: `Select whether you want to be insured for longer than ${ELIGIBILITY.MAX_COVER_PERIOD_YEARS} years`,

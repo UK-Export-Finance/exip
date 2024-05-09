@@ -84,7 +84,7 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
       });
 
       describe('when changing the answer again from no to yes', () => {
-        before(() => {
+        beforeEach(() => {
           cy.navigateToUrl(checkYourAnswersUrl);
 
           summaryList.field(FIELD_ID).changeLink().click();
@@ -92,7 +92,7 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
           cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
         });
 
-        describe(`going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_UK}`, () => {
+        describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_UK}`, () => {
           it('should have empty field values', () => {
             cy.checkValue(field(NAME), '');
 

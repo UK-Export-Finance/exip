@@ -7,6 +7,12 @@ const {
   LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY, IS_LOCATED_IN_UK, LOCATION, NAME },
 } = POLICY_FIELD_IDS;
 
+const sanitisedIsAppointed = (value: string) =>
+  sanitiseValue({
+    key: IS_APPOINTED,
+    value,
+  });
+
 describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
   describe(`when form body ${IS_APPOINTED} is true`, () => {
     const mockBody = {
@@ -18,10 +24,7 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
 
       const expected = {
         ...mockBody,
-        [IS_APPOINTED]: sanitiseValue({
-          key: IS_APPOINTED,
-          value: mockBody[IS_APPOINTED],
-        }),
+        [IS_APPOINTED]: sanitisedIsAppointed('true'),
       };
 
       expect(result).toEqual(expected);
@@ -37,10 +40,7 @@ describe('controllers/insurance/policy/map-submitted-data/loss-payee', () => {
       const result = mapSubmittedData(mockBody);
 
       const expected = {
-        [IS_APPOINTED]: sanitiseValue({
-          key: IS_APPOINTED,
-          value: mockBody[IS_APPOINTED],
-        }),
+        [IS_APPOINTED]: sanitisedIsAppointed('false'),
         [NAME]: '',
         [IS_LOCATED_INTERNATIONALLY]: null,
         [IS_LOCATED_IN_UK]: null,

@@ -11,6 +11,8 @@ describe('custom-resolvers/create-an-application', () => {
   let account: Account;
   let result: SuccessResponse;
 
+  const { status, ...mockAccountUpdate } = mockAccount;
+
   const variables = {
     accountId: '',
     eligibilityAnswers: {
@@ -26,7 +28,7 @@ describe('custom-resolvers/create-an-application', () => {
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    account = await accounts.create({ context, data: mockAccount });
+    account = await accounts.create({ context, data: mockAccountUpdate });
 
     variables.accountId = account.id;
   });

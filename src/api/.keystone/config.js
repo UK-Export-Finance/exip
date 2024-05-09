@@ -678,7 +678,8 @@ var XLSX_ROW_INDEXES = (application2) => {
     POLICY: 20,
     EXPORTER_BUSINESS: 30,
     BUYER: 49,
-    ELIGIBILITY: 59
+    ELIGIBILITY: 59,
+    DECLARATIONS: 70
   };
   const INDEXES = {
     TITLES,
@@ -701,6 +702,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     TITLES.EXPORTER_BUSINESS += 1;
     TITLES.BUYER += 1;
     TITLES.ELIGIBILITY += 1;
+    TITLES.DECLARATIONS += 1;
     INDEXES.COMPANY_ADDRESS += 1;
     INDEXES.COMPANY_SIC_CODES += 1;
     INDEXES.BROKER_ADDRESS += 1;
@@ -710,6 +712,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isUsingBroker) {
     TITLES.BUYER += 3;
     TITLES.ELIGIBILITY += 3;
+    TITLES.DECLARATIONS += 3;
   }
   return INDEXES;
 };
@@ -1411,13 +1414,6 @@ var lists = {
       salt: (0, import_fields.text)({ validation: { isRequired: true } }),
       hash: (0, import_fields.text)({ validation: { isRequired: true } }),
       // isVerified flag will only be true if the account has verified their email address.
-      isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
-      /**
-       * isBlocked flag will only be true if the account has:
-       * - repeatedly attempted sign in
-       * - repeatedly attempted password reset request
-       */
-      isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
       verificationHash: (0, import_fields.text)(),
       verificationExpiry: (0, import_fields.timestamp)(),
       otpSalt: (0, import_fields.text)(),
@@ -1440,10 +1436,26 @@ var lists = {
       applications: (0, import_fields.relationship)({
         ref: "Application",
         many: true
-      })
+      }),
+      status: (0, import_fields.relationship)({ ref: "AccountStatus.account" })
     },
     access: import_access.allowAll
   }),
+  AccountStatus: {
+    fields: {
+      account: (0, import_fields.relationship)({ ref: "Account.status" }),
+      isVerified: (0, import_fields.checkbox)({ defaultValue: false }),
+      /**
+       * isBlocked flag will only be true if the account has:
+       * - repeatedly attempted sign in
+       * - repeatedly attempted password reset request
+       */
+      isBlocked: (0, import_fields.checkbox)({ defaultValue: false }),
+      isInactive: (0, import_fields.checkbox)({ defaultValue: false }),
+      updatedAt: (0, import_fields.timestamp)()
+    },
+    access: import_access.allowAll
+  },
   AuthenticationRetry: (0, import_core2.list)({
     fields: {
       account: (0, import_fields.relationship)({
@@ -2389,7 +2401,15 @@ var getAccountByField = async (context, field, value) => {
       return false;
     }
     const account2 = accountsArray[0];
-    return account2;
+    const accountStatus2 = await context.db.AccountStatus.findOne({
+      where: { id: account2.statusId },
+      take: 1
+    });
+    const fullAccount = {
+      ...account2,
+      status: accountStatus2
+    };
+    return fullAccount;
   } catch (err) {
     console.error("Error getting account by field/value %O", err);
     throw new Error(`Getting account by field/value ${err}`);
@@ -2744,7 +2764,6 @@ var createAnAccount = async (root, variables, context) => {
       email,
       salt,
       hash,
-      isVerified: false,
       verificationHash,
       verificationExpiry,
       createdAt: now,
@@ -2752,6 +2771,15 @@ var createAnAccount = async (root, variables, context) => {
     };
     const creationResponse = await context.db.Account.createOne({
       data: accountData
+    });
+    await context.db.AccountStatus.createOne({
+      data: {
+        account: {
+          connect: {
+            id: creationResponse.id
+          }
+        }
+      }
     });
     const name = get_full_name_string_default(creationResponse);
     const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
@@ -2848,8 +2876,27 @@ var account = async (context, accountId, updateData) => {
     throw new Error(`Updating account ${err}`);
   }
 };
+var accountStatus = async (context, accountStatusId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccountStatus = await context.db.AccountStatus.updateOne({
+      where: {
+        id: accountStatusId
+      },
+      data: {
+        ...updateData,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    });
+    return updatedAccountStatus;
+  } catch (err) {
+    console.error("Error updating account status %O", err);
+    throw new Error(`Updating account status ${err}`);
+  }
+};
 var update = {
-  account
+  account,
+  accountStatus
 };
 var update_account_default = update;
 
@@ -2866,13 +2913,14 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
         invalid: true
       };
     }
-    if (account2.isVerified) {
+    if (account2.status.isVerified) {
       console.info("Account email address is already verified");
       return {
         success: true
       };
     }
     const { id } = account2;
+    const { id: statusId } = account2.status;
     const now = /* @__PURE__ */ new Date();
     const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
@@ -2885,11 +2933,14 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     }
     console.info("Verified account email address - updating account to be verified");
     const accountUpdate = {
-      isVerified: true,
       verificationHash: "",
       verificationExpiry: null
     };
+    const statusUpdate = {
+      isVerified: true
+    };
     await update_account_default.account(context, id, accountUpdate);
+    await update_account_default.accountStatus(context, statusId, statusUpdate);
     return {
       success: true,
       accountId: id,
@@ -3061,11 +3112,11 @@ var shouldBlockAccount = async (context, accountId) => {
 var should_block_account_default = shouldBlockAccount;
 
 // helpers/block-account/index.ts
-var blockAccount = async (context, accountId) => {
-  console.info("Blocking account %s", accountId);
+var blockAccount = async (context, statusId) => {
+  console.info("Blocking account %s", statusId);
   try {
-    const accountUpdate = { isBlocked: true };
-    const result = await update_account_default.account(context, accountId, accountUpdate);
+    const statusUpdate = { isBlocked: true };
+    const result = await update_account_default.accountStatus(context, statusId, statusUpdate);
     if (result.id) {
       return true;
     }
@@ -3145,7 +3196,7 @@ var accountChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
     const { id: accountId, email } = account2;
-    if (!account2.isVerified) {
+    if (!account2.status.isVerified) {
       console.info("Unable to sign in account - account has not been verified yet");
       const now = /* @__PURE__ */ new Date();
       const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account2.verificationExpiry);
@@ -3200,7 +3251,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     const account2 = accountData;
     const { id: accountId } = account2;
-    const { isBlocked } = account2;
+    const { isBlocked } = account2.status;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
       return { success: false, isBlocked: true, accountId };
@@ -3216,7 +3267,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
-      const blocked = await block_account_default(context, accountId);
+      const blocked = await block_account_default(context, account2.status.id);
       if (blocked) {
         return {
           success: false,
@@ -3449,6 +3500,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       return { success: false };
     }
     const { id: accountId } = account2;
+    const { id: statusId } = account2.status;
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
     if (!newRetriesEntry.success) {
       return { success: false };
@@ -3456,7 +3508,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
     const needToBlockAccount = await should_block_account_default(context, accountId);
     if (needToBlockAccount) {
       try {
-        const blocked = await block_account_default(context, accountId);
+        const blocked = await block_account_default(context, statusId);
         if (blocked) {
           return {
             success: false,
@@ -3552,7 +3604,9 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - account does not exist");
       return { success: false };
     }
-    const { isBlocked } = account2;
+    const {
+      status: { isBlocked }
+    } = account2;
     if (isBlocked) {
       console.info("Unable to reset account password - account is blocked");
       return { success: false };
@@ -4639,6 +4693,50 @@ var xlsx_row_default = xlsxRow;
 var ROW_SEPERATOR = xlsx_row_default("", "");
 var xlsx_row_seperator_default = ROW_SEPERATOR;
 
+// content-strings/fields/insurance/declarations/index.ts
+var {
+  DECLARATIONS: {
+    AGREE_CONFIDENTIALITY,
+    AGREE_ANTI_BRIBERY,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT,
+    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT
+  }
+} = insurance_default;
+var DECLARATIONS_FIELDS = {
+  [AGREE_CONFIDENTIALITY]: {
+    SUMMARY: {
+      TITLE: "Confidentiality"
+    }
+  },
+  [AGREE_ANTI_BRIBERY]: {
+    SUMMARY: {
+      TITLE: "Anti-bribery and corruption"
+    }
+  },
+  [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]: {
+    SUMMARY: {
+      TITLE: "Do you have a code of conduct?"
+    }
+  },
+  [WILL_EXPORT_WITH_CODE_OF_CONDUCT]: {
+    SUMMARY: {
+      TITLE: "Will you export using your code of conduct?"
+    }
+  },
+  [AGREE_CONFIRMATION_ACKNOWLEDGEMENTS]: {
+    SUMMARY: {
+      TITLE: "Confirmation and acknowledgements"
+    }
+  },
+  [AGREE_HOW_YOUR_DATA_WILL_BE_USED]: {
+    SUMMARY: {
+      TITLE: "How your data will be used"
+    }
+  }
+};
+
 // helpers/format-currency/index.ts
 var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
@@ -5096,13 +5194,15 @@ var {
   COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
 } = your_buyer_default;
 var XLSX = {
+  AGREED: "Agreed",
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
     POLICY: "Your insurance coverage",
     EXPORTER_BUSINESS: "About your business",
     BUYER: "Your buyer",
-    ELIGIBILITY: "Eligibility"
+    ELIGIBILITY: "Eligibility",
+    DECLARATIONS: "Declarations"
   },
   FIELDS: {
     [FIRST_NAME]: "Applicant first name",
@@ -5475,6 +5575,41 @@ var mapEligibility = (application2) => {
 };
 var map_eligibility_default = mapEligibility;
 
+// generate-xlsx/map-application-to-XLSX/helpers/map-agreed-field/index.ts
+var mapAgreedField = (answer) => {
+  if (answer === true) {
+    return XLSX.AGREED;
+  }
+  return DEFAULT.EMPTY;
+};
+var map_agreed_field_default = mapAgreedField;
+
+// generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
+var {
+  DECLARATIONS: {
+    AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
+    AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2,
+    AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
+  }
+} = insurance_default;
+var mapDeclarations = (application2) => {
+  const { declaration } = application2;
+  const mapped = [
+    xlsx_row_default(XLSX.SECTION_TITLES.DECLARATIONS, ""),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
+  ];
+  return mapped;
+};
+var map_declarations_default = mapDeclarations;
+
 // generate-xlsx/map-application-to-XLSX/index.ts
 var mapApplicationToXLSX = (application2) => {
   try {
@@ -5491,7 +5626,9 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
-      ...map_eligibility_default(application2)
+      ...map_eligibility_default(application2),
+      xlsx_row_seperator_default,
+      ...map_declarations_default(application2)
     ];
     return mapped;
   } catch (err) {
@@ -5675,12 +5812,15 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
       }
       console.info("Reactivating account %s", account2.id);
       const accountUpdate = {
-        isBlocked: false,
-        isVerified: true,
         reactivationHash: "",
         reactivationExpiry: null
       };
+      const statusUpdate = {
+        isBlocked: false,
+        isVerified: true
+      };
       await update_account_default.account(context, account2.id, accountUpdate);
+      await update_account_default.accountStatus(context, account2.status.id, statusUpdate);
       await delete_authentication_retries_default(context, account2.id);
       return {
         success: true
