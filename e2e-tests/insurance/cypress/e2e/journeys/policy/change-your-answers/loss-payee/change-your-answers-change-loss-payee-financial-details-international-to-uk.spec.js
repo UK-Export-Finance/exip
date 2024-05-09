@@ -14,18 +14,18 @@ const {
   ROOT,
   POLICY: {
     LOSS_PAYEE_DETAILS_CHANGE,
-    LOSS_PAYEE_FINANCIAL_DETAILS_UK,
-    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Loss payee details - Financial details - UK to International - As an exporter, I want to change my answers to the loss payee section', () => {
+context('Insurance - Policy - Change your answers - Loss payee details - Financial details - International to UK - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
-  let lossPayeeFinancialInternationalUrl;
+  let lossPayeeFinancialUkUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
@@ -33,11 +33,11 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
 
       cy.completePolicySection({
         isAppointingLossPayee: true,
-        lossPayeeIsLocatedInUK: true,
+        lossPayeeIsLocatedInUK: false,
       });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      lossPayeeFinancialInternationalUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`;
+      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`;
     });
   });
 
@@ -64,36 +64,37 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
       cy.navigateToUrl(checkYourAnswersUrl);
     });
 
-    it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) loss payee financial international fields`, () => {
+    it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) loss payee financial UK fields`, () => {
       summaryList.field(NAME).changeLink().click();
-      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
+      cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
-      cy.assertUrl(`${lossPayeeFinancialInternationalUrl}#${NAME}-label`);
+      cy.assertUrl(`${lossPayeeFinancialUkUrl}#${NAME}-label`);
 
-      cy.completeAndSubmitLossPayeeFinancialDetailsInternationalForm({});
+      cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({});
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: NAME });
     });
 
-    it('should render new answers and change links for International financial details, no UK financial details', () => {
+    it('should render new answers and change links for UK financial details, no International financial details', () => {
       checkSummaryList.LOSS_PAYEE[NAME]({ shouldRender: true });
 
-      checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isInternational: true });
-      checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: true });
-      checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: true });
+      checkSummaryList.LOSS_PAYEE[FINANCIAL_ADDRESS]({ shouldRender: true, isUk: true });
 
-      checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: false });
-      checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: false });
+      checkSummaryList.LOSS_PAYEE[SORT_CODE]({ shouldRender: true });
+      checkSummaryList.LOSS_PAYEE[ACCOUNT_NUMBER]({ shouldRender: true });
+
+      checkSummaryList.LOSS_PAYEE[BIC_SWIFT_CODE]({ shouldRender: false });
+      checkSummaryList.LOSS_PAYEE[IBAN]({ shouldRender: false });
     });
 
-    describe(`when changing the answer again from International to UK and going back to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK}`, () => {
+    describe(`when changing the answer again from UK to International and going back to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL}`, () => {
       it('should have empty field values', () => {
         summaryList.field(NAME).changeLink().click();
-        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
+        cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
-        cy.checkValue(field(SORT_CODE), '');
+        cy.checkValue(field(BIC_SWIFT_CODE), '');
 
-        cy.checkValue(field(ACCOUNT_NUMBER), '');
+        cy.checkValue(field(IBAN), '');
 
         cy.checkTextareaValue({
           fieldId: FINANCIAL_ADDRESS,
