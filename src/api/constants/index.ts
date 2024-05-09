@@ -92,7 +92,7 @@ export const DATE_2_MONTHS_IN_THE_PAST = () => {
 
   const day = now.getDate();
 
-  // subtract 1 day from the current day.
+  // subtract 60 days (2 months) from the current day.
   const twoMonths = new Date(now.setDate(day - 60));
 
   return twoMonths;

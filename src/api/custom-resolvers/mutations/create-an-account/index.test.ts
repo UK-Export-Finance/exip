@@ -64,6 +64,16 @@ describe('custom-resolvers/create-an-account', () => {
     expect(account.verificationHash.length).toEqual(KEY_LENGTH * 2);
   });
 
+  it('should generate status fields', async () => {
+    account = await accounts.get(context, account.id);
+
+    const { status } = account;
+
+    expect(status.isBlocked).toEqual(false);
+    expect(status.isVerified).toEqual(false);
+    expect(status.isInactive).toEqual(false);
+  });
+
   it('should generate and return verification expiry date', () => {
     const expiry = new Date(account.verificationExpiry);
 

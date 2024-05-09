@@ -54,6 +54,7 @@ const sendEmailPasswordResetLink = async (
     }
 
     const { id: accountId } = account;
+    const { id: statusId } = account.status;
 
     /**
      * Create a new retry entry for the account
@@ -73,7 +74,7 @@ const sendEmailPasswordResetLink = async (
 
     if (needToBlockAccount) {
       try {
-        const blocked = await blockAccount(context, accountId);
+        const blocked = await blockAccount(context, statusId);
 
         if (blocked) {
           return {

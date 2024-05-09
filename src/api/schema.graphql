@@ -1301,8 +1301,6 @@ type Account {
   email: String
   salt: String
   hash: String
-  isVerified: Boolean
-  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -1318,6 +1316,7 @@ type Account {
   reactivationExpiry: DateTime
   applications(where: ApplicationWhereInput! = {}, orderBy: [ApplicationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ApplicationWhereUniqueInput): [Application!]
   applicationsCount(where: ApplicationWhereInput! = {}): Int
+  status: AccountStatus
 }
 
 input AccountWhereUniqueInput {
@@ -1336,8 +1335,6 @@ input AccountWhereInput {
   email: StringFilter
   salt: StringFilter
   hash: StringFilter
-  isVerified: BooleanFilter
-  isBlocked: BooleanFilter
   verificationHash: StringFilter
   verificationExpiry: DateTimeNullableFilter
   otpSalt: StringFilter
@@ -1352,11 +1349,7 @@ input AccountWhereInput {
   reactivationHash: StringFilter
   reactivationExpiry: DateTimeNullableFilter
   applications: ApplicationManyRelationFilter
-}
-
-input BooleanFilter {
-  equals: Boolean
-  not: BooleanFilter
+  status: AccountStatusWhereInput
 }
 
 input ApplicationManyRelationFilter {
@@ -1374,8 +1367,6 @@ input AccountOrderByInput {
   email: OrderDirection
   salt: OrderDirection
   hash: OrderDirection
-  isVerified: OrderDirection
-  isBlocked: OrderDirection
   verificationHash: OrderDirection
   verificationExpiry: OrderDirection
   otpSalt: OrderDirection
@@ -1397,8 +1388,6 @@ input AccountUpdateInput {
   email: String
   salt: String
   hash: String
-  isVerified: Boolean
-  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -1413,6 +1402,7 @@ input AccountUpdateInput {
   reactivationHash: String
   reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForUpdateInput
+  status: AccountStatusRelateToOneForUpdateInput
 }
 
 input AuthenticationRelateToOneForUpdateInput {
@@ -1434,6 +1424,12 @@ input ApplicationRelateToManyForUpdateInput {
   connect: [ApplicationWhereUniqueInput!]
 }
 
+input AccountStatusRelateToOneForUpdateInput {
+  create: AccountStatusCreateInput
+  connect: AccountStatusWhereUniqueInput
+  disconnect: Boolean
+}
+
 input AccountUpdateArgs {
   where: AccountWhereUniqueInput!
   data: AccountUpdateInput!
@@ -1447,8 +1443,6 @@ input AccountCreateInput {
   email: String
   salt: String
   hash: String
-  isVerified: Boolean
-  isBlocked: Boolean
   verificationHash: String
   verificationExpiry: DateTime
   otpSalt: String
@@ -1463,6 +1457,7 @@ input AccountCreateInput {
   reactivationHash: String
   reactivationExpiry: DateTime
   applications: ApplicationRelateToManyForCreateInput
+  status: AccountStatusRelateToOneForCreateInput
 }
 
 input AuthenticationRelateToOneForCreateInput {
@@ -1478,6 +1473,70 @@ input AuthenticationRetryRelateToOneForCreateInput {
 input ApplicationRelateToManyForCreateInput {
   create: [ApplicationCreateInput!]
   connect: [ApplicationWhereUniqueInput!]
+}
+
+input AccountStatusRelateToOneForCreateInput {
+  create: AccountStatusCreateInput
+  connect: AccountStatusWhereUniqueInput
+}
+
+type AccountStatus {
+  id: ID!
+  account: Account
+  isVerified: Boolean
+  isBlocked: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
+}
+
+input AccountStatusWhereUniqueInput {
+  id: ID
+}
+
+input AccountStatusWhereInput {
+  AND: [AccountStatusWhereInput!]
+  OR: [AccountStatusWhereInput!]
+  NOT: [AccountStatusWhereInput!]
+  id: IDFilter
+  account: AccountWhereInput
+  isVerified: BooleanFilter
+  isBlocked: BooleanFilter
+  isInactive: BooleanFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input BooleanFilter {
+  equals: Boolean
+  not: BooleanFilter
+}
+
+input AccountStatusOrderByInput {
+  id: OrderDirection
+  isVerified: OrderDirection
+  isBlocked: OrderDirection
+  isInactive: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input AccountStatusUpdateInput {
+  account: AccountRelateToOneForUpdateInput
+  isVerified: Boolean
+  isBlocked: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
+}
+
+input AccountStatusUpdateArgs {
+  where: AccountStatusWhereUniqueInput!
+  data: AccountStatusUpdateInput!
+}
+
+input AccountStatusCreateInput {
+  account: AccountRelateToOneForCreateInput
+  isVerified: Boolean
+  isBlocked: Boolean
+  isInactive: Boolean
+  updatedAt: DateTime
 }
 
 type AuthenticationRetry {
@@ -3003,6 +3062,12 @@ type Mutation {
   updateAccounts(data: [AccountUpdateArgs!]!): [Account]
   deleteAccount(where: AccountWhereUniqueInput!): Account
   deleteAccounts(where: [AccountWhereUniqueInput!]!): [Account]
+  createAccountStatus(data: AccountStatusCreateInput!): AccountStatus
+  createAccountStatuses(data: [AccountStatusCreateInput!]!): [AccountStatus]
+  updateAccountStatus(where: AccountStatusWhereUniqueInput!, data: AccountStatusUpdateInput!): AccountStatus
+  updateAccountStatuses(data: [AccountStatusUpdateArgs!]!): [AccountStatus]
+  deleteAccountStatus(where: AccountStatusWhereUniqueInput!): AccountStatus
+  deleteAccountStatuses(where: [AccountStatusWhereUniqueInput!]!): [AccountStatus]
   createAuthenticationRetry(data: AuthenticationRetryCreateInput!): AuthenticationRetry
   createAuthenticationRetries(data: [AuthenticationRetryCreateInput!]!): [AuthenticationRetry]
   updateAuthenticationRetry(where: AuthenticationRetryWhereUniqueInput!, data: AuthenticationRetryUpdateInput!): AuthenticationRetry
@@ -3266,6 +3331,9 @@ type Query {
   accounts(where: AccountWhereInput! = {}, orderBy: [AccountOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountWhereUniqueInput): [Account!]
   account(where: AccountWhereUniqueInput!): Account
   accountsCount(where: AccountWhereInput! = {}): Int
+  accountStatuses(where: AccountStatusWhereInput! = {}, orderBy: [AccountStatusOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AccountStatusWhereUniqueInput): [AccountStatus!]
+  accountStatus(where: AccountStatusWhereUniqueInput!): AccountStatus
+  accountStatusesCount(where: AccountStatusWhereInput! = {}): Int
   authenticationRetries(where: AuthenticationRetryWhereInput! = {}, orderBy: [AuthenticationRetryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AuthenticationRetryWhereUniqueInput): [AuthenticationRetry!]
   authenticationRetry(where: AuthenticationRetryWhereUniqueInput!): AuthenticationRetry
   authenticationRetriesCount(where: AuthenticationRetryWhereInput! = {}): Int
