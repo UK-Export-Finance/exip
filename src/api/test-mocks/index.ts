@@ -20,14 +20,17 @@ export const mockAccount = {
   lastName: 'last',
   email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
   ...encryptPassword(String(process.env.MOCK_ACCOUNT_PASSWORD)),
-  isVerified: true,
   verificationHash: 'mockVerificationHash',
   verificationExpiry: new Date(now.setMinutes(now.getMinutes() + 1)).toISOString(),
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
   [PASSWORD_RESET_HASH]: 'mockResetHash',
   passwordResetExpiry: ACCOUNT.PASSWORD_RESET_EXPIRY(),
-  isBlocked: false,
+  status: {
+    isBlocked: false,
+    isVerified: true,
+    isInactive: false,
+  },
 } as Account;
 
 export const mockOTP = {

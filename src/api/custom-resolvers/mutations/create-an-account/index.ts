@@ -12,10 +12,11 @@ import { AccountCreationVariables, AccountCreationCore, Context } from '../../..
  * 1) Check if an account with the same email already exists.
  * 2) Create email verification hash/token.
  * 3) Create initial account data.
- * 4) Send "confirm email address" email.
+ * 4) Create account status connection
+ * 5) Send "confirm email address" email.
  * @param {Object} GraphQL root variables
- * @param {Object} GraphQL variables for the CreateAnAccount mutation
- * @param {Object} KeystoneJS context API
+ * @param {AccountCreationVariables} GraphQL variables for the CreateAnAccount mutation
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and some account data
  */
 const createAnAccount = async (root: any, variables: AccountCreationVariables, context: Context) => {
@@ -47,7 +48,6 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
       email,
       salt,
       hash,
-      isVerified: false,
       verificationHash,
       verificationExpiry,
       createdAt: now,
@@ -56,6 +56,17 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
     const creationResponse = await context.db.Account.createOne({
       data: accountData,
+    });
+
+    // creates account status relationship
+    await context.db.AccountStatus.createOne({
+      data: {
+        account: {
+          connect: {
+            id: creationResponse.id,
+          },
+        },
+      },
     });
 
     // send "confirm email address" email
