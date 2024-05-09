@@ -211,7 +211,7 @@ jobs:
             "check-your-answers/export-contract/change-your-answers/agent-service/*.spec.js",
             "check-your-answers/export-contract/change-your-answers/how-will-you-get-paid/*.spec.js",
             "check-your-answers/export-contract/change-your-answers/private-market/*.spec.js",
-            "check-your-answers/export-contract/change-your-answers/summary-list/**/*.spec.js",
+            "check-your-answers/export-contract/change-your-answers/summary-list/*.spec.js",
             "check-your-answers/policy/*.spec.js",
             "check-your-answers/policy/change-your-answers/broker/*.spec.js",
             "check-your-answers/policy/change-your-answers/multiple-policy/*.spec.js",
