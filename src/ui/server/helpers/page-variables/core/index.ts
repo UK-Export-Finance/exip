@@ -9,9 +9,9 @@ import {
   LINKS,
   PRODUCT as PRODUCT_CONTENT_STRINGS,
 } from '../../../content-strings';
-import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
 import { ATTRIBUTES, ROUTES } from '../../../constants';
 import isInsuranceRoute from '../../is-insurance-route';
+import { CorePageVariablesInput, CorePageVariables } from '../../../../types';
 
 const { THERE_IS_A_PROBLEM } = ERROR_MESSAGES;
 
@@ -34,10 +34,11 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
    */
   const insuranceRoute = isInsuranceRoute(ORIGINAL_URL);
 
+  let COOKIES_ROUTE = ROUTES.COOKIES;
+  let FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK;
   let FOOTER = QUOTE_FOOTER;
   let PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.QUOTE };
   let START_ROUTE = ROUTES.QUOTE.START;
-  let FEEDBACK_ROUTE = LINKS.EXTERNAL.FEEDBACK;
 
   if (USE_GENERIC_HEADER) {
     PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.GENERIC };
@@ -48,10 +49,11 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
    * this sets the footer, product and start route to be insurance ones
    */
   if (insuranceRoute) {
+    COOKIES_ROUTE = ROUTES.INSURANCE.COOKIES;
+    FEEDBACK_ROUTE = ROUTES.INSURANCE.FEEDBACK;
     FOOTER = INSURANCE_FOOTER;
     PRODUCT = { DESCRIPTION: PRODUCT_CONTENT_STRINGS.DESCRIPTION.APPLICATION };
     START_ROUTE = ROUTES.INSURANCE.START;
-    FEEDBACK_ROUTE = ROUTES.INSURANCE.FEEDBACK;
   }
 
   return {
@@ -60,14 +62,14 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
       BUTTONS,
       COOKIES_CONSENT,
       ERROR_MESSAGES: { THERE_IS_A_PROBLEM },
-      HEADER,
       FOOTER,
+      HEADER,
       LINKS,
       PHASE_BANNER,
       PRODUCT,
     },
     BACK_LINK,
-    START_ROUTE,
+    COOKIES_ROUTE,
     FEEDBACK_ROUTE,
     ATTRIBUTES,
     DATA_CY: {
@@ -75,6 +77,7 @@ const corePageVariables = ({ PAGE_CONTENT_STRINGS, BACK_LINK, ORIGINAL_URL, USE_
       BACK_LINK: 'back-link',
       INTRO: 'intro',
     },
+    START_ROUTE,
     ...HTML_FLAGS,
   };
 };

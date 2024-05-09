@@ -7,8 +7,13 @@ const accept = () => {
   partials.cookieBanner.hideButton().click();
 };
 
-const checkAnalyticsCookiesConsentAndAccept = () => {
-  checkCookiesConsentBannerIsVisible();
+/**
+ * checkAnalyticsCookiesConsentAndAccept
+ * Check analytics cookies consent banner contents and accept the cookies.
+ * @param {Boolean} isInsurancePage: Current page is an "insurance" page.
+ */
+const checkAnalyticsCookiesConsentAndAccept = ({ isInsurancePage }) => {
+  checkCookiesConsentBannerIsVisible({ isInsurancePage });
   accept();
   checkCookiesConsentBannerIsNotVisible();
 
