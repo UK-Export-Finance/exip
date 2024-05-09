@@ -44,13 +44,13 @@ describe('server/helpers/get-application-by-reference-number-variables', () => {
   describe(`when the URL includes ${CHECK_YOUR_ANSWERS}`, () => {
     const url = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
 
-    it('should return the referenceNumber, decryptFinancialUk as true, decryptFinancialInternational as undefined', () => {
+    it('should return the referenceNumber, decryptFinancialUk as true, decryptFinancialInternational as true', () => {
       const result = getApplicationByReferenceNumberVariables(referenceNumber.toString(), url);
 
       const expected = {
         referenceNumber,
         decryptFinancialUk: true,
-        decryptFinancialInternational: undefined,
+        decryptFinancialInternational: true,
       };
 
       expect(result).toEqual(expected);
