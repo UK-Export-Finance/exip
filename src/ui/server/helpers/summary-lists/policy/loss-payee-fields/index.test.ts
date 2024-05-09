@@ -164,7 +164,27 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
       });
     });
 
-    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} are true`, () => {
+    describe(`when ${IS_APPOINTED} is true and ${IS_LOCATED_IN_UK} is false`, () => {
+      it('should return fields from the submitted data/answers', () => {
+        mockNominatedLossPayee[IS_APPOINTED] = true;
+        mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
+
+        const result = lossPayeeFields(mockNominatedLossPayee, referenceNumber, checkAndChange);
+
+        const expected = [
+          fieldGroupItem({
+            field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_DETAILS, NAME),
+            data: mockNominatedLossPayee,
+            href: generateChangeLink(LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          }),
+        ];
+
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
       it('should return fields from the submitted data/answers', () => {
         mockNominatedLossPayee[IS_APPOINTED] = true;
         mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
@@ -180,26 +200,6 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
             renderChangeLink: true,
           }),
           ...lossPayeeLocatedInternationallyFields(mockNominatedLossPayee.financialInternational, referenceNumber, checkAndChange),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when ${IS_APPOINTED} is true and ${IS_LOCATED_IN_UK} is false`, () => {
-      it('should return fields from the submitted data/answers', () => {
-        mockNominatedLossPayee[IS_APPOINTED] = true;
-        mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
-
-        const result = lossPayeeFields(mockNominatedLossPayee, referenceNumber, checkAndChange);
-
-        const expected = [
-          fieldGroupItem({
-            field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_DETAILS, NAME),
-            data: mockNominatedLossPayee,
-            href: generateChangeLink(LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, `#${NAME}-label`, referenceNumber, checkAndChange),
-            renderChangeLink: true,
-          }),
         ];
 
         expect(result).toEqual(expected);
