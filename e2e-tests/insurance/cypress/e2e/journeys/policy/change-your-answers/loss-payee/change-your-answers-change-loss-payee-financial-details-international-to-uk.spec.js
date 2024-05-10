@@ -4,7 +4,9 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
-  LOSS_PAYEE_DETAILS: { NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
+  LOSS_PAYEE_DETAILS: {
+    NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY,
+  },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
