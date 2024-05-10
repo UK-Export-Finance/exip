@@ -25,6 +25,6 @@ const {
  * @returns {ValidationErrors} providedAndMaxLength
  */
 const companyOrOrganisationNameRules = (formBody: RequestBody, errors: object) =>
-  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER);
+  providedAndMaxLength(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MAXIMUM_CHARACTERS.BUYER.COMPANY_OR_ORGANISATION);
 
 export default companyOrOrganisationNameRules;
