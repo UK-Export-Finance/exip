@@ -27,6 +27,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Change your answers - Loss payee details - Financial details - UK to International - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
+  let lossPayeeDetailsUrl;
   let lossPayeeFinancialInternationalUrl;
 
   before(() => {
@@ -39,6 +40,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
       });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
       lossPayeeFinancialInternationalUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`;
     });
   });
@@ -68,6 +70,9 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
 
     it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) loss payee financial international fields`, () => {
       summaryList.field(NAME).changeLink().click();
+
+      cy.assertUrl(`${lossPayeeDetailsUrl}#${NAME}-label`);
+
       cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
       cy.assertUrl(`${lossPayeeFinancialInternationalUrl}#${NAME}-label`);
