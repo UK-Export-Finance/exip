@@ -2,6 +2,7 @@ import { field, summaryList } from '../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
+import formatSortCode from '../../../../../../../helpers/format-sort-code';
 
 const {
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
@@ -74,7 +75,9 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        const expectedAnswer = formatSortCode(newAnswer);
+
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedAnswer);
       });
     });
   });
