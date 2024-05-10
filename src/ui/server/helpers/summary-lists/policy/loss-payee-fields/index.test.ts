@@ -184,7 +184,7 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
       });
     });
 
-    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
+    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} are true`, () => {
       it('should return fields from the submitted data/answers', () => {
         mockNominatedLossPayee[IS_APPOINTED] = true;
         mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;
