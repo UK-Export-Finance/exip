@@ -20,7 +20,14 @@ describe('controllers/insurance/policy/loss-payee-financial-details-uk/validatio
   it('should return the result of numberHyphenSpacesOnlyValidation', () => {
     const result = sortCodeRules(mockBody, mockErrors);
 
-    const expected = numberHyphenSpacesOnlyValidation(mockBody, FIELD_ID, ERROR_MESSAGES_OBJECT, mockErrors, MINIMUM_CHARACTERS.SORT_CODE, MAXIMUM_CHARACTERS.SORT_CODE);
+    const expected = numberHyphenSpacesOnlyValidation(
+      mockBody,
+      FIELD_ID,
+      ERROR_MESSAGES_OBJECT,
+      mockErrors,
+      MINIMUM_CHARACTERS.SORT_CODE,
+      MAXIMUM_CHARACTERS.SORT_CODE,
+    );
 
     expect(result).toEqual(expected);
   });
