@@ -4,7 +4,9 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
-  LOSS_PAYEE_DETAILS: { NAME },
+  LOSS_PAYEE_DETAILS: {
+    NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY,
+  },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
@@ -93,8 +95,12 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
     });
 
     describe(`when changing the answer again from UK to International and going back to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL}`, () => {
-      it('should have empty field values', () => {
+      it('should have pre-selected radio inputs and empty field values', () => {
         summaryList.field(NAME).changeLink().click();
+
+        cy.assertRadioOptionIsChecked(field(`${LOCATION}-${IS_LOCATED_IN_UK}`).input());
+        cy.assertRadioOptionIsNotChecked(field(`${LOCATION}-${IS_LOCATED_INTERNATIONALLY}`).input());
+
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
         cy.checkValue(field(BIC_SWIFT_CODE), '');
