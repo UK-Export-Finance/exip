@@ -57,7 +57,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = 'ACCDB011M456';
+      const newAnswer = 'ACCDB011M45';
 
       beforeEach(() => {
         cy.navigateToUrl(url);
