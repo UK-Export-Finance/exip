@@ -5,6 +5,7 @@ interface CronWhereUpdate {
 interface CronApplicationDataUpdate {
   status: string;
   previousStatus: string;
+  updatedAt?: Date;
 }
 
 export interface CronApplicationInactiveUpdate {
