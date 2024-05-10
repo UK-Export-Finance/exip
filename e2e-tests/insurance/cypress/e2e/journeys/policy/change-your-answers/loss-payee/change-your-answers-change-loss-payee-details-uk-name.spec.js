@@ -11,6 +11,7 @@ const {
   ROOT,
   POLICY: {
     LOSS_PAYEE_DETAILS_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
@@ -19,17 +20,21 @@ const fieldId = NAME;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Policy - Change your answers - Loss payee details - ${NAME} - As an exporter, I want to change my answers to the loss payee section`, () => {
+context(`Insurance - Policy - Change your answers - Loss payee details - UK - ${NAME} - As an exporter, I want to change my answers to the loss payee section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
+  let lossPayeeDetailsUrl;
+  let lossPayeeFinancialUkUrl;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ isAppointingLossPayee: true });
+      cy.completePolicySection({ isAppointingLossPayee: true, lossPayeeIsLocatedInUK: true });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
+      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`;
     });
   });
 
@@ -56,13 +61,19 @@ context(`Insurance - Policy - Change your answers - Loss payee details - ${NAME}
 
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
-
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.changeAnswerField({ newValueInput }, field(fieldId).input());
     });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE} and then ${CHECK_YOUR_ANSWERS}`, () => {
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.assertUrl(`${lossPayeeDetailsUrl}#${NAME}-label`);
+
+      cy.changeAnswerField({ newValueInput }, field(fieldId).input());
+
+      cy.assertUrl(`${lossPayeeFinancialUkUrl}#${NAME}-label`);
+
+      cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({});
+
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
     });
 
