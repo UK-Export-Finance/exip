@@ -1,10 +1,11 @@
-import formatSortCode, { SORT_CODE_LENGTH } from '.';
+import { MAXIMUM_CHARACTERS } from '../../constants';
+import formatSortCode from '.';
 import { DEFAULT } from '../../content-strings';
 
 const { EMPTY } = DEFAULT;
 
 describe('server/helpers/format-sort-code', () => {
-  describe(`when the sort code has exactly ${SORT_CODE_LENGTH} digits`, () => {
+  describe(`when the sort code has exactly ${MAXIMUM_CHARACTERS.SORT_CODE} digits`, () => {
     const mockSortCode = '123456';
 
     it('should return a formatted sort code', () => {
@@ -16,7 +17,7 @@ describe('server/helpers/format-sort-code', () => {
     });
   });
 
-  describe(`when the sort code has more than ${SORT_CODE_LENGTH} digits`, () => {
+  describe(`when the sort code has more than ${MAXIMUM_CHARACTERS.SORT_CODE} digits`, () => {
     const mockSortCode = '1234567';
 
     it(`should return ${EMPTY}`, () => {
@@ -26,7 +27,7 @@ describe('server/helpers/format-sort-code', () => {
     });
   });
 
-  describe(`when the sort code has less than ${SORT_CODE_LENGTH} digits`, () => {
+  describe(`when the sort code has less than ${MAXIMUM_CHARACTERS.SORT_CODE} digits`, () => {
     const mockSortCode = '12345';
 
     it(`should return ${EMPTY}`, () => {

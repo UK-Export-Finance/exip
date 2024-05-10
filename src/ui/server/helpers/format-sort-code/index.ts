@@ -1,8 +1,7 @@
+import { MAXIMUM_CHARACTERS } from '../../constants';
 import { DEFAULT } from '../../content-strings';
 
 const { EMPTY } = DEFAULT;
-
-export const SORT_CODE_LENGTH = 6;
 
 /**
  * formatSortCode
@@ -12,7 +11,7 @@ export const SORT_CODE_LENGTH = 6;
  * @returns {String} Formatted sort code
  */
 const formatSortCode = (sortCode: string) => {
-  if (sortCode.length === SORT_CODE_LENGTH) {
+  if (sortCode.length === MAXIMUM_CHARACTERS.SORT_CODE) {
     const str0 = sortCode.substring(0, 2);
     const str1 = sortCode.substring(2, 4);
     const str2 = sortCode.substring(4, 6);
