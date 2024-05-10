@@ -5,7 +5,6 @@ import { Application, Context } from '../types';
  * createMultipleFullApplications
  * Create multiple full applications for unit testing
  * @param {Object} KeystoneJS context API
- * @param {Number} count for array loop
  * @returns {Array<Application>} Applications array
  */
 export const createMultipleFullApplications = async (context: Context): Promise<Array<Application>> => {

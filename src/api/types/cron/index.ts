@@ -1,4 +1,4 @@
-interface CronApplicationWhereUpdate {
+interface CronWhereUpdate {
   id: string;
 }
 
@@ -8,6 +8,24 @@ interface CronApplicationDataUpdate {
 }
 
 export interface CronApplicationInactiveUpdate {
-  where: CronApplicationWhereUpdate;
+  where: CronWhereUpdate;
   data: CronApplicationDataUpdate;
+}
+
+interface CronAccountStatusDataUpdate {
+  isInactive: boolean;
+}
+
+interface CronAccountDataUpdate {
+  updatedAt: Date;
+}
+
+export interface CronAccountStatusUnverifiedUpdate {
+  where: CronWhereUpdate;
+  data: CronAccountStatusDataUpdate;
+}
+
+export interface CronAccountUpdate {
+  where: CronWhereUpdate;
+  data: CronAccountDataUpdate;
 }
