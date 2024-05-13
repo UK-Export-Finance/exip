@@ -2,6 +2,7 @@ import mapAndSave from '.';
 import FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
 import saveLossPayee from '../../save-data/nominated-loss-payee';
 import saveUk from '../../save-data/loss-payee-financial-details-uk';
+import saveInternational from '../../save-data/loss-payee-financial-details-international';
 import { mockApplication, mockNominatedLossPayee } from '../../../../../test-mocks';
 
 const {
@@ -66,6 +67,30 @@ describe('controllers/insurance/policy/map-and-save/loss-payee - API error', () 
   describe('when saveUk.lossPayeeFinancialDetailsUk call fails', () => {
     beforeEach(() => {
       saveUk.lossPayeeFinancialDetailsUk = jest.fn(() => Promise.reject(new Error('mock')));
+    });
+
+    it('should return false', async () => {
+      const result = await mapAndSave.lossPayee(mockFormBody.isNotAppointed, mockApplication);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when saveInternational.lossPayeeFinancialDetailsInternational call does not return anything', () => {
+    beforeEach(() => {
+      saveInternational.lossPayeeFinancialDetailsInternational = jest.fn(() => Promise.resolve());
+    });
+
+    it('should return false', async () => {
+      const result = await mapAndSave.lossPayee(mockFormBody.isNotAppointed, mockApplication);
+
+      expect(result).toEqual(false);
+    });
+  });
+
+  describe('when saveInternational.lossPayeeFinancialDetailsInternational call fails', () => {
+    beforeEach(() => {
+      saveInternational.lossPayeeFinancialDetailsInternational = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

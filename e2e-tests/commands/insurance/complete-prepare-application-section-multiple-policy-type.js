@@ -14,6 +14,8 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on  - defaults to false
+ * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
+ * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
  * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
  * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false.
@@ -34,6 +36,8 @@ const completePrepareApplicationMultiplePolicyType = ({
   exporterHasBuyerFinancialAccounts = false,
   usingBroker = false,
   otherCompanyInvolved = false,
+  isAppointingLossPayee = false,
+  lossPayeeIsLocatedInUK = false,
   policyValueOverMvpMaximum = false,
   differentPolicyContact = false,
   needPreCreditPeriod = false,
@@ -65,6 +69,8 @@ const completePrepareApplicationMultiplePolicyType = ({
     usingBroker,
     otherCompanyInvolved,
     needPreCreditPeriod,
+    isAppointingLossPayee,
+    lossPayeeIsLocatedInUK,
   });
 
   cy.completeExportContractSection({

@@ -233,31 +233,45 @@ export const mockApplicationMultiplePolicyWithoutCurrencyCode = {
   },
 } as Application;
 
+const emptyFinancialUk = {
+  ...mockNominatedLossPayee.financialUk,
+  accountNumber: '',
+  sortCode: '',
+  bankAddress: '',
+};
+
+const emptyFinancialInternational = {
+  ...mockNominatedLossPayee.financialInternational,
+  bicSwiftCode: '',
+  iban: '',
+  bankAddress: '',
+};
+
 export const mockApplicationNominatedLossPayeeAppointedEmptyData = {
   ...mockApplication,
   nominatedLossPayee: {
     ...mockNominatedLossPayee,
     isAppointed: true,
-    financialUk: {
-      ...mockNominatedLossPayee.financialUk,
-      accountNumber: '',
-      sortCode: '',
-      financialAddress: '',
-    },
-    financialInternational: {
-      ...mockNominatedLossPayee.financialInternational,
-      bicSwiftCode: '',
-      iban: '',
-      financialAddress: '',
-    },
+    financialUk: emptyFinancialUk,
+    financialInternational: emptyFinancialInternational,
   },
 } as Application;
 
-export const mockApplicationNominatedLossPayeeNotAppointedFullData = {
+export const mockApplicationNominatedLossPayeeNotAppointedFullFinancialUkData = {
   ...mockApplication,
   nominatedLossPayee: {
     ...mockNominatedLossPayee,
     isAppointed: false,
+    financialInternational: emptyFinancialInternational,
+  },
+} as Application;
+
+export const mockApplicationNominatedLossPayeeNotAppointedFullFinancialInternationalData = {
+  ...mockApplication,
+  nominatedLossPayee: {
+    ...mockNominatedLossPayee,
+    isAppointed: false,
+    financialUk: emptyFinancialUk,
   },
 } as Application;
 

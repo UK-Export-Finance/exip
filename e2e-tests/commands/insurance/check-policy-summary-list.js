@@ -8,6 +8,7 @@ import application from '../../fixtures/application';
 import CURRENCIES from '../../fixtures/currencies';
 import formatCurrency from '../../helpers/format-currency';
 import { createTimestampFromNumbers, formatDate } from '../../helpers/date';
+import formatSortCode from '../../helpers/format-sort-code';
 
 const {
   CURRENCY: { CURRENCY_CODE },
@@ -400,7 +401,7 @@ const checkPolicySummaryList = ({
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.LOSS_PAYEE_FINANCIAL_UK);
 
       if (shouldRender) {
-        const expectedValue = application.POLICY.LOSS_PAYEE_FINANCIAL_UK[fieldId];
+        const expectedValue = formatSortCode(application.POLICY.LOSS_PAYEE_FINANCIAL_UK[fieldId]);
 
         cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
       } else {

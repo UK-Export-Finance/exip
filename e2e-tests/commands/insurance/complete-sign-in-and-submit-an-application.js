@@ -16,6 +16,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - policyValueOverMvpMaximum: should submit an application with a value over the MVP maximum amount. Defaults to false.
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to false.
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
+ * - isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
+ * - lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
  * - totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * - attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * - isUsingAgent: Should submit "yes" to "using an agent" form.
@@ -33,6 +35,8 @@ const completeSignInAndSubmitAnApplication = ({
   policyValueOverMvpMaximum = false,
   usingBroker = false,
   differentPolicyContact = false,
+  isAppointingLossPayee = false,
+  lossPayeeIsLocatedInUK = false,
   totalContractValueOverThreshold = false,
   attemptedPrivateMarketCover = false,
   isUsingAgent = false,
@@ -50,6 +54,8 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         usingBroker,
         differentPolicyContact,
+        isAppointingLossPayee,
+        lossPayeeIsLocatedInUK,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,
@@ -66,6 +72,8 @@ const completeSignInAndSubmitAnApplication = ({
         referenceNumber,
         usingBroker,
         differentPolicyContact,
+        isAppointingLossPayee,
+        lossPayeeIsLocatedInUK,
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,

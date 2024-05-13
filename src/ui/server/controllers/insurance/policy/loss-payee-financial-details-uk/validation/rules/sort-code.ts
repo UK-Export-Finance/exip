@@ -8,10 +8,6 @@ const { SORT_CODE: FIELD_ID } = FIELD_IDS.LOSS_PAYEE_FINANCIAL_UK;
 
 const { [FIELD_ID]: ERROR_MESSAGES_OBJECT } = ERROR_MESSAGES.INSURANCE.POLICY;
 
-export const MAXIMUM = Number(MAXIMUM_CHARACTERS.SORT_CODE);
-
-export const MINIMUM = Number(MINIMUM_CHARACTERS.SORT_CODE);
-
 /**
  * sortCodeRules
  * Check submitted form data for errors for the sort code field
@@ -21,6 +17,6 @@ export const MINIMUM = Number(MINIMUM_CHARACTERS.SORT_CODE);
  * @returns {Object} numberHyphenSpacesOnlyValidation errors
  */
 const sortCodeRules = (formBody: RequestBody, errors: object) =>
-  numberHyphenSpacesOnlyValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM, MAXIMUM);
+  numberHyphenSpacesOnlyValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM_CHARACTERS.SORT_CODE, MAXIMUM_CHARACTERS.SORT_CODE);
 
 export default sortCodeRules;

@@ -8,6 +8,7 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import formatSortCode from '../../../format-sort-code';
 import { mockNominatedLossPayee, referenceNumber } from '../../../../test-mocks/mock-application';
 
 const {
@@ -60,18 +61,21 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
           },
           replaceNewLineWithLineBreak(mockAnswers[FINANCIAL_ADDRESS]),
         ),
-        fieldGroupItem({
-          field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, SORT_CODE),
-          data: mockAnswers,
-          href: generateChangeLink(
-            LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
-            LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-            `#${SORT_CODE}-label`,
-            referenceNumber,
-            checkAndChange,
-          ),
-          renderChangeLink: true,
-        }),
+        fieldGroupItem(
+          {
+            field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, SORT_CODE),
+            data: mockAnswers,
+            href: generateChangeLink(
+              LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+              LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+              `#${SORT_CODE}-label`,
+              referenceNumber,
+              checkAndChange,
+            ),
+            renderChangeLink: true,
+          },
+          formatSortCode(mockAnswers[SORT_CODE]),
+        ),
         fieldGroupItem({
           field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, ACCOUNT_NUMBER),
           data: mockAnswers,
@@ -184,7 +188,7 @@ describe('server/helpers/summary-lists/policy/loss-payee-fields', () => {
       });
     });
 
-    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} is true`, () => {
+    describe(`when ${IS_APPOINTED} and ${IS_LOCATED_INTERNATIONALLY} are true`, () => {
       it('should return fields from the submitted data/answers', () => {
         mockNominatedLossPayee[IS_APPOINTED] = true;
         mockNominatedLossPayee[IS_LOCATED_IN_UK] = false;

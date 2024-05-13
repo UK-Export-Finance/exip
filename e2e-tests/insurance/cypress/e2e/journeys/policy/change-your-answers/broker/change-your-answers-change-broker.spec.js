@@ -55,7 +55,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHANGE, fieldId: NAME });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: BROKER_DETAILS_CHANGE, fieldId });
       });
     });
 
