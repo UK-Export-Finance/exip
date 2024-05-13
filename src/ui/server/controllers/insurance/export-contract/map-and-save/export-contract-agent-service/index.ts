@@ -1,4 +1,5 @@
 import hasFormData from '../../../../../helpers/has-form-data';
+import mapSubmittedData from '../../map-submitted-data/agent-service';
 import saveService from '../../save-data/export-contract-agent-service';
 import shouldNullifyAgentServiceChargeData from '../../../../../helpers/should-nullify-agent-service-charge-data';
 import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
@@ -19,6 +20,8 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const exportContractAgentService = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
+      const populatedData = mapSubmittedData(formBody);
+
       let saveResponse;
 
       /**
@@ -26,9 +29,9 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
        * Otherwise, simply save all data.
        */
       if (validationErrors) {
-        saveResponse = await saveService.exportContractAgentService(application, formBody, validationErrors.errorList);
+        saveResponse = await saveService.exportContractAgentService(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await saveService.exportContractAgentService(application, formBody);
+        saveResponse = await saveService.exportContractAgentService(application, populatedData);
       }
 
       if (!saveResponse) {
@@ -39,7 +42,7 @@ const exportContractAgentService = async (formBody: RequestBody, application: Ap
        * If AGENT_CHARGES data should be nullified,
        * Nullify and save the data.
        */
-      if (shouldNullifyAgentServiceChargeData(formBody, application.exportContract.agent.service.charge)) {
+      if (shouldNullifyAgentServiceChargeData(populatedData, application.exportContract.agent.service.charge)) {
         const nullifiedData = nullifyAgentServiceChargeData();
 
         saveResponse = await saveCharge.exportContractAgentServiceCharge(application, nullifiedData);
