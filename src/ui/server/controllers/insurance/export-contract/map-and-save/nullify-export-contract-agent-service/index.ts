@@ -7,7 +7,7 @@ import { Application } from '../../../../../../types';
 /**
  * exportContractAgentServiceAndCharge
  * Nullify Export contract "agent service" and "agent service charge" data.
- * @param {Application} application 
+ * @param {Application} application
  * @returns {Promise<boolean>}
  */
 const exportContractAgentServiceAndCharge = async (application: Application) => {
