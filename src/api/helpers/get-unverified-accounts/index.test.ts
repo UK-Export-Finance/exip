@@ -57,4 +57,10 @@ describe('api/helpers/get-unverified-accounts', () => {
       expect(result.length).toEqual(1);
     });
   });
+
+  describe('when an error occurs whilst getting unverified accounts', () => {
+    it('should throw an error', async () => {
+      await expect(getUnverifiedAccounts()).rejects.toThrow('Error getting unverified accounts (getUnverifiedAccounts helper)');
+    });
+  });
 });

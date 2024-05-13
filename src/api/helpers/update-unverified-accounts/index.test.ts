@@ -40,7 +40,7 @@ describe('helpers/update-unverified-accounts', () => {
     });
   });
 
-  describe('when an error occurs whilst getting and updating inactive applications', () => {
+  describe('when an error occurs whilst getting and updating unverified accounts', () => {
     it('should throw an error', async () => {
       await expect(updateUnverifiedAccounts()).rejects.toThrow('Error getting and updating unverified accounts');
     });

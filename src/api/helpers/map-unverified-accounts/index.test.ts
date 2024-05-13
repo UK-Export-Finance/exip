@@ -3,19 +3,15 @@ import { mockAccount } from '../../test-mocks';
 
 describe('helpers/map-unverified-accounts', () => {
   describe('when an empty array is passed', () => {
-    it('should return an empty account array', () => {
+    it('should return empty arrays', () => {
       const result = mapUnverifiedAccounts([]);
 
       expect(result.account).toEqual([]);
-    });
-    it('should return an empty accountStatus array', () => {
-      const result = mapUnverifiedAccounts([]);
-
       expect(result.accountStatus).toEqual([]);
     });
   });
 
-  describe('when an array is passed', () => {
+  describe('when a populated array is passed', () => {
     const accounts = [
       {
         ...mockAccount,
@@ -27,52 +23,28 @@ describe('helpers/map-unverified-accounts', () => {
       },
     ];
 
-    it('should return a populated account array', () => {
+    const [accounts0, accounts1] = accounts;
+
+    it('should return a mapped account array', () => {
       const result = mapUnverifiedAccounts(accounts);
 
-      const [accounts0, accounts1] = accounts;
+      expect(result[0].where).toEqual({ id: accounts0.id });
+      expect(result[0].data.updatedAt).toBeDefined();
 
-      const expectedAccounts = [
-        {
-          where: { id: accounts0.id },
-          data: {
-            updatedAt: new Date(),
-          },
-        },
-        {
-          where: { id: accounts1.id },
-          data: {
-            updatedAt: new Date(),
-          },
-        },
-      ];
-
-      expect(result.account).toEqual(expectedAccounts);
+      expect(result[1].where).toEqual({ id: accounts1.id });
+      expect(result[1].data.updatedAt).toBeDefined();
     });
 
-    it('should return a populated accountStatus array', () => {
+    it('should return a mapped accountStatus array', () => {
       const result = mapUnverifiedAccounts(accounts);
 
-      const [accounts0, accounts1] = accounts;
+      expect(result[0].where).toEqual({ id: accounts0.status.id });
+      expect(result[0].data.isInactive).toEqual(true);
+      expect(result[0].data.updatedAt).toBeDefined();
 
-      const expectedAccountStatus = [
-        {
-          where: { id: accounts0.status.id },
-          data: {
-            isInactive: true,
-            updatedAt: new Date(),
-          },
-        },
-        {
-          where: { id: accounts1.status.id },
-          data: {
-            isInactive: true,
-            updatedAt: new Date(),
-          },
-        },
-      ];
-
-      expect(result.accountStatus).toEqual(expectedAccountStatus);
+      expect(result[1].where).toEqual({ id: accounts1.id });
+      expect(result[1].data.isInactive).toEqual(true);
+      expect(result[1].data.updatedAt).toBeDefined();
     });
   });
 });

@@ -1,19 +1,19 @@
 import { Account, CronAccountStatusUnverifiedUpdate, CronAccountUpdate } from '../../types';
 
 /**
- * mapInactiveApplications
+ * mapUnverifiedAccounts
  * generates array of objects for updating the db
- * object contains where object with id of application to be updated
+ * object contains where object with id of account to be updated
  * contains data object with fields which are updated
- * @param {Array<CronAccountStatusUnverifiedUpdate>} applications: array of application ids and statuses
+ * @param {Array<Account>} accounts: array of accounts
  * @returns {Array<CronAccountStatusUnverifiedUpdate>}: Arrays of objects for updating db
  */
 const mapUnverifiedAccounts = (accounts: Array<Account>) => {
   /**
-   * loops through applications array
-   * adds id to where object
-   * adds abandoned status to status, previous status and updatedAt
-   * pushes to mappedArray
+   * loops through accounts array
+   * adds id of accountStatus to where object
+   * sets isInactive to true
+   * updates updatedAt timestamp
    */
   const mappedAccountStatusArray = accounts.map((account: Account) => {
     const mapped = {
@@ -27,6 +27,11 @@ const mapUnverifiedAccounts = (accounts: Array<Account>) => {
     return mapped;
   });
 
+  /**
+   * loops through accounts array
+   * adds id of account to where object
+   * updates updatedAt timestamp
+   */
   const mappedAccountArray = accounts.map((account: Account) => {
     const mapped = {
       where: { id: account.id },

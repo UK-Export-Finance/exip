@@ -7,7 +7,7 @@ import { Account } from '../../types';
  * maps and generates save object for unverified accounts
  * updates AccountStatus' isInactive flag to true and updates AccountStatus and Account updatedAt
  * @param {Array<Account>} accounts: array of applications
- * @param {Context} context
+ * @param {Context} context: KeystoneJS context API
  */
 const mapAndUpdateUnverifiedAccounts = async (accounts: Array<Account>, context: Context) => {
   try {

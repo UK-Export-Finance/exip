@@ -15,7 +15,7 @@ const updateUnverifiedAccounts = async (context: Context): Promise<SuccessRespon
   try {
     console.info('Getting and updating unverified accounts');
 
-    // gets inactive applications
+    // gets unverified accounts
     const accounts = await getUnverifiedAccounts(context);
 
     /**
@@ -25,8 +25,13 @@ const updateUnverifiedAccounts = async (context: Context): Promise<SuccessRespon
      */
     if (accounts.length) {
       await mapAndUpdateUnverifiedAccounts(accounts, context);
+
+      return {
+        success: true,
+      };
     }
 
+    console.info('No unverified accounts found - updateUnverifiedAccounts');
     return {
       success: true,
     };

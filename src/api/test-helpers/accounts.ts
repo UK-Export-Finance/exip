@@ -117,7 +117,7 @@ const update = async (context: Context, accountId: string, data: AccountCreation
     return account;
   } catch (err) {
     console.error(err);
-    throw new Error(`Getting an account by ID (test helpers) ${err}`);
+    throw new Error(`Updating an account by ID (test helpers) ${err}`);
   }
 };
 

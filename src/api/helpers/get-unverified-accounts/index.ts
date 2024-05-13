@@ -10,7 +10,7 @@ import { Account } from '../../types';
  */
 const getUnverifiedAccounts = async (context: Context): Promise<Account[]> => {
   try {
-    console.info('Getting unverified accounts - getUnverifiedAccounts helper');
+    console.info('Getting unverified accounts - getUnverifiedAccounts (helper)');
 
     /**
      * queries accounts which have a verificationExpiry before now
