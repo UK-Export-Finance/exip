@@ -9,7 +9,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
- * @returns {Boolean}
+ * @returns {Promise<Boolean>}
  */
 const privateMarket = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {

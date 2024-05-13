@@ -1,11 +1,8 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import mapSubmittedData from '../../map-submitted-data/agent';
 import saveAgent from '../../save-data/export-contract-agent';
-import saveAgentService from '../../save-data/export-contract-agent-service';
-import saveAgentServiceCharge from '../../save-data/export-contract-agent-service-charge';
 import shouldNullifyAgentServiceData from '../../../../../helpers/should-nullify-agent-service-data';
-import nullifyAgentServiceData from '../../../../../helpers/nullify-agent-service-data';
-import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
+import nullify from '../nullify-export-contract-agent-service';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
@@ -16,7 +13,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
  * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
- * @returns {Boolean}
+ * @returns {Promise<Boolean>}
  */
 const exportContractAgent = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
@@ -42,26 +39,7 @@ const exportContractAgent = async (formBody: RequestBody, application: Applicati
        * Nullify and save all AGENT_CHARGES and AGENT_SERVICE data.
        */
       if (shouldNullifyAgentServiceData(isUsingAgent, application.exportContract.agent)) {
-        const nullified = {
-          service: nullifyAgentServiceData(),
-          serviceCharge: nullifyAgentServiceChargeData(),
-        };
-
-        console.info('Mapping and saving application - export contract agent - nullifying agent service charge data');
-
-        saveResponse = await saveAgentServiceCharge.exportContractAgentServiceCharge(application, nullified.serviceCharge);
-
-        if (!saveResponse) {
-          return false;
-        }
-
-        console.info('Mapping and saving application - export contract agent - nullifying agent service data');
-
-        saveResponse = await saveAgentService.exportContractAgentService(application, nullified.service);
-
-        if (!saveResponse) {
-          return false;
-        }
+        await nullify.exportContractAgentServiceAndCharge(application);
       }
 
       return true;

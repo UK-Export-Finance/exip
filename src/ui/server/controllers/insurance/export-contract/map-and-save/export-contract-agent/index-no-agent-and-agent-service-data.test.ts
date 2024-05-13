@@ -1,11 +1,8 @@
 import mapAndSave from '.';
 import saveAgent from '../../save-data/export-contract-agent';
-import saveAgentService from '../../save-data/export-contract-agent-service';
-import saveAgentServiceCharge from '../../save-data/export-contract-agent-service-charge';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import mapSubmittedData from '../../map-submitted-data/agent';
-import nullifyAgentServiceData from '../../../../../helpers/nullify-agent-service-data';
-import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
+import nullify from '../nullify-export-contract-agent-service';
 import generateValidationErrors from '../../../../../helpers/validation';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
@@ -13,6 +10,7 @@ const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent - with USING_AGENT=true and agent service data', () => {
   jest.mock('../../save-data/export-contract-agent');
+  jest.mock('../nullify-export-contract-agent-service');
 
   const mockCsrf = '1234';
 
@@ -24,19 +22,16 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
   const mockValidationErrors = generateValidationErrors(USING_AGENT, 'error', {});
 
   let mockSaveExportContractAgent;
-  let mockSaveExportContractAgentService;
-  let mockSaveExportContractAgentServiceCharge;
+  let mockNullifyExportContractAgentServiceAndCharge;
 
   const setupMocks = () => {
     jest.resetAllMocks();
 
     mockSaveExportContractAgent = mockSpyPromise();
-    mockSaveExportContractAgentService = mockSpyPromise();
-    mockSaveExportContractAgentServiceCharge = mockSpyPromise();
+    mockNullifyExportContractAgentServiceAndCharge = mockSpyPromise();
 
     saveAgent.exportContractAgent = mockSaveExportContractAgent;
-    saveAgentService.exportContractAgentService = mockSaveExportContractAgentService;
-    saveAgentServiceCharge.exportContractAgentServiceCharge = mockSaveExportContractAgentServiceCharge;
+    nullify.exportContractAgentServiceAndCharge = mockNullifyExportContractAgentServiceAndCharge;
   };
 
   describe('when the form has validation errors', () => {
@@ -51,18 +46,11 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       expect(saveAgent.exportContractAgent).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
     });
 
-    it('should call saveAgentServiceCharge.exportContractAgentServiceCharge', async () => {
+    it('should call nullify.exportContractAgentServiceAndCharge', async () => {
       await mapAndSave.exportContractAgent(mockFormBody, mockApplication, mockValidationErrors);
 
-      expect(saveAgentServiceCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-      expect(saveAgentServiceCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication, nullifyAgentServiceChargeData());
-    });
-
-    it('should call saveAgentService.exportContractAgentService', async () => {
-      await mapAndSave.exportContractAgent(mockFormBody, mockApplication, mockValidationErrors);
-
-      expect(saveAgentService.exportContractAgentService).toHaveBeenCalledTimes(1);
-      expect(saveAgentService.exportContractAgentService).toHaveBeenCalledWith(mockApplication, nullifyAgentServiceData());
+      expect(nullify.exportContractAgentServiceAndCharge).toHaveBeenCalledTimes(1);
+      expect(nullify.exportContractAgentServiceAndCharge).toHaveBeenCalledWith(mockApplication);
     });
 
     it('should return true', async () => {
@@ -84,18 +72,11 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       expect(saveAgent.exportContractAgent).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
     });
 
-    it('should call saveAgentServiceCharge.exportContractAgentServiceCharge', async () => {
+    it('should call nullify.exportContractAgentServiceAndCharge', async () => {
       await mapAndSave.exportContractAgent(mockFormBody, mockApplication, mockValidationErrors);
 
-      expect(saveAgentServiceCharge.exportContractAgentServiceCharge).toHaveBeenCalledTimes(1);
-      expect(saveAgentServiceCharge.exportContractAgentServiceCharge).toHaveBeenCalledWith(mockApplication, nullifyAgentServiceChargeData());
-    });
-
-    it('should call saveAgentService.exportContractAgentService', async () => {
-      await mapAndSave.exportContractAgent(mockFormBody, mockApplication, mockValidationErrors);
-
-      expect(saveAgentService.exportContractAgentService).toHaveBeenCalledTimes(1);
-      expect(saveAgentService.exportContractAgentService).toHaveBeenCalledWith(mockApplication, nullifyAgentServiceData());
+      expect(nullify.exportContractAgentServiceAndCharge).toHaveBeenCalledTimes(1);
+      expect(nullify.exportContractAgentServiceAndCharge).toHaveBeenCalledWith(mockApplication);
     });
 
     it('should return true', async () => {
