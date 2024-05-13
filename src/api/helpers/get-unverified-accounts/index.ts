@@ -1,6 +1,8 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
 import { Account } from '../../types';
 
+const now = new Date();
+
 /**
  * getUnverifiedAccounts
  * gets unverified accounts - not updated for 24hours
@@ -14,17 +16,12 @@ const getUnverifiedAccounts = async (context: Context): Promise<Account[]> => {
 
     /**
      * queries accounts which have a verificationExpiry before now
-     * and where their isVerified, isBlocked or isInactive statuses are false
+     * and where their isVerified, or isInactive statuses are false
      * returns array accounts and their status
      */
     const accounts = (await context.query.Account.findMany({
       where: {
-        AND: [
-          { verificationExpiry: { lt: new Date() } },
-          { status: { isVerified: { equals: false } } },
-          { status: { isBlocked: { equals: false } } },
-          { status: { isInactive: { equals: false } } },
-        ],
+        AND: [{ verificationExpiry: { lt: now } }, { status: { isVerified: { equals: false } } }, { status: { isInactive: { equals: false } } }],
       },
       query:
         'id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry updatedAt status { id isBlocked isVerified isInactive updatedAt }',
