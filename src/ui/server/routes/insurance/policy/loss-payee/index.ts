@@ -27,9 +27,11 @@ const {
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK,
   LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
   LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
   LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK,
   LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+  LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
 } = POLICY;
 
 // @ts-ignore
@@ -56,11 +58,15 @@ router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, postLoss
 router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_SAVE_AND_BACK}`, postLossPayeeFinancialDetailsUkSaveAndBack);
 router.get(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`, getLossPayeeFinancialDetailsUk);
 router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`, postLossPayeeFinancialDetailsUk);
+router.get(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`, getLossPayeeFinancialDetailsUk);
+router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`, postLossPayeeFinancialDetailsUk);
 
 router.get(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, getLossPayeeFinancialInternational);
 router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT}`, postLossPayeeFinancialInternational);
 router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_SAVE_AND_BACK}`, postLossPayeeFinancialInternationalSaveAndBack);
 router.get(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, getLossPayeeFinancialInternational);
 router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`, postLossPayeeFinancialInternational);
+router.get(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`, getLossPayeeFinancialInternational);
+router.post(`/:referenceNumber${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`, postLossPayeeFinancialInternational);
 
 export default router;
