@@ -28,23 +28,23 @@ describe('helpers/map-unverified-accounts', () => {
     it('should return a mapped account array', () => {
       const result = mapUnverifiedAccounts(accounts);
 
-      expect(result[0].where).toEqual({ id: accounts0.id });
-      expect(result[0].data.updatedAt).toBeDefined();
+      expect(result.account[0].where).toEqual({ id: accounts0.id });
+      expect(result.account[0].data.updatedAt).toBeDefined();
 
-      expect(result[1].where).toEqual({ id: accounts1.id });
-      expect(result[1].data.updatedAt).toBeDefined();
+      expect(result.account[1].where).toEqual({ id: accounts1.id });
+      expect(result.account[1].data.updatedAt).toBeDefined();
     });
 
     it('should return a mapped accountStatus array', () => {
       const result = mapUnverifiedAccounts(accounts);
 
-      expect(result[0].where).toEqual({ id: accounts0.status.id });
-      expect(result[0].data.isInactive).toEqual(true);
-      expect(result[0].data.updatedAt).toBeDefined();
+      expect(result.accountStatus[0].where).toEqual({ id: accounts0.status.id });
+      expect(result.accountStatus[0].data.isInactive).toEqual(true);
+      expect(result.accountStatus[0].data.updatedAt).toBeDefined();
 
-      expect(result[1].where).toEqual({ id: accounts1.id });
-      expect(result[1].data.isInactive).toEqual(true);
-      expect(result[1].data.updatedAt).toBeDefined();
+      expect(result.accountStatus[1].where).toEqual({ id: accounts1.status.id });
+      expect(result.accountStatus[1].data.isInactive).toEqual(true);
+      expect(result.accountStatus[1].data.updatedAt).toBeDefined();
     });
   });
 });

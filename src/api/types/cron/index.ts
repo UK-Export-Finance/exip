@@ -15,6 +15,7 @@ export interface CronApplicationInactiveUpdate {
 
 interface CronAccountStatusDataUpdate {
   isInactive: boolean;
+  updatedAt: Date;
 }
 
 interface CronAccountDataUpdate {
