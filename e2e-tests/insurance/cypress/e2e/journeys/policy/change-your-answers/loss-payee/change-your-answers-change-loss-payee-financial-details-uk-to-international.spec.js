@@ -4,7 +4,9 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
-  LOSS_PAYEE_DETAILS: { NAME },
+  LOSS_PAYEE_DETAILS: {
+    NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY,
+  },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
@@ -25,6 +27,7 @@ const baseUrl = Cypress.config('baseUrl');
 context('Insurance - Policy - Change your answers - Loss payee details - Financial details - UK to International - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
+  let lossPayeeDetailsUrl;
   let lossPayeeFinancialInternationalUrl;
 
   before(() => {
@@ -37,6 +40,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
       });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
       lossPayeeFinancialInternationalUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE}`;
     });
   });
@@ -66,6 +70,9 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
 
     it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) loss payee financial international fields`, () => {
       summaryList.field(NAME).changeLink().click();
+
+      cy.assertUrl(`${lossPayeeDetailsUrl}#${NAME}-label`);
+
       cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
       cy.assertUrl(`${lossPayeeFinancialInternationalUrl}#${NAME}-label`);
@@ -87,8 +94,12 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
     });
 
     describe(`when changing the answer again from International to UK and going back to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK}`, () => {
-      it('should have empty field values', () => {
+      it('should have pre-selected radio inputs and empty field values', () => {
         summaryList.field(NAME).changeLink().click();
+
+        cy.assertRadioOptionIsNotChecked(field(`${LOCATION}-${IS_LOCATED_IN_UK}`).input());
+        cy.assertRadioOptionIsChecked(field(`${LOCATION}-${IS_LOCATED_INTERNATIONALLY}`).input());
+
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
         cy.checkValue(field(SORT_CODE), '');

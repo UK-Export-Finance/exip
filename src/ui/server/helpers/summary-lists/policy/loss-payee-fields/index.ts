@@ -7,6 +7,7 @@ import getFieldById from '../../../get-field-by-id';
 import mapYesNoField from '../../../mappings/map-yes-no-field';
 import generateChangeLink from '../../../generate-change-link';
 import replaceNewLineWithLineBreak from '../../../replace-new-line-with-line-break';
+import formatSortCode from '../../../format-sort-code';
 import {
   ApplicationNominatedLossPayee,
   ApplicationLossPayeeFinancialDetailsUk,
@@ -64,18 +65,21 @@ export const lossPayeeLocatedInUkFields = (answers: ApplicationLossPayeeFinancia
       },
       replaceNewLineWithLineBreak(answers[FINANCIAL_ADDRESS]),
     ),
-    fieldGroupItem({
-      field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, SORT_CODE),
-      data: answers,
-      href: generateChangeLink(
-        LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
-        LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
-        `#${SORT_CODE}-label`,
-        referenceNumber,
-        checkAndChange,
-      ),
-      renderChangeLink: true,
-    }),
+    fieldGroupItem(
+      {
+        field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, SORT_CODE),
+        data: answers,
+        href: generateChangeLink(
+          LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+          LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
+          `#${SORT_CODE}-label`,
+          referenceNumber,
+          checkAndChange,
+        ),
+        renderChangeLink: true,
+      },
+      formatSortCode(answers[SORT_CODE]),
+    ),
     fieldGroupItem({
       field: getFieldById(POLICY_FIELDS.LOSS_PAYEE_FINANCIAL_UK, ACCOUNT_NUMBER),
       data: answers,
