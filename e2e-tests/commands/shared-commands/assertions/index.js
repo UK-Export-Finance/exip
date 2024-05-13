@@ -66,8 +66,12 @@ Cypress.Commands.add('assertLossPayeeFinancialUkFieldValues', require('./assert-
 Cypress.Commands.add('assertLossPayeeFinancialInternationalFieldValues', require('./assert-loss-payee-financial-international-field-values'));
 
 Cypress.Commands.add('assertAgentDetailsFieldValues', require('./assert-agent-details-field-values'));
+Cypress.Commands.add('assertEmptyAgentDetailsFieldValues', require('./assert-empty-agent-details-field-values'));
+
 Cypress.Commands.add('assertAgentServiceFieldValues', require('./assert-agent-service-field-values'));
+Cypress.Commands.add('assertEmptyAgentServiceFieldValues', require('./assert-empty-agent-service-field-values'));
 
 Cypress.Commands.add('assertAgentChargesFieldValues', require('./assert-agent-charges-field-values'));
+Cypress.Commands.add('assertEmptyAgentChargesFieldValues', require('./assert-empty-agent-charges-field-values'));
 
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));

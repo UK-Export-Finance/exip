@@ -1,22 +1,27 @@
-import { field, status, summaryList } from '../../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import checkSummaryList from '../../../../../../../../commands/insurance/check-export-contract-summary-list';
-import { checkAutocompleteInput } from '../../../../../../../../shared-test-assertions';
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    EXPORT_CONTRACT,
+  CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT },
+  EXPORT_CONTRACT: {
+    AGENT_CHECK_AND_CHANGE,
+    AGENT_DETAILS,
+    AGENT_SERVICE,
+    AGENT_CHARGES,
   },
-  EXPORT_CONTRACT: { AGENT_CHECK_AND_CHANGE, AGENT_DETAILS },
 } = INSURANCE_ROUTES;
 
 const {
   USING_AGENT: FIELD_ID,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
-  AGENT_SERVICE: { SERVICE_DESCRIPTION, IS_CHARGING },
+  AGENT_SERVICE: {
+    IS_CHARGING,
+    SERVICE_DESCRIPTION,
+  },
 } = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
@@ -97,22 +102,21 @@ context('Insurance - Change your answers - Export contract - Summary list - Agen
       cy.checkTaskStatusCompleted(status);
     });
 
-    describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}`, () => {
-      it('should have empty field values', () => {
+    describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}, ${AGENT_SERVICE} and ${AGENT_CHARGES}`, () => {
+      it('should have empty field values and default currency prefix', () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.completeAndSubmitAgentForm({
           isUsingAgent: true,
         });
 
-        cy.checkValue(field(NAME), '');
+        cy.assertEmptyAgentDetailsFieldValues();
+        cy.completeAndSubmitAgentDetailsForm({});
 
-        cy.checkTextareaValue({
-          fieldId: FULL_ADDRESS,
-          expectedValue: '',
-        });
+        cy.assertEmptyAgentServiceFieldValues();
+        cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
 
-        checkAutocompleteInput.checkEmptyResults(COUNTRY_CODE);
+        cy.assertEmptyAgentChargesFieldValues();
       });
     });
   });

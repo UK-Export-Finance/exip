@@ -9,7 +9,7 @@ const {
 /**
  * shouldNullifyAgentServiceChargeData
  * Check if we should nullify agent service charge data.
- * If IS_CHARGING is true and the application has some charge data, the charge data should be nullified.
+ * If IS_CHARGING is false and the application has some charge data, the charge data should be nullified.
  * @param {RequestBody} formBody: Form body
  * @param {ApplicationExportContractAgentServiceCharge} chargeData: Agent service charge data
  * @returns {Boolean}

@@ -33,7 +33,7 @@ describe('controllers/insurance/export-contract/save-data/export-contract-agent-
   describe('when errorList is provided', () => {
     const mockErrorList = generateValidationErrors(mockFormBody.invalid)?.errorList;
 
-    it('should call api.keystone.application.update.exportContractAgentService with exportContract.agent.service ID and stripped and sanitised data', async () => {
+    it('should call api.keystone.application.update.exportContractAgentService with exportContract.agent.service ID and sanitised data', async () => {
       await save.exportContractAgentService(mockApplication, mockFormBody.invalid, mockErrorList);
 
       expect(updateApplicationSpy).toHaveBeenCalledTimes(1);

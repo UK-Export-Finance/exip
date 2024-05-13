@@ -9,7 +9,7 @@ import { Application, Country, RequestBody, ValidationErrors } from '../../../..
  * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
- * @returns {Boolean}
+ * @returns {Promise<Boolean>}
  */
 const exportContract = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors, countries?: Array<Country>) => {
   try {
