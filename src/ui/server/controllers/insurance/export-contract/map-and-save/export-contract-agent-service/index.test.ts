@@ -72,7 +72,11 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
       });
 
       it('should return true', async () => {
-        const result = await mapAndSave.exportContractAgentService(mapSubmittedData(mockFormBody.isCharging), mockApplication.noChargeData, mockValidationErrors);
+        const result = await mapAndSave.exportContractAgentService(
+          mapSubmittedData(mockFormBody.isCharging),
+          mockApplication.noChargeData,
+          mockValidationErrors,
+        );
 
         expect(result).toEqual(true);
       });
