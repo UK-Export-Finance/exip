@@ -58,7 +58,7 @@ export const mockExportContractAgentServiceCharge = {
 export const mockExportContractAgentService = {
   id: 'clldfm6pt000noqa6fs6cj5xl',
   agentIsCharging: true,
-  serviceDescription: 'Mock export contract agent service decsription',
+  serviceDescription: 'Mock export contract agent service description',
   charge: mockExportContractAgentServiceCharge,
 };
 
@@ -69,6 +69,22 @@ export const mockExportContractAgent = {
   isUsingAgent: false,
   name: 'Mock export contract agent name',
   service: mockExportContractAgentService,
+};
+
+export const mockExportContractAgentIsUsing = {
+  ...mockExportContractAgent,
+  isUsingAgent: true,
+};
+
+export const mockExportContractAgentIsNotUsing = {
+  id: mockExportContractAgent.id,
+  service: {
+    id: mockExportContractAgent.service.id,
+    charge: {
+      id: mockExportContractAgent.service.charge.id,
+    },
+  },
+  isUsingAgent: false,
 };
 
 export const mockExportContract = {
@@ -209,6 +225,14 @@ export const mockApplicationAgentServiceChargeEmpty = {
         },
       },
     },
+  },
+} as Application;
+
+export const mockApplicationAgentServiceEmpty = {
+  ...mockApplication,
+  exportContract: {
+    ...mockExportContract,
+    agent: mockExportContractAgentIsNotUsing,
   },
 } as Application;
 

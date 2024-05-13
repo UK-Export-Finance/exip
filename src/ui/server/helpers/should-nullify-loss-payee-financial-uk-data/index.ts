@@ -9,7 +9,7 @@ const {
 /**
  * shouldNullifyLossPayeeFinancialUkData
  * Check if we should nullify loss payee financial UK data.
- * If IS_APPOINTED is true
+ * If IS_APPOINTED is false
  * Or the location is IS_LOCATED_INTERNATIONALLY
  * and the application has some financial UK data,
  * the UK data should be nullified.

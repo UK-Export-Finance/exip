@@ -10,7 +10,11 @@ import mockCurrencies, { EUR, HKD, JPY, GBP, USD, mockCurrenciesResponse, mockCu
 import mockCompaniesHouseResponse from './mock-companies-house-response';
 import mockCompany from './mock-company';
 import mockApplication, {
+  mockExportContractAgent,
+  mockExportContractAgentIsNotUsing,
+  mockExportContractAgentIsUsing,
   mockApplicationAgentServiceChargeEmpty,
+  mockApplicationAgentServiceEmpty,
   mockApplicationMultiplePolicy,
   mockApplicationNominatedLossPayeeAppointedEmptyData,
   mockApplicationNominatedLossPayeeNotAppointedFullFinancialInternationalData,
@@ -123,7 +127,11 @@ export {
   mockAccount,
   mockAnswers,
   mockApplication,
+  mockExportContractAgent,
+  mockExportContractAgentIsNotUsing,
+  mockExportContractAgentIsUsing,
   mockApplicationAgentServiceChargeEmpty,
+  mockApplicationAgentServiceEmpty,
   mockApplicationMultiplePolicy,
   mockApplicationNominatedLossPayeeAppointedEmptyData,
   mockApplicationNominatedLossPayeeNotAppointedFullFinancialInternationalData,
