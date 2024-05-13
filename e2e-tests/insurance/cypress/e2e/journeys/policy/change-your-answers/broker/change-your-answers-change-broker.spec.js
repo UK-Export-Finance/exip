@@ -3,6 +3,7 @@ import { FIELD_VALUES } from '../../../../../../../constants';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../content-strings/fields/insurance/policy';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { mockAddress1 } from '../../../../../../../fixtures/addresses';
 
 const {
   USING_BROKER,
@@ -96,7 +97,7 @@ context('Insurance - Policy - Change your answers - Broker - As an exporter, I w
     });
 
     describe('form submission with a new answer', () => {
-      const mockNewAddress = 'Mock new address';
+      const mockNewAddress = mockAddress1;
 
       beforeEach(() => {
         cy.navigateToUrl(url);
