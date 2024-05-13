@@ -8,6 +8,7 @@ import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings
 import { FIELD_VALUES } from '../../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { mockAddress1 } from '../../../../../../../../fixtures/addresses';
 
 const {
   ROOT,
@@ -132,7 +133,7 @@ context('Insurance - Change your answers - Policy - Broker - Summary list', () =
     });
 
     describe('form submission with a new answer', () => {
-      const mockNewAddress = 'Mock new address';
+      const mockNewAddress = mockAddress1;
 
       beforeEach(() => {
         cy.navigateToUrl(url);

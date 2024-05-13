@@ -3,14 +3,18 @@ import {
   COVER_PERIOD as COVER_PERIOD_CONSTANTS,
   FIELD_IDS,
   FIELD_VALUES,
-  MULTI_LINE_STRING,
   TOTAL_CONTRACT_VALUE as TOTAL_CONTRACT_VALUE_CONSTANTS,
   WEBSITE_EXAMPLES,
 } from '../constants';
 import { COMPANIES_HOUSE_NUMBER } from '../constants/examples';
+import { mockAccountNumber0 } from './account-numbers';
 import { GBP_CURRENCY_CODE } from './currencies';
 import { COUNTRY_APPLICATION_SUPPORT } from './countries';
+import { mockAddress0 } from './addresses';
+import { mockBicSwiftCode0 } from './bic-swift-codes';
 import mockCompanies from './companies';
+import { mockIban0 } from './ibans';
+import { mockSortCode0 } from './sort-codes';
 
 const {
   AGENT_SERVICE_CHARGE,
@@ -159,14 +163,14 @@ const application = {
     [CREDIT_PERIOD_WITH_BUYER]: 'Mock description',
     [LOSS_PAYEE_NAME]: 'Mock name',
     LOSS_PAYEE_FINANCIAL_UK: {
-      [SORT_CODE]: '102030',
-      [ACCOUNT_NUMBER]: '12345678',
-      [FINANCIAL_ADDRESS]: MULTI_LINE_STRING,
+      [SORT_CODE]: mockSortCode0,
+      [ACCOUNT_NUMBER]: mockAccountNumber0,
+      [FINANCIAL_ADDRESS]: mockAddress0,
     },
     LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-      [BIC_SWIFT_CODE]: 'BKENGB2L123',
-      [IBAN]: 'GB33BUKB20201555555555',
-      [FINANCIAL_ADDRESS]: MULTI_LINE_STRING,
+      [BIC_SWIFT_CODE]: mockBicSwiftCode0,
+      [IBAN]: mockIban0,
+      [FINANCIAL_ADDRESS]: mockAddress0,
     },
   },
   REQUESTED_JOINTLY_INSURED_PARTY: {
@@ -178,20 +182,20 @@ const application = {
     [DESCRIPTION]: 'Mock description',
     [FINAL_DESTINATION]: COUNTRY_APPLICATION_SUPPORT.ONLINE.ISO_CODE,
     HOW_WILL_YOU_GET_PAID: {
-      [PAYMENT_TERMS_DESCRIPTION]: MULTI_LINE_STRING,
+      [PAYMENT_TERMS_DESCRIPTION]: mockAddress0,
     },
     PRIVATE_MARKET: {
       [ATTEMPTED]: true,
-      [DECLINED_DESCRIPTION]: MULTI_LINE_STRING,
+      [DECLINED_DESCRIPTION]: mockAddress0,
     },
     AGENT_DETAILS: {
       [AGENT_NAME]: 'Mock export contract agent name',
       [AGENT_COUNTRY_CODE]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
-      [AGENT_FULL_ADDRESS]: MULTI_LINE_STRING,
+      [AGENT_FULL_ADDRESS]: mockAddress0,
     },
     AGENT_SERVICE: {
       [IS_CHARGING]: false,
-      [SERVICE_DESCRIPTION]: MULTI_LINE_STRING,
+      [SERVICE_DESCRIPTION]: mockAddress0,
     },
     AGENT_CHARGES: {
       [PERCENTAGE_CHARGE]: '10',
@@ -212,7 +216,7 @@ const application = {
     [USING_BROKER]: true,
     [NAME]: 'Mock broker name',
     [EMAIL]: Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1'),
-    [BROKER_FULL_ADDRESS]: MULTI_LINE_STRING,
+    [BROKER_FULL_ADDRESS]: mockAddress0,
   },
   BUYER: {
     [COMPANY_OR_ORGANISATION_NAME]: 'Test name',

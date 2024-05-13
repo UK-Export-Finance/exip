@@ -4,6 +4,9 @@ import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/fi
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/policy';
 import formatSortCode from '../../../../../../../../helpers/format-sort-code';
+import { mockAccountNumber1 } from '../../../../../../../../fixtures/account-numbers';
+import { mockAddress1 } from '../../../../../../../../fixtures/addresses';
+import { mockSortCode0 } from '../../../../../../../../fixtures/sort-codes';
 
 const {
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
@@ -69,7 +72,7 @@ context('Insurance - Change your answers - Policy - Loss payee details - UK - As
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = '405060';
+      const newAnswer = mockSortCode0;
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
@@ -107,7 +110,7 @@ context('Insurance - Change your answers - Policy - Loss payee details - UK - As
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = '91011121';
+      const newAnswer = mockAccountNumber1;
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
@@ -143,7 +146,7 @@ context('Insurance - Change your answers - Policy - Loss payee details - UK - As
     });
 
     describe('form submission with a new answer', () => {
-      const mockNewAddress = 'Mock new address';
+      const mockNewAddress = mockAddress1;
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
