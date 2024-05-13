@@ -11,7 +11,10 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 
 /**
  * mapAndSave nominatedLossPayee
- * Map and save any valid nominatedLossPayee fields
+ * Map and save any valid "nominated loss payee" fields.
+ * If the form is submitted with the "is appointed" as false (IS_APPOINTED),
+ * and if LOSS_PAYEE_FINANCIAL_UK data exists in the application, nullify all LOSS_PAYEE_FINANCIAL_UK data.
+ * and if LOSS_PAYEE_FINANCIAL_INTERNATIONAL data exists in the application, nullify all LOSS_PAYEE_FINANCIAL_INTERNATIONAL data.
  * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors

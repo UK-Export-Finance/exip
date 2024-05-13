@@ -8,7 +8,7 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 /**
  * mapAndSave
  * Map and save any valid "export contract agent service charge" fields.
- * If the form is submitted with the agent charging as false (IS_CHARGING),
+ * If the form is submitted with the "agent charging" as false (IS_CHARGING),
  * and AGENT_CHARGES data exists in the application,
  * Nullify all AGENT_CHARGES data.
  * @param {RequestBody} formBody: Form body

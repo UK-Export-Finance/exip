@@ -1,11 +1,18 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import mapSubmittedData from '../../map-submitted-data/agent';
-import save from '../../save-data/export-contract-agent';
+import saveAgent from '../../save-data/export-contract-agent';
+import saveAgentService from '../../save-data/export-contract-agent-service';
+import saveAgentServiceCharge from '../../save-data/export-contract-agent-service-charge';
+import shouldNullifyAgentServiceData from '../../../../../helpers/should-nullify-agent-service-data';
+import nullifyAgentServiceData from '../../../../../helpers/nullify-agent-service-data';
+import nullifyAgentServiceChargeData from '../../../../../helpers/nullify-agent-service-charge-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
  * mapAndSave
  * Map and save any valid "export contract agent" fields
+ * If the form is submitted with the "using agent" as false (USING_AGENT),
+ * and if AGENT_SERVICE data exists in the application, nullify all AGENT_SERVICE and AGENT_CHARGES data.
  * @param {RequestBody} formBody: Form body
  * @param {Application}
  * @param {Object} Validation errors
@@ -14,18 +21,47 @@ import { Application, RequestBody, ValidationErrors } from '../../../../../../ty
 const exportContractAgent = async (formBody: RequestBody, application: Application, validationErrors?: ValidationErrors) => {
   try {
     if (hasFormData(formBody)) {
+      const { isUsingAgent } = formBody;
+
       const populatedData = mapSubmittedData(formBody);
 
       let saveResponse;
 
       if (validationErrors) {
-        saveResponse = await save.exportContractAgent(application, populatedData, validationErrors.errorList);
+        saveResponse = await saveAgent.exportContractAgent(application, populatedData, validationErrors.errorList);
       } else {
-        saveResponse = await save.exportContractAgent(application, populatedData);
+        saveResponse = await saveAgent.exportContractAgent(application, populatedData);
       }
 
       if (!saveResponse) {
         return false;
+      }
+
+      /**
+       * If AGENT_SERVICE data should be nullified,
+       * Nullify and save all AGENT_CHARGES and AGENT_SERVICE data.
+       */
+      if (shouldNullifyAgentServiceData(isUsingAgent, application.exportContract.agent)) {
+        const nullified = {
+          service: nullifyAgentServiceData(),
+          serviceCharge: nullifyAgentServiceChargeData(),
+        };
+
+        console.info('Mapping and saving application - export contract agent - nullifying agent service charge data');
+
+        saveResponse = await saveAgentServiceCharge.exportContractAgentServiceCharge(application, nullified.serviceCharge);
+
+        if (!saveResponse) {
+          return false;
+        }
+
+        console.info('Mapping and saving application - export contract agent - nullifying agent service data');
+
+        saveResponse = await saveAgentService.exportContractAgentService(application, nullified.service);
+
+        if (!saveResponse) {
+          return false;
+        }
       }
 
       return true;

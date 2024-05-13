@@ -1,17 +1,23 @@
-import { field, summaryList } from '../../../../../../../pages/shared';
+import { summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import checkSummaryList from '../../../../../../../commands/insurance/check-export-contract-summary-list';
-import { checkAutocompleteInput } from '../../../../../../../shared-test-assertions';
 
 const {
   ROOT,
-  EXPORT_CONTRACT: { CHECK_YOUR_ANSWERS, AGENT_DETAILS, AGENT_CHANGE },
+  EXPORT_CONTRACT: {
+    CHECK_YOUR_ANSWERS,
+    AGENT_CHANGE,
+    AGENT_DETAILS,
+    AGENT_SERVICE,
+    AGENT_CHARGES,
+  },
 } = INSURANCE_ROUTES;
 
 const {
   USING_AGENT: FIELD_ID,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
+  AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
 } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -73,24 +79,25 @@ context('Insurance - Export contract - Change your answers - Agent - Yes to no -
         checkSummaryList[NAME]({ shouldRender: false });
         checkSummaryList[FULL_ADDRESS]({ shouldRender: false });
         checkSummaryList[COUNTRY_CODE]({ shouldRender: false });
+        checkSummaryList[SERVICE_DESCRIPTION]({ shouldRender: false });
+        checkSummaryList[IS_CHARGING]({ shouldRender: false });
       });
 
-      describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}`, () => {
-        it('should have empty field values', () => {
+      describe(`when changing the answer again from no to yes and going back to ${AGENT_DETAILS}, ${AGENT_SERVICE} and ${AGENT_CHARGES}`, () => {
+        it('should have empty field values and default currency prefix', () => {
           summaryList.field(FIELD_ID).changeLink().click();
 
           cy.completeAndSubmitAgentForm({
             isUsingAgent: true,
           });
 
-          cy.checkValue(field(NAME), '');
+          cy.assertEmptyAgentDetailsFieldValues();
+          cy.completeAndSubmitAgentDetailsForm({});
 
-          cy.checkTextareaValue({
-            fieldId: FULL_ADDRESS,
-            expectedValue: '',
-          });
+          cy.assertEmptyAgentServiceFieldValues();
+          cy.completeAndSubmitAgentServiceForm({ agentIsCharging: true });
 
-          checkAutocompleteInput.checkEmptyResults(COUNTRY_CODE);
+          cy.assertEmptyAgentChargesFieldValues();
         });
       });
     });
