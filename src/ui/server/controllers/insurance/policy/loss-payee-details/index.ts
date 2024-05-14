@@ -150,7 +150,10 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If the route is a "check and change" route,
-     * redirect to CHECK_YOUR_ANSWERS.
+     * - if LOCATION has been submitted as IS_LOCATED_IN_UK,
+     * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_UK form.
+     * - if LOCATION has been submitted as IS_LOCATED_INTERNATIONALLY,
+     * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONALLY form.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (locationAnswer === IS_LOCATED_IN_UK) {

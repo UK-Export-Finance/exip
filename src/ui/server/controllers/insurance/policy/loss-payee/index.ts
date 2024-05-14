@@ -137,6 +137,12 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
+    /**
+     * If the route is a "check and change" route,
+     * the exporter IS_APPOINTING a loss payee,
+     * redirect to LOSS_PAYEE_DETAILS form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
     if (isCheckAndChangeRoute(req.originalUrl)) {
       if (isAppointingALossPayee) {
         return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`);
