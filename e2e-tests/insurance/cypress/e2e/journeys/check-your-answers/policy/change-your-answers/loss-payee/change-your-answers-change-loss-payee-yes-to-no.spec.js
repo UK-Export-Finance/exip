@@ -24,7 +24,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Change your answers - Policy - Loss payee - Yes to no - As an exporter, I want to change my answers to the loss payee section`, () => {
+context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
