@@ -3,18 +3,19 @@ import { field, summaryList } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { POLICY_FIELDS as FIELDS } from '../../../../../../../../content-strings/fields/insurance/policy';
-import { mockBicSwiftCode1 } from '../../../../../../../../fixtures/bic-swift-codes';
-import { mockIban1 } from '../../../../../../../../fixtures/ibans';
+import formatSortCode from '../../../../../../../../helpers/format-sort-code';
+import { mockAccountNumber1 } from '../../../../../../../../fixtures/account-numbers';
 import { mockAddress1 } from '../../../../../../../../fixtures/addresses';
+import { mockSortCode0 } from '../../../../../../../../fixtures/sort-codes';
 
 const {
-  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
 
 const {
   ROOT,
-  POLICY: { LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE },
+  POLICY: { LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
@@ -24,7 +25,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Policy - Loss payee details - International - As an exporter, I want to change my answers to the loss payee section', () => {
+context('Insurance - Change your answers - Policy - Loss payee details - Financial details - UK - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -35,7 +36,7 @@ context('Insurance - Change your answers - Policy - Loss payee details - Interna
       cy.completePrepareApplicationMultiplePolicyType({
         referenceNumber,
         isAppointingLossPayee: true,
-        lossPayeeIsLocatedInUK: false,
+        lossPayeeIsLocatedInUK: true,
       });
 
       task.link().click();
@@ -57,21 +58,21 @@ context('Insurance - Change your answers - Policy - Loss payee details - Interna
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(BIC_SWIFT_CODE, () => {
-    const fieldId = BIC_SWIFT_CODE;
+  describe(SORT_CODE, () => {
+    const fieldId = SORT_CODE;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE, fieldId });
       });
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = mockBicSwiftCode1;
+      const newAnswer = mockSortCode0;
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
@@ -88,26 +89,28 @@ context('Insurance - Change your answers - Policy - Loss payee details - Interna
       });
 
       it('should render the new answer', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
+        const expectedAnswer = formatSortCode(newAnswer);
+
+        cy.assertSummaryListRowValue(summaryList, fieldId, expectedAnswer);
       });
     });
   });
 
-  describe(IBAN, () => {
-    const fieldId = IBAN;
+  describe(ACCOUNT_NUMBER, () => {
+    const fieldId = ACCOUNT_NUMBER;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE, fieldId });
       });
     });
 
     describe('form submission with a new answer', () => {
-      const newAnswer = mockIban1;
+      const newAnswer = mockAccountNumber1;
 
       beforeEach(() => {
         cy.navigateToUrl(checkYourAnswersUrl);
@@ -133,12 +136,12 @@ context('Insurance - Change your answers - Policy - Loss payee details - Interna
     const fieldId = FINANCIAL_ADDRESS;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -160,7 +163,7 @@ context('Insurance - Change your answers - Policy - Loss payee details - Interna
       });
 
       it('should render the new answer', () => {
-        const expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL[fieldId].SUMMARY.TITLE;
+        const expectedKey = FIELDS.LOSS_PAYEE_FINANCIAL_UK[fieldId].SUMMARY.TITLE;
 
         const row = summaryList.field(fieldId);
 
