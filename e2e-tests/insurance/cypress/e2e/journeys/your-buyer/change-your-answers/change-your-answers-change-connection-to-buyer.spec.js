@@ -102,7 +102,7 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
 
-      it(`should not render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
+      it(`should NOT render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
       });
     });

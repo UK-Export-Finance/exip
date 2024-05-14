@@ -137,7 +137,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
         cy.checkTaskStatusCompleted(status);
       });
 
-      it(`should not render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row and retain a "completed" status tag`, () => {
+      it(`should NOT render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row and retain a "completed" status tag`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
 
         cy.checkTaskStatusCompleted(status);

@@ -101,7 +101,7 @@ context('Insurance - Your buyer - Change your answers - Credit insurance history
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
 
-      it(`should not render the new answer for ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
+      it(`should NOT render the new answer for ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER);
       });
     });
