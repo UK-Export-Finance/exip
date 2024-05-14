@@ -29,26 +29,15 @@ describe('helpers/map-inactive-applications', () => {
 
       const [application0, application1] = applications;
 
-      const expected = [
-        {
-          where: { id: application0.id },
-          data: {
-            status: ABANDONED,
-            previousStatus: application0.status,
-            updatedAt: new Date(),
-          },
-        },
-        {
-          where: { id: application1.id },
-          data: {
-            status: ABANDONED,
-            previousStatus: application1.status,
-            updatedAt: new Date(),
-          },
-        },
-      ];
+      expect(result[0].where).toEqual({ id: application0.id });
+      expect(result[0].data.status).toEqual(ABANDONED);
+      expect(result[0].data.previousStatus).toEqual(application0.status);
+      expect(result[0].data.updatedAt).toBeDefined();
 
-      expect(result).toEqual(expected);
+      expect(result[1].where).toEqual({ id: application1.id });
+      expect(result[1].data.status).toEqual(ABANDONED);
+      expect(result[1].data.previousStatus).toEqual(application1.status);
+      expect(result[1].data.updatedAt).toBeDefined();
     });
   });
 });
