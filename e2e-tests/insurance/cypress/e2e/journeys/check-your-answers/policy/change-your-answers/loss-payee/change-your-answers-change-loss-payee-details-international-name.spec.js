@@ -22,7 +22,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Change your answers - Policy - - Loss payee details - International - ${NAME} - As an exporter, I want to change my answers to the loss payee section`, () => {
+context(`Insurance - Change your answers - Policy - Loss payee details - International - ${NAME} - As an exporter, I want to change my answers to the loss payee section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
   let lossPayeeDetailsUrl;
