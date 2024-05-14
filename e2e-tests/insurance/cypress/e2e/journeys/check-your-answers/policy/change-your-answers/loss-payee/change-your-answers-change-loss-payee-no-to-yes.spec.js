@@ -34,11 +34,6 @@ context('Insurance - Change your answers - Policy - Loss payee - No to yes - As 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      // TODO
-      // TODO
-      // TODO: remove instances of this, ref number not used in the command.
-      // cy.completePrepareApplicationMultiplePolicyType({ referenceNumber
-
       cy.completePrepareApplicationMultiplePolicyType({ isAppointingLossPayee: false });
 
       checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
