@@ -103,14 +103,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
 
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: false });
 
-        cy.checkValue(field(BIC_SWIFT_CODE), '');
-
-        cy.checkValue(field(IBAN), '');
-
-        cy.checkTextareaValue({
-          fieldId: FINANCIAL_ADDRESS,
-          expectedValue: '',
-        });
+        cy.assertEmptyLossPayeeFinancialInternationalFieldValues();
       });
     });
   });

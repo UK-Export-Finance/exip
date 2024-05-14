@@ -1,4 +1,4 @@
-import { field, summaryList } from '../../../../../../../../pages/shared';
+import { summaryList } from '../../../../../../../../pages/shared';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 import { FIELD_VALUES } from '../../../../../../../../constants';
@@ -7,7 +7,7 @@ const {
   LOSS_PAYEE: {
     IS_APPOINTED: FIELD_ID,
   },
-  LOSS_PAYEE_DETAILS: { NAME, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
+  LOSS_PAYEE_DETAILS: { NAME },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
   FINANCIAL_ADDRESS,
 } = POLICY_FIELD_IDS;
@@ -91,12 +91,7 @@ context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As 
 
         describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_UK}`, () => {
           it('should have empty field values', () => {
-            // TODO:
-            // TODO: cypress command, DRY
-            cy.checkValue(field(NAME), '');
-
-            cy.assertRadioOptionIsNotChecked(field(`location-${IS_LOCATED_IN_UK}`).input());
-            cy.assertRadioOptionIsNotChecked(field(`location-${IS_LOCATED_INTERNATIONALLY}`).input());
+            cy.assertEmptyLossPayeeDetailsFieldValues();
 
             /**
              * Submit the loss payee details form, located in the UK.
@@ -104,11 +99,7 @@ context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As 
              */
             cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
-            // TODO:
-            // TODO: cypress command, DRY
-            cy.checkValue(field(SORT_CODE), '');
-            cy.checkValue(field(ACCOUNT_NUMBER), '');
-            cy.checkTextareaValue({ fieldId: FINANCIAL_ADDRESS, expectedValue: '' });
+            cy.assertEmptyLossPayeeFinancialUkFieldValues();
           });
         });
       });

@@ -102,14 +102,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
 
         cy.completeAndSubmitLossPayeeDetailsForm({ locatedInUK: true });
 
-        cy.checkValue(field(SORT_CODE), '');
-
-        cy.checkValue(field(ACCOUNT_NUMBER), '');
-
-        cy.checkTextareaValue({
-          fieldId: FINANCIAL_ADDRESS,
-          expectedValue: '',
-        });
+        cy.assertEmptyLossPayeeFinancialUkFieldValues();
       });
     });
   });
