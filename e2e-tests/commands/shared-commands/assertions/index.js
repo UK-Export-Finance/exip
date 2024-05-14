@@ -63,7 +63,7 @@ Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert
 Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));
 Cypress.Commands.add('assertBrokerDetailsFieldValues', require('./assert-broker-details-field-values'));
 
-Cypress.Commands.add('assertEmptyLossPayeeDetailsFieldValues', require('./assert-empty-agent-details-field-values'));
+Cypress.Commands.add('assertEmptyLossPayeeDetailsFieldValues', require('./assert-empty-loss-payee-details-field-values'));
 Cypress.Commands.add('assertLossPayeeFinancialUkFieldValues', require('./assert-loss-payee-financial-uk-field-values'));
 Cypress.Commands.add('assertEmptyLossPayeeFinancialUkFieldValues', require('./assert-empty-loss-payee-financial-uk-field-values'));
 Cypress.Commands.add('assertLossPayeeFinancialInternationalFieldValues', require('./assert-loss-payee-financial-international-field-values'));

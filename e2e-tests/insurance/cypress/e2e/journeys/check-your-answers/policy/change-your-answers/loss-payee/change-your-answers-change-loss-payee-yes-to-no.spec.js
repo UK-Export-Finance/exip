@@ -17,7 +17,7 @@ const {
   POLICY: {
     LOSS_PAYEE_CHECK_AND_CHANGE,
     LOSS_PAYEE_DETAILS_ROOT,
-    LOSS_PAYEE_FINANCIAL_UK,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
@@ -89,7 +89,7 @@ context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As 
           cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
         });
 
-        describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_UK}`, () => {
+        describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
           it('should have empty field values', () => {
             cy.assertEmptyLossPayeeDetailsFieldValues();
 
