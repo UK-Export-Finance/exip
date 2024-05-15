@@ -40,7 +40,7 @@ context('Insurance - Change your answers - Policy - Change multiple to single po
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
+      cy.completePrepareApplicationMultiplePolicyType({});
 
       task.link().click();
 

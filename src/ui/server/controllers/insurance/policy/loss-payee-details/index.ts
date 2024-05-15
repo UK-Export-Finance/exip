@@ -21,11 +21,12 @@ const {
   POLICY: {
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
     LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
   },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
@@ -149,10 +150,19 @@ export const post = async (req: Request, res: Response) => {
 
     /**
      * If the route is a "check and change" route,
-     * redirect to CHECK_YOUR_ANSWERS.
+     * - if LOCATION has been submitted as IS_LOCATED_IN_UK,
+     * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_UK form.
+     * - if LOCATION has been submitted as IS_LOCATED_INTERNATIONALLY,
+     * redirect to LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONALLY form.
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
-      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+      if (locationAnswer === IS_LOCATED_IN_UK) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`);
+      }
+
+      if (locationAnswer === IS_LOCATED_INTERNATIONALLY) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`);
+      }
     }
 
     /**

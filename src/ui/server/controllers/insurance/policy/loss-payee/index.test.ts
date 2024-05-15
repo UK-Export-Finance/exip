@@ -18,7 +18,16 @@ const {
 
 const {
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_CHANGE, LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_SAVE_AND_BACK, LOSS_PAYEE_DETAILS_CHANGE, CHECK_YOUR_ANSWERS },
+  POLICY: {
+    LOSS_PAYEE_CHANGE,
+    LOSS_PAYEE_CHECK_AND_CHANGE,
+    LOSS_PAYEE_DETAILS_ROOT,
+    LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE,
+    LOSS_PAYEE_SAVE_AND_BACK,
+    LOSS_PAYEE_DETAILS_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -201,6 +210,38 @@ describe('controllers/insurance/policy/loss-payee', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${FIELD_ID} is true and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHECK_AND_CHANGE;
+
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${FIELD_ID} is false and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHECK_AND_CHANGE;
+
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

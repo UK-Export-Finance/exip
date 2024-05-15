@@ -47,7 +47,7 @@ context('Insurance - Change your answers - Policy - Change from different name t
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, differentPolicyContact: true });
+      cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
 
       task.link().click();
 

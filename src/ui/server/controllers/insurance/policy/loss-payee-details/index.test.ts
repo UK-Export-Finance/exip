@@ -24,10 +24,11 @@ const {
     LOSS_PAYEE_CHANGE,
     LOSS_PAYEE_DETAILS_SAVE_AND_BACK,
     LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
     LOSS_PAYEE_CHECK_AND_CHANGE,
   },
-  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
 const { LOSS_PAYEE_DETAILS } = POLICY_FIELDS;
@@ -202,13 +203,35 @@ describe('controllers/insurance/policy/loss-payee-details', () => {
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+      describe(`when ${LOCATION} is ${IS_LOCATED_IN_UK} and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`, async () => {
           req.originalUrl = LOSS_PAYEE_CHECK_AND_CHANGE;
+
+          req.body = {
+            ...validBody,
+            [LOCATION]: IS_LOCATED_IN_UK,
+          };
 
           await post(req, res);
 
-          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${LOCATION} is ${IS_LOCATED_INTERNATIONALLY} and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = LOSS_PAYEE_CHECK_AND_CHANGE;
+
+          req.body = {
+            ...validBody,
+            [LOCATION]: IS_LOCATED_INTERNATIONALLY,
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });

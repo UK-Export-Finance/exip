@@ -32,7 +32,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Ot
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
+      cy.completePrepareApplicationMultiplePolicyType({});
 
       task.link().click();
 

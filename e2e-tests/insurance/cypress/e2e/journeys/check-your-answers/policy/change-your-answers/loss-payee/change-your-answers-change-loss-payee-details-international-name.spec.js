@@ -10,7 +10,10 @@ const {
 
 const {
   ROOT,
-  POLICY: { LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE },
+  POLICY: {
+    LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE,
+    LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE,
+  },
   CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
@@ -22,7 +25,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Change your answers - Policy - - Loss payee details - International - ${NAME} - As an exporter, I want to change my answers to the loss payee section`, () => {
+context(`Insurance - Change your answers - Policy - Loss payee details - International - ${NAME} - As an exporter, I want to change my answers to the loss payee section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
   let lossPayeeDetailsUrl;
@@ -74,12 +77,14 @@ context(`Insurance - Change your answers - Policy - - Loss payee details - Inter
       cy.navigateToUrl(checkYourAnswersUrl);
     });
 
-    it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+    it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_CHECK_AND_CHANGE} and then ${TYPE_OF_POLICY}`, () => {
       summaryList.field(fieldId).changeLink().click();
 
       cy.assertUrl(`${lossPayeeDetailsUrl}#${NAME}-label`);
 
       cy.changeAnswerField({ newValueInput }, field(fieldId).input());
+
+      cy.completeAndSubmitLossPayeeFinancialDetailsInternationalForm({});
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
     });

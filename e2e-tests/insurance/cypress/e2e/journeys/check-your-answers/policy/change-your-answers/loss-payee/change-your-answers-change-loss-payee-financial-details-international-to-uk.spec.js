@@ -1,7 +1,8 @@
-import { field, summaryList } from '../../../../../../../pages/shared';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import checkSummaryList from '../../../../../../../commands/insurance/check-policy-summary-list';
+import partials from '../../../../../../../../partials';
+import { field, summaryList } from '../../../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   LOSS_PAYEE_DETAILS: {
@@ -15,16 +16,20 @@ const {
 const {
   ROOT,
   POLICY: {
-    LOSS_PAYEE_DETAILS_CHANGE,
+    LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE,
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL,
-    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE,
-    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE,
   },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
+
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Loss payee details - Financial details - International to UK - As an exporter, I want to change my answers to the loss payee section', () => {
+context('Insurance - Change your answers - Policy - Loss payee details - Financial details - International to UK - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
   let lossPayeeDetailsUrl;
@@ -34,14 +39,22 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({
+      cy.completePrepareApplicationMultiplePolicyType({
+        referenceNumber,
         isAppointingLossPayee: true,
         lossPayeeIsLocatedInUK: false,
       });
 
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHANGE}`;
-      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE}`;
+      task.link().click();
+
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      lossPayeeDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`;
+      lossPayeeFinancialUkUrl = `${baseUrl}${ROOT}/${referenceNumber}${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE}`;
+
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -54,12 +67,12 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
   });
 
   describe(`when clicking the ${NAME} 'change' link`, () => {
-    it(`should redirect to ${LOSS_PAYEE_DETAILS_CHANGE}`, () => {
+    it(`should redirect to ${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`, () => {
       cy.navigateToUrl(checkYourAnswersUrl);
 
       summaryList.field(NAME).changeLink().click();
 
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_DETAILS_CHANGE, fieldId: NAME });
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, fieldId: NAME });
     });
   });
 
@@ -68,7 +81,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
       cy.navigateToUrl(checkYourAnswersUrl);
     });
 
-    it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) loss payee financial UK fields`, () => {
+    it(`should redirect to ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_CHECK_AND_CHANGE} and then ${TYPE_OF_POLICY} after completing (now required) loss payee financial UK fields`, () => {
       summaryList.field(NAME).changeLink().click();
 
       cy.assertUrl(`${lossPayeeDetailsUrl}#${NAME}-label`);
@@ -79,7 +92,7 @@ context('Insurance - Policy - Change your answers - Loss payee details - Financi
 
       cy.completeAndSubmitLossPayeeFinancialDetailsUkForm({});
 
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: NAME });
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: NAME });
     });
 
     it('should render new answers and change links for UK financial details, no International financial details', () => {

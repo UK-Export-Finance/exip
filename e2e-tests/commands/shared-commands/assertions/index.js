@@ -62,8 +62,12 @@ Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-
 Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
 Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));
 Cypress.Commands.add('assertBrokerDetailsFieldValues', require('./assert-broker-details-field-values'));
+
+Cypress.Commands.add('assertEmptyLossPayeeDetailsFieldValues', require('./assert-empty-loss-payee-details-field-values'));
 Cypress.Commands.add('assertLossPayeeFinancialUkFieldValues', require('./assert-loss-payee-financial-uk-field-values'));
+Cypress.Commands.add('assertEmptyLossPayeeFinancialUkFieldValues', require('./assert-empty-loss-payee-financial-uk-field-values'));
 Cypress.Commands.add('assertLossPayeeFinancialInternationalFieldValues', require('./assert-loss-payee-financial-international-field-values'));
+Cypress.Commands.add('assertEmptyLossPayeeFinancialInternationalFieldValues', require('./assert-empty-loss-payee-financial-international-field-values'));
 
 Cypress.Commands.add('assertAgentDetailsFieldValues', require('./assert-agent-details-field-values'));
 Cypress.Commands.add('assertEmptyAgentDetailsFieldValues', require('./assert-empty-agent-details-field-values'));
