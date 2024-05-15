@@ -1,23 +1,20 @@
 import dotenv from 'dotenv';
-import { updateInactiveApplicationsJob } from './inactive-application-cron-job';
+import updateInactiveApplicationsJob from './inactive-application-cron-job';
 import updateInactiveApplications from '../../helpers/update-inactive-applications';
+import { UPDATE_INACTIVE_APPLICATION_DESCRIPTION } from '../../constants';
 
 dotenv.config();
 
-const { INACTIVE_APPLICATION_SCHEDULE } = process.env;
-
-const inactiveApplicationSchedule = INACTIVE_APPLICATION_SCHEDULE as string;
+const { CRON_SCHEDULE_INACTIVE_APPLICATION } = process.env;
 
 describe('cron/application/inactive-application-cron-job', () => {
-  describe('updateInactiveApplicationsJob', () => {
-    it('should return an object with cronExpression, description and a task', () => {
-      const expected = {
-        cronExpression: inactiveApplicationSchedule,
-        description: 'Update inactive applications (over 30 days) to Abandoned',
-        task: updateInactiveApplications,
-      };
+  it('should return an object with cronExpression, description and a task', () => {
+    const expected = {
+      cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION),
+      description: UPDATE_INACTIVE_APPLICATION_DESCRIPTION,
+      task: updateInactiveApplications,
+    };
 
-      expect(updateInactiveApplicationsJob).toEqual(expected);
-    });
+    expect(updateInactiveApplicationsJob).toEqual(expected);
   });
 });

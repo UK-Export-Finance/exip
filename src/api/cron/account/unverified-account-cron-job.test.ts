@@ -1,23 +1,20 @@
 import dotenv from 'dotenv';
-import { updateUnverifiedAccountsJob } from './unverified-account-cron-job';
+import updateUnverifiedAccountsJob from './unverified-account-cron-job';
 import updateUnverifiedAccounts from '../../helpers/update-unverified-accounts';
+import { UPDATE_UNVERIFIED_ACCOUNT_DESCRIPTION } from '../../constants';
 
 dotenv.config();
 
-const { UNVERIFIED_ACCOUNT_SCHEDULE } = process.env;
-
-const unverifiedAccountSchedule = UNVERIFIED_ACCOUNT_SCHEDULE as string;
+const { CRON_SCHEDULE_UNVERIFIED_ACCOUNT } = process.env;
 
 describe('cron/account/unverified-account-cron-job', () => {
-  describe('updateUnverifiedAccountsJob', () => {
-    it('should return an object with cronExpression, description and a task', () => {
-      const expected = {
-        cronExpression: unverifiedAccountSchedule,
-        description: 'Update unverified accounts (over 24hrs) to isInactive',
-        task: updateUnverifiedAccounts,
-      };
+  it('should return an object with cronExpression, description and a task', () => {
+    const expected = {
+      cronExpression: String(CRON_SCHEDULE_UNVERIFIED_ACCOUNT),
+      description: UPDATE_UNVERIFIED_ACCOUNT_DESCRIPTION,
+      task: updateUnverifiedAccounts,
+    };
 
-      expect(updateUnverifiedAccountsJob).toEqual(expected);
-    });
+    expect(updateUnverifiedAccountsJob).toEqual(expected);
   });
 });

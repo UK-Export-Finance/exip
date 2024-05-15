@@ -1,12 +1,11 @@
 import dotenv from 'dotenv';
 import updateUnverifiedAccounts from '../../helpers/update-unverified-accounts';
+import { UPDATE_UNVERIFIED_ACCOUNT_DESCRIPTION } from '../../constants';
 import { CronSchedulerJob } from '../../types';
 
 dotenv.config();
 
-const { UNVERIFIED_ACCOUNT_SCHEDULE } = process.env;
-
-const unverifiedAccountSchedule = UNVERIFIED_ACCOUNT_SCHEDULE as string;
+const { CRON_SCHEDULE_UNVERIFIED_ACCOUNT } = process.env;
 
 /**
  * updateUnverifiedAccountsJob
@@ -15,8 +14,10 @@ const unverifiedAccountSchedule = UNVERIFIED_ACCOUNT_SCHEDULE as string;
  * description: description of cronjob
  * task: function which cron job runs - updateUnverifiedAccounts
  */
-export const updateUnverifiedAccountsJob: CronSchedulerJob = {
-  cronExpression: unverifiedAccountSchedule,
-  description: 'Update unverified accounts (over 24hrs) to isInactive',
+const updateUnverifiedAccountsJob: CronSchedulerJob = {
+  cronExpression: String(CRON_SCHEDULE_UNVERIFIED_ACCOUNT),
+  description: UPDATE_UNVERIFIED_ACCOUNT_DESCRIPTION,
   task: updateUnverifiedAccounts,
 };
+
+export default updateUnverifiedAccountsJob;

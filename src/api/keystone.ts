@@ -4,7 +4,7 @@ import protect from 'overload-protection';
 import securityHeaders from './middleware/headers/security';
 import checkApiKey from './middleware/headers/check-api-key';
 import rateLimiter from './middleware/rate-limiter';
-import cronJobs from './middleware/cron';
+import cronJobs from './cron';
 import { lists } from './schema';
 import { withAuth, session } from './auth';
 import { apolloPlugins, formatGraphQlError } from './apollo';
@@ -55,12 +55,12 @@ export default withAuth(
           app.use(rateLimiter);
         }
       },
-      extendHttpServer: (httpServer, commonContext) => {
+      extendHttpServer: (httpServer, context) => {
         /**
          * runs cron jobs based on their schedule
          * starts running when API is started
          */
-        cronJobs(commonContext);
+        cronJobs(context);
       },
     },
     db: {
