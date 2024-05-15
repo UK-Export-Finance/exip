@@ -31,7 +31,7 @@ context('Insurance - Your Buyer - Trading history page - Validation', () => {
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADING_HISTORY}`;
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);

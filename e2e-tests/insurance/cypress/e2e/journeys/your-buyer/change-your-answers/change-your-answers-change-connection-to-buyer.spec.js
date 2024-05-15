@@ -34,7 +34,7 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
@@ -69,7 +69,7 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+        cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -91,7 +91,7 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({});
+        cy.completeAndSubmitConnectionWithTheBuyerForm({});
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -102,7 +102,7 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
 
-      it(`should not render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
+      it(`should NOT render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
       });
     });

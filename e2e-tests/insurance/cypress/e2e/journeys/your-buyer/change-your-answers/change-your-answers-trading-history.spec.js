@@ -40,7 +40,7 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
@@ -165,11 +165,11 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       });
 
-      it(`should not render a value for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+      it(`should NOT render a value for ${TOTAL_AMOUNT_OVERDUE}`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
       });
 
-      it(`should not render a value for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+      it(`should NOT render a value for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_OUTSTANDING_PAYMENTS);
       });
     });

@@ -58,7 +58,7 @@ context('Insurance - Your Buyer - Trading history page - Outstanding payments ye
 
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);

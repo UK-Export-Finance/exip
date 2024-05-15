@@ -91,7 +91,7 @@ context('Insurance - Policy - Pre-credit period page - validation', () => {
       });
     });
 
-    it(`should not render any validation errors when ${FIELD_ID} is below the minimum`, () => {
+    it(`should NOT render any validation errors when ${FIELD_ID} is below the minimum`, () => {
       cy.completeAndSubmitPreCreditPeriodForm({ needPreCreditPeriod: true });
 
       cy.assertErrorSummaryListDoesNotExist();
