@@ -45,9 +45,9 @@ jobs:
       - name: Repository
         uses: actions/checkout@v4
 
-      - name: Dependencies
+      - name: Dependency
         working-directory: ./
-        run: npm ci --legacy-peer-deps
+        run: npm i -g release-please
 
       - name: Create
         working-directory: ./
