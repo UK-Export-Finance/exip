@@ -33,7 +33,7 @@ context('Insurance - Your Buyer - Alternative currency - As an exporter, I want 
       // go to the page we want to test.
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.clickYesRadioInput();

@@ -6,7 +6,6 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER_FIELDS as FIELD_STRINGS } from '../../../../../../content-strings/fields/insurance/your-buyer';
-import application from '../../../../../../fixtures/application';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.YOUR_BUYER.CONNECTION_WITH_BUYER;
 
@@ -20,8 +19,6 @@ const {
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const { BUYER } = application;
 
 context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have  trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
@@ -131,7 +128,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
     describe('form submission', () => {
       describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "no"`, () => {
         it(`should redirect to ${TRADED_WITH_BUYER} page`, () => {
-          cy.completeAndSubmitConnectionToTheBuyerForm({});
+          cy.completeAndSubmitConnectionWithTheBuyerForm({});
 
           cy.assertUrl(tradedWithBuyerUrl);
         });
@@ -147,7 +144,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
 
       describe(`when submitting the form with ${CONNECTION_WITH_BUYER} as "yes"`, () => {
         it(`should redirect to ${TRADED_WITH_BUYER} page`, () => {
-          cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+          cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
 
           cy.assertUrl(tradedWithBuyerUrl);
         });
@@ -156,8 +153,7 @@ context('Insurance - Your Buyer - Connection with the buyer - As an exporter, I 
           it('should have the submitted values', () => {
             cy.navigateToUrl(url);
 
-            cy.assertYesRadioOptionIsChecked();
-            cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
+            cy.assertConnectionWithBuyerFieldValues();
           });
         });
       });

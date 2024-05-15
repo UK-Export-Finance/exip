@@ -28,7 +28,7 @@ context('Insurance - Your buyer - Check your answers - As an exporter, I want to
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 

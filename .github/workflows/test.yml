@@ -306,7 +306,7 @@ jobs:
             "your-buyer/change-your-answers/**/*.spec.js",
             "your-buyer/check-your-answers/**/*.spec.js",
             "your-buyer/company-or-organisation/**/*.spec.js",
-            "your-buyer/connection-to-the-buyer/**/*.spec.js",
+            "your-buyer/connection-with-the-buyer/**/*.spec.js",
             "your-buyer/credit-insurance-cover/**/*.spec.js",
             "your-buyer/root/**/*.spec.js",
             "your-buyer/traded-with-buyer/**/*.spec.js",

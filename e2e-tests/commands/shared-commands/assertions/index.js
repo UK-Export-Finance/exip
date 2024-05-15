@@ -59,6 +59,8 @@ Cypress.Commands.add('checkPhaseBanner', require('./check-phase-banner'));
 Cypress.Commands.add('checkRadioInputYesAriaLabel', require('./check-radio-input-yes-aria-label'));
 Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-no-aria-label'));
 
+Cypress.Commands.add('assertConnectionWithBuyerFieldValues', require('./assert-connection-with-buyer-field-values'));
+
 Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
 Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));
 Cypress.Commands.add('assertBrokerDetailsFieldValues', require('./assert-broker-details-field-values'));
