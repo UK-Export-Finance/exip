@@ -76,7 +76,7 @@ context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - 
 
       summaryList.field(FIELD_ID).changeLink().click();
 
-      cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
     });
 
     it(`should redirect to ${YOUR_BUYER}`, () => {

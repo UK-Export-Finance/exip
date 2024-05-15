@@ -68,7 +68,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
 
         cy.navigateToUrl(connectionToTheBuyerUrl);
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({
+        cy.completeAndSubmitConnectionWithTheBuyerForm({
           hasConnectionToBuyer: true,
           description: MULTI_LINE_STRING,
         });

@@ -1,7 +1,7 @@
 Cypress.Commands.add('completeCompanyOrOrganisationForm', require('../../../../../commands/insurance/your-buyer/complete-company-or-organisation-form'));
 Cypress.Commands.add('completeAndSubmitCompanyOrOrganisationForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-company-or-organisation-form'));
-Cypress.Commands.add('completeAndSubmitConnectionToTheBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-connection-to-the-buyer-form'));
-Cypress.Commands.add('completeConnectionToTheBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-connection-to-the-buyer-form'));
+Cypress.Commands.add('completeAndSubmitConnectionToTheBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-connection-with-the-buyer-form'));
+Cypress.Commands.add('completeConnectionToTheBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-connection-with-the-buyer-form'));
 Cypress.Commands.add('completeAndSubmitTradedWithBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-and-submit-traded-with-buyer-form'));
 Cypress.Commands.add('completeTradedWithBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-traded-with-buyer-form'));
 Cypress.Commands.add('completeTradingHistoryWithBuyerForm', require('../../../../../commands/insurance/your-buyer/complete-trading-history-with-buyer-form'));

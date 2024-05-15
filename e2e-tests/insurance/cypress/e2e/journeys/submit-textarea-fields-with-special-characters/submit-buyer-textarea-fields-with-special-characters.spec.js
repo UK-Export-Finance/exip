@@ -62,7 +62,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render spe
 
         cy.navigateToUrl(connectionToTheBuyerUrl);
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({
+        cy.completeAndSubmitConnectionWithTheBuyerForm({
           hasConnectionToBuyer: true,
           description: mockStringWithSpecialCharacters,
         });

@@ -61,7 +61,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeConnectionToTheBuyerForm({});
+      cy.completeConnectionWithTheBuyerForm({});
 
       cy.clickYesRadioInput();
 
@@ -90,7 +90,7 @@ context('Insurance - Your buyer - Connection to buyer - Has connection to buyer 
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      cy.completeConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
 
       cy.clickSaveAndBackButton();
     });

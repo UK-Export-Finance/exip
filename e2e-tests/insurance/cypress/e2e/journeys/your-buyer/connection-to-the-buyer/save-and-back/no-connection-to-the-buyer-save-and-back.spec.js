@@ -52,7 +52,7 @@ context('Insurance - Your buyer - Connection to buyer - No connection to buyer -
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeConnectionToTheBuyerForm({});
+      cy.completeConnectionWithTheBuyerForm({});
 
       cy.clickSaveAndBackButton();
     });

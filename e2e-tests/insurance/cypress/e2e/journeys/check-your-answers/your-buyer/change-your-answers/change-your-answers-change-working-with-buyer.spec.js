@@ -92,7 +92,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+        cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {
@@ -122,7 +122,7 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({});
+        cy.completeAndSubmitConnectionWithTheBuyerForm({});
       });
 
       it(`should redirect to ${YOUR_BUYER}`, () => {

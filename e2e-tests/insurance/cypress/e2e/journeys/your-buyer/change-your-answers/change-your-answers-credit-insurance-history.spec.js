@@ -32,7 +32,7 @@ context('Insurance - Your buyer - Change your answers - Credit insurance history
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitCreditInsuranceCoverForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
@@ -90,7 +90,7 @@ context('Insurance - Your buyer - Change your answers - Credit insurance history
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.completeAndSubmitConnectionToTheBuyerForm({});
+        cy.completeAndSubmitConnectionWithTheBuyerForm({});
       });
 
       it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

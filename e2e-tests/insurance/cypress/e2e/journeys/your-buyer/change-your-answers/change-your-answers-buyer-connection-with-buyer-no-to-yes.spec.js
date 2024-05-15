@@ -29,7 +29,7 @@ context(`Insurance - Your buyer - Change your answers - Connection with buyer - 
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: false });
+      cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: false });
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
@@ -61,7 +61,7 @@ context(`Insurance - Your buyer - Change your answers - Connection with buyer - 
 
       summaryList.field(FIELD_ID).changeLink().click();
 
-      cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {

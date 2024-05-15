@@ -45,7 +45,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - Your buyer
         cy.startInsuranceYourBuyerSection({});
 
         cy.completeAndSubmitCompanyOrOrganisationForm({});
-        cy.completeAndSubmitConnectionToTheBuyerForm({});
+        cy.completeAndSubmitConnectionWithTheBuyerForm({});
         cy.completeAndSubmitTradedWithBuyerForm({});
         cy.completeAndSubmitBuyerFinancialInformationForm({});
 

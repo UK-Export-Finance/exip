@@ -1,8 +1,7 @@
-import { field, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import application from '../../../../../../fixtures/application';
 
 const {
   ROOT,
@@ -31,7 +30,7 @@ context(`Insurance - Your buyer - Change your answers - Connection with buyer - 
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+      cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
       cy.completeAndSubmitTradedWithBuyerForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
@@ -63,7 +62,7 @@ context(`Insurance - Your buyer - Change your answers - Connection with buyer - 
 
       summaryList.field(FIELD_ID).changeLink().click();
 
-      cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: false });
+      cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: false });
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
@@ -93,17 +92,12 @@ context(`Insurance - Your buyer - Change your answers - Connection with buyer - 
       });
 
       describe(`when going back to ${CONNECTION_WITH_BUYER}`, () => {
-        it('should have the submitted value', () => {
-          cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer: true });
+        it('should have the submitted values', () => {
+          cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer: true });
 
           summaryList.field(FIELD_ID).changeLink().click();
 
-          // TODO:
-          // TODO: DRY command
-          cy.assertNoRadioOptionIsNotChecked();
-          cy.assertYesRadioOptionIsChecked();
-
-          cy.checkText(field(CONNECTION_WITH_BUYER_DESCRIPTION).textarea(), application.BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
+          cy.assertConnectionWithBuyerFieldValues();
         });
       });
     });
