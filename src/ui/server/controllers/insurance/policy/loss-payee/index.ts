@@ -9,6 +9,7 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/loss-payee';
 import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
@@ -17,7 +18,8 @@ const {
 
 const {
   INSURANCE_ROOT,
-  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  POLICY: { LOSS_PAYEE_DETAILS_ROOT, LOSS_PAYEE_DETAILS_CHANGE, LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE, LOSS_PAYEE_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -133,6 +135,20 @@ export const post = async (req: Request, res: Response) => {
       }
 
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the route is a "check and change" route,
+     * the exporter IS_APPOINTING a loss payee,
+     * redirect to LOSS_PAYEE_DETAILS form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (isAppointingALossPayee) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${LOSS_PAYEE_DETAILS_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     /**
