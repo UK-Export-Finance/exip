@@ -25,11 +25,13 @@
     "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid"
   },
   "lint-staged": {
-    "package.json": "sort-package-json",
-    "*.js": "eslint --fix",
-    "*.ts": "eslint --fix",
-    "*": [
-      "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color"
+    "**/package.json": "sort-package-json",
+    "**/*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*": [
+      "cspell lint --gitignore --no-must-find-files --unique --no-progress --show-suggestions --color"
     ]
   },
   "dependencies": {
