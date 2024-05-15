@@ -80,7 +80,7 @@ context('Insurance - Policy - Loss Payee Details - Validation', () => {
       cy.submitAndAssertFieldErrors({ ...assertions, value, expectedErrorMessage: ERROR.ABOVE_MAXIMUM });
     });
 
-    it(`should not render validation errors when ${FIELD_ID} contains numbers and special characters`, () => {
+    it(`should NOT render validation errors when ${FIELD_ID} contains numbers and special characters`, () => {
       const nameValue = mockNameWithSpecialCharacters('name');
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), nameValue);
 

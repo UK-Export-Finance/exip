@@ -1,7 +1,7 @@
-import { summaryList } from '../../../../../../../pages/shared';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { FIELD_VALUES } from '../../../../../../../constants';
+import { summaryList } from '../../../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import { FIELD_VALUES } from '../../../../../../../../constants';
 
 const {
   LOSS_PAYEE: {
@@ -15,16 +15,16 @@ const {
 const {
   ROOT,
   POLICY: {
-    LOSS_PAYEE_CHANGE,
+    LOSS_PAYEE_CHECK_AND_CHANGE,
     LOSS_PAYEE_DETAILS_ROOT,
-    LOSS_PAYEE_FINANCIAL_UK,
-    CHECK_YOUR_ANSWERS,
+    LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT,
   },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As an exporter, I want to change my answers to the loss payee section', () => {
+context('Insurance - Change your answers - Policy - Loss payee - Yes to no - As an exporter, I want to change my answers to the loss payee section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -32,12 +32,9 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({
-        isAppointingLossPayee: true,
-        lossPayeeIsLocatedInUK: true,
-      });
+      cy.completePrepareApplicationMultiplePolicyType({ isAppointingLossPayee: true });
 
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
     });
   });
 
@@ -51,12 +48,12 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
 
   describe(FIELD_ID, () => {
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${LOSS_PAYEE_CHANGE}`, () => {
+      it(`should redirect to ${LOSS_PAYEE_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(FIELD_ID).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_CHANGE, fieldId: FIELD_ID });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: LOSS_PAYEE_CHECK_AND_CHANGE, fieldId: FIELD_ID });
       });
     });
 
@@ -65,12 +62,12 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
         cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         summaryList.field(FIELD_ID).changeLink().click();
 
         cy.completeAndSubmitBrokerForm({ isAppointingLossPayee: false });
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
       });
 
       it(`should render new ${FIELD_ID} answer and change link, with no other loss payee details fields`, () => {
@@ -92,7 +89,7 @@ context('Insurance - Policy - Change your answers - Loss payee - Yes to no - As 
           cy.completeAndSubmitLossPayeeForm({ isAppointingLossPayee: true });
         });
 
-        describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_UK}`, () => {
+        describe(`when going back to ${LOSS_PAYEE_DETAILS_ROOT} and ${LOSS_PAYEE_FINANCIAL_DETAILS_UK_ROOT}`, () => {
           it('should have empty field values', () => {
             cy.assertEmptyLossPayeeDetailsFieldValues();
 

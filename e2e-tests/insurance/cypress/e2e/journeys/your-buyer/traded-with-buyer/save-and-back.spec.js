@@ -20,7 +20,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${TRADED_WITH_BUYER}`;
 
@@ -74,7 +74,7 @@ context('Insurance - Your buyer - Working with buyer - Save and back', () => {
       // submit button to get to working with buyer page
       cy.clickSubmitButton();
       // submit connectionToBuyer form to get to working with buyer page
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
 
       cy.assertYesRadioOptionIsChecked();
     });

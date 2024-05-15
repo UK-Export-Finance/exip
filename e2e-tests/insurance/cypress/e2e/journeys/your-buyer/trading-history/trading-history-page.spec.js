@@ -43,7 +43,7 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
       alternativeCurrencyUrl = `${ROOT}/${referenceNumber}${ALTERNATIVE_CURRENCY}`;
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
       cy.assertUrl(url);
@@ -105,19 +105,19 @@ context('Insurance - Your Buyer - Trading history page - As an exporter, I want 
           field(TOTAL_OUTSTANDING_PAYMENTS).heading().should('not.be.visible');
         });
 
-        it(`should not render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+        it(`should NOT render a label for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
           field(TOTAL_OUTSTANDING_PAYMENTS).label().should('not.be.visible');
         });
 
-        it(`should not render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+        it(`should NOT render an input for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
           field(TOTAL_OUTSTANDING_PAYMENTS).input().should('not.be.visible');
         });
 
-        it(`should not render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+        it(`should NOT render a label for ${TOTAL_AMOUNT_OVERDUE}`, () => {
           field(TOTAL_AMOUNT_OVERDUE).label().should('not.be.visible');
         });
 
-        it(`should not render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
+        it(`should NOT render an input for ${TOTAL_AMOUNT_OVERDUE}`, () => {
           field(TOTAL_AMOUNT_OVERDUE).input().should('not.be.visible');
         });
       });

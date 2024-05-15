@@ -30,7 +30,7 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Di
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber, differentPolicyContact: true });
+      cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
 
       task.link().click();
 

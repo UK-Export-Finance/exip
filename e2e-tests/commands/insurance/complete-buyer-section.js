@@ -23,7 +23,7 @@ const completeBuyerSection = ({
   cy.startInsuranceYourBuyerSection({ viaTaskList });
 
   cy.completeAndSubmitCompanyOrOrganisationForm({});
-  cy.completeAndSubmitConnectionToTheBuyerForm({ hasConnectionToBuyer });
+  cy.completeAndSubmitConnectionWithTheBuyerForm({ hasConnectionToBuyer });
   cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer });
 
   if (exporterHasTradedWithBuyer) {

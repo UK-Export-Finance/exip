@@ -55,7 +55,7 @@ context('Insurance - Change your answers - Policy - Multiple contract policy - S
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-      cy.completePrepareApplicationMultiplePolicyType({ referenceNumber });
+      cy.completePrepareApplicationMultiplePolicyType({});
 
       task.link().click();
 

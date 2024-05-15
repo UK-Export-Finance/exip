@@ -41,7 +41,7 @@ context('Insurance - Your Buyer - Buyer financial information - As an exporter, 
 
       cy.startInsuranceYourBuyerSection({});
       cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionToTheBuyerForm({});
+      cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({});
 
       cy.assertUrl(url);

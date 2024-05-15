@@ -104,7 +104,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
   });
 
   describe(`when ${FIELD_ID} is correctly entered`, () => {
-    it(`should not render validation errors when ${FIELD_ID} does not have spaces and is only numbers`, () => {
+    it(`should NOT render validation errors when ${FIELD_ID} does not have spaces and is only numbers`, () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), '112233');
 
       cy.clickSubmitButton();
@@ -112,7 +112,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
       cy.assertErrorSummaryListLength(2);
     });
 
-    it(`should not render validation errors when ${FIELD_ID} is only numbers and dashes`, () => {
+    it(`should NOT render validation errors when ${FIELD_ID} is only numbers and dashes`, () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), '11-22-33');
 
       cy.clickSubmitButton();
@@ -120,7 +120,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
       cy.assertErrorSummaryListLength(2);
     });
 
-    it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces`, () => {
+    it(`should NOT render validation errors when ${FIELD_ID} is only numbers and spaces`, () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), '11 22 33');
 
       cy.clickSubmitButton();
@@ -128,7 +128,7 @@ context('Insurance - Policy - Loss Payee Financial Details UK - Sort code - Vali
       cy.assertErrorSummaryListLength(2);
     });
 
-    it(`should not render validation errors when ${FIELD_ID} is only numbers and spaces and dashes`, () => {
+    it(`should NOT render validation errors when ${FIELD_ID} is only numbers and spaces and dashes`, () => {
       cy.keyboardInput(fieldSelector(FIELD_ID).input(), '11-22 33');
 
       cy.clickSubmitButton();
