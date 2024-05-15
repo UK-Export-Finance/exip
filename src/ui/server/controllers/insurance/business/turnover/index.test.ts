@@ -111,67 +111,27 @@ describe('controllers/insurance/business/turnover', () => {
     });
 
     describe('when isChange is provided as true', () => {
-      it(`should have correct properties with "PROVIDE_ALTERNATIVE_CURRENCY_URL" set to ${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`, () => {
+      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`, () => {
         const isChange = true;
 
         const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange);
 
-        const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`;
 
-        const expected = {
-          FIELDS: {
-            FINANCIAL_YEAR_END_DATE: {
-              ID: FINANCIAL_YEAR_END_DATE,
-              ...TURNOVER_FIELDS[FINANCIAL_YEAR_END_DATE],
-            },
-            ESTIMATED_ANNUAL_TURNOVER: {
-              ID: ESTIMATED_ANNUAL_TURNOVER,
-              ...TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER],
-            },
-            PERCENTAGE_TURNOVER: {
-              ID: PERCENTAGE_TURNOVER,
-              ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
-            },
-          },
-          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHANGE}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
-          CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        };
-
-        expect(result).toEqual(expected);
+        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
       });
     });
 
     describe('when isCheckAndChange is provided as true', () => {
-      it(`should have correct properties with "PROVIDE_ALTERNATIVE_CURRENCY_URL" set to ${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
-        const isChange = undefined;
+      it(`should return "PROVIDE_ALTERNATIVE_CURRENCY_URL" as ${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, () => {
+        const isChange = false;
         const isCheckAndChange = true;
 
         const result = pageVariables(referenceNumber, mockCurrencies, currencyValue, isChange, isCheckAndChange);
 
-        const currency = getCurrencyByCode(mockCurrencies, String(currencyValue));
+        const expected = `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
 
-        const expected = {
-          FIELDS: {
-            FINANCIAL_YEAR_END_DATE: {
-              ID: FINANCIAL_YEAR_END_DATE,
-              ...TURNOVER_FIELDS[FINANCIAL_YEAR_END_DATE],
-            },
-            ESTIMATED_ANNUAL_TURNOVER: {
-              ID: ESTIMATED_ANNUAL_TURNOVER,
-              ...TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER],
-            },
-            PERCENTAGE_TURNOVER: {
-              ID: PERCENTAGE_TURNOVER,
-              ...TURNOVER_FIELDS[PERCENTAGE_TURNOVER],
-            },
-          },
-          PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`,
-          SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
-          CURRENCY_PREFIX_SYMBOL: currency.symbol,
-        };
-
-        expect(result).toEqual(expected);
+        expect(result.PROVIDE_ALTERNATIVE_CURRENCY_URL).toEqual(expected);
       });
     });
   });

@@ -7,11 +7,12 @@ import mapYesNoField from '../../../../mappings/map-yes-no-field';
 import mapPercentage from '../../../../map-percentage';
 import getCountryByIsoCode from '../../../../get-country-by-iso-code';
 import generateChangeLink from '../../../../generate-change-link';
+import formatCurrency from '../../../../format-currency';
 import { ApplicationExportContractAgentService, Country } from '../../../../../../types';
 
 const {
   AGENT_SERVICE: { IS_CHARGING },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
 } = FIELD_IDS;
 
 const { AGENT_SERVICE_CHANGE, AGENT_SERVICE_CHECK_AND_CHANGE } = EXPORT_CONTRACT_ROUTES;
@@ -42,12 +43,15 @@ const agentChargesFields = (answers: ApplicationExportContractAgentService, refe
   if (answers[IS_CHARGING]) {
     if (answers.charge[FIXED_SUM_AMOUNT]) {
       fields.push(
-        fieldGroupItem({
-          field: getFieldById(FIELDS.AGENT_CHARGES, FIXED_SUM_AMOUNT),
-          data: answers.charge,
-          href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
-          renderChangeLink: true,
-        }),
+        fieldGroupItem(
+          {
+            field: getFieldById(FIELDS.AGENT_CHARGES, FIXED_SUM_AMOUNT),
+            data: answers.charge,
+            href: generateChangeLink(AGENT_CHARGES_CHANGE, AGENT_CHARGES_CHECK_AND_CHANGE, `#${FIXED_SUM_AMOUNT}-label`, referenceNumber, checkAndChange),
+            renderChangeLink: true,
+          },
+          formatCurrency(answers.charge[FIXED_SUM_AMOUNT], answers.charge[FIXED_SUM_CURRENCY_CODE]),
+        ),
       );
     }
 

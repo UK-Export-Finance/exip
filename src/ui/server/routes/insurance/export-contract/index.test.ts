@@ -61,6 +61,8 @@ const {
   AGENT_CHARGES_CHANGE,
   AGENT_CHARGES_CHECK_AND_CHANGE,
   AGENT_CHARGES_ALTERNATIVE_CURRENCY,
+  AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
+  AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
   CHECK_YOUR_ANSWERS,
 } = EXPORT_CONTRACT;
 
@@ -74,8 +76,8 @@ describe('routes/insurance/export-contract', () => {
   });
 
   it('should setup all routes', () => {
-    expect(get).toHaveBeenCalledTimes(27);
-    expect(post).toHaveBeenCalledTimes(34);
+    expect(get).toHaveBeenCalledTimes(29);
+    expect(post).toHaveBeenCalledTimes(36);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${ROOT}`, exportContractRootGet);
 
@@ -145,6 +147,10 @@ describe('routes/insurance/export-contract', () => {
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`, agentChargesAlternativeCurrencyPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`, agentChargesAlternativeCurrencyGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`, agentChargesAlternativeCurrencyPost);
+    expect(get).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, agentChargesAlternativeCurrencyGet);
+    expect(post).toHaveBeenCalledWith(`/:referenceNumber${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`, agentChargesAlternativeCurrencyPost);
 
     expect(get).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersGet);
     expect(post).toHaveBeenCalledWith(`/:referenceNumber${CHECK_YOUR_ANSWERS}`, checkYourAnswersPost);
