@@ -15,7 +15,17 @@ import { mockReq, mockRes, mockApplication, referenceNumber } from '../../../../
 
 const {
   INSURANCE_ROOT,
-  POLICY: { ANOTHER_COMPANY_CHANGE, ANOTHER_COMPANY_SAVE_AND_BACK, BROKER_ROOT, CHECK_YOUR_ANSWERS, OTHER_COMPANY_DETAILS, OTHER_COMPANY_DETAILS_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  POLICY: {
+    ANOTHER_COMPANY_CHANGE,
+    ANOTHER_COMPANY_CHECK_AND_CHANGE,
+    ANOTHER_COMPANY_SAVE_AND_BACK,
+    BROKER_ROOT,
+    CHECK_YOUR_ANSWERS,
+    OTHER_COMPANY_DETAILS,
+    OTHER_COMPANY_DETAILS_CHANGE,
+    OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE,
+  },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -212,6 +222,38 @@ describe('controllers/insurance/policy/another-company', () => {
           await post(req, res);
 
           const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${FIELD_ID} is true and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`, async () => {
+          req.originalUrl = ANOTHER_COMPANY_CHECK_AND_CHANGE;
+
+          req.body = {
+            [FIELD_ID]: 'true',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${FIELD_ID} is false and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = ANOTHER_COMPANY_CHECK_AND_CHANGE;
+
+          req.body = {
+            [FIELD_ID]: 'false',
+          };
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
 
           expect(res.redirect).toHaveBeenCalledWith(expected);
         });
