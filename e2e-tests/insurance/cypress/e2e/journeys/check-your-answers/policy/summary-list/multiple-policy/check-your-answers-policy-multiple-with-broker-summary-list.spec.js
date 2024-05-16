@@ -10,7 +10,10 @@ const {
   },
 } = INSURANCE_ROUTES;
 
-const { USING_BROKER, BROKER_DETAILS } = POLICY_FIELD_IDS;
+const {
+  USING_BROKER,
+  BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS },
+} = POLICY_FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -56,15 +59,15 @@ context('Insurance - Check your answers - Policy - Multiple contract policy - Wi
     checkSummaryList[USING_BROKER]({ usingBroker: true });
   });
 
-  it(`should render a ${BROKER_DETAILS.NAME} summary list row`, () => {
-    checkSummaryList.BROKER[BROKER_DETAILS.NAME]({});
+  it(`should render a ${NAME} summary list row`, () => {
+    checkSummaryList.BROKER[NAME]({});
   });
 
-  it(`should render a ${BROKER_DETAILS.FULL_ADDRESS} summary list row`, () => {
-    checkSummaryList.BROKER[BROKER_DETAILS.FULL_ADDRESS]();
+  it(`should render a ${FULL_ADDRESS} summary list row`, () => {
+    checkSummaryList.BROKER[FULL_ADDRESS]();
   });
 
-  it(`should render a ${BROKER_DETAILS.EMAIL} summary list row`, () => {
-    checkSummaryList.BROKER[BROKER_DETAILS.EMAIL]();
+  it(`should render a ${EMAIL} summary list row`, () => {
+    checkSummaryList.BROKER[EMAIL]();
   });
 });
