@@ -55,7 +55,11 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
-      - name: Linting
+      - name: ESLint
         working-directory: ./
         run: |
           npm run lint
+
+      - name: Prettier
+        working-directory: ./
+        run: npm run prettier:all
