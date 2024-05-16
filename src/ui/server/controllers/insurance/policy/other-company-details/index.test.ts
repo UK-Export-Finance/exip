@@ -17,12 +17,7 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  POLICY: {
-    BROKER_ROOT,
-    CHECK_YOUR_ANSWERS,
-    OTHER_COMPANY_DETAILS_CHANGE,
-    OTHER_COMPANY_DETAILS_SAVE_AND_BACK,
-  },
+  POLICY: { BROKER_ROOT, CHECK_YOUR_ANSWERS, OTHER_COMPANY_DETAILS_CHANGE, OTHER_COMPANY_DETAILS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -243,7 +238,7 @@ describe('controllers/insurance/policy/other-company-details', () => {
         expect(res.redirect).toHaveBeenCalledWith(expected);
       });
 
-      describe(`when the url's last substring is 'change'`, () => {
+      describe("when the url's last substring is 'change'", () => {
         it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
           req.originalUrl = OTHER_COMPANY_DETAILS_CHANGE;
 
