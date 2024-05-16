@@ -16,7 +16,7 @@ const {
   ROOT,
   POLICY: {
     ANOTHER_COMPANY_CHANGE,
-    OTHER_COMPANY_DETAILS_CHANGE,
+    OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
@@ -60,10 +60,13 @@ context('Insurance - Policy - Change your answers - Another company - No to yes 
       cy.navigateToUrl(checkYourAnswersUrl);
     });
 
-    it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) other company details fields`, () => {
+    it(`should redirect to ${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE} and then ${CHECK_YOUR_ANSWERS} after completing (now required) other company details fields`, () => {
       summaryList.field(FIELD_ID).changeLink().click();
 
       cy.completeAndSubmitAnotherCompanyForm({ otherCompanyInvolved: true });
+
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE, fieldId: FIELD_ID });
+
       cy.completeAndSubmitOtherCompanyDetailsForm({});
 
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId: FIELD_ID });

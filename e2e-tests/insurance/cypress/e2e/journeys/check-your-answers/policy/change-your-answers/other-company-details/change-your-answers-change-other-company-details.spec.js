@@ -1,8 +1,9 @@
-import { autoCompleteField, field, summaryList } from '../../../../../../../pages/shared';
-import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import application from '../../../../../../../fixtures/application';
-import { BRA } from '../../../../../../../fixtures/countries';
+import partials from '../../../../../../../../partials';
+import { autoCompleteField, field, summaryList } from '../../../../../../../../pages/shared';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../../fixtures/application';
+import { BRA } from '../../../../../../../../fixtures/countries';
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: {
@@ -14,15 +15,17 @@ const {
 
 const {
   ROOT,
-  POLICY: {
-    OTHER_COMPANY_DETAILS_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  POLICY: { OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
+
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Other company details - As an exporter, I want to change my answers to the other company details section', () => {
+context('Insurance - Change your answers - Policy - Other company details - As an exporter, As an exporter, I want to change my answers to the other company details section', () => {
   let referenceNumber;
   let checkYourAnswersUrl;
   let otherCompanyDetailsUrl;
@@ -31,10 +34,20 @@ context('Insurance - Policy - Change your answers - Other company details - As a
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePolicySection({ otherCompanyInvolved: true });
+      cy.completePrepareApplicationMultiplePolicyType({
+        referenceNumber,
+        otherCompanyInvolved: true,
+      });
 
-      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
-      otherCompanyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHANGE}`;
+      task.link().click();
+
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
+      checkYourAnswersUrl = `${baseUrl}${ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+      otherCompanyDetailsUrl = `${baseUrl}${ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`;
+
+      cy.assertUrl(checkYourAnswersUrl);
     });
   });
 
@@ -50,12 +63,12 @@ context('Insurance - Policy - Change your answers - Other company details - As a
     const fieldId = COMPANY_NAME;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
+      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -66,14 +79,14 @@ context('Insurance - Policy - Change your answers - Other company details - As a
         cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
 
         cy.changeAnswerField({ newValueInput }, field(fieldId).input());
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -86,12 +99,12 @@ context('Insurance - Policy - Change your answers - Other company details - As a
     const fieldId = COMPANY_NUMBER;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
+      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -102,14 +115,14 @@ context('Insurance - Policy - Change your answers - Other company details - As a
         cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
 
         cy.changeAnswerField({ newValueInput }, field(fieldId).input());
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer', () => {
@@ -122,12 +135,12 @@ context('Insurance - Policy - Change your answers - Other company details - As a
     const fieldId = COUNTRY_CODE;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHANGE}`, () => {
+      it(`should redirect to ${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(checkYourAnswersUrl);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -138,7 +151,7 @@ context('Insurance - Policy - Change your answers - Other company details - As a
         cy.navigateToUrl(checkYourAnswersUrl);
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+      it(`should redirect to ${TYPE_OF_POLICY}`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.assertUrl(`${otherCompanyDetailsUrl}#${fieldId}-label`);
@@ -146,7 +159,7 @@ context('Insurance - Policy - Change your answers - Other company details - As a
         cy.keyboardInput(autoCompleteField(fieldId).input(), newValueInput);
         cy.clickSubmitButton();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId });
       });
 
       it('should render the new answer', () => {
