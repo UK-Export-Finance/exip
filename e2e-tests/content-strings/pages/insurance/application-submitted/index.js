@@ -32,7 +32,7 @@ const APPLICATION_SUBMITTED = {
     FEEDBACK: {
       INTRO: 'You can also',
       LINK: {
-        TEXT: LINKS.GIVE_US_FEEDBACK,
+        TEXT: LINKS.GIVE_FEEDBACK_LOWERCASE,
         HREF: ROUTES.INSURANCE.FEEDBACK,
       },
     },
