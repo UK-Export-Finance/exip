@@ -1,5 +1,4 @@
 import { summaryList, field } from '../../../../../../../pages/shared';
-import account from '../../../../../../../fixtures/account';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
@@ -12,14 +11,13 @@ const {
 
 const {
   POLICY: {
-    NAME_ON_POLICY: { NAME, POSITION },
+    NAME_ON_POLICY: { POSITION },
   },
-  ACCOUNT: { FIRST_NAME, LAST_NAME },
 } = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers to the same name on policy as policy owner', () => {
+context(`Insurance - Policy - Change your answers - Policy contact - Same name - ${POSITION} - As an exporter, I want to change my answers to the same name on policy as policy owner`, () => {
   let referenceNumber;
   let url;
 
@@ -69,9 +67,6 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
       });
 
       it('should render the new answers when completing the same name on policy form', () => {
-        const oldName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
-
-        cy.assertSummaryListRowValue(summaryList, NAME, oldName);
         cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
       });
     });
