@@ -84,8 +84,6 @@ context('Insurance - Check your answers - Company details - Your business - Summ
   describe(HAS_DIFFERENT_TRADING_NAME, () => {
     const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHANGE);
-
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
@@ -94,7 +92,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
+        const fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
         cy.checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
       });
