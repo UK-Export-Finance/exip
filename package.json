@@ -21,7 +21,7 @@
     "lint": "npm i --legacy-peer-deps && npm i --legacy-peer-deps --prefix ./src/ui && eslint --ext .ts src/ui && npm i --legacy-peer-deps --prefix ./src/api && eslint --ext .ts src/api && eslint --ext .js e2e-tests",
     "lint:fix": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
     "lint:fix:all": "prettier --write src/ui  && eslint --ext .ts src/api --fix && eslint --ext .ts src/ui --fix &&  eslint --ext .js e2e-tests --fix",
-    "prettier": "prettier --no-error-on-unmatched-pattern --check **/*.{ts,js}",
+    "prettier": "prettier --no-error-on-unmatched-pattern --log-level error --check **/*.{ts,js}",
     "spellcheck": "cspell lint --gitignore --no-must-find-files --quiet --unique --no-progress --show-suggestions --color '**/*'",
     "update:all": "npm update --save --legacy-peer-deps && npm update --save --legacy-peer-deps --prefix ./src/ui && npm update --save --legacy-peer-deps --prefix ./src/api && npm update --save --legacy-peer-deps --prefix ./generate-exip-pricing-grid"
   },
