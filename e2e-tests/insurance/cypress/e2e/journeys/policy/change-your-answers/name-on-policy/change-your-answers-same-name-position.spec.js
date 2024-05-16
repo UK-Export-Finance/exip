@@ -1,5 +1,5 @@
 import { summaryList, field } from '../../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -10,10 +10,10 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { POSITION },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION },
+} = FIELD_IDS;
+
+const fieldId = POSITION;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -40,35 +40,31 @@ context(`Insurance - Policy - Change your answers - Policy contact - Same name -
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(POSITION, () => {
-    const fieldId = POSITION;
+  describe('when clicking the `change` link', () => {
+    it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
+      cy.navigateToUrl(url);
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      summaryList.field(fieldId).changeLink().click();
 
-        summaryList.field(fieldId).changeLink().click();
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
+    });
+  });
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
-      });
+  describe('form submission with a new answer', () => {
+    const newAnswer = 'Boss';
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.keyboardInput(field(POSITION).input(), newAnswer);
+
+      cy.clickSubmitButton();
     });
 
-    describe('form submission with a new answer', () => {
-      const newAnswer = 'Boss';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(POSITION).input(), newAnswer);
-
-        cy.clickSubmitButton();
-      });
-
-      it('should render the new answers when completing the same name on policy form', () => {
-        cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
-      });
+    it('should render the new answers when completing the same name on policy form', () => {
+      cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
     });
   });
 });

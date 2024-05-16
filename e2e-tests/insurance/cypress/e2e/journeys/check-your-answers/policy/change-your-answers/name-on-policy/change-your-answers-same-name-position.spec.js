@@ -1,6 +1,6 @@
 import { summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
@@ -12,14 +12,14 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { POSITION },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION },
+} = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
 const task = taskList.submitApplication.tasks.checkAnswers;
+
+const fieldId = POSITION;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -51,38 +51,34 @@ context(`Insurance - Change your answers - Policy - Same name - ${POSITION} - As
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(POSITION, () => {
-    const fieldId = POSITION;
+  describe('when clicking the `change` link', () => {
+    it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
+      cy.navigateToUrl(url);
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      summaryList.field(fieldId).changeLink().click();
 
-        summaryList.field(fieldId).changeLink().click();
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHECK_AND_CHANGE, fieldId });
+    });
+  });
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHECK_AND_CHANGE, fieldId });
+  describe('form submission with a new answer', () => {
+    const newAnswer = 'Boss';
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.completeAndSubmitDifferentNameOnPolicyForm({
+        firstName: false,
+        lastName: false,
+        email: false,
+        position: newAnswer,
       });
     });
 
-    describe('form submission with a new answer', () => {
-      const newAnswer = 'Boss';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.completeAndSubmitDifferentNameOnPolicyForm({
-          firstName: false,
-          lastName: false,
-          email: false,
-          position: newAnswer,
-        });
-      });
-
-      it('should render the new answers when completing the different name on policy form', () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
-      });
+    it('should render the new answers when completing the different name on policy form', () => {
+      cy.assertSummaryListRowValue(summaryList, fieldId, newAnswer);
     });
   });
 });

@@ -110,7 +110,7 @@ context('Insurance - Policy - Pre-credit period page - Save and go back', () => 
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
-    it('should not have saved the invalid submitted value when going back to the page', () => {
+    it('should NOT have saved the invalid submitted value when going back to the page', () => {
       cy.startInsurancePolicySection({});
       cy.clickSubmitButtonMultipleTimes({ count: 4 });
 

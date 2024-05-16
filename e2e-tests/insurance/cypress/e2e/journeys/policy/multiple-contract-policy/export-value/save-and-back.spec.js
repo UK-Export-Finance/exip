@@ -102,7 +102,7 @@ context('Insurance - Policy - Multiple contract policy Export value page - Save 
         cy.clickSubmitButtonMultipleTimes({ count: 2 });
       });
 
-      it('should not have saved the submitted value', () => {
+      it('should NOT have saved the submitted value', () => {
         field.input().should('have.value', '');
       });
     });

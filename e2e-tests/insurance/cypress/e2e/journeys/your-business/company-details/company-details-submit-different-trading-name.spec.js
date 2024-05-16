@@ -72,7 +72,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
       cy.completeAndSubmitCompanyDetails({});
     });
 
-    it(`should not have ${DIFFERENT_TRADING_NAME} input populated`, () => {
+    it(`should NOT have ${DIFFERENT_TRADING_NAME} input populated`, () => {
       cy.navigateToUrl(url);
 
       cy.assertNoRadioOptionIsChecked(0);
@@ -97,7 +97,7 @@ describe(`Insurance - Your business - Company details page - submit ${DIFFERENT_
       cy.completeAndSubmitCompanyDetails({});
     });
 
-    it(`should not have ${DIFFERENT_TRADING_NAME} input populated`, () => {
+    it(`should NOT have ${DIFFERENT_TRADING_NAME} input populated`, () => {
       cy.navigateToUrl(url);
 
       // check input is not populated

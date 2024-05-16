@@ -89,7 +89,7 @@ context(`Insurance - Change your answers - Policy - Different name on Policy pag
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
     });
 
-    it('should not have fields populated on different name on policy page', () => {
+    it('should NOT have fields populated on different name on policy page', () => {
       cy.assertDifferentNameOnPolicyFieldValues({});
     });
   });
