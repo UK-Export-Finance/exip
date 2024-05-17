@@ -15,7 +15,7 @@ const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: { 
+  YOUR_BUYER: {
     TRADED_WITH_BUYER_SAVE_AND_BACK,
     CHECK_YOUR_ANSWERS,
     TRADING_HISTORY,
@@ -128,7 +128,7 @@ export const post = async (req: Request, res: Response) => {
     const answer = payload[FIELD_ID];
 
     const hasTradedWithBuyer = answer === 'true';
-    const hasNotTradedWithBuyer = answer === 'false'
+    const hasNotTradedWithBuyer = answer === 'false';
 
     /**
      * If is a change route
