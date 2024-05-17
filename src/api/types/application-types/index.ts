@@ -202,7 +202,7 @@ export interface ApplicationJointlyInsuredParty extends Relationship {
   country: Country;
 }
 
-export interface ApplicationDifferentTradingAddress extends Relationship {
+export interface ApplicationCompanyDifferentTradingAddress extends Relationship {
   fullAddress: string;
 }
 

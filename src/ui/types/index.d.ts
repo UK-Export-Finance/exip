@@ -2,7 +2,6 @@ import { Account } from './account';
 import { AnswersContent, AnswersFieldGroups } from './answers';
 import {
   Application,
-  ApplicationCompany,
   ApplicationFlat,
   ApplicationBusiness,
   ApplicationBroker,
@@ -11,6 +10,8 @@ import {
   ApplicationBuyerTradingHistory,
   ApplicationBuyerApiInput,
   ApplicationBuyerUiInput,
+  ApplicationCompany,
+  ApplicationCompanyDifferentTradingAddress,
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
@@ -87,7 +88,6 @@ export {
   AnswersFieldGroups,
   Application,
   ApplicationFlat,
-  ApplicationCompany,
   ApplicationExporterIndustrySectorNames,
   ApplicationBusiness,
   ApplicationBroker,
@@ -96,6 +96,8 @@ export {
   ApplicationBuyerTradingHistory,
   ApplicationBuyerApiInput,
   ApplicationBuyerUiInput,
+  ApplicationCompany,
+  ApplicationCompanyDifferentTradingAddress,
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
