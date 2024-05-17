@@ -44,7 +44,7 @@ on:
       - "package*.json"
 
 env:
-  environment: dev
+  environment: "qa"
   timezone: ${{ vars.TIMEZONE }}
 
 jobs:
@@ -88,7 +88,7 @@ jobs:
 
       - name: Linting
         working-directory: ./
-        run: npm run lint:all
+        run: npm run lint
 
   # 3. Lint
   prettier:
