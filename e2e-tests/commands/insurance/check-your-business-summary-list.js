@@ -111,7 +111,7 @@ const checkYourBusinessSummaryList = ({
     const fieldId = HAS_CREDIT_CONTROL;
 
     const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS);
-    const expectedValue = FIELD_VALUES.YES;
+    const expectedValue = FIELD_VALUES.NO;
 
     cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
   },
