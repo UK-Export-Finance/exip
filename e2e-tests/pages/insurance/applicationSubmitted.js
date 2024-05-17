@@ -24,6 +24,7 @@ const applicationSubmittedPage = {
     ifYouLike: () => cy.get('[data-cy="help-us-improve-if-you-like"]'),
     feedback: {
       intro: () => cy.get('[data-cy="help-us-improve-feedback-intro"]'),
+      text: () => cy.get('[data-cy="help-us-improve-feedback-text"]'),
       link: () => cy.get('[data-cy="help-us-improve-feedback-link"]'),
     },
   },

@@ -132,10 +132,15 @@ context('Insurance - application submitted page', () => {
       });
 
       it('renders a `feedback` link', () => {
+        cy.checkText(
+          helpUsImprove.feedback.text(),
+          `${CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT}.`,
+        );
+
         cy.checkLink(
           helpUsImprove.feedback.link(),
           FEEDBACK,
-          `${CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT}.`,
+          CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT,
         );
       });
     });
