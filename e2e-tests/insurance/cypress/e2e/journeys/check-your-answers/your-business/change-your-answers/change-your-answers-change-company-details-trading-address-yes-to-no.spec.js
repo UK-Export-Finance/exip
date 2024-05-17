@@ -1,4 +1,4 @@
-import { status, summaryList } from '../../../../../../../pages/shared';
+import { field, status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -10,7 +10,7 @@ const {
     YOUR_BUSINESS,
   },
   EXPORTER_BUSINESS: {
-    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
+    ALTERNATIVE_TRADING_ADDRESS_ROOT,
     COMPANY_DETAILS_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
@@ -62,8 +62,6 @@ context(`Insurance - Check your answers - Company details - Your business - ${FI
 
   beforeEach(() => {
     cy.saveSession();
-
-    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -87,12 +85,12 @@ context(`Insurance - Check your answers - Company details - Your business - ${FI
       cy.navigateToUrl(url);
     });
 
-    it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, () => {
+    it(`should redirect to ${YOUR_BUSINESS}`, () => {
       summaryList.field(FIELD_ID).changeLink().click();
 
       cy.completeAndSubmitCompanyDetails({ differentTradingAddress: false });
 
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE, fieldId: FIELD_ID });
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId: FIELD_ID });
     });
 
     it(`should render new ${FIELD_ID} answer and change link, with no ${FULL_ADDRESS} field`, () => {
@@ -104,6 +102,16 @@ context(`Insurance - Check your answers - Company details - Your business - ${FI
       cy.navigateToUrl(url);
 
       cy.checkTaskStatusCompleted(status);
+    });
+
+    describe(`when changing the answer again from no to yes and going back to ${ALTERNATIVE_TRADING_ADDRESS_ROOT}}`, () => {
+      it(`should have an empty field ${FULL_ADDRESS} value`, () => {
+        summaryList.field(FIELD_ID).changeLink().click();
+
+        cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
+
+        cy.checkText(field(FULL_ADDRESS).textarea(), '');
+      });
     });
   });
 });
