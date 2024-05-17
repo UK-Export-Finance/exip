@@ -1,22 +1,21 @@
-import { FIELD_VALUES } from '../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
+import { FIELD_VALUES } from '../../../../../../constants';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
+import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
-  YOUR_BUYER: {
-    TRADED_WITH_BUYER,
-    OUTSTANDING_PAYMENTS,
-    TOTAL_AMOUNT_OVERDUE,
-    TOTAL_OUTSTANDING_PAYMENTS,
-    FAILED_PAYMENTS,
-  },
-} = INSURANCE_FIELD_IDS;
+  TRADED_WITH_BUYER,
+  OUTSTANDING_PAYMENTS,
+  TOTAL_AMOUNT_OVERDUE,
+  TOTAL_OUTSTANDING_PAYMENTS,
+  FAILED_PAYMENTS,
+} = FIELD_IDS;
 
 const {
   ROOT,
   YOUR_BUYER: {
     CHECK_YOUR_ANSWERS,
+    TRADING_HISTORY,
   },
 } = INSURANCE_ROUTES;
 
@@ -58,19 +57,29 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitTradedWithBuyerForm({});
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: false });
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
     });
 
-    it('should render the new answer and not render option rows', () => {
+    it('should render the new answer, with no other trading history fields', () => {
       cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
       cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_OUTSTANDING_PAYMENTS);
       cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
       cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
       cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
+    });
+
+    describe(`when changing the answer again from no to yes and going back to ${TRADING_HISTORY}`, () => {
+      it('should have empty field values', () => {
+        summaryList.field(fieldId).changeLink().click();
+
+        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+
+        cy.assertEmptyTradingHistoryFieldValues();
+      });
     });
   });
 });

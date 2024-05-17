@@ -61,6 +61,8 @@ Cypress.Commands.add('checkRadioInputNoAriaLabel', require('./check-radio-input-
 
 Cypress.Commands.add('assertConnectionWithBuyerFieldValues', require('./assert-connection-with-buyer-field-values'));
 
+Cypress.Commands.add('assertEmptyTradingHistoryFieldValues', require('./assert-empty-trading-history-field-values'));
+
 Cypress.Commands.add('assertDifferentNameOnPolicyFieldValues', require('./assert-different-name-on-policy-field-values'));
 Cypress.Commands.add('assertOtherCompanyDetailsFieldValues', require('./assert-other-company-details-field-values'));
 Cypress.Commands.add('assertEmptyOtherCompanyDetailsFieldValues', require('./assert-empty-other-company-details-field-values'));
