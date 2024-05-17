@@ -6,7 +6,6 @@ import shouldNullifyCompanyDifferentAddress from '../../../../../helpers/should-
 import nullifyCompanyDifferentTradingAddress from '../../../../../helpers/nullify-company-different-trading-address-data';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
-// TODO: update documentation
 /**
  * map company details data and calls save functions.
  * If DIFFERENT_TRADING_ADDRESS data should be nullified, nullify and save the data.
