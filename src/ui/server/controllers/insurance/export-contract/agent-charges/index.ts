@@ -15,13 +15,20 @@ import constructPayload from '../../../../helpers/construct-payload';
 import generateValidationErrors from './validation';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import mapAndSave from '../map-and-save/export-contract-agent-service-charge';
+import isChangeRoute from '../../../../helpers/is-change-route';
 import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Currency, Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES_SAVE_AND_BACK, AGENT_CHARGES_ALTERNATIVE_CURRENCY, CHECK_YOUR_ANSWERS },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES_SAVE_AND_BACK,
+    AGENT_CHARGES_ALTERNATIVE_CURRENCY,
+    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
+    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    CHECK_YOUR_ANSWERS,
+  },
   CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT: CHECK_AND_CHANGE_ROUTE },
 } = INSURANCE_ROUTES;
 
@@ -49,10 +56,36 @@ export const TEMPLATE = TEMPLATES.INSURANCE.EXPORT_CONTRACT.AGENT_CHARGES;
  * @param {Number} referenceNumber: Application reference number
  * @param {Array<Currency>} currencies: Array of currencies
  * @param {String} currencyCode: Provided currency code
+ * @param {Boolean} changeRoute: req.originalUrl is a change route
+ * @param {Boolean} checkAndChangeRoute: req.originalUrl is a check change route
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number, currencies: Array<Currency>, currencyCode: string) => {
+export const pageVariables = (
+  referenceNumber: number,
+  currencies: Array<Currency>,
+  currencyCode: string,
+  changeRoute?: boolean,
+  checkAndChangeRoute?: boolean,
+) => {
   const currency = getCurrencyByCode(currencies, currencyCode);
+
+  let alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`;
+
+  /**
+   * If changeRoute,
+   * URL should be AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE
+   */
+  if (changeRoute) {
+    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE}`;
+  }
+
+  /**
+   * If checkAndChangeRoute,
+   * URL should be AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE
+   */
+  if (checkAndChangeRoute) {
+    alternativeCurrencyUrl = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE}`;
+  }
 
   return {
     FIELDS: {
@@ -83,7 +116,7 @@ export const pageVariables = (referenceNumber: number, currencies: Array<Currenc
       },
     },
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
-    PROVIDE_ALTERNATIVE_CURRENCY_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_ALTERNATIVE_CURRENCY}`,
+    PROVIDE_ALTERNATIVE_CURRENCY_URL: alternativeCurrencyUrl,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_SAVE_AND_BACK}`,
   };
 };
@@ -115,12 +148,31 @@ export const get = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    let isChange;
+    let isCheckAndChange;
+
+    /**
+     * If is a change route
+     * set isChange to true
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      isChange = true;
+    }
+
+    /**
+     * If is a check-and-change route
+     * set isCheckAndChange to true
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      isCheckAndChange = true;
+    }
+
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
         PAGE_CONTENT_STRINGS,
         BACK_LINK: req.headers.referer,
       }),
-      ...pageVariables(referenceNumber, allCurrencies, agent.service.charge[FIXED_SUM_CURRENCY_CODE]),
+      ...pageVariables(referenceNumber, allCurrencies, agent.service.charge[FIXED_SUM_CURRENCY_CODE], isChange, isCheckAndChange),
       userName: getUserNameFromSession(req.session.user),
       application: mapApplicationToFormFields(application),
       countries: mapCountries(countries, agent.service.charge[PAYABLE_COUNTRY_CODE]),
