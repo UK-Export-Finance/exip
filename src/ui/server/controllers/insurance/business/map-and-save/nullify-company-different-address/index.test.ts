@@ -10,7 +10,6 @@ describe('controllers/insurance/business/map-and-save/nullify-company-different-
 
   saveAddress.companyDifferentTradingAddress = mockSaveCompanyDifferentTradingAddress;
 
-
   it('should call saveAddress.companyDifferentTradingAddress', async () => {
     await nullify.companyDifferentTradingAddress(mockApplication);
 

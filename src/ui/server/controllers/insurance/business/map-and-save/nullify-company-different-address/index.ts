@@ -11,7 +11,7 @@ import { Application } from '../../../../../../types';
 const companyDifferentTradingAddress = async (application: Application) => {
   try {
     console.info('Mapping and saving application - business - company details - nullifying different trading address data');
-    
+
     const nullifiedData = nullifyCompanyDifferentTradingAddress();
 
     const saveResponse = await saveAddress.companyDifferentTradingAddress(application, nullifiedData);
