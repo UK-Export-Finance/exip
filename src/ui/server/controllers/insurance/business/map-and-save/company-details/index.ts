@@ -1,9 +1,8 @@
 import hasFormData from '../../../../../helpers/has-form-data';
 import mapSubmittedData from '../../map-submitted-data/company-details';
 import saveCompany from '../../save-data/company-details';
-import saveAddress from '../../save-data/company-different-trading-address';
 import shouldNullifyCompanyDifferentAddress from '../../../../../helpers/should-nullify-company-different-address';
-import nullifyCompanyDifferentTradingAddress from '../../../../../helpers/nullify-company-different-trading-address-data';
+import nullify from '../nullify-company-different-address';
 import { Application, RequestBody, ValidationErrors } from '../../../../../../types';
 
 /**
@@ -51,15 +50,7 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
       } = application;
 
       if (shouldNullifyCompanyDifferentAddress(hasDifferentTradingAddress, fullAddress)) {
-        console.info('Mapping and saving application - business - company details - nullifying different trading address data');
-
-        const nullifiedData = nullifyCompanyDifferentTradingAddress();
-
-        saveResponse = await saveAddress.companyDifferentTradingAddress(application, nullifiedData);
-
-        if (!saveResponse) {
-          return false;
-        }
+        await nullify.companyDifferentTradingAddress(application);
       }
 
       return true;

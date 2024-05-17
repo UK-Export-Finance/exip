@@ -1,8 +1,7 @@
 import mapAndSave from '.';
 import saveCompany from '../../save-data/company-details';
-import saveAddress from '../../save-data/company-different-trading-address';
+import nullify from '../nullify-company-different-address';
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import nullifyCompanyDifferentTradingAddress from '../../../../../helpers/nullify-company-different-trading-address-data';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
 const {
@@ -24,13 +23,13 @@ describe('controllers/insurance/business/map-and-save/company-details - with TRA
   const mockSaveCompanyAddress = mockSpyPromise();
 
   saveCompany.companyDetails = mockSaveCompanyDetails;
-  saveAddress.companyDifferentTradingAddress = mockSaveCompanyAddress;
+  nullify.companyDifferentTradingAddress = mockSaveCompanyAddress;
 
-  it('should call saveAddress.companyDifferentTradingAddress with application and nullified data', async () => {
+  it('should call nullify.companyDifferentTradingAddress with application', async () => {
     await mapAndSave.companyDetails(mockFormBody, mockApplication);
 
-    expect(saveAddress.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
-    expect(saveAddress.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, nullifyCompanyDifferentTradingAddress());
+    expect(nullify.companyDifferentTradingAddress).toHaveBeenCalledTimes(1);
+    expect(nullify.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication);
   });
 
   it('should return true', async () => {
