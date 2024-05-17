@@ -67,7 +67,7 @@ context(`Insurance - Policy - Other company details page - Changing ${REQUESTED}
       cy.navigateToUrl(url);
     });
 
-    it('should not have fields populated on different name on policy page', () => {
+    it('should NOT have fields populated on different name on policy page', () => {
       cy.checkValue(fieldSelector(COMPANY_NAME), '');
       cy.checkValue(autoCompleteField(COUNTRY_CODE), '');
       cy.checkValue(fieldSelector(COMPANY_NUMBER), '');

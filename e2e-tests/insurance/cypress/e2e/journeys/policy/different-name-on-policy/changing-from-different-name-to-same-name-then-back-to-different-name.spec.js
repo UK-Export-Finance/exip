@@ -1,6 +1,6 @@
 import { summaryList } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/policy';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -10,10 +10,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { NAME, SAME_NAME, OTHER_NAME },
-  },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { NAME, SAME_NAME, OTHER_NAME },
+} = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -64,7 +62,7 @@ context(`Insurance - Policy - Different name on Policy page - Changing ${OTHER_N
       cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
     });
 
-    it('should not have fields populated on different name on policy page', () => {
+    it('should NOT have fields populated on different name on policy page', () => {
       cy.assertDifferentNameOnPolicyFieldValues({});
     });
   });

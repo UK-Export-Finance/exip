@@ -1,13 +1,16 @@
-import { summaryList } from '../../../../../../../pages/shared';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import { summaryList } from '../../../../../../../../pages/shared';
+import partials from '../../../../../../../../partials';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
 
 const {
-  ROOT,
+  ROOT: INSURANCE_ROOT,
   POLICY: {
-    CHECK_YOUR_ANSWERS,
-    NAME_ON_POLICY_CHANGE,
-    DIFFERENT_NAME_ON_POLICY_CHANGE,
+    DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE,
+    NAME_ON_POLICY_CHECK_AND_CHANGE,
+  },
+  CHECK_YOUR_ANSWERS: {
+    TYPE_OF_POLICY,
   },
 } = INSURANCE_ROUTES;
 
@@ -18,11 +21,15 @@ const {
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.submitApplication.tasks.checkAnswers;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Policy contact - Different name fields - As an exporter, I want to change my answers to the different name on policy', () => {
-  let referenceNumber;
+context('Insurance - Change your answers - Policy - Different name fields - As an exporter, I want to change my answers to the different name on policy', () => {
   let url;
+  let referenceNumber;
 
   const newPosition = 'Boss';
   const newEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_2');
@@ -32,10 +39,15 @@ context('Insurance - Policy - Change your answers - Policy contact - Different n
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
+      cy.completePrepareApplicationMultiplePolicyType({ differentPolicyContact: true });
 
-      cy.completePolicySection({ sameName: false });
+      task.link().click();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      // To get past previous "Check your answers" pages
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 2 });
+
+      url = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${TYPE_OF_POLICY}`;
+
       cy.assertUrl(url);
     });
   });
@@ -52,12 +64,12 @@ context('Insurance - Policy - Change your answers - Policy contact - Different n
     const fieldId = POSITION;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
+      it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: DIFFERENT_NAME_ON_POLICY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -85,12 +97,12 @@ context('Insurance - Policy - Change your answers - Policy contact - Different n
     const fieldId = EMAIL;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
+      it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: DIFFERENT_NAME_ON_POLICY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: DIFFERENT_NAME_ON_POLICY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -118,12 +130,12 @@ context('Insurance - Policy - Change your answers - Policy contact - Different n
     const fieldId = NAME;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
+      it(`should redirect to ${NAME_ON_POLICY_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
