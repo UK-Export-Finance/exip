@@ -1,22 +1,15 @@
-import {
-  field,
-  status,
-  summaryList,
-} from '../../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
-import { FIELD_VALUES } from '../../../../../../../../constants';
+import checkSummaryList from '../../../../../../../../commands/insurance/check-policy-summary-list';
 
 const {
   ROOT,
   CHECK_YOUR_ANSWERS: {
     TYPE_OF_POLICY,
   },
-  POLICY: {
-    BROKER_CHECK_AND_CHANGE,
-    BROKER_DETAILS_ROOT,
-  },
+  POLICY: { BROKER_CHECK_AND_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -34,7 +27,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Policy - Broker - Yes to no - As an exporter, I want to change my answers to the broker section', () => {
+context('Insurance - Change your answers - Policy - Broker - No to yes - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let url;
 
@@ -42,7 +35,7 @@ context('Insurance - Change your answers - Policy - Broker - Yes to no - As an e
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: true });
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber, usingBroker: false });
 
       task.link().click();
 
@@ -79,51 +72,29 @@ context('Insurance - Change your answers - Policy - Broker - Yes to no - As an e
     });
   });
 
-  describe('after changing the answer from yes to no', () => {
+  describe('after changing the answer from no to yes and completing (now required) broker details fields', () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
-
-      summaryList.field(FIELD_ID).changeLink().click();
-
-      cy.completeAndSubmitBrokerForm({ usingBroker: false });
     });
 
     it(`should redirect to ${TYPE_OF_POLICY}`, () => {
+      summaryList.field(FIELD_ID).changeLink().click();
+
+      cy.completeAndSubmitBrokerForm({ usingBroker: true });
+      cy.completeAndSubmitBrokerDetailsForm({ usingBroker: true });
+
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: TYPE_OF_POLICY, fieldId: FIELD_ID });
     });
 
-    it(`should render new ${FIELD_ID} answer and change link, with no other broker details fields`, () => {
-      cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.NO);
-
-      cy.assertSummaryListRowDoesNotExist(summaryList, NAME);
-
-      /**
-       * Here, we can only assert the EMAIL field's "change" link.
-       * Otherwise, the other (non-broker) EMAIL field's key and value is picked up.
-       */
-      summaryList.field(EMAIL).changeLink().should('not.exist');
-
-      cy.assertSummaryListRowDoesNotExist(summaryList, FULL_ADDRESS);
+    it(`should render new ${FIELD_ID} answer and broker details fields`, () => {
+      checkSummaryList[FIELD_ID]({ usingBroker: true });
+      checkSummaryList.BROKER[NAME]({});
+      checkSummaryList.BROKER[FULL_ADDRESS]();
+      checkSummaryList.BROKER[EMAIL]();
     });
 
     it('should retain a `completed` status tag', () => {
       cy.checkTaskStatusCompleted(status);
-    });
-
-    describe(`when changing the answer again from no to yes and going back to ${BROKER_DETAILS_ROOT}`, () => {
-      it('should have empty field values', () => {
-        summaryList.field(FIELD_ID).changeLink().click();
-
-        cy.completeAndSubmitBrokerForm({ usingBroker: true });
-
-        cy.checkValue(field(NAME), '');
-        cy.checkValue(field(EMAIL), '');
-
-        cy.checkTextareaValue({
-          fieldId: FULL_ADDRESS,
-          expectedValue: '',
-        });
-      });
     });
   });
 });
