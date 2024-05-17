@@ -17,6 +17,8 @@ const getUnverifiedAccounts = async (context: Context): Promise<Account[]> => {
     /**
      * queries accounts which have a verificationExpiry before now
      * and where their isVerified, or isInactive statuses are false
+     * isVerified should be false as verified accounts should not be included
+     * isInactive should be false as accounts already marked as inactive should not be included
      * returns array accounts and their status
      */
     const accounts = (await context.query.Account.findMany({

@@ -87,12 +87,127 @@ var rateLimiter = (0, import_express_rate_limit.default)({
 });
 var rate_limiter_default = rateLimiter;
 
-// schema.ts
-var import_core2 = require("@keystone-6/core");
-var import_access = require("@keystone-6/core/access");
-var import_fields = require("@keystone-6/core/fields");
-var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns = require("date-fns");
+// cron/cron-job-scheduler.ts
+var cron = __toESM(require("node-cron"));
+
+// helpers/cron/scheduler.ts
+var asyncTaskToSyncTask = (task, context) => (now2) => {
+  (async () => {
+    await task(context, now2);
+  })();
+};
+var taskWithErrorLogging = (description, task, context) => async (_commonContext, now2) => {
+  try {
+    await task(context, now2);
+  } catch (error) {
+    console.error("An error occurred running job '%s' %o", description, error);
+    throw error;
+  }
+};
+
+// cron/cron-job-scheduler.ts
+var cronJobScheduler = (jobs, context) => {
+  jobs.forEach((job) => {
+    const { cronExpression, description, task } = job;
+    if (!cron.validate(cronExpression)) {
+      console.error("Failed to add scheduled job '%s' due to invalid cron expression: '%s'", description, cronExpression);
+      return;
+    }
+    console.info("Adding scheduled job '%s' on schedule '%s'", description, cronExpression);
+    cron.schedule(cronExpression, asyncTaskToSyncTask(taskWithErrorLogging(description, task, context), context)).on("error", (error) => console.error("An error occurred scheduling job '%s' %o", description, error));
+  });
+};
+var cron_job_scheduler_default = cronJobScheduler;
+
+// cron/account/unverified-account-cron-job.ts
+var import_dotenv2 = __toESM(require("dotenv"));
+
+// helpers/get-unverified-accounts/index.ts
+var now = /* @__PURE__ */ new Date();
+var getUnverifiedAccounts = async (context) => {
+  try {
+    console.info("Getting unverified accounts - getUnverifiedAccounts (helper)");
+    const accounts = await context.query.Account.findMany({
+      where: {
+        AND: [{ verificationExpiry: { lt: now } }, { status: { isVerified: { equals: false } } }, { status: { isInactive: { equals: false } } }]
+      },
+      query: "id firstName lastName email otpSalt otpHash otpExpiry salt hash passwordResetHash passwordResetExpiry verificationHash verificationExpiry reactivationHash reactivationExpiry updatedAt status { id isBlocked isVerified isInactive updatedAt }"
+    });
+    return accounts;
+  } catch (err) {
+    console.error("Error getting unverified accounts (getUnverifiedAccounts helper) %O", err);
+    throw new Error(`Error getting unverified accounts (getUnverifiedAccounts helper) ${err}`);
+  }
+};
+var get_unverified_accounts_default = getUnverifiedAccounts;
+
+// helpers/map-unverified-accounts/index.ts
+var mapUnverifiedAccounts = (accounts) => {
+  const mappedAccountStatusArray = accounts.map((account2) => {
+    const mapped = {
+      where: { id: account2.status.id },
+      data: {
+        isInactive: true,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    };
+    return mapped;
+  });
+  const mappedAccountArray = accounts.map((account2) => {
+    const mapped = {
+      where: { id: account2.id },
+      data: {
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    };
+    return mapped;
+  });
+  return {
+    accountStatus: mappedAccountStatusArray,
+    account: mappedAccountArray
+  };
+};
+var map_unverified_accounts_default = mapUnverifiedAccounts;
+
+// helpers/map-and-update-unverified-accounts/index.ts
+var mapAndUpdateUnverifiedAccounts = async (accounts, context) => {
+  try {
+    console.info("Mapping and updating unverified accounts - mapAndUpdateUnverifiedAccounts");
+    const { account: account2, accountStatus: accountStatus2 } = map_unverified_accounts_default(accounts);
+    await context.db.Account.updateMany({
+      data: account2
+    });
+    await context.db.AccountStatus.updateMany({
+      data: accountStatus2
+    });
+  } catch (err) {
+    console.error("Error mapping and updating unverified accounts %O", err);
+    throw new Error(`Error mapping and updating unverified accounts ${err}`);
+  }
+};
+var map_and_update_unverified_accounts_default = mapAndUpdateUnverifiedAccounts;
+
+// helpers/update-unverified-accounts/index.ts
+var updateUnverifiedAccounts = async (context) => {
+  try {
+    console.info("Getting and updating unverified accounts");
+    const accounts = await get_unverified_accounts_default(context);
+    if (accounts.length) {
+      await map_and_update_unverified_accounts_default(accounts, context);
+      return {
+        success: true
+      };
+    }
+    console.info("No unverified accounts found - updateUnverifiedAccounts");
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting and updating unverified accounts %O", err);
+    throw new Error(`Error getting and updating unverified accounts ${err}`);
+  }
+};
+var update_unverified_accounts_default = updateUnverifiedAccounts;
 
 // constants/index.ts
 var import_dotenv = __toESM(require("dotenv"));
@@ -573,6 +688,10 @@ var COVER_PERIOD = {
   }
 };
 
+// constants/cron/index.ts
+var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
+var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
+
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
@@ -739,22 +858,22 @@ var XLSX_CONFIG = {
 import_dotenv.default.config();
 var GBP_CURRENCY_CODE = "GBP";
 var DATE_24_HOURS_FROM_NOW = () => {
-  const now = /* @__PURE__ */ new Date();
-  const day = now.getDate();
-  const tomorrow = new Date(now.setDate(day + 1));
+  const now2 = /* @__PURE__ */ new Date();
+  const day = now2.getDate();
+  const tomorrow = new Date(now2.setDate(day + 1));
   return tomorrow;
 };
 var DATE_24_HOURS_IN_THE_PAST = () => {
-  const now = /* @__PURE__ */ new Date();
-  const day = now.getDate();
-  const yesterday = new Date(now.setDate(day - 1));
+  const now2 = /* @__PURE__ */ new Date();
+  const day = now2.getDate();
+  const yesterday = new Date(now2.setDate(day - 1));
   return yesterday;
 };
 var DATE_30_MINUTES_FROM_NOW = () => {
-  const now = /* @__PURE__ */ new Date();
+  const now2 = /* @__PURE__ */ new Date();
   const minutes = 30;
   const milliseconds = 6e4;
-  const future = new Date(now.getTime() + minutes * milliseconds);
+  const future = new Date(now2.getTime() + minutes * milliseconds);
   return future;
 };
 var ACCOUNT2 = {
@@ -798,10 +917,10 @@ var ACCOUNT2 = {
       ALGORITHM: "RS256"
     },
     SESSION_EXPIRY: () => {
-      const now = /* @__PURE__ */ new Date();
+      const now2 = /* @__PURE__ */ new Date();
       const hours = 12;
       const seconds = 60 * 60 * 1e3;
-      const future = new Date(now.getTime() + hours * seconds);
+      const future = new Date(now2.getTime() + hours * seconds);
       return future;
     }
   },
@@ -889,17 +1008,140 @@ var DATE_FORMAT = {
 };
 var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
+// cron/account/unverified-account-cron-job.ts
+import_dotenv2.default.config();
+var { CRON_SCHEDULE_UNVERIFIED_ACCOUNT } = process.env;
+var updateUnverifiedAccountsJob = {
+  cronExpression: String(CRON_SCHEDULE_UNVERIFIED_ACCOUNT),
+  description: CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED,
+  task: update_unverified_accounts_default
+};
+var unverified_account_cron_job_default = updateUnverifiedAccountsJob;
+
+// cron/account/index.ts
+var accountCronSchedulerJobs = [unverified_account_cron_job_default];
+var account_default2 = accountCronSchedulerJobs;
+
+// cron/application/inactive-application-cron-job.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+
+// helpers/date/index.ts
+var getThirtyDaysBeforeNow = () => {
+  const now2 = /* @__PURE__ */ new Date();
+  const result = now2.setDate(now2.getDate() - 30);
+  return new Date(result);
+};
+
+// helpers/get-inactive-applications/index.ts
+var { IN_PROGRESS } = APPLICATION.STATUS;
+var getInactiveApplications = async (context) => {
+  try {
+    console.info("Getting inactive applications - getInactiveApplications helper");
+    const thirtyDaysLimit = getThirtyDaysBeforeNow();
+    const applications = await context.query.Application.findMany({
+      where: {
+        AND: [{ status: { in: [IN_PROGRESS] } }, { updatedAt: { lt: thirtyDaysLimit } }]
+      },
+      query: "id status"
+    });
+    return applications;
+  } catch (err) {
+    console.error("Error getting inactive applications (getInactiveApplications helper) %O", err);
+    throw new Error(`Error getting inactive applications (getInactiveApplications helper) ${err}`);
+  }
+};
+var get_inactive_applications_default = getInactiveApplications;
+
+// helpers/map-inactive-applications/index.ts
+var mapInactiveApplications = (applications) => {
+  const mappedArray = applications.map((application2) => {
+    const mapped = {
+      where: { id: application2.id },
+      data: {
+        status: APPLICATION.STATUS.ABANDONED,
+        previousStatus: application2.status,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    };
+    return mapped;
+  });
+  return mappedArray;
+};
+var map_inactive_applications_default = mapInactiveApplications;
+
+// helpers/map-and-update-inactive-applications/index.ts
+var mapAndUpdateInactiveApplications = async (applications, context) => {
+  try {
+    console.info("Mapping and updating inactive applications - mapAndUpdateInactiveApplications");
+    const updateData = map_inactive_applications_default(applications);
+    await context.db.Application.updateMany({
+      data: updateData
+    });
+  } catch (err) {
+    console.error("Error mapping and updating inactive applications %O", err);
+    throw new Error(`Error mapping and updating inactive applications ${err}`);
+  }
+};
+var map_and_update_inactive_applications_default = mapAndUpdateInactiveApplications;
+
+// helpers/update-inactive-applications/index.ts
+var updateInactiveApplications = async (context) => {
+  try {
+    console.info("Getting and updating inactive applications");
+    const applications = await get_inactive_applications_default(context);
+    if (applications.length) {
+      await map_and_update_inactive_applications_default(applications, context);
+    }
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error getting and updating inactive applications %O", err);
+    throw new Error(`Error getting and updating inactive applications ${err}`);
+  }
+};
+var update_inactive_applications_default = updateInactiveApplications;
+
+// cron/application/inactive-application-cron-job.ts
+import_dotenv3.default.config();
+var { CRON_SCHEDULE_INACTIVE_APPLICATION } = process.env;
+var updateInactiveApplicationsJob = {
+  cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION),
+  description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
+  task: update_inactive_applications_default
+};
+var inactive_application_cron_job_default = updateInactiveApplicationsJob;
+
+// cron/application/index.ts
+var applicationCronSchedulerJobs = [inactive_application_cron_job_default];
+var application_default2 = applicationCronSchedulerJobs;
+
+// cron/index.ts
+var cronJobs = (context) => {
+  console.info("Running cron jobs");
+  cron_job_scheduler_default(account_default2, context);
+  cron_job_scheduler_default(application_default2, context);
+};
+var cron_default = cronJobs;
+
+// schema.ts
+var import_core2 = require("@keystone-6/core");
+var import_access = require("@keystone-6/core/access");
+var import_fields = require("@keystone-6/core/fields");
+var import_fields_document = require("@keystone-6/fields-document");
+var import_date_fns = require("date-fns");
+
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
   try {
     console.info("Updating application updatedAt timestamp");
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const application2 = await context.db.Application.updateOne({
       where: {
         id: applicationId
       },
       data: {
-        updatedAt: now
+        updatedAt: now2
       }
     });
     return application2;
@@ -1081,10 +1323,10 @@ var lists = {
                 id: declarationId
               }
             };
-            const now = /* @__PURE__ */ new Date();
-            modifiedData.createdAt = now;
-            modifiedData.updatedAt = now;
-            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now), SUBMISSION_DEADLINE_IN_MONTHS);
+            const now2 = /* @__PURE__ */ new Date();
+            modifiedData.createdAt = now2;
+            modifiedData.updatedAt = now2;
+            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = SUBMISSION_TYPE.MIA;
             modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
@@ -2467,12 +2709,12 @@ var getFullNameString = (account2) => {
 var get_full_name_string_default = getFullNameString;
 
 // emails/index.ts
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_dotenv6 = __toESM(require("dotenv"));
 
 // integrations/notify/index.ts
-var import_dotenv2 = __toESM(require("dotenv"));
+var import_dotenv4 = __toESM(require("dotenv"));
 var import_notifications_node_client = require("notifications-node-client");
-import_dotenv2.default.config();
+import_dotenv4.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
@@ -2680,7 +2922,7 @@ var application = {
     }
   }
 };
-var application_default2 = application;
+var application_default3 = application;
 
 // emails/documents/index.ts
 var documentsEmail = async (variables, templateId) => {
@@ -2696,7 +2938,7 @@ var documentsEmail = async (variables, templateId) => {
 };
 
 // emails/insurance-feedback-email/index.ts
-var import_dotenv3 = __toESM(require("dotenv"));
+var import_dotenv5 = __toESM(require("dotenv"));
 
 // helpers/format-date/index.ts
 var import_date_fns2 = require("date-fns");
@@ -2708,7 +2950,7 @@ var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction
 var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 
 // emails/insurance-feedback-email/index.ts
-import_dotenv3.default.config();
+import_dotenv5.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info("Sending insurance feedback email");
@@ -2733,13 +2975,13 @@ var insuranceFeedbackEmail = async (variables) => {
 };
 
 // emails/index.ts
-import_dotenv4.default.config();
+import_dotenv6.default.config();
 var sendEmail = {
   confirmEmailAddress,
   accessCodeEmail,
   passwordResetLink,
   reactivateAccountLink,
-  application: application_default2,
+  application: application_default3,
   documentsEmail,
   insuranceFeedbackEmail
 };
@@ -2756,7 +2998,7 @@ var createAnAccount = async (root, variables, context) => {
       return { success: false };
     }
     const { salt, hash } = encrypt_password_default(password2);
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
     const accountData = {
       firstName,
@@ -2766,8 +3008,8 @@ var createAnAccount = async (root, variables, context) => {
       hash,
       verificationHash,
       verificationExpiry,
-      createdAt: now,
-      updatedAt: now
+      createdAt: now2,
+      updatedAt: now2
     };
     const creationResponse = await context.db.Account.createOne({
       data: accountData
@@ -2921,8 +3163,8 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     }
     const { id } = account2;
     const { id: statusId } = account2.status;
-    const now = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns3.isBefore)(now, account2[VERIFICATION_EXPIRY]);
+    const now2 = /* @__PURE__ */ new Date();
+    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info("Unable to verify account email address - verification period has expired");
       return {
@@ -3057,7 +3299,7 @@ var is_valid_account_password_default = isValidAccountPassword;
 var createAuthenticationRetryEntry = async (context, accountId) => {
   try {
     console.info("Creating account authentication retry entry");
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const response = await context.db.AuthenticationRetry.createOne({
       data: {
         account: {
@@ -3065,7 +3307,7 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
             id: accountId
           }
         },
-        createdAt: now
+        createdAt: now2
       }
     });
     if (response.id) {
@@ -3090,11 +3332,11 @@ var shouldBlockAccount = async (context, accountId) => {
   console.info("Checking account authentication retries %s", accountId);
   try {
     const retries = await get_authentication_retries_by_account_id_default(context, accountId);
-    const now = /* @__PURE__ */ new Date();
+    const now2 = /* @__PURE__ */ new Date();
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now);
+      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now2);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
@@ -3198,8 +3440,8 @@ var accountChecks = async (context, account2, urlOrigin) => {
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
       console.info("Unable to sign in account - account has not been verified yet");
-      const now = /* @__PURE__ */ new Date();
-      const verificationHasExpired = (0, import_date_fns5.isAfter)(now, account2.verificationExpiry);
+      const now2 = /* @__PURE__ */ new Date();
+      const verificationHasExpired = (0, import_date_fns5.isAfter)(now2, account2.verificationExpiry);
       if (account2.verificationHash && !verificationHasExpired) {
         console.info("Account has an unexpired verification token - resetting verification expiry");
         const accountUpdate = {
@@ -3414,8 +3656,8 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = account2;
-    const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns6.isAfter)(now, otpExpiry);
+    const now2 = /* @__PURE__ */ new Date();
+    const hasExpired = (0, import_date_fns6.isAfter)(now2, otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -3616,8 +3858,8 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
       return { success: false };
     }
-    const now = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns7.isAfter)(now, passwordResetExpiry);
+    const now2 = /* @__PURE__ */ new Date();
+    const hasExpired = (0, import_date_fns7.isAfter)(now2, passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -5726,15 +5968,15 @@ var submitApplication = async (root, variables, context) => {
     if (application2) {
       const { status, submissionDeadline, submissionCount } = application2;
       const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
-      const now = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now);
+      const now2 = /* @__PURE__ */ new Date();
+      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
         const update2 = {
           status: APPLICATION.STATUS.SUBMITTED,
           previousStatus: APPLICATION.STATUS.IN_PROGRESS,
-          submissionDate: now,
+          submissionDate: now2,
           submissionCount: submissionCount + 1
         };
         const updatedApplication = await context.db.Application.updateOne({
@@ -5800,8 +6042,8 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
     const account2 = await get_account_by_field_default(context, REACTIVATION_HASH, variables.token);
     if (account2) {
       console.info("Received a request to reactivate account - found account %s", account2.id);
-      const now = /* @__PURE__ */ new Date();
-      const canReactivateAccount = (0, import_date_fns9.isBefore)(now, account2[REACTIVATION_EXPIRY]);
+      const now2 = /* @__PURE__ */ new Date();
+      const canReactivateAccount = (0, import_date_fns9.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
@@ -6081,8 +6323,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv5 = __toESM(require("dotenv"));
-import_dotenv5.default.config();
+var import_dotenv7 = __toESM(require("dotenv"));
+import_dotenv7.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -6378,8 +6620,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv6 = __toESM(require("dotenv"));
-import_dotenv6.default.config();
+var import_dotenv8 = __toESM(require("dotenv"));
+import_dotenv8.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -6419,8 +6661,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv7 = __toESM(require("dotenv"));
-import_dotenv7.default.config();
+var import_dotenv9 = __toESM(require("dotenv"));
+import_dotenv9.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -6710,8 +6952,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv8 = __toESM(require("dotenv"));
-import_dotenv8.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {
@@ -6819,8 +7061,8 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
     const { token } = variables;
     const account2 = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
     if (account2) {
-      const now = /* @__PURE__ */ new Date();
-      const hasExpired = (0, import_date_fns10.isAfter)(now, account2[PASSWORD_RESET_EXPIRY]);
+      const now2 = /* @__PURE__ */ new Date();
+      const hasExpired = (0, import_date_fns10.isAfter)(now2, account2[PASSWORD_RESET_EXPIRY]);
       if (hasExpired) {
         console.info("Unable to verify account password reset token - token has expired");
         return {
@@ -6902,6 +7144,9 @@ var keystone_default = withAuth(
         if (isProdEnvironment) {
           app.use(rate_limiter_default);
         }
+      },
+      extendHttpServer: (httpServer, context) => {
+        cron_default(context);
       }
     },
     db: {
