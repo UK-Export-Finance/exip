@@ -1,3 +1,2 @@
 src/ui/public
 src/ui/generated_reports
-src/api/helpers/cron/scheduler.ts

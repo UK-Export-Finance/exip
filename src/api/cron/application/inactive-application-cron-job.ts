@@ -1,6 +1,6 @@
 import dotenv from 'dotenv';
 import updateInactiveApplications from '../../helpers/update-inactive-applications';
-import { UPDATE_INACTIVE_APPLICATION_DESCRIPTION } from '../../constants';
+import { CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE } from '../../constants';
 import { CronSchedulerJob } from '../../types';
 
 dotenv.config();
@@ -16,7 +16,7 @@ const { CRON_SCHEDULE_INACTIVE_APPLICATION } = process.env;
  */
 const updateInactiveApplicationsJob: CronSchedulerJob = {
   cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION),
-  description: UPDATE_INACTIVE_APPLICATION_DESCRIPTION,
+  description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
   task: updateInactiveApplications,
 };
 

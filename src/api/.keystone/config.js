@@ -87,7 +87,7 @@ var rateLimiter = (0, import_express_rate_limit.default)({
 });
 var rate_limiter_default = rateLimiter;
 
-// cron/index.ts
+// cron/cron-job-scheduler.ts
 var cron = __toESM(require("node-cron"));
 
 // helpers/cron/scheduler.ts
@@ -105,7 +105,7 @@ var taskWithErrorLogging = (description, task, context) => async (_commonContext
   }
 };
 
-// cron/index.ts
+// cron/cron-job-scheduler.ts
 var cronJobScheduler = (jobs, context) => {
   jobs.forEach((job) => {
     const { cronExpression, description, task } = job;
@@ -117,9 +117,10 @@ var cronJobScheduler = (jobs, context) => {
     cron.schedule(cronExpression, asyncTaskToSyncTask(taskWithErrorLogging(description, task, context), context)).on("error", (error) => console.error("An error occurred scheduling job '%s' %o", description, error));
   });
 };
+var cron_job_scheduler_default = cronJobScheduler;
 
 // cron/account/unverified-account-cron-job.ts
-var import_dotenv = __toESM(require("dotenv"));
+var import_dotenv2 = __toESM(require("dotenv"));
 
 // helpers/get-unverified-accounts/index.ts
 var now = /* @__PURE__ */ new Date();
@@ -208,31 +209,8 @@ var updateUnverifiedAccounts = async (context) => {
 };
 var update_unverified_accounts_default = updateUnverifiedAccounts;
 
-// cron/account/unverified-account-cron-job.ts
-import_dotenv.default.config();
-var { UNVERIFIED_ACCOUNT_SCHEDULE } = process.env;
-var unverifiedAccountSchedule = UNVERIFIED_ACCOUNT_SCHEDULE;
-var updateUnverifiedAccountsJob = {
-  cronExpression: unverifiedAccountSchedule,
-  description: "Update unverified accounts (over 24hrs) to isInactive",
-  task: update_unverified_accounts_default
-};
-
-// cron/account/index.ts
-var accountCronSchedulerJobs = [updateUnverifiedAccountsJob];
-
-// cron/application/inactive-application-cron-job.ts
-var import_dotenv3 = __toESM(require("dotenv"));
-
-// helpers/date/index.ts
-var getThirtyDaysBeforeNow = () => {
-  const now2 = /* @__PURE__ */ new Date();
-  const result = now2.setDate(now2.getDate() - 30);
-  return new Date(result);
-};
-
 // constants/index.ts
-var import_dotenv2 = __toESM(require("dotenv"));
+var import_dotenv = __toESM(require("dotenv"));
 
 // constants/field-ids/shared/index.ts
 var SHARED = {
@@ -710,6 +688,10 @@ var COVER_PERIOD = {
   }
 };
 
+// constants/cron/index.ts
+var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
+var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
+
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
@@ -873,7 +855,7 @@ var XLSX_CONFIG = {
 };
 
 // constants/index.ts
-import_dotenv2.default.config();
+import_dotenv.default.config();
 var GBP_CURRENCY_CODE = "GBP";
 var DATE_24_HOURS_FROM_NOW = () => {
   const now2 = /* @__PURE__ */ new Date();
@@ -1026,6 +1008,30 @@ var DATE_FORMAT = {
 };
 var ORDNANCE_SURVEY_QUERY_URL = "/search/places/v1/postcode?postcode=";
 
+// cron/account/unverified-account-cron-job.ts
+import_dotenv2.default.config();
+var { CRON_SCHEDULE_UNVERIFIED_ACCOUNT } = process.env;
+var updateUnverifiedAccountsJob = {
+  cronExpression: String(CRON_SCHEDULE_UNVERIFIED_ACCOUNT),
+  description: CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED,
+  task: update_unverified_accounts_default
+};
+var unverified_account_cron_job_default = updateUnverifiedAccountsJob;
+
+// cron/account/index.ts
+var accountCronSchedulerJobs = [unverified_account_cron_job_default];
+var account_default2 = accountCronSchedulerJobs;
+
+// cron/application/inactive-application-cron-job.ts
+var import_dotenv3 = __toESM(require("dotenv"));
+
+// helpers/date/index.ts
+var getThirtyDaysBeforeNow = () => {
+  const now2 = /* @__PURE__ */ new Date();
+  const result = now2.setDate(now2.getDate() - 30);
+  return new Date(result);
+};
+
 // helpers/get-inactive-applications/index.ts
 var { IN_PROGRESS } = APPLICATION.STATUS;
 var getInactiveApplications = async (context) => {
@@ -1098,22 +1104,23 @@ var update_inactive_applications_default = updateInactiveApplications;
 
 // cron/application/inactive-application-cron-job.ts
 import_dotenv3.default.config();
-var { INACTIVE_APPLICATION_SCHEDULE } = process.env;
-var inactiveApplicationSchedule = INACTIVE_APPLICATION_SCHEDULE;
+var { CRON_SCHEDULE_INACTIVE_APPLICATION } = process.env;
 var updateInactiveApplicationsJob = {
-  cronExpression: inactiveApplicationSchedule,
-  description: "Update inactive applications (over 30 days) to Abandoned",
+  cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION),
+  description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
   task: update_inactive_applications_default
 };
+var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
 // cron/application/index.ts
-var applicationCronSchedulerJobs = [updateInactiveApplicationsJob];
+var applicationCronSchedulerJobs = [inactive_application_cron_job_default];
+var application_default2 = applicationCronSchedulerJobs;
 
-// middleware/cron/index.ts
+// cron/index.ts
 var cronJobs = (context) => {
   console.info("Running cron jobs");
-  cronJobScheduler(accountCronSchedulerJobs, context);
-  cronJobScheduler(applicationCronSchedulerJobs, context);
+  cron_job_scheduler_default(account_default2, context);
+  cron_job_scheduler_default(application_default2, context);
 };
 var cron_default = cronJobs;
 
@@ -2915,7 +2922,7 @@ var application = {
     }
   }
 };
-var application_default2 = application;
+var application_default3 = application;
 
 // emails/documents/index.ts
 var documentsEmail = async (variables, templateId) => {
@@ -2974,7 +2981,7 @@ var sendEmail = {
   accessCodeEmail,
   passwordResetLink,
   reactivateAccountLink,
-  application: application_default2,
+  application: application_default3,
   documentsEmail,
   insuranceFeedbackEmail
 };
@@ -7138,8 +7145,8 @@ var keystone_default = withAuth(
           app.use(rate_limiter_default);
         }
       },
-      extendHttpServer: (httpServer, commonContext) => {
-        cron_default(commonContext);
+      extendHttpServer: (httpServer, context) => {
+        cron_default(context);
       }
     },
     db: {
