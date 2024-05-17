@@ -17,7 +17,8 @@ import { mockReq, mockRes, mockApplication, mockCountries } from '../../../../te
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS_SAVE_AND_BACK },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  POLICY: { BROKER_ROOT, CHECK_YOUR_ANSWERS, OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE, OTHER_COMPANY_DETAILS_CHANGE, OTHER_COMPANY_DETAILS_SAVE_AND_BACK },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -219,8 +220,6 @@ describe('controllers/insurance/policy/other-company-details', () => {
       });
 
       it('should call mapAndSave.jointlyInsuredParty once with data from constructPayload function', async () => {
-        req.body = validBody;
-
         await post(req, res);
 
         const payload = constructPayload(req.body, FIELD_IDS);
@@ -238,6 +237,30 @@ describe('controllers/insurance/policy/other-company-details', () => {
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is 'change'", () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.originalUrl = OTHER_COMPANY_DETAILS_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is 'check-and-change'", () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.originalUrl = OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

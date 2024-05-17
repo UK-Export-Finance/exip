@@ -9,11 +9,21 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from '../../../../shared-validation/yes-no-radios-form';
 import mapAndSave from '../map-and-save/jointly-insured-party';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS, ANOTHER_COMPANY_SAVE_AND_BACK },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  POLICY: {
+    BROKER_ROOT,
+    OTHER_COMPANY_DETAILS,
+    OTHER_COMPANY_DETAILS_CHANGE,
+    OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE,
+    ANOTHER_COMPANY_SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+  },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -135,9 +145,42 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const answer = payload[FIELD_ID];
+    const requestedJointlyInsuredParty = payload[FIELD_ID] === 'true';
 
-    if (answer === 'true') {
+    /**
+     * If the route is a "change" route,
+     * the exporter has REQUESTED a jointly insured party,
+     * redirect to OTHER_COMPANY_DETAILS_CHANGE form.
+     * Otherwise, redirect to CHECK_YOUR_ANSWERS.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      if (requestedJointlyInsuredParty) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the route is a "check and change" route,
+     * the exporter has REQUESTED a jointly insured party,
+     * redirect to OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE form.
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE.
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (requestedJointlyInsuredParty) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS_CHECK_AND_CHANGE}`);
+      }
+
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
+    }
+
+    /**
+     * If the exporter has REQUESTED a jointly insured party,
+     * redirect to OTHER_COMPANY_DETAILS form.
+     * Otherwise, redirect to BROKER_ROOT.
+     */
+    if (requestedJointlyInsuredParty) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${OTHER_COMPANY_DETAILS}`);
     }
 

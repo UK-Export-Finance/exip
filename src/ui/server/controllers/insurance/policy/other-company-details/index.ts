@@ -12,11 +12,14 @@ import constructPayload from '../../../../helpers/construct-payload';
 import { sanitiseData } from '../../../../helpers/sanitise-data';
 import generateValidationErrors from './validation';
 import mapAndSave from '../map-and-save/jointly-insured-party';
+import isChangeRoute from '../../../../helpers/is-change-route';
+import isCheckAndChangeRoute from '../../../../helpers/is-check-and-change-route';
 import { Request, Response } from '../../../../../types';
 
 const {
   INSURANCE_ROOT,
-  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS_SAVE_AND_BACK },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY: CHECK_AND_CHANGE_ROUTE },
+  POLICY: { BROKER_ROOT, OTHER_COMPANY_DETAILS_SAVE_AND_BACK, CHECK_YOUR_ANSWERS },
   PROBLEM_WITH_SERVICE,
 } = INSURANCE_ROUTES;
 
@@ -151,6 +154,23 @@ export const post = async (req: Request, res: Response) => {
 
     if (!saveResponse) {
       return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    /**
+     * If the route is a "change" route,
+     * redirect to CHECK_YOUR_ANSWERS form.
+     */
+    if (isChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
+    }
+
+    /**
+     * If the route is a "check and change" route,
+     * redirect to CHECK_AND_CHANGE_ROUTE form.
+     * Otherwise, redirect to BROKER_ROOT.
+     */
+    if (isCheckAndChangeRoute(req.originalUrl)) {
+      return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
     return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${BROKER_ROOT}`);
