@@ -5,7 +5,7 @@
 # the workflow will exit with an error, preventing the pull request from proceeding.
 
 name: GitHub
-run-name: 🔬Pull request inspection on ${{ github.event.number }}
+run-name: 🔬 Pull request inspection on ${{ github.event.number }}
 
 on:
   pull_request:
@@ -33,6 +33,7 @@ jobs:
   # 2. Pull request
   pullrequest:
     name: Pull request ⬇️
+    needs: setup
     environment:
       name: ${{ needs.setup.outputs.environment }}
     runs-on: ubuntu-latest
