@@ -41,7 +41,10 @@ context('Insurance - Check your answers - Company details - Credit control - Sum
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({
+        referenceNumber,
+        hasCreditControlProcess: true,
+      });
 
       task.link().click();
 
