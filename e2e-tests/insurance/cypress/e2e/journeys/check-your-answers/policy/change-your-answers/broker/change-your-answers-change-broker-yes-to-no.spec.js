@@ -34,7 +34,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Change your answers - Policy - Summary list - Broker - Yes to no', () => {
+context('Insurance - Change your answers - Policy - Broker - Yes to no - As an exporter, I want to change my answers to the broker section', () => {
   let referenceNumber;
   let url;
 
