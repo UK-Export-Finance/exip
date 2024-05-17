@@ -135,7 +135,7 @@ context('Insurance - application submitted page', () => {
         cy.checkLink(
           helpUsImprove.feedback.link(),
           FEEDBACK,
-          CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT,
+          `${CONTENT_STRINGS.HELP_US_IMPROVE.FEEDBACK.LINK.TEXT}.`,
         );
       });
     });
