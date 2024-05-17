@@ -2,6 +2,7 @@ import { status, summaryList } from '../../../../../../../../pages/shared';
 import partials from '../../../../../../../../partials';
 import FIELD_IDS from '../../../../../../../../constants/field-ids/insurance/export-contract';
 import { INSURANCE_ROUTES } from '../../../../../../../../constants/routes/insurance';
+import formatCurrency from '../../../../../../../../helpers/format-currency';
 import application from '../../../../../../../../fixtures/application';
 
 const {
@@ -89,7 +90,9 @@ context(`Insurance - Change your answers - Export contract - Summary list - Agen
     });
 
     it('should render the new answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+      const expectedAnswer = formatCurrency(newValueInput);
+
+      cy.assertSummaryListRowValue(summaryList, fieldId, expectedAnswer);
     });
 
     it('should retain a `completed` status tag', () => {

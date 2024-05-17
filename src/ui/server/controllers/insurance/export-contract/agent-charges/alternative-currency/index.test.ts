@@ -25,7 +25,13 @@ import {
 const {
   INSURANCE_ROOT,
   PROBLEM_WITH_SERVICE,
-  EXPORT_CONTRACT: { AGENT_CHARGES },
+  EXPORT_CONTRACT: {
+    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE,
+    AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE,
+    AGENT_CHARGES,
+    AGENT_CHARGES_CHANGE,
+    AGENT_CHARGES_CHECK_AND_CHANGE,
+  },
 } = INSURANCE_ROUTES;
 
 const {
@@ -259,6 +265,34 @@ describe('controllers/insurance/export-contract/agent-charges/alternative-curren
         const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES}`;
 
         expect(res.redirect).toHaveBeenCalledWith(expected);
+      });
+
+      describe("when the url's last substring is `change`", () => {
+        it(`should redirect to ${AGENT_CHARGES_CHANGE}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe("when the url's last substring is `check-and-change`", () => {
+        it(`should redirect to ${AGENT_CHARGES_CHECK_AND_CHANGE}`, async () => {
+          req.body = validBody;
+
+          req.originalUrl = AGENT_CHARGES_ALTERNATIVE_CURRENCY_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${AGENT_CHARGES_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
       });
     });
 

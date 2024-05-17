@@ -1,6 +1,7 @@
 import { field, summaryList } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
+import formatCurrency from '../../../../../../../helpers/format-currency';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -73,7 +74,9 @@ context(`Insurance - Export contract - Change your answers - Agent charges - ${F
     });
 
     it('should render the new answer', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, newValueInput);
+      const expectedAnswer = formatCurrency(newValueInput);
+
+      cy.assertSummaryListRowValue(summaryList, fieldId, expectedAnswer);
     });
   });
 });

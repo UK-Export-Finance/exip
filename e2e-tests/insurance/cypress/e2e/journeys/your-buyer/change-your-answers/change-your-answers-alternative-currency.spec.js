@@ -56,7 +56,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
 
   describe(`changing ${CURRENCY_CODE} to ${SYMBOLS.EUR}`, () => {
     const fieldId = OUTSTANDING_PAYMENTS;
-    const currency = EUR_CURRENCY_CODE;
+    const currencyCode = EUR_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
@@ -76,7 +76,8 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitAlternativeCurrencyForm({ isoCode: EUR_CURRENCY_CODE });
-        // submit trading-history page
+
+        // submit TRADING_HISTORY form
         cy.clickSubmitButton();
       });
 
@@ -86,14 +87,14 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
 
       it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE} including ${SYMBOLS.EUR}`, () => {
         const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
-        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
+        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currencyCode);
 
         cy.checkText(row.value(), expected);
       });
 
       it(`should render the new answer for ${TOTAL_OUTSTANDING_PAYMENTS} including ${SYMBOLS.EUR}`, () => {
         const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
-        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
+        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currencyCode);
 
         cy.checkText(row.value(), expected);
       });
@@ -102,7 +103,7 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
 
   describe(`changing ${CURRENCY_CODE} to an alternative currency`, () => {
     const fieldId = OUTSTANDING_PAYMENTS;
-    const currency = NON_STANDARD_CURRENCY_CODE;
+    const currencyCode = NON_STANDARD_CURRENCY_CODE;
 
     describe('when clicking the `change` link', () => {
       it(`should redirect to ${ALTERNATIVE_CURRENCY_CHANGE}`, () => {
@@ -122,7 +123,8 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitAlternativeCurrencyForm({ alternativeCurrency: true });
-        // submit trading-history page
+
+        // submit TRADING_HISTORY form
         cy.clickSubmitButton();
       });
 
@@ -132,14 +134,14 @@ context('Insurance - Your buyer - Change your answers - Alternative currency - A
 
       it(`should render the new answer for ${TOTAL_AMOUNT_OVERDUE}`, () => {
         const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
-        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
+        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currencyCode);
 
         cy.checkText(row.value(), expected);
       });
 
       it(`should render the new answer for ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
         const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
-        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
+        const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currencyCode);
 
         cy.checkText(row.value(), expected);
       });
