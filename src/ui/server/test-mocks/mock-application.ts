@@ -51,6 +51,7 @@ export const mockExportContractAgentServiceCharge = {
   id: 'clldfm6pt000noqa6fs6cj5xm',
   percentageCharge: '10',
   fixedSumAmount: '1500',
+  fixedSumCurrencyCode: mockCountries[0].isoCode,
   payableCountryCode: mockCountries[0].isoCode,
   method: APPLICATION.EXPORT_CONTRACT.AGENT_SERVICE_CHARGE.METHOD.FIXED_SUM,
 };

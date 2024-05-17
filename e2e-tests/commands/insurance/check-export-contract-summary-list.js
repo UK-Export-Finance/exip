@@ -3,6 +3,7 @@ import getSummaryListField from './get-summary-list-field';
 import { EXPECTED_SINGLE_LINE_STRING, FIELD_VALUES } from '../../constants';
 import FIELD_IDS from '../../constants/field-ids/insurance/export-contract';
 import { EXPORT_CONTRACT_FIELDS as FIELDS } from '../../content-strings/fields/insurance/export-contract';
+import formatCurrency from '../../helpers/format-currency';
 import application from '../../fixtures/application';
 import COUNTRIES from '../../fixtures/countries';
 
@@ -13,7 +14,9 @@ const {
   USING_AGENT,
   AGENT_DETAILS: { NAME, FULL_ADDRESS, COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-  AGENT_CHARGES: { FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE },
+  AGENT_CHARGES: {
+    FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE_CHARGE, PAYABLE_COUNTRY_CODE,
+  },
 } = FIELD_IDS;
 
 /**
@@ -226,7 +229,9 @@ const checkExportContractSummaryList = ({
     if (shouldRender) {
       const { expectedKey, expectedChangeLinkText } = getSummaryListField(fieldId, FIELDS.AGENT_CHARGES);
 
-      const expectedValue = application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId];
+      const currencyCode = application.EXPORT_CONTRACT.AGENT_CHARGES[FIXED_SUM_CURRENCY_CODE];
+
+      const expectedValue = formatCurrency(application.EXPORT_CONTRACT.AGENT_CHARGES[fieldId], currencyCode);
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
     } else {

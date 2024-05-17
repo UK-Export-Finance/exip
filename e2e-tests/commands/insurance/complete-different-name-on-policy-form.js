@@ -19,22 +19,33 @@ const { POLICY_CONTACT } = mockApplication;
 
 /**
  * completeDifferentNameOnPolicyForm
- * Runs through the different name on policy form in the "policy" section
- * @param {String} First name
- * @param {String} Last name
- * @param {String} email
+ * Complete the "different name on policy form"
+ * @param {String} firstName: First name
+ * @param {String} lastName: Last name
+ * @param {String} email: Email
+ * @param {String} position: Position
  */
 const completeDifferentNameOnPolicyForm = ({
   firstName = POLICY_CONTACT[FIRST_NAME],
   lastName = POLICY_CONTACT[LAST_NAME],
   email = POLICY_CONTACT[EMAIL],
+  position = POLICY_CONTACT[POSITION],
 }) => {
-  cy.keyboardInput(field(FIRST_NAME).input(), firstName);
-  cy.keyboardInput(field(LAST_NAME).input(), lastName);
+  if (firstName) {
+    cy.keyboardInput(field(FIRST_NAME).input(), firstName);
+  }
 
-  cy.keyboardInput(field(EMAIL).input(), email);
+  if (lastName) {
+    cy.keyboardInput(field(LAST_NAME).input(), lastName);
+  }
 
-  cy.keyboardInput(field(POSITION).input(), POLICY_CONTACT[POSITION]);
+  if (email) {
+    cy.keyboardInput(field(EMAIL).input(), email);
+  }
+
+  if (position) {
+    cy.keyboardInput(field(POSITION).input(), position);
+  }
 };
 
 export default completeDifferentNameOnPolicyForm;

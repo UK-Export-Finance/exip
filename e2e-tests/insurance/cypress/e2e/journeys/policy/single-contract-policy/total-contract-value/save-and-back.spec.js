@@ -99,7 +99,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
         cy.clickSubmitButtonMultipleTimes({ count: 2 });
       });
 
-      it('should not have saved the submitted value', () => {
+      it('should NOT have saved the submitted value', () => {
         field.input().should('have.value', '');
       });
     });

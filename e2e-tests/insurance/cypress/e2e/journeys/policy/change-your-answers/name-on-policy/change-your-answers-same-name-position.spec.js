@@ -1,6 +1,5 @@
 import { summaryList, field } from '../../../../../../../pages/shared';
-import account from '../../../../../../../fixtures/account';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -11,15 +10,14 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { NAME, POSITION },
-  },
-  ACCOUNT: { FIRST_NAME, LAST_NAME },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { POSITION },
+} = FIELD_IDS;
+
+const fieldId = POSITION;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers to the same name on policy as policy owner', () => {
+context(`Insurance - Policy - Change your answers - Policy contact - Same name - ${POSITION} - As an exporter, I want to change my answers to the same name on policy as policy owner`, () => {
   let referenceNumber;
   let url;
 
@@ -42,38 +40,31 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(POSITION, () => {
-    const fieldId = POSITION;
+  describe('when clicking the `change` link', () => {
+    it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
+      cy.navigateToUrl(url);
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      summaryList.field(fieldId).changeLink().click();
 
-        summaryList.field(fieldId).changeLink().click();
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
+    });
+  });
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
-      });
+  describe('form submission with a new answer', () => {
+    const newAnswer = 'Boss';
+
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.keyboardInput(field(POSITION).input(), newAnswer);
+
+      cy.clickSubmitButton();
     });
 
-    describe('form submission with a new answer', () => {
-      const newAnswer = 'Boss';
-
-      beforeEach(() => {
-        cy.navigateToUrl(url);
-
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.keyboardInput(field(POSITION).input(), newAnswer);
-
-        cy.clickSubmitButton();
-      });
-
-      it('should render the new answers when completing the same name on policy form', () => {
-        const oldName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
-
-        cy.assertSummaryListRowValue(summaryList, NAME, oldName);
-        cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
-      });
+    it('should render the new answers when completing the same name on policy form', () => {
+      cy.assertSummaryListRowValue(summaryList, POSITION, newAnswer);
     });
   });
 });

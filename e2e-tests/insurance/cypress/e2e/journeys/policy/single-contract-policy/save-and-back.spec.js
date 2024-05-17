@@ -92,7 +92,7 @@ context('Insurance - Policy - Single contract policy page - Save and go back', (
       cy.checkTaskPolicyStatusIsInProgress();
     });
 
-    it('should not have saved the submitted values when going back to the page', () => {
+    it('should NOT have saved the submitted values when going back to the page', () => {
       cy.startInsurancePolicySection({});
       cy.clickSubmitButton();
 

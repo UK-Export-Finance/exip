@@ -18,9 +18,11 @@ const {
   ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
 } = INSURANCE_FIELD_IDS;
 
-const baseUrl = Cypress.config('baseUrl');
-
 const { POLICY_CONTACT } = application;
+
+const fieldId = NAME;
+
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Change your answers - Policy contact - As an exporter, I want to change my answers to a different name on policy', () => {
   let referenceNumber;
@@ -47,43 +49,39 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
     cy.deleteApplication(referenceNumber);
   });
 
-  describe(NAME, () => {
-    const fieldId = NAME;
+  describe('when clicking the `change` link', () => {
+    it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
+      cy.navigateToUrl(url);
 
-    describe('when clicking the `change` link', () => {
-      it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
-        cy.navigateToUrl(url);
+      summaryList.field(fieldId).changeLink().click();
 
-        summaryList.field(fieldId).changeLink().click();
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
+    });
+  });
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
-      });
+  describe('form submission with a new answer', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
     });
 
-    describe('form submission with a new answer', () => {
-      beforeEach(() => {
-        cy.navigateToUrl(url);
+    it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHANGE}`, () => {
+      cy.assertUrl(`${differentNameUrl}#${fieldId}-label`);
+    });
 
-        summaryList.field(fieldId).changeLink().click();
+    it('should render the new answers when completing different name on policy form', () => {
+      cy.completeAndSubmitDifferentNameOnPolicyForm({});
 
-        cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
-      });
+      const newName = `${POLICY_CONTACT[FIRST_NAME]} ${POLICY_CONTACT[LAST_NAME]}`;
+      const newEmail = POLICY_CONTACT[EMAIL];
+      const newPosition = POLICY_CONTACT[POSITION];
 
-      it(`should redirect to ${DIFFERENT_NAME_ON_POLICY_CHANGE}`, () => {
-        cy.assertUrl(`${differentNameUrl}#${fieldId}-label`);
-      });
-
-      it('should render the new answers when completing different name on policy form', () => {
-        cy.completeAndSubmitDifferentNameOnPolicyForm({});
-
-        const newName = `${POLICY_CONTACT[FIRST_NAME]} ${POLICY_CONTACT[LAST_NAME]}`;
-        const newEmail = POLICY_CONTACT[EMAIL];
-        const newPosition = POLICY_CONTACT[POSITION];
-
-        cy.assertSummaryListRowValue(summaryList, fieldId, newName);
-        cy.assertSummaryListRowValue(summaryList, EMAIL, newEmail);
-        cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
-      });
+      cy.assertSummaryListRowValue(summaryList, fieldId, newName);
+      cy.assertSummaryListRowValue(summaryList, EMAIL, newEmail);
+      cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
     });
   });
 });

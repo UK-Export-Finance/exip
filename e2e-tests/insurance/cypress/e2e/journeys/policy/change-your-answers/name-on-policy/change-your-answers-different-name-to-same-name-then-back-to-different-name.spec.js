@@ -1,7 +1,5 @@
 import { summaryList } from '../../../../../../../pages/shared';
-import application from '../../../../../../../fixtures/application';
-import account from '../../../../../../../fixtures/account';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { POLICY as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
 import { INSURANCE_ROUTES, INSURANCE_ROOT } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -12,13 +10,18 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  POLICY: {
-    NAME_ON_POLICY: { NAME, POSITION },
-  },
-  ACCOUNT: { FIRST_NAME, LAST_NAME },
-} = INSURANCE_FIELD_IDS;
+  NAME_ON_POLICY: { NAME, OTHER_NAME, SAME_NAME },
+} = FIELD_IDS;
 
-const { POLICY_CONTACT } = application;
+const getFieldVariables = (fieldId, referenceNumber) => ({
+  route: NAME_ON_POLICY_CHANGE,
+  checkYourAnswersRoute: CHECK_YOUR_ANSWERS,
+  newValueInput: '',
+  fieldId,
+  referenceNumber,
+  summaryList,
+  changeLink: summaryList.field(fieldId).changeLink,
+});
 
 const fieldId = NAME;
 
@@ -48,30 +51,33 @@ context('Insurance - Policy - Change your answers - Policy contact - As an expor
   });
 
   describe('when clicking the `change` link', () => {
+    beforeEach(() => {
+      cy.navigateToUrl(url);
+    });
+
     it(`should redirect to ${NAME_ON_POLICY_CHANGE}`, () => {
       cy.navigateToUrl(url);
+      const fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-      summaryList.field(fieldId).changeLink().click();
-
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: NAME_ON_POLICY_CHANGE, fieldId });
+      cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
     });
   });
 
-  describe('form submission with a new answer', () => {
+  describe(`when changing from ${OTHER_NAME} to ${SAME_NAME} and then back to ${OTHER_NAME}`, () => {
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      summaryList.field(fieldId).changeLink().click();
+      summaryList.field(NAME).changeLink().click();
 
-      cy.completeAndSubmitNameOnPolicyForm({});
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: true });
+
+      summaryList.field(NAME).changeLink().click();
+
+      cy.completeAndSubmitNameOnPolicyForm({ sameName: false });
     });
 
-    it('should render the new answers when completing the same name on policy form', () => {
-      const newName = `${account[FIRST_NAME]} ${account[LAST_NAME]}`;
-      const newPosition = POLICY_CONTACT[POSITION];
-
-      cy.assertSummaryListRowValue(summaryList, fieldId, newName);
-      cy.assertSummaryListRowValue(summaryList, POSITION, newPosition);
+    it('should NOT have fields populated on different name on policy page', () => {
+      cy.assertDifferentNameOnPolicyFieldValues({});
     });
   });
 });
