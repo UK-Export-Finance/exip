@@ -100,7 +100,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
 
     it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
-      checkSummaryList[HAS_CREDIT_CONTROL]();
+      checkSummaryList[HAS_CREDIT_CONTROL]({ isYes: true });
     });
   });
 
