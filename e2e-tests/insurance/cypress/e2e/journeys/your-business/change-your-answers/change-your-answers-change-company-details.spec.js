@@ -1,8 +1,4 @@
-import {
-  VALID_PHONE_NUMBERS,
-  WEBSITE_EXAMPLES,
-  FIELD_VALUES,
-} from '../../../../../../constants';
+import { VALID_PHONE_NUMBERS, WEBSITE_EXAMPLES } from '../../../../../../constants';
 import {
   field,
   summaryList,
@@ -112,7 +108,7 @@ context('Insurance - Your business - Change your answers - Company details - As 
       });
     });
 
-    describe(`form submission with a new answer (change ${TRADING_ADDRESS} from ${FIELD_VALUES.NO} to ${FIELD_VALUES.YES})`, () => {
+    describe(`form submission with a new answer (change ${TRADING_ADDRESS} from no to yes)`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 

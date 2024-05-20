@@ -39,7 +39,11 @@ const exportContractAgent = async (formBody: RequestBody, application: Applicati
        * Nullify and save all AGENT_CHARGES and AGENT_SERVICE data.
        */
       if (shouldNullifyAgentServiceData(isUsingAgent, application.exportContract.agent)) {
-        await nullify.exportContractAgentServiceAndCharge(application);
+        saveResponse = await nullify.exportContractAgentServiceAndCharge(application);
+
+        if (!saveResponse) {
+          return false;
+        }
       }
 
       return true;

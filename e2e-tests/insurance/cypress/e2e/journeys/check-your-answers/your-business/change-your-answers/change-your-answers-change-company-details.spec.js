@@ -16,6 +16,7 @@ const {
     YOUR_BUSINESS,
   },
   EXPORTER_BUSINESS: {
+    ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE,
     COMPANY_DETAILS_CHECK_AND_CHANGE,
     COMPANY_DETAILS_CHANGE,
   },
@@ -83,8 +84,6 @@ context('Insurance - Check your answers - Company details - Your business - Summ
   describe(HAS_DIFFERENT_TRADING_NAME, () => {
     const fieldId = HAS_DIFFERENT_TRADING_NAME;
 
-    let fieldVariables = getFieldVariables(fieldId, referenceNumber, COMPANY_DETAILS_CHANGE);
-
     describe('when clicking the `change` link', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
@@ -93,7 +92,7 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       it(`should redirect to ${COMPANY_DETAILS_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
-        fieldVariables = getFieldVariables(fieldId, referenceNumber);
+        const fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
         cy.checkChangeLinkUrl(fieldVariables, referenceNumber, fieldId);
       });
@@ -141,24 +140,31 @@ context('Insurance - Check your answers - Company details - Your business - Summ
       });
     });
 
-    describe('form submission with a new answer', () => {
+    describe(`form submission with a new answer (change ${TRADING_ADDRESS} from no to yes)`, () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitCompanyDetails({ differentTradingAddress: true });
+      });
+
+      it(`should redirect to ${ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: ALTERNATIVE_TRADING_ADDRESS_CHECK_AND_CHANGE, fieldId });
+      });
+
+      it(`should redirect to ${YOUR_BUSINESS} after submitting new ${TRADING_ADDRESS} and ${FULL_ADDRESS} answers`, () => {
         cy.completeAndSubmitAlternativeTradingAddressForm({});
-      });
 
-      it(`should redirect to ${YOUR_BUSINESS}`, () => {
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUSINESS, fieldId });
-      });
 
-      it('should render the new answer and retain a `completed` status tag', () => {
         const expectedFullAddress = application.DIFFERENT_TRADING_ADDRESS[FULL_ADDRESS];
 
-        cy.checkText(summaryList.field(fieldId).value(), expectedFullAddress);
+        cy.assertSummaryListRowValue(summaryList, TRADING_ADDRESS, expectedFullAddress);
+      });
+
+      it('should retain a `completed` status tag', () => {
+        cy.navigateToUrl(url);
 
         cy.checkTaskStatusCompleted(status);
       });

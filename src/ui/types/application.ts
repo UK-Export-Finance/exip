@@ -69,7 +69,7 @@ interface ApplicationExportContract {
   agent: ApplicationExportContractAgent;
 }
 
-interface ApplicationDifferentTradingAddress {
+interface ApplicationCompanyDifferentTradingAddress {
   id: string;
   fullAddress?: string;
 }
@@ -100,7 +100,7 @@ interface ApplicationCompany {
   hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddress;
   sicCodes: Array<SicCode>;
-  differentTradingAddress: ApplicationDifferentTradingAddress;
+  differentTradingAddress: ApplicationCompanyDifferentTradingAddress;
 }
 
 interface ApplicationBusiness {
@@ -291,6 +291,7 @@ export {
   ApplicationBuyerUiInput,
   ApplicationBuyerApiInput,
   ApplicationCompany,
+  ApplicationCompanyDifferentTradingAddress,
   ApplicationExportContract,
   ApplicationExportContractAgent,
   ApplicationExportContractAgentService,
