@@ -19,6 +19,8 @@ const {
   },
 } = INSURANCE_ROUTES;
 
+const fieldId = TRADED_WITH_BUYER;
+
 const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Your buyer - Change your answers - Trading history - Yes to no - As an exporter, I want to change my answers to the trading history section from yes to no', () => {
@@ -43,43 +45,37 @@ context('Insurance - Your buyer - Change your answers - Trading history - Yes to
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
+
+    summaryList.field(fieldId).changeLink().click();
+
+    cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: false });
   });
 
   after(() => {
     cy.deleteApplication(referenceNumber);
   });
 
-  const fieldId = TRADED_WITH_BUYER;
+  it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
+    cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+  });
 
-  describe('form submission with a new answer', () => {
-    beforeEach(() => {
-      cy.navigateToUrl(url);
+  it('should render the new answer, with no other trading history fields', () => {
+    cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
+    cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_OUTSTANDING_PAYMENTS);
+    cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
+    cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
+    cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
+  });
 
+  describe(`when changing the answer again from no to yes and going back to ${TRADING_HISTORY}`, () => {
+    it('should have empty field values', () => {
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: false });
-    });
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
 
-    it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-      cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-    });
-
-    it('should render the new answer, with no other trading history fields', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
-      cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_OUTSTANDING_PAYMENTS);
-      cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
-      cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
-      cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
-    });
-
-    describe(`when changing the answer again from no to yes and going back to ${TRADING_HISTORY}`, () => {
-      it('should have empty field values', () => {
-        summaryList.field(fieldId).changeLink().click();
-
-        cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-
-        cy.assertEmptyTradingHistoryFieldValues();
-      });
+      cy.assertEmptyTradingHistoryFieldValues();
     });
   });
 });
