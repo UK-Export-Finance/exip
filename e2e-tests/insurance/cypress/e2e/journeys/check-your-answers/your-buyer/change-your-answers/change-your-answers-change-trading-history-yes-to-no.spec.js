@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -79,6 +79,10 @@ context('Insurance - Check your answers - Trading history - Yes to no - As an ex
     cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
     cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
     cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
+  });
+
+  it('should retain a `completed` status tag', () => {
+    cy.checkTaskStatusCompleted(status);
   });
 
   describe(`when changing the answer again from no to yes and going back to ${TRADING_HISTORY}`, () => {

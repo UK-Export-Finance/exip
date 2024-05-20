@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -86,6 +86,10 @@ context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - 
     it(`should render new ${FIELD_ID} answer and change link, with other buyer connection fields`, () => {
       checkSummaryList[FIELD_ID]({ isYes: true });
       checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: true });
+    });
+
+    it('should retain a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status);
     });
   });
 });

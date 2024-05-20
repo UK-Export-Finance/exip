@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
@@ -99,6 +99,10 @@ context(`Insurance - Check your answers - Trading history - ${OUTSTANDING_PAYMEN
       const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
 
       row.value().contains(expected);
+    });
+
+    it('should retain a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status);
     });
   });
 });

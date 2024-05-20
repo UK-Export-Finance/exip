@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -95,6 +95,10 @@ context('Insurance - Check your answers - Credit insurance history - As an expor
 
         it(`should render the new answer for ${PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
           cy.assertSummaryListRowValue(summaryList, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+        });
+
+        it('should retain a `completed` status tag', () => {
+          cy.checkTaskStatusCompleted(status);
         });
       });
 

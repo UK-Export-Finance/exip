@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -76,5 +76,9 @@ context('Insurance - Check your answers - Trading history - No to yes - As an ex
     checkSummaryList[FAILED_PAYMENTS]({ shouldRender: true, isYes: false });
     checkSummaryList[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
     checkSummaryList[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]({ shouldRender: false });
+  });
+
+  it('should retain a `completed` status tag', () => {
+    cy.checkTaskStatusCompleted(status);
   });
 });

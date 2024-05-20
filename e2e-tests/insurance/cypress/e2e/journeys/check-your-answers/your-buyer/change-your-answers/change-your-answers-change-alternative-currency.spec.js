@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -158,6 +158,10 @@ context('Insurance - Check your answers - Alternative currency - As an exporter,
         const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currencyCode);
 
         cy.checkText(row.value(), expected);
+      });
+
+      it('should retain a `completed` status tag', () => {
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });

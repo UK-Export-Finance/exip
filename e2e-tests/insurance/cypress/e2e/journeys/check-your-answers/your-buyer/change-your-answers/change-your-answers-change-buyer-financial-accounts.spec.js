@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -80,6 +80,10 @@ context('Insurance - Check your answers - Buyer financial accounts - As an expor
 
     it('should render the new answer', () => {
       cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
+    });
+
+    it('should retain a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status);
     });
   });
 });
