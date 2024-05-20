@@ -10,12 +10,8 @@ import { createTimestampFromNumbers, formatDate } from '../../../../../../../hel
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
-  },
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  POLICY: { SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -76,11 +72,26 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
   describe('single policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;
-      let fieldVariables = getFieldVariables(fieldId, referenceNumber);
-
-      const newAnswer = {
+      const newStartDate = {
         ...application.POLICY[fieldId],
         year: application.POLICY[fieldId].year + 1,
+      };
+
+      const newEndDate = {
+        ...application.POLICY[fieldId],
+        year: newStartDate.year + 1,
+      };
+
+      const fieldVariables = {
+        startDate: {
+          ...getFieldVariables(fieldId, referenceNumber),
+          newValueInput: newStartDate.year,
+        },
+        endDate: {
+          ...application.POLICY[CONTRACT_COMPLETION_DATE],
+          ...getFieldVariables(CONTRACT_COMPLETION_DATE, referenceNumber),
+          newValueInput: newEndDate.year,
+        },
       };
 
       describe('when clicking the `change` link', () => {
@@ -90,26 +101,20 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
         it(`should redirect to ${SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE}`, () => {
           cy.navigateToUrl(url);
-          fieldVariables = getFieldVariables(fieldId, referenceNumber);
 
-          cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
+          cy.checkChangeLinkUrl(fieldVariables.startDate, referenceNumber);
         });
       });
 
       describe('form submission with a new answer', () => {
-        const contractCompletionDateYearChange = newAnswer.year + 1;
-
         beforeEach(() => {
           cy.navigateToUrl(url);
 
           summaryList.field(fieldId).changeLink().click();
 
-          fieldVariables.newValueInput = newAnswer.year;
+          cy.changeAnswerField(fieldVariables.startDate, field(fieldId).yearInput(), false);
 
-          cy.changeAnswerField(fieldVariables, field(fieldId).yearInput(), false);
-
-          fieldVariables.newValueInput = contractCompletionDateYearChange;
-          cy.changeAnswerField(fieldVariables, field(CONTRACT_COMPLETION_DATE).yearInput());
+          cy.changeAnswerField(fieldVariables.endDate, field(CONTRACT_COMPLETION_DATE).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {
@@ -117,8 +122,10 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
         });
 
         it('should render the new answer', () => {
-          fieldVariables.newValue = formatDate(createTimestampFromNumbers(newAnswer.day, newAnswer.month, contractCompletionDateYearChange));
-          cy.checkChangeAnswerRendered(fieldVariables);
+          const { day, month, year } = newStartDate;
+
+          fieldVariables.startDate.newValue = formatDate(createTimestampFromNumbers(day, month, year));
+          cy.checkChangeAnswerRendered(fieldVariables.startDate);
         });
       });
     });
