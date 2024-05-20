@@ -33,7 +33,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Alternative currency - As an exporter, I want to change my answers to an alternative currency', () => {
+context('Insurance - Check your answers - Your buyer - Alternative currency - As an exporter, I want to change my answers to an alternative currency', () => {
   let referenceNumber;
   let url;
 

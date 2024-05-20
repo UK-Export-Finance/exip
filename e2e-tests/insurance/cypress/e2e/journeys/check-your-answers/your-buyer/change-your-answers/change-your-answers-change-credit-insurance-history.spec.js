@@ -28,7 +28,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Credit insurance history - As an exporter, I want to change my answers to the credit insurance history section', () => {
+context('Insurance - Check your answers - Your buyer - Credit insurance history - As an exporter, I want to change my answers to the credit insurance history section', () => {
   let referenceNumber;
   let url;
 

@@ -22,7 +22,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Credit insurance cover - form validation', () => {
+context('Insurance - Your buyer - Credit insurance cover - form validation', () => {
   let referenceNumber;
   let url;
 

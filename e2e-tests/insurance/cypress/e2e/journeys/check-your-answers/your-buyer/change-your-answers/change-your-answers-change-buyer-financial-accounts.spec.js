@@ -24,7 +24,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Buyer financial accounts - As an exporter, I want to change my answers to an alternative currency', () => {
+context('Insurance - Check your answers - Your buyer - Buyer financial accounts - As an exporter, I want to change my answers to the buyer financial accounts section', () => {
   let referenceNumber;
   let url;
 

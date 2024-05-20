@@ -25,7 +25,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - No to yes`, () => {
+context(`Insurance - Check your answers - Your buyer - Connection with buyer - ${FIELD_ID} - No to yes - As an exporter, I want to change my answers to the connection with buyer section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 

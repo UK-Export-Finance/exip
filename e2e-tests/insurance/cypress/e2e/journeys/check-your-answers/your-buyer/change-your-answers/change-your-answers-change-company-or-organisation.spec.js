@@ -44,7 +44,7 @@ const getFieldVariables = (fieldId, referenceNumber) => ({
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Company or organisation - Your buyer page - Summary list', () => {
+context('Insurance - Check your answers - Your buyer - Company or organisation - As an exporter, I want to change my answers to the company or organisation section', () => {
   let referenceNumber;
   let url;
 

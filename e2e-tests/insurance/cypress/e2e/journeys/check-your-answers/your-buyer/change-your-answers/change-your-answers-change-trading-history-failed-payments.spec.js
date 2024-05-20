@@ -24,7 +24,7 @@ const fieldId = FAILED_PAYMENTS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Check your answers - Trading history - ${FAILED_PAYMENTS} - As an exporter, I want to change my answers to the trading history section`, () => {
+context(`Insurance - Check your answers - Your buyer - Trading history - ${FAILED_PAYMENTS} - As an exporter, I want to change my answers to the trading history section`, () => {
   let referenceNumber;
   let url;
 

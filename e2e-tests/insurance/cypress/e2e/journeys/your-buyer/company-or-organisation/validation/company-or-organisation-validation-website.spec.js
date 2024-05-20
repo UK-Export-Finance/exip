@@ -22,7 +22,7 @@ const ERROR_MESSAGE = COMPANY_OR_ORG_ERROR_MESSAGES[FIELD_ID];
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Company or organisation page - form validation - website', () => {
+context('Insurance - Your buyer - Company or organisation page - form validation - website', () => {
   let referenceNumber;
   let url;
 

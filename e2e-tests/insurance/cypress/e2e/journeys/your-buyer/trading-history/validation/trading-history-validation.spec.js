@@ -18,7 +18,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Trading history page - Validation', () => {
+context('Insurance - Your buyer - Trading history page - Validation', () => {
   let referenceNumber;
   let url;
 

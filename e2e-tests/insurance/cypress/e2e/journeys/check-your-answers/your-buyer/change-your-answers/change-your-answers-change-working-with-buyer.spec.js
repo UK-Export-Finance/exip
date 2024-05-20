@@ -36,9 +36,11 @@ const getFieldVariables = (fieldId, referenceNumber, route) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
+const fieldId = CONNECTION_WITH_BUYER;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Working with buyer - Your buyer page - Summary list', () => {
+context(`Insurance - Check your answers - Your buyer - Working with buyer - ${CONNECTION_WITH_BUYER} - As an exporter, I want to change my answers to the working with buyer section`, () => {
   let referenceNumber;
   let url;
 
@@ -70,7 +72,6 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
   });
 
   describe(CONNECTION_WITH_BUYER, () => {
-    const fieldId = CONNECTION_WITH_BUYER;
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
 
     describe('when clicking the `change` link', () => {

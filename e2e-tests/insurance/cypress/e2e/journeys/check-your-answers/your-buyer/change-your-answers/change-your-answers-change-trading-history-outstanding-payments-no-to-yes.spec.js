@@ -35,7 +35,7 @@ const currency = application.BUYER[CURRENCY_CODE];
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Check your answers - Trading history - ${OUTSTANDING_PAYMENTS} - No to yes - As an exporter, I want to change my answers to the trading history section`, () => {
+context(`Insurance - Check your answers - Your buyer - Trading history - ${OUTSTANDING_PAYMENTS} - No to yes - As an exporter, I want to change my answers to the trading history section`, () => {
   let referenceNumber;
   let url;
 
