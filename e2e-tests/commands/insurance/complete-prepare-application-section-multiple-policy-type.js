@@ -7,6 +7,7 @@ const { POLICY_TYPE } = APPLICATION;
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
+ * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form. Defaults to false.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
  * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
@@ -29,6 +30,7 @@ const { POLICY_TYPE } = APPLICATION;
  */
 const completePrepareApplicationMultiplePolicyType = ({
   differentTradingAddress = false,
+  hasCreditControlProcess = false,
   hasConnectionToBuyer = false,
   exporterHasTradedWithBuyer = false,
   fullyPopulatedBuyerTradingHistory = false,
@@ -49,7 +51,11 @@ const completePrepareApplicationMultiplePolicyType = ({
   agentChargeMethodPercentage = false,
   submitCheckYourAnswers = true,
 }) => {
-  cy.completeBusinessSection({ differentTradingAddress, submitCheckYourAnswers });
+  cy.completeBusinessSection({
+    differentTradingAddress,
+    hasCreditControlProcess,
+    submitCheckYourAnswers,
+  });
 
   cy.completeBuyerSection({
     hasConnectionToBuyer,

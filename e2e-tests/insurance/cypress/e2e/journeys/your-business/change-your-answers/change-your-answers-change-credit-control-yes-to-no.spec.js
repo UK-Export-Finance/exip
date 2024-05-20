@@ -1,9 +1,9 @@
 import { summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
-const { HAS_CREDIT_CONTROL } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
+const { HAS_CREDIT_CONTROL } = FIELD_IDS;
 
 const {
   ROOT,
@@ -17,7 +17,7 @@ const fieldId = HAS_CREDIT_CONTROL;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your business - Change your answers - Credit control - As an exporter, I want to change my answers to the credit control section', () => {
+context('Insurance - Your business - Change your answers - Credit control - Yes to no - As an exporter, I want to change my answers to the credit control section', () => {
   let referenceNumber;
   let url;
 

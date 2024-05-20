@@ -47,7 +47,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
         cy.completeAndSubmitCompanyDetails({});
         cy.completeAndSubmitNatureOfYourBusiness();
         cy.completeAndSubmitTurnoverForm();
-        cy.completeAndSubmitCreditControlForm({});
+        cy.completeAndSubmitCreditControlForm({ hasCreditControlProcess: true });
 
         url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
       });
@@ -100,7 +100,7 @@ context('Insurance - Your business - Check your answers - Summary list - your bu
     });
 
     it(`should render a ${HAS_CREDIT_CONTROL} summary list row`, () => {
-      checkSummaryList[HAS_CREDIT_CONTROL]();
+      checkSummaryList[HAS_CREDIT_CONTROL]({ isYes: true });
     });
   });
 

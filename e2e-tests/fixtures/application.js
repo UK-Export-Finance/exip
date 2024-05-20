@@ -141,7 +141,7 @@ const application = {
   [BUYER_COUNTRY]: COUNTRY_APPLICATION_SUPPORT.ONLINE.NAME,
   COMPANY: mockCompanies[COMPANIES_HOUSE_NUMBER],
   YOUR_COMPANY: {
-    [DIFFERENT_TRADING_NAME]: 'test',
+    [DIFFERENT_TRADING_NAME]: 'Mock different trading name',
   },
   POLICY: {
     [REQUESTED_START_DATE]: {

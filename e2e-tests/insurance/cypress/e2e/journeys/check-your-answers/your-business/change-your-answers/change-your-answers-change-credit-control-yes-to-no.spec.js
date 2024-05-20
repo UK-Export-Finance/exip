@@ -1,7 +1,7 @@
 import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 
 const {
@@ -13,8 +13,8 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  EXPORTER_BUSINESS: { HAS_CREDIT_CONTROL: FIELD_ID },
-} = INSURANCE_FIELD_IDS;
+  HAS_CREDIT_CONTROL: FIELD_ID,
+} = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -34,14 +34,17 @@ const getFieldVariables = (fieldId, referenceNumber, route = CREDIT_CONTROL_CHEC
 let fieldVariables;
 let referenceNumber;
 
-context('Insurance - Check your answers - Company details - Credit control - Summary list', () => {
+context('Insurance - Check your answers - Company details - Credit control - Yes to no - As an exporter, I want to change my answers to the credit control section', () => {
   let url;
 
   before(() => {
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({
+        referenceNumber,
+        hasCreditControlProcess: true,
+      });
 
       task.link().click();
 

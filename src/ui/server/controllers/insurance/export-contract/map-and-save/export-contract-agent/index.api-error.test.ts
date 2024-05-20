@@ -1,7 +1,7 @@
 import mapAndSave from '.';
 import saveAgent from '../../save-data/export-contract-agent';
-import saveAgentService from '../../save-data/export-contract-agent-service';
 import saveAgentServiceCharge from '../../save-data/export-contract-agent-service-charge';
+import nullify from '../nullify-export-contract-agent-service';
 import EXPORT_CONTRACT_FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contract';
 import { mockApplication } from '../../../../../test-mocks';
 
@@ -9,6 +9,7 @@ const { USING_AGENT } = EXPORT_CONTRACT_FIELD_IDS;
 
 describe('controllers/insurance/export-contract/map-and-save/export-contract-agent - api errors', () => {
   jest.mock('../../save-data/export-contract-agent');
+  jest.mock('../nullify-export-contract-agent-service');
 
   const mockFormBody = {
     _csrf: '1234',
@@ -63,9 +64,9 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     });
   });
 
-  describe('when save saveAgentService.exportContractAgentService call does not return anything', () => {
+  describe('when save nullify.exportContractAgentServiceAndCharge call does not return anything', () => {
     beforeEach(() => {
-      saveAgentService.exportContractAgentService = jest.fn(() => Promise.resolve());
+      nullify.exportContractAgentServiceAndCharge = jest.fn(() => Promise.resolve());
     });
 
     it('should return false', async () => {
@@ -75,9 +76,9 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     });
   });
 
-  describe('when save saveAgentService.exportContractAgentService call fails', () => {
+  describe('when save nullify.exportContractAgentServiceAndCharge call fails', () => {
     beforeEach(() => {
-      saveAgentService.exportContractAgentService = jest.fn(() => Promise.reject(new Error('mock')));
+      nullify.exportContractAgentServiceAndCharge = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {
