@@ -1,6 +1,6 @@
 import mapAndSave from '.';
 import saveCompany from '../../save-data/company-details';
-import saveAddress from '../../save-data/company-different-trading-address';
+import nullify from '../nullify-company-different-address';
 import { FIELD_IDS } from '../../../../../constants';
 import { mockApplication, mockSpyPromise } from '../../../../../test-mocks';
 
@@ -23,10 +23,10 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
   };
 
   const mockSaveCompanyDetails = mockSpyPromise();
-  const mockSaveCompanyAddress = mockSpyPromise();
+  const mockNullify = mockSpyPromise();
 
   saveCompany.companyDetails = mockSaveCompanyDetails;
-  saveAddress.companyDifferentTradingAddress = mockSaveCompanyAddress;
+  nullify.companyDifferentTradingAddress = mockNullify;
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -56,9 +56,9 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
     });
   });
 
-  describe('when saveAddress.companyDifferentTradingAddress does not return anything', () => {
+  describe('when nullify.companyDifferentTradingAddress does not return anything', () => {
     beforeEach(() => {
-      saveAddress.companyDifferentTradingAddress = jest.fn(() => Promise.resolve());
+      nullify.companyDifferentTradingAddress = jest.fn(() => Promise.resolve());
     });
 
     it('should return false', async () => {
@@ -68,9 +68,9 @@ describe('controllers/insurance/business/map-and-save/company-details - API erro
     });
   });
 
-  describe('when saveAddress.companyDifferentTradingAddress fails', () => {
+  describe('when nullify.companyDifferentTradingAddress fails', () => {
     beforeEach(() => {
-      saveAddress.companyDifferentTradingAddress = jest.fn(() => Promise.reject(new Error('mock')));
+      nullify.companyDifferentTradingAddress = jest.fn(() => Promise.reject(new Error('mock')));
     });
 
     it('should return false', async () => {

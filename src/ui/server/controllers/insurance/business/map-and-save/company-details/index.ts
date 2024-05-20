@@ -50,7 +50,11 @@ const companyDetails = async (formBody: RequestBody, application: Application, v
       } = application;
 
       if (shouldNullifyCompanyDifferentAddress(hasDifferentTradingAddress, fullAddress)) {
-        await nullify.companyDifferentTradingAddress(application);
+        saveResponse = await nullify.companyDifferentTradingAddress(application);
+
+        if (!saveResponse) {
+          return false;
+        }
       }
 
       return true;

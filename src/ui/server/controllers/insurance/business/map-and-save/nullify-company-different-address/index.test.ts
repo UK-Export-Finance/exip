@@ -17,6 +17,12 @@ describe('controllers/insurance/business/map-and-save/nullify-company-different-
     expect(saveAddress.companyDifferentTradingAddress).toHaveBeenCalledWith(mockApplication, nullifyCompanyDifferentTradingAddress());
   });
 
+  it('should return the result of saveAddress.companyDifferentTradingAddress', async () => {
+    const result = await nullify.companyDifferentTradingAddress(mockApplication);
+
+    expect(result).toEqual({});
+  });
+
   describe('when save saveAddress.companyDifferentTradingAddress call does not return anything', () => {
     beforeEach(() => {
       saveAddress.companyDifferentTradingAddress = jest.fn(() => Promise.resolve());

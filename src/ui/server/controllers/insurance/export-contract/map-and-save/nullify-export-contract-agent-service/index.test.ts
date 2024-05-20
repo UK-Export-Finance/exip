@@ -29,6 +29,12 @@ describe('controllers/insurance/export-contract/map-and-save/export-contract-age
     expect(saveAgentService.exportContractAgentService).toHaveBeenCalledWith(mockApplication, nullifyAgentServiceData());
   });
 
+  it('should return the result of saveAddress.companyDifferentTradingAddress', async () => {
+    const result = await nullify.exportContractAgentServiceAndCharge(mockApplication);
+
+    expect(result).toEqual({});
+  });
+
   describe('when save saveAgentServiceCharge.exportContractAgentServiceCharge call does not return anything', () => {
     beforeEach(() => {
       saveAgentServiceCharge.exportContractAgentServiceCharge = jest.fn(() => Promise.resolve());
