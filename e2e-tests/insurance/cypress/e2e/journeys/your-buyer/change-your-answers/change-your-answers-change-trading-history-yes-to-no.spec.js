@@ -21,7 +21,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Change your answers - Trading history - As an exporter, I want to change my answers to the trading history section from yes to no', () => {
+context('Insurance - Your buyer - Change your answers - Trading history - Yes to no - As an exporter, I want to change my answers to the trading history section from yes to no', () => {
   let referenceNumber;
   let url;
 

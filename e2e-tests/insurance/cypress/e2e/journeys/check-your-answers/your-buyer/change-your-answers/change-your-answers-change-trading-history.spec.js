@@ -1,9 +1,10 @@
-import { FIELD_VALUES } from '../../../../../../constants';
-import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
-import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { summaryList } from '../../../../../../pages/shared';
-import application from '../../../../../../fixtures/application';
-import formatCurrency from '../../../../../../helpers/format-currency';
+import { status, summaryList } from '../../../../../../../pages/shared';
+import partials from '../../../../../../../partials';
+import { FIELD_VALUES } from '../../../../../../../constants';
+import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
+import application from '../../../../../../../fixtures/application';
+import formatCurrency from '../../../../../../../helpers/format-currency';
 
 const {
   CURRENCY: {
@@ -20,16 +21,22 @@ const {
 
 const {
   ROOT,
+  CHECK_YOUR_ANSWERS: {
+    YOUR_BUYER,
+  },
   YOUR_BUYER: {
-    TRADED_WITH_BUYER_CHANGE,
-    TRADING_HISTORY_CHANGE,
-    CHECK_YOUR_ANSWERS,
+    TRADED_WITH_BUYER_CHECK_AND_CHANGE,
+    TRADING_HISTORY_CHECK_AND_CHANGE,
   },
 } = INSURANCE_ROUTES;
 
+const { taskList } = partials.insurancePartials;
+
+const task = taskList.submitApplication.tasks.checkAnswers;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Change your answers - Trading history - As an exporter, I want to change my answers to the trading history section', () => {
+context('Insurance - Check your answers - Trading history - As an exporter, I want to change my answers to the trading history section', () => {
   let referenceNumber;
   let url;
 
@@ -37,19 +44,23 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.startInsuranceYourBuyerSection({});
+      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
-      cy.completeAndSubmitCompanyOrOrganisationForm({});
-      cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({});
-      cy.completeAndSubmitBuyerFinancialInformationForm({});
+      task.link().click();
 
-      url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
+      // To get past "Your business" check your answers page
+      cy.completeAndSubmitMultipleCheckYourAnswers({ count: 1 });
+
+      url = `${baseUrl}${ROOT}/${referenceNumber}${YOUR_BUYER}`;
+
+      cy.assertUrl(url);
     });
   });
 
   beforeEach(() => {
     cy.saveSession();
+
+    cy.navigateToUrl(url);
   });
 
   after(() => {
@@ -60,30 +71,37 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
     const fieldId = TRADED_WITH_BUYER;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${TRADED_WITH_BUYER_CHANGE}`, () => {
+      it(`should redirect to ${TRADED_WITH_BUYER_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADED_WITH_BUYER_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADED_WITH_BUYER_CHECK_AND_CHANGE, fieldId });
       });
     });
 
     describe('form submission with a new answer', () => {
       beforeEach(() => {
         cy.navigateToUrl(url);
+      });
 
+      it(`should redirect to ${TRADING_HISTORY_CHECK_AND_CHANGE} and then ${YOUR_BUYER} after completing (now required) ${TRADING_HISTORY_CHECK_AND_CHANGE} fields`, () => {
         summaryList.field(fieldId).changeLink().click();
 
         cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+
+        cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
-      });
-
-      it('should render the new answer', () => {
+      it('should render the new answers and retain a `completed` status tag', () => {
         cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
+
+        cy.assertSummaryListRowValue(summaryList, OUTSTANDING_PAYMENTS, FIELD_VALUES.NO);
+        cy.assertSummaryListRowValue(summaryList, FAILED_PAYMENTS, FIELD_VALUES.NO);
+
+        cy.checkTaskStatusCompleted(status);
       });
     });
   });
@@ -93,12 +111,12 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
     const currency = application.BUYER[CURRENCY_CODE];
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${TRADING_HISTORY_CHANGE}`, () => {
+      it(`should redirect to ${TRADING_HISTORY_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -111,8 +129,8 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      it(`should redirect to ${YOUR_BUYER}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
       it(`should render the new answer for ${OUTSTANDING_PAYMENTS}`, () => {
@@ -139,12 +157,12 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
     const fieldId = OUTSTANDING_PAYMENTS;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${TRADING_HISTORY_CHANGE}`, () => {
+      it(`should redirect to ${TRADING_HISTORY_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -157,8 +175,8 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({});
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      it(`should redirect to ${YOUR_BUYER}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
       it(`should render the new answer for ${OUTSTANDING_PAYMENTS}`, () => {
@@ -179,12 +197,12 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
     const fieldId = FAILED_PAYMENTS;
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${TRADING_HISTORY_CHANGE}`, () => {
+      it(`should redirect to ${TRADING_HISTORY_CHECK_AND_CHANGE}`, () => {
         cy.navigateToUrl(url);
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHANGE, fieldId });
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHECK_AND_CHANGE, fieldId });
       });
     });
 
@@ -197,8 +215,8 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
         cy.completeAndSubmitTradingHistoryWithBuyerForm({ failedToPay: true });
       });
 
-      it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
+      it(`should redirect to ${YOUR_BUYER}`, () => {
+        cy.assertChangeAnswersPageUrl({ referenceNumber, route: YOUR_BUYER, fieldId });
       });
 
       it(`should render the new answer for ${FAILED_PAYMENTS}`, () => {
