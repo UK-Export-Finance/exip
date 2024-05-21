@@ -1,5 +1,39 @@
 # Changelog
 
+## [2.7.0](https://github.com/UK-Export-Finance/exip/compare/v2.6.0...v2.7.0) (2024-05-21)
+
+
+### Features
+
+* **EMS-3373:** fixed MySQL startup ([5e01498](https://github.com/UK-Export-Finance/exip/commit/5e01498891d056ee4da952186544ecb72161a530))
+* **EMS-3373:** prettier fixed path ([8e9f563](https://github.com/UK-Export-Finance/exip/commit/8e9f563dd6ab3647d5932d4fb7b4eebebbec7d73))
+* **EMS-3373:** refactored git hooks ([e8c8574](https://github.com/UK-Export-Finance/exip/commit/e8c8574318800158d0c10b5ca881178cda9a688f))
+* **EMS-3373:** release please updated to v4 ([b98caab](https://github.com/UK-Export-Finance/exip/commit/b98caab9249229ee1d8a92c591f9bd4eb9ebb988))
+* **EMS-3373:** release please updated to v4 ([f81fe91](https://github.com/UK-Export-Finance/exip/commit/f81fe911b41a7ffd4f5bae35c2a14c5eae8c1cba))
+
+
+### Bug Fixes
+
+* **deps:** reverted dependencies ([c58adf4](https://github.com/UK-Export-Finance/exip/commit/c58adf45e03606f6fad5d4567c6aefc8d4f559de))
+* **deps:** reverted dependencies ([42f8bc7](https://github.com/UK-Export-Finance/exip/commit/42f8bc7b0fe460d7bd650dc3c8456ff16414e263))
+* **deps:** reverted dependencies ([41391e3](https://github.com/UK-Export-Finance/exip/commit/41391e36d9987d301d8cf71ccab9e70052d0a4f0))
+* **EMS-3373:** added cookie parser ([304e501](https://github.com/UK-Export-Finance/exip/commit/304e5016e1c656119c9af8f60083b254d187ce7c))
+* **EMS-3373:** added documentation ([68e2058](https://github.com/UK-Export-Finance/exip/commit/68e2058cf07a614b577d1752bd9ac281d334948f))
+* **EMS-3373:** added pettier check ([118046b](https://github.com/UK-Export-Finance/exip/commit/118046b6af7cae45661d6196fe497308d2288e35))
+* **EMS-3373:** dependencies updates ([fe2a6ea](https://github.com/UK-Export-Finance/exip/commit/fe2a6eab5accc661480e1d56c51eeb14e106106f))
+* **EMS-3373:** disabled prettier check in the pipeline ([f2af0bf](https://github.com/UK-Export-Finance/exip/commit/f2af0bf8de255a1d9886d0c49c54cd53fc6f26cb))
+* **EMS-3373:** fixed prettier command ([80a2dd2](https://github.com/UK-Export-Finance/exip/commit/80a2dd240733198a2edc83796b9614abfdd2d48d))
+* **EMS-3373:** fixed prettier command ([c205906](https://github.com/UK-Export-Finance/exip/commit/c2059060e6a0c335d4fc2645bd76988d0587351c))
+* **EMS-3373:** fixed prettier log level ([4785584](https://github.com/UK-Export-Finance/exip/commit/47855848bc66949bb41126889bdc834f92e0016d))
+* **EMS-3373:** reverted keystone breaking changes ([0b548f1](https://github.com/UK-Export-Finance/exip/commit/0b548f12b4d5b3091a99be037cd5606572e4a3ca))
+* **EMS-3373:** spelling fixes ([fcd77a6](https://github.com/UK-Export-Finance/exip/commit/fcd77a62bf1534b8f003a9dbe4a3099c11e45deb))
+* **EMS-3373:** timezone env variable ([32be30f](https://github.com/UK-Export-Finance/exip/commit/32be30fb20cc937eeedc7a2630ce991e7640d5d7))
+* **EMS-3373:** updated actions/setup-node@v4 ([451fa81](https://github.com/UK-Export-Finance/exip/commit/451fa81029e7d7863f0e759012c32666ea5e5585))
+* **EMS-3373:** updated actions/setup-node@v4 ([c362f64](https://github.com/UK-Export-Finance/exip/commit/c362f64581421f4fd928a98f294b1da99ab6bb7e))
+* **EMS-3373:** updated GHA plugin szenius/set-timezone@v2.0 ([b69f37a](https://github.com/UK-Export-Finance/exip/commit/b69f37a0026f943b926b615f48a8c661229c1d7e))
+* **EMS-3373:** updated publish.yml ([e8c3a2a](https://github.com/UK-Export-Finance/exip/commit/e8c3a2a8a3174824fdaf7fcf64ca812ffe7dede3))
+* **github:** fixed github actions ([3deb304](https://github.com/UK-Export-Finance/exip/commit/3deb30416362a87b2a1671ea2b3f462a8a19fbe5))
+
 ## [2.6.0](https://github.com/UK-Export-Finance/exip/compare/v2.5.0...v2.6.0) (2024-02-27)
 
 
