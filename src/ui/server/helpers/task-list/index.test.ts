@@ -53,9 +53,7 @@ describe('server/helpers/task-list', () => {
       const result = generateTaskStatusesAndLinks(mockTaskListData, mockApplicationFlat);
 
       const expectedTasks = {
-        initialChecks: () => {
-          return group1Tasks.map((task) => mapTask(task, mockApplicationFlat));
-        },
+        initialChecks: () => group1Tasks.map((task) => mapTask(task, mockApplicationFlat)),
         prepareApplication: () => {
           const { 1: tasksListData } = mockTaskListData;
           const { tasks: group2Tasks } = tasksListData;

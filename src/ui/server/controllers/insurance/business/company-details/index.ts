@@ -42,13 +42,11 @@ export const FIELD_IDS = [HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, 
 
 const IS_APPLICATION_SUMMARY_LIST = true;
 
-const pageVariables = (referenceNumber: number) => {
-  return {
-    SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
-    DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
-    FIELDS: BUSINESS_FIELD_IDS,
-  };
-};
+const pageVariables = (referenceNumber: number) => ({
+  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_SAVE_AND_BACK}`,
+  DIFFERENT_COMPANIES_HOUSE_NUMBER_URL: `${INSURANCE_ROOT}/${referenceNumber}${COMPANY_DETAILS_ROOT}`,
+  FIELDS: BUSINESS_FIELD_IDS,
+});
 
 /**
  * HTML_FLAGS

@@ -27,12 +27,10 @@ export const mapTask = (task: TaskListDataTask, submittedData: ApplicationFlat) 
  * @returns {Object} Task list groups and tasks with added statuses and links.
  */
 export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submittedData: ApplicationFlat): TaskListData => {
-  const tasksList = taskListData.map((group) => {
-    return {
-      ...group,
-      tasks: group.tasks.map((task) => mapTask(task, submittedData)),
-    };
-  }) as TaskListData;
+  const tasksList = taskListData.map((group) => ({
+    ...group,
+    tasks: group.tasks.map((task) => mapTask(task, submittedData)),
+  })) as TaskListData;
 
   return tasksList;
 };
@@ -42,21 +40,19 @@ export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submitt
  * @param {Array} taskList Task list groups and tasks
  * @returns {Array} Array of groups and tasks with only the data required for UI consumption.
  */
-export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup> => {
-  return taskList.map(
-    (group) =>
-      ({
-        title: group.title,
-        hint: group.hint,
-        tasks: group.tasks.map((task: TaskListDataTask) => ({
-          id: task.id,
-          href: task.href,
-          status: task.status,
-          title: task.title,
-        })),
-      }) as TaskListGroup,
-  );
-};
+export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup> => taskList.map(
+  (group) =>
+    ({
+      title: group.title,
+      hint: group.hint,
+      tasks: group.tasks.map((task: TaskListDataTask) => ({
+        id: task.id,
+        href: task.href,
+        status: task.status,
+        title: task.title,
+      })),
+    }) as TaskListGroup,
+);
 
 /**
  * generateTaskList
