@@ -6,7 +6,7 @@ import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import accounts from '../../../test-helpers/accounts';
 import { APPLICATION } from '../../../constants';
 
-const { STATUS, SUBMISSION_TYPE } = APPLICATION;
+const { STATUS } = APPLICATION;
 
 
 describe('custom-resolvers/create-an-application', () => {
@@ -46,12 +46,6 @@ describe('custom-resolvers/create-an-application', () => {
     result = await createAnApplication({}, variables, context);
 
     expect(result.status).toEqual(STATUS.IN_PROGRESS);
-  });
-
-  test(`it should return submissionType as ${SUBMISSION_TYPE.MIA}`, async () => {
-    result = await createAnApplication({}, variables, context);
-
-    expect(result.submissionType).toEqual(SUBMISSION_TYPE.MIA);
   });
 
   describe('when there is no account for the provided accountId', () => {

@@ -2379,7 +2379,6 @@ var typeDefs = `
     success: Boolean!
     id: String
     referenceNumber: Int
-    status: String
   }
 
   type MappedCisCountry {
@@ -4640,6 +4639,7 @@ var create_an_application_default2 = createAnApplication2;
 // custom-resolvers/mutations/create-an-abandoned-application/index.ts
 var { STATUS: STATUS3 } = APPLICATION;
 var createAnAbandonedApplication = async (root, variables, context) => {
+  console.info("Creating an abandoned application for ", variables.accountId);
   const abandonedApplicationVariables = variables;
   abandonedApplicationVariables.status = STATUS3.ABANDONED;
   try {

@@ -38,7 +38,6 @@ const queryStrings = {
   mutation createAnAbandonedApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!, $company: CompanyInput!, $sectionReview: SectionReviewInput!) {
     createAnAbandonedApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company, sectionReview: $sectionReview) {
       referenceNumber
-      status
     }
   }
 `,
@@ -46,6 +45,7 @@ const queryStrings = {
     mutation createApplications($data: [ApplicationCreateInput!]!) {
       createApplications(data: $data) {
         id
+        referenceNumber
       }
     }
   `,

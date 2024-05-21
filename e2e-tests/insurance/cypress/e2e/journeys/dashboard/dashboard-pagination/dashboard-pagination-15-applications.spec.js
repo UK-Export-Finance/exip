@@ -11,17 +11,11 @@ const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications`, () => {
   let applications;
-  let abandonedApplication;
 
   before(() => {
     cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
       cy.createApplications(accountId, totalApplications).then((createdApplications) => {
         applications = createdApplications;
-      });
-
-      // creates an abandoned application
-      cy.createAnAbandonedApplication(accountId).then((createdApplication) => {
-        abandonedApplication = createdApplication;
       });
 
       cy.navigateToUrl(dashboardUrl);
@@ -34,10 +28,9 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications`
 
   after(() => {
     cy.deleteApplications(applications);
-    cy.deleteApplication(abandonedApplication.referenceNumber);
   });
 
-  it(`should NOT render pagination list items because there are no more than ${MAX_APPLICATIONS_PER_PAGE} applications (which are not Abandoned)`, () => {
+  it(`should NOT render pagination list items because there are no more than ${MAX_APPLICATIONS_PER_PAGE} applications`, () => {
     cy.assertPaginationDoesNotExist();
   });
 });

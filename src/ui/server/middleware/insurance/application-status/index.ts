@@ -16,6 +16,7 @@ const {
 /**
  * middleware to check if application is submitted
  * if submitted, access is not allowed to application apart from application submitted page
+ * if abandoned, access is not allowed to application and should be redirected to NO_ACCESS_TO_APPLICATION
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @param {Next}

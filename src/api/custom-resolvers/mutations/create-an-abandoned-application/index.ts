@@ -17,6 +17,8 @@ const { STATUS } = APPLICATION;
  * @returns {Promise<Object>} Object with success flag and application
  */
 const createAnAbandonedApplication = async (root: any, variables: CreateAnApplicationVariables, context: Context) => {
+  console.info('Creating an abandoned application for ', variables.accountId);
+
   const abandonedApplicationVariables = variables;
 
   // set status to abandoned
@@ -27,7 +29,7 @@ const createAnAbandonedApplication = async (root: any, variables: CreateAnApplic
     const createdApplication = await createAnApplicationHelper(root, abandonedApplicationVariables, context);
 
     if (createdApplication) {
-      // TODO: remove once schema hooks for status is removed
+      // TODO: EMS-3387 remove once schema hooks for status is removed
       // updates application status to abandoned
       const updatedApplication = await context.db.Application.updateOne({
         where: {

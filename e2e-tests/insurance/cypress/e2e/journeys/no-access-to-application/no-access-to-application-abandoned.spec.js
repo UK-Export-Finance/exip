@@ -1,4 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
+import { APPLICATION } from '../../../../../constants/application';
+
+const { ABANDONED } = APPLICATION.STATUS;
 
 const {
   ROOT,
@@ -8,16 +11,16 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - no access to application page - Abandoned application', () => {
+context('Insurance - no access to application page - Abandoned application - to ensure that the system should automatically marks applications as abandoned where the application has not been submitted 30 days after it was started', () => {
   let refNumber;
-  let applicationUrl;
+  let allSectionsUrl;
 
   before(() => {
     cy.saveSession();
 
     cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
       cy.createAnAbandonedApplication(accountId).then((createdApplication) => {
-        applicationUrl = `${baseUrl}${ROOT}/${createdApplication.referenceNumber}${ALL_SECTIONS}`;
+        allSectionsUrl = `${baseUrl}${ROOT}/${createdApplication.referenceNumber}${ALL_SECTIONS}`;
         refNumber = createdApplication.referenceNumber;
       });
     });
@@ -27,9 +30,9 @@ context('Insurance - no access to application page - Abandoned application', () 
     cy.deleteApplication(refNumber);
   });
 
-  describe('when trying to access an Abandoned application', () => {
+  describe(`when trying to access an ${ABANDONED} application`, () => {
     beforeEach(() => {
-      cy.navigateToUrl(applicationUrl);
+      cy.navigateToUrl(allSectionsUrl);
     });
 
     it(`should redirect to ${NO_ACCESS_TO_APPLICATION}`, () => {

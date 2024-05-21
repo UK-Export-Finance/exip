@@ -209,7 +209,6 @@ const typeDefs = `
     success: Boolean!
     id: String
     referenceNumber: Int
-    status: String
   }
 
   type MappedCisCountry {

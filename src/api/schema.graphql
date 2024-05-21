@@ -3727,7 +3727,6 @@ type CreateAnAbandonedApplicationResponse {
   success: Boolean!
   id: String
   referenceNumber: Int
-  status: String
 }
 
 type MappedCisCountry {
