@@ -1,2 +1,19 @@
-src/ui/public
-src/ui/generated_reports
+# Root
+node_modules/
+dist/
+build/
+public/
+generated_reports/
+coverage/
+package*.json
+.cache
+
+# Sub-directories
+**/node_modules/
+**/dist/
+**/build/
+**/public/
+**/**/**/generated_reports/
+**/coverage/
+**/package*.json
+**/.cache
