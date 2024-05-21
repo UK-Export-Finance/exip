@@ -307,7 +307,7 @@ jobs:
             "your-business/turnover/**/*.spec.js",
             "your-buyer/alternative-currency/**/*.spec.js",
             "your-buyer/buyer-financial-information/**/*.spec.js",
-            "your-buyer/change-your-answers/*.spec.js",
+            "your-buyer/change-your-answers/**/*.spec.js",
             "your-buyer/check-your-answers/**/*.spec.js",
             "your-buyer/company-or-organisation/**/*.spec.js",
             "your-buyer/connection-with-the-buyer/**/*.spec.js",
