@@ -48,10 +48,6 @@ export const bicSwiftCodeFieldValidation = () => {
       runAssertion({ value: '12345678' });
     });
 
-    it(`should render a validation error when ${FIELD_ID} contains lowercase letters and numbers`, () => {
-      runAssertion({ value: 'letters123' });
-    });
-
     it(`should render a validation error when ${FIELD_ID} contains only special characters`, () => {
       runAssertion({ value: mockStringWithSpecialCharacters });
     });

@@ -1,5 +1,7 @@
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { bicSwiftCodeFieldValidation } from '../../../../../../../shared-test-assertions';
+import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
+import { field as fieldSelector } from '../../../../../../../pages/shared';
 
 const {
   ROOT: INSURANCE_ROOT,
@@ -7,6 +9,12 @@ const {
     LOSS_PAYEE_FINANCIAL_DETAILS_INTERNATIONAL_ROOT,
   },
 } = INSURANCE_ROUTES;
+
+const {
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    BIC_SWIFT_CODE: FIELD_ID,
+  },
+} = POLICY_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -47,4 +55,14 @@ context('Insurance - Policy - Loss Payee Financial Details International - BIC/S
   });
 
   bicSwiftCodeFieldValidation();
+
+  describe(`when ${FIELD_ID} is correctly entered with lowercase letters and numbers`, () => {
+    it('should not render validation errors', () => {
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), 'letters123');
+
+      cy.clickSubmitButton();
+
+      cy.assertErrorSummaryListLength(2);
+    });
+  });
 });
