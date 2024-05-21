@@ -45,6 +45,7 @@ context(`Insurance - Check your answers - Your buyer - Trading history - ${OUTST
 
       cy.completePrepareApplicationSinglePolicyType({
         referenceNumber,
+        exporterHasTradedWithBuyer: true,
         fullyPopulatedBuyerTradingHistory: false,
       });
 

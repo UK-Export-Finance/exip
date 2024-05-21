@@ -56,7 +56,10 @@ context(`Insurance - Your buyer - Change your answers - Trading history - ${TRAD
     summaryList.field(fieldId).changeLink().click();
 
     cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-    cy.completeAndSubmitTradingHistoryWithBuyerForm({});
+    cy.completeAndSubmitTradingHistoryWithBuyerForm({
+      outstandingPayments: false,
+      failedToPay: false,
+    });
 
     cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
   });

@@ -40,7 +40,7 @@ context(`Insurance - Your buyer - Change your answers - Trading history - ${OUTS
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionWithTheBuyerForm({});
-      cy.completeAndSubmitTradedWithBuyerForm({ fullyPopulatedBuyerTradingHistory: false });
+      cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;

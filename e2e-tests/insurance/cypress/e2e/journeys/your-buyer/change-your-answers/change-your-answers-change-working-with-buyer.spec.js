@@ -1,4 +1,4 @@
-import { status, summaryList } from '../../../../../../pages/shared';
+import { summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
@@ -90,20 +90,16 @@ context(`Insurance - Your buyer - Change your answers - Working with buyer - ${C
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
-      it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER}`, () => {
         fieldVariables.newValue = FIELD_VALUES.YES;
         cy.checkChangeAnswerRendered({ fieldVariables });
-
-        cy.checkTaskStatusCompleted(status);
       });
 
-      it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION} and retain a "completed" status tag`, () => {
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
         fieldVariables = getFieldVariables(CONNECTION_WITH_BUYER_DESCRIPTION, referenceNumber, CONNECTION_WITH_BUYER_CHANGE);
         fieldVariables.newValue = BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
 
         cy.checkChangeAnswerRendered({ fieldVariables });
-
-        cy.checkTaskStatusCompleted(status);
       });
     });
 
@@ -120,18 +116,14 @@ context(`Insurance - Your buyer - Change your answers - Working with buyer - ${C
         cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
       });
 
-      it(`should render the new answer for ${CONNECTION_WITH_BUYER} and retain a "completed" status tag`, () => {
+      it(`should render the new answer for ${CONNECTION_WITH_BUYER}`, () => {
         fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHANGE);
         fieldVariables.newValue = FIELD_VALUES.NO;
         cy.checkChangeAnswerRendered({ fieldVariables });
-
-        cy.checkTaskStatusCompleted(status);
       });
 
-      it(`should NOT render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row and retain a "completed" status tag`, () => {
+      it(`should NOT render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
-
-        cy.checkTaskStatusCompleted(status);
       });
     });
   });

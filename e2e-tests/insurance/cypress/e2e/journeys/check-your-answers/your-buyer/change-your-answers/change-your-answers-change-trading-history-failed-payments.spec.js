@@ -32,7 +32,11 @@ context(`Insurance - Check your answers - Your buyer - Trading history - ${FAILE
     cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
 
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
+      cy.completePrepareApplicationSinglePolicyType({
+        referenceNumber,
+        exporterHasTradedWithBuyer: true,
+        fullyPopulatedBuyerTradingHistory: true,
+      });
 
       task.link().click();
 

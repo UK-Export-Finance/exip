@@ -59,7 +59,12 @@ context(`Insurance - Check your answers - Your buyer - Trading history - ${TRADE
 
     summaryList.field(fieldId).changeLink().click();
 
-    cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: false });
+    cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
+
+    cy.completeAndSubmitTradingHistoryWithBuyerForm({
+      outstandingPayments: false,
+      failedToPay: false,
+    });
   });
 
   after(() => {
