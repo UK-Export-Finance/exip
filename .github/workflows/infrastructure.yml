@@ -649,6 +649,8 @@ jobs:
             JWT_SIGNING_KEY='${{ secrets.JWT_SIGNING_KEY }}' \
             UNDERWRITING_TEAM_EMAIL='${{ secrets.UNDERWRITING_TEAM_EMAIL }}' \
             FEEDBACK_EMAIL_RECIPIENT='${{ secrets.FEEDBACK_EMAIL_RECIPIENT }}'
+            CRON_SCHEDULE_UNVERIFIED_ACCOUNT='${{ secrets.CRON_SCHEDULE_UNVERIFIED_ACCOUNT }}'
+            CRON_SCHEDULE_INACTIVE_APPLICATION='${{ secrets.CRON_SCHEDULE_INACTIVE_APPLICATION }}'
 
       - name: Extension ➕
         uses: azure/cli@v1.0.9

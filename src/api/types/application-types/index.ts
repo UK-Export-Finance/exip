@@ -266,6 +266,7 @@ export interface CreateAnApplicationVariables {
   eligibilityAnswers: ApplicationEligibility;
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
+  status?: string;
 }
 
 export interface CreateExportContractAgentResponse {

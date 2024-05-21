@@ -586,6 +586,7 @@ if (isDevEnvironment) {
     "accounts",
     "addAndGetOTP",
     "createApplications",
+    "createAnAbandonedApplication",
     "createBuyer",
     "deleteAnAccount",
     "deleteApplications",
@@ -2374,6 +2375,13 @@ var typeDefs = `
     referenceNumber: Int
   }
 
+  type CreateAnAbandonedApplicationResponse {
+    success: Boolean!
+    id: String
+    referenceNumber: Int
+    status: String
+  }
+
   type MappedCisCountry {
     isoCode: String!
     name: String
@@ -2480,6 +2488,14 @@ var typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+    """ create an application """
+    createAnAbandonedApplication(
+      accountId: String!
+      eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
+      sectionReview: SectionReviewInput!
+    ): CreateAnAbandonedApplicationResponse
 
     """ delete an account """
     deleteAnAccount(
@@ -4529,24 +4545,26 @@ var createASectionReview = async (context, applicationId, sectionReviewData) => 
 };
 var create_a_section_review_default = createASectionReview;
 
-// custom-resolvers/mutations/create-an-application/index.ts
+// helpers/create-an-application/index.ts
+var { SUBMISSION_TYPE: SUBMISSION_TYPE2 } = APPLICATION;
 var createAnApplication = async (root, variables, context) => {
-  console.info("Creating application for ", variables.accountId);
+  console.info("Creating an application (createAnApplication helper)");
   try {
-    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData } = variables;
+    const { accountId, eligibilityAnswers, company: companyData, sectionReview: sectionReviewData, status } = variables;
     const account2 = await get_account_by_id_default(context, accountId);
     if (!account2) {
-      return {
-        success: false
-      };
+      return null;
     }
     const { buyerCountryIsoCode, needPreCreditPeriodCover, totalContractValueId, coverPeriodId, ...otherEligibilityAnswers } = eligibilityAnswers;
     const country = await get_country_by_field_default(context, "isoCode", buyerCountryIsoCode);
+    const submissionType = SUBMISSION_TYPE2.MIA;
     const application2 = await context.db.Application.createOne({
       data: {
         owner: {
           connect: { id: accountId }
-        }
+        },
+        status,
+        submissionType
       }
     });
     const { id: applicationId } = application2;
@@ -4587,16 +4605,68 @@ var createAnApplication = async (root, variables, context) => {
         }
       }
     });
+    return updatedApplication;
+  } catch (err) {
+    console.error("Error creating an application (createAnApplication helper) %O", err);
+    throw new Error(`Creating an application (createAnApplication helper) ${err}`);
+  }
+};
+var create_an_application_default = createAnApplication;
+
+// custom-resolvers/mutations/create-an-application/index.ts
+var { STATUS: STATUS2 } = APPLICATION;
+var createAnApplication2 = async (root, variables, context) => {
+  console.info("Creating application for ", variables.accountId);
+  const updatedVariables = variables;
+  updatedVariables.status = STATUS2.IN_PROGRESS;
+  try {
+    const updatedApplication = await create_an_application_default(root, updatedVariables, context);
+    if (updatedApplication) {
+      return {
+        ...updatedApplication,
+        success: true
+      };
+    }
     return {
-      ...updatedApplication,
-      success: true
+      success: false
     };
   } catch (err) {
     console.error("Error creating application %O", err);
     throw new Error(`Creating application ${err}`);
   }
 };
-var create_an_application_default = createAnApplication;
+var create_an_application_default2 = createAnApplication2;
+
+// custom-resolvers/mutations/create-an-abandoned-application/index.ts
+var { STATUS: STATUS3 } = APPLICATION;
+var createAnAbandonedApplication = async (root, variables, context) => {
+  const abandonedApplicationVariables = variables;
+  abandonedApplicationVariables.status = STATUS3.ABANDONED;
+  try {
+    const createdApplication = await create_an_application_default(root, abandonedApplicationVariables, context);
+    if (createdApplication) {
+      const updatedApplication = await context.db.Application.updateOne({
+        where: {
+          id: createdApplication.id
+        },
+        data: {
+          status: STATUS3.ABANDONED
+        }
+      });
+      return {
+        ...updatedApplication,
+        success: true
+      };
+    }
+    return {
+      success: false
+    };
+  } catch (err) {
+    console.error("Error creating an abandoned application %O", err);
+    throw new Error(`Creating an abandoned application ${err}`);
+  }
+};
+var create_an_abandoned_application_default = createAnAbandonedApplication;
 
 // helpers/get-application-by-reference-number/index.ts
 var getApplicationByReferenceNumber = async (referenceNumber, context) => {
@@ -7102,7 +7172,8 @@ var customResolvers = {
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
     sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
-    createAnApplication: create_an_application_default,
+    createAnApplication: create_an_application_default2,
+    createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,
     submitApplication: submit_application_default,
     createFeedbackAndSendEmail: create_feedback_default,

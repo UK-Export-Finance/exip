@@ -4,7 +4,14 @@ import isSubmitYourApplicationRoute from './is-submit-your-application-route';
 import canAccessSubmitYourApplicationRoutes from '../../../helpers/can-access-submit-your-application-routes';
 import { Next, Request, Response } from '../../../../types';
 
-const { APPLICATION_SUBMITTED, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const {
+  APPLICATION_SUBMITTED,
+  NO_ACCESS_TO_APPLICATION,
+  NO_ACCESS_APPLICATION_SUBMITTED,
+  INSURANCE_ROOT,
+  COMPLETE_OTHER_SECTIONS,
+  PROBLEM_WITH_SERVICE
+} = INSURANCE_ROUTES;
 
 /**
  * middleware to check if application is submitted
@@ -35,6 +42,14 @@ export const applicationStatusMiddleware = async (req: Request, res: Response, n
        */
       if (application.status === APPLICATION.STATUS.SUBMITTED) {
         return res.redirect(NO_ACCESS_APPLICATION_SUBMITTED);
+      }
+
+      /**
+       * If the status is abandoned,
+       * do not allow the user to view/access the application and redirect to NO_ACCESS_TO_APPLICATION.
+       */
+      if (application.status === APPLICATION.STATUS.ABANDONED) {
+        return res.redirect(NO_ACCESS_TO_APPLICATION);
       }
 
       /**

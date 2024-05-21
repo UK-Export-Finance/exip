@@ -34,6 +34,14 @@ const queryStrings = {
       }
     }
   `,
+  createAnAbandonedApplication: () => gql`
+  mutation createAnAbandonedApplication($accountId: String!, $eligibilityAnswers: ApplicationEligibility!, $company: CompanyInput!, $sectionReview: SectionReviewInput!) {
+    createAnAbandonedApplication(accountId: $accountId, eligibilityAnswers: $eligibilityAnswers, company: $company, sectionReview: $sectionReview) {
+      referenceNumber
+      status
+    }
+  }
+`,
   createApplications: () => gql`
     mutation createApplications($data: [ApplicationCreateInput!]!) {
       createApplications(data: $data) {
@@ -235,6 +243,27 @@ const createAnApplication = (accountId, eligibilityAnswers, company, sectionRevi
     },
     context: APOLLO_CONTEXT,
   }).then((response) => response.data.createAnApplication);
+
+/**
+  * createAnApplication
+  * Create an application
+  * @param {String} Account/application owner ID
+  * @param {Object} Eligibility answers
+  * @param {Object} Company object (obtained from eligibility companies house call)
+  * @param {Object} sectionReview object (with eligibility set to true)
+  * @returns {Object} Created application
+  */
+const createAnAbandonedApplication = (accountId, eligibilityAnswers, company, sectionReview) =>
+  apollo.query({
+    query: queryStrings.createAnAbandonedApplication(),
+    variables: {
+      accountId,
+      eligibilityAnswers,
+      company,
+      sectionReview,
+    },
+    context: APOLLO_CONTEXT,
+  }).then((response) => response.data.createAnAbandonedApplication);
 
 /**
   * createApplications
@@ -559,6 +588,7 @@ const api = {
   createAnAccount,
   createBuyer,
   createAnApplication,
+  createAnAbandonedApplication,
   createApplications,
   getAccountByEmail,
   updateAccount,
