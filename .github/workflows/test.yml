@@ -21,7 +21,7 @@ on:
 
 env:
   environment: "qa"
-  timezone: "Europe/London"
+  timezone: ${{ vars.TIMEZONE }}
   NODE_ENV: ${{ vars.NODE_ENV }}
   TLS_CERTIFICATE: "${{ secrets.TLS_CERTIFICATE }}"
   TLS_KEY: "${{ secrets.TLS_KEY }}"
