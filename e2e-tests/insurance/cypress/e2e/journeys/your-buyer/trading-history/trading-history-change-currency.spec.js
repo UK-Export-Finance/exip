@@ -12,7 +12,7 @@ const { TOTAL_AMOUNT_OVERDUE, TOTAL_OUTSTANDING_PAYMENTS } = FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Trading history page - Currency symbol when changing currency', () => {
+context('Insurance - Your buyer - Trading history page - Currency symbol when changing currency', () => {
   let referenceNumber;
   let url;
 

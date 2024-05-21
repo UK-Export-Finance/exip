@@ -26,7 +26,7 @@ const baseUrl = Cypress.config('baseUrl');
 
 const { BUYER } = application;
 
-context('Insurance - Your Buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
+context('Insurance - Your buyer - Trading history page - As an exporter, I want to provide the details on trading history with the buyer of my export trade, So that UKEF can gain clarity on whether I have trading history with the buyer as part of due diligence', () => {
   let referenceNumber;
   let url;
   let buyerFinancialInformationUrl;

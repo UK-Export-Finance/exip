@@ -2,7 +2,7 @@ import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
-import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
 
 const {
@@ -18,7 +18,7 @@ const {
 const {
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
-} = INSURANCE_FIELD_IDS.YOUR_BUYER;
+} = FIELD_IDS;
 
 const { taskList } = partials.insurancePartials;
 
@@ -36,9 +36,11 @@ const getFieldVariables = (fieldId, referenceNumber, route) => ({
   changeLink: summaryList.field(fieldId).changeLink,
 });
 
+const fieldId = CONNECTION_WITH_BUYER;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Check your answers - Working with buyer - Your buyer page - Summary list', () => {
+context(`Insurance - Check your answers - Your buyer - Working with buyer - ${CONNECTION_WITH_BUYER} - As an exporter, I want to change my answers to the working with buyer section`, () => {
   let referenceNumber;
   let url;
 
@@ -70,7 +72,6 @@ context('Insurance - Check your answers - Working with buyer - Your buyer page -
   });
 
   describe(CONNECTION_WITH_BUYER, () => {
-    const fieldId = CONNECTION_WITH_BUYER;
     let fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHECK_AND_CHANGE);
 
     describe('when clicking the `change` link', () => {

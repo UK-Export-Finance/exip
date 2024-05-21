@@ -1,13 +1,13 @@
+import { summaryList } from '../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
-import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
-import { summaryList } from '../../../../../../pages/shared';
+import { YOUR_BUYER as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../fixtures/application';
 
 const {
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
-} = YOUR_BUYER_FIELD_IDS;
+} = FIELD_IDS;
 
 const {
   ROOT,
@@ -19,23 +19,34 @@ const {
 
 const { BUYER } = application;
 
+const getFieldVariables = (fieldId, referenceNumber, route) => ({
+  route,
+  checkYourAnswersRoute: CHECK_YOUR_ANSWERS,
+  newValueInput: '',
+  fieldId,
+  referenceNumber,
+  summaryList,
+  changeLink: summaryList.field(fieldId).changeLink,
+});
+
+const fieldId = CONNECTION_WITH_BUYER;
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Change your answers - Connection to the buyer - As an exporter, I want to change my answers to the connection to the buyer section', () => {
+context(`Insurance - Your buyer - Change your answers - Working with buyer - ${CONNECTION_WITH_BUYER} - As an exporter, I want to change my answers to the working with buyer section`, () => {
   let url;
   let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+    cy.completeSignInAndGoToApplication({ totalContractValueOverThreshold: true }).then(({ referenceNumber: refNumber }) => {
       referenceNumber = refNumber;
-
-      cy.completePrepareApplicationSinglePolicyType({ referenceNumber });
 
       cy.startInsuranceYourBuyerSection({});
 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({});
+      cy.completeAndSubmitCreditInsuranceCoverForm({});
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -51,15 +62,18 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
   });
 
   describe(CONNECTION_WITH_BUYER, () => {
-    const fieldId = CONNECTION_WITH_BUYER;
+    let fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHANGE);
 
     describe('when clicking the `change` link', () => {
-      it(`should redirect to ${CONNECTION_WITH_BUYER}`, () => {
+      beforeEach(() => {
         cy.navigateToUrl(url);
+      });
 
-        summaryList.field(fieldId).changeLink().click();
+      it(`should redirect to ${CONNECTION_WITH_BUYER_CHANGE}`, () => {
+        cy.navigateToUrl(url);
+        fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHANGE);
 
-        cy.assertChangeAnswersPageUrl({ referenceNumber, route: CONNECTION_WITH_BUYER_CHANGE, fieldId: CONNECTION_WITH_BUYER });
+        cy.checkChangeLinkUrl(fieldVariables, referenceNumber);
       });
     });
 
@@ -77,11 +91,15 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
       });
 
       it(`should render the new answer for ${CONNECTION_WITH_BUYER}`, () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
+        fieldVariables.newValue = FIELD_VALUES.YES;
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
 
       it(`should render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
-        cy.assertSummaryListRowValue(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION, BUYER[CONNECTION_WITH_BUYER_DESCRIPTION]);
+        fieldVariables = getFieldVariables(CONNECTION_WITH_BUYER_DESCRIPTION, referenceNumber, CONNECTION_WITH_BUYER_CHANGE);
+        fieldVariables.newValue = BUYER[CONNECTION_WITH_BUYER_DESCRIPTION];
+
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
     });
 
@@ -99,10 +117,12 @@ context('Insurance - Your buyer - Change your answers - Connection to the buyer 
       });
 
       it(`should render the new answer for ${CONNECTION_WITH_BUYER}`, () => {
-        cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
+        fieldVariables = getFieldVariables(fieldId, referenceNumber, CONNECTION_WITH_BUYER_CHANGE);
+        fieldVariables.newValue = FIELD_VALUES.NO;
+        cy.checkChangeAnswerRendered({ fieldVariables });
       });
 
-      it(`should NOT render the new answer for ${CONNECTION_WITH_BUYER_DESCRIPTION}`, () => {
+      it(`should NOT render a ${CONNECTION_WITH_BUYER_DESCRIPTION} row`, () => {
         cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
       });
     });

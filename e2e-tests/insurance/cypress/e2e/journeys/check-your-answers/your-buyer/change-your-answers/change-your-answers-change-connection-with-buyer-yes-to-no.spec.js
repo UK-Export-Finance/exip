@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -26,7 +26,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - Yes to no`, () => {
+context(`Insurance - Check your answers - Your buyer - Connection with buyer - ${FIELD_ID} - Yes to no - As an exporter, I want to change my answers to the connection with buyer section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -88,6 +88,10 @@ context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - 
       cy.assertSummaryListRowValue(summaryList, FIELD_ID, FIELD_VALUES.NO);
 
       cy.assertSummaryListRowDoesNotExist(summaryList, CONNECTION_WITH_BUYER_DESCRIPTION);
+    });
+
+    it('should retain a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status);
     });
 
     describe('when changing the answer again from no to yes', () => {

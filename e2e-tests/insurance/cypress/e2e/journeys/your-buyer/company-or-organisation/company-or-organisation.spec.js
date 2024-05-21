@@ -30,7 +30,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
+context('Insurance - Your buyer - Company or organisation page - As an exporter, I want to enter the buyer details', () => {
   let referenceNumber;
   let url;
   let connectionToTheBuyerUrl;

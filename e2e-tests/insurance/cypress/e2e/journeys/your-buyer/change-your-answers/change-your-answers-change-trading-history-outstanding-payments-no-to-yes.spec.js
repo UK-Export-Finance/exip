@@ -2,27 +2,33 @@ import { FIELD_VALUES } from '../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { summaryList } from '../../../../../../pages/shared';
+import application from '../../../../../../fixtures/application';
+import formatCurrency from '../../../../../../helpers/format-currency';
 
 const {
+  CURRENCY: {
+    CURRENCY_CODE,
+  },
   YOUR_BUYER: {
-    TRADED_WITH_BUYER,
     OUTSTANDING_PAYMENTS,
-    TOTAL_AMOUNT_OVERDUE,
     TOTAL_OUTSTANDING_PAYMENTS,
-    FAILED_PAYMENTS,
   },
 } = INSURANCE_FIELD_IDS;
 
 const {
   ROOT,
   YOUR_BUYER: {
+    TRADING_HISTORY_CHANGE,
     CHECK_YOUR_ANSWERS,
   },
 } = INSURANCE_ROUTES;
 
+const fieldId = OUTSTANDING_PAYMENTS;
+const currency = application.BUYER[CURRENCY_CODE];
+
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your buyer - Change your answers - Trading history - As an exporter, I want to change my answers to the trading history section from yes to no', () => {
+context(`Insurance - Your buyer - Change your answers - Trading history - ${OUTSTANDING_PAYMENTS} - No to yes - As an exporter, I want to change my answers to the trading history section`, () => {
   let referenceNumber;
   let url;
 
@@ -35,7 +41,6 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
       cy.completeAndSubmitCompanyOrOrganisationForm({});
       cy.completeAndSubmitConnectionWithTheBuyerForm({});
       cy.completeAndSubmitTradedWithBuyerForm({ exporterHasTradedWithBuyer: true });
-      cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true, failedToPay: true });
       cy.completeAndSubmitBuyerFinancialInformationForm({});
 
       url = `${baseUrl}${ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`;
@@ -50,7 +55,15 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
     cy.deleteApplication(referenceNumber);
   });
 
-  const fieldId = TRADED_WITH_BUYER;
+  describe('when clicking the `change` link', () => {
+    it(`should redirect to ${TRADING_HISTORY_CHANGE}`, () => {
+      cy.navigateToUrl(url);
+
+      summaryList.field(fieldId).changeLink().click();
+
+      cy.assertChangeAnswersPageUrl({ referenceNumber, route: TRADING_HISTORY_CHANGE, fieldId });
+    });
+  });
 
   describe('form submission with a new answer', () => {
     beforeEach(() => {
@@ -58,19 +71,20 @@ context('Insurance - Your buyer - Change your answers - Trading history - As an 
 
       summaryList.field(fieldId).changeLink().click();
 
-      cy.completeAndSubmitTradedWithBuyerForm({});
+      cy.completeAndSubmitTradingHistoryWithBuyerForm({ outstandingPayments: true });
     });
 
     it(`should redirect to ${CHECK_YOUR_ANSWERS}`, () => {
       cy.assertChangeAnswersPageUrl({ referenceNumber, route: CHECK_YOUR_ANSWERS, fieldId });
     });
 
-    it('should render the new answer and not render option rows', () => {
-      cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.NO);
-      cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_OUTSTANDING_PAYMENTS);
-      cy.assertSummaryListRowDoesNotExist(summaryList, FAILED_PAYMENTS);
-      cy.assertSummaryListRowDoesNotExist(summaryList, TOTAL_AMOUNT_OVERDUE);
-      cy.assertSummaryListRowDoesNotExist(summaryList, OUTSTANDING_PAYMENTS);
+    it(`should render the new answer with ${TOTAL_OUTSTANDING_PAYMENTS}`, () => {
+      cy.assertSummaryListRowValue(summaryList, fieldId, FIELD_VALUES.YES);
+
+      const row = summaryList.field(TOTAL_OUTSTANDING_PAYMENTS);
+      const expected = formatCurrency(application.BUYER[TOTAL_OUTSTANDING_PAYMENTS], currency);
+
+      row.value().contains(expected);
     });
   });
 });

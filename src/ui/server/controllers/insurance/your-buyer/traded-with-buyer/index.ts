@@ -15,12 +15,18 @@ const { TRADED_WITH_BUYER } = BUYER_FIELD_IDS;
 
 const {
   INSURANCE_ROOT,
-  YOUR_BUYER: YOUR_BUYER_ROUTES,
+  YOUR_BUYER: {
+    TRADED_WITH_BUYER_SAVE_AND_BACK,
+    CHECK_YOUR_ANSWERS,
+    TRADING_HISTORY,
+    TRADING_HISTORY_CHANGE,
+    TRADING_HISTORY_CHECK_AND_CHANGE,
+    CREDIT_INSURANCE_COVER,
+    BUYER_FINANCIAL_INFORMATION,
+  },
   CHECK_YOUR_ANSWERS: { YOUR_BUYER: CHECK_AND_CHANGE_ROUTE },
   PROBLEM_WITH_SERVICE,
 } = ROUTES.INSURANCE;
-
-const { TRADED_WITH_BUYER_SAVE_AND_BACK, CHECK_YOUR_ANSWERS, TRADING_HISTORY, CREDIT_INSURANCE_COVER, BUYER_FINANCIAL_INFORMATION } = YOUR_BUYER_ROUTES;
 
 export const FIELD_ID = TRADED_WITH_BUYER;
 
@@ -119,19 +125,36 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
+    const answer = payload[FIELD_ID];
+
+    const hasTradedWithBuyer = answer === 'true';
+    const hasNotTradedWithBuyer = answer === 'false';
+
     /**
      * If is a change route
+     * the exporter has TRADED_WITH_BUYER,
+     * redirect to TRADING_HISTORY CHANGE.
      * redirect to CHECK_YOUR_ANSWERS
      */
     if (isChangeRoute(req.originalUrl)) {
+      if (hasTradedWithBuyer) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_YOUR_ANSWERS}`);
     }
 
     /**
-     * If is a check-and-change route
-     * redirect to CHECK_AND_CHANGE_ROUTE
+     * If is a check-and-change route,
+     * the exporter has TRADED_WITH_BUYER,
+     * redirect to TRADING_HISTORY_CHECK_AND_CHANGE.
+     * Otherwise, redirect to CHECK_AND_CHANGE_ROUTE
      */
     if (isCheckAndChangeRoute(req.originalUrl)) {
+      if (hasTradedWithBuyer) {
+        return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHECK_AND_CHANGE}`);
+      }
+
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CHECK_AND_CHANGE_ROUTE}`);
     }
 
@@ -139,7 +162,7 @@ export const post = async (req: Request, res: Response) => {
      * if exporterHasTradedWithBuyer is true
      * redirect to prior trading history page
      */
-    if (payload[FIELD_ID] === 'true') {
+    if (hasTradedWithBuyer) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY}`);
     }
 
@@ -148,7 +171,7 @@ export const post = async (req: Request, res: Response) => {
      * then should redirect to CREDIT_INSURANCE_COVER
      * otherwise it should redirect to the BUYER_FINANCIAL_INFORMATION page
      */
-    if (application.totalContractValueOverThreshold && payload[FIELD_ID] === 'false') {
+    if (application.totalContractValueOverThreshold && hasNotTradedWithBuyer) {
       return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${CREDIT_INSURANCE_COVER}`);
     }
 
