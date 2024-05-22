@@ -27,7 +27,7 @@ const {
 } = FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-key-information', () => {
-  it('should return an array of mapped buyer fields', () => {
+  it('should return an array of mapped fields', () => {
     const result = mapKeyInformation(mockApplication);
 
     const { policy } = mockApplication;

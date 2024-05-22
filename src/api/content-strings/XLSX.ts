@@ -26,6 +26,13 @@ const {
   },
 } = INSURANCE_FIELD_IDS;
 
+/**
+ * XLSX
+ * Content strings specific for the XLSX.
+ * Some field titles/labels need to have different wording for internal teams, after an application is submitted.
+ * as apposed to other field content strings that are used for a user completing an application.
+ * If a field is in the XLSX and not listed here, the field is using the "regular" field content strings.
+ */
 export const XLSX = {
   AGREED: 'Agreed',
   SECTION_TITLES: {
