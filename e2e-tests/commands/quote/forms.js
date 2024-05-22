@@ -1,21 +1,10 @@
-import {
-  field,
-  yesRadio,
-  noRadio,
-  submitButton,
-} from '../../pages/shared';
+import { field, yesRadio, noRadio, submitButton } from '../../pages/shared';
 import { policyTypePage, tellUsAboutYourPolicyPage } from '../../pages/quote';
 import { FIELD_IDS } from '../../constants';
 import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
 
 const {
-  ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CURRENCY,
-    CREDIT_PERIOD,
-    MAX_AMOUNT_OWED,
-    PERCENTAGE_OF_COVER,
-  },
+  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY, CREDIT_PERIOD, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
   POLICY_LENGTH,
 } = FIELD_IDS;
@@ -47,6 +36,11 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
   submitButton().click();
 };
 
+/**
+ * completeAndSubmitTellUsAboutYourSinglePolicyForm
+ * Complete and submit the "tell us about your single policy" form
+ * @param {Integer} policyLength: Policy length
+ */
 export const completeAndSubmitTellUsAboutYourSinglePolicyForm = ({ policyLength = 3 }) => {
   cy.keyboardInput(field(POLICY_LENGTH).input(), policyLength);
   field(CURRENCY).input().select(GBP_CURRENCY_CODE);
@@ -55,6 +49,10 @@ export const completeAndSubmitTellUsAboutYourSinglePolicyForm = ({ policyLength 
   submitButton().click();
 };
 
+/**
+ * completeAndSubmitTellUsAboutYourMultiPolicyForm
+ * Complete and submit the "tell us about your multiple policy" form
+ */
 export const completeAndSubmitTellUsAboutYourMultiPolicyForm = () => {
   field(CURRENCY).input().select(GBP_CURRENCY_CODE);
   cy.keyboardInput(field(MAX_AMOUNT_OWED).input(), '150000');
