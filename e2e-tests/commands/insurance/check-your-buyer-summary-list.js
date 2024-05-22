@@ -134,7 +134,7 @@ const checkYourBusinessSummaryList = ({
       if (isYes) {
         expectedValue = FIELD_VALUES.YES;
       } else {
-        expectedValue = application.BUYER[fieldId];
+        expectedValue = FIELD_VALUES.NO;
       }
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);
@@ -177,7 +177,7 @@ const checkYourBusinessSummaryList = ({
       if (isYes) {
         expectedValue = FIELD_VALUES.YES;
       } else {
-        expectedValue = application.BUYER[fieldId];
+        expectedValue = FIELD_VALUES.NO;
       }
 
       cy.assertSummaryListRow(summaryList, fieldId, expectedKey, expectedValue, expectedChangeLinkText);

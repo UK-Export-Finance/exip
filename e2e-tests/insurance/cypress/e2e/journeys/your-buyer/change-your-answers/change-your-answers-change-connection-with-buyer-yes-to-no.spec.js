@@ -19,7 +19,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Your buyer - Change your answers - Connection with buyer - ${FIELD_ID} - Yes to no`, () => {
+context(`Insurance - Your buyer - Change your answers - Connection with buyer - ${FIELD_ID} - Yes to no - As an exporter, I want to change my answers to the connection with buyer section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 

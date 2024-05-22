@@ -24,7 +24,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Credit insurance cover page - As an exporter, I want to provide information, So that UKEF can better understand the risk undertaken if I am given insurance cover', () => {
+context('Insurance - Your buyer - Credit insurance cover page - As an exporter, I want to provide information, So that UKEF can better understand the risk undertaken if I am given insurance cover', () => {
   let referenceNumber;
   let url;
   let buyerFinancialInformationUrl;

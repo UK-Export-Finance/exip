@@ -1,4 +1,4 @@
-import { summaryList } from '../../../../../../../pages/shared';
+import { status, summaryList } from '../../../../../../../pages/shared';
 import partials from '../../../../../../../partials';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { YOUR_BUYER as FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
@@ -25,7 +25,7 @@ const task = taskList.submitApplication.tasks.checkAnswers;
 
 const baseUrl = Cypress.config('baseUrl');
 
-context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - No to yes`, () => {
+context(`Insurance - Check your answers - Your buyer - Connection with buyer - ${FIELD_ID} - No to yes - As an exporter, I want to change my answers to the connection with buyer section`, () => {
   let referenceNumber;
   let checkYourAnswersUrl;
 
@@ -86,6 +86,10 @@ context(`Insurance - Connection with buyer - Check your answers - ${FIELD_ID} - 
     it(`should render new ${FIELD_ID} answer and change link, with other buyer connection fields`, () => {
       checkSummaryList[FIELD_ID]({ isYes: true });
       checkSummaryList[CONNECTION_WITH_BUYER_DESCRIPTION]({ shouldRender: true });
+    });
+
+    it('should retain a `completed` status tag', () => {
+      cy.checkTaskStatusCompleted(status);
     });
   });
 });

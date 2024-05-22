@@ -19,6 +19,8 @@ const {
     TRADED_WITH_BUYER_CHECK_AND_CHANGE,
     TRADED_WITH_BUYER_CHANGE,
     TRADING_HISTORY,
+    TRADING_HISTORY_CHANGE,
+    TRADING_HISTORY_CHECK_AND_CHANGE,
     CREDIT_INSURANCE_COVER,
     BUYER_FINANCIAL_INFORMATION,
   },
@@ -171,10 +173,26 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         });
       });
 
-      describe("when the url's last substring is `change`", () => {
-        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+      describe(`when ${TRADED_WITH_BUYER} is true and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${TRADING_HISTORY_CHANGE}`, async () => {
           req.body = {
             [TRADED_WITH_BUYER]: 'true',
+          };
+
+          req.originalUrl = TRADED_WITH_BUYER_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${TRADED_WITH_BUYER} is false and the url's last substring is 'change'`, () => {
+        it(`should redirect to ${CHECK_YOUR_ANSWERS}`, async () => {
+          req.body = {
+            [TRADED_WITH_BUYER]: 'false',
           };
 
           req.originalUrl = TRADED_WITH_BUYER_CHANGE;
@@ -187,10 +205,26 @@ describe('controllers/insurance/your-buyer/traded-with-buyer', () => {
         });
       });
 
-      describe("when the url's last substring is `check-and-change`", () => {
-        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+      describe(`when ${TRADED_WITH_BUYER} is true and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${TRADING_HISTORY_CHECK_AND_CHANGE}`, async () => {
           req.body = {
             [TRADED_WITH_BUYER]: 'true',
+          };
+
+          req.originalUrl = TRADED_WITH_BUYER_CHECK_AND_CHANGE;
+
+          await post(req, res);
+
+          const expected = `${INSURANCE_ROOT}/${referenceNumber}${TRADING_HISTORY_CHECK_AND_CHANGE}`;
+
+          expect(res.redirect).toHaveBeenCalledWith(expected);
+        });
+      });
+
+      describe(`when ${TRADED_WITH_BUYER} is false and the url's last substring is 'check-and-change'`, () => {
+        it(`should redirect to ${CHECK_AND_CHANGE_ROUTE}`, async () => {
+          req.body = {
+            [TRADED_WITH_BUYER]: 'false',
           };
 
           req.originalUrl = TRADED_WITH_BUYER_CHECK_AND_CHANGE;

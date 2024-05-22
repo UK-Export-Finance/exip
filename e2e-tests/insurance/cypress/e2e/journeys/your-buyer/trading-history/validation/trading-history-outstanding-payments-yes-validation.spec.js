@@ -44,7 +44,7 @@ const submitAndAssertBothFields = ({
   });
 };
 
-context('Insurance - Your Buyer - Trading history page - Outstanding payments yes validation', () => {
+context('Insurance - Your buyer - Trading history page - Outstanding payments yes validation', () => {
   let referenceNumber;
   let url;
   let buyerFinancialInformationUrl;

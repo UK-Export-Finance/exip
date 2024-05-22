@@ -23,7 +23,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Company or organisation page - form validation - company or organisation name', () => {
+context('Insurance - Your buyer - Company or organisation page - form validation - company or organisation name', () => {
   let referenceNumber;
   let url;
 

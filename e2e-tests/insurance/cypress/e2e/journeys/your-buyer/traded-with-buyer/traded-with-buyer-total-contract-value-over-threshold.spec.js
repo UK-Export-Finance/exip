@@ -9,7 +9,7 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Traded with buyer page - Submission with total contract value over threshold', () => {
+context('Insurance - Your buyer - Traded with buyer page - Submission with total contract value over threshold', () => {
   let referenceNumber;
   let url;
   let tradingHistoryUrl;

@@ -26,7 +26,7 @@ const ERROR_MESSAGE = ERRORS[FIELD_ID];
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Traded with buyer page - As an exporter, I want to confirm my buyer details', () => {
+context('Insurance - Your buyer - Traded with buyer page - As an exporter, I want to confirm my buyer details', () => {
   let referenceNumber;
   let url;
   let tradingHistoryUrl;

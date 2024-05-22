@@ -27,7 +27,7 @@ const ERROR_MESSAGE = ERRORS[FIELD_ID];
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Your Buyer - Buyer financial information - As an exporter, I want to provide the details on the buyer of my export trade, So that UKEF can gain clarity on the buyer history as part of due diligence', () => {
+context('Insurance - Your buyer - Buyer financial information - As an exporter, I want to provide the details on the buyer of my export trade, So that UKEF can gain clarity on the buyer history as part of due diligence', () => {
   let referenceNumber;
   let url;
   let checkYourAnswersUrl;
