@@ -7,6 +7,11 @@ const {
   USING_BROKER,
 } = POLICY_FIELD_IDS;
 
+/**
+ * TITLE_INDEXES
+ * All XLSX title indexes.
+ * @returns {Object}
+ */
 export const TITLE_INDEXES = () => ({
   HEADER: 1,
   EXPORTER_CONTACT_DETAILS: 10,
@@ -18,6 +23,11 @@ export const TITLE_INDEXES = () => ({
   DECLARATIONS: 66,
 }) as XLSXTitleRowIndexes;
 
+/**
+ * INDEXES
+ * All XLSX indexes.
+ * @returns {Object}
+ */
 export const INDEXES = () => ({
   TITLES: TITLE_INDEXES(),
   COMPANY_ADDRESS: 34,
