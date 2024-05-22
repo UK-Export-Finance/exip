@@ -47,8 +47,8 @@ export const completeAndSubmitPolicyTypeMultiForm = () => {
   submitButton().click();
 };
 
-export const completeAndSubmitTellUsAboutYourSinglePolicyForm = () => {
-  cy.keyboardInput(field(POLICY_LENGTH).input(), '3');
+export const completeAndSubmitTellUsAboutYourSinglePolicyForm = ({ policyLength = 3 }) => {
+  cy.keyboardInput(field(POLICY_LENGTH).input(), policyLength);
   field(CURRENCY).input().select(GBP_CURRENCY_CODE);
   cy.keyboardInput(field(CONTRACT_VALUE).input(), '150000');
   field(PERCENTAGE_OF_COVER).input().select('90');

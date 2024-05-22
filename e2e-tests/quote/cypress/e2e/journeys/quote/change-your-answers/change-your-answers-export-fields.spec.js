@@ -38,7 +38,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
 
   before(() => {
     cy.login();
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.assertUrl(url);
   });
 

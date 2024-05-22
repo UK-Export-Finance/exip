@@ -53,7 +53,7 @@ context('Check your answers page (single policy) - as an exporter, I want to rev
 
   before(() => {
     cy.login();
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.assertUrl(url);
   });
 

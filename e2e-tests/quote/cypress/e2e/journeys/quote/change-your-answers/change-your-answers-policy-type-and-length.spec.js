@@ -79,7 +79,7 @@ context('Change your answers - as an exporter, I want to change the details befo
   context('Policy type and length fields - user flow', () => {
     before(() => {
       cy.login();
-      cy.submitQuoteAnswersHappyPathSinglePolicy();
+      cy.submitQuoteAnswersHappyPathSinglePolicy({});
 
       cy.assertUrl(url);
       row = summaryList.field(POLICY_TYPE);
@@ -127,7 +127,7 @@ context('Change your answers - as an exporter, I want to change the details befo
     beforeEach(() => {
       cy.login();
 
-      cy.submitQuoteAnswersHappyPathSinglePolicy();
+      cy.submitQuoteAnswersHappyPathSinglePolicy({});
       cy.assertUrl(url);
 
       row = summaryList.field(POLICY_TYPE);
@@ -168,7 +168,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       before(() => {
         cy.login();
 
-        cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
 
         cy.navigateToUrl(url);
@@ -224,7 +224,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       beforeEach(() => {
         cy.login();
 
-        cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
 
         cy.navigateToUrl(url);
@@ -260,7 +260,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       before(() => {
         cy.login();
 
-        cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
 
         cy.navigateToUrl(url);

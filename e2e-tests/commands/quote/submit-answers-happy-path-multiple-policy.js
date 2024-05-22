@@ -7,7 +7,11 @@ import {
   completeAndSubmitTellUsAboutYourMultiPolicyForm,
 } from './forms';
 
-export default () => {
+/**
+ * submitQuoteAnswersHappyPathMultiplePolicy
+ * Submit all quote answers - happy path - multiple policy
+ */
+const submitQuoteAnswersHappyPathMultiplePolicy = () => {
   completeAndSubmitBuyerCountryForm();
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
@@ -15,3 +19,5 @@ export default () => {
   completeAndSubmitPolicyTypeMultiForm();
   completeAndSubmitTellUsAboutYourMultiPolicyForm();
 };
+
+export default submitQuoteAnswersHappyPathMultiplePolicy;

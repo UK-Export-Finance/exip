@@ -14,7 +14,7 @@ context('Get a quote, Complete insurance eligibility and then re-visit the quote
   before(() => {
     cy.navigateToUrl(ROOT);
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     submitButton().click();
 
     const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;

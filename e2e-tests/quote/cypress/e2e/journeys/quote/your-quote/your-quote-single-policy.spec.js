@@ -59,7 +59,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   before(() => {
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     submitButton().click();
 
     cy.assertUrl(url);

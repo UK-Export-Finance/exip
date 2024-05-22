@@ -26,7 +26,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
   before(() => {
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
 
     // change currency to non-GBP
     summaryList.field(CONTRACT_VALUE).changeLink().click();
