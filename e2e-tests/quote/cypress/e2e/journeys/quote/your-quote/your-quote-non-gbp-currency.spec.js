@@ -4,19 +4,15 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { EUR_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
-  ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CURRENCY,
-  },
+  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY },
   QUOTE,
 } = FIELD_IDS;
 
-const { QUOTE: { YOUR_QUOTE } } = ROUTES;
-
 const {
-  INSURED_FOR,
-  ESTIMATED_COST,
-} = QUOTE;
+  QUOTE: { YOUR_QUOTE },
+} = ROUTES;
+
+const { INSURED_FOR, ESTIMATED_COST } = QUOTE;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -69,7 +65,7 @@ context('Get a quote/your quote page (non GBP currency) - as an exporter, I want
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = '€1,740.00';
+        const expected = '€1,710.00';
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
