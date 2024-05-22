@@ -14,9 +14,9 @@ const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
 const { table } = dashboardPage;
 
-const { ABANDONED } = APPLICATION.STATUS;
+const { ABANDONED, IN_PROGRESS } = APPLICATION.STATUS;
 
-context(`Insurance - Dashboard - pagination - ${totalApplications} applications and 1 abandoned application`, () => {
+context(`Insurance - Dashboard - pagination - ${totalApplications} applications and 1 ${ABANDONED} application`, () => {
   let applications;
   let abandonedApplication;
 
@@ -62,6 +62,12 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications 
         expectedPageNumber: 1,
         previousLinkShouldExist: false,
         expectedUrl: `${baseUrl}${DASHBOARD}`,
+      });
+    });
+
+    it(`should have no ${ABANDONED} applications`, () => {
+      dashboardPage.body.rows().forEach((row) => {
+        cy.checkText(row.status(), IN_PROGRESS);
       });
     });
   });

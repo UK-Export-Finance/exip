@@ -8,7 +8,7 @@ const { DASHBOARD } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
-const totalApplications = 1;
+const totalExpectedApplications = 1;
 
 const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
@@ -20,7 +20,7 @@ context(`Insurance - Dashboard - pagination - 1 ${IN_PROGRESS} application and 1
 
   before(() => {
     cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
-      cy.createApplications(accountId, totalApplications).then((createdApplications) => {
+      cy.createApplications(accountId, totalExpectedApplications).then((createdApplications) => {
         applications = createdApplications;
       });
 
@@ -42,7 +42,7 @@ context(`Insurance - Dashboard - pagination - 1 ${IN_PROGRESS} application and 1
   });
 
   it(`should render 1 ${IN_PROGRESS} application on the dashboard`, () => {
-    cy.assertLength(table.body.rows(), totalApplications);
-    dashboardPage.table.body.row(applications[0].referenceNumber).status();
+    cy.assertLength(table.body.rows(), totalExpectedApplications);
+    cy.checkText(dashboardPage.table.body.row(applications[0].referenceNumber).status(), IN_PROGRESS);
   });
 });
