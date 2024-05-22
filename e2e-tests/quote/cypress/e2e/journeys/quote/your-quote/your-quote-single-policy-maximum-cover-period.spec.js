@@ -1,23 +1,12 @@
 import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { LINKS, QUOTE_TITLES } from '../../../../../../content-strings';
-import {
-  ELIGIBILITY,
-  ROUTES,
-  FIELD_IDS,
-  FIELD_VALUES,
-} from '../../../../../../constants';
+import { ELIGIBILITY, ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    CONTRACT_VALUE,
-    CURRENCY,
-    CREDIT_PERIOD,
-    PERCENTAGE_OF_COVER,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CURRENCY, CREDIT_PERIOD, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
   POLICY_LENGTH,
   QUOTE,
@@ -25,19 +14,10 @@ const {
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    BUYER_COUNTRY_CHANGE,
-    YOUR_QUOTE,
-  },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY_CHANGE, BUYER_COUNTRY_CHANGE, YOUR_QUOTE },
 } = ROUTES;
 
-const {
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
-  BUYER_LOCATION,
-} = QUOTE;
+const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
 
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
@@ -81,11 +61,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
       const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
 
     it('renders `percentage of cover` key, value and change link', () => {
@@ -100,11 +76,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
       const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
 
     it('renders `insured for` key and value with decimal points (no change link)', () => {
@@ -125,7 +97,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
 
       cy.checkText(row.key(), expectedKeyText);
 
-      const expected = '3.74%';
+      const expected = '3.68%';
       cy.checkText(row.value(), expected);
 
       row.changeLink().should('not.exist');
@@ -137,7 +109,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
 
       cy.checkText(row.key(), expectedKeyText);
 
-      const expected = '£5,610.00';
+      const expected = '£5,520.00';
       cy.checkText(row.value(), expected);
 
       row.changeLink().should('not.exist');
@@ -155,11 +127,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
       const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
 
     it('renders `buyer location` key, value and change link', () => {
@@ -174,11 +142,7 @@ context('Get a quote/your quote page (single policy) - maximum cover period - as
       const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
       const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-      cy.checkLink(
-        row.changeLink(),
-        expectedChangeHref,
-        expectedChangeText,
-      );
+      cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
     });
   });
 });
