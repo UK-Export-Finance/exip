@@ -26,7 +26,7 @@ const bicSwiftCodeValidation = (formBody: RequestBody, errors: object) => {
     return generateValidationErrors(FIELD_ID, ERROR_MESSAGES_OBJECT.IS_EMPTY, errors);
   }
 
-  const fieldValue = formBody[FIELD_ID];
+  const fieldValue = formBody[FIELD_ID].toUpperCase();
 
   const alphaNumericalOnlyErrors = alphaNumericalCharactersOnlyValidation(fieldValue, FIELD_ID, ERROR_MESSAGES_OBJECT.INCORRECT_FORMAT, errors);
 
