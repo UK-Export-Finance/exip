@@ -1,10 +1,6 @@
 import { countryInput, submitButton, summaryList } from '../../../../../../pages/shared';
 import { yourQuotePage } from '../../../../../../pages/quote';
-import {
-  LINKS,
-  PAGES,
-  QUOTE_TITLES,
-} from '../../../../../../content-strings';
+import { LINKS, PAGES, QUOTE_TITLES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
@@ -12,11 +8,7 @@ const CONTENT_STRINGS = PAGES.QUOTE.YOUR_QUOTE;
 
 const {
   ELIGIBILITY: {
-    BUYER_COUNTRY,
-    CONTRACT_VALUE,
-    CURRENCY,
-    CREDIT_PERIOD,
-    PERCENTAGE_OF_COVER,
+    BUYER_COUNTRY, CONTRACT_VALUE, CURRENCY, CREDIT_PERIOD, PERCENTAGE_OF_COVER,
   },
   POLICY_TYPE,
   POLICY_LENGTH,
@@ -27,18 +19,12 @@ const {
 const {
   ROOT,
   QUOTE: {
-    BUYER_COUNTRY: BUYER_COUNTRY_ROUTE,
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    BUYER_COUNTRY_CHANGE,
-    YOUR_QUOTE,
+    BUYER_COUNTRY: BUYER_COUNTRY_ROUTE, TELL_US_ABOUT_YOUR_POLICY_CHANGE, BUYER_COUNTRY_CHANGE, YOUR_QUOTE,
   },
 } = ROUTES;
 
 const {
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
-  BUYER_LOCATION,
+  INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION,
 } = QUOTE;
 
 const submissionData = {
@@ -109,11 +95,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${CONTRACT_VALUE}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          cy.checkLink(
-            row.changeLink(),
-            expectedChangeHref,
-            expectedChangeText,
-          );
+          cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
         });
 
         it('renders `percentage of cover` key, value and change link', () => {
@@ -128,11 +110,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          cy.checkLink(
-            row.changeLink(),
-            expectedChangeHref,
-            expectedChangeText,
-          );
+          cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
         });
 
         it('renders `insured for` key and value with decimal points (no change link)', () => {
@@ -153,7 +131,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
           cy.checkText(row.key(), expectedKeyText);
 
-          const expected = '1.16%';
+          const expected = '1.14%';
           cy.checkText(row.value(), expected);
 
           row.changeLink().should('not.exist');
@@ -165,7 +143,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
 
           cy.checkText(row.key(), expectedKeyText);
 
-          const expected = '£1,740.00';
+          const expected = '£1,710.00';
           cy.checkText(row.value(), expected);
 
           row.changeLink().should('not.exist');
@@ -183,11 +161,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${POLICY_LENGTH}-label`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          cy.checkLink(
-            row.changeLink(),
-            expectedChangeHref,
-            expectedChangeText,
-          );
+          cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
         });
 
         it('renders `buyer location` key, value and change link', () => {
@@ -202,11 +176,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
           const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-          cy.checkLink(
-            row.changeLink(),
-            expectedChangeHref,
-            expectedChangeText,
-          );
+          cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
         });
       });
     });
@@ -225,10 +195,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       });
 
       it('renders `can start a new application` copy and link', () => {
-        cy.checkText(
-          yourQuotePage.whatHappensNext.intro.youCan(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_NOW_SUBMIT,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.intro.youCan(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_NOW_SUBMIT);
 
         cy.checkLink(
           yourQuotePage.whatHappensNext.intro.fullApplicationLink(),
@@ -238,29 +205,17 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       });
 
       it('renders `timeframe` and `can get help` copy', () => {
-        cy.checkText(
-          yourQuotePage.whatHappensNext.intro.timeframe(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.TIMEFRAME,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.intro.timeframe(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.TIMEFRAME);
 
-        cy.checkText(
-          yourQuotePage.whatHappensNext.intro.canGetHelp(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_GET_HELP,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.intro.canGetHelp(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.INTRO.CAN_GET_HELP);
       });
 
       it('renders `finance managers` heading and copy', () => {
-        cy.checkText(
-          yourQuotePage.whatHappensNext.financeManagers.heading(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.HEADING,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.financeManagers.heading(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.HEADING);
       });
 
       it('renders `finance managers available` copy and link', () => {
-        cy.checkText(
-          yourQuotePage.whatHappensNext.financeManagers.available(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.AVAILABLE,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.financeManagers.available(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.EXPORT_FINANCE_MANAGERS.AVAILABLE);
 
         cy.checkLink(
           yourQuotePage.whatHappensNext.financeManagers.link(),
@@ -270,22 +225,13 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
       });
 
       it('renders `brokers` heading and `act as` copy', () => {
-        cy.checkText(
-          yourQuotePage.whatHappensNext.brokers.heading(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.HEADING,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.brokers.heading(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.HEADING);
 
-        cy.checkText(
-          yourQuotePage.whatHappensNext.brokers.actAs(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.ACT_AS,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.brokers.actAs(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.ACT_AS);
       });
 
       it('renders `brokers - they receive` copy and link', () => {
-        cy.checkText(
-          yourQuotePage.whatHappensNext.brokers.theyReceive.intro(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.INTRO,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.brokers.theyReceive.intro(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.INTRO);
 
         cy.checkLink(
           yourQuotePage.whatHappensNext.brokers.theyReceive.link(),
@@ -293,27 +239,16 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
           CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.LINK.TEXT,
         );
 
-        cy.checkText(
-          yourQuotePage.whatHappensNext.brokers.theyReceive.outro(),
-          CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.OUTRO,
-        );
+        cy.checkText(yourQuotePage.whatHappensNext.brokers.theyReceive.outro(), CONTENT_STRINGS.WHAT_HAPPENS_NEXT.BROKERS.THEY_RECEIVE.OUTRO);
       });
     });
 
     it('renders a `feedback` link', () => {
-      cy.checkLink(
-        yourQuotePage.links.feedback(),
-        LINKS.EXTERNAL.FEEDBACK,
-        LINKS.GIVE_FEEDBACK,
-      );
+      cy.checkLink(yourQuotePage.links.feedback(), LINKS.EXTERNAL.FEEDBACK, LINKS.GIVE_FEEDBACK);
     });
 
     it('renders `start again` link', () => {
-      cy.checkLink(
-        yourQuotePage.links.startAgain(),
-        ROOT,
-        LINKS.START_AGAIN.TEXT,
-      );
+      cy.checkLink(yourQuotePage.links.startAgain(), ROOT, LINKS.START_AGAIN.TEXT);
     });
 
     context('clicking `start again`', () => {

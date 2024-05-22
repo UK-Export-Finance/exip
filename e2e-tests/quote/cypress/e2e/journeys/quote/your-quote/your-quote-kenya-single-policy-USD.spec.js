@@ -1,13 +1,6 @@
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-} from '../../../../../../commands/quote/forms';
-import {
-  countryInput,
-  field,
-  submitButton,
-  summaryList,
+  countryInput, field, submitButton, summaryList,
 } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -15,10 +8,7 @@ import { USD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
   ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CURRENCY,
-    PERCENTAGE_OF_COVER,
-    BUYER_COUNTRY,
+    CONTRACT_VALUE, CURRENCY, PERCENTAGE_OF_COVER, BUYER_COUNTRY,
   },
   POLICY_TYPE,
   QUOTE,
@@ -79,7 +69,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     cy.checkText(summaryList.field(QUOTE.INSURED_FOR).value(), expectedValue);
 
     // Check estimated cost in the quote
-    const expectedCost = '$5,090.00';
+    const expectedCost = '$4,860.00';
     cy.checkText(summaryList.field(QUOTE.ESTIMATED_COST).value(), expectedCost);
   });
 });

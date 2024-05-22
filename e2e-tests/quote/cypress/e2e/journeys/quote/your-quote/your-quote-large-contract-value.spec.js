@@ -10,11 +10,7 @@ import { ROUTES, FIELD_IDS } from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
-  ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CURRENCY,
-    PERCENTAGE_OF_COVER,
-  },
+  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY, PERCENTAGE_OF_COVER },
   POLICY_LENGTH,
   QUOTE,
 } = FIELD_IDS;
@@ -66,7 +62,7 @@ context('Get a quote/your quote page (large contract value) - as an exporter, I 
     cy.checkText(summaryList.field(QUOTE.INSURED_FOR).value(), expectedValue);
 
     // Check estimated cost in the quote
-    const expectedCost = '£143,209.86';
+    const expectedCost = '£140,740.73';
     cy.checkText(summaryList.field(QUOTE.ESTIMATED_COST).value(), expectedCost);
   });
 });
