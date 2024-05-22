@@ -88,7 +88,7 @@ jobs:
           'Team=development' >> $GITHUB_ENV
 
       - name: Login 🔐
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -352,7 +352,7 @@ jobs:
           'Team=development' >> $GITHUB_ENV
 
       - name: Login 🔐
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -558,7 +558,7 @@ jobs:
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Login 🔐
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -691,7 +691,7 @@ jobs:
         run: echo "TYPE=Production" >> $GITHUB_ENV
 
       - name: Login 🔐
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
@@ -799,7 +799,7 @@ jobs:
           'Team=development' >> $GITHUB_ENV
 
       - name: Login 🔐
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
