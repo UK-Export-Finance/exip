@@ -1,4 +1,4 @@
-import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '.';
+import { TITLE_INDEXES, INDEXES, XLSX_CONFIG, XLSX_ROW_INDEXES } from '.';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
 import { mockApplication } from '../../test-mocks';
@@ -9,6 +9,38 @@ const {
 } = POLICY_FIELD_IDS;
 
 describe('api/constants/XLSX-CONFIG', () => {
+  describe('TITLE_INDEXES', () => {
+    it('should return default title indexes', () => {
+      const expected = {
+        HEADER: 1,
+        EXPORTER_CONTACT_DETAILS: 10,
+        KEY_INFORMATION: 15,
+        ELIGIBILITY: 21,
+        POLICY: 31,
+        EXPORTER_BUSINESS: 40,
+        BUYER: 58,
+        DECLARATIONS: 66,
+      };
+
+      expect(TITLE_INDEXES()).toEqual(expected);
+    });
+  });
+
+  describe('INDEXES', () => {
+    it('should return default indexes', () => {
+      const expected = {
+        TITLES: TITLE_INDEXES(),
+        COMPANY_ADDRESS: 34,
+        COMPANY_SIC_CODES: 37,
+        BROKER_ADDRESS: 45,
+        BUYER_ADDRESS: 50,
+        BUYER_CONTACT_DETAILS: 53,
+      };
+
+      expect(INDEXES()).toEqual(expected);
+    });
+  });
+
   describe('XLSX_CONFIG', () => {
     it('should return a config for XLSX', () => {
       const result = XLSX_CONFIG;
@@ -55,22 +87,16 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const result = XLSX_ROW_INDEXES(application);
 
+          const defaultIndexes = INDEXES();
+          const defaultTitleIndexes = TITLE_INDEXES();
+
           const expected = {
+            ...defaultIndexes,
             TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 30,
-              BUYER: 52,
-              ELIGIBILITY: 62,
-              DECLARATIONS: 73,
+              ...defaultTitleIndexes,
+              BUYER: defaultTitleIndexes.BUYER + 3,
+              DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 3,
             },
-            COMPANY_ADDRESS: 34,
-            COMPANY_SIC_CODES: 37,
-            BROKER_ADDRESS: 45,
-            BUYER_ADDRESS: 50,
-            BUYER_CONTACT_DETAILS: 53,
           };
 
           expect(result).toEqual(expected);
@@ -78,7 +104,7 @@ describe('api/constants/XLSX-CONFIG', () => {
       });
 
       describe('when NOT using a broker', () => {
-        it('should return correct row indexes', () => {
+        it('should return default row indexes', () => {
           application.broker = {
             ...mockApplication.buyer,
             [USING_BROKER]: false,
@@ -86,23 +112,7 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const result = XLSX_ROW_INDEXES(application);
 
-          const expected = {
-            TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 30,
-              BUYER: 49,
-              ELIGIBILITY: 59,
-              DECLARATIONS: 70,
-            },
-            COMPANY_ADDRESS: 34,
-            COMPANY_SIC_CODES: 37,
-            BROKER_ADDRESS: 45,
-            BUYER_ADDRESS: 50,
-            BUYER_CONTACT_DETAILS: 53,
-          };
+          const expected = INDEXES();
 
           expect(result).toEqual(expected);
         });
@@ -127,22 +137,22 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const result = XLSX_ROW_INDEXES(application);
 
+          const defaultIndexes = INDEXES();
+          const defaultTitleIndexes = TITLE_INDEXES();
+
           const expected = {
+            ...defaultIndexes,
+            COMPANY_ADDRESS: defaultIndexes.COMPANY_ADDRESS + 1,
+            COMPANY_SIC_CODES: defaultIndexes.COMPANY_SIC_CODES + 1,
+            BROKER_ADDRESS: defaultIndexes.BROKER_ADDRESS + 1,
+            BUYER_ADDRESS: defaultIndexes.BUYER_ADDRESS + 1,
+            BUYER_CONTACT_DETAILS: defaultIndexes.BUYER_CONTACT_DETAILS + 1,
             TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 31,
-              BUYER: 53,
-              ELIGIBILITY: 63,
-              DECLARATIONS: 74,
+              ...defaultTitleIndexes,
+              EXPORTER_BUSINESS: defaultTitleIndexes.EXPORTER_BUSINESS + 1,
+              BUYER: defaultTitleIndexes.BUYER + 4,
+              DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 4,
             },
-            COMPANY_ADDRESS: 35,
-            COMPANY_SIC_CODES: 38,
-            BROKER_ADDRESS: 46,
-            BUYER_ADDRESS: 51,
-            BUYER_CONTACT_DETAILS: 54,
           };
 
           expect(result).toEqual(expected);
@@ -158,22 +168,22 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const result = XLSX_ROW_INDEXES(application);
 
+          const defaultIndexes = INDEXES();
+          const defaultTitleIndexes = TITLE_INDEXES();
+
           const expected = {
+            ...defaultIndexes,
+            COMPANY_ADDRESS: defaultIndexes.COMPANY_ADDRESS + 1,
+            COMPANY_SIC_CODES: defaultIndexes.COMPANY_SIC_CODES + 1,
+            BROKER_ADDRESS: defaultIndexes.BROKER_ADDRESS + 1,
+            BUYER_ADDRESS: defaultIndexes.BUYER_ADDRESS + 1,
+            BUYER_CONTACT_DETAILS: defaultIndexes.BUYER_CONTACT_DETAILS + 1,
             TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 31,
-              BUYER: 50,
-              ELIGIBILITY: 60,
-              DECLARATIONS: 71,
+              ...defaultTitleIndexes,
+              EXPORTER_BUSINESS: defaultTitleIndexes.EXPORTER_BUSINESS + 1,
+              BUYER: defaultTitleIndexes.BUYER + 1,
+              DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 1,
             },
-            COMPANY_ADDRESS: 35,
-            COMPANY_SIC_CODES: 38,
-            BROKER_ADDRESS: 46,
-            BUYER_ADDRESS: 51,
-            BUYER_CONTACT_DETAILS: 54,
           };
 
           expect(result).toEqual(expected);

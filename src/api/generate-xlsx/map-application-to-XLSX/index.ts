@@ -1,7 +1,7 @@
 import ROW_SEPERATOR from './helpers/xlsx-row-seperator';
-import mapKeyInformation from './map-key-information';
+import mapIntroduction from './map-introduction';
 import mapExporterContactDetails from './map-exporter-contact-details';
-import mapSecondaryKeyInformation from './map-secondary-key-information';
+import mapKeyInformation from './map-key-information';
 import mapPolicy from './map-policy';
 import mapExporter from './map-exporter';
 import mapBuyer from './map-buyer';
@@ -18,7 +18,7 @@ import { Application } from '../../types';
 const mapApplicationToXLSX = (application: Application) => {
   try {
     const mapped = [
-      ...mapKeyInformation(application),
+      ...mapIntroduction(application),
 
       ROW_SEPERATOR,
 
@@ -26,7 +26,11 @@ const mapApplicationToXLSX = (application: Application) => {
 
       ROW_SEPERATOR,
 
-      ...mapSecondaryKeyInformation(application),
+      ...mapKeyInformation(application),
+
+      ROW_SEPERATOR,
+
+      ...mapEligibility(application),
 
       ROW_SEPERATOR,
 
@@ -39,10 +43,6 @@ const mapApplicationToXLSX = (application: Application) => {
       ROW_SEPERATOR,
 
       ...mapBuyer(application),
-
-      ROW_SEPERATOR,
-
-      ...mapEligibility(application),
 
       ROW_SEPERATOR,
 

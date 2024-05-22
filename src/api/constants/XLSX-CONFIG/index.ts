@@ -7,6 +7,26 @@ const {
   USING_BROKER,
 } = POLICY_FIELD_IDS;
 
+export const TITLE_INDEXES = () => ({
+  HEADER: 1,
+  EXPORTER_CONTACT_DETAILS: 10,
+  KEY_INFORMATION: 15,
+  ELIGIBILITY: 21,
+  POLICY: 31,
+  EXPORTER_BUSINESS: 40,
+  BUYER: 58,
+  DECLARATIONS: 66,
+}) as XLSXTitleRowIndexes;
+
+export const INDEXES = () => ({
+  TITLES: TITLE_INDEXES(),
+  COMPANY_ADDRESS: 34,
+  COMPANY_SIC_CODES: 37,
+  BROKER_ADDRESS: 45,
+  BUYER_ADDRESS: 50,
+  BUYER_CONTACT_DETAILS: 53,
+}) as XLSXRowIndexes;
+
 /**
  * XLSX_ROW_INDEXES
  * Generate row indexes for XLSX.
@@ -18,59 +38,34 @@ const {
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const { policy, broker } = application;
 
-  const TITLES = {
-    HEADER: 1,
-    EXPORTER_CONTACT_DETAILS: 9,
-    KEY_INFORMATION: 14,
-    POLICY: 20,
-    EXPORTER_BUSINESS: 30,
-    BUYER: 49,
-    ELIGIBILITY: 59,
-    DECLARATIONS: 70,
-  } as XLSXTitleRowIndexes;
-
-  const INDEXES = {
-    TITLES,
-    COMPANY_ADDRESS: 34,
-    COMPANY_SIC_CODES: 37,
-    BROKER_ADDRESS: 45,
-    BUYER_ADDRESS: 50,
-    BUYER_CONTACT_DETAILS: 53,
-  } as XLSXRowIndexes;
-
   const policyType = policy[POLICY_TYPE];
 
   let isMultiplePolicy = false;
-  let isUsingBroker = false;
 
   if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
 
-  if (broker[USING_BROKER]) {
-    isUsingBroker = true;
-  }
+  const indexes = INDEXES();
 
   if (isMultiplePolicy) {
-    TITLES.EXPORTER_BUSINESS += 1;
-    TITLES.BUYER += 1;
-    TITLES.ELIGIBILITY += 1;
-    TITLES.DECLARATIONS += 1;
+    indexes.TITLES.EXPORTER_BUSINESS += 1;
+    indexes.TITLES.BUYER += 1;
+    indexes.TITLES.DECLARATIONS += 1;
 
-    INDEXES.COMPANY_ADDRESS += 1;
-    INDEXES.COMPANY_SIC_CODES += 1;
-    INDEXES.BROKER_ADDRESS += 1;
-    INDEXES.BUYER_ADDRESS += 1;
-    INDEXES.BUYER_CONTACT_DETAILS += 1;
+    indexes.COMPANY_ADDRESS += 1;
+    indexes.COMPANY_SIC_CODES += 1;
+    indexes.BROKER_ADDRESS += 1;
+    indexes.BUYER_ADDRESS += 1;
+    indexes.BUYER_CONTACT_DETAILS += 1;
   }
 
-  if (isUsingBroker) {
-    TITLES.BUYER += 3;
-    TITLES.ELIGIBILITY += 3;
-    TITLES.DECLARATIONS += 3;
+  if (broker[USING_BROKER]) {
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
   }
 
-  return INDEXES;
+  return indexes;
 };
 
 /**
