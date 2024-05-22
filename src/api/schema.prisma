@@ -405,7 +405,7 @@ model Buyer {
   address                   String               @default("") @mysql.VarChar(500)
   country                   Country?             @relation("Buyer_country", fields: [countryId], references: [id])
   countryId                 String?              @map("country")
-  registrationNumber        String               @default("") @mysql.VarChar(100)
+  registrationNumber        String               @default("") @mysql.VarChar(200)
   website                   String               @default("")
   buyerTradingHistory       BuyerTradingHistory? @relation("Buyer_buyerTradingHistory", fields: [buyerTradingHistoryId], references: [id])
   buyerTradingHistoryId     String?              @unique @map("buyerTradingHistory")

@@ -683,7 +683,7 @@ export const lists = {
       }),
       country: relationship({ ref: 'Country' }),
       registrationNumber: text({
-        db: { nativeType: 'VarChar(100)' },
+        db: { nativeType: 'VarChar(200)' },
       }),
       website: text(),
       buyerTradingHistory: relationship({ ref: 'BuyerTradingHistory.buyer' }),
