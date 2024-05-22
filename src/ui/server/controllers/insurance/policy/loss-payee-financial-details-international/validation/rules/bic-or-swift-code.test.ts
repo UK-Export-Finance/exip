@@ -5,7 +5,7 @@ import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import alphaNumericalCharactersOnlyValidation from '../../../../../../shared-validation/alpha-numerical-characters-only';
 import minAndMaxLengthValidation from '../../../../../../shared-validation/min-and-max-length';
-import { mockErrors, mockLossPayeeFinancialDetailsInternational } from '../../../../../../test-mocks';
+import { mockErrors } from '../../../../../../test-mocks';
 import { mockBicSwiftCodeLowerCase } from '../../../../../../test-mocks/mock-bic-swift-code';
 
 const { BIC_SWIFT_CODE: FIELD_ID } = FIELD_IDS.LOSS_PAYEE_FINANCIAL_INTERNATIONAL;
@@ -39,37 +39,16 @@ describe('controllers/insurance/policy/loss-payee-financial-details-internationa
     });
   });
 
-  describe('when a value contains a valid input in lowercase', () => {
-    it('should return minAndMaxLengthValidation', () => {
-      const mockBody = {
-        [FIELD_ID]: mockBicSwiftCodeLowerCase,
-      };
-
-      const result = bicSwiftCodeValidation(mockBody, mockErrors);
-
-      const expected = minAndMaxLengthValidation({
-        fieldId: FIELD_ID,
-        value: mockBody[FIELD_ID],
-        errorMessages: ERROR_MESSAGES_OBJECT,
-        errors: mockErrors,
-        minimum: MINIMUM_CHARACTERS.BIC_SWIFT_CODE,
-        maximum: MAXIMUM_CHARACTERS.BIC_SWIFT_CODE,
-      });
-
-      expect(result).toEqual(expected);
-    });
-  });
-
   it('should otherwise return minAndMaxLengthValidation', () => {
     const mockBody = {
-      [FIELD_ID]: mockLossPayeeFinancialDetailsInternational[FIELD_ID],
+      [FIELD_ID]: mockBicSwiftCodeLowerCase,
     };
 
     const result = bicSwiftCodeValidation(mockBody, mockErrors);
 
     const expected = minAndMaxLengthValidation({
       fieldId: FIELD_ID,
-      value: mockBody[FIELD_ID],
+      value: mockBody[FIELD_ID].toUpperCase(),
       errorMessages: ERROR_MESSAGES_OBJECT,
       errors: mockErrors,
       minimum: MINIMUM_CHARACTERS.BIC_SWIFT_CODE,
