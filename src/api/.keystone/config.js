@@ -1847,7 +1847,7 @@ var lists = {
       }),
       country: (0, import_fields.relationship)({ ref: "Country" }),
       registrationNumber: (0, import_fields.text)({
-        db: { nativeType: "VarChar(100)" }
+        db: { nativeType: "VarChar(200)" }
       }),
       website: (0, import_fields.text)(),
       buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
