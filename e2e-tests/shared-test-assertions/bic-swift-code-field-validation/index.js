@@ -4,6 +4,7 @@ import { MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS } from '../../constants';
 import { ERROR_MESSAGES } from '../../content-strings';
 import mockStringWithSpecialCharacters from '../../fixtures/string-with-special-characters';
 import SPECIAL_CHARACTERS from '../../fixtures/special-characters';
+import { mockBicSwiftCodeLowerCase } from '../../fixtures/bic-swift-codes';
 
 const {
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
@@ -48,10 +49,6 @@ export const bicSwiftCodeFieldValidation = () => {
       runAssertion({ value: '12345678' });
     });
 
-    it(`should render a validation error when ${FIELD_ID} contains lowercase letters and numbers`, () => {
-      runAssertion({ value: 'letters123' });
-    });
-
     it(`should render a validation error when ${FIELD_ID} contains only special characters`, () => {
       runAssertion({ value: mockStringWithSpecialCharacters });
     });
@@ -86,6 +83,14 @@ export const bicSwiftCodeFieldValidation = () => {
       const value = 'A1'.repeat(MAXIMUM_CHARACTERS.BIC_SWIFT_CODE / 2 + 1);
 
       runAssertion({ value, expectedErrorMessage: errorMessages.ABOVE_MAXIMUM });
+    });
+
+    it(`should NOT render a validation error for ${FIELD_ID} when it is correctly entered with lowercase letters and numbers`, () => {
+      cy.keyboardInput(fieldSelector(FIELD_ID).input(), mockBicSwiftCodeLowerCase);
+
+      cy.clickSubmitButton();
+
+      cy.assertErrorSummaryListLength(2);
     });
   });
 };
