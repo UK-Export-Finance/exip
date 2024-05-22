@@ -1,6 +1,9 @@
 import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 import {
-  countryInput, field, submitButton, summaryList,
+  countryInput,
+  field,
+  submitButton,
+  summaryList,
 } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -8,7 +11,10 @@ import { USD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const {
   ELIGIBILITY: {
-    CONTRACT_VALUE, CURRENCY, PERCENTAGE_OF_COVER, BUYER_COUNTRY,
+    CONTRACT_VALUE,
+    CURRENCY,
+    PERCENTAGE_OF_COVER,
+    BUYER_COUNTRY,
   },
   POLICY_TYPE,
   QUOTE,

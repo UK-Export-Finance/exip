@@ -7,11 +7,18 @@ import {
   completeAndSubmitTellUsAboutYourSinglePolicyForm,
 } from './forms';
 
-export default () => {
+/**
+ * submitQuoteAnswersHappyPathSinglePolicy
+ * Submit all quote answers - happy path - single policy
+ * @param {Integer} policyLength: Policy length
+ */
+const submitQuoteAnswersHappyPathSinglePolicy = ({ policyLength }) => {
   completeAndSubmitBuyerCountryForm();
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();
   completeAndSubmitPolicyTypeSingleForm();
-  completeAndSubmitTellUsAboutYourSinglePolicyForm();
+  completeAndSubmitTellUsAboutYourSinglePolicyForm({ policyLength });
 };
+
+export default submitQuoteAnswersHappyPathSinglePolicy;

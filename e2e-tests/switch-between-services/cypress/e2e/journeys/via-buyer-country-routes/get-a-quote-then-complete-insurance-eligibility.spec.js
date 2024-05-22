@@ -26,7 +26,7 @@ context('Get a quote, complete insurance eligibility and then re-visit the quote
   before(() => {
     cy.navigateToUrl(BUYER_COUNTRY);
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     submitButton().click();
 
     cy.assertUrl(url);

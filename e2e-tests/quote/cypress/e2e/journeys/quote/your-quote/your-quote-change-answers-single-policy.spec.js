@@ -39,7 +39,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     submitButton().click();
 
     cy.assertUrl(url);

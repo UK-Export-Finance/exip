@@ -20,7 +20,7 @@ context('Insurance - Dashboard - Get a quote button - As an Exporter, I want to 
 
       dashboardPage.getAQuoteButton().click();
 
-      cy.submitQuoteAnswersHappyPathSinglePolicy();
+      cy.submitQuoteAnswersHappyPathSinglePolicy({});
 
       submitButton().click();
     });
