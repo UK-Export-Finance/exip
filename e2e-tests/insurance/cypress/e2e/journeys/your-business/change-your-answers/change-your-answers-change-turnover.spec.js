@@ -1,23 +1,18 @@
-import { field, summaryList } from '../../../../../../pages/shared';
+import { field as fieldSelector, summaryList } from '../../../../../../pages/shared';
 import { GBP_CURRENCY_CODE } from '../../../../../../constants';
-import { NON_STANDARD_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
+import { NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME } from '../../../../../../fixtures/currencies';
 import { INSURANCE_FIELD_IDS } from '../../../../../../constants/field-ids/insurance';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import formatCurrency from '../../../../../../helpers/format-currency';
 
 const {
-  TURNOVER: {
-    ESTIMATED_ANNUAL_TURNOVER,
-    PERCENTAGE_TURNOVER,
-  },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
 } = INSURANCE_FIELD_IDS.EXPORTER_BUSINESS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    TURNOVER_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  EXPORTER_BUSINESS: { TURNOVER_CHANGE, CHECK_YOUR_ANSWERS },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -70,7 +65,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
       });
@@ -123,6 +118,19 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         cy.assertSummaryListRowValue(summaryList, fieldId, expectedValue);
       });
+
+      it('should render the turnover legend with the alternative currency on the turnover page', () => {
+        summaryList.field(fieldId).changeLink().click();
+
+        const field = fieldSelector(ESTIMATED_ANNUAL_TURNOVER);
+
+        cy.assertCopyWithCurrencyName({
+          pageTitle: FIELDS.TURNOVER[ESTIMATED_ANNUAL_TURNOVER].LEGEND,
+          currencyName: NON_STANDARD_CURRENCY_NAME,
+          selector: field.legend(),
+          withQuestionMark: true,
+        });
+      });
     });
   });
 
@@ -147,7 +155,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
 
         summaryList.field(fieldId).changeLink().click();
 
-        cy.keyboardInput(field(fieldId).input(), newAnswer);
+        cy.keyboardInput(fieldSelector(fieldId).input(), newAnswer);
 
         cy.clickSubmitButton();
       });
