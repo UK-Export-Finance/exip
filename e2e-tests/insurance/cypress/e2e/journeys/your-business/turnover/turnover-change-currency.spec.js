@@ -59,7 +59,7 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to ch
     it('should render the turnover legend with the alternative currency', () => {
       const field = fieldSelector(ESTIMATED_ANNUAL_TURNOVER);
 
-      cy.assertHeadingWithCurrencyName({
+      cy.assertCopyWithCurrencyName({
         pageTitle: FIELDS.TURNOVER[ESTIMATED_ANNUAL_TURNOVER].LEGEND,
         currencyName: NON_STANDARD_CURRENCY_NAME,
         selector: field.legend(),
