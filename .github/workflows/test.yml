@@ -4,6 +4,7 @@
 # upon a PR creation, to ensure PR is healthy, bug-free and
 # adheres to pre-written unit, API and E2E tests.
 
+
 name: Quality Assurance - Tests
 run-name: Executing test QA on ${{ github.repository }} 🚀
 
