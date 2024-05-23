@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.9.1](https://github.com/UK-Export-Finance/exip/compare/v2.9.0...v2.9.1) (2024-05-23)
+
+
+### Bug Fixes
+
+* **EMS-3407:** update SRI values ([#2466](https://github.com/UK-Export-Finance/exip/issues/2466)) ([8520b51](https://github.com/UK-Export-Finance/exip/commit/8520b51d4d37fa664de6ac9190dca5e941266411))
+
 ## [2.9.0](https://github.com/UK-Export-Finance/exip/compare/v2.8.0...v2.9.0) (2024-05-22)
 
 
