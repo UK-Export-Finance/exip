@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field, heading } from '../../../../../../../pages/shared';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { PAGES } from '../../../../../../../content-strings';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -10,22 +10,18 @@ const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.MULTIPLE_CONTRACT_POLICY_EXPORT_V
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE,
-    MULTIPLE_CONTRACT_POLICY,
-  },
+  POLICY: { MULTIPLE_CONTRACT_POLICY_EXPORT_VALUE, MULTIPLE_CONTRACT_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
   EXPORT_VALUE: {
-    MULTIPLE: {
-      TOTAL_SALES_TO_BUYER,
-      MAXIMUM_BUYER_WILL_OWE,
-    },
+    MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
   },
 } = POLICY_FIELD_IDS;
 
-const { CURRENCY: { CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+const {
+  CURRENCY: { CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
 
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
 
@@ -68,9 +64,10 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
     });
 
     it('should render a heading with the non-GBP currency', () => {
-      cy.assertHeadingWithCurrencyName({
+      cy.assertCopyWithCurrencyName({
         pageTitle: CONTENT_STRINGS.PAGE_TITLE,
         currencyName: USD.name,
+        selector: heading(),
       });
     });
 

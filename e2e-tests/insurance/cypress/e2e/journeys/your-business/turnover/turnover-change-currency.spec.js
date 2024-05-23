@@ -1,18 +1,17 @@
+import { field as fieldSelector } from '../../../../../../pages/shared';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 import { EXPORTER_BUSINESS as FIELD_IDS } from '../../../../../../constants/field-ids/insurance/business';
+import { EXPORTER_BUSINESS_FIELDS as FIELDS } from '../../../../../../content-strings/fields/insurance/business';
 import { assertCurrencyFormFields } from '../../../../../../shared-test-assertions';
+import { NON_STANDARD_CURRENCY_NAME } from '../../../../../../fixtures/currencies';
 
 const {
-  TURNOVER: {
-    ESTIMATED_ANNUAL_TURNOVER,
-  },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
 } = FIELD_IDS;
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    TURNOVER_ROOT,
-  },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT },
 } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -49,5 +48,23 @@ context('Insurance - Your business - Turnover page - As an Exporter I want to ch
     const { prefixAssertions } = assertCurrencyFormFields({ fieldId: ESTIMATED_ANNUAL_TURNOVER });
 
     prefixAssertions();
+  });
+
+  describe('the currency should be included in the legend', () => {
+    beforeEach(() => {
+      // submit alternative currency form
+      cy.clickSubmitButton();
+    });
+
+    it('should render the turnover legend with the alternative currency', () => {
+      const field = fieldSelector(ESTIMATED_ANNUAL_TURNOVER);
+
+      cy.assertCopyWithCurrencyName({
+        pageTitle: FIELDS.TURNOVER[ESTIMATED_ANNUAL_TURNOVER].LEGEND,
+        currencyName: NON_STANDARD_CURRENCY_NAME,
+        selector: field.legend(),
+        withQuestionMark: true,
+      });
+    });
   });
 });
