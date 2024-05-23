@@ -1,5 +1,6 @@
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { COVER_PERIOD, TOTAL_CONTRACT_VALUE, GBP_CURRENCY_CODE } from '../../../../constants';
+import { LINKS } from '../../../links';
 import formatCurrency from '../../../../helpers/format-currency';
 
 const {
@@ -10,7 +11,10 @@ const {
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
   HAS_END_BUYER,
+  HAS_COMPANIES_HOUSE_NUMBER,
 } = FIELD_IDS.ELIGIBILITY;
+
+const { COMPANY_NAME } = FIELD_IDS.COMPANIES_HOUSE;
 
 const THRESHOLD = formatCurrency(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 
@@ -34,7 +38,7 @@ export const FIELDS_ELIGIBILITY = {
   [HAS_END_BUYER]: {
     HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
     SUMMARY: {
-      TITLE: 'Mock title',
+      TITLE: 'End buyer',
     },
   },
   [COVER_PERIOD_FIELD_ID]: {
@@ -55,8 +59,19 @@ export const FIELDS_ELIGIBILITY = {
     },
   },
   [COMPANIES_HOUSE_NUMBER]: {
+    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    SUMMARY: {
+      TITLE: 'UK Companies House number',
+    },
+  },
+  [HAS_COMPANIES_HOUSE_NUMBER]: {
     SUMMARY: {
       TITLE: 'UK Companies House registration number and actively trading',
+    },
+  },
+  [COMPANY_NAME]: {
+    SUMMARY: {
+      TITLE: 'Company name',
     },
   },
   [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
@@ -77,8 +92,5 @@ export const FIELDS_ELIGIBILITY = {
       ABOVE: `Above ${THRESHOLD}`,
       BELOW: `Below ${THRESHOLD}`,
     },
-  },
-  [HAS_END_BUYER]: {
-    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
   },
 };
