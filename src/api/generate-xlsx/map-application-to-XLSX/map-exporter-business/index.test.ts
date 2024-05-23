@@ -62,7 +62,7 @@ const expectedMapExporterArray = (company, companySicCodes, business, financialY
   ...mapBroker(mockApplication),
 ];
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-exporter', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () => {
   describe('mapSicCodes', () => {
     it('should return a string of SIC codes', () => {
       const sicCodes = mockApplication.companySicCodes;

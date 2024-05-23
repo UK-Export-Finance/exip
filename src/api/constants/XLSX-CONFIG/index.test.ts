@@ -16,8 +16,8 @@ describe('api/constants/XLSX-CONFIG', () => {
         EXPORTER_CONTACT_DETAILS: 10,
         KEY_INFORMATION: 15,
         ELIGIBILITY: 21,
-        POLICY: 31,
-        EXPORTER_BUSINESS: 40,
+        EXPORTER_BUSINESS: 31,
+        POLICY: 49,
         BUYER: 58,
         DECLARATIONS: 66,
       };
@@ -30,11 +30,9 @@ describe('api/constants/XLSX-CONFIG', () => {
     it('should return default indexes', () => {
       const expected = {
         TITLES: TITLE_INDEXES(),
-        COMPANY_ADDRESS: 34,
-        COMPANY_SIC_CODES: 37,
-        BROKER_ADDRESS: 45,
-        BUYER_ADDRESS: 50,
-        BUYER_CONTACT_DETAILS: 53,
+        COMPANY_ADDRESS: 35,
+        COMPANY_SIC_CODES: 38,
+        BUYER_ADDRESS: 60,
       };
 
       expect(INDEXES()).toEqual(expected);
@@ -92,8 +90,10 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const expected = {
             ...defaultIndexes,
+            BROKER_ADDRESS: 49,
             TITLES: {
               ...defaultTitleIndexes,
+              POLICY: defaultTitleIndexes.POLICY + 3,
               BUYER: defaultTitleIndexes.BUYER + 3,
               DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 3,
             },
@@ -142,14 +142,11 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const expected = {
             ...defaultIndexes,
-            COMPANY_ADDRESS: defaultIndexes.COMPANY_ADDRESS + 1,
-            COMPANY_SIC_CODES: defaultIndexes.COMPANY_SIC_CODES + 1,
-            BROKER_ADDRESS: defaultIndexes.BROKER_ADDRESS + 1,
-            BUYER_ADDRESS: defaultIndexes.BUYER_ADDRESS + 1,
-            BUYER_CONTACT_DETAILS: defaultIndexes.BUYER_CONTACT_DETAILS + 1,
+            BUYER_ADDRESS: 1,
+            BUYER_CONTACT_DETAILS: 1,
             TITLES: {
               ...defaultTitleIndexes,
-              EXPORTER_BUSINESS: defaultTitleIndexes.EXPORTER_BUSINESS + 1,
+              POLICY: defaultTitleIndexes.POLICY + 3,
               BUYER: defaultTitleIndexes.BUYER + 4,
               DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 4,
             },
@@ -173,14 +170,10 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const expected = {
             ...defaultIndexes,
-            COMPANY_ADDRESS: defaultIndexes.COMPANY_ADDRESS + 1,
-            COMPANY_SIC_CODES: defaultIndexes.COMPANY_SIC_CODES + 1,
-            BROKER_ADDRESS: defaultIndexes.BROKER_ADDRESS + 1,
-            BUYER_ADDRESS: defaultIndexes.BUYER_ADDRESS + 1,
-            BUYER_CONTACT_DETAILS: defaultIndexes.BUYER_CONTACT_DETAILS + 1,
+            BUYER_ADDRESS: 1,
+            BUYER_CONTACT_DETAILS: 1,
             TITLES: {
               ...defaultTitleIndexes,
-              EXPORTER_BUSINESS: defaultTitleIndexes.EXPORTER_BUSINESS + 1,
               BUYER: defaultTitleIndexes.BUYER + 1,
               DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 1,
             },

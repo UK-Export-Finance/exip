@@ -22,10 +22,13 @@ const EXPORTER_BUSINESS = {
     YOUR_BUSINESS: 'yourBusiness',
     TRADING_ADDRESS: 'hasDifferentTradingAddress',
     HAS_DIFFERENT_TRADING_NAME: 'hasDifferentTradingName',
+    DIFFERENT_TRADING_NAME: 'differentTradingName',
     WEBSITE: 'companyWebsite',
     PHONE_NUMBER: 'phoneNumber',
   },
-  ALTERNATIVE_TRADING_ADDRESS: 'alternativeTradingAddress',
+  ALTERNATIVE_TRADING_ADDRESS: {
+    FULL_ADDRESS: 'fullAddress',
+  },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',
     YEARS_EXPORTING: 'totalYearsExporting',
