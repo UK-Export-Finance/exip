@@ -7,7 +7,9 @@
  * @param {Function} selector: Cypress selector
  * @param {Boolean} withQuestionMark: Add a question mark to the expected text.
  */
-const assertCopyWithCurrencyName = ({ pageTitle, currencyName, selector, withQuestionMark = false }) => {
+const assertCopyWithCurrencyName = ({
+  pageTitle, currencyName, selector, withQuestionMark = false,
+}) => {
   let expected = `${pageTitle} ${currencyName}`;
 
   if (withQuestionMark) {
