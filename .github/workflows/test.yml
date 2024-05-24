@@ -329,6 +329,9 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
+      - name: NPM version
+        run: npm install npm@9.9.3
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -393,7 +396,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: NPM version
-        run: npm install npm@10.8.0
+        run: npm install npm@9.9.3
 
       - name: Dependencies
         working-directory: ./
