@@ -842,11 +842,11 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.TITLES.DECLARATIONS += 3;
     indexes.BROKER_ADDRESS = 48;
   }
-  if (hasDifferentTradingName) {
-    indexes = incrementIndexes(indexes);
-  }
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 36;
+    indexes = incrementIndexes(indexes);
+  }
+  if (hasDifferentTradingName) {
     indexes = incrementIndexes(indexes);
   }
   if (hasDifferentTradingName && hasDifferentTradingAddress) {

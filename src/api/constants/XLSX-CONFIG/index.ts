@@ -11,15 +11,15 @@ const {
 /**
  * XLSX_ROW_INDEXES
  * Generate row indexes for XLSX.
- * Depending on the submitted application data, the rows can be different:
- * - If the policy type is multiple - the XLSX's "Policy” section has 1 additional row.
- * - If "using a broker" is true - the XLSX's “About your business“ section has 3 additional rows.
- * @returns {Object}
+ * Depending on the submitted application data, the rows can be different.
+ * - If the policy type is multiple, the XLSX has 1 additional row.
+ * - If "using a broker" is true, the XLSX has 3 additional rows.
+ * - If "has different trading address" is true, the XLSX has 1 additional row.
+ * - If "has different trading name" is true, the XLSX has 1 additional row.
+ * - If "has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
+ * @returns {XLSXRowIndexes}
  */
 
-// TODO
-// TODO
-// TODO: update documentation
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const {
     broker,
@@ -50,13 +50,13 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.BROKER_ADDRESS = 48;
   }
 
-  if (hasDifferentTradingName) {
-    indexes = incrementIndexes(indexes);
-  }
-
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 36;
 
+    indexes = incrementIndexes(indexes);
+  }
+
+  if (hasDifferentTradingName) {
     indexes = incrementIndexes(indexes);
   }
 
