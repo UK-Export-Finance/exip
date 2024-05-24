@@ -205,6 +205,12 @@ const typeDefs = `
     referenceNumber: Int
   }
 
+  type CreateAnAbandonedApplicationResponse {
+    success: Boolean!
+    id: String
+    referenceNumber: Int
+  }
+
   type MappedCisCountry {
     isoCode: String!
     name: String
@@ -311,6 +317,14 @@ const typeDefs = `
       company: CompanyInput!
       sectionReview: SectionReviewInput!
     ): CreateAnApplicationResponse
+
+    """ create an application """
+    createAnAbandonedApplication(
+      accountId: String!
+      eligibilityAnswers: ApplicationEligibility!
+      company: CompanyInput!
+      sectionReview: SectionReviewInput!
+    ): CreateAnAbandonedApplicationResponse
 
     """ delete an account """
     deleteAnAccount(
