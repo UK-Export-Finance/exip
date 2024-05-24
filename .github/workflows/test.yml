@@ -329,6 +329,11 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -392,6 +397,11 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -443,6 +453,11 @@ jobs:
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ vars.NODE_VERSION }}
 
       - name: Dependencies
         working-directory: ./

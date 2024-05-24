@@ -65,7 +65,7 @@ context('Insurance - Policy - Multiple contract policy - Export value page - Non
 
     it('should render a heading with the non-GBP currency', () => {
       cy.assertCopyWithCurrencyName({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        expectedCopy: CONTENT_STRINGS.PAGE_TITLE,
         currencyName: USD.name,
         selector: heading(),
       });

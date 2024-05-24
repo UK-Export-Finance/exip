@@ -62,7 +62,7 @@ context('Insurance - Policy - Single contract policy - Total contract value page
 
     it('should render a heading with the alternative currency', () => {
       cy.assertCopyWithCurrencyName({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+        expectedCopy: CONTENT_STRINGS.PAGE_TITLE,
         currencyName: NON_STANDARD_CURRENCY_NAME,
         selector: heading(),
         withQuestionMark: true,
