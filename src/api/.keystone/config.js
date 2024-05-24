@@ -789,52 +789,47 @@ var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
   USING_BROKER
 } = POLICY;
+var TITLE_INDEXES = () => ({
+  HEADER: 1,
+  EXPORTER_CONTACT_DETAILS: 10,
+  KEY_INFORMATION: 15,
+  ELIGIBILITY: 21,
+  POLICY: 31,
+  EXPORTER_BUSINESS: 40,
+  BUYER: 58,
+  DECLARATIONS: 66
+});
+var INDEXES = () => ({
+  TITLES: TITLE_INDEXES(),
+  COMPANY_ADDRESS: 34,
+  COMPANY_SIC_CODES: 37,
+  BROKER_ADDRESS: 45,
+  BUYER_ADDRESS: 50,
+  BUYER_CONTACT_DETAILS: 53
+});
 var XLSX_ROW_INDEXES = (application2) => {
   const { policy, broker } = application2;
-  const TITLES = {
-    HEADER: 1,
-    EXPORTER_CONTACT_DETAILS: 9,
-    KEY_INFORMATION: 14,
-    POLICY: 20,
-    EXPORTER_BUSINESS: 30,
-    BUYER: 49,
-    ELIGIBILITY: 59,
-    DECLARATIONS: 70
-  };
-  const INDEXES = {
-    TITLES,
-    COMPANY_ADDRESS: 34,
-    COMPANY_SIC_CODES: 37,
-    BROKER_ADDRESS: 45,
-    BUYER_ADDRESS: 50,
-    BUYER_CONTACT_DETAILS: 53
-  };
   const policyType = policy[POLICY_TYPE2];
   let isMultiplePolicy = false;
-  let isUsingBroker = false;
   if (isMultiplePolicyType(policyType)) {
     isMultiplePolicy = true;
   }
-  if (broker[USING_BROKER]) {
-    isUsingBroker = true;
-  }
+  const indexes = INDEXES();
   if (isMultiplePolicy) {
-    TITLES.EXPORTER_BUSINESS += 1;
-    TITLES.BUYER += 1;
-    TITLES.ELIGIBILITY += 1;
-    TITLES.DECLARATIONS += 1;
-    INDEXES.COMPANY_ADDRESS += 1;
-    INDEXES.COMPANY_SIC_CODES += 1;
-    INDEXES.BROKER_ADDRESS += 1;
-    INDEXES.BUYER_ADDRESS += 1;
-    INDEXES.BUYER_CONTACT_DETAILS += 1;
+    indexes.TITLES.EXPORTER_BUSINESS += 1;
+    indexes.TITLES.BUYER += 1;
+    indexes.TITLES.DECLARATIONS += 1;
+    indexes.COMPANY_ADDRESS += 1;
+    indexes.COMPANY_SIC_CODES += 1;
+    indexes.BROKER_ADDRESS += 1;
+    indexes.BUYER_ADDRESS += 1;
+    indexes.BUYER_CONTACT_DETAILS += 1;
   }
-  if (isUsingBroker) {
-    TITLES.BUYER += 3;
-    TITLES.ELIGIBILITY += 3;
-    TITLES.DECLARATIONS += 3;
+  if (broker[USING_BROKER]) {
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
   }
-  return INDEXES;
+  return indexes;
 };
 var XLSX_CONFIG = {
   KEY: {
@@ -1848,7 +1843,7 @@ var lists = {
       }),
       country: (0, import_fields.relationship)({ ref: "Country" }),
       registrationNumber: (0, import_fields.text)({
-        db: { nativeType: "VarChar(100)" }
+        db: { nativeType: "VarChar(200)" }
       }),
       website: (0, import_fields.text)(),
       buyerTradingHistory: (0, import_fields.relationship)({ ref: "BuyerTradingHistory.buyer" }),
@@ -5049,6 +5044,29 @@ var DECLARATIONS_FIELDS = {
   }
 };
 
+// content-strings/links.ts
+var LINKS = {
+  EXTERNAL: {
+    GUIDANCE: "https://www.gov.uk/guidance/export-insurance-policy#eligibility",
+    BEFORE_YOU_START: "https://www.gov.uk/guidance/get-a-quote-for-ukef-export-insurance",
+    PRIVACY: "https://www.gov.uk/government/publications/ukef-privacy-notice/ukef-privacy-notice--2",
+    FEEDBACK: "https://forms.office.com/r/TacytrRCgJ",
+    RESEARCH: "https://forms.office.com/pages/responsepage.aspx?id=jhOEgACUnkCm2ka1KB4LCkj8OKxLpCpDmTbrMyQ3j2JUOUFHNUc0QUhUOFdLNkJXWkRUS0wyMUZFNiQlQCN0PWcu",
+    EXPORT_FINANCE_MANAGERS: "https://www.gov.uk/government/publications/find-an-export-finance-manager",
+    APPROVED_BROKER_LIST: "https://www.gov.uk/government/publications/uk-export-finance-insurance-list-of-approved-brokers/export-insurance-approved-brokers",
+    PROPOSAL_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1075267/10489_UKEF_Export_Insurance_Proposal_Form_20220513-fillable.pdf",
+    NBI_FORM: "https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1041659/export-insurance-non-binding-indication-request-form_20170609.pdf",
+    FULL_APPLICATION: "https://www.gov.uk/guidance/apply-for-ukef-export-insurance",
+    ABILITY_NET: "https://mcmw.abilityNet.org.uk",
+    EQUALITY_ADVISORY_SERVICE: "https://www.equalityadvisoryservice.com",
+    ACCESSIBILITY_GUIDLINES: "https://www.w3.org/TR/WCAG21",
+    BRIBERY_ACT_2010_GUIDANCE: "https://www.justice.gov.uk/downloads/legislation/bribery-act-2010-guidance.pdf",
+    ICO_MAKE_A_COMPLAINT: "https://ico.org.uk/make-a-complaint",
+    CALL_CHARGES: "https://www.gov.uk/call-charges",
+    COMPANIES_HOUSE: "https://find-and-update.company-information.service.gov.uk"
+  }
+};
+
 // helpers/format-currency/index.ts
 var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
@@ -5066,8 +5084,10 @@ var {
   COVER_PERIOD: COVER_PERIOD_FIELD_ID,
   COMPANIES_HOUSE_NUMBER,
   TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID,
-  HAS_END_BUYER
+  HAS_END_BUYER,
+  HAS_COMPANIES_HOUSE_NUMBER
 } = insurance_default.ELIGIBILITY;
+var { COMPANY_NAME } = insurance_default.COMPANIES_HOUSE;
 var THRESHOLD = format_currency_default(TOTAL_CONTRACT_VALUE.AMOUNT_250K, GBP_CURRENCY_CODE, 0);
 var FIELDS_ELIGIBILITY = {
   [BUYER_COUNTRY]: {
@@ -5089,7 +5109,7 @@ var FIELDS_ELIGIBILITY = {
   [HAS_END_BUYER]: {
     HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'.",
     SUMMARY: {
-      TITLE: "Mock title"
+      TITLE: "End buyer"
     }
   },
   [COVER_PERIOD_FIELD_ID]: {
@@ -5110,8 +5130,19 @@ var FIELDS_ELIGIBILITY = {
     }
   },
   [COMPANIES_HOUSE_NUMBER]: {
+    HINT: `<p>For example, 8989898 or SC907816. You'll find it on your incorporation certificate or on the <a class="govuk-link" href="${LINKS.EXTERNAL.COMPANIES_HOUSE}">Companies House website</a>.</p>`,
+    SUMMARY: {
+      TITLE: "UK Companies House number"
+    }
+  },
+  [HAS_COMPANIES_HOUSE_NUMBER]: {
     SUMMARY: {
       TITLE: "UK Companies House registration number and actively trading"
+    }
+  },
+  [COMPANY_NAME]: {
+    SUMMARY: {
+      TITLE: "Company name"
     }
   },
   [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
@@ -5132,9 +5163,6 @@ var FIELDS_ELIGIBILITY = {
       ABOVE: `Above ${THRESHOLD}`,
       BELOW: `Below ${THRESHOLD}`
     }
-  },
-  [HAS_END_BUYER]: {
-    HINT: "Sometimes, exporters supply goods to a client in an overseas market who will then sell them on. The exporter will not get paid by the buyer until they have been paid by this third party. We call this third party an 'end buyer'."
   }
 };
 
@@ -5321,7 +5349,7 @@ var POLICY_FIELDS = {
 
 // content-strings/fields/insurance/your-business/index.ts
 var {
-  COMPANIES_HOUSE: { COMPANY_NAME, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  COMPANIES_HOUSE: { COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
   EXPORTER_BUSINESS: EXPORTER_BUSINESS2
 } = insurance_default;
 var {
@@ -5338,7 +5366,7 @@ var FIELDS = {
         TITLE: "Companies House registration number"
       }
     },
-    [COMPANY_NAME]: {
+    [COMPANY_NAME2]: {
       SUMMARY: {
         TITLE: "Company name"
       }
@@ -5488,23 +5516,27 @@ var DEFAULT = {
 };
 
 // content-strings/XLSX.ts
-var { FIRST_NAME, LAST_NAME } = account_default;
+var { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var {
-  CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
+  ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+    YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 }
   },
-  USING_BROKER: USING_BROKER3,
-  BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
-} = policy_default;
-var {
-  COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
-  YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 }
-} = business_default;
-var {
-  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
-} = your_buyer_default;
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
+    },
+    USING_BROKER: USING_BROKER3,
+    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
+  }
+} = insurance_default;
 var XLSX = {
   AGREED: "Agreed",
   SECTION_TITLES: {
@@ -5520,15 +5552,22 @@ var XLSX = {
     [FIRST_NAME]: "Applicant first name",
     [LAST_NAME]: "Applicant last name",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
+    APPLICANT_ROLE: "Applicants role",
+    [BUYER_COUNTRY2]: "Where is your buyer based?",
     EXPORTER_CONTACT: {
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
       EXPORTER_CONTACT_EMAIL: "Exporter email address"
     },
+    [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
+    [COVER_PERIOD2]: "Length of cover",
+    [HAS_END_BUYER2]: "Is there an end buyer?",
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services",
     [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
+    [MORE_THAN_250K.VALUE]: `Insured for more than ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
     [WEBSITE2]: "Exporter Company website (optional)",
     [PHONE_NUMBER2]: "Exporter telephone number (optional)",
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
@@ -5550,21 +5589,31 @@ var XLSX = {
 var formatTimeOfDay = (date) => format_date_default(date, DATE_FORMAT.HOURS_AND_MINUTES);
 var format_time_of_day_default = formatTimeOfDay;
 
-// generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
+// generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
-var { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 } = account_default;
-var mapKeyInformation = (application2) => {
+var {
+  ACCOUNT: {
+    FIRST_NAME: FIRST_NAME2,
+    LAST_NAME: LAST_NAME2,
+    EMAIL: EMAIL5
+  },
+  POLICY: {
+    NAME_ON_POLICY: { POSITION }
+  }
+} = insurance_default;
+var mapIntroduction = (application2) => {
   const mapped = [
     xlsx_row_default(REFERENCE_NUMBER.SUMMARY.TITLE, application2.referenceNumber),
     xlsx_row_default(DATE_SUBMITTED.SUMMARY.TITLE, format_date_default(application2.submissionDate, "dd-MM-yyyy")),
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL5])
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL5]),
+    xlsx_row_default(FIELDS2.APPLICANT_ROLE, application2.policyContact[POSITION])
   ];
   return mapped;
 };
-var map_key_information_default = mapKeyInformation;
+var map_introduction_default = mapIntroduction;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
 var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default;
@@ -5584,7 +5633,7 @@ var mapExporterContactDetails = (application2) => {
 };
 var map_exporter_contact_details_default = mapExporterContactDetails;
 
-// generate-xlsx/map-application-to-XLSX/map-secondary-key-information/index.ts
+// generate-xlsx/map-application-to-XLSX/map-key-information/index.ts
 var {
   SECTION_TITLES: { KEY_INFORMATION },
   FIELDS: FIELDS4
@@ -5603,7 +5652,7 @@ var {
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 }
   }
 } = insurance_default;
-var mapSecondaryKeyInformation = (application2) => {
+var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
@@ -5614,7 +5663,7 @@ var mapSecondaryKeyInformation = (application2) => {
   ];
   return mapped;
 };
-var map_secondary_key_information_default = mapSecondaryKeyInformation;
+var map_key_information_default = mapKeyInformation;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
 var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
@@ -5742,7 +5791,7 @@ var CONTENT_STRINGS3 = {
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME2, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
+    COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME3, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
@@ -5783,7 +5832,7 @@ var mapExporter = (application2) => {
     xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
     // company fields
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME2], company[COMPANY_NAME2]),
+    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME3], company[COMPANY_NAME3]),
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(CONTENT_STRINGS3[HAS_DIFFERENT_TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME2])),
@@ -5830,58 +5879,34 @@ var mapBuyer = (application2) => {
 };
 var map_buyer_default = mapBuyer;
 
-// generate-xlsx/map-application-to-XLSX/helpers/map-total-contract-field/index.ts
-var FIELD_ID = FIELD_IDS.INSURANCE.ELIGIBILITY.TOTAL_CONTRACT_VALUE;
-var { LESS_THAN_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
-var { ABOVE, BELOW } = FIELDS_ELIGIBILITY[FIELD_ID].SUMMARY;
-var mapTotalContractField = (answer) => {
-  if (answer === MORE_THAN_250K.DB_ID) {
-    return ABOVE;
-  }
-  if (answer === LESS_THAN_250K.DB_ID) {
-    return BELOW;
-  }
-  return DEFAULT.EMPTY;
-};
-var map_total_contract_field_default = mapTotalContractField;
-
-// generate-xlsx/map-application-to-XLSX/helpers/map-cover-period-field/index.ts
-var FIELD_ID2 = FIELD_IDS.INSURANCE.ELIGIBILITY.COVER_PERIOD;
-var { LESS_THAN_2_YEARS, MORE_THAN_2_YEARS } = COVER_PERIOD;
-var { ABOVE: ABOVE2, BELOW: BELOW2 } = FIELDS_ELIGIBILITY[FIELD_ID2].OPTIONS;
-var mapCoverPeriodField = (answer) => {
-  if (answer === MORE_THAN_2_YEARS.DB_ID) {
-    return ABOVE2.TEXT;
-  }
-  if (answer === LESS_THAN_2_YEARS.DB_ID) {
-    return BELOW2.TEXT;
-  }
-  return DEFAULT.EMPTY;
-};
-var map_cover_period_field_default = mapCoverPeriodField;
-
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
+var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
+var { FIELDS: FIELDS5, SECTION_TITLES } = XLSX;
 var {
   ELIGIBILITY: {
-    BUYER_COUNTRY: BUYER_COUNTRY2,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2,
+    BUYER_COUNTRY: BUYER_COUNTRY3,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES3,
     VALID_EXPORTER_LOCATION: VALID_EXPORTER_LOCATION2,
     COVER_PERIOD: COVER_PERIOD_ELIGIBILITY,
-    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE3,
-    COVER_PERIOD: COVER_PERIOD2,
-    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2
+    TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID2,
+    COVER_PERIOD: COVER_PERIOD3,
+    HAS_COMPANIES_HOUSE_NUMBER: HAS_COMPANIES_HOUSE_NUMBER2,
+    COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER3,
+    HAS_END_BUYER: HAS_END_BUYER3
   }
-} = FIELD_IDS.INSURANCE;
+} = insurance_default;
 var mapEligibility = (application2) => {
-  const { eligibility } = application2;
+  const { company, eligibility } = application2;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.ELIGIBILITY, ""),
-    xlsx_row_default(FIELDS_ELIGIBILITY[BUYER_COUNTRY2].SUMMARY?.TITLE, eligibility[BUYER_COUNTRY2].name),
+    xlsx_row_default(SECTION_TITLES.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_MINIMUM_UK_GOODS_OR_SERVICES2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[TOTAL_CONTRACT_VALUE3].SUMMARY?.TITLE, map_total_contract_field_default(eligibility[TOTAL_CONTRACT_VALUE3].valueId)),
-    xlsx_row_default(FIELDS_ELIGIBILITY[COVER_PERIOD2].SUMMARY?.TITLE, map_cover_period_field_default(eligibility[COVER_PERIOD_ELIGIBILITY].valueId)),
-    xlsx_row_default(FIELDS_ELIGIBILITY[COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[COMPANIES_HOUSE_NUMBER2]))
+    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_COMPANIES_HOUSE_NUMBER2])),
+    xlsx_row_default(FIELDS5[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(FIELDS5[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(FIELDS5[MORE_THAN_250K2.VALUE], map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID)),
+    xlsx_row_default(FIELDS5[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(FIELDS5[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3])),
+    xlsx_row_default(FIELDS5[HAS_END_BUYER3], map_yes_no_field_default(eligibility[HAS_END_BUYER3]))
   ];
   return mapped;
 };
@@ -5926,19 +5951,19 @@ var map_declarations_default = mapDeclarations;
 var mapApplicationToXLSX = (application2) => {
   try {
     const mapped = [
-      ...map_key_information_default(application2),
+      ...map_introduction_default(application2),
       xlsx_row_seperator_default,
       ...map_exporter_contact_details_default(application2),
       xlsx_row_seperator_default,
-      ...map_secondary_key_information_default(application2),
+      ...map_key_information_default(application2),
+      xlsx_row_seperator_default,
+      ...map_eligibility_default(application2),
       xlsx_row_seperator_default,
       ...map_policy_default(application2),
       xlsx_row_seperator_default,
       ...map_exporter_default(application2),
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
-      xlsx_row_seperator_default,
-      ...map_eligibility_default(application2),
       xlsx_row_seperator_default,
       ...map_declarations_default(application2)
     ];
@@ -5972,9 +5997,9 @@ var worksheetRowHeights = (titleRowIndexes, rowIndexes, worksheet) => {
 };
 var styledColumns = (application2, worksheet) => {
   let modifiedWorksheet = worksheet;
-  const INDEXES = XLSX_ROW_INDEXES(application2);
-  const { TITLES, ...ROWS } = INDEXES;
-  const TITLE_INDEXES = Object.values(TITLES);
+  const INDEXES2 = XLSX_ROW_INDEXES(application2);
+  const { TITLES, ...ROWS } = INDEXES2;
+  const TITLE_INDEXES2 = Object.values(TITLES);
   const ROW_INDEXES = Object.values(ROWS);
   modifiedWorksheet.eachRow((row, rowNumber) => {
     row.eachCell((cell, colNumber) => {
@@ -5983,14 +6008,14 @@ var styledColumns = (application2, worksheet) => {
         vertical: "top",
         wrapText: true
       };
-      const isTitleRow = TITLE_INDEXES.includes(rowNumber);
+      const isTitleRow = TITLE_INDEXES2.includes(rowNumber);
       modifiedRow.getCell(colNumber).font = {
         bold: Boolean(isTitleRow),
         size: isTitleRow ? FONT_SIZE.TITLE : FONT_SIZE.DEFAULT
       };
     });
   });
-  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES, ROW_INDEXES, modifiedWorksheet);
+  modifiedWorksheet = worksheetRowHeights(TITLE_INDEXES2, ROW_INDEXES, modifiedWorksheet);
   return modifiedWorksheet;
 };
 var styled_columns_default = styledColumns;

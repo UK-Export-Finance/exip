@@ -93,6 +93,7 @@ const pageVariables = (referenceNumber: number, currencies: Array<Currency>, cur
     },
     PROVIDE_ALTERNATIVE_CURRENCY_URL: alternativeCurrencyUrl,
     SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${TURNOVER_SAVE_AND_BACK}`,
+    TURNOVER_LEGEND: `${TURNOVER_FIELDS[ESTIMATED_ANNUAL_TURNOVER].LEGEND} ${currency.name}?`,
     CURRENCY_PREFIX_SYMBOL: currency.symbol,
   };
 };
@@ -113,9 +114,9 @@ const get = async (req: Request, res: Response) => {
 
     const { referenceNumber, business } = application;
 
-    const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+    const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-    if (!isPopulatedArray(supportedCurrencies)) {
+    if (!isPopulatedArray(allCurrencies)) {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
@@ -138,7 +139,7 @@ const get = async (req: Request, res: Response) => {
       isCheckAndChange = true;
     }
 
-    const generatedPageVariables = pageVariables(referenceNumber, supportedCurrencies, String(business[TURNOVER_CURRENCY_CODE]), isChange, isCheckAndChange);
+    const generatedPageVariables = pageVariables(referenceNumber, allCurrencies, String(business[TURNOVER_CURRENCY_CODE]), isChange, isCheckAndChange);
 
     return res.render(TEMPLATE, {
       ...insuranceCorePageVariables({
@@ -200,15 +201,15 @@ const post = async (req: Request, res: Response) => {
     if (validationErrors) {
       const { referenceNumber: applicationReferenceNumber, business } = application;
 
-      const { supportedCurrencies } = await api.keystone.APIM.getCurrencies();
+      const { allCurrencies } = await api.keystone.APIM.getCurrencies();
 
-      if (!isPopulatedArray(supportedCurrencies)) {
+      if (!isPopulatedArray(allCurrencies)) {
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
 
       const generatedPageVariables = pageVariables(
         applicationReferenceNumber,
-        supportedCurrencies,
+        allCurrencies,
         String(business[TURNOVER_CURRENCY_CODE]),
         isChange,
         isCheckAndChange,
