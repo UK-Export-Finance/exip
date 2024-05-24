@@ -3210,6 +3210,9 @@ type Mutation {
   """ create an application """
   createAnApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnApplicationResponse
 
+  """ create an application """
+  createAnAbandonedApplication(accountId: String!, eligibilityAnswers: ApplicationEligibility!, company: CompanyInput!, sectionReview: SectionReviewInput!): CreateAnAbandonedApplicationResponse
+
   """ delete an account """
   deleteAnAccount(email: String!): SuccessResponse
 
@@ -3715,6 +3718,12 @@ input ApplicationEligibility {
 }
 
 type CreateAnApplicationResponse {
+  success: Boolean!
+  id: String
+  referenceNumber: Int
+}
+
+type CreateAnAbandonedApplicationResponse {
   success: Boolean!
   id: String
   referenceNumber: Int

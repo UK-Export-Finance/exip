@@ -14,8 +14,7 @@ import { RequestBody, ErrorMessageObject } from '../../../types';
  * @param {Object} errors: Other validation errors for the same form
  * @returns {ValidationErrors} providedAndMaxLength
  */
-const fullAddress = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) => {
-  return providedAndMaxLength(formBody, fieldId, errorMessages, errors, MAXIMUM_CHARACTERS.FULL_ADDRESS);
-};
+const fullAddress = (formBody: RequestBody, fieldId: string, errorMessages: ErrorMessageObject, errors: object) =>
+  providedAndMaxLength(formBody, fieldId, errorMessages, errors, MAXIMUM_CHARACTERS.FULL_ADDRESS);
 
 export default fullAddress;

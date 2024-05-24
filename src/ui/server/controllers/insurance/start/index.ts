@@ -22,6 +22,4 @@ export const get = (req: Request, res: Response) => {
   });
 };
 
-export const post = (req: Request, res: Response) => {
-  return res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);
-};
+export const post = (req: Request, res: Response) => res.redirect(ROUTES.INSURANCE.ELIGIBILITY.CHECK_IF_ELIGIBLE);

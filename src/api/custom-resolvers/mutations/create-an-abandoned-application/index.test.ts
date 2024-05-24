@@ -1,4 +1,4 @@
-import createAnApplication from '.';
+import createAnAbandonedApplication from '.';
 import { mockAccount, mockCountries } from '../../../test-mocks';
 import mockCompany from '../../../test-mocks/mock-company';
 import { Account, Context, SuccessResponse } from '../../../types';
@@ -9,7 +9,7 @@ import { APPLICATION } from '../../../constants';
 const { STATUS } = APPLICATION;
 
 
-describe('custom-resolvers/create-an-application', () => {
+describe('custom-resolvers/create-an-abandoned-application', () => {
   let context: Context;
   let account: Account;
   let result: SuccessResponse;
@@ -37,22 +37,22 @@ describe('custom-resolvers/create-an-application', () => {
   });
 
   test('it should return success=true', async () => {
-    result = await createAnApplication({}, variables, context);
+    result = await createAnAbandonedApplication({}, variables, context);
 
     expect(result.success).toEqual(true);
   });
 
-  test(`it should return status as ${STATUS.IN_PROGRESS}`, async () => {
-    result = await createAnApplication({}, variables, context);
+  test(`it should return status as ${STATUS.ABANDONED}`, async () => {
+    result = await createAnAbandonedApplication({}, variables, context);
 
-    expect(result.status).toEqual(STATUS.IN_PROGRESS);
+    expect(result.status).toEqual(STATUS.ABANDONED);
   });
 
   describe('when there is no account for the provided accountId', () => {
     test('it should return success=false', async () => {
       variables.accountId = 'invalid-id';
 
-      result = await createAnApplication({}, variables, context);
+      result = await createAnAbandonedApplication({}, variables, context);
 
       expect(result.success).toEqual(false);
     });
@@ -60,14 +60,7 @@ describe('custom-resolvers/create-an-application', () => {
 
   describe('when creation is not successful', () => {
     test('it should throw an error', async () => {
-      try {
-        // pass empty context object to force an error
-        await createAnApplication({}, variables, {});
-      } catch (err) {
-        const errorString = String(err);
-
-        expect(errorString.includes('Creating application')).toEqual(true);
-      }
+      await expect(createAnAbandonedApplication({}, variables, {})).rejects.toThrow('Creating an abandoned application');
     });
   });
 });
