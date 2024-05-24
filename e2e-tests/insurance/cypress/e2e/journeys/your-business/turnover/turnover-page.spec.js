@@ -17,9 +17,7 @@ const {
 
 const {
   ROOT,
-  EXPORTER_BUSINESS: {
-    TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY, NATURE_OF_BUSINESS_ROOT, CREDIT_CONTROL,
-  },
+  EXPORTER_BUSINESS: { TURNOVER_ROOT, TURNOVER_ALTERNATIVE_CURRENCY, NATURE_OF_BUSINESS_ROOT, CREDIT_CONTROL },
 } = INSURANCE_ROUTES;
 
 const financialYearEnd = {
@@ -97,7 +95,7 @@ context(
         field.input().should('exist');
 
         cy.assertCopyWithCurrencyName({
-          pageTitle: FIELDS.TURNOVER[fieldId].LEGEND,
+          expectedCopy: FIELDS.TURNOVER[fieldId].LEGEND,
           currencyName: GBP.name,
           selector: field.legend(),
           withQuestionMark: true,
