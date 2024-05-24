@@ -393,7 +393,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: NPM version
-        run: npm install -g npm@10.8.0
+        run: npm install npm@10.8.0
 
       - name: Dependencies
         working-directory: ./
