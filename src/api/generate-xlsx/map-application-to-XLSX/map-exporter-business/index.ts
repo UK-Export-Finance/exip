@@ -89,6 +89,8 @@ const mapExporterBusiness = (application: Application) => {
    * financial year end date should only be populated if it exists.
    * Otherwise, return default text.
    */
+
+  // TODO: constant
   let financialYearEndDate = 'No data from Companies House';
 
   if (company[FINANCIAL_YEAR_END_DATE]) {
@@ -96,6 +98,7 @@ const mapExporterBusiness = (application: Application) => {
   }
 
   // TODO: documentation
+  // TODO: unit tests
   const hasDifferentTradingName = company[HAS_DIFFERENT_TRADING_NAME];
 
   const hasDifferentTradingAddress = differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS];

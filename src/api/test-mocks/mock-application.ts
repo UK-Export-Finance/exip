@@ -59,10 +59,11 @@ export const mockAccount = {
 };
 
 export const mockCompany = {
-  id: 'clcyyopn40148m8noyar9wxrn',
+  id: 'claydon40148m8boyar9waen',
   companyName: 'Test Name',
   companyNumber: '0123456',
   companyWebsite: '',
+  differentTradingAddress: {},
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
   dateOfCreation: '2014-04-10T00:00:00.000Z',
@@ -73,7 +74,7 @@ export const mockCompany = {
     },
   ],
   registeredOfficeAddress: {
-    id: 'clcyyopna0158m8noaglyy94t',
+    id: 'claydona0158m8noaglyy94t',
     addressLine1: 'Line 1',
     addressLine2: 'Line 2',
     careOf: '',
@@ -107,12 +108,12 @@ export const mockBusiness = {
 };
 
 export const mockBroker = {
-  id: 'clcyyopna0158m8noaglyy9gg',
+  id: 'claydona0158m8noaglyy9gg',
   ...broker,
 };
 
 export const mockApplicationBuyer = {
-  id: 'clcyyopna0158m8noaglyy9aa',
+  id: 'claydona0158m8noaglyy9aa',
   ...buyer,
 };
 
@@ -195,7 +196,7 @@ const mockApplication = {
   companySicCodes: [mockCompanySicCode, mockCompanySicCode],
   companyAddress: mockCompany.registeredOfficeAddress,
   business: {
-    id: 'clcyyopna0158m8noaglyy9gg',
+    id: 'claydona0158m8noaglyy9gg',
     ...mockBusiness,
   },
   broker: mockBroker,

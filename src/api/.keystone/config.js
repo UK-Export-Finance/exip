@@ -782,15 +782,7 @@ var TOTAL_CONTRACT_VALUE = {
   AMOUNT_250K: 25e4
 };
 
-// helpers/policy-type/index.ts
-var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
-var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-// constants/XLSX-CONFIG/index.ts
-var {
-  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
-  USING_BROKER
-} = POLICY;
+// constants/XLSX-CONFIG/INDEXES/index.ts
 var TITLE_INDEXES = () => ({
   HEADER: 1,
   EXPORTER_CONTACT_DETAILS: 10,
@@ -807,46 +799,55 @@ var INDEXES = () => ({
   COMPANY_SIC_CODES: 44,
   BUYER_ADDRESS: 64
 });
+var incrementIndexes = (indexes) => {
+  const modified = indexes;
+  modified.COMPANY_SIC_CODES += 1;
+  modified.BROKER_ADDRESS += 1;
+  modified.BUYER_ADDRESS += 1;
+  modified.TITLES.POLICY += 1;
+  modified.TITLES.BUYER += 1;
+  modified.TITLES.DECLARATIONS += 1;
+  return modified;
+};
+
+// helpers/policy-type/index.ts
+var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
+var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
+
+// constants/XLSX-CONFIG/index.ts
+var {
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
+  USING_BROKER
+} = POLICY;
 var XLSX_ROW_INDEXES = (application2) => {
   const {
     broker,
-    company: { hasDifferentTradingName, differentTradingAddress: { fullAddress: hasDifferentTradingAddress } },
+    company: {
+      differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
+      hasDifferentTradingName
+    },
     policy
   } = application2;
   const policyType = policy[POLICY_TYPE2];
-  let isMultiplePolicy = false;
+  let indexes = INDEXES();
   if (isMultiplePolicyType(policyType)) {
-    isMultiplePolicy = true;
-  }
-  const indexes = INDEXES();
-  if (isMultiplePolicy) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
     indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
   if (broker[USING_BROKER]) {
-    indexes.BROKER_ADDRESS = 48;
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+    indexes.BROKER_ADDRESS = 48;
   }
   if (hasDifferentTradingName) {
-    indexes.COMPANY_SIC_CODES += 1;
-    indexes.BROKER_ADDRESS += 1;
-    indexes.BUYER_ADDRESS += 1;
-    indexes.TITLES.POLICY += 1;
-    indexes.TITLES.BUYER += 1;
-    indexes.TITLES.DECLARATIONS += 1;
+    indexes = incrementIndexes(indexes);
   }
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 36;
-    indexes.COMPANY_SIC_CODES += 1;
-    indexes.BROKER_ADDRESS += 1;
-    indexes.BUYER_ADDRESS += 1;
-    indexes.TITLES.POLICY += 1;
-    indexes.TITLES.BUYER += 1;
-    indexes.TITLES.DECLARATIONS += 1;
+    indexes = incrementIndexes(indexes);
   }
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
@@ -5810,17 +5811,11 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(FIELDS5[HAS_DIFFERENT_TRADING_NAME3], map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME3]))
   ];
   if (hasDifferentTradingName) {
-    mapped.push(
-      xlsx_row_default(FIELDS5[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2])
-    );
+    mapped.push(xlsx_row_default(FIELDS5[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]));
   }
-  mapped.push(
-    xlsx_row_default(FIELDS5[TRADING_ADDRESS3], map_yes_no_field_default(company[TRADING_ADDRESS3]))
-  );
+  mapped.push(xlsx_row_default(FIELDS5[TRADING_ADDRESS3], map_yes_no_field_default(company[TRADING_ADDRESS3])));
   if (hasDifferentTradingAddress) {
-    mapped.push(
-      xlsx_row_default(FIELDS5[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS], differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS])
-    );
+    mapped.push(xlsx_row_default(FIELDS5[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS], differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS]));
   }
   mapped = [
     ...mapped,

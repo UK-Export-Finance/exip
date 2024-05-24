@@ -1,7 +1,7 @@
 import mapExporter, { mapSicCodes, mapBroker } from '.';
 import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
 import { XLSX } from '../../../content-strings';
-import { FIELDS } from '../../../content-strings/fields/insurance/your-business';
+import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapExporterAddress from './map-address';
@@ -11,20 +11,23 @@ import NEW_LINE from '../helpers/xlsx-new-line';
 import { mockApplication } from '../../../test-mocks';
 import mapYesNoField from '../helpers/map-yes-no-field';
 
+const { FIELDS, SECTION_TITLES } = XLSX;
+
 const CONTENT_STRINGS = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER,
-  ...FIELDS.BROKER_DETAILS,
+  ...YOUR_BUSINESS_FIELDS.COMPANY_DETAILS,
+  ...YOUR_BUSINESS_FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...YOUR_BUSINESS_FIELDS.TURNOVER,
+  ...YOUR_BUSINESS_FIELDS.BROKER,
+  ...YOUR_BUSINESS_FIELDS.BROKER_DETAILS,
 };
 
 const {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NUMBER, COMPANY_NAME, COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, TRADING_ADDRESS, WEBSITE, PHONE_NUMBER },
+    COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    HAS_CREDIT_CONTROL,
   },
   POLICY: {
     USING_BROKER,
@@ -33,32 +36,28 @@ const {
 } = INSURANCE_FIELD_IDS;
 
 const expectedMapExporterArray = (company, companySicCodes, business, financialYearEndDateValue) => [
-  xlsxRow(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ''),
+  xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
 
-  // company fields
-  xlsxRow(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE, company[COMPANY_NUMBER]),
-  xlsxRow(XLSX.FIELDS[COMPANY_NAME], company[COMPANY_NAME]),
   xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], 'dd-MMM-yy')),
+  xlsxRow(FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
+  xlsxRow(FIELDS[HAS_DIFFERENT_TRADING_NAME], mapYesNoField(company[HAS_DIFFERENT_TRADING_NAME])),
+  xlsxRow(FIELDS[TRADING_ADDRESS], mapYesNoField(company[TRADING_ADDRESS])),
 
-  xlsxRow(XLSX.FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
+  xlsxRow(FIELDS[WEBSITE], company[WEBSITE]),
+  xlsxRow(FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),
 
-  xlsxRow(CONTENT_STRINGS[HAS_DIFFERENT_TRADING_NAME].SUMMARY?.TITLE, mapYesNoField(company[HAS_DIFFERENT_TRADING_NAME])),
-  xlsxRow(CONTENT_STRINGS[TRADING_ADDRESS].SUMMARY?.TITLE, mapYesNoField(company[TRADING_ADDRESS])),
-
-  xlsxRow(XLSX.FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
-
-  xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDateValue),
-  xlsxRow(XLSX.FIELDS[WEBSITE], company[WEBSITE]),
-  xlsxRow(XLSX.FIELDS[PHONE_NUMBER], company[PHONE_NUMBER]),
-
-  // business fields
-  xlsxRow(XLSX.FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
-  xlsxRow(XLSX.FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
-  xlsxRow(XLSX.FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
-  xlsxRow(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
+  xlsxRow(FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
+  xlsxRow(FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
+  xlsxRow(FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
+  xlsxRow(FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
   xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
-  // broker fields
+  xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField(business[HAS_CREDIT_CONTROL])),
+
+  xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
+
+  xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDateValue),
+
   ...mapBroker(mockApplication),
 ];
 

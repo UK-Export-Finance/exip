@@ -1,41 +1,12 @@
+import { INDEXES, incrementIndexes } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { isMultiplePolicyType } from '../../helpers/policy-type';
-import { Application, XLSXTitleRowIndexes, XLSXRowIndexes } from '../../types';
+import { Application, XLSXRowIndexes } from '../../types';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
   USING_BROKER,
 } = POLICY_FIELD_IDS;
-
-/**
- * TITLE_INDEXES
- * All XLSX title indexes.
- * @returns {Object}
- */
-export const TITLE_INDEXES = () =>
-  ({
-    HEADER: 1,
-    EXPORTER_CONTACT_DETAILS: 10,
-    KEY_INFORMATION: 15,
-    ELIGIBILITY: 21,
-    EXPORTER_BUSINESS: 31,
-    POLICY: 48,
-    BUYER: 57,
-    DECLARATIONS: 65,
-  }) as XLSXTitleRowIndexes;
-
-/**
- * INDEXES
- * All XLSX indexes.
- * @returns {Object}
- */
-export const INDEXES = () =>
-  ({
-    TITLES: TITLE_INDEXES(),
-    COMPANY_ADDRESS: 33,
-    COMPANY_SIC_CODES: 44,
-    BUYER_ADDRESS: 64,
-  }) as XLSXRowIndexes;
 
 /**
  * XLSX_ROW_INDEXES
@@ -45,62 +16,48 @@ export const INDEXES = () =>
  * - If "using a broker" is true - the XLSX's “About your business“ section has 3 additional rows.
  * @returns {Object}
  */
+
+// TODO
+// TODO
+// TODO: update documentation
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const {
     broker,
     company: {
-      hasDifferentTradingName,
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
+      hasDifferentTradingName,
     },
     policy,
   } = application;
 
   const policyType = policy[POLICY_TYPE];
 
-  let isMultiplePolicy = false;
+  let indexes = INDEXES();
 
   if (isMultiplePolicyType(policyType)) {
-    isMultiplePolicy = true;
-  }
-
-  const indexes = INDEXES();
-
-  if (isMultiplePolicy) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
+
     indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
 
   if (broker[USING_BROKER]) {
-    indexes.BROKER_ADDRESS = 48;
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+
+    indexes.BROKER_ADDRESS = 48;
   }
 
   if (hasDifferentTradingName) {
-    indexes.COMPANY_SIC_CODES += 1;
-
-    indexes.BROKER_ADDRESS += 1;
-    indexes.BUYER_ADDRESS += 1;
-
-    indexes.TITLES.POLICY += 1;
-    indexes.TITLES.BUYER += 1;
-    indexes.TITLES.DECLARATIONS += 1;
+    indexes = incrementIndexes(indexes);
   }
 
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 36;
 
-    indexes.COMPANY_SIC_CODES += 1;
-
-    indexes.BROKER_ADDRESS += 1;
-    indexes.BUYER_ADDRESS += 1;
-
-    indexes.TITLES.POLICY += 1;
-    indexes.TITLES.BUYER += 1;
-    indexes.TITLES.DECLARATIONS += 1;
+    indexes = incrementIndexes(indexes);
   }
 
   if (hasDifferentTradingName && hasDifferentTradingAddress) {

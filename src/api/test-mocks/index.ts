@@ -4,7 +4,7 @@ import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
 import cisCountries from './mock-CIS-countries';
 import currencies from './mock-currencies';
-import company from './mock-company';
+import company, { companyScenarios } from './mock-company';
 import companySicCode from './mock-company-sic-code';
 import nominatedLossPayee from './mock-nominated-loss-payee';
 import { Account } from '../types';
@@ -48,6 +48,7 @@ export const mockCisCountries = cisCountries;
 
 export const mockCompany = company;
 export const mockCompanySicCode = companySicCode;
+export const mockCompanyScenarios = companyScenarios;
 
 export const mockNominatedLossPayee = nominatedLossPayee;
 
