@@ -406,6 +406,10 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Create node_modules dir
+        working-directory: ./
+        run: mkdir node_modules
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -462,6 +466,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ vars.NODE_VERSION }}
+
+      - name: Create node_modules dir
+        working-directory: ./
+        run: mkdir node_modules
 
       - name: Dependencies
         working-directory: ./
