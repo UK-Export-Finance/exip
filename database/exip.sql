@@ -3,7 +3,7 @@
 # Version 0.3
 #
 # Database: exip
-# Generation Time: 2024-05-09 09:59:31 +0000
+# Generation Time: 2024-05-09 09:59:30 +0000
 # ************************************************************
 
 CREATE DATABASE IF NOT EXISTS `exip`;

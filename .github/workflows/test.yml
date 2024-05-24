@@ -330,7 +330,7 @@ jobs:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
       - name: npm latest
-        run: npm i -g npm@latest --registry=https://registry.npmjs.org
+        run: npm i -g npm@10.8.0 --registry=https://registry.npmjs.org
 
       - name: Dependencies
         working-directory: ./
@@ -395,8 +395,8 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: NPM version
-        run: npm install npm@9.9.3
+      - name: npm latest
+        run: npm i -g npm@10.8.0 --registry=https://registry.npmjs.org
 
       - name: Dependencies
         working-directory: ./
