@@ -125,7 +125,7 @@ context('Insurance - Your business - Change your answers - Turnover - As an expo
         const field = fieldSelector(ESTIMATED_ANNUAL_TURNOVER);
 
         cy.assertCopyWithCurrencyName({
-          pageTitle: FIELDS.TURNOVER[ESTIMATED_ANNUAL_TURNOVER].LEGEND,
+          expectedCopy: FIELDS.TURNOVER[ESTIMATED_ANNUAL_TURNOVER].LEGEND,
           currencyName: NON_STANDARD_CURRENCY_NAME,
           selector: field.legend(),
           withQuestionMark: true,

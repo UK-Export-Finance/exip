@@ -97,7 +97,7 @@ context(
         field.input().should('exist');
 
         cy.assertCopyWithCurrencyName({
-          pageTitle: FIELDS.TURNOVER[fieldId].LEGEND,
+          expectedCopy: FIELDS.TURNOVER[fieldId].LEGEND,
           currencyName: GBP.name,
           selector: field.legend(),
           withQuestionMark: true,
