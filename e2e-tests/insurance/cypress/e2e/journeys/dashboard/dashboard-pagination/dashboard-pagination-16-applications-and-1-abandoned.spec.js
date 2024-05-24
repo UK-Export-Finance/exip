@@ -14,7 +14,7 @@ const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 
 const { table } = dashboardPage;
 
-const { ABANDONED, IN_PROGRESS } = APPLICATION.STATUS;
+const { ABANDONED } = APPLICATION.STATUS;
 
 context(`Insurance - Dashboard - pagination - ${totalApplications} applications and 1 ${ABANDONED} application`, () => {
   let applications;
@@ -66,9 +66,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications 
     });
 
     it(`should have no ${ABANDONED} applications`, () => {
-      dashboardPage.body.rows().forEach((row) => {
-        cy.checkText(row.status(), IN_PROGRESS);
-      });
+      cy.assertAllDashboardApplicationStatusesAreInProgress();
     });
   });
 
@@ -90,6 +88,7 @@ context(`Insurance - Dashboard - pagination - ${totalApplications} applications 
 
     it(`should have 1 application on the dashboard (and not the ${ABANDONED} application)`, () => {
       cy.assertLength(table.body.rows(), 1);
+      cy.assertAllDashboardApplicationStatusesAreInProgress();
     });
   });
 
