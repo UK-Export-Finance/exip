@@ -329,8 +329,10 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: npm latest
-        run: npm i -g npm@latest --registry=https://registry.npmjs.org
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.7.3
 
       - name: Dependencies
         working-directory: ./
@@ -395,8 +397,10 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: npm latest
-        run: npm i -g npm@latest --registry=https://registry.npmjs.org
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.7.3
 
       - name: Dependencies
         working-directory: ./
@@ -450,8 +454,10 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
-      - name: npm latest
-        run: npm i -g npm@latest --registry=https://registry.npmjs.org
+      - name: Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 21.7.3
 
       - name: Dependencies
         working-directory: ./
