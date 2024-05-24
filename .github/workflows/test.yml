@@ -329,6 +329,9 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
+      - name: npm latest
+        run: npm i -g npm@latest --registry=https://registry.npmjs.org
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -392,6 +395,9 @@ jobs:
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
 
+      - name: npm latest
+        run: npm i -g npm@latest --registry=https://registry.npmjs.org
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
@@ -443,6 +449,9 @@ jobs:
         uses: szenius/set-timezone@v2.0
         with:
           timezoneLinux: ${{ needs.setup.outputs.timezone }}
+
+      - name: npm latest
+        run: npm i -g npm@latest --registry=https://registry.npmjs.org
 
       - name: Dependencies
         working-directory: ./
