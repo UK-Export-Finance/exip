@@ -334,6 +334,10 @@ jobs:
         with:
           node-version: ${{ vars.NODE_VERSION }}
 
+      - name: Create node_modules dir
+        working-directory: ./
+        run: mkdir node_modules
+
       - name: Dependencies
         working-directory: ./
         run: npm run ci:all
