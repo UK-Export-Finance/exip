@@ -30,7 +30,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...indexes,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 48,
         TITLES: {
@@ -56,7 +56,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...incremented,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 49,
         TITLES: {
@@ -86,10 +86,10 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...incremented,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 49,
-        ALTERNATIVE_TRADING_ADDRESS: 36,
+        ALTERNATIVE_TRADING_ADDRESS: 37,
         TITLES: {
           ...incremented.TITLES,
           POLICY: incremented.TITLES.POLICY + 3,
@@ -114,10 +114,10 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...secondIncrement,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 50,
-        ALTERNATIVE_TRADING_ADDRESS: 37,
+        ALTERNATIVE_TRADING_ADDRESS: 38,
         TITLES: {
           ...secondIncrement.TITLES,
           POLICY: incremented.TITLES.POLICY + 3,

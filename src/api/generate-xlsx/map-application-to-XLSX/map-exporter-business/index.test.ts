@@ -27,6 +27,7 @@ const {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+    // ALTERNATIVE_TRADING_ADDRESS: { ALTERNATIVE_TRADING_FULL_ADDRESS },
     HAS_CREDIT_CONTROL,
   },
   POLICY: {
@@ -40,6 +41,8 @@ const expectedMapExporterArray = (company, companySicCodes, business, financialY
 
   xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], 'dd-MMM-yy')),
   xlsxRow(FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
+  xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
+
   xlsxRow(FIELDS[HAS_DIFFERENT_TRADING_NAME], mapYesNoField(company[HAS_DIFFERENT_TRADING_NAME])),
   xlsxRow(FIELDS[TRADING_ADDRESS], mapYesNoField(company[TRADING_ADDRESS])),
 
@@ -49,14 +52,11 @@ const expectedMapExporterArray = (company, companySicCodes, business, financialY
   xlsxRow(FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
   xlsxRow(FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
   xlsxRow(FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
+  xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDateValue),
   xlsxRow(FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
   xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
   xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField(business[HAS_CREDIT_CONTROL])),
-
-  xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
-
-  xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDateValue),
 
   ...mapBroker(mockApplication),
 ];

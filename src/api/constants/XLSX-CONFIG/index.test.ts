@@ -62,6 +62,7 @@ describe('api/constants/XLSX-CONFIG', () => {
           const expected = {
             ...defaultIndexes,
             BROKER_ADDRESS: 48,
+            BUYER_ADDRESS: defaultIndexes.BUYER_ADDRESS + 3,
             TITLES: {
               ...defaultTitleIndexes,
               POLICY: defaultTitleIndexes.POLICY + 3,

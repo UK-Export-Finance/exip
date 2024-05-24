@@ -24,8 +24,8 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
       const expected = {
         TITLES: TITLE_INDEXES(),
         COMPANY_ADDRESS: 33,
-        COMPANY_SIC_CODES: 44,
-        BUYER_ADDRESS: 64,
+        COMPANY_SIC_CODES: 34,
+        BUYER_ADDRESS: 59,
       };
 
       expect(INDEXES()).toEqual(expected);
@@ -35,26 +35,24 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
   describe('incrementIndexes', () => {
     it('should return incremented indexes', () => {
       const mockIndexes = {
-        COMPANY_SIC_CODES: 1,
-        BROKER_ADDRESS: 2,
-        BUYER_ADDRESS: 3,
+        BROKER_ADDRESS: 1,
+        BUYER_ADDRESS: 2,
         TITLES: {
-          POLICY: 4,
-          BUYER: 5,
-          DECLARATIONS: 6,
+          POLICY: 3,
+          BUYER: 4,
+          DECLARATIONS: 5,
         },
       } as XLSXRowIndexes;
 
       const result = incrementIndexes(mockIndexes);
 
       const expected = {
-        COMPANY_SIC_CODES: 2,
-        BROKER_ADDRESS: 3,
-        BUYER_ADDRESS: 4,
+        BROKER_ADDRESS: 2,
+        BUYER_ADDRESS: 3,
         TITLES: {
-          POLICY: 5,
-          BUYER: 6,
-          DECLARATIONS: 7,
+          POLICY: 4,
+          BUYER: 5,
+          DECLARATIONS: 6,
         },
       };
 

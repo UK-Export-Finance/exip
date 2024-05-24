@@ -107,6 +107,7 @@ const mapExporterBusiness = (application: Application) => {
     xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
     xlsxRow(CONTENT_STRINGS[COMPANY_INCORPORATED].SUMMARY?.TITLE, formatDate(company[COMPANY_INCORPORATED], 'dd-MMM-yy')),
     xlsxRow(FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
+    xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
     xlsxRow(FIELDS[HAS_DIFFERENT_TRADING_NAME], mapYesNoField(company[HAS_DIFFERENT_TRADING_NAME])),
   ];
 
@@ -117,7 +118,7 @@ const mapExporterBusiness = (application: Application) => {
   mapped.push(xlsxRow(FIELDS[TRADING_ADDRESS], mapYesNoField(company[TRADING_ADDRESS])));
 
   if (hasDifferentTradingAddress) {
-    mapped.push(xlsxRow(FIELDS[ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS], differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]));
+    mapped.push(xlsxRow(FIELDS[ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS_DOT_NOTATION], differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]));
   }
 
   mapped = [
@@ -129,14 +130,11 @@ const mapExporterBusiness = (application: Application) => {
     xlsxRow(FIELDS[GOODS_OR_SERVICES], business[GOODS_OR_SERVICES]),
     xlsxRow(FIELDS[YEARS_EXPORTING], business[YEARS_EXPORTING]),
     xlsxRow(FIELDS[EMPLOYEES_UK], business[EMPLOYEES_UK]),
+    xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDate),
     xlsxRow(FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
     xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
     xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField(business[HAS_CREDIT_CONTROL])),
-
-    xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
-
-    xlsxRow(CONTENT_STRINGS[FINANCIAL_YEAR_END_DATE].SUMMARY?.TITLE, financialYearEndDate),
 
     ...mapBroker(application),
   ];

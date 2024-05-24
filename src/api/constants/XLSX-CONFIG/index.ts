@@ -38,7 +38,6 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
 
-    indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
 
@@ -46,12 +45,13 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+    indexes.BUYER_ADDRESS += 3;
 
     indexes.BROKER_ADDRESS = 48;
   }
 
   if (hasDifferentTradingAddress) {
-    indexes.ALTERNATIVE_TRADING_ADDRESS = 36;
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
 
     indexes = incrementIndexes(indexes);
   }
@@ -61,7 +61,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   }
 
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
-    indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
 
   return indexes;

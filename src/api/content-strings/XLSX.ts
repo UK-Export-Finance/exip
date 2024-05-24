@@ -13,7 +13,7 @@ const {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
-    ALTERNATIVE_TRADING_ADDRESS,
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
     HAS_CREDIT_CONTROL,
   },
   POLICY: {
@@ -68,7 +68,7 @@ export const XLSX = {
     [HAS_DIFFERENT_TRADING_NAME]: 'Different trading name?',
     [DIFFERENT_TRADING_NAME]: 'Alternative trading name',
     [TRADING_ADDRESS]: 'Different trading address?',
-    [ALTERNATIVE_TRADING_ADDRESS.FULL_ADDRESS]: 'Alternative trading address',
+    [FULL_ADDRESS_DOT_NOTATION]: 'Alternative trading address',
     [MORE_THAN_250K.VALUE]: `Insured for more than ${formatCurrency(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
     [WEBSITE]: 'Exporter Company website (optional)',
     [PHONE_NUMBER]: 'Exporter UK telephone number (optional)',

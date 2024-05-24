@@ -394,7 +394,8 @@ var EXPORTER_BUSINESS = {
     PHONE_NUMBER: "phoneNumber"
   },
   ALTERNATIVE_TRADING_ADDRESS: {
-    FULL_ADDRESS: "fullAddress"
+    FULL_ADDRESS: "fullAddress",
+    FULL_ADDRESS_DOT_NOTATION: "alternativeTrading.fullAddress"
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: "goodsOrServicesSupplied",
@@ -797,12 +798,11 @@ var TITLE_INDEXES = () => ({
 var INDEXES = () => ({
   TITLES: TITLE_INDEXES(),
   COMPANY_ADDRESS: 33,
-  COMPANY_SIC_CODES: 44,
-  BUYER_ADDRESS: 64
+  COMPANY_SIC_CODES: 34,
+  BUYER_ADDRESS: 59
 });
 var incrementIndexes = (indexes) => {
   const modified = indexes;
-  modified.COMPANY_SIC_CODES += 1;
   modified.BROKER_ADDRESS += 1;
   modified.BUYER_ADDRESS += 1;
   modified.TITLES.POLICY += 1;
@@ -834,24 +834,24 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isMultiplePolicyType(policyType)) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
-    indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+    indexes.BUYER_ADDRESS += 3;
     indexes.BROKER_ADDRESS = 48;
   }
   if (hasDifferentTradingAddress) {
-    indexes.ALTERNATIVE_TRADING_ADDRESS = 36;
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
     indexes = incrementIndexes(indexes);
   }
   if (hasDifferentTradingName) {
     indexes = incrementIndexes(indexes);
   }
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
-    indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
   return indexes;
 };
@@ -5559,7 +5559,7 @@ var {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
-    ALTERNATIVE_TRADING_ADDRESS: ALTERNATIVE_TRADING_ADDRESS2,
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
     HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2
   },
   POLICY: {
@@ -5606,7 +5606,7 @@ var XLSX = {
     [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
     [DIFFERENT_TRADING_NAME]: "Alternative trading name",
     [TRADING_ADDRESS2]: "Different trading address?",
-    [ALTERNATIVE_TRADING_ADDRESS2.FULL_ADDRESS]: "Alternative trading address",
+    [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
     [MORE_THAN_250K.VALUE]: `Insured for more than ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
     [WEBSITE2]: "Exporter Company website (optional)",
     [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
@@ -5836,7 +5836,7 @@ var {
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2, PHONE_NUMBER: PHONE_NUMBER3, TRADING_ADDRESS: TRADING_ADDRESS3, WEBSITE: WEBSITE3 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
-    ALTERNATIVE_TRADING_ADDRESS: ALTERNATIVE_TRADING_ADDRESS3,
+    ALTERNATIVE_TRADING_ADDRESS: ALTERNATIVE_TRADING_ADDRESS2,
     HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3
   },
   POLICY: {
@@ -5873,11 +5873,12 @@ var mapExporterBusiness = (application2) => {
     financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
   }
   const hasDifferentTradingName = company[HAS_DIFFERENT_TRADING_NAME3];
-  const hasDifferentTradingAddress = differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS];
+  const hasDifferentTradingAddress = differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS2.FULL_ADDRESS];
   let mapped = [
     xlsx_row_default(SECTION_TITLES.EXPORTER_BUSINESS, ""),
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(FIELDS5[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(FIELDS5[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
     xlsx_row_default(FIELDS5[HAS_DIFFERENT_TRADING_NAME3], map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME3]))
   ];
   if (hasDifferentTradingName) {
@@ -5885,7 +5886,7 @@ var mapExporterBusiness = (application2) => {
   }
   mapped.push(xlsx_row_default(FIELDS5[TRADING_ADDRESS3], map_yes_no_field_default(company[TRADING_ADDRESS3])));
   if (hasDifferentTradingAddress) {
-    mapped.push(xlsx_row_default(FIELDS5[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS], differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS3.FULL_ADDRESS]));
+    mapped.push(xlsx_row_default(FIELDS5[ALTERNATIVE_TRADING_ADDRESS2.FULL_ADDRESS_DOT_NOTATION], differentTradingAddress[ALTERNATIVE_TRADING_ADDRESS2.FULL_ADDRESS]));
   }
   mapped = [
     ...mapped,
@@ -5894,11 +5895,10 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(FIELDS5[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
     xlsx_row_default(FIELDS5[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
     xlsx_row_default(FIELDS5[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
     xlsx_row_default(FIELDS5[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     xlsx_row_default(FIELDS5[HAS_CREDIT_CONTROL3], map_yes_no_field_default(business[HAS_CREDIT_CONTROL3])),
-    xlsx_row_default(FIELDS5[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
     ...mapBroker(application2)
   ];
   return mapped;
