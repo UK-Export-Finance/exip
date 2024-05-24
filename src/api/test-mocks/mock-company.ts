@@ -19,7 +19,6 @@ const mockCompany = {
   financialYearEndDate: new Date(),
   sicCodes: ['68201'],
   industrySectorNames: [],
-  differentTradingAddress: {},
 } as ApplicationCompanyCore;
 
 const mockCompanyDifferentTradingAddress = {
