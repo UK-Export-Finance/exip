@@ -23,7 +23,10 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - isUsingAgent: Should submit "yes" to "using an agent" form.
  * - agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * - agentChargeMethodFixedSum: Agent charge method is "fixed sum"
- * - agentChargeMethodPercentage: Agent charge method is "percentage"
+ * - hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
+ * - fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
+ * - hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
+ * - exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
@@ -44,7 +47,10 @@ const completeSignInAndSubmitAnApplication = ({
   agentIsCharging = false,
   agentChargeMethodFixedSum = false,
   agentChargeMethodPercentage = false,
-  agentChargeMethod,
+  hasConnectionToBuyer = false,
+  fullyPopulatedBuyerTradingHistory = false,
+  hasHadCreditInsuranceCover = false,
+  exporterHasBuyerFinancialAccounts = false,
 }) => {
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
@@ -64,7 +70,10 @@ const completeSignInAndSubmitAnApplication = ({
         agentIsCharging,
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
-        agentChargeMethod,
+        hasConnectionToBuyer,
+        fullyPopulatedBuyerTradingHistory,
+        hasHadCreditInsuranceCover,
+        exporterHasBuyerFinancialAccounts,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
@@ -82,7 +91,10 @@ const completeSignInAndSubmitAnApplication = ({
         isUsingAgent,
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
-        agentChargeMethod,
+        hasConnectionToBuyer,
+        fullyPopulatedBuyerTradingHistory,
+        hasHadCreditInsuranceCover,
+        exporterHasBuyerFinancialAccounts,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();
