@@ -1,14 +1,15 @@
-import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
+import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
 import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
-import mapExporterAddress from './map-address';
+import mapBroker from './map-broker';
+import mapExporterAddress from './map-exporter-address';
+import mapSicCodes from './map-sic-codes';
 import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
 import mapYesNoField from '../helpers/map-yes-no-field';
-import NEW_LINE from '../helpers/xlsx-new-line';
-import { Application, ApplicationCompanySicCode } from '../../../types';
+import { Application } from '../../../types';
 
 const { FIELDS, SECTION_TITLES } = XLSX;
 
@@ -20,60 +21,13 @@ const CONTENT_STRINGS = {
 };
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
-    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-    ALTERNATIVE_TRADING_ADDRESS,
-    HAS_CREDIT_CONTROL,
-  },
-  POLICY: {
-    USING_BROKER,
-    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
-  },
-} = INSURANCE_FIELD_IDS;
-
-/**
- * mapSicCodes
- * Map an application's array of company SIC codes into a single string
- * @param {Array} Application company SIC codes
- * @returns {String} String of company SIC codes for XLSX generation
- */
-export const mapSicCodes = (sicCodes: Array<ApplicationCompanySicCode>) => {
-  let mapped = '';
-
-  sicCodes.forEach((sicCodeObj) => {
-    const { sicCode, industrySectorName } = sicCodeObj;
-
-    mapped += `${sicCode} - ${industrySectorName}${NEW_LINE}`;
-  });
-
-  return mapped;
-};
-
-/**
- * mapBroker
- * Map an application's broker fields into an array of objects for XLSX generation
- * @param {Application}
- * @returns {Array} Array of objects for XLSX generation
- */
-export const mapBroker = (application: Application) => {
-  const { broker } = application;
-
-  let mapped = [xlsxRow(FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
-
-  if (broker[USING_BROKER]) {
-    mapped = [
-      ...mapped,
-      xlsxRow(FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-      xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
-      xlsxRow(FIELDS[EMAIL], broker[EMAIL]),
-    ];
-  }
-
-  return mapped;
-};
+  COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  ALTERNATIVE_TRADING_ADDRESS,
+  HAS_CREDIT_CONTROL,
+} = FIELD_IDS;
 
 /**
  * mapExporterBusiness
@@ -91,7 +45,7 @@ const mapExporterBusiness = (application: Application) => {
    */
 
   // TODO: constant
-  let financialYearEndDate = 'No data from Companies House';
+  let financialYearEndDate = FIELDS.NO_FINANCIAL_YEAR_END_DATE;
 
   if (company[FINANCIAL_YEAR_END_DATE]) {
     financialYearEndDate = formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM');

@@ -1,13 +1,14 @@
-import mapExporter, { mapSicCodes, mapBroker } from '.';
-import INSURANCE_FIELD_IDS from '../../../constants/field-ids/insurance';
+import mapExporterBusiness from '.';
+import FIELD_IDS from '../../../constants/field-ids/insurance/business';
 import { XLSX } from '../../../content-strings';
 import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
-import mapExporterAddress from './map-address';
+import mapBroker from './map-broker';
+import mapExporterAddress from './map-exporter-address';
+import mapSicCodes from './map-sic-codes';
 import formatDate from '../../../helpers/format-date';
 import formatCurrency from '../helpers/format-currency';
-import NEW_LINE from '../helpers/xlsx-new-line';
 import { mockApplication } from '../../../test-mocks';
 import mapYesNoField from '../helpers/map-yes-no-field';
 
@@ -22,19 +23,12 @@ const CONTENT_STRINGS = {
 };
 
 const {
-  EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
-    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
-    // ALTERNATIVE_TRADING_ADDRESS: { ALTERNATIVE_TRADING_FULL_ADDRESS },
-    HAS_CREDIT_CONTROL,
-  },
-  POLICY: {
-    USING_BROKER,
-    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
-  },
-} = INSURANCE_FIELD_IDS;
+  COMPANIES_HOUSE: { COMPANY_ADDRESS, COMPANY_INCORPORATED, COMPANY_SIC, FINANCIAL_YEAR_END_DATE },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
+  HAS_CREDIT_CONTROL,
+} = FIELD_IDS;
 
 const expectedMapExporterArray = (company, companySicCodes, business, financialYearEndDateValue) => [
   xlsxRow(SECTION_TITLES.EXPORTER_BUSINESS, ''),
@@ -62,92 +56,33 @@ const expectedMapExporterArray = (company, companySicCodes, business, financialY
 ];
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () => {
-  describe('mapSicCodes', () => {
-    it('should return a string of SIC codes', () => {
-      const sicCodes = mockApplication.companySicCodes;
+  it('should return an array of mapped exporter fields', () => {
+    const result = mapExporterBusiness(mockApplication);
 
-      const result = mapSicCodes(sicCodes);
+    const { company, companySicCodes, business } = mockApplication;
 
-      const [first, last] = sicCodes;
+    const financialYearEndDate = formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM');
 
-      const expectedFirst = `${first.sicCode} - ${first.industrySectorName}${NEW_LINE}`;
+    const expected = expectedMapExporterArray(company, companySicCodes, business, financialYearEndDate);
 
-      const expectedLast = `${last.sicCode} - ${last.industrySectorName}${NEW_LINE}`;
-
-      const expected = `${expectedFirst}${expectedLast}`;
-
-      expect(result).toEqual(expected);
-    });
+    expect(result).toEqual(expected);
   });
 
-  describe('mapBroker', () => {
-    describe(`when ${USING_BROKER} is true`, () => {
-      it('should return an array of mapped exporter fields', () => {
-        const result = mapBroker(mockApplication);
+  describe('when financial year end date does not exist', () => {
+    it('should return an array of mapped exporter fields with financialYearEndDate as an empty string', () => {
+      const noFinancialYearEndDateApplication = mockApplication;
 
-        const { broker } = mockApplication;
+      noFinancialYearEndDateApplication.company[FINANCIAL_YEAR_END_DATE] = null;
 
-        const expected = [
-          xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER])),
-          xlsxRow(XLSX.FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-          xlsxRow(XLSX.FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
-          xlsxRow(XLSX.FIELDS[EMAIL], broker[EMAIL]),
-        ];
+      const result = mapExporterBusiness(noFinancialYearEndDateApplication);
 
-        expect(result).toEqual(expected);
-      });
-    });
+      const { company, companySicCodes, business } = noFinancialYearEndDateApplication;
 
-    describe(`when ${USING_BROKER} is false`, () => {
-      it('should return an array of mapped exporter fields', () => {
-        const mockApplicationNoBroker = {
-          ...mockApplication,
-          broker: {
-            ...mockApplication.broker,
-            [USING_BROKER]: false,
-          },
-        };
-
-        const result = mapBroker(mockApplicationNoBroker);
-
-        const { broker } = mockApplicationNoBroker;
-
-        const expected = [xlsxRow(XLSX.FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
-  describe('mapExporter', () => {
-    it('should return an array of mapped exporter fields', () => {
-      const result = mapExporter(mockApplication);
-
-      const { company, companySicCodes, business } = mockApplication;
-
-      const financialYearEndDate = formatDate(company[FINANCIAL_YEAR_END_DATE], 'd MMMM');
+      const financialYearEndDate = FIELDS.NO_FINANCIAL_YEAR_END_DATE;
 
       const expected = expectedMapExporterArray(company, companySicCodes, business, financialYearEndDate);
 
       expect(result).toEqual(expected);
-    });
-
-    describe('when financial year end date does not exist', () => {
-      it('should return an array of mapped exporter fields with financialYearEndDate as an empty string', () => {
-        const noFinancialYearEndDateApplication = mockApplication;
-
-        noFinancialYearEndDateApplication.company[FINANCIAL_YEAR_END_DATE] = null;
-
-        const result = mapExporter(noFinancialYearEndDateApplication);
-
-        const { company, companySicCodes, business } = noFinancialYearEndDateApplication;
-
-        const financialYearEndDate = 'No data from Companies House';
-
-        const expected = expectedMapExporterArray(company, companySicCodes, business, financialYearEndDate);
-
-        expect(result).toEqual(expected);
-      });
     });
   });
 });

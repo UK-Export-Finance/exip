@@ -10,7 +10,7 @@ const {
   },
 } = FIELD_IDS;
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-exporter/map-address', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/map-exporter/map-exporter-address', () => {
   it('should return a string from address fields', () => {
     const address = mockCompany[COMPANY_ADDRESS];
 

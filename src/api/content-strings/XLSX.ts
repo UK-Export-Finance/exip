@@ -84,6 +84,7 @@ export const XLSX = {
     [BUYER_COMPANY_NAME]: 'Buyer company name',
     [BUYER_REGISTRATION_NUMBER]: 'Buyer registration number (optional)',
     [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
+    NO_FINANCIAL_YEAR_END_DATE: 'No data from Companies House',
   },
 };
 
