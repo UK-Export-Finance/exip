@@ -4,12 +4,12 @@ import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import { Application } from '../../../../types';
 
-const { FIELDS } = XLSX;
-
 const {
   USING_BROKER,
   BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
 } = FIELD_IDS;
+
+const { FIELDS } = XLSX;
 
 /**
  * mapBroker

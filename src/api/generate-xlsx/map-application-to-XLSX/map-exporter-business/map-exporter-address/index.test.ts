@@ -10,7 +10,7 @@ const {
   },
 } = FIELD_IDS;
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-exporter/map-exporter-address', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-exporter-address', () => {
   it('should return a string from address fields', () => {
     const address = mockCompany[COMPANY_ADDRESS];
 
@@ -23,6 +23,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter/map-exporter-ad
     const postalCode = `${address[POSTAL_CODE]}${NEW_LINE}`;
 
     const expected = `${line1}${line2}${locality}${region}${postalCode}`;
+
     expect(result).toEqual(expected);
   });
 });

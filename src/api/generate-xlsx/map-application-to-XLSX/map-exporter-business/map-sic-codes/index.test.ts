@@ -2,7 +2,7 @@ import mapSicCodes from '.';
 import NEW_LINE from '../../helpers/xlsx-new-line';
 import { mockApplication } from '../../../../test-mocks';
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-sic-codes', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-sic-codes', () => {
   it('should return a string of SIC codes', () => {
     const sicCodes = mockApplication.companySicCodes;
 

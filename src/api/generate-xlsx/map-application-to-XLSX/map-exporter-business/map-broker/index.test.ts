@@ -5,14 +5,14 @@ import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import { mockApplication } from '../../../../test-mocks';
 
-const { FIELDS } = XLSX;
-
 const {
   USING_BROKER,
   BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL, FULL_ADDRESS },
 } = FIELD_IDS;
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-broker', () => {
+const { FIELDS } = XLSX;
+
+describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-broker', () => {
   describe(`when ${USING_BROKER} is true`, () => {
     it('should return an array of mapped exporter fields', () => {
       const result = mapBroker(mockApplication);
