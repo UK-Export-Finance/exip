@@ -1,6 +1,6 @@
-import { APPLICATION } from '../../../../../../constants';
+import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Multiple policy type, fully populated buyer', () => {
+context('Insurance - submit an application - Multiple policy type, exporter has connection with buyer, has traded with buyer before', () => {
   let referenceNumber;
 
   before(() => {
@@ -9,9 +9,6 @@ context('Insurance - submit an application - Multiple policy type, fully populat
       hasConnectionToBuyer: true,
       exporterHasTradedWithBuyer: true,
       fullyPopulatedBuyerTradingHistory: true,
-      hasHadCreditInsuranceCover: true,
-      exporterHasBuyerFinancialAccounts: true,
-      totalContractValueOverThreshold: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
