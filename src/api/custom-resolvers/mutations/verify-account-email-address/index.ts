@@ -60,6 +60,10 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
       isVerified: true,
     } as AccountStatusCore;
 
+    /**
+     * if isInactive is true
+     * then set isInactive flag to false
+     */
     if (isInactive) {
       statusUpdate.isInactive = false;
     }
