@@ -145,7 +145,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
       expect(result).toEqual(expected);
     });
 
-    describe('when the verificationExpiry is after now', () => {
+    describe('when isInactive is true', () => {
       beforeEach(async () => {
         jest.resetAllMocks();
 
@@ -154,12 +154,11 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
         const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
 
-        await context.query.Account.updateOne({
-          where: { id: account.id },
-          data: {
-            verificationExpiry: oneMinuteInThePast,
-          },
-        });
+        await accounts.update(context, account.id, { verificationExpiry: oneMinuteInThePast });
+        account = await accounts.get(context, account.id);
+
+        await accountStatusHelper.update(context, account.status.id, { isInactive: true });
+        account = await accounts.get(context, account.id);
       });
 
       test('it should NOT call confirmEmailAddressEmail.send', async () => {

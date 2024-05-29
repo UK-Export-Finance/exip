@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 import verifyAccountEmailAddress from '.';
-import { ACCOUNT, FIELD_IDS, DATE_ONE_MINUTE_IN_THE_PAST } from '../../../constants';
+import { ACCOUNT, FIELD_IDS } from '../../../constants';
 import encryptPassword from '../../../helpers/encrypt-password';
 import accounts from '../../../test-helpers/accounts';
 import accountStatusHelper from '../../../test-helpers/account-status';
@@ -47,6 +47,7 @@ describe('custom-resolvers/verify-account-email-address', () => {
   beforeEach(async () => {
     await authRetries.deleteAll(context);
     await accounts.deleteAll(context);
+    await accountStatusHelper.deleteAll(context);
 
     /**
      * Create an account that:
@@ -108,30 +109,35 @@ describe('custom-resolvers/verify-account-email-address', () => {
     expect(retries.length).toEqual(0);
   });
 
-  describe(`when the ${VERIFICATION_EXPIRY} has expired`, () => {
-    test('it should return success=false and expired=true', async () => {
-      const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
-
-      const accountVerificationExpired = {
+  describe(`when isInactive is true`, () => {
+    test('it should return success=true with accountId and emailRecipient', async () => {
+      const accountInactive = {
         ...mockAccountUpdate,
         verificationHash,
-        [VERIFICATION_EXPIRY]: oneMinuteInThePast,
       };
 
-      account = await accounts.create({ context, data: accountVerificationExpired });
-      await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: false });
+      account = await accounts.create({ context, data: accountInactive });
+      await accountStatusHelper.update(context, account.status.id, { [IS_VERIFIED]: false, isInactive: true });
+
       // get updated account
       account = await accounts.get(context, account.id);
 
       result = await verifyAccountEmailAddress({}, variables, context);
 
       const expected = {
-        success: false,
-        expired: true,
+        success: true,
         accountId: account.id,
+        emailRecipient: account[EMAIL],
       };
 
       expect(result).toEqual(expected);
+    });
+
+    test('should update the account status isInactive to be false', async () => {
+      // get updated account
+      account = await accounts.get(context, account.id);
+
+      expect(account.status.isInactive).toEqual(false);
     });
   });
 

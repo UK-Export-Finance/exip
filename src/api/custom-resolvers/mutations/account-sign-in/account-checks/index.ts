@@ -1,4 +1,3 @@
-import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../../../../constants';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generateOTPAndUpdateAccount from '../../../../helpers/generate-otp-and-update-account';
@@ -35,15 +34,12 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
     console.info('Signing in account - checking account');
 
     const { id: accountId, email } = account;
+    const { isInactive } = account.status;
 
     if (!account.status.isVerified) {
       console.info('Unable to sign in account - account has not been verified yet');
 
-      const now = new Date();
-
-      const verificationHasExpired = isAfter(now, account.verificationExpiry);
-
-      if (account.verificationHash && !verificationHasExpired) {
+      if (account.verificationHash && !isInactive) {
         console.info('Account has an unexpired verification token - resetting verification expiry');
 
         const accountUpdate = {

@@ -1,10 +1,9 @@
-import { isBefore } from 'date-fns';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import update from '../../../helpers/update-account';
-import { Account, Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
+import { Account, AccountStatusCore, Context, VerifyEmailAddressVariables, VerifyEmailAddressResponse } from '../../../types';
 
-const { ID, EMAIL, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
+const { ID, EMAIL } = ACCOUNT_FIELD_IDS;
 
 /**
  * verifyAccountEmailAddress
@@ -44,24 +43,7 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
     }
 
     const { id } = account;
-    const { id: statusId } = account.status;
-
-    /**
-     * Check if the verification period has expired.
-     * If so, return success=false, expired=true
-     */
-    const now = new Date();
-    const canActivateAccount = isBefore(now, account[VERIFICATION_EXPIRY]);
-
-    if (!canActivateAccount) {
-      console.info('Unable to verify account email address - verification period has expired');
-
-      return {
-        expired: true,
-        success: false,
-        accountId: id,
-      };
-    }
+    const { id: statusId, isInactive } = account.status;
 
     /**
      * Mark the account as verified and
@@ -76,7 +58,11 @@ const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddres
 
     const statusUpdate = {
       isVerified: true,
-    };
+    } as AccountStatusCore;
+
+    if (isInactive) {
+      statusUpdate.isInactive = false;
+    }
 
     await update.account(context, id, accountUpdate);
     await update.accountStatus(context, statusId, statusUpdate);
