@@ -11,6 +11,8 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form. Defaults to false.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
  * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
+ * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer
+ * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
@@ -35,6 +37,8 @@ const completePrepareApplicationSinglePolicyType = ({
   hasCreditControlProcess = false,
   hasConnectionToBuyer,
   exporterHasTradedWithBuyer,
+  buyerOutstandingPayments = false,
+  buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory,
   hasHadCreditInsuranceCover,
   exporterHasBuyerFinancialAccounts,
@@ -63,6 +67,8 @@ const completePrepareApplicationSinglePolicyType = ({
   cy.completeBuyerSection({
     hasConnectionToBuyer,
     exporterHasTradedWithBuyer,
+    outstandingPayments: buyerOutstandingPayments,
+    failedToPay: buyerFailedToPayOnTime,
     fullyPopulatedBuyerTradingHistory,
     hasHadCreditInsuranceCover,
     exporterHasBuyerFinancialAccounts,

@@ -1,14 +1,11 @@
-context('Insurance - submit an application - Single policy type, fully populated buyer', () => {
+context('Insurance - submit an application - Single policy type, exporter has traded with buyer, has outstanding payments, not failed to pay on time', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      hasConnectionToBuyer: true,
       exporterHasTradedWithBuyer: true,
-      fullyPopulatedBuyerTradingHistory: true,
-      hasHadCreditInsuranceCover: true,
-      exporterHasBuyerFinancialAccounts: true,
-      totalContractValueOverThreshold: true,
+      buyerOutstandingPayments: true,
+      buyerFailedToPayOnTime: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

@@ -4,6 +4,8 @@
  * @param {Boolean} viaTaskList: Start the "buyer" section from the task list.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio. Defaults to "no".
  * @param {Boolean} exporterHasTradedWithBuyer: Submit "yes" to "have traded with buyer before" in the "working with buyer" form.
+ * @param {Boolean} outstandingPayments: Exporter has outstanding payments with the buyer
+ * @param {Boolean} failedToPay: Buyer has failed to pay the exporter on the time
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past"
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Submit "yes" to "have traded with buyer before" in the "working with buyer" form.
@@ -14,6 +16,8 @@ const completeBuyerSection = ({
   viaTaskList = true,
   hasConnectionToBuyer = false,
   exporterHasTradedWithBuyer = false,
+  outstandingPayments = false,
+  failedToPay = false,
   fullyPopulatedBuyerTradingHistory = false,
   hasHadCreditInsuranceCover = false,
   exporterHasBuyerFinancialAccounts = false,
@@ -28,8 +32,8 @@ const completeBuyerSection = ({
 
   if (exporterHasTradedWithBuyer) {
     cy.completeAndSubmitTradingHistoryWithBuyerForm({
-      outstandingPayments: fullyPopulatedBuyerTradingHistory,
-      failedToPay: fullyPopulatedBuyerTradingHistory,
+      outstandingPayments: outstandingPayments || fullyPopulatedBuyerTradingHistory,
+      failedToPay: failedToPay || fullyPopulatedBuyerTradingHistory,
     });
   }
 

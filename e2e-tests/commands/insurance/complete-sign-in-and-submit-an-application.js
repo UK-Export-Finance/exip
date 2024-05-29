@@ -24,6 +24,8 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * - agentChargeMethodFixedSum: Agent charge method is "fixed sum"
  * - hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
+ * - buyerOutstandingPayments: Exporter has outstanding payments with the buyer
+ * - buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * - fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * - hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * - exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
@@ -48,6 +50,8 @@ const completeSignInAndSubmitAnApplication = ({
   agentChargeMethodFixedSum = false,
   agentChargeMethodPercentage = false,
   hasConnectionToBuyer = false,
+  buyerOutstandingPayments = false,
+  buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory = false,
   hasHadCreditInsuranceCover = false,
   exporterHasBuyerFinancialAccounts = false,
@@ -71,6 +75,8 @@ const completeSignInAndSubmitAnApplication = ({
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
         hasConnectionToBuyer,
+        buyerOutstandingPayments,
+        buyerFailedToPayOnTime,
         fullyPopulatedBuyerTradingHistory,
         hasHadCreditInsuranceCover,
         exporterHasBuyerFinancialAccounts,
@@ -92,6 +98,8 @@ const completeSignInAndSubmitAnApplication = ({
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
         hasConnectionToBuyer,
+        buyerOutstandingPayments,
+        buyerFailedToPayOnTime,
         fullyPopulatedBuyerTradingHistory,
         hasHadCreditInsuranceCover,
         exporterHasBuyerFinancialAccounts,

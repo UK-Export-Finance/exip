@@ -16,7 +16,15 @@ export interface BuyerTradingHistory extends Relationship {
   currencyCode?: string;
   exporterHasTradedWithBuyer?: boolean;
   failedPayments?: boolean;
-  outstandingPayment?: boolean;
+  outstandingPayments?: boolean;
+}
+
+export interface ApplicationBuyerRelationship extends Relationship {
+  exporterIsConnectedWithBuyer?: boolean;
+  connectionWithBuyerDescription?: string;
+  exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
+  exporterHasBuyerFinancialAccounts?: boolean;
+  previousCreditInsuranceWithBuyerDescription?: string;
 }
 
 export interface ApplicationBuyer extends Relationship {
@@ -30,8 +38,8 @@ export interface ApplicationBuyer extends Relationship {
   contactPosition?: string;
   contactEmail?: string;
   canContactBuyer?: boolean;
-  exporterIsConnectedWithBuyer?: boolean;
   buyerTradingHistory: BuyerTradingHistory;
+  relationship: ApplicationBuyerRelationship;
 }
 
 export interface ApplicationCompanyAddressCore {

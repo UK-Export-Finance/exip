@@ -20,9 +20,19 @@ const {
  * @returns {XLSXRowIndexes}
  */
 
+// TODO - updates
+// - 3 extra fields regardless
+// - if connected with buyer, +1 row
+// - if traded with buyer, +4 rows
+// - if has previous credit insurance cover with buyer, +1 row
+
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const {
     broker,
+    buyer: {
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
+    },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName,
@@ -44,7 +54,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.DECLARATIONS += 6;
     indexes.BUYER_ADDRESS += 3;
 
     indexes.BROKER_ADDRESS = 48;
@@ -53,6 +63,8 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
 
+    // TODO: after other sections are complete, rename incrementIndexes?
+    // incrementIndexes is only applicable to certain fields/sections.
     indexes = incrementIndexes(indexes);
   }
 
@@ -62,6 +74,22 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
+  }
+
+  if (exporterIsConnectedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+
+  if (exporterHasTradedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 2;
+
+    if (buyerHasOutstandingPayments) {
+      indexes.TITLES.DECLARATIONS += 2;
+    }
+  }
+
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
   }
 
   return indexes;

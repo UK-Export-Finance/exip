@@ -46,7 +46,7 @@ describe('api/helpers/get-populated-application', () => {
 
     expect(result.business.id).toEqual(application.business.id);
     expect(result.broker.id).toEqual(application.broker.id);
-    expect(result.buyer.id).toEqual(application.buyer.id);
+    // expect(result.buyer.id).toEqual(application.buyer.id);
     expect(result.declaration.id).toEqual(application.declaration.id);
     expect(result.eligibility.id).toEqual(application.eligibility.id);
     expect(result.eligibility.coverPeriod.id).toEqual(application.eligibility.coverPeriodId);
@@ -59,13 +59,33 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.sectionReview.id).toEqual(application.sectionReview.id);
   });
 
-  it('should return an application with populated buyer country', async () => {
+  // it('should return an application with populated buyer country', async () => {
+  //   const result = await getPopulatedApplication(context, applicationIds);
+
+  //   const [expectedCountry] = mockCountries;
+
+  //   expect(result.buyer.country?.name).toEqual(expectedCountry.name);
+  //   expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
+  // });
+
+  // TODO:
+  // it('should return an application with populated eligibility', async () => {
+
+  // TODO: improve test coverage.
+  it('should return an application with populated buyer', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
     const [expectedCountry] = mockCountries;
 
+    expect(result.buyer.id).toEqual(application.buyer.id);
     expect(result.buyer.country?.name).toEqual(expectedCountry.name);
     expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
+
+    // expect(result.buyer.relationship.id).toEqual(application.buyer.relationship.buyer.id);
+    expect(result.buyer.exporterIsConnectedWithBuyer).toBeNull();
+
+    expect(result.buyer.buyerTradingHistory.id).toEqual(application.buyer.buyerTradingHistory.id);
+    expect(result.buyer.buyerTradingHistory.outstandingPayments).toBeNull();
   });
 
   it('should return an application with populated company', async () => {
