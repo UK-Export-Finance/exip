@@ -77,15 +77,15 @@ context(
          * so that we can mimic an application being inactive.
          */
         await api.updateAccountStatus(updatedAccount.status.id, updateAccountStatusObj);
+      });
 
+      it(`should redirect to ${signInUrl} and render success banner content`, () => {
         const { verificationHash } = updatedAccount;
 
         const verificationUrl = `${VERIFY_EMAIL}?token=${verificationHash}&id=${account.id}`;
 
         cy.navigateToUrl(`${baseUrl}${verificationUrl}`);
-      });
 
-      it(`should redirect to ${signInUrl} and render success banner content`, () => {
         cy.assertUrl(signInUrl);
 
         const { successBanner } = signInPage;
