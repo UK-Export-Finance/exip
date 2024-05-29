@@ -8,7 +8,6 @@ import { APPLICATION } from '../../../constants';
 
 const { STATUS } = APPLICATION;
 
-
 describe('custom-resolvers/create-an-abandoned-application', () => {
   let context: Context;
   let account: Account;

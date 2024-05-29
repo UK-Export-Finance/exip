@@ -3,7 +3,7 @@ import mapIntroduction from './map-introduction';
 import mapExporterContactDetails from './map-exporter-contact-details';
 import mapKeyInformation from './map-key-information';
 import mapPolicy from './map-policy';
-import mapExporter from './map-exporter';
+import mapExporterBusiness from './map-exporter-business';
 import mapBuyer from './map-buyer';
 import mapEligibility from './map-eligibility';
 import mapDeclarations from './map-declarations';
@@ -34,11 +34,11 @@ const mapApplicationToXLSX = (application: Application) => {
 
       ROW_SEPERATOR,
 
-      ...mapPolicy(application),
+      ...mapExporterBusiness(application),
 
       ROW_SEPERATOR,
 
-      ...mapExporter(application),
+      ...mapPolicy(application),
 
       ROW_SEPERATOR,
 

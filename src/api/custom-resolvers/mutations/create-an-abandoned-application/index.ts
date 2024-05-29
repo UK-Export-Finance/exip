@@ -24,7 +24,7 @@ const createAnAbandonedApplication = async (root: any, variables: CreateAnApplic
   // set status to abandoned
   abandonedApplicationVariables.status = STATUS.ABANDONED;
 
-  try{
+  try {
     // creates and returns application
     const createdApplication = await createAnApplicationHelper(root, abandonedApplicationVariables, context);
 
@@ -48,7 +48,7 @@ const createAnAbandonedApplication = async (root: any, variables: CreateAnApplic
 
     return {
       success: false,
-    }
+    };
   } catch (err) {
     console.error('Error creating an abandoned application %O', err);
 

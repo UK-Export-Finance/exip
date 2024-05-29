@@ -11,6 +11,7 @@ export interface XLSXTitleRowIndexes {
 
 export interface XLSXRowIndexes {
   TITLES: XLSXTitleRowIndexes;
+  ALTERNATIVE_TRADING_ADDRESS?: number;
   COMPANY_ADDRESS: number;
   COMPANY_SIC_CODES: number;
   BROKER_ADDRESS: number;

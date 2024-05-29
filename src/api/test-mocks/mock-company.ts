@@ -1,4 +1,6 @@
-import { ApplicationCompanyCore } from '../types';
+import { ApplicationCompany, ApplicationCompanyCore } from '../types';
+
+const mockId = 'claydon40148m8boyar9waen';
 
 const mockCompany = {
   companyName: 'Mock company',
@@ -18,5 +20,44 @@ const mockCompany = {
   sicCodes: ['68201'],
   industrySectorNames: [],
 } as ApplicationCompanyCore;
+
+const mockCompanyDifferentTradingAddress = {
+  ...mockCompany,
+  differentTradingAddress: {
+    id: mockId,
+    fullAddress: 'Mock address',
+  },
+};
+
+const mockCompanyNoDifferentTradingAddress = {
+  ...mockCompany,
+  differentTradingAddress: {
+    id: mockId,
+    fullAddress: '',
+  },
+};
+
+export const companyScenarios = {
+  differentTradingAddressAndName: {
+    ...mockCompany,
+    ...mockCompanyDifferentTradingAddress,
+    hasDifferentTradingName: true,
+  } as ApplicationCompany,
+  differentTradingAddressNoName: {
+    ...mockCompany,
+    ...mockCompanyDifferentTradingAddress,
+    hasDifferentTradingName: false,
+  } as ApplicationCompany,
+  differentTradingNameNoAddress: {
+    ...mockCompany,
+    hasDifferentTradingName: true,
+    ...mockCompanyNoDifferentTradingAddress,
+  } as ApplicationCompany,
+  noDifferentTradingNameOrAddress: {
+    ...mockCompany,
+    hasDifferentTradingName: false,
+    ...mockCompanyNoDifferentTradingAddress,
+  } as ApplicationCompany,
+};
 
 export default mockCompany;

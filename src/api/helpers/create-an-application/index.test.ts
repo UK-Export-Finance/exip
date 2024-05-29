@@ -9,7 +9,6 @@ import { Context, Account } from '../../types';
 
 const { STATUS, SUBMISSION_TYPE } = APPLICATION;
 
-
 describe('helpers/create-an-application', () => {
   let context: Context;
   let account: Account;

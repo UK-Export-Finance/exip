@@ -13,5 +13,4 @@ export const sanitise = (string?: string): string | undefined =>
    * // ABC
    * // CBA
    */
-  string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string
-;
+  string ? string.replace(/\\n|\\\n|\\\\n/g, '\n') : string;

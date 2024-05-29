@@ -8,7 +8,10 @@
  * @param {Boolean} withQuestionMark: Add a question mark to the expected text.
  */
 const assertCopyWithCurrencyName = ({
-  expectedCopy, currencyName, selector, withQuestionMark = false,
+  expectedCopy,
+  currencyName,
+  selector,
+  withQuestionMark = false,
 }) => {
   let expected = `${expectedCopy} ${currencyName}`;
 

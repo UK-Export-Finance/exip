@@ -389,10 +389,14 @@ var EXPORTER_BUSINESS = {
     YOUR_BUSINESS: "yourBusiness",
     TRADING_ADDRESS: "hasDifferentTradingAddress",
     HAS_DIFFERENT_TRADING_NAME: "hasDifferentTradingName",
+    DIFFERENT_TRADING_NAME: "differentTradingName",
     WEBSITE: "companyWebsite",
     PHONE_NUMBER: "phoneNumber"
   },
-  ALTERNATIVE_TRADING_ADDRESS: "alternativeTradingAddress",
+  ALTERNATIVE_TRADING_ADDRESS: {
+    FULL_ADDRESS: "fullAddress",
+    FULL_ADDRESS_DOT_NOTATION: "alternativeTrading.fullAddress"
+  },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: "goodsOrServicesSupplied",
     YEARS_EXPORTING: "totalYearsExporting",
@@ -780,6 +784,33 @@ var TOTAL_CONTRACT_VALUE = {
   AMOUNT_250K: 25e4
 };
 
+// constants/XLSX-CONFIG/INDEXES/index.ts
+var TITLE_INDEXES = () => ({
+  HEADER: 1,
+  EXPORTER_CONTACT_DETAILS: 10,
+  KEY_INFORMATION: 15,
+  ELIGIBILITY: 21,
+  EXPORTER_BUSINESS: 31,
+  POLICY: 48,
+  BUYER: 57,
+  DECLARATIONS: 65
+});
+var INDEXES = () => ({
+  TITLES: TITLE_INDEXES(),
+  COMPANY_ADDRESS: 33,
+  COMPANY_SIC_CODES: 34,
+  BUYER_ADDRESS: 59
+});
+var incrementIndexes = (indexes) => {
+  const modified = indexes;
+  modified.BROKER_ADDRESS += 1;
+  modified.BUYER_ADDRESS += 1;
+  modified.TITLES.POLICY += 1;
+  modified.TITLES.BUYER += 1;
+  modified.TITLES.DECLARATIONS += 1;
+  return modified;
+};
+
 // helpers/policy-type/index.ts
 var isSinglePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.SINGLE;
 var isMultiplePolicyType = (policyType) => policyType === FIELD_VALUES.POLICY_TYPE.MULTIPLE;
@@ -789,45 +820,38 @@ var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE2 },
   USING_BROKER
 } = POLICY;
-var TITLE_INDEXES = () => ({
-  HEADER: 1,
-  EXPORTER_CONTACT_DETAILS: 10,
-  KEY_INFORMATION: 15,
-  ELIGIBILITY: 21,
-  POLICY: 31,
-  EXPORTER_BUSINESS: 40,
-  BUYER: 58,
-  DECLARATIONS: 66
-});
-var INDEXES = () => ({
-  TITLES: TITLE_INDEXES(),
-  COMPANY_ADDRESS: 34,
-  COMPANY_SIC_CODES: 37,
-  BROKER_ADDRESS: 45,
-  BUYER_ADDRESS: 50,
-  BUYER_CONTACT_DETAILS: 53
-});
 var XLSX_ROW_INDEXES = (application2) => {
-  const { policy, broker } = application2;
+  const {
+    broker,
+    company: {
+      differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
+      hasDifferentTradingName
+    },
+    policy
+  } = application2;
   const policyType = policy[POLICY_TYPE2];
-  let isMultiplePolicy = false;
+  let indexes = INDEXES();
   if (isMultiplePolicyType(policyType)) {
-    isMultiplePolicy = true;
-  }
-  const indexes = INDEXES();
-  if (isMultiplePolicy) {
-    indexes.TITLES.EXPORTER_BUSINESS += 1;
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
-    indexes.COMPANY_ADDRESS += 1;
-    indexes.COMPANY_SIC_CODES += 1;
-    indexes.BROKER_ADDRESS += 1;
-    indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
   if (broker[USING_BROKER]) {
+    indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
+    indexes.BUYER_ADDRESS += 3;
+    indexes.BROKER_ADDRESS = 48;
+  }
+  if (hasDifferentTradingAddress) {
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
+    indexes = incrementIndexes(indexes);
+  }
+  if (hasDifferentTradingName) {
+    indexes = incrementIndexes(indexes);
+  }
+  if (hasDifferentTradingName && hasDifferentTradingAddress) {
+    indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
   return indexes;
 };
@@ -4798,9 +4822,19 @@ var getPopulatedApplication = async (context, application2) => {
   const companyAddress = await context.db.CompanyAddress.findOne({
     where: { id: company.registeredOfficeAddressId }
   });
+  if (!companyAddress) {
+    throw new Error(generateErrorMessage("companyAddress", application2.id));
+  }
+  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+    where: { id: company.differentTradingAddressId }
+  });
+  if (!differentTradingAddress) {
+    throw new Error(generateErrorMessage("differentTradingAddress", application2.id));
+  }
   const populatedCompany = {
     ...company,
-    registeredOfficeAddress: companyAddress
+    registeredOfficeAddress: companyAddress,
+    differentTradingAddress
   };
   const business = await context.db.Business.findOne({
     where: { id: businessId }
@@ -5521,10 +5555,12 @@ var {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
-    YOUR_COMPANY: { WEBSITE: WEBSITE2, PHONE_NUMBER: PHONE_NUMBER2 },
+    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
-    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 }
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
+    HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2
   },
   POLICY: {
     CONTRACT_POLICY: {
@@ -5563,13 +5599,17 @@ var XLSX = {
     [COVER_PERIOD2]: "Length of cover",
     [HAS_END_BUYER2]: "Is there an end buyer?",
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services",
+    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments",
     [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
-    [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
+    [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
+    [DIFFERENT_TRADING_NAME]: "Alternative trading name",
+    [TRADING_ADDRESS2]: "Different trading address?",
+    [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
     [MORE_THAN_250K.VALUE]: `Insured for more than ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
     [WEBSITE2]: "Exporter Company website (optional)",
-    [PHONE_NUMBER2]: "Exporter telephone number (optional)",
+    [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
     [YEARS_EXPORTING2]: "Exporter years exporting",
     [EMPLOYEES_UK2]: "Exporter UK Employees",
@@ -5581,7 +5621,8 @@ var XLSX = {
     [COUNTRY]: "Buyer location",
     [BUYER_COMPANY_NAME]: "Buyer company name",
     [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
-    [BUYER_CONTACT_DETAILS]: "Buyer contact details"
+    [BUYER_CONTACT_DETAILS]: "Buyer contact details",
+    NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House"
   }
 };
 
@@ -5643,7 +5684,7 @@ var CONTENT_STRINGS = {
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME }
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
@@ -5656,7 +5697,7 @@ var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
+    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME], application2.company[EXPORTER_COMPANY_NAME]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5])
@@ -5754,22 +5795,6 @@ var mapPolicy = (application2) => {
 };
 var map_policy_default = mapPolicy;
 
-// generate-xlsx/map-application-to-XLSX/helpers/xlsx-new-line/index.ts
-var NEW_LINE = "\r\n";
-var xlsx_new_line_default = NEW_LINE;
-
-// generate-xlsx/map-application-to-XLSX/map-exporter/map-address/index.ts
-var mapExporterAddress = (address) => {
-  let addressString = "";
-  Object.keys(address).forEach((field) => {
-    if (address[field] && field !== "id" && field !== "__typename") {
-      addressString += `${address[field]}${xlsx_new_line_default}`;
-    }
-  });
-  return addressString;
-};
-var map_address_default = mapExporterAddress;
-
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var mapYesNoField = (answer) => {
   if (answer === false) {
@@ -5782,25 +5807,83 @@ var mapYesNoField = (answer) => {
 };
 var map_yes_no_field_default = mapYesNoField;
 
-// generate-xlsx/map-application-to-XLSX/map-exporter/index.ts
-var CONTENT_STRINGS3 = {
-  ...FIELDS.COMPANY_DETAILS,
-  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
-  ...FIELDS.TURNOVER,
-  ...FIELDS.BROKER
-};
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-broker/index.ts
 var {
-  EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_NAME: COMPANY_NAME3, COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE3, PHONE_NUMBER: PHONE_NUMBER3 },
-    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
-    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 }
-  },
-  POLICY: {
-    USING_BROKER: USING_BROKER4,
-    BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+  USING_BROKER: USING_BROKER4,
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+} = POLICY;
+var { FIELDS: FIELDS5 } = XLSX;
+var mapBroker = (application2) => {
+  const { broker } = application2;
+  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
+  if (broker[USING_BROKER4]) {
+    mapped = [
+      ...mapped,
+      xlsx_row_default(FIELDS5[BROKER_NAME2], broker[BROKER_NAME2]),
+      xlsx_row_default(FIELDS5[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
+      xlsx_row_default(FIELDS5[EMAIL7], broker[EMAIL7])
+    ];
   }
-} = insurance_default;
+  return mapped;
+};
+var map_broker_default = mapBroker;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-name/index.ts
+var {
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 }
+} = business_default;
+var { FIELDS: FIELDS6 } = XLSX;
+var mapDifferentTradingName = (company) => {
+  if (company[HAS_DIFFERENT_TRADING_NAME3]) {
+    return xlsx_row_default(FIELDS6[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]);
+  }
+};
+var map_different_trading_name_default = mapDifferentTradingName;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-address/index.ts
+var {
+  ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS3, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
+} = business_default;
+var { FIELDS: FIELDS7 } = XLSX;
+var mapDifferentTradingAddress = (company) => {
+  const { differentTradingAddress } = company;
+  const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS3];
+  if (differentTradingAddressValue) {
+    return xlsx_row_default(FIELDS7[FULL_ADDRESS_DOT_NOTATION2], differentTradingAddressValue);
+  }
+};
+var map_different_trading_address_default = mapDifferentTradingAddress;
+
+// generate-xlsx/map-application-to-XLSX/helpers/xlsx-new-line/index.ts
+var NEW_LINE = "\r\n";
+var xlsx_new_line_default = NEW_LINE;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-exporter-address/index.ts
+var mapExporterAddress = (address) => {
+  let addressString = "";
+  Object.keys(address).forEach((field) => {
+    if (address[field] && field !== "id" && field !== "__typename") {
+      addressString += `${address[field]}${xlsx_new_line_default}`;
+    }
+  });
+  return addressString;
+};
+var map_exporter_address_default = mapExporterAddress;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-financial-year-end-date/index.ts
+var {
+  COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 }
+} = business_default;
+var { FIELDS: FIELDS8 } = XLSX;
+var mapFinancialYearEndDate = (company) => {
+  if (company[FINANCIAL_YEAR_END_DATE2]) {
+    return format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
+  }
+  return FIELDS8.NO_FINANCIAL_YEAR_END_DATE;
+};
+var map_financial_year_end_date_default = mapFinancialYearEndDate;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-sic-codes/index.ts
 var mapSicCodes2 = (sicCodes) => {
   let mapped = "";
   sicCodes.forEach((sicCodeObj) => {
@@ -5809,50 +5892,48 @@ var mapSicCodes2 = (sicCodes) => {
   });
   return mapped;
 };
-var mapBroker = (application2) => {
-  const { broker } = application2;
-  let mapped = [xlsx_row_default(XLSX.FIELDS[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
-  if (broker[USING_BROKER4]) {
-    mapped = [
-      ...mapped,
-      xlsx_row_default(XLSX.FIELDS[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(XLSX.FIELDS[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
-      xlsx_row_default(XLSX.FIELDS[EMAIL7], broker[EMAIL7])
-    ];
-  }
-  return mapped;
+var map_sic_codes_default2 = mapSicCodes2;
+
+// generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
+var { FIELDS: FIELDS9, SECTION_TITLES } = XLSX;
+var CONTENT_STRINGS3 = {
+  ...FIELDS.COMPANY_DETAILS,
+  ...FIELDS.NATURE_OF_YOUR_BUSINESS,
+  ...FIELDS.TURNOVER,
+  ...FIELDS.BROKER
 };
-var mapExporter = (application2) => {
-  const { company, companySicCodes, business } = application2;
-  let financialYearEndDate = "No data from Companies House";
-  if (company[FINANCIAL_YEAR_END_DATE2]) {
-    financialYearEndDate = format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
-  }
+var {
+  COMPANIES_HOUSE: { COMPANY_ADDRESS: COMPANY_ADDRESS2, COMPANY_INCORPORATED: COMPANY_INCORPORATED2, COMPANY_SIC: COMPANY_SIC2, FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE3 },
+  YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME4, TRADING_ADDRESS: TRADING_ADDRESS3, PHONE_NUMBER: PHONE_NUMBER3, WEBSITE: WEBSITE3 },
+  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES3, YEARS_EXPORTING: YEARS_EXPORTING3, EMPLOYEES_UK: EMPLOYEES_UK3 },
+  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER3, PERCENTAGE_TURNOVER: PERCENTAGE_TURNOVER2 },
+  HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL3
+} = business_default;
+var mapExporterBusiness = (application2) => {
+  const { business, company, companySicCodes } = application2;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.EXPORTER_BUSINESS, ""),
-    // company fields
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_NUMBER2].SUMMARY?.TITLE, company[COMPANY_NUMBER2]),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_NAME3], company[COMPANY_NAME3]),
+    xlsx_row_default(SECTION_TITLES.EXPORTER_BUSINESS, ""),
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_ADDRESS2], map_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(CONTENT_STRINGS3[HAS_DIFFERENT_TRADING_NAME2].SUMMARY?.TITLE, map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME2])),
-    xlsx_row_default(CONTENT_STRINGS3[TRADING_ADDRESS2].SUMMARY?.TITLE, map_yes_no_field_default(company[TRADING_ADDRESS2])),
-    xlsx_row_default(XLSX.FIELDS[COMPANY_SIC2], mapSicCodes2(companySicCodes)),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE2].SUMMARY?.TITLE, financialYearEndDate),
-    xlsx_row_default(XLSX.FIELDS[WEBSITE3], company[WEBSITE3]),
-    xlsx_row_default(XLSX.FIELDS[PHONE_NUMBER3], company[PHONE_NUMBER3]),
-    // business fields
-    xlsx_row_default(XLSX.FIELDS[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(XLSX.FIELDS[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
-    xlsx_row_default(XLSX.FIELDS[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(XLSX.FIELDS[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(FIELDS9[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(FIELDS9[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
+    xlsx_row_default(FIELDS9[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME4])),
+    map_different_trading_name_default(company),
+    xlsx_row_default(FIELDS9[TRADING_ADDRESS3], map_yes_no_field_default(company[TRADING_ADDRESS3])),
+    map_different_trading_address_default(company),
+    xlsx_row_default(FIELDS9[WEBSITE3], company[WEBSITE3]),
+    xlsx_row_default(FIELDS9[PHONE_NUMBER3], company[PHONE_NUMBER3]),
+    xlsx_row_default(FIELDS9[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(FIELDS9[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    xlsx_row_default(FIELDS9[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
+    xlsx_row_default(FIELDS9[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    // broker fields
-    ...mapBroker(application2)
+    xlsx_row_default(FIELDS9[HAS_CREDIT_CONTROL3], map_yes_no_field_default(business[HAS_CREDIT_CONTROL3])),
+    ...map_broker_default(application2)
   ];
   return mapped;
 };
-var map_exporter_default = mapExporter;
+var map_exporter_business_default = mapExporterBusiness;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
 var CONTENT_STRINGS4 = {
@@ -5881,7 +5962,7 @@ var map_buyer_default = mapBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
-var { FIELDS: FIELDS5, SECTION_TITLES } = XLSX;
+var { FIELDS: FIELDS10, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY3,
@@ -5898,15 +5979,15 @@ var {
 var mapEligibility = (application2) => {
   const { company, eligibility } = application2;
   const mapped = [
-    xlsx_row_default(SECTION_TITLES.ELIGIBILITY, ""),
+    xlsx_row_default(SECTION_TITLES2.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_COMPANIES_HOUSE_NUMBER2])),
-    xlsx_row_default(FIELDS5[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(FIELDS5[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(FIELDS5[MORE_THAN_250K2.VALUE], map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID)),
-    xlsx_row_default(FIELDS5[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(FIELDS5[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3])),
-    xlsx_row_default(FIELDS5[HAS_END_BUYER3], map_yes_no_field_default(eligibility[HAS_END_BUYER3]))
+    xlsx_row_default(FIELDS10[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(FIELDS10[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(FIELDS10[MORE_THAN_250K2.VALUE], map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID)),
+    xlsx_row_default(FIELDS10[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(FIELDS10[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3])),
+    xlsx_row_default(FIELDS10[HAS_END_BUYER3], map_yes_no_field_default(eligibility[HAS_END_BUYER3]))
   ];
   return mapped;
 };
@@ -5959,9 +6040,9 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_eligibility_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_default(application2),
+      ...map_exporter_business_default(application2),
       xlsx_row_seperator_default,
-      ...map_exporter_default(application2),
+      ...map_policy_default(application2),
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
@@ -6036,7 +6117,9 @@ var XLSX2 = (application2) => {
       worksheet.columns = header_columns_default;
       console.info("Generating XLSX file - adding rows to worksheet");
       xlsxData.forEach((row) => {
-        worksheet.addRow(row);
+        if (row) {
+          worksheet.addRow(row);
+        }
       });
       console.info("Generating XLSX file - adding custom styles to worksheet");
       worksheet = styled_columns_default(application2, worksheet);
@@ -7089,7 +7172,7 @@ var mapAddress = (address) => ({
   town: address.DPA.POST_TOWN,
   postalCode: address.DPA.POSTCODE
 });
-var map_address_default2 = mapAddress;
+var map_address_default = mapAddress;
 
 // helpers/map-and-filter-address/index.ts
 var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
@@ -7101,7 +7184,7 @@ var mapAndFilterAddress = (houseNameOrNumber, ordnanceSurveyResponse) => {
   }
   const mappedFilteredAddresses = [];
   filtered.forEach((address) => {
-    mappedFilteredAddresses.push(map_address_default2(address));
+    mappedFilteredAddresses.push(map_address_default(address));
   });
   return mappedFilteredAddresses;
 };
