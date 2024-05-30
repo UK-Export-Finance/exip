@@ -179,6 +179,28 @@ describe('api/helpers/get-populated-application - error handling', () => {
     }
   });
 
+  it('should throw an error when buyerRelationship does not exist', async () => {
+    const invalidId = applicationIds.id;
+
+    try {
+      await getPopulatedApplication(context, { ...applicationIds, buyerRelationship: invalidId });
+    } catch (err) {
+      const expected = new Error(generateErrorMessage('buyerRelationship', applicationIds.id));
+      expect(err).toEqual(expected);
+    }
+  });
+
+  it('should throw an error when buyerTradingHistory does not exist', async () => {
+    const invalidId = applicationIds.id;
+
+    try {
+      await getPopulatedApplication(context, { ...applicationIds, buyerTradingHistory: invalidId });
+    } catch (err) {
+      const expected = new Error(generateErrorMessage('buyerTradingHistory', applicationIds.id));
+      expect(err).toEqual(expected);
+    }
+  });
+
   it('should throw an error when buyer country does not exist', async () => {
     const invalidId = applicationIds.id;
 

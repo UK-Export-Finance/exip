@@ -17,6 +17,8 @@ export interface BuyerTradingHistory extends Relationship {
   exporterHasTradedWithBuyer?: boolean;
   failedPayments?: boolean;
   outstandingPayments?: boolean;
+  totalOutstandingPayments?: number;
+  totalOverduePayments?: number;
 }
 
 export interface ApplicationBuyerRelationship extends Relationship {

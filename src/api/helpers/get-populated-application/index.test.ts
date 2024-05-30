@@ -59,19 +59,6 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.sectionReview.id).toEqual(application.sectionReview.id);
   });
 
-  // it('should return an application with populated buyer country', async () => {
-  //   const result = await getPopulatedApplication(context, applicationIds);
-
-  //   const [expectedCountry] = mockCountries;
-
-  //   expect(result.buyer.country?.name).toEqual(expectedCountry.name);
-  //   expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
-  // });
-
-  // TODO:
-  // it('should return an application with populated eligibility', async () => {
-
-  // TODO: improve test coverage.
   it('should return an application with populated buyer', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
@@ -81,11 +68,11 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.buyer.country?.name).toEqual(expectedCountry.name);
     expect(result.buyer.country?.isoCode).toEqual(expectedCountry.isoCode);
 
-    // expect(result.buyer.relationship.id).toEqual(application.buyer.relationship.buyer.id);
-    expect(result.buyer.exporterIsConnectedWithBuyer).toBeNull();
-
-    expect(result.buyer.buyerTradingHistory.id).toEqual(application.buyer.buyerTradingHistory.id);
-    expect(result.buyer.buyerTradingHistory.outstandingPayments).toBeNull();
+    expect(result.buyer.relationship.exporterIsConnectedWithBuyer).toBeNull();
+    expect(result.buyer.relationship.connectionWithBuyerDescription).toEqual('');
+    expect(result.buyer.relationship.exporterHasPreviousCreditInsuranceWithBuyer).toBeNull();
+    expect(result.buyer.relationship.exporterHasBuyerFinancialAccounts).toBeNull();
+    expect(result.buyer.relationship.previousCreditInsuranceWithBuyerDescription).toEqual('');
   });
 
   it('should return an application with populated company', async () => {
