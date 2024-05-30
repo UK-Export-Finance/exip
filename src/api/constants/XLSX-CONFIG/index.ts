@@ -14,18 +14,15 @@ const {
  * Depending on the submitted application data, the rows can be different.
  * - If the policy type is multiple, the XLSX has 1 additional row.
  * - If "using a broker" is true, the XLSX has 3 additional rows.
- * - If "has different trading address" is true, the XLSX has 1 additional row.
- * - If "has different trading name" is true, the XLSX has 1 additional row.
- * - If "has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
+ * - If "exporter business section - has different trading address" is true, the XLSX has 1 additional row.
+ * - If "exporter business section - has different trading name" is true, the XLSX has 1 additional row.
+ * - If "exporter business section - has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
+ * - If "buyer section - is connected with buyer" is true, the XLSX has 1 additional row.
+ * - If "buyer section - traded with buyer before" is true, the XLSX has 4 additional rows.
+ * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
+ * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
  * @returns {XLSXRowIndexes}
  */
-
-// TODO - updates
-// - 3 extra fields regardless
-// - if connected with buyer, +1 row
-// - if traded with buyer, +4 rows
-// - if has previous credit insurance cover with buyer, +1 row
-
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const {
     broker,
@@ -63,8 +60,6 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
 
-    // TODO: after other sections are complete, rename incrementIndexes?
-    // incrementIndexes is only applicable to certain fields/sections.
     indexes = incrementIndexes(indexes);
   }
 

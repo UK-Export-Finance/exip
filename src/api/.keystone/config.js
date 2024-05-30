@@ -3007,6 +3007,7 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -6157,10 +6158,7 @@ var mapExporterBusiness = (application2) => {
 var map_exporter_business_default = mapExporterBusiness;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
-var {
-  CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3,
-  CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3
-} = your_buyer_default;
+var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
 var { FIELDS: FIELDS10 } = XLSX;
 var mapConnectionWithBuyer = (relationship2) => {
   if (relationship2[CONNECTION_WITH_BUYER3]) {
@@ -6172,11 +6170,7 @@ var map_connection_with_buyer_default = mapConnectionWithBuyer;
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-outstanding-payments/index.ts
 var {
   CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 },
-  YOUR_BUYER: {
-    OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3,
-    TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3,
-    TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2
-  }
+  YOUR_BUYER: { OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3, TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3, TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2 }
 } = insurance_default;
 var { FIELDS: FIELDS11 } = XLSX;
 var mapOutstandingPayments = (tradingHistory) => {
@@ -6212,10 +6206,7 @@ var mapBuyerTradingHistory = (tradingHistory) => {
 var map_buyer_trading_history_default = mapBuyerTradingHistory;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
-var {
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3,
-  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3
-} = your_buyer_default;
+var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
 var { FIELDS: FIELDS13 } = XLSX;
 var mapPreviousCoverWithBuyer = (relationship2) => {
   if (relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]) {
