@@ -1,21 +1,19 @@
 import { PAGES } from '../../../../../../../content-strings';
-import { signInPage } from '../../../../../../../pages/insurance/account/sign-in';
+import { verifyEmailLinkExpiredPage } from '../../../../../../../pages/insurance/account/create';
+import { body } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../commands/api';
 
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.SIGN_IN.ROOT;
+const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
 const {
   START,
   ACCOUNT: {
-    CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL },
-    SIGN_IN: { ROOT: SIGN_IN_ROOT },
+    CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK },
   },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
-
-const signInUrl = `${baseUrl}${SIGN_IN_ROOT}`;
 
 context(
   'Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF',
@@ -67,33 +65,32 @@ context(
         };
 
         updatedAccount = await api.updateAccount(account.id, updateObj);
-
-        const updateAccountStatusObj = {
-          isInactive: true,
-        };
-
-        /**
-         * Update the account status' isInactive via the API,
-         * so that we can mimic an application being inactive.
-         */
-        await api.updateAccountStatus(updatedAccount.status.id, updateAccountStatusObj);
       });
 
-      it(`should redirect to ${signInUrl} and render success banner content`, () => {
+      it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} and render core page elements and content`, () => {
         const { verificationHash } = updatedAccount;
 
         const verificationUrl = `${VERIFY_EMAIL}?token=${verificationHash}&id=${account.id}`;
 
         cy.navigateToUrl(`${baseUrl}${verificationUrl}`);
 
-        cy.assertUrl(signInUrl);
+        const expectedUrl = `${baseUrl}${VERIFY_EMAIL_EXPIRED_LINK}?id=${account.id}`;
 
-        const { successBanner } = signInPage;
+        cy.assertUrl(expectedUrl);
 
-        successBanner.container().should('exist');
+        cy.corePageChecks({
+          pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+          currentHref: verificationUrl,
+          backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
+          hasAForm: false,
+          assertAuthenticatedHeader: false,
+        });
 
-        cy.checkText(successBanner.heading(), CONTENT_STRINGS.SUCCESS_BANNER.HEADING);
-        cy.checkText(successBanner.continue(), CONTENT_STRINGS.SUCCESS_BANNER.SIGN_IN_TO_CONTINUE);
+        // assert body content
+        cy.checkText(body(), CONTENT_STRINGS.BODY);
+
+        // assert link to create an account
+        cy.checkLink(verifyEmailLinkExpiredPage.createAccount(), CONTENT_STRINGS.CREATE_ACCOUNT.HREF, CONTENT_STRINGS.CREATE_ACCOUNT.TEXT);
       });
     });
   },
