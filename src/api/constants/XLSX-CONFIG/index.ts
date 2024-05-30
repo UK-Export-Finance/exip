@@ -45,6 +45,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
 
+    indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
 
@@ -52,9 +53,9 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 6;
-    indexes.BUYER_ADDRESS += 3;
 
     indexes.BROKER_ADDRESS = 48;
+    indexes.BUYER_ADDRESS += 3;
   }
 
   if (hasDifferentTradingAddress) {
