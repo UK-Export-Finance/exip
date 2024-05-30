@@ -18,11 +18,11 @@ const { FIELDS } = XLSX;
 const mapBuyerTradingHistory = (tradingHistory: BuyerTradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER]) {
     const mapped = [
-      xlsxRow(String(FIELDS[OUTSTANDING_PAYMENTS]), mapYesNoField(tradingHistory[OUTSTANDING_PAYMENTS])),
+      xlsxRow(String(FIELDS[OUTSTANDING_PAYMENTS]), mapYesNoField({ answer: tradingHistory[OUTSTANDING_PAYMENTS] })),
 
       ...mapOutstandingPayments(tradingHistory),
 
-      xlsxRow(String(FIELDS[FAILED_PAYMENTS]), mapYesNoField(tradingHistory[FAILED_PAYMENTS])),
+      xlsxRow(String(FIELDS[FAILED_PAYMENTS]), mapYesNoField({ answer: tradingHistory[FAILED_PAYMENTS] })),
     ];
 
     return mapped;

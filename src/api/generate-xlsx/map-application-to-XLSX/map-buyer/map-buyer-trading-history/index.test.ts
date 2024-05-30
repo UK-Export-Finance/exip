@@ -21,11 +21,11 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer-trading-history', 
       const result = mapBuyerTradingHistory(mockTradingHistory);
 
       const expected = [
-        xlsxRow(String(FIELDS[OUTSTANDING_PAYMENTS]), mapYesNoField(mockTradingHistory[OUTSTANDING_PAYMENTS])),
+        xlsxRow(String(FIELDS[OUTSTANDING_PAYMENTS]), mapYesNoField({ answer: mockTradingHistory[OUTSTANDING_PAYMENTS] })),
 
         ...mapOutstandingPayments(mockTradingHistory),
 
-        xlsxRow(String(FIELDS[FAILED_PAYMENTS]), mapYesNoField(mockTradingHistory[FAILED_PAYMENTS])),
+        xlsxRow(String(FIELDS[FAILED_PAYMENTS]), mapYesNoField({ answer: mockTradingHistory[FAILED_PAYMENTS] })),
       ];
 
       expect(result).toEqual(expected);

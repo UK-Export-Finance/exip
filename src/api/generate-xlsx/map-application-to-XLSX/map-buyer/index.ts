@@ -1,3 +1,4 @@
+import { FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance/your-buyer';
 import { XLSX } from '../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
@@ -40,19 +41,25 @@ const mapBuyer = (application: Application) => {
     xlsxRow(String(CONTENT_STRINGS[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${NEW_LINE}${buyer[COUNTRY].name}`),
     xlsxRow(FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsxRow(String(CONTENT_STRINGS[WEBSITE].SUMMARY?.TITLE), buyer[WEBSITE]),
-    xlsxRow(String(FIELDS[CONNECTION_WITH_BUYER]), mapYesNoField(relationship[CONNECTION_WITH_BUYER])),
+    xlsxRow(String(FIELDS[CONNECTION_WITH_BUYER]), mapYesNoField({ answer: relationship[CONNECTION_WITH_BUYER] })),
 
     mapConnectionWithBuyer(relationship),
 
-    xlsxRow(String(FIELDS[TRADED_WITH_BUYER]), mapYesNoField(buyerTradingHistory[TRADED_WITH_BUYER])),
+    xlsxRow(String(FIELDS[TRADED_WITH_BUYER]), mapYesNoField({ answer: buyerTradingHistory[TRADED_WITH_BUYER] })),
 
     ...mapBuyerTradingHistory(buyerTradingHistory),
 
-    xlsxRow(String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), mapYesNoField(relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER], 'No')),
+    xlsxRow(
+      String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
+      mapYesNoField({
+        answer: relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+        defaultValue: FIELD_VALUES.NO,
+      }),
+    ),
 
     mapPreviousCoverWithBuyer(relationship),
 
-    xlsxRow(String(FIELDS[HAS_BUYER_FINANCIAL_ACCOUNTS]), mapYesNoField(relationship[HAS_BUYER_FINANCIAL_ACCOUNTS])),
+    xlsxRow(String(FIELDS[HAS_BUYER_FINANCIAL_ACCOUNTS]), mapYesNoField({ answer: relationship[HAS_BUYER_FINANCIAL_ACCOUNTS] })),
   ];
 
   return mapped;

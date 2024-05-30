@@ -6015,12 +6015,13 @@ var mapPolicy = (application2) => {
 var map_policy_default = mapPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
-var mapYesNoField = (answer, defaultValue) => {
+var { YES, NO } = FIELD_VALUES;
+var mapYesNoField = ({ answer, defaultValue }) => {
   if (answer === false) {
-    return "No";
+    return NO;
   }
   if (answer === true) {
-    return "Yes";
+    return YES;
   }
   if (defaultValue) {
     return defaultValue;
@@ -6037,7 +6038,7 @@ var {
 var { FIELDS: FIELDS5 } = XLSX;
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
+  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
   if (broker[USING_BROKER4]) {
     mapped = [
       ...mapped,
@@ -6138,9 +6139,9 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(FIELDS9[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(FIELDS9[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
-    xlsx_row_default(FIELDS9[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME4])),
+    xlsx_row_default(FIELDS9[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(FIELDS9[TRADING_ADDRESS3], map_yes_no_field_default(company[TRADING_ADDRESS3])),
+    xlsx_row_default(FIELDS9[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
     xlsx_row_default(FIELDS9[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(FIELDS9[PHONE_NUMBER3], company[PHONE_NUMBER3]),
@@ -6150,7 +6151,7 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
     xlsx_row_default(FIELDS9[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    xlsx_row_default(FIELDS9[HAS_CREDIT_CONTROL3], map_yes_no_field_default(business[HAS_CREDIT_CONTROL3])),
+    xlsx_row_default(FIELDS9[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] })),
     ...map_broker_default(application2)
   ];
   return mapped;
@@ -6195,9 +6196,9 @@ var { FIELDS: FIELDS12 } = XLSX;
 var mapBuyerTradingHistory = (tradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS12[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default(tradingHistory[OUTSTANDING_PAYMENTS4])),
+      xlsx_row_default(String(FIELDS12[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
       ...map_outstanding_payments_default(tradingHistory),
-      xlsx_row_default(String(FIELDS12[FAILED_PAYMENTS3]), map_yes_no_field_default(tradingHistory[FAILED_PAYMENTS3]))
+      xlsx_row_default(String(FIELDS12[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
     ];
     return mapped;
   }
@@ -6237,13 +6238,19 @@ var mapBuyer = (application2) => {
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(FIELDS14[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(String(FIELDS14[CONNECTION_WITH_BUYER4]), map_yes_no_field_default(relationship2[CONNECTION_WITH_BUYER4])),
+    xlsx_row_default(String(FIELDS14[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
     map_connection_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS14[TRADED_WITH_BUYER4]), map_yes_no_field_default(buyerTradingHistory[TRADED_WITH_BUYER4])),
+    xlsx_row_default(String(FIELDS14[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
-    xlsx_row_default(String(FIELDS14[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]), map_yes_no_field_default(relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4], "No")),
+    xlsx_row_default(
+      String(FIELDS14[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]),
+      map_yes_no_field_default({
+        answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4],
+        defaultValue: FIELD_VALUES.NO
+      })
+    ),
     map_previous_cover_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS14[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default(relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3]))
+    xlsx_row_default(String(FIELDS14[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;
 };
@@ -6269,14 +6276,14 @@ var mapEligibility = (application2) => {
   const { company, eligibility } = application2;
   const mapped = [
     xlsx_row_default(SECTION_TITLES3.ELIGIBILITY, ""),
-    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_COMPANIES_HOUSE_NUMBER2])),
+    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
+    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
     xlsx_row_default(FIELDS15[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
     xlsx_row_default(FIELDS15[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(FIELDS15[MORE_THAN_250K2.VALUE], map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID)),
+    xlsx_row_default(FIELDS15[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
     xlsx_row_default(FIELDS15[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(FIELDS15[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3])),
-    xlsx_row_default(FIELDS15[HAS_END_BUYER3], map_yes_no_field_default(eligibility[HAS_END_BUYER3]))
+    xlsx_row_default(FIELDS15[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(FIELDS15[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
   ];
   return mapped;
 };
@@ -6308,8 +6315,8 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(XLSX.SECTION_TITLES.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2])),
-    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2] })),
+    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2] })),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
@@ -6939,12 +6946,12 @@ var cannot_get_a_quote_default = cannotGetAQuote;
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
 var {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED }
+    SHORT_TERM_COVER_AVAILABLE: { YES: YES2, ILC, CILC, REFER, UNLISTED }
   }
 } = EXTERNAL_API_DEFINITIONS;
 var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
   switch (originalShortTermCover) {
-    case (riskCategory && YES):
+    case (riskCategory && YES2):
       return true;
     case (riskCategory && ILC):
       return true;
