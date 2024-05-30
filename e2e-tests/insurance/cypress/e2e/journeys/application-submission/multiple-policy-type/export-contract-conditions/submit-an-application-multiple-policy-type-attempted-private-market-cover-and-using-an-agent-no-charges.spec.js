@@ -1,13 +1,15 @@
-import { APPLICATION } from '../../../../../../constants';
+import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Single policy type, Loss payee - Financial details UK ', () => {
+context('Insurance - submit an application - Multiple policy type, attempted private market cover, using an agent, no agent charges', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      isAppointingLossPayee: true,
-      lossPayeeIsLocatedInUK: true,
+      totalContractValueOverThreshold: true,
+      attemptedPrivateMarketCover: true,
+      isUsingAgent: true,
+      agentIsCharging: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

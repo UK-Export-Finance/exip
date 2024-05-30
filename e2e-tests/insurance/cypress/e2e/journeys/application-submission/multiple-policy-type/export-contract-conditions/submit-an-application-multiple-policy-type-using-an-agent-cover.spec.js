@@ -1,13 +1,12 @@
-import { APPLICATION } from '../../../../../../constants';
+import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Multiple policy type, Loss payee - Financial details International ', () => {
+context('Insurance - submit an application - Multiple policy type, using an agent', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
       policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
-      isAppointingLossPayee: true,
-      lossPayeeIsLocatedInUK: false,
+      isUsingAgent: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

@@ -1,15 +1,15 @@
-import { APPLICATION } from '../../../../../../constants';
+import { APPLICATION } from '../../../../../../../constants';
 
 context(
-  'Insurance - submit an application - Single policy type with a different trading address and broker - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
+  'Insurance - submit an application - Multiple policy type, different trading name and address - As an Exporter, I want to submit my completed credit insurance application, So that UKEF can process and make a decision on my application',
   () => {
     let referenceNumber;
 
     before(() => {
       cy.completeSignInAndSubmitAnApplication({
         policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
+        differentTradingName: true,
         differentTradingAddress: true,
-        usingBroker: true,
       }).then((refNumber) => {
         referenceNumber = refNumber;
       });
