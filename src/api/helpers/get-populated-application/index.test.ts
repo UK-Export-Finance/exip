@@ -46,7 +46,6 @@ describe('api/helpers/get-populated-application', () => {
 
     expect(result.business.id).toEqual(application.business.id);
     expect(result.broker.id).toEqual(application.broker.id);
-    // expect(result.buyer.id).toEqual(application.buyer.id);
     expect(result.declaration.id).toEqual(application.declaration.id);
     expect(result.eligibility.id).toEqual(application.eligibility.id);
     expect(result.eligibility.coverPeriod.id).toEqual(application.eligibility.coverPeriodId);
