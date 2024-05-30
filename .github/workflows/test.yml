@@ -192,6 +192,14 @@ jobs:
       matrix:
         spec:
           [
+            "/*.spec.js",
+            "account/create/**/*.spec.js",
+            "account/manage/**/*.spec.js",
+            "account/password-reset/**/*.spec.js",
+            "account/reactivated/**/*.spec.js",
+            "account/sign-in/**/*.spec.js",
+            "account/sign-out/**/*.spec.js",
+            "account/suspended/**/*.spec.js",
             "application-submission/multiple-policy-type/*.spec.js",
             "application-submission/multiple-policy-type/business-conditions/*.spec.js",
             "application-submission/multiple-policy-type/buyer-conditions/*.spec.js",
