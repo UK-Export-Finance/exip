@@ -67,7 +67,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   });
 
   cy.completeBuyerSection({
-    alternativeBuyerCurrency,
+    alternativeCurrency: alternativeBuyerCurrency,
     hasConnectionToBuyer,
     exporterHasTradedWithBuyer,
     outstandingPayments: buyerOutstandingPayments,
