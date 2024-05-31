@@ -15,7 +15,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-yes-no-field', (
 
   describe('when value is "false"', () => {
     it(`should return "${NO}"`, () => {
-      const response = mapYesNoField({ answer: true });
+      const response = mapYesNoField({ answer: false });
 
       expect(response).toEqual(NO);
     });
