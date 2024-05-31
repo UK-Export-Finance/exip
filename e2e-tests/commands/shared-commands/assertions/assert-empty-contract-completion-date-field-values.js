@@ -8,7 +8,7 @@ const {
 } = FIELD_IDS;
 
 /**
- * assertEmptyRequestedStartDateFieldValues
+ * assertEmptyContractCompletionDateFieldValues
  * Assert all CONTRACT_COMPLETION_DATE field values are empty.
  */
 const assertEmptyContractCompletionDateFieldValues = () => {

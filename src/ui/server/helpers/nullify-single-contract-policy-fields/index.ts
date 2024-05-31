@@ -7,6 +7,11 @@ const {
   },
 } = FIELD_IDS;
 
+/**
+ * nullifySingleContractPolicyFields
+ * Create an object with empty "single contract policy" fields.
+ * @returns {ApplicationPolicy}
+ */
 const nullifySingleContractPolicyFields = (formBody: RequestBody) => ({
   ...formBody,
   [CONTRACT_COMPLETION_DATE]: null,

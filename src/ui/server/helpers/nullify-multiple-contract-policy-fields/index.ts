@@ -10,6 +10,11 @@ const {
   },
 } = FIELD_IDS;
 
+/**
+ * nullifyMultipleContractPolicyFields
+ * Create an object with empty "multiple contract policy" fields.
+ * @returns {ApplicationPolicy}
+ */
 const nullifyMultipleContractPolicyFields = (formBody: RequestBody) => ({
   ...formBody,
   [MAXIMUM_BUYER_WILL_OWE]: null,
