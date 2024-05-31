@@ -83,7 +83,7 @@ export const get = async (req: Request, res: Response) => {
         BACK_LINK: req.headers.referer,
       }),
       userName: getUserNameFromSession(req.session.user),
-      ...pageVariables(referenceNumber),
+      ...pageVariables,
       status,
       SUMMARY_LISTS: summaryList,
     });
