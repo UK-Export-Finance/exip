@@ -1045,22 +1045,14 @@ var account_default2 = accountCronSchedulerJobs;
 // cron/application/inactive-application-cron-job.ts
 var import_dotenv3 = __toESM(require("dotenv"));
 
-// helpers/date/index.ts
-var getThirtyDaysBeforeNow = () => {
-  const now2 = /* @__PURE__ */ new Date();
-  const result = now2.setDate(now2.getDate() - 30);
-  return new Date(result);
-};
-
 // helpers/get-inactive-applications/index.ts
 var { IN_PROGRESS } = APPLICATION.STATUS;
 var getInactiveApplications = async (context) => {
   try {
     console.info("Getting inactive applications - getInactiveApplications helper");
-    const thirtyDaysLimit = getThirtyDaysBeforeNow();
     const applications = await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS] } }, { updatedAt: { lt: thirtyDaysLimit } }]
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: /* @__PURE__ */ new Date() } }]
       },
       query: "id status"
     });

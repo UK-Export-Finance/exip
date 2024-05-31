@@ -11,7 +11,7 @@ describe('api/helpers/get-inactive-applications', () => {
   let applicationArray: Array<Application>;
 
   const updateData = {
-    updatedAt: DATE_2_MONTHS_IN_THE_PAST(),
+    submissionDeadline: DATE_2_MONTHS_IN_THE_PAST(),
   };
 
   beforeAll(async () => {
