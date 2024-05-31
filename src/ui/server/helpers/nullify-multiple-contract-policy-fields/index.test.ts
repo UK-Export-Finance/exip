@@ -18,7 +18,7 @@ describe('server/helpers/nullify-multiple-contract-policy-fields', () => {
 
     const expected = {
       ...mockFormBody,
-      [MAXIMUM_BUYER_WILL_OWE]: '',
+      [MAXIMUM_BUYER_WILL_OWE]: null,
       [TOTAL_MONTHS_OF_COVER]: null,
       [TOTAL_SALES_TO_BUYER]: null,
     };

@@ -16,7 +16,7 @@ describe('server/helpers/nullify-single-contract-policy-fields', () => {
     const expected = {
       ...mockFormBody,
       [CONTRACT_COMPLETION_DATE]: null,
-      [TOTAL_CONTRACT_VALUE]: '',
+      [TOTAL_CONTRACT_VALUE]: null,
     };
 
     expect(result).toEqual(expected);

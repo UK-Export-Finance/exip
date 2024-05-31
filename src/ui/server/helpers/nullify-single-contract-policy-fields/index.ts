@@ -10,7 +10,7 @@ const {
 const nullifySingleContractPolicyFields = (formBody: RequestBody) => ({
   ...formBody,
   [CONTRACT_COMPLETION_DATE]: null,
-  [TOTAL_CONTRACT_VALUE]: '',
+  [TOTAL_CONTRACT_VALUE]: null,
 });
 
 export default nullifySingleContractPolicyFields;

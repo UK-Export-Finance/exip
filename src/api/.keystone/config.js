@@ -5633,11 +5633,7 @@ var format_time_of_day_default = formatTimeOfDay;
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
 var {
-  ACCOUNT: {
-    FIRST_NAME: FIRST_NAME2,
-    LAST_NAME: LAST_NAME2,
-    EMAIL: EMAIL5
-  },
+  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 },
   POLICY: {
     NAME_ON_POLICY: { POSITION }
   }
