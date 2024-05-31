@@ -1,5 +1,8 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../commands/api';
+import { APPLICATION } from '../../../../../../../constants';
+
+const { IS_INACTIVE } = APPLICATION;
 
 const {
   START,
@@ -11,7 +14,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Account - Create - Confirm email page - expired token and isInactive flag set - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF',
+  `Insurance - Account - Create - Confirm email page - expired token and ${IS_INACTIVE} flag set - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF`,
   () => {
     let url;
     let account;
@@ -33,7 +36,7 @@ context(
       cy.saveSession();
     });
 
-    describe(`When a verification token has expired and the isInactive flag is set and the user navigates to ${VERIFY_EMAIL} with the expired token`, () => {
+    describe(`When a verification token has expired and the ${IS_INACTIVE} flag is set and the user navigates to ${VERIFY_EMAIL} with the expired token`, () => {
       let updatedAccount;
 
       beforeEach(async () => {
@@ -61,6 +64,10 @@ context(
 
         updatedAccount = await api.updateAccount(account.id, updateObj);
 
+        /**
+         * Update the account status' isInactive flag via the API,
+         * so that we can mimic an inactive account.
+         */
         const updateStatusObj = {
           isInactive: true,
         };

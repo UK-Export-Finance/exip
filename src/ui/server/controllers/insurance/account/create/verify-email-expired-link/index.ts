@@ -52,7 +52,7 @@ export const get = (req: Request, res: Response) => {
 
 /**
  * post
- * Submit verify email expired link page
+ * Submit verify email expired link form
  * @param {Express.Request} Express request
  * @param {Express.Response} Express response
  * @returns {Express.Response.redirect} Confirm email resent page or problem with service page
@@ -81,7 +81,7 @@ export const post = async (req: Request, res: Response) => {
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   } catch (err) {
-    console.error("Error rendering 'verify email expired link' page %O", err);
+    console.error('Error sending email confirm email address - verify-email-expired-link %O', err);
 
     return res.redirect(PROBLEM_WITH_SERVICE);
   }

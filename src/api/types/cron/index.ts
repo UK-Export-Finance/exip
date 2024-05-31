@@ -52,8 +52,8 @@ interface CronAccountStatusDataUpdate {
 
 interface CronAccountDataUpdate {
   updatedAt: Date;
-  verificationHash?: string;
-  verificationExpiry?: Date | null;
+  verificationHash: string;
+  verificationExpiry: Date | null;
 }
 
 export interface CronAccountStatusUnverifiedUpdate {

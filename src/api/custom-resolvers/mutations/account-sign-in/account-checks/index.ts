@@ -39,7 +39,11 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
     if (!account.status.isVerified) {
       console.info('Unable to sign in account - account has not been verified yet');
 
-      const verificationHasExpired = dateIsInThePast(account.verificationExpiry);
+      let verificationHasExpired = false;
+
+      if (account.verificationExpiry) {
+        verificationHasExpired = dateIsInThePast(account.verificationExpiry);
+      }
 
       if (account.verificationHash && !verificationHasExpired) {
         console.info('Account has an unexpired verification token - resetting verification expiry');

@@ -30,19 +30,21 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
 
     let latestVerificationHash = '';
 
-    const verificationHasExpired = dateIsInThePast(account.verificationExpiry);
+    let verificationHasExpired = false;
+
+    if (account.verificationExpiry) {
+      verificationHasExpired = dateIsInThePast(account.verificationExpiry);
+    }
 
     /**
      * if the account already has a verificationHash and if it has not expired
      * then set latestVerificationHash as account's verification hash
-     * else, generate new hash and update account
-     * if an account has expired verification, then new hash and verificationExpiry will be generated
      */
     if (account.verificationHash && !verificationHasExpired) {
       latestVerificationHash = account.verificationHash;
     } else {
       /**
-       * If an account does not have a verification hash,
+       * If an account does not have a verification hash or an account has an expired verification,
        * 1) Generate a new hash
        * 2) Update the account
        */

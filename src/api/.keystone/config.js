@@ -1031,12 +1031,9 @@ var getThirtyDaysBeforeNow = () => {
   const result = now2.setDate(now2.getDate() - 30);
   return new Date(result);
 };
-var dateIsInThePast = (specifiedDate) => {
-  if (specifiedDate) {
-    const now2 = /* @__PURE__ */ new Date();
-    return (0, import_date_fns.isAfter)(now2, specifiedDate);
-  }
-  return false;
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns.isAfter)(now2, targetDate);
 };
 
 // helpers/get-inactive-applications/index.ts
@@ -3245,7 +3242,10 @@ var send = async (context, urlOrigin, accountId) => {
       };
     }
     let latestVerificationHash = "";
-    const verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+    let verificationHasExpired = false;
+    if (account2.verificationExpiry) {
+      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+    }
     if (account2.verificationHash && !verificationHasExpired) {
       latestVerificationHash = account2.verificationHash;
     } else {
@@ -3459,7 +3459,10 @@ var accountChecks = async (context, account2, urlOrigin) => {
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
       console.info("Unable to sign in account - account has not been verified yet");
-      const verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+      let verificationHasExpired = false;
+      if (account2.verificationExpiry) {
+        verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+      }
       if (account2.verificationHash && !verificationHasExpired) {
         console.info("Account has an unexpired verification token - resetting verification expiry");
         const accountUpdate = {
@@ -3575,9 +3578,6 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-// custom-resolvers/mutations/verify-account-sign-in-code/index.ts
-var import_date_fns6 = require("date-fns");
-
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
@@ -3674,8 +3674,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = account2;
-    const now2 = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns6.isAfter)(now2, otpExpiry);
+    const hasExpired = dateIsInThePast(otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -3803,9 +3802,6 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
-// custom-resolvers/mutations/account-password-reset/index.ts
-var import_date_fns7 = require("date-fns");
-
 // helpers/account-has-used-password-before/index.ts
 var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
   console.info("Checking if an account has used a password before");
@@ -3876,8 +3872,7 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
       return { success: false };
     }
-    const now2 = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns7.isAfter)(now2, passwordResetExpiry);
+    const hasExpired = dateIsInThePast(passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -4722,7 +4717,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
 // custom-resolvers/mutations/submit-application/index.ts
-var import_date_fns8 = require("date-fns");
+var import_date_fns6 = require("date-fns");
 
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
@@ -6072,7 +6067,7 @@ var submitApplication = async (root, variables, context) => {
       const { status, submissionDeadline, submissionCount } = application2;
       const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now2 = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now2);
+      const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
@@ -6133,7 +6128,7 @@ var createFeedback = async (root, variables, context) => {
 var create_feedback_default = createFeedback;
 
 // custom-resolvers/mutations/verify-account-reactivation-token/index.ts
-var import_date_fns9 = require("date-fns");
+var import_date_fns7 = require("date-fns");
 var {
   INSURANCE: {
     ACCOUNT: { REACTIVATION_HASH, REACTIVATION_EXPIRY }
@@ -6146,7 +6141,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
     if (account2) {
       console.info("Received a request to reactivate account - found account %s", account2.id);
       const now2 = /* @__PURE__ */ new Date();
-      const canReactivateAccount = (0, import_date_fns9.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
+      const canReactivateAccount = (0, import_date_fns7.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
@@ -7156,7 +7151,6 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
 var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
-var import_date_fns10 = require("date-fns");
 var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
@@ -7164,8 +7158,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
     const { token } = variables;
     const account2 = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
     if (account2) {
-      const now2 = /* @__PURE__ */ new Date();
-      const hasExpired = (0, import_date_fns10.isAfter)(now2, account2[PASSWORD_RESET_EXPIRY]);
+      const hasExpired = dateIsInThePast(account2[PASSWORD_RESET_EXPIRY]);
       if (hasExpired) {
         console.info("Unable to verify account password reset token - token has expired");
         return {

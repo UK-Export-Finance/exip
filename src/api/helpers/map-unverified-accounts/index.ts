@@ -31,6 +31,8 @@ const mapUnverifiedAccounts = (accounts: Array<Account>) => {
    * loops through accounts array
    * adds id of account to where object
    * updates updatedAt timestamp
+   * sets verificationHash to an empty string
+   * sets verificationExpiry to null
    */
   const mappedAccountArray = accounts.map((account: Account) => {
     const mapped = {

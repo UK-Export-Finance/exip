@@ -61,15 +61,11 @@ export const getThirtyDaysBeforeNow = (): Date => {
 /**
  * dateIsInThePast
  * Is the time now after a specified date
- * @param {Date} specifiedDate
+ * @param {Date} targetDate
  * @returns {Boolean}
  */
-export const dateIsInThePast = (specifiedDate?: Date) => {
-  if (specifiedDate) {
-    const now = new Date();
+export const dateIsInThePast = (targetDate: Date) => {
+  const now = new Date();
 
-    return isAfter(now, specifiedDate);
-  }
-
-  return false;
+  return isAfter(now, targetDate);
 };

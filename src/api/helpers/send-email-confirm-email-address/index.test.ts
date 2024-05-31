@@ -56,6 +56,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   describe('when verificationHash exists and verificationExpiry has elapsed', () => {
     test('it should call sendEmail.confirmEmailAddress and return success=true and not use account verificationHash', async () => {
       await accounts.update(context, account.id, { verificationExpiry: DATE_24_HOURS_IN_THE_PAST(), verificationHash: 'mock-hash' });
+
       const updatedAccount = await accounts.get(context, account.id);
       const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, updatedAccount.id);
 
@@ -64,6 +65,7 @@ describe('helpers/send-email-confirm-email-address', () => {
       const name = getFullNameString(account);
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
+
       // should generate new hash so not called with account hash
       expect(sendEmailConfirmEmailAddressSpy).not.toHaveBeenCalledWith(email, mockUrlOrigin, name, verificationHash, account.id);
 
@@ -79,6 +81,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   describe('when verificationHash exists and verificationExpiry has not elapsed', () => {
     test('it should call sendEmail.confirmEmailAddress and return success=true', async () => {
       await accounts.update(context, account.id, { verificationExpiry: DATE_24_HOURS_FROM_NOW(), verificationHash: 'mock-hash' });
+
       const updatedAccount = await accounts.get(context, account.id);
       const result = await confirmEmailAddressEmail.send(context, mockUrlOrigin, updatedAccount.id);
 
@@ -87,7 +90,7 @@ describe('helpers/send-email-confirm-email-address', () => {
       const name = getFullNameString(account);
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-      // should generate new hash so not called with account hash
+
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, mockUrlOrigin, name, verificationHash, account.id);
 
       const expected = {

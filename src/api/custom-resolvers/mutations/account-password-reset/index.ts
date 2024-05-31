@@ -1,4 +1,3 @@
-import { isAfter } from 'date-fns';
 import ACCOUNT_FIELD_IDS from '../../../constants/field-ids/insurance/account';
 import getAccountByField from '../../../helpers/get-account-by-field';
 import encryptPassword from '../../../helpers/encrypt-password';
@@ -7,6 +6,7 @@ import getPasswordHash from '../../../helpers/get-password-hash';
 import deleteAuthenticationRetries from '../../../helpers/delete-authentication-retries';
 import createAuthenticationEntry from '../../../helpers/create-authentication-entry';
 import update from '../../../helpers/update-account';
+import { dateIsInThePast } from '../../../helpers/date';
 import { Account, AccountPasswordResetVariables, Context } from '../../../types';
 
 const accountPasswordReset = async (root: any, variables: AccountPasswordResetVariables, context: Context) => {
@@ -57,9 +57,7 @@ const accountPasswordReset = async (root: any, variables: AccountPasswordResetVa
      * Check that the current time has not surpassed the reset expiry period.
      * If it has, return expired=true
      */
-    const now = new Date();
-
-    const hasExpired = isAfter(now, passwordResetExpiry);
+    const hasExpired = dateIsInThePast(passwordResetExpiry);
 
     if (hasExpired) {
       console.info('Unable to reset account password - verification period has expired');
