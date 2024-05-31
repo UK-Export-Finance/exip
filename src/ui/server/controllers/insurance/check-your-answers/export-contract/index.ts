@@ -1,4 +1,4 @@
-import { PAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
@@ -15,27 +15,21 @@ export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 export const FIELD_ID = FIELD_IDS.CHECK_YOUR_ANSWERS.EXPORT_CONTRACT;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT_SAVE_AND_BACK },
-    PROBLEM_WITH_SERVICE,
-  },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
 /**
  * pageVariables
- * Page fields and "save and go back" URL
- * @param {Number} Application reference number
+ * Page fields and SUBMIT_BUTTON_COPY
  * @returns {Object} Page variables
  */
-export const pageVariables = (referenceNumber: number) => ({
+export const pageVariables = {
   FIELD: {
     ID: FIELD_ID,
     ...FIELDS[FIELD_ID],
   },
-  SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_SAVE_AND_BACK}`,
-});
+  SUBMIT_BUTTON_COPY: BUTTONS.SAVE_AND_BACK,
+};
 
 /**
  * get
