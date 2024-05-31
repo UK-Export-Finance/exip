@@ -9,7 +9,7 @@ export const START_NEW_APPLICATION = {
 
 export const YOUR_BUSINESS = {
   ...SHARED,
-  PAGE_TITLE: 'About your business',
+  PAGE_TITLE: 'Your business',
 };
 
 export const YOUR_BUYER = {
