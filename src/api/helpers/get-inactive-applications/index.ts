@@ -15,7 +15,7 @@ const getInactiveApplications = async (context: Context): Promise<Application[]>
     console.info('Getting inactive applications - getInactiveApplications helper');
 
     /**
-     * queries in progress applications which are older than 30 days from the db
+     * queries in progress applications which have a submissionDeadline which has elapsed
      * returns array of id and status
      */
     const applications = (await context.query.Application.findMany({
