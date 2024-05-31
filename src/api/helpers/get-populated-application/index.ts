@@ -115,9 +115,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     where: { id: company.registeredOfficeAddressId },
   });
 
+  if (!companyAddress) {
+    throw new Error(generateErrorMessage('companyAddress', application.id));
+  }
+
+  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+    where: { id: company.differentTradingAddressId },
+  });
+
+  if (!differentTradingAddress) {
+    throw new Error(generateErrorMessage('differentTradingAddress', application.id));
+  }
+
   const populatedCompany = {
     ...company,
     registeredOfficeAddress: companyAddress,
+    differentTradingAddress,
   };
 
   const business = await context.db.Business.findOne({

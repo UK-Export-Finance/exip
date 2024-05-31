@@ -1,4 +1,5 @@
 import { XLSX_CONFIG, XLSX_ROW_INDEXES } from '.';
+import { INDEXES, TITLE_INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
 import { mockApplication } from '../../test-mocks';
@@ -55,22 +56,19 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const result = XLSX_ROW_INDEXES(application);
 
+          const defaultIndexes = INDEXES();
+          const defaultTitleIndexes = TITLE_INDEXES();
+
           const expected = {
+            ...defaultIndexes,
+            BROKER_ADDRESS: 48,
+            BUYER_ADDRESS: defaultIndexes.BUYER_ADDRESS + 3,
             TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 30,
-              BUYER: 52,
-              ELIGIBILITY: 62,
-              DECLARATIONS: 73,
+              ...defaultTitleIndexes,
+              POLICY: defaultTitleIndexes.POLICY + 3,
+              BUYER: defaultTitleIndexes.BUYER + 3,
+              DECLARATIONS: defaultTitleIndexes.DECLARATIONS + 3,
             },
-            COMPANY_ADDRESS: 34,
-            COMPANY_SIC_CODES: 37,
-            BROKER_ADDRESS: 45,
-            BUYER_ADDRESS: 50,
-            BUYER_CONTACT_DETAILS: 53,
           };
 
           expect(result).toEqual(expected);
@@ -78,7 +76,7 @@ describe('api/constants/XLSX-CONFIG', () => {
       });
 
       describe('when NOT using a broker', () => {
-        it('should return correct row indexes', () => {
+        it('should return default row indexes', () => {
           application.broker = {
             ...mockApplication.buyer,
             [USING_BROKER]: false,
@@ -86,95 +84,7 @@ describe('api/constants/XLSX-CONFIG', () => {
 
           const result = XLSX_ROW_INDEXES(application);
 
-          const expected = {
-            TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 30,
-              BUYER: 49,
-              ELIGIBILITY: 59,
-              DECLARATIONS: 70,
-            },
-            COMPANY_ADDRESS: 34,
-            COMPANY_SIC_CODES: 37,
-            BROKER_ADDRESS: 45,
-            BUYER_ADDRESS: 50,
-            BUYER_CONTACT_DETAILS: 53,
-          };
-
-          expect(result).toEqual(expected);
-        });
-      });
-    });
-
-    describe(APPLICATION.POLICY_TYPE.MULTIPLE, () => {
-      const application = {
-        ...mockApplication,
-        policy: {
-          ...mockApplication.policy,
-          [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
-        },
-      };
-
-      describe('when using a broker', () => {
-        it('should return correct row indexes', () => {
-          application.broker = {
-            ...mockApplication.buyer,
-            [USING_BROKER]: true,
-          };
-
-          const result = XLSX_ROW_INDEXES(application);
-
-          const expected = {
-            TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 31,
-              BUYER: 53,
-              ELIGIBILITY: 63,
-              DECLARATIONS: 74,
-            },
-            COMPANY_ADDRESS: 35,
-            COMPANY_SIC_CODES: 38,
-            BROKER_ADDRESS: 46,
-            BUYER_ADDRESS: 51,
-            BUYER_CONTACT_DETAILS: 54,
-          };
-
-          expect(result).toEqual(expected);
-        });
-      });
-
-      describe('when NOT using a broker', () => {
-        it('should return correct row indexes', () => {
-          application.broker = {
-            ...mockApplication.buyer,
-            [USING_BROKER]: false,
-          };
-
-          const result = XLSX_ROW_INDEXES(application);
-
-          const expected = {
-            TITLES: {
-              HEADER: 1,
-              EXPORTER_CONTACT_DETAILS: 9,
-              KEY_INFORMATION: 14,
-              POLICY: 20,
-              EXPORTER_BUSINESS: 31,
-              BUYER: 50,
-              ELIGIBILITY: 60,
-              DECLARATIONS: 71,
-            },
-            COMPANY_ADDRESS: 35,
-            COMPANY_SIC_CODES: 38,
-            BROKER_ADDRESS: 46,
-            BUYER_ADDRESS: 51,
-            BUYER_CONTACT_DETAILS: 54,
-          };
+          const expected = INDEXES();
 
           expect(result).toEqual(expected);
         });

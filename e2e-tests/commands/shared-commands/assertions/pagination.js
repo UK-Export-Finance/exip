@@ -5,3 +5,7 @@ Cypress.Commands.add('assertPaginationItemEllipsis', require('../../pagination/a
 Cypress.Commands.add('assertPaginationNextLink', require('../../pagination/assert-pagination-next-link'));
 Cypress.Commands.add('assertPaginationPreviousLink', require('../../pagination/assert-pagination-previous-link'));
 Cypress.Commands.add('assertPaginationState', require('../../pagination/assert-pagination-state'));
+Cypress.Commands.add(
+  'assertAllDashboardApplicationStatusesAreInProgress',
+  require('../../pagination/assert-all-dashboard-application-statuses-are-in-progress'),
+);

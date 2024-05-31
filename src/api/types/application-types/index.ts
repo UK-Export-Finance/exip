@@ -45,14 +45,21 @@ export interface ApplicationCompanyAddressCore {
   premises?: string;
 }
 
+export interface ApplicationCompanyDifferentTradingAddress extends Relationship {
+  fullAddress: string;
+}
+
 export interface ApplicationCompanyCore {
   companyName: string;
   companyNumber: string;
   dateOfCreation: Date;
-  sicCodes: Array<string>;
+  differentTradingAddress: ApplicationCompanyDifferentTradingAddress;
   industrySectorNames: Array<string>;
   financialYearEndDate: Date;
+  hasDifferentTradingName?: boolean;
+  hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddressCore;
+  sicCodes: Array<string>;
 }
 
 export interface ApplicationCompany extends ApplicationCompanyCore {
@@ -202,10 +209,6 @@ export interface ApplicationJointlyInsuredParty extends Relationship {
   country: Country;
 }
 
-export interface ApplicationCompanyDifferentTradingAddress extends Relationship {
-  fullAddress: string;
-}
-
 export interface Application {
   id: string;
   referenceNumber: number;
@@ -266,6 +269,7 @@ export interface CreateAnApplicationVariables {
   eligibilityAnswers: ApplicationEligibility;
   company: ApplicationCompanyCore;
   sectionReview: SectionReview;
+  status?: string;
 }
 
 export interface CreateExportContractAgentResponse {

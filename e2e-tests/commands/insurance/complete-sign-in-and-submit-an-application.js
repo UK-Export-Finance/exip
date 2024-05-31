@@ -27,6 +27,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
+  differentTradingName = false,
   differentTradingAddress = false,
   policyType = APPLICATION.POLICY_TYPE.SINGLE,
   exporterHasTradedWithBuyer,
@@ -48,6 +49,7 @@ const completeSignInAndSubmitAnApplication = ({
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
       cy.completePrepareApplicationMultiplePolicyType({
+        differentTradingName,
         differentTradingAddress,
         exporterHasTradedWithBuyer,
         policyValueOverMvpMaximum,
@@ -66,6 +68,7 @@ const completeSignInAndSubmitAnApplication = ({
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
+        differentTradingName,
         differentTradingAddress,
         exporterHasTradedWithBuyer,
         policyValueOverMvpMaximum,

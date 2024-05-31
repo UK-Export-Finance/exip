@@ -1,4 +1,4 @@
-import { field } from '../../../../../../../pages/shared';
+import { field, heading } from '../../../../../../../pages/shared';
 import { PAGES } from '../../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
 import { POLICY as POLICY_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/policy';
@@ -18,7 +18,9 @@ const {
   },
 } = POLICY_FIELD_IDS;
 
-const { CURRENCY: { ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+const {
+  CURRENCY: { ALTERNATIVE_CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -59,9 +61,10 @@ context('Insurance - Policy - Single contract policy - Total contract value page
     });
 
     it('should render a heading with the alternative currency', () => {
-      cy.assertHeadingWithCurrencyName({
-        pageTitle: CONTENT_STRINGS.PAGE_TITLE,
+      cy.assertCopyWithCurrencyName({
+        expectedCopy: CONTENT_STRINGS.PAGE_TITLE,
         currencyName: NON_STANDARD_CURRENCY_NAME,
+        selector: heading(),
         withQuestionMark: true,
       });
     });

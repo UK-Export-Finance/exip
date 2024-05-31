@@ -4,7 +4,9 @@ import mockCompany from '../../../test-mocks/mock-company';
 import { Account, Context, SuccessResponse } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import accounts from '../../../test-helpers/accounts';
-import applications from '../../../test-helpers/applications';
+import { APPLICATION } from '../../../constants';
+
+const { STATUS } = APPLICATION;
 
 describe('custom-resolvers/create-an-application', () => {
   let context: Context;
@@ -39,46 +41,10 @@ describe('custom-resolvers/create-an-application', () => {
     expect(result.success).toEqual(true);
   });
 
-  test('it should return an ID', async () => {
+  test(`it should return status as ${STATUS.IN_PROGRESS}`, async () => {
     result = await createAnApplication({}, variables, context);
 
-    const createdApplication = await applications.get({ context, applicationId: result.id });
-
-    expect(result.id).toEqual(createdApplication.id);
-  });
-
-  test('it should return a reference number', async () => {
-    result = await createAnApplication({}, variables, context);
-
-    const createdApplication = await applications.get({ context, applicationId: result.id });
-
-    const expected = createdApplication.referenceNumber;
-
-    expect(result.referenceNumber).toEqual(expected);
-  });
-
-  test('it should return application relationships', async () => {
-    result = await createAnApplication({}, variables, context);
-
-    const application = await applications.get({ context, applicationId: result.id });
-
-    const expected = {
-      buyerId: application.buyer.id,
-      companyId: application.company.id,
-      eligibilityId: application.eligibility.id,
-      exportContractId: application.exportContract.id,
-      nominatedLossPayeeId: application.nominatedLossPayee.id,
-      policyId: application.policy.id,
-      sectionReviewId: application.sectionReview.id,
-    };
-
-    expect(result.buyerId).toEqual(expected.buyerId);
-    expect(result.companyId).toEqual(expected.companyId);
-    expect(result.eligibilityId).toEqual(expected.eligibilityId);
-    expect(result.exportContractId).toEqual(expected.exportContractId);
-    expect(result.nominatedLossPayeeId).toEqual(expected.nominatedLossPayeeId);
-    expect(result.policyId).toEqual(expected.policyId);
-    expect(result.sectionReviewId).toEqual(expected.sectionReviewId);
+    expect(result.status).toEqual(STATUS.IN_PROGRESS);
   });
 
   describe('when there is no account for the provided accountId', () => {

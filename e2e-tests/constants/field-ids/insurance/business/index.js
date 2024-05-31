@@ -10,6 +10,7 @@ export const EXPORTER_BUSINESS = {
   },
   ALTERNATIVE_TRADING_ADDRESS: {
     FULL_ADDRESS: 'fullAddress',
+    FULL_ADDRESS_DOT_NOTATION: 'alternativeTrading.fullAddress',
   },
   NATURE_OF_YOUR_BUSINESS: {
     GOODS_OR_SERVICES: 'goodsOrServicesSupplied',

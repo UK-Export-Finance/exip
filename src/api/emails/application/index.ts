@@ -50,8 +50,10 @@ const application = {
 
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
 
-        // NOTE: no need to handle an error from fs.unlink here,
-        // if it errors, it will go into the catch handler below.
+        /**
+         * NOTE: no need to handle an error from fs.unlink here.
+         * If this errors, it will go into the catch handler below.
+         */
         await fileSystem.unlink(filePath);
 
         return response;

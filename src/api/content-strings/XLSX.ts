@@ -1,29 +1,40 @@
-import ACCOUNT from '../constants/field-ids/insurance/account';
-import POLICY from '../constants/field-ids/insurance/policy';
-import EXPORTER_BUSINESS from '../constants/field-ids/insurance/business';
-import YOUR_BUYER from '../constants/field-ids/insurance/your-buyer';
+import { TOTAL_CONTRACT_VALUE } from '../constants/total-contract-value';
+import INSURANCE_FIELD_IDS from '../constants/field-ids/insurance';
+import { GBP_CURRENCY_CODE } from '../constants';
+import formatCurrency from '../helpers/format-currency';
 
-const { FIRST_NAME, LAST_NAME } = ACCOUNT;
+const { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 
 const {
-  CONTRACT_POLICY: {
-    SINGLE: { CONTRACT_COMPLETION_DATE },
+  ACCOUNT: { FIRST_NAME, LAST_NAME },
+  ELIGIBILITY: { BUYER_COUNTRY, COMPANIES_HOUSE_NUMBER, COVER_PERIOD, HAS_END_BUYER, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+  EXPORTER_BUSINESS: {
+    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME, DIFFERENT_TRADING_NAME, PHONE_NUMBER, TRADING_ADDRESS, WEBSITE },
+    NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+    TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
+    HAS_CREDIT_CONTROL,
   },
-  USING_BROKER,
-  BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
-} = POLICY;
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { CONTRACT_COMPLETION_DATE },
+    },
+    USING_BROKER,
+    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
+  },
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
+  },
+} = INSURANCE_FIELD_IDS;
 
-const {
-  COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
-  YOUR_COMPANY: { WEBSITE, PHONE_NUMBER },
-  NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
-  TURNOVER: { ESTIMATED_ANNUAL_TURNOVER },
-} = EXPORTER_BUSINESS;
-
-const {
-  COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
-} = YOUR_BUYER;
-
+/**
+ * XLSX
+ * Content strings specific for the XLSX.
+ * Some field titles/labels need to have different wording for internal teams, after an application is submitted.
+ * as apposed to other field content strings that are used for a user completing an application.
+ * If a field is in the XLSX and not listed here, the field is using the "regular" field content strings.
+ */
 export const XLSX = {
   AGREED: 'Agreed',
   SECTION_TITLES: {
@@ -39,17 +50,28 @@ export const XLSX = {
     [FIRST_NAME]: 'Applicant first name',
     [LAST_NAME]: 'Applicant last name',
     APPLICANT_EMAIL_ADDRESS: 'Applicant email address',
+    APPLICANT_ROLE: 'Applicants role',
+    [BUYER_COUNTRY]: 'Where is your buyer based?',
     EXPORTER_CONTACT: {
       [FIRST_NAME]: 'Exporter first name',
       [LAST_NAME]: 'Exporter last name',
       EXPORTER_CONTACT_EMAIL: 'Exporter email address',
     },
+    [COMPANIES_HOUSE_NUMBER]: 'Companies house number',
+    [COVER_PERIOD]: 'Length of cover',
+    [HAS_END_BUYER]: 'Is there an end buyer?',
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES]: 'Is at least 20% of the contract value made up from UK goods or services',
+    [HAS_CREDIT_CONTROL]: 'Do you have a process for dealing with late payments',
     [CONTRACT_COMPLETION_DATE]: 'Date expected for contract to complete',
-    [EXPORTER_COMPANY_NAME]: 'Exporter company name',
     [EXPORTER_COMPANY_ADDRESS]: 'Exporter registered office address',
     [EXPORTER_COMPANY_SIC]: 'Exporter standard industry classification (SIC) codes and nature of business',
+    [HAS_DIFFERENT_TRADING_NAME]: 'Different trading name?',
+    [DIFFERENT_TRADING_NAME]: 'Alternative trading name',
+    [TRADING_ADDRESS]: 'Different trading address?',
+    [FULL_ADDRESS_DOT_NOTATION]: 'Alternative trading address',
+    [MORE_THAN_250K.VALUE]: `Insured for more than ${formatCurrency(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
     [WEBSITE]: 'Exporter Company website (optional)',
-    [PHONE_NUMBER]: 'Exporter telephone number (optional)',
+    [PHONE_NUMBER]: 'Exporter UK telephone number (optional)',
     [GOODS_OR_SERVICES]: 'Goods or services the business supplies',
     [YEARS_EXPORTING]: 'Exporter years exporting',
     [EMPLOYEES_UK]: 'Exporter UK Employees',
@@ -62,6 +84,7 @@ export const XLSX = {
     [BUYER_COMPANY_NAME]: 'Buyer company name',
     [BUYER_REGISTRATION_NUMBER]: 'Buyer registration number (optional)',
     [BUYER_CONTACT_DETAILS]: 'Buyer contact details',
+    NO_FINANCIAL_YEAR_END_DATE: 'No data from Companies House',
   },
 };
 

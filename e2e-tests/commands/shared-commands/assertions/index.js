@@ -22,7 +22,7 @@ Cypress.Commands.add('assertErrorSummaryListLength', require('./assert-error-sum
 Cypress.Commands.add('assertErrorSummaryListDoesNotExist', require('./assert-error-summary-list-does-not-exist'));
 Cypress.Commands.add('assertCurrencyFormFieldsAreEmpty', require('./assert-currency-form-fields-are-empty'));
 
-Cypress.Commands.add('assertHeadingWithCurrencyName', require('./assert-heading-with-currency-name'));
+Cypress.Commands.add('assertCopyWithCurrencyName', require('./assert-copy-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
 Cypress.Commands.add('assertSuffix', require('./assert-suffix'));
 Cypress.Commands.add('assertTextareaRendering', require('./assert-textarea-rendering'));

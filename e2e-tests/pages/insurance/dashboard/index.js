@@ -13,6 +13,7 @@ const dashboardPage = {
     },
     body: {
       rows: () => cy.get('table tbody tr'),
+      firstColumn: () => cy.get('table tbody tr td:first'),
       row: (referenceNumber) => ({
         status: () => cy.get(`[data-cy="ref-${referenceNumber}-status"]`),
         buyerLocation: () => cy.get(`[data-cy="ref-${referenceNumber}-buyerLocation"]`),
