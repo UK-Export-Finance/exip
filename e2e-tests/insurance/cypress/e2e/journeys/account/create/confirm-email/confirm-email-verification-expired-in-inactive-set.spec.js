@@ -1,22 +1,17 @@
-import { PAGES } from '../../../../../../../content-strings';
-import { verifyEmailLinkExpiredPage } from '../../../../../../../pages/insurance/account/create';
-import { body } from '../../../../../../../pages/shared';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../commands/api';
-
-const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
 const {
   START,
   ACCOUNT: {
-    CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK },
+    CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, CONFIRM_EMAIL_RESENT },
   },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Account - Create - Confirm email page - expired token - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF',
+  'Insurance - Account - Create - Confirm email page - expired token and isInactive flag set - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF',
   () => {
     let url;
     let account;
@@ -38,7 +33,7 @@ context(
       cy.saveSession();
     });
 
-    describe(`When a verification token has expired and the user navigates to ${VERIFY_EMAIL} with the expired token`, () => {
+    describe(`When a verification token has expired and the isInactive flag is set and the user navigates to ${VERIFY_EMAIL} with the expired token`, () => {
       let updatedAccount;
 
       beforeEach(async () => {
@@ -65,32 +60,25 @@ context(
         };
 
         updatedAccount = await api.updateAccount(account.id, updateObj);
+
+        const updateStatusObj = {
+          isInactive: true,
+        };
+
+        await api.updateAccountStatus(updatedAccount.status.id, updateStatusObj);
       });
 
-      it(`should redirect to ${VERIFY_EMAIL_EXPIRED_LINK} and render core page elements and content`, () => {
+      it(`should redirect to ${CONFIRM_EMAIL_RESENT} when submitting the form`, () => {
         const { verificationHash } = updatedAccount;
 
         const verificationUrl = `${VERIFY_EMAIL}?token=${verificationHash}&id=${account.id}`;
 
         cy.navigateToUrl(`${baseUrl}${verificationUrl}`);
 
-        const expectedUrl = `${baseUrl}${VERIFY_EMAIL_EXPIRED_LINK}?id=${account.id}`;
+        cy.clickSubmitButton();
 
+        const expectedUrl = `${baseUrl}${CONFIRM_EMAIL_RESENT}?id=${account.id}`;
         cy.assertUrl(expectedUrl);
-
-        cy.corePageChecks({
-          pageTitle: CONTENT_STRINGS.PAGE_TITLE,
-          currentHref: verificationUrl,
-          backLink: `${CONFIRM_EMAIL}?id=${account.id}`,
-          hasAForm: false,
-          assertAuthenticatedHeader: false,
-        });
-
-        // assert body content
-        cy.checkText(body(), CONTENT_STRINGS.BODY);
-
-        // assert link to create an account
-        cy.checkLink(verifyEmailLinkExpiredPage.createAccount(), CONTENT_STRINGS.CREATE_ACCOUNT.HREF, CONTENT_STRINGS.CREATE_ACCOUNT.TEXT);
       });
     });
   },

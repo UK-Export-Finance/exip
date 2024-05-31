@@ -30,9 +30,13 @@ describe('helpers/map-unverified-accounts', () => {
 
       expect(result.account[0].where).toEqual({ id: accounts0.id });
       expect(result.account[0].data.updatedAt).toBeDefined();
+      expect(result.account[0].data.verificationHash).toEqual('');
+      expect(result.account[0].data.verificationExpiry).toBeNull();
 
       expect(result.account[1].where).toEqual({ id: accounts1.id });
       expect(result.account[1].data.updatedAt).toBeDefined();
+      expect(result.account[1].data.verificationHash).toEqual('');
+      expect(result.account[1].data.verificationExpiry).toBeNull();
     });
 
     it('should return a mapped accountStatus array', () => {

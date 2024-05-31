@@ -37,6 +37,8 @@ const mapUnverifiedAccounts = (accounts: Array<Account>) => {
       where: { id: account.id },
       data: {
         updatedAt: new Date(),
+        verificationHash: '',
+        verificationExpiry: null,
       },
     } as CronAccountUpdate;
 

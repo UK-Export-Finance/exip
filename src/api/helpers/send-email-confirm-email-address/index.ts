@@ -3,6 +3,7 @@ import generateAccountVerificationHash from '../get-account-verification-hash';
 import update from '../update-account';
 import getFullNameString from '../get-full-name-string';
 import sendEmail from '../../emails';
+import { dateIsInThePast } from '../date';
 import { Context, SuccessResponse } from '../../types';
 
 /**
@@ -29,7 +30,15 @@ const send = async (context: Context, urlOrigin: string, accountId: string): Pro
 
     let latestVerificationHash = '';
 
-    if (account.verificationHash) {
+    const verificationHasExpired = dateIsInThePast(account.verificationExpiry);
+
+    /**
+     * if the account already has a verificationHash and if it has not expired
+     * then set latestVerificationHash as account's verification hash
+     * else, generate new hash and update account
+     * if an account has expired verification, then new hash and verificationExpiry will be generated
+     */
+    if (account.verificationHash && !verificationHasExpired) {
       latestVerificationHash = account.verificationHash;
     } else {
       /**

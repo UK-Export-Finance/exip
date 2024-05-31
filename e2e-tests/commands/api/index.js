@@ -79,6 +79,7 @@ const queryStrings = {
     mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!) {
       updateAccount(where: $where, data: $data) {
         id
+        verificationExpiry
         verificationHash
         reactivationHash
         passwordResetHash
