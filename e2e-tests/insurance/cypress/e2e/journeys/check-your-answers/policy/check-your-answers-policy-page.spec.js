@@ -5,11 +5,7 @@ import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT: INSURANCE_ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUYER,
-    EXPORT_CONTRACT,
-    TYPE_OF_POLICY,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER, EXPORT_CONTRACT, TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.CHECK_YOUR_ANSWERS.POLICY;
@@ -91,8 +87,8 @@ context('Insurance - Check your answers - Policy - I want to confirm my selectio
         cy.navigateToAllSectionsUrl(referenceNumber);
       });
 
-      it('should change the status of task `check your answers` to `completed`', () => {
-        cy.checkTaskCheckAnswersStatusIsComplete();
+      it('should retain the status of task `check your answers` as `in progress`', () => {
+        cy.checkTaskCheckAnswersStatusIsInProgress();
       });
     });
   });
