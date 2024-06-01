@@ -39,11 +39,15 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
   populatedData = mapDateFields(formBody);
 
   /**
-   * If NEED_PRE_CREDIT_PERIOD is answered as "no",
+   * If NEED_PRE_CREDIT_PERIOD is submitted as "no",
    * wipe the CREDIT_PERIOD_WITH_BUYER field.
+   * If NEED_PRE_CREDIT_PERIOD is submitted without an answer,
+   * mark NEED_PRE_CREDIT_PERIOD as null.
    */
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'false') {
     populatedData[CREDIT_PERIOD_WITH_BUYER] = '';
+  } else if (formBody[NEED_PRE_CREDIT_PERIOD] === '') {
+    populatedData[NEED_PRE_CREDIT_PERIOD] = null;
   }
 
   const policyType = formBody[POLICY_TYPE];
@@ -78,9 +82,9 @@ const mapSubmittedData = (formBody: RequestBody, application: Application): obje
    */
   if (objectHasProperty(populatedData, CURRENCY_CODE)) {
     populatedData[POLICY_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
-
-    delete populatedData[CURRENCY_CODE];
   }
+
+  delete populatedData[CURRENCY_CODE];
 
   return populatedData;
 };

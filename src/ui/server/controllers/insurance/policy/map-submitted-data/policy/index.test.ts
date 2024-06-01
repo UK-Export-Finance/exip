@@ -45,6 +45,24 @@ describe('controllers/insurance/policy/map-submitted-data/policy', () => {
     });
   });
 
+  describe(`when a ${NEED_PRE_CREDIT_PERIOD} field with an empty string value`, () => {
+    it(`should return an object with null ${NEED_PRE_CREDIT_PERIOD} field`, () => {
+      const mockBody = {
+        [NEED_PRE_CREDIT_PERIOD]: '',
+        [CREDIT_PERIOD_WITH_BUYER]: 'mock',
+      };
+
+      const result = mapSubmittedData(mockBody, mockApplication);
+
+      const expected = {
+        ...mockBody,
+        [NEED_PRE_CREDIT_PERIOD]: null,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe(`when ${POLICY_TYPE} is single`, () => {
     it('should return an object with mapped date and currency fields, wiped multiple policy specific fields', () => {
       const mockBody = {
