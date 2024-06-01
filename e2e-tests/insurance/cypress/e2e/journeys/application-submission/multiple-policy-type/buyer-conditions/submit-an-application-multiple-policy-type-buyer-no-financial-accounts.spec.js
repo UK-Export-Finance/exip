@@ -1,6 +1,6 @@
 import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Multiple policy type, fully populated buyer', () => {
+context('Insurance - submit an application - Multiple policy type, fully populated buyer, no financial accounts', () => {
   let referenceNumber;
 
   before(() => {

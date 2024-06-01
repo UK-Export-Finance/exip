@@ -1,7 +1,7 @@
 import { APPLICATION } from '../../../../../../../constants';
 
 context(
-  'Insurance - submit an application - Multiple policy type, no broker - As an Exporter, I want to submit my completed credit insurance application with a value greater than 500000, So that UKEF can process and make a decision on my application',
+  'Insurance - submit an application - Multiple policy type - As an Exporter, I want to submit my completed credit insurance application with a value greater than 500000, So that UKEF can process and make a decision on my application',
   () => {
     let referenceNumber;
 

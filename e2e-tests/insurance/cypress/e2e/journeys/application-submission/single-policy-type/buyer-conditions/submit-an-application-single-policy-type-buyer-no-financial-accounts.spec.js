@@ -1,4 +1,4 @@
-context('Insurance - submit an application - Single policy type, fully populated buyer', () => {
+context('Insurance - submit an application - Single policy type, fully populated buyer, no financial accounts', () => {
   let referenceNumber;
 
   before(() => {
