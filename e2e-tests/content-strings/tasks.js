@@ -16,7 +16,7 @@ export const TASKS = {
       HEADING: 'Prepare your application',
       HINT: 'You can complete this section in any order',
       TASKS: {
-        EXPORTER_BUSINESS: 'About your business',
+        EXPORTER_BUSINESS: 'Your business',
         BUYER: 'About your buyer',
         POLICY: 'Your insurance policy',
         EXPORT_CONTRACT: 'Your export contract',
