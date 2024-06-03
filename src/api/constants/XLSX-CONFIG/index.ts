@@ -52,7 +52,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 6;
+    indexes.TITLES.DECLARATIONS += 3;
 
     indexes.BROKER_ADDRESS = 48;
     indexes.BUYER_ADDRESS += 3;
