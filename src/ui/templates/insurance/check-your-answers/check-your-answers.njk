@@ -67,14 +67,14 @@
 
     <div class="govuk-button-group">
       {{ submitButton.render({
-        text: CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE
+        text: SUBMIT_BUTTON_COPY or CONTENT_STRINGS.BUTTONS.CONFIRM_AND_CONTINUE
       }) }}
 
       {% if eligibility %}
 
       <a class="govuk-button govuk-button--secondary" href="{{ START_NEW_APPLICATION }}" data-cy="save-and-back-button">{{ CONTENT_STRINGS.CHANGE_ANSWERS }}</a>
 
-      {% else %}
+      {% elif SAVE_AND_BACK_URL %}
 
       {{ govukButton({
         text: CONTENT_STRINGS.BUTTONS.SAVE_AND_BACK,

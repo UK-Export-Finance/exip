@@ -26,7 +26,7 @@ describe('shared-validation/date', () => {
   const month = date.getMonth() + 1;
   const year = date.getFullYear();
 
-  const futureDate = new Date(date.setMonth(month + 6));
+  const futureDate = new Date(date.setMonth(month));
   const futureDateMonth = futureDate.getMonth();
   const futureDateYear = futureDate.getFullYear();
   const futureDateDay = getDaysInAMonth(futureDateMonth, futureDateYear);

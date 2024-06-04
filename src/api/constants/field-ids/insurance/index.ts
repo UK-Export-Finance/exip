@@ -23,6 +23,10 @@ const INSURANCE_FIELD_IDS = {
     HAS_REVIEWED_ELIGIBILITY: 'hasReviewedEligibility',
   },
   ...SHARED_FIELD_IDS,
+  CURRENCY: {
+    CURRENCY_CODE: 'currencyCode',
+    ALTERNATIVE_CURRENCY_CODE: 'alternativeCurrencyCode',
+  },
   SUBMISSION_DEADLINE: 'submissionDeadline',
   ACCOUNT,
   POLICY,

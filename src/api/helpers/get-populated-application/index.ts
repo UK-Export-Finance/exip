@@ -157,6 +157,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('buyer', application.id));
   }
 
+  const buyerRelationship = await context.db.BuyerRelationship.findOne({
+    where: { id: buyer.relationshipId },
+  });
+
+  if (!buyerRelationship) {
+    throw new Error(generateErrorMessage('buyerRelationship', application.id));
+  }
+
+  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+    where: { id: buyer.buyerTradingHistoryId },
+  });
+
+  if (!buyerTradingHistory) {
+    throw new Error(generateErrorMessage('buyerTradingHistory', application.id));
+  }
+
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
     where: { id: nominatedLossPayeeId },
     query:
@@ -186,6 +202,8 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   const populatedBuyer = {
     ...buyer,
     country: buyerCountry,
+    relationship: buyerRelationship,
+    buyerTradingHistory,
   };
 
   const declaration = await context.db.Declaration.findOne({
