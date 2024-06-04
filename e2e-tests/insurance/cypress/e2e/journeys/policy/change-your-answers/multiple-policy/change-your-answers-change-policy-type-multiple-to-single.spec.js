@@ -1,5 +1,4 @@
 import { summaryList } from '../../../../../../../pages/shared';
-import { typeOfPolicyPage } from '../../../../../../../pages/insurance/policy';
 import { FIELD_VALUES } from '../../../../../../../constants';
 import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance';
 import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insurance';
@@ -7,11 +6,7 @@ import checkSummaryList from '../../../../../../../commands/insurance/check-poli
 
 const {
   ROOT,
-  POLICY: {
-    CHECK_YOUR_ANSWERS,
-    TYPE_OF_POLICY_CHANGE,
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE,
-  },
+  POLICY: { CHECK_YOUR_ANSWERS, TYPE_OF_POLICY_CHANGE, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE },
 } = INSURANCE_ROUTES;
 
 const {
@@ -73,12 +68,7 @@ context('Insurance - Policy - Change your answers - Policy type - multiple to si
     beforeEach(() => {
       cy.navigateToUrl(checkYourAnswersUrl);
 
-      summaryList.field(POLICY_TYPE).changeLink().click();
-
-      typeOfPolicyPage[POLICY_TYPE].single.label().click();
-      cy.clickSubmitButton();
-
-      cy.completeAndSubmitSingleContractPolicyForm({});
+      cy.changePolicyTypeToSingleAndSubmitContractPolicyForm();
     });
 
     it(`should redirect to ${SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHANGE} because the policy type has changed`, () => {
