@@ -1,5 +1,5 @@
 import { FIELD_ID, pageVariables, get, post, TEMPLATE } from '.';
-import { PAGES } from '../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../content-strings';
 import { ROUTES, TEMPLATES } from '../../../../constants';
 import CHECK_YOUR_ANSWERS_FIELD_IDS from '../../../../constants/field-ids/insurance/check-your-answers';
 import { CHECK_YOUR_ANSWERS_FIELDS as FIELDS } from '../../../../content-strings/fields/insurance/check-your-answers';
@@ -15,12 +15,7 @@ import { mockReq, mockRes, referenceNumber, mockApplication, mockCountries } fro
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
 const {
-  INSURANCE: {
-    INSURANCE_ROOT,
-    ALL_SECTIONS,
-    CHECK_YOUR_ANSWERS: { EXPORT_CONTRACT_SAVE_AND_BACK },
-    PROBLEM_WITH_SERVICE,
-  },
+  INSURANCE: { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE },
 } = ROUTES;
 
 const { exportContract, totalContractValueOverThreshold } = mockApplication;
@@ -60,17 +55,15 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
 
   describe('pageVariables', () => {
     it('should have correct properties', () => {
-      const result = pageVariables(referenceNumber);
-
       const expected = {
         FIELD: {
           ID: FIELD_ID,
           ...FIELDS[FIELD_ID],
         },
-        SAVE_AND_BACK_URL: `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT_SAVE_AND_BACK}`,
+        SUBMIT_BUTTON_COPY: BUTTONS.SAVE_AND_BACK,
       };
 
-      expect(result).toEqual(expected);
+      expect(pageVariables).toEqual(expected);
     });
   });
 
@@ -111,7 +104,7 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
           BACK_LINK: req.headers.referer,
         }),
         userName: getUserNameFromSession(req.session.user),
-        ...pageVariables(referenceNumber),
+        ...pageVariables,
         status,
         SUMMARY_LISTS: summaryList,
       };

@@ -12,7 +12,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         EXPORTER_BUSINESS: 31,
         POLICY: 48,
         BUYER: 57,
-        DECLARATIONS: 65,
+        DECLARATIONS: 67,
       };
 
       expect(TITLE_INDEXES()).toEqual(expected);

@@ -14,15 +14,22 @@ const {
  * Depending on the submitted application data, the rows can be different.
  * - If the policy type is multiple, the XLSX has 1 additional row.
  * - If "using a broker" is true, the XLSX has 3 additional rows.
- * - If "has different trading address" is true, the XLSX has 1 additional row.
- * - If "has different trading name" is true, the XLSX has 1 additional row.
- * - If "has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
+ * - If "exporter business section - has different trading address" is true, the XLSX has 1 additional row.
+ * - If "exporter business section - has different trading name" is true, the XLSX has 1 additional row.
+ * - If "exporter business section - has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
+ * - If "buyer section - is connected with buyer" is true, the XLSX has 1 additional row.
+ * - If "buyer section - traded with buyer before" is true, the XLSX has 4 additional rows.
+ * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
+ * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
  * @returns {XLSXRowIndexes}
  */
-
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const {
     broker,
+    buyer: {
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
+    },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName,
@@ -38,6 +45,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
 
+    indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
 
@@ -45,9 +53,9 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
-    indexes.BUYER_ADDRESS += 3;
 
     indexes.BROKER_ADDRESS = 48;
+    indexes.BUYER_ADDRESS += 3;
   }
 
   if (hasDifferentTradingAddress) {
@@ -62,6 +70,22 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
+  }
+
+  if (exporterIsConnectedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+
+  if (exporterHasTradedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 2;
+
+    if (buyerHasOutstandingPayments) {
+      indexes.TITLES.DECLARATIONS += 2;
+    }
+  }
+
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
   }
 
   return indexes;
