@@ -2,7 +2,7 @@ import { XLSX_ROW_INDEXES } from '.';
 import { incrementIndexes, INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
-import { mockApplication, mockCompanyScenarios } from '../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany, mockCompanyScenarios } from '../../test-mocks';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
@@ -10,13 +10,13 @@ const {
 } = POLICY_FIELD_IDS;
 
 const application = {
-  ...mockApplication,
+  ...mockApplicationMinimalBrokerBuyerAndCompany,
   policy: {
-    ...mockApplication.policy,
+    ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
   },
   broker: {
-    ...mockApplication.broker,
+    ...mockApplicationMinimalBrokerBuyerAndCompany.broker,
     isUsingBroker: true,
   },
 };
@@ -30,7 +30,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...indexes,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 4,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 48,
         TITLES: {
@@ -56,7 +56,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...incremented,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 4,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 49,
         TITLES: {
@@ -86,7 +86,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...incremented,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 4,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 49,
         ALTERNATIVE_TRADING_ADDRESS: 37,
@@ -114,7 +114,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
       const expected = {
         ...secondIncrement,
-        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
+        BUYER_ADDRESS: indexes.BUYER_ADDRESS + 4,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
         BROKER_ADDRESS: 50,
         ALTERNATIVE_TRADING_ADDRESS: 38,

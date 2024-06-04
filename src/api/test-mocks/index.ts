@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ACCOUNT, FIELD_IDS } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
+import buyer from './mock-buyer';
 import cisCountries from './mock-CIS-countries';
 import currencies from './mock-currencies';
 import company, { companyScenarios } from './mock-company';
@@ -44,6 +45,24 @@ export const mockIV = 'SVheFWN4nT+2pac4';
 
 export const mockApplication = application;
 
+export const mockApplicationMinimalBrokerBuyerAndCompany = {
+  ...application,
+  broker: {
+    ...mockApplication.broker,
+    isUsingBroker: false,
+  },
+  buyer: {
+    ...mockApplication.buyer,
+    buyerTradingHistory: {
+      id: buyer.buyerTradingHistory.id,
+    },
+    relationship: {
+      id: buyer.relationship.id,
+    },
+  },
+  company: companyScenarios.noDifferentTradingNameOrAddress,
+};
+
 export const mockCisCountries = cisCountries;
 
 export const mockCompany = company;
@@ -52,10 +71,10 @@ export const mockCompanyScenarios = companyScenarios;
 
 export const mockNominatedLossPayee = nominatedLossPayee;
 
-export const mockBuyer = {
-  companyOrOrganisationName: 'Mock buyer',
-  exporterIsConnectedWithBuyer: true,
-};
+export const mockBuyer = buyer;
+
+export const mockBuyerTradingHistory = buyer.buyerTradingHistory;
+export const mockBuyerRelationship = buyer.relationship;
 
 export const mockLossPayeeFinancialDetailsUk = {
   accountNumber: '12345678',

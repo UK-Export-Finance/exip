@@ -8,7 +8,7 @@ const {
 
 /**
  * changePolicyTypeToMultipleAndSubmitContractPolicyForm
- * 1) Change policy type to multiple and submit the "contract policy" form.
+ * Change policy type to multiple and submit the "multiple contract policy" form.
  */
 const changePolicyTypeToMultipleAndSubmitContractPolicyForm = () => {
   summaryList.field(POLICY_TYPE).changeLink().click();

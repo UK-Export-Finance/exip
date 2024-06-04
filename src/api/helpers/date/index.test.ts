@@ -1,4 +1,4 @@
-import { get30minutesFromNow, getTomorrowDay, getYesterdayDay, getThirtyDaysBeforeNow } from '.';
+import { get30minutesFromNow, getTomorrowDay, getYesterdayDay, getThirtyDaysBeforeNow, dateIsInThePast } from '.';
 
 describe('api/helpers/date', () => {
   describe('get30minutesFromNow', () => {
@@ -52,6 +52,34 @@ describe('api/helpers/date', () => {
       const expected = new Date(now.setDate(now.getDate() - 30));
 
       expect(result).toEqual(expected);
+    });
+  });
+
+  describe('dateIsInThePast', () => {
+    it('should true when provided date is in the past', () => {
+      const now = new Date();
+
+      const pastDate = new Date(now.setDate(now.getDate() - 30));
+
+      const result = dateIsInThePast(pastDate);
+
+      expect(result).toEqual(true);
+    });
+
+    it('should false when provided date is in the future', () => {
+      const now = new Date();
+
+      const futureDate = new Date(now.setDate(now.getDate() + 30));
+
+      const result = dateIsInThePast(futureDate);
+
+      expect(result).toEqual(false);
+    });
+
+    it('should false when date is not provided', () => {
+      const result = dateIsInThePast();
+
+      expect(result).toEqual(false);
     });
   });
 });
