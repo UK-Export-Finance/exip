@@ -1,10 +1,10 @@
-import { isAfter } from 'date-fns';
 import { ACCOUNT } from '../../../../constants';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generateOTPAndUpdateAccount from '../../../../helpers/generate-otp-and-update-account';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import update from '../../../../helpers/update-account';
 import sendEmail from '../../../../emails';
+import { dateIsInThePast } from '../../../../helpers/date';
 import { Account, Context } from '../../../../types';
 
 const { EMAIL } = ACCOUNT;
@@ -39,9 +39,15 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
     if (!account.status.isVerified) {
       console.info('Unable to sign in account - account has not been verified yet');
 
-      const now = new Date();
+      let verificationHasExpired = false;
 
-      const verificationHasExpired = isAfter(now, account.verificationExpiry);
+      /**
+       * if account's verificationExpiry has elapsed
+       * then verificationHasExpired should be set to true
+       */
+      if (account.verificationExpiry) {
+        verificationHasExpired = dateIsInThePast(account.verificationExpiry);
+      }
 
       if (account.verificationHash && !verificationHasExpired) {
         console.info('Account has an unexpired verification token - resetting verification expiry');

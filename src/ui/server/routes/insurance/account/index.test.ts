@@ -5,7 +5,7 @@ import { get as confirmEmailGet } from '../../../controllers/insurance/account/c
 import { get as resendConfirmEmailGet } from '../../../controllers/insurance/account/create/resend-confirm-email';
 import { get as confirmEmailResentGet } from '../../../controllers/insurance/account/create/confirm-email-resent';
 import { get as verifyEmailGet } from '../../../controllers/insurance/account/create/verify-email';
-import { get as verifyEmailExpiredLinkGet } from '../../../controllers/insurance/account/create/verify-email-expired-link';
+import { get as verifyEmailExpiredLinkGet, post as verifyEmailExpiredLinkPost } from '../../../controllers/insurance/account/create/verify-email-expired-link';
 import { get as signInGet, post as signInPost } from '../../../controllers/insurance/account/sign-in';
 import { get as enterCodeGet, post as enterCodePost } from '../../../controllers/insurance/account/sign-in/enter-code';
 import { get as requestNewCodeGet, post as requestNewCodePost } from '../../../controllers/insurance/account/sign-in/request-new-code';
@@ -37,7 +37,7 @@ describe('routes/insurance/account', () => {
 
   it('should setup all routes', () => {
     expect(get).toHaveBeenCalledTimes(25);
-    expect(post).toHaveBeenCalledTimes(9);
+    expect(post).toHaveBeenCalledTimes(10);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS, yourDetailsPost);
@@ -50,6 +50,7 @@ describe('routes/insurance/account', () => {
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_INVALID_LINK, invalidLinkGet);
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK, verifyEmailExpiredLinkGet);
+    expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK, verifyEmailExpiredLinkPost);
 
     expect(get).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInGet);
     expect(post).toHaveBeenCalledWith(INSURANCE_ROUTES.ACCOUNT.SIGN_IN.ROOT, signInPost);

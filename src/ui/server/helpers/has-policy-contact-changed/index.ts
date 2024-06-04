@@ -6,10 +6,10 @@ const {
 } = POLICY_FIELD_IDS;
 
 /**
- * checks if policyContact isSameAsOwner has changed
- * returns true if has changed
- * @param {ApplicationPolicyContact} oldPolicyContact - old policyContact data before update
- * @param {ApplicationPolicyContact} newPolicyContact - updated policyContact data after update
+ * hasPolicyContactChanged
+ * check if policyContact IS_SAME_AS_OWNER has changed
+ * @param {ApplicationPolicyContact} oldPolicyContact: Old policyContact data before update
+ * @param {ApplicationPolicyContact} newPolicyContact: Updated policyContact data after update
  * @returns {Boolean}
  */
 const hasPolicyContactChanged = (oldPolicyContact: ApplicationPolicyContact, newPolicyContact: ApplicationPolicyContact) =>

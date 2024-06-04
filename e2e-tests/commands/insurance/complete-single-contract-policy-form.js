@@ -3,7 +3,7 @@ import { radios, field } from '../../pages/shared';
 import application from '../../fixtures/application';
 
 const {
-  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+  CURRENCY: { CURRENCY_CODE },
   POLICY: {
     CONTRACT_POLICY: {
       REQUESTED_START_DATE,
@@ -20,11 +20,7 @@ const {
  * @param {Boolean} alternativeCurrency: Select the "alternative currency" option
  * @param {Boolean} chooseCurrency: Whether to choose a currency or not
  */
-const completeSingleContractPolicyForm = ({
-  isoCode = application.POLICY[POLICY_CURRENCY_CODE],
-  alternativeCurrency = false,
-  chooseCurrency = true,
-}) => {
+const completeSingleContractPolicyForm = ({ isoCode = application.POLICY[POLICY_CURRENCY_CODE], alternativeCurrency = false, chooseCurrency = true }) => {
   cy.keyboardInput(field(REQUESTED_START_DATE).dayInput(), application.POLICY[REQUESTED_START_DATE].day);
   cy.keyboardInput(field(REQUESTED_START_DATE).monthInput(), application.POLICY[REQUESTED_START_DATE].month);
   cy.keyboardInput(field(REQUESTED_START_DATE).yearInput(), application.POLICY[REQUESTED_START_DATE].year);
@@ -37,7 +33,7 @@ const completeSingleContractPolicyForm = ({
     if (alternativeCurrency) {
       cy.clickAlternativeCurrencyRadioOption();
 
-      cy.autocompleteKeyboardInput(ALTERNATIVE_CURRENCY_CODE, isoCode);
+      cy.completeAlternativeCurrencyField({ currency: isoCode });
     } else {
       radios(CURRENCY_CODE, isoCode).option.label().click();
     }

@@ -5,7 +5,7 @@ dotenv.config();
 
 export const mockConnectionWithBuyer = {
   exporterIsConnectedWithBuyer: true,
-  connectionWithBuyerDescription: 'test description',
+  connectionWithBuyerDescription: 'Mock connection with buyer description',
 };
 
 export const mockBuyerTradingHistory = {
@@ -23,7 +23,7 @@ export const mockBuyerRelationship = {
   ...mockConnectionWithBuyer,
   exporterHasPreviousCreditInsuranceWithBuyer: true,
   exporterHasBuyerFinancialAccounts: true,
-  previousCreditInsuranceWithBuyerDescription: 'mock credit insurance buyer',
+  previousCreditInsuranceWithBuyerDescription: 'mock credit insurance with buyer description',
 };
 
 export const mockBuyerContact = {

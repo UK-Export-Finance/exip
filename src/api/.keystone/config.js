@@ -157,7 +157,9 @@ var mapUnverifiedAccounts = (accounts) => {
     const mapped = {
       where: { id: account2.id },
       data: {
-        updatedAt: /* @__PURE__ */ new Date()
+        updatedAt: /* @__PURE__ */ new Date(),
+        verificationHash: "",
+        verificationExpiry: null
       }
     };
     return mapped;
@@ -463,7 +465,14 @@ var YOUR_BUYER = {
   },
   CONNECTION_WITH_BUYER: "exporterIsConnectedWithBuyer",
   CONNECTION_WITH_BUYER_DESCRIPTION: "connectionWithBuyerDescription",
-  TRADED_WITH_BUYER: "exporterHasTradedWithBuyer"
+  TRADED_WITH_BUYER: "exporterHasTradedWithBuyer",
+  OUTSTANDING_PAYMENTS: "outstandingPayments",
+  TOTAL_OUTSTANDING_PAYMENTS: "totalOutstandingPayments",
+  TOTAL_AMOUNT_OVERDUE: "totalOverduePayments",
+  FAILED_PAYMENTS: "failedPayments",
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: "exporterHasPreviousCreditInsuranceWithBuyer",
+  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: "previousCreditInsuranceWithBuyerDescription",
+  HAS_BUYER_FINANCIAL_ACCOUNTS: "exporterHasBuyerFinancialAccounts"
 };
 var your_buyer_default = YOUR_BUYER;
 
@@ -504,6 +513,10 @@ var INSURANCE_FIELD_IDS = {
     HAS_REVIEWED_ELIGIBILITY: "hasReviewedEligibility"
   },
   ...shared_default2,
+  CURRENCY: {
+    CURRENCY_CODE: "currencyCode",
+    ALTERNATIVE_CURRENCY_CODE: "alternativeCurrencyCode"
+  },
   SUBMISSION_DEADLINE: "submissionDeadline",
   ACCOUNT: account_default,
   POLICY: policy_default,
@@ -594,7 +607,8 @@ if (isDevEnvironment) {
     "createBuyer",
     "deleteAnAccount",
     "deleteApplications",
-    "getAccountPasswordResetToken"
+    "getAccountPasswordResetToken",
+    "updateAccountStatus"
   );
 }
 var ALLOWED_GRAPHQL_RESOLVERS = [...DEFAULT_RESOLVERS, ...CUSTOM_RESOLVERS];
@@ -793,7 +807,7 @@ var TITLE_INDEXES = () => ({
   EXPORTER_BUSINESS: 31,
   POLICY: 48,
   BUYER: 57,
-  DECLARATIONS: 65
+  DECLARATIONS: 67
 });
 var INDEXES = () => ({
   TITLES: TITLE_INDEXES(),
@@ -823,6 +837,10 @@ var {
 var XLSX_ROW_INDEXES = (application2) => {
   const {
     broker,
+    buyer: {
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer }
+    },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName
@@ -834,14 +852,15 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (isMultiplePolicyType(policyType)) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
+    indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 3;
-    indexes.BUYER_ADDRESS += 3;
     indexes.BROKER_ADDRESS = 48;
+    indexes.BUYER_ADDRESS += 3;
   }
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
@@ -852,6 +871,18 @@ var XLSX_ROW_INDEXES = (application2) => {
   }
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
+  }
+  if (exporterIsConnectedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+  if (exporterHasTradedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 2;
+    if (buyerHasOutstandingPayments) {
+      indexes.TITLES.DECLARATIONS += 2;
+    }
+  }
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
   }
   return indexes;
 };
@@ -872,6 +903,40 @@ var XLSX_CONFIG = {
     DEFAULT: 11,
     TITLE: 14
   }
+};
+
+// constants/validation.ts
+var MAXIMUM_CHARACTERS = {
+  ABOUT_GOODS_OR_SERVICES_DESCRIPTION: 1e3,
+  ACCOUNT_NUMBER: 8,
+  AGENT_NAME: 800,
+  AGENT_SERVICE_DESCRIPTION: 1e3,
+  BIC_SWIFT_CODE: 11,
+  BROKER_NAME: 800,
+  BUSINESS: {
+    GOODS_OR_SERVICES_DESCRIPTION: 1e3
+  },
+  BUYER: {
+    COMPANY_OR_ORGANISATION: 200,
+    REGISTRATION_NUMBER: 200,
+    PREVIOUS_CREDIT_INSURANCE_COVER: 1e3
+  },
+  COMPANY_DIFFERENT_TRADING_NAME: 200,
+  CONNECTION_WITH_BUYER_DESCRIPTION: 1e3,
+  CREDIT_PERIOD_WITH_BUYER: 1e3,
+  DECLINED_BY_PRIVATE_MARKET_DESCRIPTION: 1e3,
+  EMAIL: 300,
+  FEEDBACK: {
+    IMPROVEMENT: 1200,
+    OTHER_COMMENTS: 1200
+  },
+  FULL_ADDRESS: 500,
+  IBAN: 34,
+  LOSS_PAYEE_NAME: 200,
+  PAYMENT_TERMS_DESCRIPTION: 1e3,
+  PERCENTAGE: 100,
+  POLICY_CONTACT_NAME: 400,
+  SORT_CODE: 6
 };
 
 // constants/index.ts
@@ -1046,10 +1111,15 @@ var account_default2 = accountCronSchedulerJobs;
 var import_dotenv3 = __toESM(require("dotenv"));
 
 // helpers/date/index.ts
+var import_date_fns = require("date-fns");
 var getThirtyDaysBeforeNow = () => {
   const now2 = /* @__PURE__ */ new Date();
   const result = now2.setDate(now2.getDate() - 30);
   return new Date(result);
+};
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns.isAfter)(now2, targetDate);
 };
 
 // helpers/get-inactive-applications/index.ts
@@ -1149,7 +1219,7 @@ var import_core2 = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns = require("date-fns");
+var import_date_fns2 = require("date-fns");
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1346,7 +1416,7 @@ var lists = {
             const now2 = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = (0, import_date_fns2.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = SUBMISSION_TYPE.MIA;
             modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
@@ -2975,8 +3045,8 @@ var documentsEmail = async (variables, templateId) => {
 var import_dotenv5 = __toESM(require("dotenv"));
 
 // helpers/format-date/index.ts
-var import_date_fns2 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
+var import_date_fns3 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns3.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // helpers/map-feedback-satisfaction/index.ts
@@ -3134,7 +3204,7 @@ var deleteAnAccount = async (root, variables, context) => {
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns3 = require("date-fns");
+var import_date_fns4 = require("date-fns");
 
 // helpers/update-account/index.ts
 var account = async (context, accountId, updateData) => {
@@ -3198,7 +3268,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const { id } = account2;
     const { id: statusId } = account2.status;
     const now2 = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
+    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info("Unable to verify account email address - verification period has expired");
       return {
@@ -3258,7 +3328,11 @@ var send = async (context, urlOrigin, accountId) => {
       };
     }
     let latestVerificationHash = "";
-    if (account2.verificationHash) {
+    let verificationHasExpired = false;
+    if (account2.verificationExpiry) {
+      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+    }
+    if (account2.verificationHash && !verificationHasExpired) {
       latestVerificationHash = account2.verificationHash;
     } else {
       const { email: email2, salt } = account2;
@@ -3360,7 +3434,7 @@ var createAuthenticationRetryEntry = async (context, accountId) => {
 var create_authentication_retry_entry_default = createAuthenticationRetryEntry;
 
 // helpers/should-block-account/index.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns5 = require("date-fns");
 var { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT2;
 var shouldBlockAccount = async (context, accountId) => {
   console.info("Checking account authentication retries %s", accountId);
@@ -3370,7 +3444,7 @@ var shouldBlockAccount = async (context, accountId) => {
     const retriesInTimeframe = [];
     retries.forEach((retry) => {
       const retryDate = retry.createdAt;
-      const isWithinLast24Hours = (0, import_date_fns4.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns4.isBefore)(retryDate, now2);
+      const isWithinLast24Hours = (0, import_date_fns5.isAfter)(retryDate, MAX_AUTH_RETRIES_TIMEFRAME) && (0, import_date_fns5.isBefore)(retryDate, now2);
       if (isWithinLast24Hours) {
         retriesInTimeframe.push(retry.id);
       }
@@ -3403,9 +3477,6 @@ var blockAccount = async (context, statusId) => {
   }
 };
 var block_account_default = blockAccount;
-
-// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var import_date_fns5 = require("date-fns");
 
 // helpers/generate-otp/index.ts
 var import_crypto4 = __toESM(require("crypto"));
@@ -3474,8 +3545,10 @@ var accountChecks = async (context, account2, urlOrigin) => {
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
       console.info("Unable to sign in account - account has not been verified yet");
-      const now2 = /* @__PURE__ */ new Date();
-      const verificationHasExpired = (0, import_date_fns5.isAfter)(now2, account2.verificationExpiry);
+      let verificationHasExpired = false;
+      if (account2.verificationExpiry) {
+        verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+      }
       if (account2.verificationHash && !verificationHasExpired) {
         console.info("Account has an unexpired verification token - resetting verification expiry");
         const accountUpdate = {
@@ -3591,9 +3664,6 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 };
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
-// custom-resolvers/mutations/verify-account-sign-in-code/index.ts
-var import_date_fns6 = require("date-fns");
-
 // helpers/is-valid-otp/index.ts
 var import_crypto5 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
@@ -3690,8 +3760,7 @@ var verifyAccountSignInCode = async (root, variables, context) => {
       };
     }
     const { otpSalt, otpHash, otpExpiry } = account2;
-    const now2 = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns6.isAfter)(now2, otpExpiry);
+    const hasExpired = dateIsInThePast(otpExpiry);
     if (hasExpired) {
       console.info("Unable to verify account sign in code - verification period has expired");
       return {
@@ -3819,9 +3888,6 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
 };
 var send_email_password_reset_link_default = sendEmailPasswordResetLink;
 
-// custom-resolvers/mutations/account-password-reset/index.ts
-var import_date_fns7 = require("date-fns");
-
 // helpers/account-has-used-password-before/index.ts
 var hasAccountUsedPasswordBefore = async (context, accountId, newPassword) => {
   console.info("Checking if an account has used a password before");
@@ -3892,8 +3958,7 @@ var accountPasswordReset = async (root, variables, context) => {
       console.info("Unable to reset account password - reset hash or expiry does not exist");
       return { success: false };
     }
-    const now2 = /* @__PURE__ */ new Date();
-    const hasExpired = (0, import_date_fns7.isAfter)(now2, passwordResetExpiry);
+    const hasExpired = dateIsInThePast(passwordResetExpiry);
     if (hasExpired) {
       console.info("Unable to reset account password - verification period has expired");
       return {
@@ -4738,7 +4803,7 @@ var deleteApplicationByReferenceNumber = async (root, variables, context) => {
 var delete_application_by_reference_number_default = deleteApplicationByReferenceNumber;
 
 // custom-resolvers/mutations/submit-application/index.ts
-var import_date_fns8 = require("date-fns");
+var import_date_fns6 = require("date-fns");
 
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
@@ -4854,6 +4919,18 @@ var getPopulatedApplication = async (context, application2) => {
   if (!buyer) {
     throw new Error(generateErrorMessage("buyer", application2.id));
   }
+  const buyerRelationship = await context.db.BuyerRelationship.findOne({
+    where: { id: buyer.relationshipId }
+  });
+  if (!buyerRelationship) {
+    throw new Error(generateErrorMessage("buyerRelationship", application2.id));
+  }
+  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+    where: { id: buyer.buyerTradingHistoryId }
+  });
+  if (!buyerTradingHistory) {
+    throw new Error(generateErrorMessage("buyerTradingHistory", application2.id));
+  }
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
     where: { id: nominatedLossPayeeId },
     query: "id financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } isAppointed isLocatedInUk isLocatedInternationally name"
@@ -4876,7 +4953,9 @@ var getPopulatedApplication = async (context, application2) => {
   };
   const populatedBuyer = {
     ...buyer,
-    country: buyerCountry
+    country: buyerCountry,
+    relationship: buyerRelationship,
+    buyerTradingHistory
   };
   const declaration = await context.db.Declaration.findOne({
     where: { id: declarationId }
@@ -5485,44 +5564,170 @@ var FIELDS = {
   }
 };
 
+// content-strings/form-titles.ts
+var FORM_TITLES = {
+  YOUR_BUSINESS: {
+    COMPANY_DETAILS: "Company details",
+    NATURE_OF_BUSINESS: "Nature of your business",
+    TURNOVER: "Turnover",
+    CREDIT_CONTROL: "Credit control"
+  },
+  YOUR_BUYER: {
+    COMPANY_DETAILS: "Company details",
+    CONNECTION_TO_BUYER: "Connection to the buyer",
+    TRADING_HISTORY: "Trading history",
+    CREDIT_INSURANCE_HISTORY: "Credit insurance history",
+    FINANCIAL_ACCOUNTS: "Financial accounts"
+  },
+  POLICY: {
+    CONTRACT_POLICY: "Requested insurance policy",
+    NAME_ON_POLICY: "Named person on the policy",
+    BROKER: "Broker",
+    OTHER_COMPANY: "Other company to be insured",
+    LOSS_PAYEE: "Loss payee"
+  },
+  EXPORT_CONTRACT: {
+    ABOUT_THE_EXPORT: "About the export",
+    PRIVATE_MARKET: "Private insurance market",
+    AGENT: "Agent"
+  }
+};
+
 // content-strings/fields/insurance/your-buyer/index.ts
 var {
-  YOUR_BUYER: { COMPANY_OR_ORGANISATION, CONNECTION_WITH_BUYER, TRADED_WITH_BUYER }
-} = insurance_default;
+  YOUR_BUYER: {
+    COMPANY_OR_ORGANISATION,
+    CONNECTION_WITH_BUYER,
+    TRADED_WITH_BUYER,
+    CONNECTION_WITH_BUYER_DESCRIPTION,
+    OUTSTANDING_PAYMENTS,
+    FAILED_PAYMENTS,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
+    TOTAL_OUTSTANDING_PAYMENTS,
+    TOTAL_AMOUNT_OVERDUE,
+    HAS_BUYER_FINANCIAL_ACCOUNTS
+  },
+  CURRENCY: { CURRENCY_CODE }
+} = FIELD_IDS.INSURANCE;
+var {
+  YOUR_BUYER: { COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS }
+} = FORM_TITLES;
 var YOUR_BUYER_FIELDS = {
   COMPANY_OR_ORGANISATION: {
     [COMPANY_OR_ORGANISATION.NAME]: {
+      LABEL: "Buyer's company or organisation name",
       SUMMARY: {
-        TITLE: "Company or organisation name"
+        TITLE: "Company or organisation name",
+        FORM_TITLE: COMPANY_DETAILS
       }
     },
     [COMPANY_OR_ORGANISATION.ADDRESS]: {
+      LABEL: "Company address",
       SUMMARY: {
-        TITLE: "Buyer address"
-      }
+        TITLE: "Buyer address",
+        FORM_TITLE: COMPANY_DETAILS
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
     },
     [COMPANY_OR_ORGANISATION.COUNTRY]: {
-      LABEL: "Country"
-    },
-    [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
+      LABEL: "Buyer country",
       SUMMARY: {
-        TITLE: "Registration number (optional)"
+        TITLE: "Buyer country"
       }
     },
-    [COMPANY_OR_ORGANISATION.WEBSITE]: {
+    [COMPANY_OR_ORGANISATION.REGISTRATION_NUMBER]: {
+      LABEL: "Company registration number (optional)",
       SUMMARY: {
-        TITLE: "Buyer website (optional)"
+        TITLE: "Registration number (optional)",
+        FORM_TITLE: COMPANY_DETAILS
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.BUYER.REGISTRATION_NUMBER
+    },
+    [COMPANY_OR_ORGANISATION.WEBSITE]: {
+      LABEL: "Enter their website (optional)",
+      SUMMARY: {
+        TITLE: "Buyer website (optional)",
+        FORM_TITLE: COMPANY_DETAILS
       }
     }
   },
   [CONNECTION_WITH_BUYER]: {
+    LABEL: "Are you connected with the buyer in any way?",
+    HINT: "For example, someone in your company is a shareholder or director of the buyer's company.",
     SUMMARY: {
-      TITLE: "Connected with the buyer in any way?"
+      TITLE: "Connected with the buyer",
+      FORM_TITLE: CONNECTION_TO_BUYER
+    }
+  },
+  [CONNECTION_WITH_BUYER_DESCRIPTION]: {
+    LABEL: "Describe the connection with the buyer",
+    MAXIMUM: MAXIMUM_CHARACTERS.CONNECTION_WITH_BUYER_DESCRIPTION,
+    SUMMARY: {
+      TITLE: "Details of connection",
+      FORM_TITLE: CONNECTION_TO_BUYER
     }
   },
   [TRADED_WITH_BUYER]: {
+    LABEL: "Have you traded with this buyer before?",
+    HINT: "If yes, we will request a copy of your trading history once the application has been submitted.",
     SUMMARY: {
-      TITLE: "Have you traded with this buyer before?"
+      TITLE: "Trading history",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [OUTSTANDING_PAYMENTS]: {
+    LABEL: "Do you currently have any outstanding or overdue payments from the buyer?",
+    SUMMARY: {
+      TITLE: "Outstanding or overdue payments",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [FAILED_PAYMENTS]: {
+    LABEL: "Has the buyer ever failed to pay you on time?",
+    SUMMARY: {
+      TITLE: "Buyer failed to pay on time?",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [CURRENCY_CODE]: {
+    LEGEND: "What currency are the outstanding or overdue payments in?"
+  },
+  [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: "Have you in the past held credit insurance cover on the buyer?",
+    SUMMARY: {
+      TITLE: "Credit insurance previously held for the buyer",
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY
+    }
+  },
+  [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
+    LABEL: "Tell us about the credit insurance cover you had on the buyer",
+    HINT: "Include the name of the insurer(s) and the credit limit.",
+    SUMMARY: {
+      TITLE: "Details of credit insurance",
+      FORM_TITLE: CREDIT_INSURANCE_HISTORY
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.BUYER.PREVIOUS_CREDIT_INSURANCE_COVER
+  },
+  [TOTAL_OUTSTANDING_PAYMENTS]: {
+    HEADING: "Tell us about the outstanding or overdue payments",
+    LABEL: "Total outstanding, including overdue",
+    SUMMARY: {
+      TITLE: "Total outstanding including overdue",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [TOTAL_AMOUNT_OVERDUE]: {
+    LABEL: "Amount overdue",
+    SUMMARY: {
+      TITLE: "Amount overdue",
+      FORM_TITLE: TRADING_HISTORY
+    }
+  },
+  [HAS_BUYER_FINANCIAL_ACCOUNTS]: {
+    SUMMARY: {
+      TITLE: "Financial accounts relating to the buyer",
+      FORM_TITLE: FINANCIAL_ACCOUNTS
     }
   }
 };
@@ -5553,6 +5758,7 @@ var DEFAULT = {
 var { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
+  DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
     COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
@@ -5570,7 +5776,16 @@ var {
     BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
   },
   YOUR_BUYER: {
-    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS }
+    COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
+    CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER2,
+    CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION2,
+    FAILED_PAYMENTS: FAILED_PAYMENTS2,
+    HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS2,
+    HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2,
+    OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS2,
+    PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2,
+    TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS2,
+    TRADED_WITH_BUYER: TRADED_WITH_BUYER2
   }
 } = insurance_default;
 var XLSX = {
@@ -5587,6 +5802,7 @@ var XLSX = {
   FIELDS: {
     [FIRST_NAME]: "Applicant first name",
     [LAST_NAME]: "Applicant last name",
+    [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
     APPLICANT_ROLE: "Applicants role",
     [BUYER_COUNTRY2]: "Where is your buyer based?",
@@ -5597,8 +5813,9 @@ var XLSX = {
     },
     [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
     [COVER_PERIOD2]: "Length of cover",
+    [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
     [HAS_END_BUYER2]: "Is there an end buyer?",
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services",
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
     [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments",
     [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
@@ -5607,7 +5824,7 @@ var XLSX = {
     [DIFFERENT_TRADING_NAME]: "Alternative trading name",
     [TRADING_ADDRESS2]: "Different trading address?",
     [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
-    [MORE_THAN_250K.VALUE]: `Insured for more than ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
+    [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
     [WEBSITE2]: "Exporter Company website (optional)",
     [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
@@ -5619,9 +5836,19 @@ var XLSX = {
     [BROKER_ADDRESS]: "Broker address",
     [BROKER_EMAIL]: "Broker email address",
     [COUNTRY]: "Buyer location",
-    [BUYER_COMPANY_NAME]: "Buyer company name",
+    [BUYER_COMPANY_NAME]: "Buyer company name or organisation",
     [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
     [BUYER_CONTACT_DETAILS]: "Buyer contact details",
+    [CONNECTION_WITH_BUYER2]: "Is the exporter connected with the buyer in any way?",
+    [CONNECTION_WITH_BUYER_DESCRIPTION2]: "Describe connection to the buyer",
+    [TRADED_WITH_BUYER2]: "Has the exporter traded with this buyer before?",
+    [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time",
+    [HAS_BUYER_FINANCIAL_ACCOUNTS2]: "Does the exporter hold any financial accounts in relation to the buyer?",
+    [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "If the exporter has in past held credit insurance cover on the buyer",
+    [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer",
+    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Exporter explaining the credit insurance cover they had on the buyer",
+    [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
+    [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
     NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House"
   }
 };
@@ -5633,11 +5860,7 @@ var format_time_of_day_default = formatTimeOfDay;
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
 var {
-  ACCOUNT: {
-    FIRST_NAME: FIRST_NAME2,
-    LAST_NAME: LAST_NAME2,
-    EMAIL: EMAIL5
-  },
+  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 },
   POLICY: {
     NAME_ON_POLICY: { POSITION }
   }
@@ -5796,12 +6019,16 @@ var mapPolicy = (application2) => {
 var map_policy_default = mapPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
-var mapYesNoField = (answer) => {
+var { YES, NO } = FIELD_VALUES;
+var mapYesNoField = ({ answer, defaultValue }) => {
   if (answer === false) {
-    return "No";
+    return NO;
   }
   if (answer === true) {
-    return "Yes";
+    return YES;
+  }
+  if (defaultValue) {
+    return defaultValue;
   }
   return DEFAULT.EMPTY;
 };
@@ -5815,7 +6042,7 @@ var {
 var { FIELDS: FIELDS5 } = XLSX;
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default(broker[USING_BROKER4]))];
+  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
   if (broker[USING_BROKER4]) {
     mapped = [
       ...mapped,
@@ -5916,9 +6143,9 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(FIELDS9[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(FIELDS9[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
-    xlsx_row_default(FIELDS9[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default(company[HAS_DIFFERENT_TRADING_NAME4])),
+    xlsx_row_default(FIELDS9[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(FIELDS9[TRADING_ADDRESS3], map_yes_no_field_default(company[TRADING_ADDRESS3])),
+    xlsx_row_default(FIELDS9[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
     xlsx_row_default(FIELDS9[WEBSITE3], company[WEBSITE3]),
     xlsx_row_default(FIELDS9[PHONE_NUMBER3], company[PHONE_NUMBER3]),
@@ -5928,12 +6155,70 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
     xlsx_row_default(FIELDS9[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
     xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    xlsx_row_default(FIELDS9[HAS_CREDIT_CONTROL3], map_yes_no_field_default(business[HAS_CREDIT_CONTROL3])),
+    xlsx_row_default(FIELDS9[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] })),
     ...map_broker_default(application2)
   ];
   return mapped;
 };
 var map_exporter_business_default = mapExporterBusiness;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
+var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
+var { FIELDS: FIELDS10 } = XLSX;
+var mapConnectionWithBuyer = (relationship2) => {
+  if (relationship2[CONNECTION_WITH_BUYER3]) {
+    return xlsx_row_default(String(FIELDS10[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
+  }
+};
+var map_connection_with_buyer_default = mapConnectionWithBuyer;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-outstanding-payments/index.ts
+var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 },
+  YOUR_BUYER: { OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3, TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3, TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2 }
+} = insurance_default;
+var { FIELDS: FIELDS11 } = XLSX;
+var mapOutstandingPayments = (tradingHistory) => {
+  if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
+    const values = {
+      totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE2]),
+      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE2])
+    };
+    const mapped = [
+      xlsx_row_default(String(FIELDS11[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue)
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_outstanding_payments_default = mapOutstandingPayments;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-buyer-trading-history/index.ts
+var { FAILED_PAYMENTS: FAILED_PAYMENTS3, OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS4, TRADED_WITH_BUYER: TRADED_WITH_BUYER3 } = your_buyer_default;
+var { FIELDS: FIELDS12 } = XLSX;
+var mapBuyerTradingHistory = (tradingHistory) => {
+  if (tradingHistory[TRADED_WITH_BUYER3]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS12[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
+      ...map_outstanding_payments_default(tradingHistory),
+      xlsx_row_default(String(FIELDS12[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_buyer_trading_history_default = mapBuyerTradingHistory;
+
+// generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
+var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
+var { FIELDS: FIELDS13 } = XLSX;
+var mapPreviousCoverWithBuyer = (relationship2) => {
+  if (relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]) {
+    return xlsx_row_default(String(FIELDS13[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]);
+  }
+};
+var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
 var CONTENT_STRINGS4 = {
@@ -5942,19 +6227,34 @@ var CONTENT_STRINGS4 = {
 };
 var {
   COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
-  CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER2,
-  TRADED_WITH_BUYER: TRADED_WITH_BUYER2
+  CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER4,
+  HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
+  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4,
+  TRADED_WITH_BUYER: TRADED_WITH_BUYER4
 } = your_buyer_default;
+var { SECTION_TITLES: SECTION_TITLES2, FIELDS: FIELDS14 } = XLSX;
 var mapBuyer = (application2) => {
   const { buyer } = application2;
+  const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.BUYER, ""),
-    xlsx_row_default(XLSX.FIELDS[NAME2], buyer[NAME2]),
+    xlsx_row_default(SECTION_TITLES2.BUYER, ""),
+    xlsx_row_default(FIELDS14[NAME2], buyer[NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(XLSX.FIELDS[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(FIELDS14[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
     xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(String(CONTENT_STRINGS4[CONNECTION_WITH_BUYER2].SUMMARY?.TITLE), map_yes_no_field_default(buyer[CONNECTION_WITH_BUYER2])),
-    xlsx_row_default(String(CONTENT_STRINGS4[TRADED_WITH_BUYER2].SUMMARY?.TITLE), map_yes_no_field_default(buyer[TRADED_WITH_BUYER2]))
+    xlsx_row_default(String(FIELDS14[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
+    map_connection_with_buyer_default(relationship2),
+    xlsx_row_default(String(FIELDS14[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
+    ...map_buyer_trading_history_default(buyerTradingHistory),
+    xlsx_row_default(
+      String(FIELDS14[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]),
+      map_yes_no_field_default({
+        answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4],
+        defaultValue: FIELD_VALUES.NO
+      })
+    ),
+    map_previous_cover_with_buyer_default(relationship2),
+    xlsx_row_default(String(FIELDS14[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;
 };
@@ -5962,7 +6262,7 @@ var map_buyer_default = mapBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
-var { FIELDS: FIELDS10, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
+var { FIELDS: FIELDS15, SECTION_TITLES: SECTION_TITLES3 } = XLSX;
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY3,
@@ -5979,15 +6279,15 @@ var {
 var mapEligibility = (application2) => {
   const { company, eligibility } = application2;
   const mapped = [
-    xlsx_row_default(SECTION_TITLES2.ELIGIBILITY, ""),
-    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[VALID_EXPORTER_LOCATION2])),
-    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default(eligibility[HAS_COMPANIES_HOUSE_NUMBER2])),
-    xlsx_row_default(FIELDS10[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(FIELDS10[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(FIELDS10[MORE_THAN_250K2.VALUE], map_yes_no_field_default(eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID)),
-    xlsx_row_default(FIELDS10[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(FIELDS10[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default(eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3])),
-    xlsx_row_default(FIELDS10[HAS_END_BUYER3], map_yes_no_field_default(eligibility[HAS_END_BUYER3]))
+    xlsx_row_default(SECTION_TITLES3.ELIGIBILITY, ""),
+    xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
+    xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
+    xlsx_row_default(FIELDS15[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(FIELDS15[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(FIELDS15[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
+    xlsx_row_default(FIELDS15[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(FIELDS15[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(FIELDS15[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
   ];
   return mapped;
 };
@@ -6003,25 +6303,26 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
+var { FIELDS: FIELDS16, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
     AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
-    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2,
-    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2,
-    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT3,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED3,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
   }
 } = insurance_default;
 var mapDeclarations = (application2) => {
   const { declaration } = application2;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.DECLARATIONS, ""),
+    xlsx_row_default(SECTION_TITLES4.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2])),
-    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2])),
-    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED2])),
+    xlsx_row_default(String(FIELDS16[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS16[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS16[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;
@@ -6147,7 +6448,7 @@ var submitApplication = async (root, variables, context) => {
       const { status, submissionDeadline, submissionCount } = application2;
       const isInProgress = status === APPLICATION.STATUS.IN_PROGRESS;
       const now2 = /* @__PURE__ */ new Date();
-      const validSubmissionDate = (0, import_date_fns8.isAfter)(new Date(submissionDeadline), now2);
+      const validSubmissionDate = (0, import_date_fns6.isAfter)(new Date(submissionDeadline), now2);
       const isFirstSubmission = submissionCount === 0;
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
       if (canSubmit) {
@@ -6208,7 +6509,7 @@ var createFeedback = async (root, variables, context) => {
 var create_feedback_default = createFeedback;
 
 // custom-resolvers/mutations/verify-account-reactivation-token/index.ts
-var import_date_fns9 = require("date-fns");
+var import_date_fns7 = require("date-fns");
 var {
   INSURANCE: {
     ACCOUNT: { REACTIVATION_HASH, REACTIVATION_EXPIRY }
@@ -6221,7 +6522,7 @@ var verifyAccountReactivationToken = async (root, variables, context) => {
     if (account2) {
       console.info("Received a request to reactivate account - found account %s", account2.id);
       const now2 = /* @__PURE__ */ new Date();
-      const canReactivateAccount = (0, import_date_fns9.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
+      const canReactivateAccount = (0, import_date_fns7.isBefore)(now2, account2[REACTIVATION_EXPIRY]);
       if (!canReactivateAccount) {
         console.info("Unable to reactivate account - reactivation period has expired");
         return {
@@ -6650,12 +6951,12 @@ var cannot_get_a_quote_default = cannotGetAQuote;
 // helpers/map-CIS-countries/map-CIS-country/can-apply-for-insurance-online/index.ts
 var {
   CIS: {
-    SHORT_TERM_COVER_AVAILABLE: { YES, ILC, CILC, REFER, UNLISTED }
+    SHORT_TERM_COVER_AVAILABLE: { YES: YES2, ILC, CILC, REFER, UNLISTED }
   }
 } = EXTERNAL_API_DEFINITIONS;
 var canApplyForInsuranceOnline = (originalShortTermCover, riskCategory) => {
   switch (originalShortTermCover) {
-    case (riskCategory && YES):
+    case (riskCategory && YES2):
       return true;
     case (riskCategory && ILC):
       return true;
@@ -7231,7 +7532,6 @@ var getOrdnanceSurveyAddress = async (root, variables) => {
 var get_ordnance_survey_address_default = getOrdnanceSurveyAddress;
 
 // custom-resolvers/queries/verify-account-password-reset-token/index.ts
-var import_date_fns10 = require("date-fns");
 var { PASSWORD_RESET_HASH, PASSWORD_RESET_EXPIRY } = account_default;
 var verifyAccountPasswordResetToken = async (root, variables, context) => {
   console.info("Verifying account password reset token");
@@ -7239,8 +7539,7 @@ var verifyAccountPasswordResetToken = async (root, variables, context) => {
     const { token } = variables;
     const account2 = await get_account_by_field_default(context, PASSWORD_RESET_HASH, token);
     if (account2) {
-      const now2 = /* @__PURE__ */ new Date();
-      const hasExpired = (0, import_date_fns10.isAfter)(now2, account2[PASSWORD_RESET_EXPIRY]);
+      const hasExpired = dateIsInThePast(account2[PASSWORD_RESET_EXPIRY]);
       if (hasExpired) {
         console.info("Unable to verify account password reset token - token has expired");
         return {

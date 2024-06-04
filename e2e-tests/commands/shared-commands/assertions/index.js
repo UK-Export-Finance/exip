@@ -20,6 +20,7 @@ Cypress.Commands.add('assertNoRadioOptionIsNotChecked', require('./assert-no-rad
 Cypress.Commands.add('assertLength', require('./assert-length'));
 Cypress.Commands.add('assertErrorSummaryListLength', require('./assert-error-summary-list-length'));
 Cypress.Commands.add('assertErrorSummaryListDoesNotExist', require('./assert-error-summary-list-does-not-exist'));
+Cypress.Commands.add('assertCurrencyFormFieldsAreEmpty', require('./assert-currency-form-fields-are-empty'));
 
 Cypress.Commands.add('assertCopyWithCurrencyName', require('./assert-copy-with-currency-name'));
 Cypress.Commands.add('assertPrefix', require('./assert-prefix'));
@@ -83,5 +84,8 @@ Cypress.Commands.add('assertEmptyAgentServiceFieldValues', require('./assert-emp
 
 Cypress.Commands.add('assertAgentChargesFieldValues', require('./assert-agent-charges-field-values'));
 Cypress.Commands.add('assertEmptyAgentChargesFieldValues', require('./assert-empty-agent-charges-field-values'));
+
+Cypress.Commands.add('assertEmptyContractCompletionDateFieldValues', require('./assert-empty-contract-completion-date-field-values'));
+Cypress.Commands.add('assertEmptyRequestedStartDateFieldValues', require('./assert-empty-requested-start-date-field-values'));
 
 Cypress.Commands.add('submitAndAssertChangeAnswersPageUrl', require('./submit-and-assert-change-answers-page-url'));

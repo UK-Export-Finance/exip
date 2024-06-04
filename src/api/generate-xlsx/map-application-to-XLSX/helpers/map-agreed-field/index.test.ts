@@ -1,4 +1,4 @@
-import mapYesNoField from '.';
+import mapAgreedField from '.';
 import { DEFAULT, XLSX } from '../../../../content-strings';
 
 describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-agreed-field', () => {
@@ -6,7 +6,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-agreed-field', (
     const value = true;
 
     it(`should return "${XLSX.AGREED}"`, () => {
-      const response = mapYesNoField(value);
+      const response = mapAgreedField(value);
 
       expect(response).toEqual(XLSX.AGREED);
     });
@@ -16,7 +16,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-agreed-field', (
     const value = false;
 
     it(`should return "${DEFAULT.EMPTY}"`, () => {
-      const response = mapYesNoField(value);
+      const response = mapAgreedField(value);
 
       expect(response).toEqual(DEFAULT.EMPTY);
     });
@@ -24,7 +24,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/helpers/map-agreed-field', (
 
   describe('when value is undefined', () => {
     it(`should return "${DEFAULT.EMPTY}"`, () => {
-      const response = mapYesNoField();
+      const response = mapAgreedField();
 
       expect(response).toEqual(DEFAULT.EMPTY);
     });

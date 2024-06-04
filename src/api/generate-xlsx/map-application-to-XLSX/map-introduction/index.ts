@@ -9,14 +9,10 @@ import { Application } from '../../../types';
 const { FIELDS } = XLSX;
 
 const {
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL },
   POLICY: {
     NAME_ON_POLICY: { POSITION },
-  }
+  },
 } = INSURANCE_FIELD_IDS;
 
 /**
