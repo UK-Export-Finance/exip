@@ -31,7 +31,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
         await mapAndSave.policy(mockFormBody, mockApplication, mockValidationErrors);
 
         expect(save.policy).toHaveBeenCalledTimes(1);
-        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody), mockValidationErrors?.errorList);
+        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockApplication), mockValidationErrors?.errorList);
       });
 
       it('should return true', async () => {
@@ -46,7 +46,7 @@ describe('controllers/insurance/policy/map-and-save/policy', () => {
         await mapAndSave.policy(mockFormBody, mockApplication);
 
         expect(save.policy).toHaveBeenCalledTimes(1);
-        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody));
+        expect(save.policy).toHaveBeenCalledWith(mockApplication, mapSubmittedData(mockFormBody, mockApplication));
       });
 
       it('should return true', async () => {
