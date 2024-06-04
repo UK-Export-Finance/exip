@@ -1110,27 +1110,14 @@ var account_default2 = accountCronSchedulerJobs;
 // cron/application/inactive-application-cron-job.ts
 var import_dotenv3 = __toESM(require("dotenv"));
 
-// helpers/date/index.ts
-var import_date_fns = require("date-fns");
-var getThirtyDaysBeforeNow = () => {
-  const now2 = /* @__PURE__ */ new Date();
-  const result = now2.setDate(now2.getDate() - 30);
-  return new Date(result);
-};
-var dateIsInThePast = (targetDate) => {
-  const now2 = /* @__PURE__ */ new Date();
-  return (0, import_date_fns.isAfter)(now2, targetDate);
-};
-
 // helpers/get-inactive-applications/index.ts
 var { IN_PROGRESS } = APPLICATION.STATUS;
 var getInactiveApplications = async (context) => {
   try {
     console.info("Getting inactive applications - getInactiveApplications helper");
-    const thirtyDaysLimit = getThirtyDaysBeforeNow();
     const applications = await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS] } }, { updatedAt: { lt: thirtyDaysLimit } }]
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: /* @__PURE__ */ new Date() } }]
       },
       query: "id status"
     });
@@ -1219,7 +1206,7 @@ var import_core2 = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns2 = require("date-fns");
+var import_date_fns = require("date-fns");
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1416,7 +1403,7 @@ var lists = {
             const now2 = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns2.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = SUBMISSION_TYPE.MIA;
             modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
@@ -3045,8 +3032,8 @@ var documentsEmail = async (variables, templateId) => {
 var import_dotenv5 = __toESM(require("dotenv"));
 
 // helpers/format-date/index.ts
-var import_date_fns3 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns3.format)(new Date(timestamp3), dateFormat);
+var import_date_fns2 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // helpers/map-feedback-satisfaction/index.ts
@@ -3204,7 +3191,7 @@ var deleteAnAccount = async (root, variables, context) => {
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns4 = require("date-fns");
+var import_date_fns3 = require("date-fns");
 
 // helpers/update-account/index.ts
 var account = async (context, accountId, updateData) => {
@@ -3268,7 +3255,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const { id } = account2;
     const { id: statusId } = account2.status;
     const now2 = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
+    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info("Unable to verify account email address - verification period has expired");
       return {
@@ -3315,6 +3302,13 @@ var getAccountById = async (context, accountId) => {
   }
 };
 var get_account_by_id_default = getAccountById;
+
+// helpers/date/index.ts
+var import_date_fns4 = require("date-fns");
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns4.isAfter)(now2, targetDate);
+};
 
 // helpers/send-email-confirm-email-address/index.ts
 var send = async (context, urlOrigin, accountId) => {

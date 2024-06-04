@@ -11,7 +11,7 @@ describe('api/helpers/get-inactive-applications', () => {
   let applicationArray: Array<Application>;
 
   const updateData = {
-    updatedAt: DATE_2_MONTHS_IN_THE_PAST(),
+    submissionDeadline: DATE_2_MONTHS_IN_THE_PAST(),
   };
 
   beforeAll(async () => {
@@ -61,6 +61,8 @@ describe('api/helpers/get-inactive-applications', () => {
         status: ABANDONED,
       };
 
+      await applications.update({ context, applicationId: applicationArray[3].id, data: updateData });
+      await applications.update({ context, applicationId: applicationArray[4].id, data: updateData });
       await applications.update({ context, applicationId: applicationArray[5].id, data: update });
     });
 
