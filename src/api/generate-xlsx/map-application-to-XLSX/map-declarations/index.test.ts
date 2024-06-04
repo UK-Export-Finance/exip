@@ -7,6 +7,8 @@ import mapYesNoField from '../helpers/map-yes-no-field';
 import mapAgreedField from '../helpers/map-agreed-field';
 import { mockApplication } from '../../../test-mocks';
 
+const { FIELDS, SECTION_TITLES } = XLSX;
+
 const {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY,
@@ -25,12 +27,12 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-declarations', () => {
     const { declaration } = mockApplication;
 
     const expected = [
-      xlsxRow(XLSX.SECTION_TITLES.DECLARATIONS, ''),
+      xlsxRow(SECTION_TITLES.DECLARATIONS, ''),
       xlsxRow(CONTENT_STRINGS[AGREE_CONFIDENTIALITY].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_CONFIDENTIALITY])),
       xlsxRow(CONTENT_STRINGS[AGREE_ANTI_BRIBERY].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_ANTI_BRIBERY])),
-      xlsxRow(CONTENT_STRINGS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT].SUMMARY.TITLE, mapYesNoField({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT] })),
-      xlsxRow(CONTENT_STRINGS[WILL_EXPORT_WITH_CODE_OF_CONDUCT].SUMMARY.TITLE, mapYesNoField({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT] })),
-      xlsxRow(CONTENT_STRINGS[AGREE_HOW_YOUR_DATA_WILL_BE_USED].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED])),
+      xlsxRow(String(FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]), mapYesNoField(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT])),
+      xlsxRow(String(FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT]), mapYesNoField(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT])),
+      xlsxRow(String(FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED]), mapAgreedField(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED])),
       xlsxRow(CONTENT_STRINGS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS])),
     ];
 
