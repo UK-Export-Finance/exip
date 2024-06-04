@@ -25,7 +25,11 @@ const {
  * @param {String} currency - Currency string
  * @return {Function} radio
  */
-const currencyRadio = ({ fieldId, currency, alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE }) => {
+const currencyRadio = ({
+  fieldId,
+  currency,
+  alternativeCurrencyFieldId = ALTERNATIVE_CURRENCY_CODE,
+}) => {
   if (currency) {
     const { option } = radios(fieldId, currency);
     return option;
