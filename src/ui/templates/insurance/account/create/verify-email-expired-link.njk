@@ -1,6 +1,7 @@
 {% extends 'index.njk' %}
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from 'govuk/components/button/macro.njk' import govukButton %}
+{% import '../../../components/form-buttons.njk' as formButtons %}
 
 {% block pageTitle %}
   {{ CONTENT_STRINGS.PAGE_TITLE }}
@@ -16,10 +17,21 @@
     }
   }) }}
 
-  <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+  <form method="POST" data-cy="form" enctype="application/x-www-form-urlencoded" novalidate>
 
-  <p data-cy="body">{{ CONTENT_STRINGS.BODY }}</p>
+    <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 
-  <a class="govuk-button" href="{{ CONTENT_STRINGS.CREATE_ACCOUNT.HREF }}" data-cy="create-account">{{ CONTENT_STRINGS.CREATE_ACCOUNT.TEXT }}</a>
+    <h1 class="govuk-heading-xl" data-cy="{{ DATA_CY.HEADING }}">{{ CONTENT_STRINGS.PAGE_TITLE }}</h1>
+
+    <p data-cy="not-verified">{{ CONTENT_STRINGS.NOT_VERIFIED }}</p>
+
+    <p data-cy="can-send-new-link">{{ CONTENT_STRINGS.CAN_SEND_NEW_LINK }}</p>
+
+    {{ formButtons.render({
+      contentStrings: CONTENT_STRINGS.REQUEST_NEW_LINK,
+      submitText: CONTENT_STRINGS.REQUEST_NEW_LINK.TEXT
+    }) }}
+
+  </form>
 
 {% endblock %}

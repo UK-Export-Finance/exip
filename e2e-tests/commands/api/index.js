@@ -79,9 +79,21 @@ const queryStrings = {
     mutation updateAccount($where: AccountWhereUniqueInput!, $data: AccountUpdateInput!) {
       updateAccount(where: $where, data: $data) {
         id
+        verificationExpiry
         verificationHash
         reactivationHash
         passwordResetHash
+        status {
+          id
+        }
+      }
+    }
+  `,
+  updateAccountStatus: () => gql`
+    mutation updateAccountStatus($where: AccountStatusWhereUniqueInput!, $data: AccountStatusUpdateInput!) {
+      updateAccountStatus(where: $where, data: $data) {
+        id
+        isInactive
       }
     }
   `,
@@ -354,6 +366,33 @@ const updateAccount = async (id, updateObj) => {
     console.error(err);
 
     throw new Error('Updating account', { err });
+  }
+};
+
+/**
+ * updateAccountStatus
+ * Update an account status
+ * @param {String} AccountStatus ID
+ * @returns {AccountStatus} AccountStatus
+ */
+const updateAccountStatus = async (id, updateObj) => {
+  try {
+    const responseBody = await apollo
+      .query({
+        query: queryStrings.updateAccountStatus(),
+        variables: {
+          where: { id },
+          data: updateObj,
+        },
+        context: APOLLO_CONTEXT,
+      })
+      .then((response) => response.data.updateAccountStatus);
+
+    return responseBody;
+  } catch (err) {
+    console.error(err);
+
+    throw new Error('Updating account status', { err });
   }
 };
 
@@ -638,6 +677,7 @@ const api = {
   createApplications,
   getAccountByEmail,
   updateAccount,
+  updateAccountStatus,
   deleteAnAccount,
   addAndGetOTP,
   getAccountPasswordResetToken,

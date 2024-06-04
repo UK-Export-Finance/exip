@@ -47,9 +47,10 @@ const ACCOUNT = {
     },
     VERIFY_EMAIL_EXPIRED_LINK: {
       PAGE_TITLE: 'Your link has expired',
-      BODY: "You'll need to enter your details and create an account again.",
-      CREATE_ACCOUNT: {
-        TEXT: 'Create account',
+      NOT_VERIFIED: 'Your account has not been verified.',
+      CAN_SEND_NEW_LINK: 'If you would still like to verify your account we can send you a new link.',
+      REQUEST_NEW_LINK: {
+        TEXT: 'Request a new link',
         HREF: INSURANCE_ROUTES.ACCOUNT.CREATE.YOUR_DETAILS,
       },
     },

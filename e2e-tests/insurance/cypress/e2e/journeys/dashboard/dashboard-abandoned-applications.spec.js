@@ -15,14 +15,12 @@ const dashboardUrl = `${baseUrl}${DASHBOARD}`;
 const { table } = dashboardPage;
 
 context(`Insurance - Dashboard - pagination - 1 ${IN_PROGRESS} application and 1 ${ABANDONED} application`, () => {
-  let applications;
   let abandonedApplication;
+  let referenceNumber;
 
   before(() => {
-    cy.completeSignInAndGoToDashboard().then(({ accountId }) => {
-      cy.createApplications(accountId, totalExpectedApplications).then((createdApplications) => {
-        applications = createdApplications;
-      });
+    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber, accountId }) => {
+      referenceNumber = refNumber;
 
       cy.createAnAbandonedApplication(accountId).then((createdApplication) => {
         abandonedApplication = createdApplication;
@@ -37,12 +35,12 @@ context(`Insurance - Dashboard - pagination - 1 ${IN_PROGRESS} application and 1
   });
 
   after(() => {
-    cy.deleteApplications(applications);
+    cy.deleteApplication(referenceNumber);
     cy.deleteApplication(abandonedApplication.referenceNumber);
   });
 
   it(`should render 1 ${IN_PROGRESS} application on the dashboard`, () => {
     cy.assertLength(table.body.rows(), totalExpectedApplications);
-    cy.checkText(dashboardPage.table.body.row(applications[0].referenceNumber).status(), IN_PROGRESS);
+    cy.checkText(dashboardPage.table.body.row(referenceNumber).status(), IN_PROGRESS);
   });
 });
