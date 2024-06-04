@@ -17,7 +17,7 @@ const START_NEW_APPLICATION = {
 
 const YOUR_BUSINESS = {
   ...SHARED,
-  PAGE_TITLE: 'About your business',
+  PAGE_TITLE: 'Your business',
 };
 
 const YOUR_BUYER = {
