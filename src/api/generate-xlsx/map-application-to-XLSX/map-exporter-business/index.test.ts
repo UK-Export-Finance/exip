@@ -46,10 +46,10 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () =
       xlsxRow(FIELDS[COMPANY_ADDRESS], mapExporterAddress(company[COMPANY_ADDRESS])),
       xlsxRow(FIELDS[COMPANY_SIC], mapSicCodes(companySicCodes)),
 
-      xlsxRow(FIELDS[HAS_DIFFERENT_TRADING_NAME], mapYesNoField(company[HAS_DIFFERENT_TRADING_NAME])),
+      xlsxRow(FIELDS[HAS_DIFFERENT_TRADING_NAME], mapYesNoField({ answer: company[HAS_DIFFERENT_TRADING_NAME] })),
       mapDifferentTradingName(company),
 
-      xlsxRow(FIELDS[TRADING_ADDRESS], mapYesNoField(company[TRADING_ADDRESS])),
+      xlsxRow(FIELDS[TRADING_ADDRESS], mapYesNoField({ answer: company[TRADING_ADDRESS] })),
       mapDifferentTradingAddress(company),
 
       xlsxRow(FIELDS[WEBSITE], company[WEBSITE]),
@@ -62,7 +62,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business', () =
       xlsxRow(FIELDS[ESTIMATED_ANNUAL_TURNOVER], formatCurrency(business[ESTIMATED_ANNUAL_TURNOVER], GBP_CURRENCY_CODE)),
       xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
-      xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField(business[HAS_CREDIT_CONTROL])),
+      xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField({ answer: business[HAS_CREDIT_CONTROL] })),
 
       ...mapBroker(mockApplication),
     ];

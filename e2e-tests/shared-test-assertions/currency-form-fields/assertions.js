@@ -12,7 +12,9 @@ import { checkAutocompleteInput } from '../autocomplete-assertions';
 import { DZA } from '../../fixtures/countries';
 import partials from '../../partials';
 
-const { CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } } = INSURANCE_FIELD_IDS;
+const {
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
+} = INSURANCE_FIELD_IDS;
 
 /**
  * returns field for currency/alternative currency
@@ -110,23 +112,16 @@ const assertCurrencyFormFields = ({
     checkAutocompleteInput.rendersMultipleResults(autoCompleteField(alternativeCurrencyFieldId), 'Be');
 
     const expectedValue = `${NON_STANDARD_CURRENCY_NAME} (${NON_STANDARD_CURRENCY_CODE})`;
-    checkAutocompleteInput
-      .allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
+    checkAutocompleteInput.allowsUserToRemoveCountryAndSearchAgain(alternativeCurrencyFieldId, DZA.NAME, NON_STANDARD_CURRENCY_NAME, expectedValue);
   },
   rendersAlternativeCurrencyValidationError: ({ errorIndex = 0 }) => {
     cy.clickAlternativeCurrencyRadioOption();
 
     cy.clickSubmitButton();
 
-    cy.checkText(
-      partials.errorSummaryListItems().eq(errorIndex),
-      errors[alternativeCurrencyFieldId].IS_EMPTY,
-    );
+    cy.checkText(partials.errorSummaryListItems().eq(errorIndex), errors[alternativeCurrencyFieldId].IS_EMPTY);
 
-    cy.checkText(
-      fieldSelector(alternativeCurrencyFieldId).errorMessage(),
-      `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`,
-    );
+    cy.checkText(fieldSelector(alternativeCurrencyFieldId).errorMessage(), `Error: ${errors[alternativeCurrencyFieldId].IS_EMPTY}`);
   },
   submitRadioAndAssertUrl: ({ currency, url, completeNonCurrencyFields }) => {
     if (completeNonCurrencyFields) {
@@ -155,12 +150,10 @@ const assertCurrencyFormFields = ({
     cy.assertRadioOptionIsChecked(option.input());
   },
   submitAlternativeCurrencyAndAssertUrl: (url) => {
-    cy.clickAlternativeCurrencyRadioOption();
-
-    // search for currency
-    cy.autocompleteKeyboardInput(alternativeCurrencyFieldId, NON_STANDARD_CURRENCY_NAME);
-
-    cy.clickSubmitButton();
+    cy.clickAlternativeCurrencyRadioAndSubmitCurrency({
+      fieldId: alternativeCurrencyFieldId,
+      currency: NON_STANDARD_CURRENCY_NAME,
+    });
 
     cy.url().should('include', url);
   },

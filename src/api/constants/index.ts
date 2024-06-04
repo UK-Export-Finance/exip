@@ -12,6 +12,7 @@ export * from './field-values';
 export * from './supported-currencies';
 export * from './total-contract-value';
 export * from './XLSX-CONFIG';
+export * from './validation';
 
 dotenv.config();
 
