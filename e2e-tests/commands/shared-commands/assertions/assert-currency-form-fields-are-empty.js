@@ -2,10 +2,7 @@ import { radios } from '../../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../../constants/field-ids/insurance';
 import { checkAutocompleteInput } from '../../../shared-test-assertions/autocomplete-assertions';
 import {
-  EUR,
-  GBP,
-  JPY,
-  USD,
+  EUR, GBP, JPY, USD,
 } from '../../../fixtures/currencies';
 
 const {

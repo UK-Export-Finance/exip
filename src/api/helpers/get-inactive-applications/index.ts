@@ -1,5 +1,4 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
-import { getThirtyDaysBeforeNow } from '../date';
 import { APPLICATION } from '../../constants';
 
 const { IN_PROGRESS } = APPLICATION.STATUS;
@@ -15,15 +14,14 @@ const getInactiveApplications = async (context: Context): Promise<Application[]>
   try {
     console.info('Getting inactive applications - getInactiveApplications helper');
 
-    const thirtyDaysLimit = getThirtyDaysBeforeNow();
-
     /**
-     * queries in progress applications which are older than 30 days from the db
-     * returns array of id and status
+     * Queries applications that:
+     * - have a status of IN_PROGRESS
+     * - have a submission deadline in the past
      */
     const applications = (await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS] } }, { updatedAt: { lt: thirtyDaysLimit } }],
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: new Date() } }],
       },
       query: 'id status',
     })) as Array<Application>;
