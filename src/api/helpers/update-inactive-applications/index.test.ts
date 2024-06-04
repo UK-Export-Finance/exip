@@ -18,7 +18,7 @@ describe('helpers/update-inactive-applications', () => {
   beforeEach(async () => {
     application = await createFullApplication(context);
 
-    application = await applications.update({ context, applicationId: application.id, data: { updatedAt: DATE_2_MONTHS_IN_THE_PAST() } });
+    application = await applications.update({ context, applicationId: application.id, data: { submissionDeadline: DATE_2_MONTHS_IN_THE_PAST() } });
   });
 
   afterAll(() => {
