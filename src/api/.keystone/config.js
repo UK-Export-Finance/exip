@@ -5758,6 +5758,7 @@ var DEFAULT = {
 var { AMOUNT_250K, MORE_THAN_250K } = TOTAL_CONTRACT_VALUE;
 var {
   ACCOUNT: { FIRST_NAME, LAST_NAME },
+  DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
     COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
@@ -5801,6 +5802,7 @@ var XLSX = {
   FIELDS: {
     [FIRST_NAME]: "Applicant first name",
     [LAST_NAME]: "Applicant last name",
+    [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
     APPLICANT_ROLE: "Applicants role",
     [BUYER_COUNTRY2]: "Where is your buyer based?",
@@ -5811,8 +5813,9 @@ var XLSX = {
     },
     [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
     [COVER_PERIOD2]: "Length of cover",
+    [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
     [HAS_END_BUYER2]: "Is there an end buyer?",
-    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services",
+    [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
     [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments",
     [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
@@ -5821,7 +5824,7 @@ var XLSX = {
     [DIFFERENT_TRADING_NAME]: "Alternative trading name",
     [TRADING_ADDRESS2]: "Different trading address?",
     [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
-    [MORE_THAN_250K.VALUE]: `Insured for more than ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)}`,
+    [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
     [WEBSITE2]: "Exporter Company website (optional)",
     [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
@@ -5845,6 +5848,7 @@ var XLSX = {
     [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer",
     [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Exporter explaining the credit insurance cover they had on the buyer",
     [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
+    [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
     NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House"
   }
 };
@@ -6299,25 +6303,26 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
+var { FIELDS: FIELDS16, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
     AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
-    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2,
-    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2,
-    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2,
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT3,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED3,
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
   }
 } = insurance_default;
 var mapDeclarations = (application2) => {
   const { declaration } = application2;
   const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.DECLARATIONS, ""),
+    xlsx_row_default(SECTION_TITLES4.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2] })),
-    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2] })),
-    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED2])),
+    xlsx_row_default(String(FIELDS16[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS16[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS16[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;
