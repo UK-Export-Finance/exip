@@ -8,7 +8,7 @@ const { CONNECTION_WITH_BUYER, CONNECTION_WITH_BUYER_DESCRIPTION } = FIELD_IDS;
 const { FIELDS } = XLSX;
 
 /**
- * mapPreviousCoverWithBuyer
+ * mapConnectionWithBuyer
  * Generate an XLSX row if an exporter has a connection with the buyer.
  * @param {ApplicationBuyerRelationship} relationship: Application buyer relationship
  * @returns {Object | undefined} xlsxRow
