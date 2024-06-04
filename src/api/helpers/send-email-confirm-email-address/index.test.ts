@@ -54,7 +54,7 @@ describe('helpers/send-email-confirm-email-address', () => {
   });
 
   describe('when verificationHash exists and verificationExpiry has elapsed', () => {
-    test('it should call sendEmail.confirmEmailAddress and return success=true and not use account verificationHash', async () => {
+    test("it should call sendEmail.confirmEmailAddress and return success=true but should NOT use the stored account's verificationHash", async () => {
       await accounts.update(context, account.id, { verificationExpiry: DATE_24_HOURS_IN_THE_PAST(), verificationHash: 'mock-hash' });
 
       const updatedAccount = await accounts.get(context, account.id);

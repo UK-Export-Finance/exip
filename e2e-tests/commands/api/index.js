@@ -373,7 +373,7 @@ const updateAccount = async (id, updateObj) => {
  * updateAccountStatus
  * Update an account status
  * @param {String} AccountStatus ID
- * @returns {String} AccountStatus ID
+ * @returns {AccountStatus} AccountStatus
  */
 const updateAccountStatus = async (id, updateObj) => {
   try {

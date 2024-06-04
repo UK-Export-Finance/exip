@@ -41,6 +41,10 @@ const accountChecks = async (context: Context, account: Account, urlOrigin: stri
 
       let verificationHasExpired = false;
 
+      /**
+       * if account's verificationExpiry has elapsed
+       * then verificationHasExpired should be set to true
+       */
       if (account.verificationExpiry) {
         verificationHasExpired = dateIsInThePast(account.verificationExpiry);
       }

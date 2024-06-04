@@ -26,5 +26,4 @@ export const APPLICATION = {
       },
     },
   },
-  IS_INACTIVE: 'isInactive',
 };

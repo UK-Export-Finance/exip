@@ -1,8 +1,8 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../commands/api';
-import { APPLICATION } from '../../../../../../../constants';
+import { ACCOUNT } from '../../../../../../../constants';
 
-const { IS_INACTIVE } = APPLICATION;
+const { IS_INACTIVE } = ACCOUNT;
 
 const {
   START,
