@@ -14,7 +14,7 @@ export const TITLE_INDEXES = () =>
     EXPORTER_BUSINESS: 31,
     POLICY: 48,
     BUYER: 57,
-    DECLARATIONS: 65,
+    DECLARATIONS: 67,
   }) as XLSXTitleRowIndexes;
 
 /**

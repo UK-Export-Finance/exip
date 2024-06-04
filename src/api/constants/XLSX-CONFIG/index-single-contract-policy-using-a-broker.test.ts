@@ -2,7 +2,7 @@ import { XLSX_ROW_INDEXES } from '.';
 import { incrementIndexes, INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
-import { mockApplication, mockCompanyScenarios } from '../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany, mockCompanyScenarios } from '../../test-mocks';
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
@@ -10,13 +10,13 @@ const {
 } = POLICY_FIELD_IDS;
 
 const application = {
-  ...mockApplication,
+  ...mockApplicationMinimalBrokerBuyerAndCompany,
   policy: {
-    ...mockApplication.policy,
+    ...mockApplicationMinimalBrokerBuyerAndCompany,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
   },
   broker: {
-    ...mockApplication.broker,
+    ...mockApplicationMinimalBrokerBuyerAndCompany,
     isUsingBroker: true,
   },
 };
