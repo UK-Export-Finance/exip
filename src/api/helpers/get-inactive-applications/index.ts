@@ -15,8 +15,9 @@ const getInactiveApplications = async (context: Context): Promise<Application[]>
     console.info('Getting inactive applications - getInactiveApplications helper');
 
     /**
-     * queries in progress applications which have a submissionDeadline which has is in the past (past the submission deadline)
-     * returns array of id and status
+     * Queries applications that:
+     * - have a status of IN_PROGRESS
+     * - have a submission deadline in the past
      */
     const applications = (await context.query.Application.findMany({
       where: {
