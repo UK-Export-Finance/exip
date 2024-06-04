@@ -83,3 +83,5 @@ export const POLICY = {
   FINANCIAL_ADDRESS: 'bankAddress',
   LOSS_PAYEE_FINANCIAL_ADDRESS: 'lossPayee.bankAddress',
 };
+
+export default POLICY;

@@ -1,17 +1,7 @@
 import api from '../../../../../api';
 import getDataToSave from '../../../../../helpers/get-data-to-save';
-import stripEmptyFormFields from '../../../../../helpers/strip-empty-form-fields';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import { Application, RequestBody } from '../../../../../../types';
-import POLICY_FIELD_IDS from '../../../../../constants/field-ids/insurance/policy';
-
-const { CREDIT_PERIOD_WITH_BUYER } = POLICY_FIELD_IDS;
-
-/**
- * string fields which are exempt from being stripped by stripEmptyFormFields
- * for example when a string field needs to be set to an empty string or null
- */
-export const NULL_OR_EMPTY_STRING_FIELDS = [CREDIT_PERIOD_WITH_BUYER];
 
 /**
  * policy
@@ -23,12 +13,10 @@ export const NULL_OR_EMPTY_STRING_FIELDS = [CREDIT_PERIOD_WITH_BUYER];
  * @returns {Promise<Object>} Saved data
  */
 const policy = async (application: Application, formBody: RequestBody, errorList?: object) => {
-  // determines which fields to save
-  const dataToSave = stripEmptyFormFields(getDataToSave(formBody, errorList), NULL_OR_EMPTY_STRING_FIELDS);
+  const dataToSave = getDataToSave(formBody, errorList);
 
   const sanitisedData = sanitiseData(dataToSave);
 
-  // send the form data to the API for database update.
   const policyId = application.policy?.id;
 
   try {

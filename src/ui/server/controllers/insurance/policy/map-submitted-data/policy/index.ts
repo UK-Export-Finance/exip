@@ -1,23 +1,19 @@
 import INSURANCE_FIELD_IDS from '../../../../../constants/field-ids/insurance';
-import createTimestampFromNumbers from '../../../../../helpers/date/create-timestamp-from-numbers';
+import mapDateFields from './date-fields';
+import hasPolicyTypeChanged from '../../../../../helpers/has-policy-type-changed';
+import nullifyGenericContractPolicyFields from '../../../../../helpers/nullify-generic-contract-policy-fields';
+import nullifyMultipleContractPolicyFields from '../../../../../helpers/nullify-multiple-contract-policy-fields';
+import nullifySingleContractPolicyFields from '../../../../../helpers/nullify-single-contract-policy-fields';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../../../helpers/policy-type';
 import mapCurrencyCodeFormData from '../../../../../helpers/mappings/map-currency-code-form-data';
 import { objectHasProperty } from '../../../../../helpers/object';
-import { RequestBody } from '../../../../../../types';
+import { Application, RequestBody } from '../../../../../../types';
 
 const {
   CURRENCY: { CURRENCY_CODE },
   POLICY: {
     POLICY_TYPE,
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE, TOTAL_CONTRACT_VALUE },
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-      POLICY_CURRENCY_CODE,
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
+    CONTRACT_POLICY: { POLICY_CURRENCY_CODE },
     NEED_PRE_CREDIT_PERIOD,
     CREDIT_PERIOD_WITH_BUYER,
   },
@@ -25,74 +21,49 @@ const {
 
 /**
  * mapSubmittedData
- * 1) Check form data and map any fields that need to be sent to the API in a different format or structure.
- * 2) If a policy is a "single" policy, but has "multiple" policy fields, wipe "multiple" policy fields.
- * 3) If a policy is a "multiple" policy, but has "single" policy fields, wipe "single" policy fields.
- * 4) Map submitted currency fields.
- * @param {Express.Request.body} Form data
- * @returns {Object} Page variables
+ * Check form data and map any fields that need to be sent to the API in a different format or structure.
+ * 1) Map date fields into timestamps.
+ * 2) If NEED_PRE_CREDIT_PERIOD is provided as "no", wipe the CREDIT_PERIOD_WITH_BUYER field.
+ * 3) If the policy type has changed, nullify generic contract policy fields.
+ * 4) If a policy is a "single" policy, nullify "multiple" policy fields.
+ * 5) If a policy is a "multiple" policy, nullify "single" policy fields.
+ * 6) Map submitted currency fields.
+ * @param {RequestBody} formBody: Form data
+ * @returns {Object} Mapped data
  */
-const mapSubmittedData = (formBody: RequestBody): object => {
+const mapSubmittedData = (formBody: RequestBody, application: Application): object => {
   const { _csrf, ...otherFields } = formBody;
 
   let populatedData = otherFields;
 
-  const dateFieldIds = {
-    start: {
-      day: `${REQUESTED_START_DATE}-day`,
-      month: `${REQUESTED_START_DATE}-month`,
-      year: `${REQUESTED_START_DATE}-year`,
-    },
-    end: {
-      day: `${CONTRACT_COMPLETION_DATE}-day`,
-      month: `${CONTRACT_COMPLETION_DATE}-month`,
-      year: `${CONTRACT_COMPLETION_DATE}-year`,
-    },
-  };
-
-  const { start, end } = dateFieldIds;
+  populatedData = mapDateFields(formBody);
 
   /**
-   * If REQUESTED_START_DATE and/or CONTRACT_COMPLETION_DATE fields are provided,
-   * transform the day/month/year fields into a timestamp.
-   */
-  if (formBody[start.day] && formBody[start.month] && formBody[start.year]) {
-    const day = Number(formBody[start.day]);
-    const month = Number(formBody[start.month]);
-    const year = Number(formBody[start.year]);
-
-    populatedData[REQUESTED_START_DATE] = createTimestampFromNumbers(day, month, year);
-  }
-
-  if (formBody[end.day] && formBody[end.month] && formBody[end.year]) {
-    const day = Number(formBody[end.day]);
-    const month = Number(formBody[end.month]);
-    const year = Number(formBody[end.year]);
-
-    populatedData[CONTRACT_COMPLETION_DATE] = createTimestampFromNumbers(day, month, year);
-  }
-
-  /**
-   * If NEED_PRE_CREDIT_PERIOD is answered as "no",
+   * If NEED_PRE_CREDIT_PERIOD is submitted as "no",
    * wipe the CREDIT_PERIOD_WITH_BUYER field.
+   * If NEED_PRE_CREDIT_PERIOD is submitted without an answer,
+   * mark NEED_PRE_CREDIT_PERIOD as null.
    */
   if (formBody[NEED_PRE_CREDIT_PERIOD] === 'false') {
     populatedData[CREDIT_PERIOD_WITH_BUYER] = '';
+  } else if (formBody[NEED_PRE_CREDIT_PERIOD] === '') {
+    populatedData[NEED_PRE_CREDIT_PERIOD] = null;
   }
 
   const policyType = formBody[POLICY_TYPE];
+
+  const policyTypeHasChanged = hasPolicyTypeChanged(policyType, application.policy.policyType);
+
+  if (policyTypeHasChanged) {
+    populatedData = nullifyGenericContractPolicyFields(populatedData);
+  }
 
   /**
    * If the policy type is "single",
    * wipe "multiple" specific fields.
    */
   if (isSinglePolicyType(policyType)) {
-    populatedData = {
-      ...populatedData,
-      [MAXIMUM_BUYER_WILL_OWE]: '',
-      [TOTAL_MONTHS_OF_COVER]: '',
-      [TOTAL_SALES_TO_BUYER]: '',
-    };
+    populatedData = nullifyMultipleContractPolicyFields(populatedData);
   }
 
   /**
@@ -100,16 +71,15 @@ const mapSubmittedData = (formBody: RequestBody): object => {
    * wipe "single" specific fields.
    */
   if (isMultiplePolicyType(policyType)) {
-    populatedData = {
-      ...populatedData,
-      [CONTRACT_COMPLETION_DATE]: null,
-      [TOTAL_CONTRACT_VALUE]: '',
-    };
+    populatedData = nullifySingleContractPolicyFields(populatedData);
   }
 
   populatedData = mapCurrencyCodeFormData(populatedData);
 
-  // map the resulting "currency code" into a "Policy currency code" field
+  /**
+   * if a CURRENCY_CODE field is provided,
+   * map this into a POLICY_CURRENCY_CODE field.
+   */
   if (objectHasProperty(populatedData, CURRENCY_CODE)) {
     populatedData[POLICY_CURRENCY_CODE] = populatedData[CURRENCY_CODE];
   }
