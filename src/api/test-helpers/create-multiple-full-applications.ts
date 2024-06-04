@@ -1,4 +1,5 @@
 import createFullApplication from './create-full-application';
+import applications from './applications';
 import { Application, Context } from '../types';
 
 /**
@@ -8,6 +9,8 @@ import { Application, Context } from '../types';
  * @returns {Array<Application>} Applications array
  */
 export const createMultipleFullApplications = async (context: Context): Promise<Array<Application>> => {
+  await applications.deleteAll(context);
+
   const application1 = await createFullApplication(context);
   const application2 = await createFullApplication(context);
   const application3 = await createFullApplication(context);

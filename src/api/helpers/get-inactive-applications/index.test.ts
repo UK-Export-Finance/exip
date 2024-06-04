@@ -61,6 +61,8 @@ describe('api/helpers/get-inactive-applications', () => {
         status: ABANDONED,
       };
 
+      await applications.update({ context, applicationId: applicationArray[3].id, data: updateData });
+      await applications.update({ context, applicationId: applicationArray[4].id, data: updateData });
       await applications.update({ context, applicationId: applicationArray[5].id, data: update });
     });
 
