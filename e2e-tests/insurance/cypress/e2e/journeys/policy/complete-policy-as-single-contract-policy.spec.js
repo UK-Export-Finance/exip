@@ -1,9 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 
-const {
-  ROOT: INSURANCE_ROOT,
-  ALL_SECTIONS,
-} = INSURANCE_ROUTES;
+const { ROOT: INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
 
@@ -27,11 +24,9 @@ context('Insurance - Policy - Complete the entire section as a single contract p
 
       /**
        * Submit the "Policy - check your answers" form,
-       * This proceeds to the next part of the flow - "Export contract - start"
-       * From here, we can get back to the "All sections" page.
+       * This proceeds to the next part of the flow - "All sections"
        */
       cy.clickSubmitButton();
-      cy.clickAllSectionsLink();
     });
   });
 
