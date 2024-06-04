@@ -26,7 +26,7 @@ describe('controllers/insurance/policy/map-submitted-data/policy/date-fields', (
   describe(`when ${REQUESTED_START_DATE} day, month and year fields are provided`, () => {
     it(`should return an object with ${REQUESTED_START_DATE} as a timestamp`, () => {
       const mockBody = {
-        [`${REQUESTED_START_DATE}-day`]: '1',
+        [`${REQUESTED_START_DATE}-day`]: day,
         [`${REQUESTED_START_DATE}-month`]: month,
         [`${REQUESTED_START_DATE}-year`]: year,
       };
