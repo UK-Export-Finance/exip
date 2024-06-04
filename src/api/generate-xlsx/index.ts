@@ -23,32 +23,46 @@ const XLSX = (application: Application): Promise<string> => {
 
       const xlsxData = mapApplicationToXLSX(application);
 
-      // Create a new workbook
+      // create a new workbook
       console.info('Generating XLSX file - creating a new workbook');
 
       const workbook = new ExcelJS.Workbook();
 
-      // Add a worksheet to the workbook
+      // add a worksheet to the workbook
       console.info('Generating XLSX file - adding worksheet to workbook');
 
       let worksheet = workbook.addWorksheet(refNumber);
 
-      // Add header columns to the worksheet
+      // add header columns to the worksheet
       worksheet.columns = HEADER_COLUMNS;
 
-      // Add each row to the worksheet
+      // add each row to the worksheet
       console.info('Generating XLSX file - adding rows to worksheet');
 
       xlsxData.forEach((row) => {
-        worksheet.addRow(row);
+        /**
+         * NOTE: some rows are undefined.
+         * Therefore, only add rows that have data.
+         */
+        if (row) {
+          worksheet.addRow(row);
+        }
       });
 
-      // Add custom styles to each column in the worksheet
+      /**
+       * Add custom styles to each column in the worksheet.
+       * This introduces e.g:
+       * - larger rows for address and SIC codes.
+       * - bold heading rows.
+       */
       console.info('Generating XLSX file - adding custom styles to worksheet');
 
       worksheet = styledColumns(application, worksheet);
 
-      // Write the file and return the file path
+      /**
+       * Write the file,
+       * return the file path
+       */
       console.info('Generating XLSX file - writing file');
 
       workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));

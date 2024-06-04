@@ -149,6 +149,6 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     throw new Error(`Creating an application (createAnApplication helper) ${err}`);
   }
-}
+};
 
 export default createAnApplication;

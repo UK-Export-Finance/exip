@@ -8,7 +8,6 @@ import { APPLICATION } from '../../../constants';
 
 const { STATUS } = APPLICATION;
 
-
 describe('custom-resolvers/create-an-application', () => {
   let context: Context;
   let account: Account;

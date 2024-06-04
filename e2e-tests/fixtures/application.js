@@ -16,17 +16,11 @@ import mockCompanies from './companies';
 import { mockIban0 } from './ibans';
 import { mockSortCode0 } from './sort-codes';
 
-const {
-  AGENT_SERVICE_CHARGE,
-} = APPLICATION.EXPORT_CONTRACT;
+const { AGENT_SERVICE_CHARGE } = APPLICATION.EXPORT_CONTRACT;
 
 const {
   INSURANCE: {
-    ACCOUNT: {
-      FIRST_NAME: ACCOUNT_FIRST_NAME,
-      LAST_NAME: ACCOUNT_LAST_NAME,
-      EMAIL: ACCOUNT_EMAIL,
-    },
+    ACCOUNT: { FIRST_NAME: ACCOUNT_FIRST_NAME, LAST_NAME: ACCOUNT_LAST_NAME, EMAIL: ACCOUNT_EMAIL },
     ELIGIBILITY: {
       COVER_PERIOD_ID,
       HAS_COMPANIES_HOUSE_NUMBER,
@@ -51,17 +45,11 @@ const {
       CREDIT_PERIOD_WITH_BUYER,
       REQUESTED_JOINTLY_INSURED_PARTY: { COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
       USING_BROKER,
-      BROKER_DETAILS: {
-        NAME,
-        EMAIL,
-        FULL_ADDRESS: BROKER_FULL_ADDRESS,
-      },
+      BROKER_DETAILS: { NAME, EMAIL, FULL_ADDRESS: BROKER_FULL_ADDRESS },
       LOSS_PAYEE_FINANCIAL_UK: { ACCOUNT_NUMBER, SORT_CODE },
       LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
       FINANCIAL_ADDRESS,
-      LOSS_PAYEE_DETAILS: {
-        NAME: LOSS_PAYEE_NAME,
-      },
+      LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME },
     },
     EXPORT_CONTRACT: {
       ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
@@ -70,26 +58,18 @@ const {
       AGENT_DETAILS: { COUNTRY_CODE: AGENT_COUNTRY_CODE, FULL_ADDRESS: AGENT_FULL_ADDRESS, NAME: AGENT_NAME },
       AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
       AGENT_CHARGES: {
-        METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE,
+        METHOD,
+        PAYABLE_COUNTRY_CODE,
+        FIXED_SUM_AMOUNT,
+        PERCENTAGE_CHARGE,
       },
     },
     EXPORTER_BUSINESS: {
-      ALTERNATIVE_TRADING_ADDRESS: {
-        FULL_ADDRESS: EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS,
-      },
-      NATURE_OF_YOUR_BUSINESS: {
-        GOODS_OR_SERVICES,
-        YEARS_EXPORTING,
-        EMPLOYEES_UK,
-      },
-      TURNOVER: {
-        ESTIMATED_ANNUAL_TURNOVER,
-        PERCENTAGE_TURNOVER,
-      },
+      ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: EXPORTER_BUSINESS_FULL_ALT_TRADING_ADDRESS },
+      NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES, YEARS_EXPORTING, EMPLOYEES_UK },
+      TURNOVER: { ESTIMATED_ANNUAL_TURNOVER, PERCENTAGE_TURNOVER },
       HAS_CREDIT_CONTROL,
-      YOUR_COMPANY: {
-        DIFFERENT_TRADING_NAME,
-      },
+      YOUR_COMPANY: { DIFFERENT_TRADING_NAME },
     },
     YOUR_BUYER: {
       COMPANY_OR_ORGANISATION: {
@@ -108,9 +88,7 @@ const {
       TOTAL_AMOUNT_OVERDUE,
       HAS_BUYER_FINANCIAL_ACCOUNTS,
     },
-    CURRENCY: {
-      CURRENCY_CODE,
-    },
+    CURRENCY: { CURRENCY_CODE },
   },
 } = FIELD_IDS;
 
@@ -125,8 +103,8 @@ const date = new Date();
  * move on the following year.
  * Note: JS months range (0 - 11)
  */
-export const startDate = new Date(date.setMonth((date.getMonth() + 3))); // Add 3 months
-export const endDate = new Date(date.setMonth((date.getMonth() + 6))); // Add 6 months
+export const startDate = new Date(date.setMonth(date.getMonth() + 3)); // Add 3 months
+export const endDate = new Date(date.setMonth(date.getMonth() + 6)); // Add 6 months
 
 const application = {
   ELIGIBILITY: {
@@ -146,12 +124,12 @@ const application = {
   POLICY: {
     [REQUESTED_START_DATE]: {
       day: '1',
-      month: (startDate.getMonth() + 1),
+      month: startDate.getMonth() + 1,
       year: startDate.getFullYear(),
     },
     [CONTRACT_COMPLETION_DATE]: {
       day: '1',
-      month: (endDate.getMonth() + 1),
+      month: endDate.getMonth() + 1,
       year: endDate.getFullYear(),
     },
     [TOTAL_CONTRACT_VALUE]: '10000',
@@ -227,7 +205,7 @@ const application = {
     [CONNECTION_WITH_BUYER]: FIELD_VALUES.NO,
     [TRADED_WITH_BUYER]: FIELD_VALUES.NO,
     [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: FIELD_VALUES.NO,
-    [CONNECTION_WITH_BUYER_DESCRIPTION]: 'test description',
+    [CONNECTION_WITH_BUYER_DESCRIPTION]: 'Mock connection with buyer description',
     [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: 'Mock cover with buyer',
     [TOTAL_OUTSTANDING_PAYMENTS]: '1000',
     [TOTAL_AMOUNT_OVERDUE]: '2000',

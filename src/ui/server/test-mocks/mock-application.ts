@@ -108,7 +108,7 @@ export const mockCompanyDifferentTradingAddress = {
 };
 
 export const mockCompany = {
-  id: 'clcyyopn40148m8noyar9wxrn',
+  id: 'claydon40148m8boyar9waen',
   ...companyMock,
   hasDifferentTradingName: false,
   hasDifferentTradingAddress: false,
@@ -122,7 +122,7 @@ export const mockCompany = {
   ],
   differentTradingAddress: mockCompanyDifferentTradingAddress,
   registeredOfficeAddress: {
-    id: 'clcyyopna0158m8noaglyy94t',
+    id: 'claydona0158m8noaglyy94t',
     addressLine1: 'Line 1',
     addressLine2: 'Line 2',
     careOf: '',
@@ -137,7 +137,7 @@ export const mockCompany = {
 };
 
 export const mockBusiness = {
-  id: 'clcyyopna0158m8noaglyy9gg',
+  id: 'claydona0158m8noaglyy9gg',
   goodsOrServicesSupplied: 'ABC',
   totalYearsExporting: '20',
   totalEmployeesUK: '400',
@@ -148,7 +148,7 @@ export const mockBusiness = {
 };
 
 export const mockBroker = {
-  id: 'clcyyopna0158m8noaglyy9gg',
+  id: 'claydona0158m8noaglyy9gg',
   ...broker,
 };
 
@@ -157,7 +157,7 @@ export const mockApplicationBuyer = {
 };
 
 export const mockNominatedLossPayee = {
-  id: 'clcyyopna0158m8noaglyy9gh',
+  id: 'claydona0158m8noaglyy9gh',
   ...nominatedLossPayee,
 };
 

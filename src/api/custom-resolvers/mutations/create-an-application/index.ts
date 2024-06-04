@@ -4,7 +4,6 @@ import { CreateAnApplicationVariables, Context } from '../../../types';
 
 const { STATUS } = APPLICATION;
 
-
 /**
  * createAnApplication
  * Create an application.
@@ -24,7 +23,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
   // set status to in progress
   updatedVariables.status = STATUS.IN_PROGRESS;
 
-  try{
+  try {
     const updatedApplication = await createAnApplicationHelper(root, updatedVariables, context);
 
     if (updatedApplication) {
@@ -36,7 +35,7 @@ const createAnApplication = async (root: any, variables: CreateAnApplicationVari
 
     return {
       success: false,
-    }
+    };
   } catch (err) {
     console.error('Error creating application %O', err);
 

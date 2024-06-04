@@ -115,9 +115,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     where: { id: company.registeredOfficeAddressId },
   });
 
+  if (!companyAddress) {
+    throw new Error(generateErrorMessage('companyAddress', application.id));
+  }
+
+  const differentTradingAddress = await context.db.CompanyDifferentTradingAddress.findOne({
+    where: { id: company.differentTradingAddressId },
+  });
+
+  if (!differentTradingAddress) {
+    throw new Error(generateErrorMessage('differentTradingAddress', application.id));
+  }
+
   const populatedCompany = {
     ...company,
     registeredOfficeAddress: companyAddress,
+    differentTradingAddress,
   };
 
   const business = await context.db.Business.findOne({
@@ -142,6 +155,22 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
 
   if (!buyer) {
     throw new Error(generateErrorMessage('buyer', application.id));
+  }
+
+  const buyerRelationship = await context.db.BuyerRelationship.findOne({
+    where: { id: buyer.relationshipId },
+  });
+
+  if (!buyerRelationship) {
+    throw new Error(generateErrorMessage('buyerRelationship', application.id));
+  }
+
+  const buyerTradingHistory = await context.db.BuyerTradingHistory.findOne({
+    where: { id: buyer.buyerTradingHistoryId },
+  });
+
+  if (!buyerTradingHistory) {
+    throw new Error(generateErrorMessage('buyerTradingHistory', application.id));
   }
 
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
@@ -173,6 +202,8 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   const populatedBuyer = {
     ...buyer,
     country: buyerCountry,
+    relationship: buyerRelationship,
+    buyerTradingHistory,
   };
 
   const declaration = await context.db.Declaration.findOne({

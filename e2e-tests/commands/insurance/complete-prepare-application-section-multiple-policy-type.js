@@ -6,10 +6,14 @@ const { POLICY_TYPE } = APPLICATION;
  * completePrepareApplicationMultiplePolicyType
  * Runs through the full prepare your application journey for multiple policy type
  * @param {Object} Object with flags on how to complete specific parts of the application
+ * @param {Boolean} alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section. Defaults to false.
+ * @param {Boolean} differentTradingName: Should submit "yes" to "have a different trading name" in the "company details" form. Defaults to false.
  * @param {Boolean} differentTradingAddress: Should submit "yes" to "trade from a different address" in the "company details" form. Defaults to false.
  * @param {Boolean} hasCreditControlProcess: Flag whether to submit "yes" or "no" radio input in the "credit control" form. Defaults to false.
  * @param {Boolean} hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
  * @param {Boolean} exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form.
+ * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer
+ * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
  * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
@@ -29,10 +33,14 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} submitCheckYourAnswers: Should click each section's "check your answers" submit button.
  */
 const completePrepareApplicationMultiplePolicyType = ({
+  alternativeBuyerCurrency = false,
+  differentTradingName = false,
   differentTradingAddress = false,
   hasCreditControlProcess = false,
   hasConnectionToBuyer = false,
   exporterHasTradedWithBuyer = false,
+  buyerOutstandingPayments = false,
+  buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory = false,
   hasHadCreditInsuranceCover = false,
   exporterHasBuyerFinancialAccounts = false,
@@ -52,14 +60,18 @@ const completePrepareApplicationMultiplePolicyType = ({
   submitCheckYourAnswers = true,
 }) => {
   cy.completeBusinessSection({
+    differentTradingName,
     differentTradingAddress,
     hasCreditControlProcess,
     submitCheckYourAnswers,
   });
 
   cy.completeBuyerSection({
+    alternativeCurrency: alternativeBuyerCurrency,
     hasConnectionToBuyer,
     exporterHasTradedWithBuyer,
+    outstandingPayments: buyerOutstandingPayments,
+    failedToPay: buyerFailedToPayOnTime,
     fullyPopulatedBuyerTradingHistory,
     hasHadCreditInsuranceCover,
     exporterHasBuyerFinancialAccounts,

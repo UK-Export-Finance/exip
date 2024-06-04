@@ -5,14 +5,8 @@ import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
 import { mockReq, mockRes, mockApplication, mockAccount, referenceNumber } from '../../../test-mocks';
 import { Next, Request, Response } from '../../../../types';
 
-const {
-  APPLICATION_SUBMITTED,
-  NO_ACCESS_TO_APPLICATION,
-  NO_ACCESS_APPLICATION_SUBMITTED,
-  INSURANCE_ROOT,
-  COMPLETE_OTHER_SECTIONS,
-  CHECK_YOUR_ANSWERS,
-} = INSURANCE_ROUTES;
+const { APPLICATION_SUBMITTED, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS, CHECK_YOUR_ANSWERS } =
+  INSURANCE_ROUTES;
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },

@@ -40,19 +40,20 @@ export const generateTaskStatusesAndLinks = (taskListData: TaskListData, submitt
  * @param {Array} taskList Task list groups and tasks
  * @returns {Array} Array of groups and tasks with only the data required for UI consumption.
  */
-export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup> => taskList.map(
-  (group) =>
-    ({
-      title: group.title,
-      hint: group.hint,
-      tasks: group.tasks.map((task: TaskListDataTask) => ({
-        id: task.id,
-        href: task.href,
-        status: task.status,
-        title: task.title,
-      })),
-    }) as TaskListGroup,
-);
+export const generateSimplifiedTaskList = (taskList: TaskListData): Array<TaskListGroup> =>
+  taskList.map(
+    (group) =>
+      ({
+        title: group.title,
+        hint: group.hint,
+        tasks: group.tasks.map((task: TaskListDataTask) => ({
+          id: task.id,
+          href: task.href,
+          status: task.status,
+          title: task.title,
+        })),
+      }) as TaskListGroup,
+  );
 
 /**
  * generateTaskList

@@ -16,7 +16,17 @@ export interface BuyerTradingHistory extends Relationship {
   currencyCode?: string;
   exporterHasTradedWithBuyer?: boolean;
   failedPayments?: boolean;
-  outstandingPayment?: boolean;
+  outstandingPayments?: boolean;
+  totalOutstandingPayments?: number;
+  totalOverduePayments?: number;
+}
+
+export interface ApplicationBuyerRelationship extends Relationship {
+  exporterIsConnectedWithBuyer?: boolean;
+  connectionWithBuyerDescription?: string;
+  exporterHasPreviousCreditInsuranceWithBuyer?: boolean;
+  exporterHasBuyerFinancialAccounts?: boolean;
+  previousCreditInsuranceWithBuyerDescription?: string;
 }
 
 export interface ApplicationBuyer extends Relationship {
@@ -30,8 +40,8 @@ export interface ApplicationBuyer extends Relationship {
   contactPosition?: string;
   contactEmail?: string;
   canContactBuyer?: boolean;
-  exporterIsConnectedWithBuyer?: boolean;
   buyerTradingHistory: BuyerTradingHistory;
+  relationship: ApplicationBuyerRelationship;
 }
 
 export interface ApplicationCompanyAddressCore {
@@ -45,14 +55,21 @@ export interface ApplicationCompanyAddressCore {
   premises?: string;
 }
 
+export interface ApplicationCompanyDifferentTradingAddress extends Relationship {
+  fullAddress: string;
+}
+
 export interface ApplicationCompanyCore {
   companyName: string;
   companyNumber: string;
   dateOfCreation: Date;
-  sicCodes: Array<string>;
+  differentTradingAddress: ApplicationCompanyDifferentTradingAddress;
   industrySectorNames: Array<string>;
   financialYearEndDate: Date;
+  hasDifferentTradingName?: boolean;
+  hasDifferentTradingAddress?: boolean;
   registeredOfficeAddress: ApplicationCompanyAddressCore;
+  sicCodes: Array<string>;
 }
 
 export interface ApplicationCompany extends ApplicationCompanyCore {
@@ -200,10 +217,6 @@ export interface ApplicationJointlyInsuredParty extends Relationship {
   companyName?: string;
   companyNumber?: string;
   country: Country;
-}
-
-export interface ApplicationCompanyDifferentTradingAddress extends Relationship {
-  fullAddress: string;
 }
 
 export interface Application {

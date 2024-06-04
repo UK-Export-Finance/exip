@@ -4,14 +4,8 @@ import isSubmitYourApplicationRoute from './is-submit-your-application-route';
 import canAccessSubmitYourApplicationRoutes from '../../../helpers/can-access-submit-your-application-routes';
 import { Next, Request, Response } from '../../../../types';
 
-const {
-  APPLICATION_SUBMITTED,
-  NO_ACCESS_TO_APPLICATION,
-  NO_ACCESS_APPLICATION_SUBMITTED,
-  INSURANCE_ROOT,
-  COMPLETE_OTHER_SECTIONS,
-  PROBLEM_WITH_SERVICE
-} = INSURANCE_ROUTES;
+const { APPLICATION_SUBMITTED, NO_ACCESS_TO_APPLICATION, NO_ACCESS_APPLICATION_SUBMITTED, INSURANCE_ROOT, COMPLETE_OTHER_SECTIONS, PROBLEM_WITH_SERVICE } =
+  INSURANCE_ROUTES;
 
 /**
  * middleware to check if application is submitted
