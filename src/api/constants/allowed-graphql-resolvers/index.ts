@@ -92,6 +92,7 @@ if (isDevEnvironment) {
     'deleteAnAccount',
     'deleteApplications',
     'getAccountPasswordResetToken',
+    'updateAccountStatus',
   );
 }
 

@@ -1,3 +1,5 @@
+import { isAfter } from 'date-fns';
+
 /**
  * get30minutesFromNow
  * Get 30 minutes from now and return the minute
@@ -41,4 +43,16 @@ export const getYesterdayDay = (): number => {
   const result = new Date(now.setDate(now.getDate() - 1)).getDate();
 
   return result;
+};
+
+/**
+ * dateIsInThePast
+ * Is the time now after a specified date
+ * @param {Date} targetDate
+ * @returns {Boolean}
+ */
+export const dateIsInThePast = (targetDate: Date) => {
+  const now = new Date();
+
+  return isAfter(now, targetDate);
 };

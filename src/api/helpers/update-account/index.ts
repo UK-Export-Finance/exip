@@ -1,4 +1,4 @@
-import { Context } from '../../types';
+import { AccountStatusCore, Context } from '../../types';
 
 /**
  * account
@@ -35,7 +35,7 @@ const account = async (context: Context, accountId: string, updateData: object) 
  * @param {Object} updateData: Update data
  * @returns {Promise<Object>} Updated account
  */
-const accountStatus = async (context: Context, accountStatusId: string, updateData: object) => {
+const accountStatus = async (context: Context, accountStatusId: string, updateData: AccountStatusCore) => {
   try {
     console.info('Updating account');
 
