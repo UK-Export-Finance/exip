@@ -8,6 +8,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * 3) Complete and submit all declarations forms
  * 4) Get and return the application reference number from the URL for consumption in the tests
  * @param {Object} Object with flags on how to complete specific parts of the application
+ * - alternativeBuyerCurrency: Should submit an "alternative currency" in the buyer section. Defaults to false.
  * - differentTradingAddress: Should submit "yes" to "trade from a different address" in the "your business - company details" form. Defaults to false.
  * - policyType: Type of policy. Defaults to "single"
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
@@ -23,10 +24,16 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - isUsingAgent: Should submit "yes" to "using an agent" form.
  * - agentIsCharging: Should submit "yes" to "agent is charging" in the "agent details" form.
  * - agentChargeMethodFixedSum: Agent charge method is "fixed sum"
- * - agentChargeMethodPercentage: Agent charge method is "percentage"
+ * - hasConnectionToBuyer: Should submit "yes" to "have connection to buyer" radio.
+ * - buyerOutstandingPayments: Exporter has outstanding payments with the buyer
+ * - buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
+ * - fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
+ * - hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
+ * - exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @return {String} Application reference number
  */
 const completeSignInAndSubmitAnApplication = ({
+  alternativeBuyerCurrency = false,
   differentTradingName = false,
   differentTradingAddress = false,
   policyType = APPLICATION.POLICY_TYPE.SINGLE,
@@ -44,11 +51,17 @@ const completeSignInAndSubmitAnApplication = ({
   agentIsCharging = false,
   agentChargeMethodFixedSum = false,
   agentChargeMethodPercentage = false,
-  agentChargeMethod,
+  hasConnectionToBuyer = false,
+  buyerOutstandingPayments = false,
+  buyerFailedToPayOnTime = false,
+  fullyPopulatedBuyerTradingHistory = false,
+  hasHadCreditInsuranceCover = false,
+  exporterHasBuyerFinancialAccounts = false,
 }) => {
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
     if (policyType === APPLICATION.POLICY_TYPE.MULTIPLE) {
       cy.completePrepareApplicationMultiplePolicyType({
+        alternativeBuyerCurrency,
         differentTradingName,
         differentTradingAddress,
         exporterHasTradedWithBuyer,
@@ -64,10 +77,16 @@ const completeSignInAndSubmitAnApplication = ({
         agentIsCharging,
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
-        agentChargeMethod,
+        hasConnectionToBuyer,
+        buyerOutstandingPayments,
+        buyerFailedToPayOnTime,
+        fullyPopulatedBuyerTradingHistory,
+        hasHadCreditInsuranceCover,
+        exporterHasBuyerFinancialAccounts,
       });
     } else {
       cy.completePrepareApplicationSinglePolicyType({
+        alternativeBuyerCurrency,
         differentTradingName,
         differentTradingAddress,
         exporterHasTradedWithBuyer,
@@ -82,7 +101,12 @@ const completeSignInAndSubmitAnApplication = ({
         isUsingAgent,
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
-        agentChargeMethod,
+        hasConnectionToBuyer,
+        buyerOutstandingPayments,
+        buyerFailedToPayOnTime,
+        fullyPopulatedBuyerTradingHistory,
+        hasHadCreditInsuranceCover,
+        exporterHasBuyerFinancialAccounts,
       });
     }
     cy.completeAndSubmitCheckYourAnswers();

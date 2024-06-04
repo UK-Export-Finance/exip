@@ -1,8 +1,7 @@
-import { NON_STANDARD_CURRENCY_CODE } from '../../fixtures/currencies';
 import { radios } from '../../pages/shared';
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 
-const { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
+const { CURRENCY_CODE } = INSURANCE_FIELD_IDS.CURRENCY;
 
 /**
  * completeAndSubmitAlternativeCurrencyForm
@@ -23,14 +22,7 @@ const completeAndSubmitAlternativeCurrencyForm = ({ isoCode, alternativeCurrency
   if (alternativeCurrency) {
     cy.clickProvideAlternativeCurrencyLink();
 
-    /**
-     * clicks alternativeCurrency radio option
-     * enters alternative currency into input
-     * submits form
-     */
-    cy.clickAlternativeCurrencyRadioOption();
-    cy.autocompleteKeyboardInput(ALTERNATIVE_CURRENCY_CODE, NON_STANDARD_CURRENCY_CODE);
-    cy.clickSubmitButton();
+    cy.clickAlternativeCurrencyRadioAndSubmitCurrency({});
   }
 };
 

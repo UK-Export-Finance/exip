@@ -20,7 +20,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-br
       const { broker } = mockApplication;
 
       const expected = [
-        xlsxRow(FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER])),
+        xlsxRow(FIELDS[USING_BROKER], mapYesNoField({ answer: broker[USING_BROKER] })),
         xlsxRow(FIELDS[BROKER_NAME], broker[BROKER_NAME]),
         xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
         xlsxRow(FIELDS[EMAIL], broker[EMAIL]),
@@ -44,7 +44,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-br
 
       const { broker } = mockApplicationNoBroker;
 
-      const expected = [xlsxRow(FIELDS[USING_BROKER], mapYesNoField(broker[USING_BROKER]))];
+      const expected = [xlsxRow(FIELDS[USING_BROKER], mapYesNoField({ answer: broker[USING_BROKER] }))];
 
       expect(result).toEqual(expected);
     });

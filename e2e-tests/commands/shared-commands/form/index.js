@@ -1,6 +1,11 @@
 Cypress.Commands.add('changeAnswerField', require('./change-answer-field'));
 Cypress.Commands.add('changeAnswerSelectField', require('./change-answer-select-field'));
 Cypress.Commands.add('changeAnswerRadioField', require('./change-answer-radio-field'));
+
+Cypress.Commands.add('completeAlternativeCurrencyField', require('./complete-alternative-currency-field'));
+Cypress.Commands.add('clickAlternativeCurrencyRadioAndCompleteCurrency', require('./click-alternative-currency-radio-and-complete-currency'));
+Cypress.Commands.add('clickAlternativeCurrencyRadioAndSubmitCurrency', require('./click-alternative-currency-radio-and-submit-currency'));
+
 Cypress.Commands.add('clickSubmitButton', require('./click-submit-button'));
 Cypress.Commands.add('clickSubmitButtonMultipleTimes', require('./click-submit-button-multiple-times'));
 Cypress.Commands.add('clickSaveAndBackButton', require('./click-save-and-back-button'));
