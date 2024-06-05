@@ -3531,38 +3531,24 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
-// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var { EMAIL: EMAIL3 } = ACCOUNT2;
-var accountChecks = async (context, account2, urlOrigin) => {
+// custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
+var accountSignInChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
-      console.info("Unable to sign in account - account has not been verified yet");
-      let verificationHasExpired = false;
-      if (account2.verificationExpiry) {
-        verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
-      }
-      if (account2.verificationHash && !verificationHasExpired) {
-        console.info("Account has an unexpired verification token - resetting verification expiry");
-        const accountUpdate = {
-          verificationExpiry: EMAIL3.VERIFICATION_EXPIRY()
+      console.info("Unable to sign in account - account has not been verified yet. Sending a new email verification");
+      const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+      if (emailResponse2?.success) {
+        return {
+          success: false,
+          resentVerificationEmail: true,
+          accountId
         };
-        await update_account_default.account(context, accountId, accountUpdate);
-        console.info("Account has an unexpired verification token - sending verification email");
-        const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
-        if (emailResponse2?.success) {
-          return {
-            success: false,
-            resentVerificationEmail: true,
-            accountId
-          };
-        }
-        return { success: false, accountId };
       }
-      console.info("Unable to sign in account - account has not been verified");
-      return { success: false };
+      return { success: false, accountId };
     }
+    console.info("Signing in account - account is verified. Generating and sending an OTP");
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
@@ -3576,11 +3562,11 @@ var accountChecks = async (context, account2, urlOrigin) => {
       success: false
     };
   } catch (err) {
-    console.error("Error validating password or sending email for account sign in (accountSignIn mutation - account checks) %O", err);
-    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
+    console.error("Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O", err);
+    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${err}`);
   }
 };
-var account_checks_default = accountChecks;
+var account_sign_in_checks_default = accountSignInChecks;
 
 // custom-resolvers/mutations/account-sign-in/index.ts
 var accountSignIn = async (root, variables, context) => {
@@ -3594,6 +3580,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     const account2 = accountData;
     const { id: accountId } = account2;
+    console.info("Signing in account - account found %s", accountId);
     const { isBlocked } = account2.status;
     if (isBlocked) {
       console.info("Unable to sign in account - account is already blocked");
@@ -3601,7 +3588,7 @@ var accountSignIn = async (root, variables, context) => {
     }
     if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
       console.info("Signing in account - valid credentials provided");
-      return account_checks_default(context, account2, urlOrigin);
+      return account_sign_in_checks_default(context, account2, urlOrigin);
     }
     console.info("Signing in account - invalid credentials provided");
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
@@ -5330,7 +5317,7 @@ var {
     EXPORT_VALUE,
     POLICY_TYPE: POLICY_TYPE4,
     USING_BROKER: USING_BROKER2,
-    BROKER_DETAILS: { NAME, EMAIL: EMAIL4, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME, EMAIL: EMAIL3, FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
     LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY }
   }
@@ -5411,7 +5398,7 @@ var POLICY_FIELDS = {
         TITLE: "Broker's name or company"
       }
     },
-    [EMAIL4]: {
+    [EMAIL3]: {
       LABEL: "Email address",
       SUMMARY: {
         TITLE: "Broker's email"
@@ -5854,7 +5841,7 @@ var format_time_of_day_default = formatTimeOfDay;
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
 var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 },
+  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 },
   POLICY: {
     NAME_ON_POLICY: { POSITION }
   }
@@ -5866,7 +5853,7 @@ var mapIntroduction = (application2) => {
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL5]),
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
     xlsx_row_default(FIELDS2.APPLICANT_ROLE, application2.policyContact[POSITION])
   ];
   return mapped;
@@ -5874,7 +5861,7 @@ var mapIntroduction = (application2) => {
 var map_introduction_default = mapIntroduction;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default;
+var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 } = account_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
@@ -5885,7 +5872,7 @@ var mapExporterContactDetails = (application2) => {
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL6])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5])
   ];
   return mapped;
 };
@@ -6031,7 +6018,7 @@ var map_yes_no_field_default = mapYesNoField;
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER4,
-  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL6, FULL_ADDRESS: FULL_ADDRESS2 }
 } = POLICY;
 var { FIELDS: FIELDS5 } = XLSX;
 var mapBroker = (application2) => {
@@ -6042,7 +6029,7 @@ var mapBroker = (application2) => {
       ...mapped,
       xlsx_row_default(FIELDS5[BROKER_NAME2], broker[BROKER_NAME2]),
       xlsx_row_default(FIELDS5[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
-      xlsx_row_default(FIELDS5[EMAIL7], broker[EMAIL7])
+      xlsx_row_default(FIELDS5[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;

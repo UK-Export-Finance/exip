@@ -2,15 +2,14 @@ import { PAGES } from '../../../../../../../content-strings';
 import { verifyEmailLinkExpiredPage } from '../../../../../../../pages/insurance/account/create';
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
 import api from '../../../../../../../commands/api';
+import { createDateOneMonthInThePast } from '../../../../../../../helpers/date';
 
 const CONTENT_STRINGS = PAGES.INSURANCE.ACCOUNT.CREATE.VERIFY_EMAIL_EXPIRED_LINK;
 
 const {
   START,
   ACCOUNT: {
-    CREATE: {
-      CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK, CONFIRM_EMAIL_RESENT,
-    },
+    CREATE: { CONFIRM_EMAIL, VERIFY_EMAIL, VERIFY_EMAIL_EXPIRED_LINK, CONFIRM_EMAIL_RESENT },
   },
 } = ROUTES;
 
@@ -58,11 +57,8 @@ context(
          * Update the account's verification expiry date via the API,
          * so that we can mimic missing the verification period.
          */
-        const today = new Date();
-        const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-
         const updateObj = {
-          verificationExpiry: lastMonth,
+          verificationExpiry: createDateOneMonthInThePast(),
         };
 
         updatedAccount = await api.updateAccount(account.id, updateObj);

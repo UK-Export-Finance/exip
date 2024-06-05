@@ -1,6 +1,7 @@
 import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/routes/insurance';
-import api from '../../../../../../../commands/api';
 import { ACCOUNT } from '../../../../../../../constants';
+import api from '../../../../../../../commands/api';
+import { createDateOneMonthInThePast } from '../../../../../../../helpers/date';
 
 const { IS_INACTIVE } = ACCOUNT;
 
@@ -14,7 +15,7 @@ const {
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  `Insurance - Account - Create - Confirm email page - expired token and ${IS_INACTIVE} flag set - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF`,
+  `Insurance - Account - Create - Confirm email page - expired verification and ${IS_INACTIVE} flag set - As an Exporter I want to verify my email address for account creation, So that I can activate my email address and use it to create a digital service account with UKEF`,
   () => {
     let url;
     let account;
@@ -55,11 +56,8 @@ context(
          * Update the account's verification expiry date via the API,
          * so that we can mimic missing the verification period.
          */
-        const today = new Date();
-        const lastMonth = new Date(today.setMonth(today.getMonth() - 1));
-
         const updateObj = {
-          verificationExpiry: lastMonth,
+          verificationExpiry: createDateOneMonthInThePast(),
         };
 
         updatedAccount = await api.updateAccount(account.id, updateObj);

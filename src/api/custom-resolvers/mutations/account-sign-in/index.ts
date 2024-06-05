@@ -4,7 +4,7 @@ import isValidAccountPassword from '../../../helpers/is-valid-account-password';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import shouldBlockAccount from '../../../helpers/should-block-account';
 import blockAccount from '../../../helpers/block-account';
-import accountChecks from './account-checks';
+import accountChecks from './account-sign-in-checks';
 import { Account, AccountSignInVariables, AccountSignInResponse, Context } from '../../../types';
 
 /**
@@ -42,6 +42,8 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const account = accountData;
 
     const { id: accountId } = account;
+
+    console.info('Signing in account - account found %s', accountId);
 
     /**
      * Check if the account is blocked

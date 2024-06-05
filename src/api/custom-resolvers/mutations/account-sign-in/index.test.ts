@@ -3,7 +3,7 @@ import accountSignIn from '.';
 import createAuthenticationRetryEntry from '../../../helpers/create-authentication-retry-entry';
 import generate from '../../../helpers/generate-otp';
 import sendEmail from '../../../emails';
-import accountChecks from './account-checks';
+import accountChecks from './account-sign-in-checks';
 import accounts from '../../../test-helpers/accounts';
 import accountStatusHelper from '../../../test-helpers/account-status';
 import authRetries from '../../../test-helpers/auth-retries';

@@ -11,17 +11,16 @@ const {
 } = ROUTES;
 
 const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
+const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Account - Sign in - after account has been blocked and reactivated', () => {
-  const baseUrl = Cypress.config('baseUrl');
   const accountReactivatedUrl = `${baseUrl}${REACTIVATED_ROOT}`;
   const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
   const dashboardUrl = `${baseUrl}${DASHBOARD}`;
-
   let account;
 
   before(() => {
-    cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
+    // cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
   });
 
   after(() => {
