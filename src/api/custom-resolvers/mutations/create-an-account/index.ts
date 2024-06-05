@@ -50,7 +50,12 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
           const emailResponse = await confirmEmailAddressEmail.send(context, urlOrigin, accountId);
 
           if (emailResponse.success) {
-            return { success: true };
+            return {
+              // TODO
+              // TODO: update unit test
+              id: accountId,
+              success: true,
+            };
           }
         }
       } else {
@@ -111,7 +116,10 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
       if (emailResponse.success) {
         return {
-          ...creationResponse,
+          // TODO
+          // TODO: update unit test
+          // ...creationResponse,
+          id: creationResponse.id,
           verificationHash,
           success: true,
         };

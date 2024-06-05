@@ -3241,7 +3241,12 @@ var createAnAccount = async (root, variables, context) => {
           console.info("Account creation - resending an email verification for %s", email);
           const emailResponse = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
           if (emailResponse.success) {
-            return { success: true };
+            return {
+              // TODO
+              // TODO: update unit test
+              id: accountId,
+              success: true
+            };
           }
         }
       } else {
@@ -3284,7 +3289,10 @@ var createAnAccount = async (root, variables, context) => {
       const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
       if (emailResponse.success) {
         return {
-          ...creationResponse,
+          // TODO
+          // TODO: update unit test
+          // ...creationResponse,
+          id: creationResponse.id,
           verificationHash,
           success: true
         };
