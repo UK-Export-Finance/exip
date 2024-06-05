@@ -52,7 +52,7 @@ const accountSignIn = async (root: any, variables: AccountSignInVariables, conte
     const { isBlocked } = account.status;
 
     if (isBlocked) {
-      console.info('Unable to sign in account - account is already blocked');
+      console.info('Unable to sign in account - account is blocked');
 
       return { success: false, isBlocked: true, accountId };
     }

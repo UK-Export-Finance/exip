@@ -40,7 +40,7 @@ const deleteAll = async (context: Context) => {
  * @param {String} Account ID
  * @returns {Object} Account
  */
-const get = async (context: Context, accountId: string) => {
+const get = async (context: Context, accountId: string): Promise<Account> => {
   try {
     console.info('Getting an account by ID (test helpers)');
 

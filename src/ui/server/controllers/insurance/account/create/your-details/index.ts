@@ -6,7 +6,7 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
+import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists-invalid-password';
 import saveData from './save-data';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';

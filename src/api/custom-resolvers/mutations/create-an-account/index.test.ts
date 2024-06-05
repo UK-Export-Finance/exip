@@ -2,7 +2,9 @@ import createAnAccount from '.';
 import { ACCOUNT, DATE_24_HOURS_FROM_NOW } from '../../../constants';
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
+import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
 import accounts from '../../../test-helpers/accounts';
+import accountStatus from '../../../test-helpers/account-status';
 import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
@@ -21,8 +23,10 @@ describe('custom-resolvers/create-an-account', () => {
   let account: Account;
 
   jest.mock('../../../emails');
+  // jest.mock('../../../helpers/send-email-confirm-email-address');
 
   let sendEmailConfirmEmailAddressSpy = jest.fn();
+  let sendConfirmEmailAddressEmailSpy = jest.fn();
 
   const mockPassword = String(process.env.MOCK_ACCOUNT_PASSWORD);
 
@@ -42,64 +46,169 @@ describe('custom-resolvers/create-an-account', () => {
     jest.resetAllMocks();
   });
 
-  beforeEach(async () => {
-    jest.resetAllMocks();
+  // beforeEach(async () => {
+  //   jest.resetAllMocks();
 
-    sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+  //   sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+  //   sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
 
-    await accounts.deleteAll(context);
+  //   sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-    // create an account
-    account = (await createAnAccount({}, variables, context)) as Account;
+  //   confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+  //   await accounts.deleteAll(context);
+
+  //   // create an account
+  //   account = (await createAnAccount({}, variables, context)) as Account;
+  // });
+
+  describe('when an account with the provided email does NOT already exist', () => {
+    beforeEach(async () => {
+      jest.resetAllMocks();
+
+      sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+
+      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+
+      sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+
+      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+      await accounts.deleteAll(context);
+
+      // create an account
+      account = (await createAnAccount({}, variables, context)) as Account;
+    });
+
+    it('should generate and return the created account with added salt and hashes', () => {
+      expect(account.firstName).toEqual(variables.firstName);
+      expect(account.lastName).toEqual(variables.lastName);
+      expect(account.email).toEqual(variables.email);
+      expect(account.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);
+      expect(account.hash.length).toEqual(KEY_LENGTH * 2);
+      expect(account.verificationHash.length).toEqual(KEY_LENGTH * 2);
+    });
+
+    it('should generate status fields', async () => {
+      account = await accounts.get(context, account.id);
+
+      const { status } = account;
+
+      expect(status.isBlocked).toEqual(false);
+      expect(status.isVerified).toEqual(false);
+      expect(status.isInactive).toEqual(false);
+    });
+
+    it('should call sendEmail.confirmEmailAddress', () => {
+      const { email, verificationHash, id } = account;
+
+      const name = getFullNameString(account);
+
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, variables.urlOrigin, name, verificationHash, id);
+    });
+
+    it('should generate and return verification expiry date', () => {
+      const expiry = new Date(account.verificationExpiry);
+
+      const expiryDay = expiry.getDate();
+
+      const tomorrow = DATE_24_HOURS_FROM_NOW();
+      const tomorrowDay = new Date(tomorrow).getDate();
+
+      expect(expiryDay).toEqual(tomorrowDay);
+    });
   });
 
-  it('should generate and return the created account with added salt and hashes', () => {
-    expect(account.firstName).toEqual(variables.firstName);
-    expect(account.lastName).toEqual(variables.lastName);
-    expect(account.email).toEqual(variables.email);
-    expect(account.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);
-    expect(account.hash.length).toEqual(KEY_LENGTH * 2);
-    expect(account.verificationHash.length).toEqual(KEY_LENGTH * 2);
+  describe('when an account with the provided email already exists, provided password is valid, account is unverified', () => {
+    let result: Account;
+
+    beforeEach(async () => {
+      jest.resetAllMocks();
+
+      sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+      sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+
+      await accounts.deleteAll(context);
+
+      account = (await createAnAccount({}, variables, context)) as Account;
+
+      // get the account's status ID.
+      const { status } = await accounts.get(context, account.id);
+
+      // update the account to be unverified
+      const statusUpdate = {
+        isVerified: false,
+      };
+
+      await accountStatus.update(context, status.id, statusUpdate);
+
+      // TODO: DRY
+      // TODO: document why we need to do this (2x calls to createAnAccount)
+      jest.resetAllMocks();
+
+      sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+      sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+
+      // attempt to create account with the same email
+      result = (await createAnAccount({}, variables, context)) as Account;
+    });
+
+    it('should call confirmEmailAddressEmail.send', () => {
+      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
+
+      expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, variables.urlOrigin, account.id);
+    });
+
+    it('should NOT call sendEmail.confirmEmailAddress', () => {
+      expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(0);
+    });
+
+    it('should return success=true', () => {
+      const expected = {
+        success: true,
+      };
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should NOT create a new account', async () => {
+      const allAccounts = await context.query.Account.findMany();
+
+      // should only have the first created account
+      expect(allAccounts.length).toEqual(1);
+    });
   });
 
-  it('should generate status fields', async () => {
-    account = await accounts.get(context, account.id);
-
-    const { status } = account;
-
-    expect(status.isBlocked).toEqual(false);
-    expect(status.isVerified).toEqual(false);
-    expect(status.isInactive).toEqual(false);
-  });
-
-  it('should generate and return verification expiry date', () => {
-    const expiry = new Date(account.verificationExpiry);
-
-    const expiryDay = expiry.getDate();
-
-    const tomorrow = DATE_24_HOURS_FROM_NOW();
-    const tomorrowDay = new Date(tomorrow).getDate();
-
-    expect(expiryDay).toEqual(tomorrowDay);
-  });
-
-  it('should call sendEmail.confirmEmailAddress', () => {
-    const { email, verificationHash, id } = account;
-
-    const name = getFullNameString(account);
-
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
-    expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, variables.urlOrigin, name, verificationHash, id);
-  });
-
-  describe('when an account with the provided email already exists', () => {
+  describe('when an account with the provided email already exists, but the provided password is invalid', () => {
     let result: Account;
 
     beforeAll(async () => {
+      jest.resetAllMocks();
+
+      sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+      sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+
+      confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+      await accounts.deleteAll(context);
+
+      account = (await createAnAccount({}, variables, context)) as Account;
+
       // attempt to create account with the same email
-      result = (await createAnAccount({}, variables, context)) as Account;
+      const variablesInvalidPassword = {
+        ...variables,
+        password: `${mockPassword}-invalid`,
+      };
+
+      result = (await createAnAccount({}, variablesInvalidPassword, context)) as Account;
     });
 
     it('should return success=false', () => {
@@ -109,20 +218,17 @@ describe('custom-resolvers/create-an-account', () => {
 
       expect(result).toEqual(expected);
     });
-
-    it('should not create the account', async () => {
-      const allAccounts = await context.query.Account.findMany();
-
-      // should only have the first created account
-      expect(allAccounts.length).toEqual(1);
-    });
   });
+
+  // TODO: confirmEmailAddressEmail.send error handling
 
   describe('error handling', () => {
     describe('when sendEmail.confirmEmailAddress does not return success=true', () => {
       const emailFailureResponse = { ...mockSendEmailResponse, success: false };
 
-      beforeEach(() => {
+      beforeAll(async () => {
+        await accounts.deleteAll(context);
+
         sendEmail.confirmEmailAddress = jest.fn(() => Promise.resolve(emailFailureResponse));
       });
 
@@ -130,7 +236,9 @@ describe('custom-resolvers/create-an-account', () => {
         try {
           await createAnAccount({}, variables, context);
         } catch (err) {
-          const expected = new Error(`Sending email verification for account creation ${emailFailureResponse}`);
+          const expected = new Error(
+            `Account creation - creating account Error: Account creation - sending email verification for account creation ${emailFailureResponse}`,
+          );
           expect(err).toEqual(expected);
         }
       });

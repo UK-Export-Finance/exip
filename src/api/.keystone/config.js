@@ -2719,6 +2719,21 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
+// helpers/get-account-status-by-id/index.ts
+var getAccountStatusById = async (context, id) => {
+  try {
+    console.info("Getting account status by ID  %s", id);
+    const accountStatus2 = await context.query.AccountStatus.findOne({
+      where: { id }
+    });
+    return accountStatus2;
+  } catch (err) {
+    console.error("Error getting account status by ID %O", err);
+    throw new Error(`Getting account status by ID ${err}`);
+  }
+};
+var get_account_status_by_id_default = getAccountStatusById;
+
 // helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
@@ -2734,15 +2749,12 @@ var getAccountByField = async (context, field, value) => {
       return false;
     }
     const account2 = accountsArray[0];
-    const accountStatus2 = await context.db.AccountStatus.findOne({
-      where: { id: account2.statusId },
-      take: 1
-    });
-    const fullAccount = {
+    const accountStatus2 = await get_account_status_by_id_default(context, account2.statusId);
+    const populatedAccount = {
       ...account2,
       status: accountStatus2
     };
-    return fullAccount;
+    return populatedAccount;
   } catch (err) {
     console.error("Error getting account by field/value %O", err);
     throw new Error(`Getting account by field/value ${err}`);
@@ -2750,20 +2762,49 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
-// helpers/encrypt-password/index.ts
+// helpers/get-password-hash/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT2;
 var {
-  RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
   PASSWORD: {
     PBKDF2: { KEY_LENGTH }
   }
 } = ENCRYPTION;
-var encryptPassword = (password2) => {
-  const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+var getPasswordHash = (password2, salt) => {
   const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+  return hash;
+};
+var get_password_hash_default = getPasswordHash;
+
+// helpers/is-valid-account-password/index.ts
+var isValidAccountPassword = (password2, salt, hash) => {
+  console.info("Validating account password");
+  const hashVerify = get_password_hash_default(password2, salt);
+  if (hash === hashVerify) {
+    console.info("Valid account password");
+    return true;
+  }
+  console.info("Invalid account password");
+  return false;
+};
+var is_valid_account_password_default = isValidAccountPassword;
+
+// helpers/encrypt-password/index.ts
+var import_crypto2 = __toESM(require("crypto"));
+var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE: STRING_TYPE2,
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
+} = ENCRYPTION2;
+var encryptPassword = (password2) => {
+  const salt = import_crypto2.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE2);
+  const hash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
   return {
     salt,
     hash
@@ -2772,17 +2813,17 @@ var encryptPassword = (password2) => {
 var encrypt_password_default = encryptPassword;
 
 // helpers/get-account-verification-hash/index.ts
-var import_crypto2 = __toESM(require("crypto"));
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var import_crypto3 = __toESM(require("crypto"));
+var { EMAIL, ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
-  STRING_TYPE: STRING_TYPE2,
-  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  STRING_TYPE: STRING_TYPE3,
+  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
   }
-} = ENCRYPTION2;
+} = ENCRYPTION3;
 var generateAccountVerificationHash = (email, salt) => {
-  const verificationHash = import_crypto2.default.pbkdf2Sync(email, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
+  const verificationHash = import_crypto3.default.pbkdf2Sync(email, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
   const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
   return {
     verificationHash,
@@ -3078,55 +3119,181 @@ var sendEmail = {
 };
 var emails_default = sendEmail;
 
+// helpers/get-account-by-id/index.ts
+var getAccountById = async (context, accountId) => {
+  try {
+    console.info("Getting account by ID");
+    const account2 = await context.db.Account.findOne({
+      where: {
+        id: accountId
+      }
+    });
+    return account2;
+  } catch (err) {
+    console.error("Error getting account by ID %O", err);
+    throw new Error(`Getting account by ID ${err}`);
+  }
+};
+var get_account_by_id_default = getAccountById;
+
+// helpers/update-account/index.ts
+var account = async (context, accountId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccount = await context.db.Account.updateOne({
+      where: {
+        id: accountId
+      },
+      data: updateData
+    });
+    return updatedAccount;
+  } catch (err) {
+    console.error("Error updating account %O", err);
+    throw new Error(`Updating account ${err}`);
+  }
+};
+var accountStatus = async (context, accountStatusId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccountStatus = await context.db.AccountStatus.updateOne({
+      where: {
+        id: accountStatusId
+      },
+      data: {
+        ...updateData,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    });
+    return updatedAccountStatus;
+  } catch (err) {
+    console.error("Error updating account status %O", err);
+    throw new Error(`Updating account status ${err}`);
+  }
+};
+var update = {
+  account,
+  accountStatus
+};
+var update_account_default = update;
+
+// helpers/date/index.ts
+var import_date_fns3 = require("date-fns");
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns3.isAfter)(now2, targetDate);
+};
+
+// helpers/send-email-confirm-email-address/index.ts
+var send = async (context, urlOrigin, accountId) => {
+  try {
+    console.info("Sending email verification");
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Sending email verification - no account exists with the provided account ID");
+      return {
+        success: false
+      };
+    }
+    let latestVerificationHash = "";
+    let verificationHasExpired = false;
+    if (account2.verificationExpiry) {
+      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+    }
+    if (account2.verificationHash && !verificationHasExpired) {
+      latestVerificationHash = account2.verificationHash;
+    } else {
+      const { email: email2, salt } = account2;
+      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
+      const accountUpdate = { verificationHash, verificationExpiry };
+      latestVerificationHash = verificationHash;
+      await update_account_default.account(context, accountId, accountUpdate);
+    }
+    const { email, id } = account2;
+    const name = get_full_name_string_default(account2);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
+  } catch (err) {
+    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  }
+};
+var confirmEmailAddressEmail = {
+  send
+};
+var send_email_confirm_email_address_default = confirmEmailAddressEmail;
+
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
-  console.info("Creating new account for %s", variables.email);
+  console.info("Account creation - %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account2) {
-      console.info("Unable to create a new account for %s - account already exists", variables.email);
-      return { success: false };
-    }
-    const { salt, hash } = encrypt_password_default(password2);
-    const now2 = /* @__PURE__ */ new Date();
-    const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
-    const accountData = {
-      firstName,
-      lastName,
-      email,
-      salt,
-      hash,
-      verificationHash,
-      verificationExpiry,
-      createdAt: now2,
-      updatedAt: now2
-    };
-    const creationResponse = await context.db.Account.createOne({
-      data: accountData
-    });
-    await context.db.AccountStatus.createOne({
-      data: {
-        account: {
-          connect: {
-            id: creationResponse.id
+      console.info("Account creation - account already exists %s", email);
+      if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
+        console.info("Account creation - account already exists - valid credentials provided %s", email);
+        if (!account2.status.isVerified) {
+          console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);
+          const { id: accountId } = account2;
+          console.info("Account creation - resending an email verification for %s", email);
+          const emailResponse = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+          if (emailResponse.success) {
+            return { success: true };
           }
         }
+      } else {
+        console.info("Account creation - account already exists - invalid credentials provided %s", email);
+        return { success: false };
       }
-    });
-    const name = get_full_name_string_default(creationResponse);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
-    if (emailResponse.success) {
-      return {
-        ...creationResponse,
+    } else {
+      console.info("Account creation - no existing account found. Generating an encrypted password %s", email);
+      const { salt, hash } = encrypt_password_default(password2);
+      const now2 = /* @__PURE__ */ new Date();
+      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
+      console.info("Account creation - constructing account data %s", email);
+      const accountData = {
+        firstName,
+        lastName,
+        email,
+        salt,
+        hash,
         verificationHash,
-        success: true
+        verificationExpiry,
+        createdAt: now2,
+        updatedAt: now2
       };
+      console.info("Account creation - creating account %s", email);
+      const creationResponse = await context.db.Account.createOne({
+        data: accountData
+      });
+      console.info("Account creation - creating account status relationship %s", email);
+      await context.db.AccountStatus.createOne({
+        data: {
+          account: {
+            connect: {
+              id: creationResponse.id
+            }
+          }
+        }
+      });
+      console.info("Account creation - sending an email verification for %s", email);
+      const name = get_full_name_string_default(creationResponse);
+      const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
+      if (emailResponse.success) {
+        return {
+          ...creationResponse,
+          verificationHash,
+          success: true
+        };
+      }
+      throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
     }
-    throw new Error(`Sending email verification for account creation ${emailResponse}`);
   } catch (err) {
-    console.error("Error creating a new account %O", err);
-    throw new Error(`Creating a new account ${err}`);
+    console.error("Error Account creation - creating account %O", err);
+    throw new Error(`Account creation - creating account ${err}`);
   }
 };
 var create_an_account_default = createAnAccount;
@@ -3191,49 +3358,7 @@ var deleteAnAccount = async (root, variables, context) => {
 var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
-var import_date_fns3 = require("date-fns");
-
-// helpers/update-account/index.ts
-var account = async (context, accountId, updateData) => {
-  try {
-    console.info("Updating account");
-    const updatedAccount = await context.db.Account.updateOne({
-      where: {
-        id: accountId
-      },
-      data: updateData
-    });
-    return updatedAccount;
-  } catch (err) {
-    console.error("Error updating account %O", err);
-    throw new Error(`Updating account ${err}`);
-  }
-};
-var accountStatus = async (context, accountStatusId, updateData) => {
-  try {
-    console.info("Updating account");
-    const updatedAccountStatus = await context.db.AccountStatus.updateOne({
-      where: {
-        id: accountStatusId
-      },
-      data: {
-        ...updateData,
-        updatedAt: /* @__PURE__ */ new Date()
-      }
-    });
-    return updatedAccountStatus;
-  } catch (err) {
-    console.error("Error updating account status %O", err);
-    throw new Error(`Updating account status ${err}`);
-  }
-};
-var update = {
-  account,
-  accountStatus
-};
-var update_account_default = update;
-
-// custom-resolvers/mutations/verify-account-email-address/index.ts
+var import_date_fns4 = require("date-fns");
 var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -3255,7 +3380,7 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
     const { id } = account2;
     const { id: statusId } = account2.status;
     const now2 = /* @__PURE__ */ new Date();
-    const canActivateAccount = (0, import_date_fns3.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
+    const canActivateAccount = (0, import_date_fns4.isBefore)(now2, account2[VERIFICATION_EXPIRY]);
     if (!canActivateAccount) {
       console.info("Unable to verify account email address - verification period has expired");
       return {
@@ -3286,72 +3411,6 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
-// helpers/get-account-by-id/index.ts
-var getAccountById = async (context, accountId) => {
-  try {
-    console.info("Getting account by ID");
-    const account2 = await context.db.Account.findOne({
-      where: {
-        id: accountId
-      }
-    });
-    return account2;
-  } catch (err) {
-    console.error("Error getting account by ID %O", err);
-    throw new Error(`Getting account by ID ${err}`);
-  }
-};
-var get_account_by_id_default = getAccountById;
-
-// helpers/date/index.ts
-var import_date_fns4 = require("date-fns");
-var dateIsInThePast = (targetDate) => {
-  const now2 = /* @__PURE__ */ new Date();
-  return (0, import_date_fns4.isAfter)(now2, targetDate);
-};
-
-// helpers/send-email-confirm-email-address/index.ts
-var send = async (context, urlOrigin, accountId) => {
-  try {
-    console.info("Sending email verification");
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      console.info("Sending email verification - no account exists with the provided account ID");
-      return {
-        success: false
-      };
-    }
-    let latestVerificationHash = "";
-    let verificationHasExpired = false;
-    if (account2.verificationExpiry) {
-      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
-    }
-    if (account2.verificationHash && !verificationHasExpired) {
-      latestVerificationHash = account2.verificationHash;
-    } else {
-      const { email: email2, salt } = account2;
-      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
-      const accountUpdate = { verificationHash, verificationExpiry };
-      latestVerificationHash = verificationHash;
-      await update_account_default.account(context, accountId, accountUpdate);
-    }
-    const { email, id } = account2;
-    const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
-  }
-};
-var confirmEmailAddressEmail = {
-  send
-};
-var send_email_confirm_email_address_default = confirmEmailAddressEmail;
-
 // custom-resolvers/mutations/send-email-confirm-email-address/index.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   try {
@@ -3367,35 +3426,6 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   }
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
-
-// helpers/get-password-hash/index.ts
-var import_crypto3 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
-var {
-  STRING_TYPE: STRING_TYPE3,
-  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
-  }
-} = ENCRYPTION3;
-var getPasswordHash = (password2, salt) => {
-  const hash = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
-  return hash;
-};
-var get_password_hash_default = getPasswordHash;
-
-// helpers/is-valid-account-password/index.ts
-var isValidAccountPassword = (password2, salt, hash) => {
-  console.info("Validating account password");
-  const hashVerify = get_password_hash_default(password2, salt);
-  if (hash === hashVerify) {
-    console.info("Valid account password");
-    return true;
-  }
-  console.info("Invalid account password");
-  return false;
-};
-var is_valid_account_password_default = isValidAccountPassword;
 
 // helpers/create-authentication-retry-entry/index.ts
 var createAuthenticationRetryEntry = async (context, accountId) => {
@@ -3583,7 +3613,7 @@ var accountSignIn = async (root, variables, context) => {
     console.info("Signing in account - account found %s", accountId);
     const { isBlocked } = account2.status;
     if (isBlocked) {
-      console.info("Unable to sign in account - account is already blocked");
+      console.info("Unable to sign in account - account is blocked");
       return { success: false, isBlocked: true, accountId };
     }
     if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
