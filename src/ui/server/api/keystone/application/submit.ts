@@ -16,6 +16,9 @@ const submitApplication = async (applicationId: string) => {
 
     const response = (await apollo('POST', submitApplicationMutation, variables)) as ApolloResponse;
 
+    console.info('temporary logs for debugging in dev environment - submit application response ', response);
+    console.info('temporary logs for debugging in dev environment - submit application response.data ', response?.data);
+
     if (response.errors) {
       console.error('GraphQL error submitting application %O', response.errors);
     }
