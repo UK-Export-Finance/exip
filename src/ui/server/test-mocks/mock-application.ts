@@ -163,10 +163,11 @@ export const mockNominatedLossPayee = {
 
 export const mockSectionReview = {
   id: 'clflcq9w4002moqzlnr5yhamr',
-  eligibility: true,
-  policy: true,
   business: true,
   buyer: true,
+  eligibility: true,
+  exportContract: true,
+  policy: true,
 };
 
 export const mockApplicationDeclaration = {
