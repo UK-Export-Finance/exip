@@ -1,9 +1,3 @@
-import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
-
-const { ROOT: INSURANCE_ROOT, ALL_SECTIONS } = INSURANCE_ROUTES;
-
-const baseUrl = Cypress.config('baseUrl');
-
 context('Insurance - Policy - Complete the entire section as a single contract policy', () => {
   let referenceNumber;
 
@@ -38,10 +32,8 @@ context('Insurance - Policy - Complete the entire section as a single contract p
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should change the 'type of policy' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
-    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-    cy.assertUrl(expectedUrl);
+  it('should change the `type of policy`` task status to `completed` in the `all sections` page', () => {
+    cy.assertAllSectionsUrl(referenceNumber);
 
     cy.checkTaskPolicyStatusIsComplete();
   });

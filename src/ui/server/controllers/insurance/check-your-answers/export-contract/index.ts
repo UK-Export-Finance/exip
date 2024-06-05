@@ -8,6 +8,8 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
 import requiredFields from '../../../../helpers/required-fields/export-contract';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
+import save from '../save-data';
 import { Request, Response } from '../../../../../types';
 
 export const TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
@@ -109,5 +111,20 @@ export const post = async (req: Request, res: Response) => {
 
   const { referenceNumber } = application;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  try {
+    // save the application
+    const payload = constructPayload(req.body, [FIELD_ID]);
+
+    const saveResponse = await save.sectionReview(application, payload);
+
+    if (!saveResponse) {
+      return res.redirect(PROBLEM_WITH_SERVICE);
+    }
+
+    return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
+  } catch (err) {
+    console.error('Error updating Check your answers - Export contract %O', err);
+
+    return res.redirect(PROBLEM_WITH_SERVICE);
+  }
 };

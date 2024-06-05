@@ -499,9 +499,10 @@ model SectionReview {
   application                    Application?  @relation("SectionReview_application", fields: [applicationId], references: [id])
   applicationId                  String?       @map("application")
   eligibility                    Boolean?
-  policy                         Boolean?
   business                       Boolean?
   buyer                          Boolean?
+  exportContract                 Boolean?
+  policy                         Boolean?
   from_Application_sectionReview Application[] @relation("Application_sectionReview")
 
   @@index([applicationId])

@@ -1,12 +1,6 @@
-import { FIELD_VALUES, ROUTES } from '../../../../../constants';
-
-const {
-  INSURANCE: { ROOT: INSURANCE_ROOT, ALL_SECTIONS },
-} = ROUTES;
+import { FIELD_VALUES } from '../../../../../constants';
 
 const policyType = FIELD_VALUES.POLICY_TYPE.MULTIPLE;
-
-const baseUrl = Cypress.config('baseUrl');
 
 context('Insurance - Policy - Complete the entire section as a multiple contract policy', () => {
   let referenceNumber;
@@ -42,10 +36,8 @@ context('Insurance - Policy - Complete the entire section as a multiple contract
     cy.deleteApplication(referenceNumber);
   });
 
-  it(`should change the 'type of policy' task status to 'completed' in the ${ALL_SECTIONS} page`, () => {
-    const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-
-    cy.assertUrl(expectedUrl);
+  it('should change the `type of policy`` task status to `completed` in the `all sections` page', () => {
+    cy.assertAllSectionsUrl(referenceNumber);
 
     cy.checkTaskPolicyStatusIsComplete();
   });

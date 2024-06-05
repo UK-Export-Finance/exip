@@ -2523,9 +2523,10 @@ type SectionReview {
   id: ID!
   application: Application
   eligibility: Boolean
-  policy: Boolean
   business: Boolean
   buyer: Boolean
+  exportContract: Boolean
+  policy: Boolean
 }
 
 input SectionReviewWhereUniqueInput {
@@ -2547,9 +2548,10 @@ input SectionReviewOrderByInput {
 input SectionReviewUpdateInput {
   application: ApplicationRelateToOneForUpdateInput
   eligibility: Boolean
-  policy: Boolean
   business: Boolean
   buyer: Boolean
+  exportContract: Boolean
+  policy: Boolean
 }
 
 input SectionReviewUpdateArgs {
@@ -2560,9 +2562,10 @@ input SectionReviewUpdateArgs {
 input SectionReviewCreateInput {
   application: ApplicationRelateToOneForCreateInput
   eligibility: Boolean
-  policy: Boolean
   business: Boolean
   buyer: Boolean
+  exportContract: Boolean
+  policy: Boolean
 }
 
 type Declaration {
