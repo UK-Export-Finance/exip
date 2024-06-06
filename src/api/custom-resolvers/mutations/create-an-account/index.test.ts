@@ -24,7 +24,6 @@ describe('custom-resolvers/create-an-account', () => {
   let createdAccount: Account;
 
   jest.mock('../../../emails');
-  // jest.mock('../../../helpers/send-email-confirm-email-address');
 
   let sendEmailConfirmEmailAddressSpy = jest.fn();
   let sendConfirmEmailAddressEmailSpy = jest.fn();
