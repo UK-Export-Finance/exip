@@ -15,7 +15,8 @@ import { Account, AccountCreationVariables, AccountCreationCore, Context } from 
  * If an account already exists:
  * - Validate the provided password.
  * - If the account is unverified, send a "confirm email address" email.
- * - Otherwise, return "success=false", as the password is invalid.
+ * - If the account is verified, return "isVerified=true"
+ * - If the password is invalid, return "success=false".
  * If an account does NOT already exist:
  * - Create email verification hash/token.
  * - Create initial account data.
@@ -53,78 +54,84 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
             return {
               id: accountId,
               success: true,
+              alreadyExists: true,
+              isVerified: false,
             };
           }
         }
-      } else {
-        console.info('Account creation - account already exists - invalid credentials provided %s', email);
 
-        return { success: false };
-      }
-    } else {
-      console.info('Account creation - no existing account found. Generating an encrypted password %s', email);
+        console.info('Account creation - unable to create a new account - account already exists and is verified %s', email);
 
-      const { salt, hash } = encryptPassword(password);
-
-      const now = new Date();
-
-      const { verificationHash, verificationExpiry } = generateAccountVerificationHash(email, salt);
-
-      console.info('Account creation - constructing account data %s', email);
-
-      const accountData = {
-        firstName,
-        lastName,
-        email,
-        salt,
-        hash,
-        verificationHash,
-        verificationExpiry,
-        createdAt: now,
-        updatedAt: now,
-      } as AccountCreationCore;
-
-      console.info('Account creation - creating account %s', email);
-
-      const creationResponse = await context.db.Account.createOne({
-        data: accountData,
-      });
-
-      console.info('Account creation - creating account status relationship %s', email);
-
-      await context.db.AccountStatus.createOne({
-        data: {
-          account: {
-            connect: {
-              id: creationResponse.id,
-            },
-          },
-        },
-      });
-
-      /**
-       * Generate a full name string.
-       * Send "confirm email address" email
-       */
-      console.info('Account creation - sending an email verification for %s', email);
-
-      const name = getFullNameString(creationResponse);
-
-      const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
-
-      if (emailResponse.success) {
         return {
-          // TODO
-          // TODO: update unit test
-          // ...creationResponse,
-          id: creationResponse.id,
-          verificationHash,
-          success: true,
+          success: false,
+          alreadyExists: true,
+          isVerified: true,
         };
       }
 
-      throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
+      console.info('Account creation - account already exists - invalid credentials provided %s', email);
+
+      return { success: false };
     }
+    console.info('Account creation - no existing account found. Generating an encrypted password %s', email);
+
+    const { salt, hash } = encryptPassword(password);
+
+    const now = new Date();
+
+    const { verificationHash, verificationExpiry } = generateAccountVerificationHash(email, salt);
+
+    console.info('Account creation - constructing account data %s', email);
+
+    const accountData = {
+      firstName,
+      lastName,
+      email,
+      salt,
+      hash,
+      verificationHash,
+      verificationExpiry,
+      createdAt: now,
+      updatedAt: now,
+    } as AccountCreationCore;
+
+    console.info('Account creation - creating account %s', email);
+
+    const creationResponse = await context.db.Account.createOne({
+      data: accountData,
+    });
+
+    console.info('Account creation - creating account status relationship %s', email);
+
+    await context.db.AccountStatus.createOne({
+      data: {
+        account: {
+          connect: {
+            id: creationResponse.id,
+          },
+        },
+      },
+    });
+
+    /**
+     * Generate a full name string.
+     * Send "confirm email address" email
+     */
+    console.info('Account creation - sending an email verification for %s', email);
+
+    const name = getFullNameString(creationResponse);
+
+    const emailResponse = await sendEmail.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
+
+    if (emailResponse.success) {
+      return {
+        id: creationResponse.id,
+        verificationHash,
+        success: true,
+      };
+    }
+
+    throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
   } catch (err) {
     console.error('Error Account creation - creating account %O', err);
     throw new Error(`Account creation - creating account ${err}`);

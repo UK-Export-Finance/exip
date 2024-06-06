@@ -2268,9 +2268,9 @@ var typeDefs = `
 
   type CreateAnAccountResponse {
     success: Boolean
+    alreadyExists: Boolean
+    isVerified: Boolean
     id: String
-    firstName: String
-    lastName: String
     email: String
     verificationHash: String
   }
@@ -3244,10 +3244,18 @@ var createAnAccount = async (root, variables, context) => {
           if (emailResponse.success) {
             return {
               id: accountId,
-              success: true
+              success: true,
+              alreadyExists: true,
+              isVerified: false
             };
           }
         }
+        console.info("Account creation - unable to create a new account - account already exists and is verified %s", email);
+        return {
+          success: false,
+          alreadyExists: true,
+          isVerified: true
+        };
       } else {
         console.info("Account creation - account already exists - invalid credentials provided %s", email);
         return { success: false };

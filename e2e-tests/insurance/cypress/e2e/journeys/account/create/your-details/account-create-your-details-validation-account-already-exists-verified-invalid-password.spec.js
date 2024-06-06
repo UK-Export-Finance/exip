@@ -25,7 +25,7 @@ const invalidPassword = `${mockAccount[PASSWORD]}-invalid`;
 const baseUrl = Cypress.config('baseUrl');
 
 context(
-  'Insurance - Account - Create - Your details page - Account already exists - unverified - invalid password - As an Exporter, I want the system to verify that the email address that I register against my UKEF digital service account is unique, So that I can be sure that the system does not have multiple digital service accounts with the same email address',
+  'Insurance - Account - Create - Your details page - Account already exists - verified - invalid password - As an Exporter, I want the system to verify that the email address that I register against my UKEF digital service account is unique, So that I can be sure that the system does not have multiple digital service accounts with the same email address',
   () => {
     let url;
 
@@ -38,6 +38,9 @@ context(
 
       // create an account
       cy.completeAndSubmitCreateAccountForm();
+
+      // verify email
+      cy.verifyAccountEmail();
     });
 
     beforeEach(() => {

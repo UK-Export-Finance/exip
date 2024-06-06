@@ -1,7 +1,7 @@
 import accountAlreadyExistsInvalidPasswordValidation from '.';
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../../helpers/validation';
+import INSURANCE_FIELD_IDS from '../../../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
+import generateValidationErrors from '../../../../../../../../helpers/validation';
 
 const {
   ACCOUNT: { EMAIL, PASSWORD },
@@ -13,7 +13,7 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/account/create/your-details/validation/account-already-exists-invalid-password', () => {
+describe('controllers/insurance/account/create/your-details/validation/account-already-exists/invalid-password', () => {
   it('should return the result of generateValidationErrors', () => {
     const result = accountAlreadyExistsInvalidPasswordValidation();
 

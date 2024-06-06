@@ -1,7 +1,7 @@
-import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
-import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import generateValidationErrors from '../../../../../../../helpers/validation';
-import { ValidationErrors } from '../../../../../../../../types';
+import INSURANCE_FIELD_IDS from '../../../../../../../../constants/field-ids/insurance';
+import { ERROR_MESSAGES } from '../../../../../../../../content-strings';
+import generateValidationErrors from '../../../../../../../../helpers/validation';
+import { ValidationErrors } from '../../../../../../../../../types';
 
 const {
   ACCOUNT: { EMAIL, PASSWORD },

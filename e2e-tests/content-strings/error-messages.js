@@ -1,11 +1,4 @@
-import {
-  APPLICATION,
-  ELIGIBILITY,
-  FIELD_IDS,
-  MINIMUM_CHARACTERS,
-  MAXIMUM_CHARACTERS,
-  TOTAL_CONTRACT_VALUE,
-} from '../constants';
+import { APPLICATION, ELIGIBILITY, FIELD_IDS, MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS, TOTAL_CONTRACT_VALUE } from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 const {
@@ -474,6 +467,7 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
             IS_EMPTY: 'Enter your last name',
           },
+          ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
             IS_EMPTY: 'Enter an email address in the correct format, like name@example.com',
             INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',

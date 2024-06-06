@@ -5,16 +5,13 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 
 const {
   START,
-  ACCOUNT: { CREATE: { YOUR_DETAILS } },
+  ACCOUNT: {
+    CREATE: { YOUR_DETAILS },
+  },
 } = ROUTES;
 
 const {
-  ACCOUNT: {
-    FIRST_NAME,
-    LAST_NAME,
-    EMAIL,
-    PASSWORD,
-  },
+  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
 } = INSURANCE_FIELD_IDS;
 
 const {
@@ -54,7 +51,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
     cy.submitAndAssertFieldErrors({
       field: fieldSelector(FIRST_NAME),
       expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
-      expectedErrorMessage: String(YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY),
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[FIRST_NAME].IS_EMPTY,
     });
   });
 
@@ -63,7 +60,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
       field: fieldSelector(LAST_NAME),
       errorIndex: 1,
       expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
-      expectedErrorMessage: String(YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY),
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[LAST_NAME].IS_EMPTY,
     });
   });
 
@@ -72,7 +69,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
       field: fieldSelector(EMAIL),
       errorIndex: 2,
       expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
-      expectedErrorMessage: String(YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT),
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[EMAIL].INCORRECT_FORMAT,
     });
   });
 
@@ -81,7 +78,7 @@ context('Insurance - Account - Create - Your details page - empty form validatio
       field: fieldSelector(PASSWORD),
       errorIndex: 3,
       expectedErrorsCount: TOTAL_REQUIRED_FIELDS,
-      expectedErrorMessage: String(YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT),
+      expectedErrorMessage: YOUR_DETAILS_ERROR_MESSAGES[PASSWORD].INCORRECT_FORMAT,
     });
   });
 });
