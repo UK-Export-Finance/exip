@@ -5122,6 +5122,7 @@ var replace_character_codes_with_characters_default = replaceCharacterCodesWithC
 // generate-xlsx/map-application-to-XLSX/helpers/xlsx-row/index.ts
 var { KEY, VALUE } = XLSX_CONFIG;
 var xlsxRow = (fieldName, answer) => {
+  console.info("Mapping XLSX row %s", fieldName);
   const value = answer || answer === 0 ? answer : "";
   const cleanValue = replace_character_codes_with_characters_default(String(value));
   const row = {
@@ -5784,7 +5785,11 @@ var {
   DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_SIC: EXPORTER_COMPANY_SIC },
+    COMPANIES_HOUSE: {
+      COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS,
+      COMPANY_NAME: EXPORTER_COMPANY_NAME,
+      COMPANY_SIC: EXPORTER_COMPANY_SIC
+    },
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
@@ -5842,6 +5847,7 @@ var XLSX = {
     [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments",
     [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
+    [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
     [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
     [DIFFERENT_TRADING_NAME]: "Alternative trading name",
@@ -5930,7 +5936,7 @@ var CONTENT_STRINGS = {
 };
 var {
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME }
+    COMPANIES_HOUSE: { COMPANY_NAME: EXPORTER_COMPANY_NAME2 }
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
@@ -5943,7 +5949,7 @@ var mapKeyInformation = (application2) => {
   const { policy } = application2;
   const mapped = [
     xlsx_row_default(KEY_INFORMATION),
-    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME], application2.company[EXPORTER_COMPANY_NAME]),
+    xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
     xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5])
@@ -6343,8 +6349,8 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(SECTION_TITLES4.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(String(FIELDS16[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3])),
-    xlsx_row_default(String(FIELDS16[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS16[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS16[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
     xlsx_row_default(String(FIELDS16[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
