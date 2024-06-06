@@ -835,6 +835,7 @@ var {
   USING_BROKER
 } = POLICY;
 var XLSX_ROW_INDEXES = (application2) => {
+<<<<<<< HEAD
   const {
     broker,
     buyer: {
@@ -847,6 +848,27 @@ var XLSX_ROW_INDEXES = (application2) => {
     },
     policy
   } = application2;
+=======
+  const { policy, broker } = application2;
+  const TITLES = {
+    HEADER: 1,
+    EXPORTER_CONTACT_DETAILS: 9,
+    KEY_INFORMATION: 14,
+    POLICY: 20,
+    EXPORTER_BUSINESS: 30,
+    BUYER: 49,
+    ELIGIBILITY: 59,
+    DECLARATIONS: 70
+  };
+  const INDEXES = {
+    TITLES,
+    COMPANY_ADDRESS: 34,
+    COMPANY_SIC_CODES: 37,
+    BROKER_ADDRESS: 45,
+    BUYER_ADDRESS: 50,
+    BUYER_CONTACT_DETAILS: 53
+  };
+>>>>>>> main
   const policyType = policy[POLICY_TYPE2];
   let indexes = INDEXES();
   if (isMultiplePolicyType(policyType)) {
@@ -862,12 +884,30 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.BROKER_ADDRESS = 48;
     indexes.BUYER_ADDRESS += 3;
   }
+<<<<<<< HEAD
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
     indexes = incrementIndexes(indexes);
   }
   if (hasDifferentTradingName) {
     indexes = incrementIndexes(indexes);
+=======
+  if (isMultiplePolicy) {
+    TITLES.EXPORTER_BUSINESS += 1;
+    TITLES.BUYER += 1;
+    TITLES.ELIGIBILITY += 1;
+    TITLES.DECLARATIONS += 1;
+    INDEXES.COMPANY_ADDRESS += 1;
+    INDEXES.COMPANY_SIC_CODES += 1;
+    INDEXES.BROKER_ADDRESS += 1;
+    INDEXES.BUYER_ADDRESS += 1;
+    INDEXES.BUYER_CONTACT_DETAILS += 1;
+  }
+  if (isUsingBroker) {
+    TITLES.BUYER += 3;
+    TITLES.ELIGIBILITY += 3;
+    TITLES.DECLARATIONS += 3;
+>>>>>>> main
   }
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
@@ -5151,6 +5191,7 @@ var DECLARATIONS_FIELDS = {
   }
 };
 
+<<<<<<< HEAD
 // content-strings/links.ts
 var LINKS = {
   EXTERNAL: {
@@ -5183,6 +5224,8 @@ var formatCurrency = (number, currencyCode, decimalPoints) => number.toLocaleStr
 });
 var format_currency_default = formatCurrency;
 
+=======
+>>>>>>> main
 // content-strings/fields/insurance/eligibility/index.ts
 var {
   BUYER_COUNTRY,
@@ -6297,26 +6340,44 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
+<<<<<<< HEAD
 var { FIELDS: FIELDS16, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
+=======
+>>>>>>> main
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
     AGREE_ANTI_BRIBERY: AGREE_ANTI_BRIBERY2,
+<<<<<<< HEAD
     HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3,
     WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT3,
     AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED3,
+=======
+    HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2,
+    WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2,
+    AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2,
+>>>>>>> main
     AGREE_CONFIRMATION_ACKNOWLEDGEMENTS: AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2
   }
 } = insurance_default;
 var mapDeclarations = (application2) => {
   const { declaration } = application2;
   const mapped = [
+<<<<<<< HEAD
     xlsx_row_default(SECTION_TITLES4.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
     xlsx_row_default(String(FIELDS16[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3])),
     xlsx_row_default(String(FIELDS16[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3])),
     xlsx_row_default(String(FIELDS16[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
+=======
+    xlsx_row_default(XLSX.SECTION_TITLES.DECLARATIONS, ""),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT2].SUMMARY.TITLE, map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT2])),
+    xlsx_row_default(DECLARATIONS_FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED2])),
+>>>>>>> main
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;
@@ -6341,6 +6402,11 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
+<<<<<<< HEAD
+=======
+      ...map_eligibility_default(application2),
+      xlsx_row_seperator_default,
+>>>>>>> main
       ...map_declarations_default(application2)
     ];
     return mapped;

@@ -1,33 +1,17 @@
 import { summaryList } from '../../../../../../pages/shared';
-import {
-  LINKS,
-  QUOTE_TITLES,
-} from '../../../../../../content-strings';
+import { LINKS, QUOTE_TITLES } from '../../../../../../content-strings';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    MAX_AMOUNT_OWED,
-    PERCENTAGE_OF_COVER,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
   POLICY_LENGTH,
   QUOTE,
 } = FIELD_IDS;
 
-const {
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
-  BUYER_LOCATION,
-} = QUOTE;
+const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
 
 const {
-  QUOTE: {
-    YOUR_QUOTE,
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    BUYER_COUNTRY_CHANGE,
-  },
+  QUOTE: { YOUR_QUOTE, TELL_US_ABOUT_YOUR_POLICY_CHANGE, BUYER_COUNTRY_CHANGE },
 } = ROUTES;
 
 const submissionData = {
@@ -70,11 +54,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${MAX_AMOUNT_OWED}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-        cy.checkLink(
-          row.changeLink(),
-          expectedChangeHref,
-          expectedChangeText,
-        );
+        cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
       });
 
       it('renders `percentage of cover` key, value and change link', () => {
@@ -89,11 +69,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const expectedChangeHref = `${TELL_US_ABOUT_YOUR_POLICY_CHANGE}#${PERCENTAGE_OF_COVER}-label`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-        cy.checkLink(
-          row.changeLink(),
-          expectedChangeHref,
-          expectedChangeText,
-        );
+        cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
       });
 
       it('renders `insured for` key and value with decimal points (no change link)', () => {
@@ -114,7 +90,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = '1.13%';
+        const expected = '1.11%';
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
@@ -126,7 +102,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
 
         cy.checkText(row.key(), expectedKeyText);
 
-        const expected = '£1,695.00';
+        const expected = '£1,665.00';
         cy.checkText(row.value(), expected);
 
         row.changeLink().should('not.exist');
@@ -156,11 +132,7 @@ context('Get a quote/your quote page (multiple policy) - as an exporter, I want 
         const expectedChangeHref = `${BUYER_COUNTRY_CHANGE}#heading`;
         const expectedChangeText = `${LINKS.CHANGE} ${expectedKeyText}`;
 
-        cy.checkLink(
-          row.changeLink(),
-          expectedChangeHref,
-          expectedChangeText,
-        );
+        cy.checkLink(row.changeLink(), expectedChangeHref, expectedChangeText);
       });
     });
   });

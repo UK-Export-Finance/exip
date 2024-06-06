@@ -1,28 +1,16 @@
-import {
-  backLink,
-  field,
-  summaryList,
-} from '../../../../../../pages/shared';
+import { backLink, field, summaryList } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { FIELD_IDS, FIELD_VALUES, ROUTES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
 const {
-  ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CREDIT_PERIOD,
-    MAX_AMOUNT_OWED,
-  },
+  ELIGIBILITY: { CONTRACT_VALUE, CREDIT_PERIOD, MAX_AMOUNT_OWED },
   POLICY_LENGTH,
   POLICY_TYPE,
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    TELL_US_ABOUT_YOUR_POLICY,
-    POLICY_TYPE_CHANGE,
-    CHECK_YOUR_ANSWERS,
-  },
+  QUOTE: { TELL_US_ABOUT_YOUR_POLICY, POLICY_TYPE_CHANGE, CHECK_YOUR_ANSWERS },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -78,7 +66,7 @@ context('Change your answers - as an exporter, I want to change the details befo
   context('Policy type and length fields - user flow', () => {
     before(() => {
       cy.login();
-      cy.submitQuoteAnswersHappyPathSinglePolicy();
+      cy.submitQuoteAnswersHappyPathSinglePolicy({});
 
       cy.assertUrl(url);
       row = summaryList.field(POLICY_TYPE);
@@ -101,11 +89,7 @@ context('Change your answers - as an exporter, I want to change the details befo
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it('has originally submitted `policy type` (single)', () => {
@@ -126,7 +110,7 @@ context('Change your answers - as an exporter, I want to change the details befo
     beforeEach(() => {
       cy.login();
 
-      cy.submitQuoteAnswersHappyPathSinglePolicy();
+      cy.submitQuoteAnswersHappyPathSinglePolicy({});
       cy.assertUrl(url);
 
       row = summaryList.field(POLICY_TYPE);
@@ -167,7 +151,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       before(() => {
         cy.login();
 
-        cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
 
         cy.navigateToUrl(url);
@@ -198,11 +182,7 @@ context('Change your answers - as an exporter, I want to change the details befo
 
         const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-        cy.checkLink(
-          backLink(),
-          expectedHref,
-          LINKS.BACK,
-        );
+        cy.checkLink(backLink(), expectedHref, LINKS.BACK);
       });
 
       it('has previously submitted `policy type` (single)', () => {
@@ -223,7 +203,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       beforeEach(() => {
         cy.login();
 
-        cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
 
         cy.navigateToUrl(url);
@@ -259,7 +239,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       before(() => {
         cy.login();
 
-        cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
         cy.assertUrl(url);
 
         cy.navigateToUrl(url);
@@ -290,11 +270,7 @@ context('Change your answers - as an exporter, I want to change the details befo
       it('renders a back link with correct url', () => {
         const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-        cy.checkLink(
-          backLink(),
-          expectedHref,
-          LINKS.BACK,
-        );
+        cy.checkLink(backLink(), expectedHref, LINKS.BACK);
       });
 
       it('has previously submitted `policy type` (single)', () => {
