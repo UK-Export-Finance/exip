@@ -22,6 +22,7 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
       otpSalt: salt,
       otpHash: hash,
       otpExpiry: expiry,
+      isInactive: false,
     };
 
     await update.account(context, accountId, accountUpdate);

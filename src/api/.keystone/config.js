@@ -3554,7 +3554,8 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
     const accountUpdate = {
       otpSalt: salt,
       otpHash: hash,
-      otpExpiry: expiry
+      otpExpiry: expiry,
+      isInactive: false
     };
     await update_account_default.account(context, accountId, accountUpdate);
     return {

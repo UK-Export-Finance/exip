@@ -30,10 +30,11 @@ describe('helpers/generate-otp-and-update-account', () => {
     account = await accounts.get(context, account.id);
   });
 
-  test('it should generate an OTP and save to the account', async () => {
+  test('it should generate an OTP and isInactive=false flag, saved to the account', async () => {
     expect(account.otpSalt).toEqual(mockOTP.salt);
     expect(account.otpHash).toEqual(mockOTP.hash);
     expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
+    expect(account.isInactive).toEqual(false);
   });
 
   test('it should return the success response and securityCode', async () => {

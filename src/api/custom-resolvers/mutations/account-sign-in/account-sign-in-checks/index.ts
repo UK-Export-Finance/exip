@@ -8,12 +8,8 @@ import { Account, Context } from '../../../../types';
 
 /**
  * accountSignInChecks
- * Assuming that a provided password is valid, check if the account:
- * 1) Is unverified.
- * 2) Has a verification hash/token.
- * 3) Has a verification hash/token that has not expired.
- *
- * If so, this means that the user has not verified their email address. We can therefore:
+ * Assuming that a provided password is valid, check if the account is verified.
+ * If not, this means that the user has not verified their email address. We can therefore:
  * 1) Reset the account's verification expiry.
  * 2) Re-send the verification link email that was sent during account creation.
  *
