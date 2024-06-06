@@ -1,6 +1,6 @@
 import { APPLICATION } from '../../../../../../../constants';
 
-context('Insurance - submit an application - Single policy type, with a different `name on policy`', () => {
+context('Insurance - submit an application - Multiple policy type, with a different `name on policy`', () => {
   let referenceNumber;
 
   before(() => {
