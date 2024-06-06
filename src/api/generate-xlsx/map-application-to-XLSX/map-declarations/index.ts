@@ -23,7 +23,7 @@ const {
  * mapDeclarations
  * Map an application's decalarations fields into an array of objects for XLSX generation
  * @param {Application}
- * @returns {Array} Array of objects for XLSX generation
+ * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapDeclarations = (application: Application) => {
   const { declaration } = application;

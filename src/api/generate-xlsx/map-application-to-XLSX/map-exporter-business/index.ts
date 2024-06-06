@@ -3,7 +3,6 @@ import { XLSX } from '../../../content-strings';
 import { FIELDS as YOUR_BUSINESS_FIELDS } from '../../../content-strings/fields/insurance/your-business';
 import { GBP_CURRENCY_CODE } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
-import mapBroker from './map-broker';
 import mapDifferentTradingName from './map-different-trading-name';
 import mapDifferentTradingAddress from './map-different-trading-address';
 import mapExporterAddress from './map-exporter-address';
@@ -63,8 +62,6 @@ const mapExporterBusiness = (application: Application) => {
     xlsxRow(CONTENT_STRINGS[PERCENTAGE_TURNOVER].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER]}%`),
 
     xlsxRow(FIELDS[HAS_CREDIT_CONTROL], mapYesNoField({ answer: business[HAS_CREDIT_CONTROL] })),
-
-    ...mapBroker(application),
   ];
 
   return mapped;

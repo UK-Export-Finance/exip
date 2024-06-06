@@ -1,7 +1,7 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
-import { Application } from '../../types';
+import { Application, ApplicationPolicy } from '../../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
   `Getting populated application - no ${section} found for application ${applicationId}`;
@@ -15,6 +15,7 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
  */
 const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
   console.info('Getting populated application');
+
   const {
     eligibilityId,
     ownerId,
@@ -60,9 +61,11 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('account', application.id));
   }
 
-  const policy = await context.db.Policy.findOne({
+  const policy = (await context.query.Policy.findOne({
     where: { id: policyId },
-  });
+    query:
+      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
+  })) as ApplicationPolicy;
 
   if (!policy) {
     throw new Error(generateErrorMessage('policy', application.id));
@@ -75,6 +78,31 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
   if (!policyContact) {
     throw new Error(generateErrorMessage('policyContact', application.id));
   }
+
+  // const jointlyInsuredParty = await context.db.JointlyInsuredParty.findOne({
+  //   where: { id: policy.jointlyInsuredParty.id },
+  // });
+
+  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
+    where: { id: nominatedLossPayeeId },
+    query:
+      'id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }',
+  });
+
+  if (!nominatedLossPayee) {
+    console.error('%s', generateErrorMessage('nominated loss payee', application.id));
+    throw new Error(generateErrorMessage('nominated loss payee', application.id));
+  }
+
+  const populatedPolicy = {
+    ...policy,
+
+    // this is required otherwise, the dates are returned with a "datetime" type (from the database)
+    // they need to have a Date type, as per the GraphQL schema.
+    requestedStartDate: new Date(policy.requestedStartDate),
+    contractCompletionDate: new Date(policy.contractCompletionDate),
+    // jointlyInsuredParty,
+  } as ApplicationPolicy;
 
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId },
@@ -173,17 +201,6 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('buyerTradingHistory', application.id));
   }
 
-  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
-    where: { id: nominatedLossPayeeId },
-    query:
-      'id financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } isAppointed isLocatedInUk isLocatedInternationally name',
-  });
-
-  if (!nominatedLossPayee) {
-    console.error('%s', generateErrorMessage('nominated loss payee', application.id));
-    throw new Error(generateErrorMessage('nominated loss payee', application.id));
-  }
-
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId },
   });
@@ -233,7 +250,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     declaration,
     exportContract: populatedExportContract,
     owner: account,
-    policy,
+    policy: populatedPolicy,
     policyContact,
     nominatedLossPayee,
     sectionReview,
