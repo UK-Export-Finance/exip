@@ -4,8 +4,6 @@ import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
 import { Account, Context } from '../../../../types';
 
-// TODO: update documentation
-
 /**
  * accountSignInChecks
  * Assuming that a provided password is valid, check if the account is verified.

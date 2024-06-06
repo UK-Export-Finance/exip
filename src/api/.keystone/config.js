@@ -3240,8 +3240,8 @@ var createAnAccount = async (root, variables, context) => {
           console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);
           const { id: accountId } = account2;
           console.info("Account creation - resending an email verification for %s", email);
-          const emailResponse = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
-          if (emailResponse.success) {
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+          if (emailResponse2.success) {
             return {
               id: accountId,
               success: true,
@@ -3256,56 +3256,51 @@ var createAnAccount = async (root, variables, context) => {
           alreadyExists: true,
           isVerified: true
         };
-      } else {
-        console.info("Account creation - account already exists - invalid credentials provided %s", email);
-        return { success: false };
       }
-    } else {
-      console.info("Account creation - no existing account found. Generating an encrypted password %s", email);
-      const { salt, hash } = encrypt_password_default(password2);
-      const now2 = /* @__PURE__ */ new Date();
-      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
-      console.info("Account creation - constructing account data %s", email);
-      const accountData = {
-        firstName,
-        lastName,
-        email,
-        salt,
-        hash,
-        verificationHash,
-        verificationExpiry,
-        createdAt: now2,
-        updatedAt: now2
-      };
-      console.info("Account creation - creating account %s", email);
-      const creationResponse = await context.db.Account.createOne({
-        data: accountData
-      });
-      console.info("Account creation - creating account status relationship %s", email);
-      await context.db.AccountStatus.createOne({
-        data: {
-          account: {
-            connect: {
-              id: creationResponse.id
-            }
+      console.info("Account creation - account already exists - invalid credentials provided %s", email);
+      return { success: false };
+    }
+    console.info("Account creation - no existing account found. Generating an encrypted password %s", email);
+    const { salt, hash } = encrypt_password_default(password2);
+    const now2 = /* @__PURE__ */ new Date();
+    const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
+    console.info("Account creation - constructing account data %s", email);
+    const accountData = {
+      firstName,
+      lastName,
+      email,
+      salt,
+      hash,
+      verificationHash,
+      verificationExpiry,
+      createdAt: now2,
+      updatedAt: now2
+    };
+    console.info("Account creation - creating account %s", email);
+    const creationResponse = await context.db.Account.createOne({
+      data: accountData
+    });
+    console.info("Account creation - creating account status relationship %s", email);
+    await context.db.AccountStatus.createOne({
+      data: {
+        account: {
+          connect: {
+            id: creationResponse.id
           }
         }
-      });
-      console.info("Account creation - sending an email verification for %s", email);
-      const name = get_full_name_string_default(creationResponse);
-      const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
-      if (emailResponse.success) {
-        return {
-          // TODO
-          // TODO: update unit test
-          // ...creationResponse,
-          id: creationResponse.id,
-          verificationHash,
-          success: true
-        };
       }
-      throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
+    });
+    console.info("Account creation - sending an email verification for %s", email);
+    const name = get_full_name_string_default(creationResponse);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
+    if (emailResponse.success) {
+      return {
+        id: creationResponse.id,
+        verificationHash,
+        success: true
+      };
     }
+    throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
   } catch (err) {
     console.error("Error Account creation - creating account %O", err);
     throw new Error(`Account creation - creating account ${err}`);
@@ -3562,10 +3557,11 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
     const accountUpdate = {
       otpSalt: salt,
       otpHash: hash,
-      otpExpiry: expiry,
-      isInactive: false
+      otpExpiry: expiry
     };
-    await update_account_default.account(context, accountId, accountUpdate);
+    const updatedAccount = await update_account_default.account(context, accountId, accountUpdate);
+    const accountStatusUpdate = { isInactive: false };
+    await update_account_default.accountStatus(context, updatedAccount.statusId, accountStatusUpdate);
     return {
       success: true,
       securityCode

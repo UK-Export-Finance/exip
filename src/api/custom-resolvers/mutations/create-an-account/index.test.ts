@@ -309,12 +309,47 @@ describe('custom-resolvers/create-an-account', () => {
     });
   });
 
-  // TODO: confirmEmailAddressEmail.send error handling
-
   describe('error handling', () => {
-    describe('when sendEmail.confirmEmailAddress does not return success=true', () => {
-      const emailFailureResponse = { ...mockSendEmailResponse, success: false };
+    const emailFailureResponse = { ...mockSendEmailResponse, success: false };
 
+    describe('when an account with the provided email already exists, provided password is valid, account is unverified and confirmEmailAddressEmail.send does not return success=true', () => {
+      beforeAll(async () => {
+        jest.resetAllMocks();
+
+        sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(emailFailureResponse));
+        confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
+
+        sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+        sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
+
+        await accounts.deleteAll(context);
+
+        account = (await createAnAccount({}, variables, context)) as Account;
+
+        // get the account's status ID.
+        const { status } = await accounts.get(context, account.id);
+
+        // update the account to be unverified
+        const statusUpdate = {
+          isVerified: false,
+        };
+
+        await accountStatus.update(context, status.id, statusUpdate);
+      });
+
+      test('should throw an error', async () => {
+        try {
+          await createAnAccount({}, variables, context);
+        } catch (err) {
+          const expected = new Error(
+            `Account creation - creating account Error: Account creation - sending email verification for account creation ${emailFailureResponse}`,
+          );
+          expect(err).toEqual(expected);
+        }
+      });
+    });
+
+    describe('when an account with the provided email does NOT already exist and sendEmail.confirmEmailAddress does not return success=true', () => {
       beforeAll(async () => {
         await accounts.deleteAll(context);
 
