@@ -3,7 +3,7 @@ import { ApplicationBuyer, TestHelperBuyerCreate } from '../types';
 /**
  * create buyer test helper
  * Create an buyer with mock buyer data and any provied custom buyer data.
- * @param {Object} KeystoneJS context API, buyer data
+ * @param {Context} KeystoneJS context API, buyer data
  * @returns {Object} Created buyer
  */
 const create = async ({ context, data }: TestHelperBuyerCreate) => {

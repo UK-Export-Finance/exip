@@ -36,6 +36,10 @@ describe('helpers/generate-otp-and-update-account', () => {
     expect(new Date(account.otpExpiry)).toEqual(mockOTP.expiry);
   });
 
+  test("it should update the account's isInactive flag to be false", async () => {
+    expect(account.status.isInactive).toEqual(false);
+  });
+
   test('it should return the success response and securityCode', async () => {
     const expected = {
       success: true,

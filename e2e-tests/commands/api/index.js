@@ -12,9 +12,9 @@ const queryStrings = {
     mutation createAnAccount($urlOrigin: String!, $firstName: String!, $lastName: String!, $email: String!, $password: String!) {
       createAnAccount(urlOrigin: $urlOrigin, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
         success
+        alreadyExists
+        isVerified
         id
-        firstName
-        lastName
         email
         verificationHash
       }

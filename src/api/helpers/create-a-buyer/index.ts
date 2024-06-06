@@ -9,7 +9,7 @@ import createABuyerRelationship from '../create-a-buyer-relationship';
  * 1) A country relationship
  * 2) An application relationship
  * 3) A Buyer trading history and relationship
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
  * @returns {Promise<Object>} Created buyer

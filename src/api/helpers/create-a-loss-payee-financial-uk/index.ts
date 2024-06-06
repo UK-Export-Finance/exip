@@ -3,7 +3,7 @@ import { ApplicationLossPayeeFinancialUk, Context } from '../../types';
 /**
  * createALossPayeeFinancialUk
  * Create a "Loss payee financial UK" with a Loss payee relationship
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Loss payee ID
  * @returns {Promise<Object>} Created loss payee financial UK
  */

@@ -1,20 +1,18 @@
 import dotenv from 'dotenv';
-import { DATE_ONE_MINUTE_IN_THE_PAST, DATE_24_HOURS_FROM_NOW } from '../../../../constants';
-import accountChecks from '.';
+import accountSignInChecks from '.';
 import confirmEmailAddressEmail from '../../../../helpers/send-email-confirm-email-address';
 import generate from '../../../../helpers/generate-otp';
 import getFullNameString from '../../../../helpers/get-full-name-string';
 import sendEmail from '../../../../emails';
 import accounts from '../../../../test-helpers/accounts';
 import accountStatusHelper from '../../../../test-helpers/account-status';
-import authRetries from '../../../../test-helpers/auth-retries';
 import getKeystoneContext from '../../../../test-helpers/get-keystone-context';
 import { mockAccount, mockOTP, mockSendEmailResponse, mockUrlOrigin } from '../../../../test-mocks';
 import { Account, AccountSignInResponse, Context } from '../../../../types';
 
 dotenv.config();
 
-describe('custom-resolvers/account-sign-in/account-checks', () => {
+describe('custom-resolvers/account-sign-in/account-sign-in-checks', () => {
   let context: Context;
   let account: Account;
 
@@ -58,7 +56,7 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
     sendEmail.accessCodeEmail = accessCodeEmailSpy;
 
-    result = await accountChecks(context, account, mockUrlOrigin);
+    result = await accountSignInChecks(context, account, mockUrlOrigin);
 
     account = await accounts.get(context, account.id);
   });
@@ -89,19 +87,22 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
     });
   });
 
-  describe('when account is not verified, but has a verificationHash and verificationExpiry has not expired', () => {
+  describe('when the account is NOT verified', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
 
       const accountUpdate = {
-        verificationHash: mockAccount.verificationHash,
+        verificationHash: '',
+        verificationExpiry: null,
       };
 
       sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
       confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
 
-      await accountStatusHelper.update(context, account.status.id, { isVerified: false, isBlocked: false });
+      accessCodeEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
+      sendEmail.accessCodeEmail = accessCodeEmailSpy;
+
+      await accountStatusHelper.update(context, account.status.id, { isVerified: false });
 
       const updatedAccount = await context.query.Account.updateOne({
         where: { id: account.id },
@@ -109,30 +110,16 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
         query: 'id firstName lastName email verificationHash status { isVerified isBlocked }',
       });
 
-      result = await accountChecks(context, updatedAccount, mockUrlOrigin);
-    });
-
-    describe('verificationExpiry', () => {
-      let updatedAccount: Account;
-      let newExpiryDay: number;
-
-      beforeEach(async () => {
-        updatedAccount = await accounts.get(context, account.id);
-
-        newExpiryDay = new Date(updatedAccount.verificationExpiry).getDate();
-      });
-
-      test('it should be reset and have the correct day value', async () => {
-        const tomorrow = DATE_24_HOURS_FROM_NOW();
-        const tomorrowDay = new Date(tomorrow).getDate();
-
-        expect(newExpiryDay).toEqual(tomorrowDay);
-      });
+      result = await accountSignInChecks(context, updatedAccount, mockUrlOrigin);
     });
 
     test('it should call confirmEmailAddressEmail.send', async () => {
       expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(1);
       expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledWith(context, variables.urlOrigin, account.id);
+    });
+
+    test('it should NOT call sendEmail.accessCodeEmail', async () => {
+      expect(accessCodeEmailSpy).toHaveBeenCalledTimes(0);
     });
 
     test('it should return success=false, accountId and resentVerificationEmail=true', async () => {
@@ -144,38 +131,6 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
       expect(result).toEqual(expected);
     });
-
-    describe('when the verificationExpiry is after now', () => {
-      beforeEach(async () => {
-        jest.resetAllMocks();
-
-        // wipe the AuthenticationRetry table so we have a clean slate.
-        await authRetries.deleteAll(context);
-
-        const oneMinuteInThePast = DATE_ONE_MINUTE_IN_THE_PAST();
-
-        await context.query.Account.updateOne({
-          where: { id: account.id },
-          data: {
-            verificationExpiry: oneMinuteInThePast,
-          },
-        });
-      });
-
-      test('it should NOT call confirmEmailAddressEmail.send', async () => {
-        sendEmail.accessCodeEmail = accessCodeEmailSpy;
-
-        expect(sendConfirmEmailAddressEmailSpy).toHaveBeenCalledTimes(0);
-      });
-
-      test('it should return success=false', async () => {
-        result = await accountChecks(context, account, mockUrlOrigin);
-
-        const expected = { success: false };
-
-        expect(result).toEqual(expected);
-      });
-    });
   });
 
   describe('error handling', () => {
@@ -185,13 +140,14 @@ describe('custom-resolvers/account-sign-in/account-checks', () => {
 
     test('should throw an error', async () => {
       try {
-        await accountChecks(context, account, mockUrlOrigin);
+        await accountSignInChecks(context, account, mockUrlOrigin);
       } catch (err) {
         expect(accessCodeEmailSpy).toHaveBeenCalledTimes(1);
 
         const expected = new Error(
-          `Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${mockSendEmailResponse}`,
+          `Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${mockSendEmailResponse}`,
         );
+
         expect(err).toEqual(expected);
       }
     });

@@ -11,7 +11,7 @@ import removeWhiteSpace from '../../../helpers/remove-white-space';
  * Finds address by house name/number
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the getOrdnanceSurveyAddress mutation - postcode and houseNameOrNumber
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and addresses in an array
  */
 const getOrdnanceSurveyAddress = async (root: any, variables: OrdnanceSurveyVariables) => {

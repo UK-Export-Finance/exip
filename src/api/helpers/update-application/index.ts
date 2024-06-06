@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * timestamp
  * Update an application's "updated" timestamp
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Application ID
  * @returns {Promise<Object>} Application
  */

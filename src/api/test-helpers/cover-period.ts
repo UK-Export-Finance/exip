@@ -6,7 +6,7 @@ const coverPeriodQuery = 'id value valueId';
 /**
  * create coverPeriod test helper
  * Create an coverPeriod with mock data
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Created coverPeriod
  */
 const create = async ({ context }: TestHelperCreate) => {

@@ -22,9 +22,9 @@ const typeDefs = `
 
   type CreateAnAccountResponse {
     success: Boolean
+    alreadyExists: Boolean
+    isVerified: Boolean
     id: String
-    firstName: String
-    lastName: String
     email: String
     verificationHash: String
   }

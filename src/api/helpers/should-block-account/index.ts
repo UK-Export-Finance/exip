@@ -10,7 +10,7 @@ const { MAX_AUTH_RETRIES, MAX_AUTH_RETRIES_TIMEFRAME } = ACCOUNT;
  * Check an accounts authentication retries
  * If there are total of MAX_AUTH_RETRIES in less than MAX_AUTH_RETRIES_TIMEFRAME,
  * Return a flag indicating that the account should be blocked.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Boolean>}
  */
