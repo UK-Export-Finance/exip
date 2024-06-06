@@ -1,12 +1,23 @@
 import { submitButton, summaryList } from '../../../../../../pages/shared';
 import { LINKS, QUOTE_TITLES } from '../../../../../../content-strings';
-import { ELIGIBILITY, ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
+import {
+  ELIGIBILITY,
+  ROUTES,
+  FIELD_IDS,
+  FIELD_VALUES,
+} from '../../../../../../constants';
 import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 
 const { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CURRENCY, CREDIT_PERIOD, PERCENTAGE_OF_COVER },
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    CONTRACT_VALUE,
+    CURRENCY,
+    CREDIT_PERIOD,
+    PERCENTAGE_OF_COVER,
+  },
   POLICY_TYPE,
   POLICY_LENGTH,
   QUOTE,
@@ -17,7 +28,12 @@ const {
   QUOTE: { TELL_US_ABOUT_YOUR_POLICY_CHANGE, BUYER_COUNTRY_CHANGE, YOUR_QUOTE },
 } = ROUTES;
 
-const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
+const {
+  INSURED_FOR,
+  PREMIUM_RATE_PERCENTAGE,
+  ESTIMATED_COST,
+  BUYER_LOCATION,
+} = QUOTE;
 
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
