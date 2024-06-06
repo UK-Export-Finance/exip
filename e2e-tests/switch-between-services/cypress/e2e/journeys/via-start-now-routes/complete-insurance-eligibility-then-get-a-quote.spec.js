@@ -26,7 +26,7 @@ context('Complete insurance eligibility, get a quote and then re-visit the insur
 
     cy.assertUrl(expectedUrl);
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.clickSubmitButton();
 
     expectedUrl = `${baseUrl}${YOUR_QUOTE}`;

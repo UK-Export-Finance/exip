@@ -7,13 +7,7 @@ import { GBP_CURRENCY_CODE } from '../../../../../../fixtures/currencies';
 const CONTENT_STRINGS = PAGES.QUOTE.YOUR_QUOTE;
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    CONTRACT_VALUE,
-    CURRENCY,
-    CREDIT_PERIOD,
-    PERCENTAGE_OF_COVER,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CURRENCY, CREDIT_PERIOD, PERCENTAGE_OF_COVER },
   POLICY_TYPE,
   POLICY_LENGTH,
   QUOTE,
@@ -22,20 +16,10 @@ const {
 
 const {
   ROOT,
-  QUOTE: {
-    BUYER_COUNTRY: BUYER_COUNTRY_ROUTE,
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    BUYER_COUNTRY_CHANGE,
-    YOUR_QUOTE,
-  },
+  QUOTE: { BUYER_COUNTRY: BUYER_COUNTRY_ROUTE, TELL_US_ABOUT_YOUR_POLICY_CHANGE, BUYER_COUNTRY_CHANGE, YOUR_QUOTE },
 } = ROUTES;
 
-const {
-  INSURED_FOR,
-  PREMIUM_RATE_PERCENTAGE,
-  ESTIMATED_COST,
-  BUYER_LOCATION,
-} = QUOTE;
+const { INSURED_FOR, PREMIUM_RATE_PERCENTAGE, ESTIMATED_COST, BUYER_LOCATION } = QUOTE;
 
 const submissionData = {
   [BUYER_COUNTRY]: 'Algeria',
@@ -55,7 +39,7 @@ context('Get a quote/your quote page (single policy) - as an exporter, I want to
   before(() => {
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.clickSubmitButton();
 
     cy.assertUrl(url);
