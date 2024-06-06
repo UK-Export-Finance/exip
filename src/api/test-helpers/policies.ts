@@ -3,7 +3,7 @@ import { Application, TestHelperPolicyCreate } from '../types';
 /**
  * Create policy test helper
  * Create a policy with or without any provied custom policy data.
- * @param {Object} KeystoneJS context API, policy data
+ * @param {Context} KeystoneJS context API, policy data
  * @returns {Object} Created policy
  */
 const create = async ({ context, data }: TestHelperPolicyCreate) => {

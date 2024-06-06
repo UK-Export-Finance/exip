@@ -9,7 +9,7 @@ import { AccountPasswordResetTokenResponse, Context, GetAccountPasswordResetToke
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the GetAccountPasswordResetToken mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and Password reset token
  */
 const getAccountPasswordResetToken = async (

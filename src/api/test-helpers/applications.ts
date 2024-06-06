@@ -6,7 +6,7 @@ const applicationQuery =
 /**
  * create application test helper
  * Create an application with mock application data and any provied custom application data.
- * @param {Object} KeystoneJS context API, application data
+ * @param {Context} KeystoneJS context API, application data
  * @returns {Object} Created application
  */
 const create = async ({ context, data }: TestHelperApplicationCreate) => {
@@ -28,7 +28,7 @@ const create = async ({ context, data }: TestHelperApplicationCreate) => {
 /**
  * get application test helper
  * Get an application by ID.
- * @param {Object} KeystoneJS context API, application ID
+ * @param {Context} KeystoneJS context API, application ID
  * @returns {Object} Application
  */
 const get = async ({ context, applicationId }: TestHelperApplicationGet): Promise<Application> => {
@@ -51,7 +51,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 /**
  * update application test helper
  * Update an application by ID.
- * @param {Object} KeystoneJS context API, application ID
+ * @param {Context} KeystoneJS context API, application ID
  * @returns {Object} Application
  */
 const update = async ({ context, applicationId, data }: TestHelperApplicationUpdate): Promise<Application> => {
@@ -74,7 +74,7 @@ const update = async ({ context, applicationId, data }: TestHelperApplicationUpd
 /**
  * deleteAll test helper
  * Get all accounts and delete them.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */
 const deleteAll = async (context: Context) => {

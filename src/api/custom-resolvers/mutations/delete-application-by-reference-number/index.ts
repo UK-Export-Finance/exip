@@ -9,7 +9,7 @@ import { DeleteApplicationByReferenceNumberVariables, SuccessResponse } from '..
  * 2) Delete the application.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the DeleteApplicationByReferenceNumber mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const deleteApplicationByReferenceNumber = async (

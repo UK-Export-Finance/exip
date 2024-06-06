@@ -21,7 +21,7 @@ import { Account, AccountSignInVariables, AccountSignInResponse, Context } from 
  *   5.2) Check if the account should be blocked. If so, block the account.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AccountSignIn mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const accountSignIn = async (root: any, variables: AccountSignInVariables, context: Context): Promise<AccountSignInResponse> => {

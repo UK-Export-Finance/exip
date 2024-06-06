@@ -13,7 +13,7 @@ const {
   },
 } = ERROR_MESSAGES.INSURANCE;
 
-describe('controllers/insurance/account/create/your-details/validation/account-already-exists/invalid-password', () => {
+describe('controllers/insurance/account/create/your-details/validation/account-already-exists/already-verified', () => {
   it('should return the result of generateValidationErrors', () => {
     const result = accountAlreadyExistsAlreadyVerifiedValidation();
 

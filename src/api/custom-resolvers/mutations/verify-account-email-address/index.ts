@@ -10,7 +10,7 @@ const { ID, EMAIL, VERIFICATION_EXPIRY } = ACCOUNT_FIELD_IDS;
  * verifyAccountEmailAddress
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the VerifyEmailAddress mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success or expired flag.
  */
 const verifyAccountEmailAddress = async (root: any, variables: VerifyEmailAddressVariables, context: Context): Promise<VerifyEmailAddressResponse> => {

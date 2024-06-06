@@ -16,8 +16,8 @@ import { Account, Context } from '../../../../types';
  * 2) Update the account
  * 3) Send an email with the OTP
  *
- * @param {Object} KeystoneJS context API
- * @param {Object} Account
+ * @param {Context} KeystoneJS context API
+ * @param {Account} Account
  * @param {String} URL origin
  * @returns {Promise<Object>} Object with success flag
  */

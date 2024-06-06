@@ -21,7 +21,7 @@ const {
  * Generate a hash, update account and send a link to the account via email.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SendReactivateAccountEmail mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const sendEmailReactivateAccountLink = async (

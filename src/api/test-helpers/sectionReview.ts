@@ -2,7 +2,7 @@ import { SectionReview, TestHelperCreate } from '../types';
 
 /**
  * create sectionReview test helper
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Created sectionReview
  */
 const create = async ({ context }: TestHelperCreate) => {
