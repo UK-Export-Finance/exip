@@ -1,17 +1,33 @@
-import { backLink, autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
+import {
+  backLink,
+  autoCompleteField,
+  field,
+  summaryList,
+} from '../../../../../../pages/shared';
 import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
 const {
-  ELIGIBILITY: { CONTRACT_VALUE, CREDIT_PERIOD, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, BUYER_COUNTRY },
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CREDIT_PERIOD,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+    BUYER_COUNTRY,
+  },
   POLICY_TYPE,
   QUOTE,
   POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
-  QUOTE: { BUYER_COUNTRY_CHANGE, TELL_US_ABOUT_YOUR_POLICY_CHANGE, YOUR_QUOTE, CHECK_YOUR_ANSWERS },
+  QUOTE: {
+    BUYER_COUNTRY_CHANGE,
+    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
+    YOUR_QUOTE,
+    CHECK_YOUR_ANSWERS,
+  },
 } = ROUTES;
 
 context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Credit insurance quote', () => {
