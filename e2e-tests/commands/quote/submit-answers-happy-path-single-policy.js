@@ -13,7 +13,7 @@ import {
  * @param {Integer} policyLength: Policy length
  */
 const submitQuoteAnswersHappyPathSinglePolicy = ({ policyLength }) => {
-  completeAndSubmitBuyerCountryForm();
+  completeAndSubmitBuyerCountryForm({});
   completeAndSubmitBuyerBodyForm();
   completeAndSubmitExporterLocationForm();
   completeAndSubmitUkContentForm();
