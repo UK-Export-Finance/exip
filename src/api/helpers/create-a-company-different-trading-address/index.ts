@@ -3,7 +3,7 @@ import { Context } from '../../types';
 /**
  * createACompanyDifferentTradingAddress
  * Create a company different trading address with company relationships.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Company ID
  * @returns {Promise<Object>} Created company different trading address
  */

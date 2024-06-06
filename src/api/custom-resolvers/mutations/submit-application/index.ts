@@ -14,7 +14,7 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
  * 3) Sends emails to the UKEF underwriting team and the account that created the application
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const submitApplication = async (root: any, variables: SubmitApplicationVariables, context: Context): Promise<SuccessResponse> => {

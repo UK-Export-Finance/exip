@@ -4,7 +4,7 @@ import { Context } from '../../types';
 /**
  * createCompanySicCodes
  * Map and create company SIC codes with industry sector names and company ID.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {Array} SIC codes
  * @param {Array} Industry sector names
  * @param {String} Company ID

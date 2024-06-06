@@ -5,7 +5,8 @@ import { AddAndGetOtpResponse, Context } from '../../types';
 /**
  * generateOTPAndUpdateAccount
  * - Generate an OTP, save to the account
- * @param {Object} KeystoneJS context API
+ * - Set the account's isInactive flag to false, since the user is signing in and is therefore active.
+ * @param {Context} KeystoneJS context API
  * @param {String} Exporter account ID
  * @returns {Promise<Object>} Object with success flag and access code
  */
@@ -24,7 +25,12 @@ const generateOTPAndUpdateAccount = async (context: Context, accountId: string):
       otpExpiry: expiry,
     };
 
-    await update.account(context, accountId, accountUpdate);
+    const updatedAccount = await update.account(context, accountId, accountUpdate);
+
+    // update the account's isInactive flag.
+    const accountStatusUpdate = { isInactive: false };
+
+    await update.accountStatus(context, updatedAccount.statusId, accountStatusUpdate);
 
     return {
       success: true,

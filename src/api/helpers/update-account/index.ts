@@ -3,9 +3,9 @@ import { AccountStatusCore, Context } from '../../types';
 /**
  * account
  * Update an account
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Account ID
- * @param {Object} Account update data
+ * @param {Account} Account update data
  * @returns {Promise<Object>} Updated account
  */
 const account = async (context: Context, accountId: string, updateData: object) => {

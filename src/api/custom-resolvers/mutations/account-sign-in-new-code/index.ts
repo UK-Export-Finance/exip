@@ -10,7 +10,7 @@ import { AccountSignInSendNewCodeVariables, AccountSignInResponse, Context } fro
  * - Send the user an email with security code
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AccountSignInNewCode mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const accountSignInSendNewCode = async (root: any, variables: AccountSignInSendNewCodeVariables, context: Context): Promise<AccountSignInResponse> => {

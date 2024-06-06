@@ -4,7 +4,7 @@ import { Account, Context } from '../types';
 /**
  * createMultipleAccounts
  * Create multiple accounts for unit testing
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Array<Account>>} Accounts array
  */
 export const createMultipleAccounts = async (context: Context): Promise<Array<Account>> => {
