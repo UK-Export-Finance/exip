@@ -20,7 +20,7 @@ context('Insurance - Account - Sign in - after account has been blocked and reac
   let account;
 
   before(() => {
-    // cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
+    cy.createAnAccountAndBecomeBlocked({ startReactivationJourney: true });
   });
 
   after(() => {
