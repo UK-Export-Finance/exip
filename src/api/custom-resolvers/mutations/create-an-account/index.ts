@@ -51,8 +51,6 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
           if (emailResponse.success) {
             return {
-              // TODO
-              // TODO: update unit test
               id: accountId,
               success: true,
             };

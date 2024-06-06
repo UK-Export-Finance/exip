@@ -2724,7 +2724,8 @@ var getAccountStatusById = async (context, id) => {
   try {
     console.info("Getting account status by ID  %s", id);
     const accountStatus2 = await context.query.AccountStatus.findOne({
-      where: { id }
+      where: { id },
+      query: "id isVerified isBlocked isInactive"
     });
     return accountStatus2;
   } catch (err) {
@@ -3242,8 +3243,6 @@ var createAnAccount = async (root, variables, context) => {
           const emailResponse = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
           if (emailResponse.success) {
             return {
-              // TODO
-              // TODO: update unit test
               id: accountId,
               success: true
             };

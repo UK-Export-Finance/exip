@@ -83,6 +83,29 @@ describe('custom-resolvers/account-sign-in', () => {
     });
   });
 
+  describe('when the account is blocked', () => {
+    beforeAll(async () => {
+      await accounts.deleteAll(context);
+
+      account = await accounts.create({ context });
+      account = await accounts.get(context, account.id);
+
+      await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
+    });
+
+    test('it should return success=false, isBlocked=true and accountId', async () => {
+      result = await accountSignIn({}, variables, context);
+
+      const expected = {
+        success: false,
+        isBlocked: true,
+        accountId: account.id,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
   describe('when the provided password is invalid', () => {
     beforeEach(async () => {
       await accounts.deleteAll(context);
@@ -155,28 +178,6 @@ describe('custom-resolvers/account-sign-in', () => {
         account = await accounts.get(context, account.id);
 
         expect(account.status.isBlocked).toEqual(true);
-      });
-    });
-
-    describe('when the account is blocked', () => {
-      beforeEach(async () => {
-        await accounts.deleteAll(context);
-
-        account = await accounts.create({ context });
-        account = await accounts.get(context, account.id);
-        await accountStatusHelper.update(context, account.status.id, { isBlocked: true });
-
-        result = await accountSignIn({}, variables, context);
-      });
-
-      test('it should return success=false, isBlocked=true and accountId', async () => {
-        const expected = {
-          success: false,
-          isBlocked: true,
-          accountId: account.id,
-        };
-
-        expect(result).toEqual(expected);
       });
     });
   });

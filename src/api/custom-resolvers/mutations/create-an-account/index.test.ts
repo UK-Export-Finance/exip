@@ -21,6 +21,7 @@ const {
 describe('custom-resolvers/create-an-account', () => {
   let context: Context;
   let account: Account;
+  let createdAccount: Account;
 
   jest.mock('../../../emails');
   // jest.mock('../../../helpers/send-email-confirm-email-address');
@@ -46,23 +47,6 @@ describe('custom-resolvers/create-an-account', () => {
     jest.resetAllMocks();
   });
 
-  // beforeEach(async () => {
-  //   jest.resetAllMocks();
-
-  //   sendEmailConfirmEmailAddressSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
-  //   sendEmail.confirmEmailAddress = sendEmailConfirmEmailAddressSpy;
-
-  //   sendConfirmEmailAddressEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
-
-  //   confirmEmailAddressEmail.send = sendConfirmEmailAddressEmailSpy;
-
-  //   await accounts.deleteAll(context);
-
-  //   // create an account
-  //   account = (await createAnAccount({}, variables, context)) as Account;
-  // });
-
   describe('when an account with the provided email does NOT already exist', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
@@ -79,15 +63,21 @@ describe('custom-resolvers/create-an-account', () => {
 
       // create an account
       account = (await createAnAccount({}, variables, context)) as Account;
+
+      /**
+       * Get the fully created account.
+       * note: the response only returns some specific fields.
+       */
+      createdAccount = await accounts.get(context, account.id);
     });
 
-    it('should generate and return the created account with added salt and hashes', () => {
-      expect(account.firstName).toEqual(variables.firstName);
-      expect(account.lastName).toEqual(variables.lastName);
-      expect(account.email).toEqual(variables.email);
-      expect(account.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);
-      expect(account.hash.length).toEqual(KEY_LENGTH * 2);
-      expect(account.verificationHash.length).toEqual(KEY_LENGTH * 2);
+    it('should generate a created account with added salt and hashes', () => {
+      expect(createdAccount.firstName).toEqual(variables.firstName);
+      expect(createdAccount.lastName).toEqual(variables.lastName);
+      expect(createdAccount.email).toEqual(variables.email);
+      expect(createdAccount.salt.length).toEqual(RANDOM_BYTES_SIZE * 2);
+      expect(createdAccount.hash.length).toEqual(KEY_LENGTH * 2);
+      expect(createdAccount.verificationHash.length).toEqual(KEY_LENGTH * 2);
     });
 
     it('should generate status fields', async () => {
@@ -101,16 +91,16 @@ describe('custom-resolvers/create-an-account', () => {
     });
 
     it('should call sendEmail.confirmEmailAddress', () => {
-      const { email, verificationHash, id } = account;
+      const { email, verificationHash, id } = createdAccount;
 
-      const name = getFullNameString(account);
+      const name = getFullNameString(createdAccount);
 
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(1);
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledWith(email, variables.urlOrigin, name, verificationHash, id);
     });
 
-    it('should generate and return verification expiry date', () => {
-      const expiry = new Date(account.verificationExpiry);
+    it('should generate a verification expiry date', () => {
+      const expiry = new Date(createdAccount.verificationExpiry);
 
       const expiryDay = expiry.getDate();
 
@@ -118,6 +108,16 @@ describe('custom-resolvers/create-an-account', () => {
       const tomorrowDay = new Date(tomorrow).getDate();
 
       expect(expiryDay).toEqual(tomorrowDay);
+    });
+
+    it('should return the account ID, verification hash and success=true', () => {
+      const expected = {
+        id: createdAccount.id,
+        verificationHash: createdAccount.verificationHash,
+        success: true,
+      };
+
+      expect(account).toEqual(expected);
     });
   });
 
@@ -159,6 +159,12 @@ describe('custom-resolvers/create-an-account', () => {
 
       // attempt to create account with the same email
       result = (await createAnAccount({}, variables, context)) as Account;
+
+      /**
+       * Get the fully created account.
+       * note: the response only returns some specific fields.
+       */
+      createdAccount = await accounts.get(context, account.id);
     });
 
     it('should call confirmEmailAddressEmail.send', () => {
@@ -171,8 +177,9 @@ describe('custom-resolvers/create-an-account', () => {
       expect(sendEmailConfirmEmailAddressSpy).toHaveBeenCalledTimes(0);
     });
 
-    it('should return success=true', () => {
+    it('should return the account ID and success=true', () => {
       const expected = {
+        id: createdAccount.id,
         success: true,
       };
 

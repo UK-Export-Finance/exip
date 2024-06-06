@@ -13,6 +13,7 @@ const getAccountStatusById = async (context: Context, id: string): Promise<Accou
 
     const accountStatus = await context.query.AccountStatus.findOne({
       where: { id },
+      query: 'id isVerified isBlocked isInactive',
     });
 
     return accountStatus;
