@@ -3,7 +3,7 @@ import { Context, SectionReview } from '../../types';
 /**
  * createASectionReview
  * Create a section review with appropriate relationships.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Application ID
  * @param {Object} sectionReviewData data to create
  * @returns {Promise<Object>}  Created section review

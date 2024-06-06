@@ -1,17 +1,10 @@
 import { headingCaption } from '../../../../../../pages/shared';
-import {
-  BUTTONS,
-  PAGES,
-} from '../../../../../../content-strings';
+import { BUTTONS, PAGES } from '../../../../../../content-strings';
 import { INSURANCE_ROUTES } from '../../../../../../constants/routes/insurance';
 
 const {
   ROOT,
-  POLICY: {
-    CHECK_YOUR_ANSWERS,
-    LOSS_PAYEE_ROOT,
-  },
-  EXPORT_CONTRACT,
+  POLICY: { CHECK_YOUR_ANSWERS, LOSS_PAYEE_ROOT },
 } = INSURANCE_ROUTES;
 
 const CONTENT_STRINGS = PAGES.INSURANCE.POLICY.CHECK_YOUR_ANSWERS;
@@ -62,13 +55,12 @@ context('Insurance - Policy - Check your answers - As an exporter, I want to che
     });
 
     describe('form submission', () => {
-      it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
+      it('should redirect to `all sections`', () => {
         cy.navigateToUrl(url);
 
         cy.clickSubmitButton();
 
-        const expectedUrl = `${baseUrl}${ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
-        cy.assertUrl(expectedUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
     });
   });

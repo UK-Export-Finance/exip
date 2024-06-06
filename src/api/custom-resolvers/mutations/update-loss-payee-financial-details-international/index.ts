@@ -10,7 +10,7 @@ import { ApplicationLossPayeeFinancialInternational, SuccessResponse } from '../
  * saves iban, ibanVector, bicSwiftCode, bicSwiftCodeVector, bankAddress to db
  * @param {Object} GraphQL root variables
  * @param {ApplicationLossPayeeFinancialInternational} GraphQL variables for the ApplicationLossPayeeFinancialInternational mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Object} Object with success flag
  */
 const updateLossPayeeFinancialDetailsInternational = async (

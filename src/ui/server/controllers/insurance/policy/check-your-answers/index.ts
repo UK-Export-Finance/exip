@@ -10,7 +10,7 @@ import mapApplicationToFormFields from '../../../../helpers/mappings/map-applica
 import { policySummaryLists } from '../../../../helpers/summary-lists/policy';
 import { Request, Response } from '../../../../../types';
 
-const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { POLICY } = FIELD_IDS.INSURANCE;
 
@@ -79,5 +79,5 @@ export const get = async (req: Request, res: Response) => {
 export const post = (req: Request, res: Response) => {
   const { referenceNumber } = req.params;
 
-  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`);
+  return res.redirect(`${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`);
 };

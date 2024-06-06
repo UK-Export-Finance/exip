@@ -6,7 +6,7 @@ import { Context } from '../../types';
  * 1) A buyer country
  * 2) An application
  * 3) A total contract value
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Country ID
  * @param {String} Application ID
  * @param {String} Cover period value ID

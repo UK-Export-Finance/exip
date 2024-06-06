@@ -3,7 +3,7 @@ import { Context, ApplicationCompanyAddressCore } from '../../types';
 /**
  * createACompanyAddress
  * Create a company address with company relationships.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {Object} Company address data
  * @param {String} Company ID
  * @returns {Promise<Object>} Created company address

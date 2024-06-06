@@ -3,7 +3,9 @@ import { INSURANCE_ROUTES as ROUTES } from '../../../../../../../constants/route
 
 const {
   START,
-  ACCOUNT: { CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT } },
+  ACCOUNT: {
+    CREATE: { CONFIRM_EMAIL, CONFIRM_EMAIL_RESENT },
+  },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -30,7 +32,7 @@ context('Insurance - Account - Create - Resend confirm email page - Go back to c
   beforeEach(() => {
     /**
      * Get the account ID directly from the API,
-     * so that we can assert that the URL and `request a new link` has the correct ID.
+     * so that we can assert that the URLs have the correct ID.
      */
     const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 

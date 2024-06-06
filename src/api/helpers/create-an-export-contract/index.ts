@@ -6,7 +6,7 @@ import { Context, CreateExportContractResponse } from '../../types';
 /**
  * createAnExportContract
  * Create an export contract with an application relationship.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Application ID
  * @returns {Promise<Object>} Created export contract
  */

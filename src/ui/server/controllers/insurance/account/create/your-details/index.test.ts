@@ -7,7 +7,8 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
+import generateAccountAlreadyExistsValidation from './validation/account-already-exists/invalid-password';
+import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-already-exists/already-verified';
 import saveData from './save-data';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
 import mapEligibilityAnswers from '../../../../../helpers/map-eligibility-answers';
@@ -254,9 +255,9 @@ describe('controllers/insurance/account/create/your-details', () => {
           });
         });
 
-        describe('when success=false is returned', () => {
+        describe('when isVerified=true is returned', () => {
           beforeEach(() => {
-            const saveDataSpy = jest.fn(() => Promise.resolve({ success: false }));
+            const saveDataSpy = jest.fn(() => Promise.resolve({ isVerified: true }));
 
             saveData.account = saveDataSpy;
           });
@@ -274,7 +275,32 @@ describe('controllers/insurance/account/create/your-details', () => {
               ...PAGE_VARIABLES,
               userName: getUserNameFromSession(req.session.user),
               submittedValues: payload,
-              validationErrors: generateAccountAlreadyExistsValidationErrors(),
+              validationErrors: accountAlreadyExistsAlreadyVerifiedValidation(),
+            });
+          });
+        });
+
+        describe('when isVerified=true is NOT returned', () => {
+          beforeEach(() => {
+            const saveDataSpy = jest.fn(() => Promise.resolve({ isVerified: false }));
+
+            saveData.account = saveDataSpy;
+          });
+
+          it('should render template with validation errors from constructPayload function', async () => {
+            await post(req, res);
+
+            const payload = constructPayload(req.body, FIELD_IDS);
+
+            expect(res.render).toHaveBeenCalledWith(TEMPLATE, {
+              ...insuranceCorePageVariables({
+                PAGE_CONTENT_STRINGS,
+                BACK_LINK: req.headers.referer,
+              }),
+              ...PAGE_VARIABLES,
+              userName: getUserNameFromSession(req.session.user),
+              submittedValues: payload,
+              validationErrors: generateAccountAlreadyExistsValidation(),
             });
           });
         });

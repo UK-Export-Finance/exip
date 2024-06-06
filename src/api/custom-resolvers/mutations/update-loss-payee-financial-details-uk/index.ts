@@ -10,7 +10,7 @@ import { ApplicationLossPayeeFinancialUk, SuccessResponse } from '../../../types
  * saves sortCode, sortCodeVector, accountNumber, accountNumberVector, bankAddress to db
  * @param {Object} GraphQL root variables
  * @param {ApplicationLossPayeeFinancialUk} GraphQL variables for the ApplicationLossPayeeFinancialUk mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const updateLossPayeeFinancialDetailsUk = async (root: any, variables: ApplicationLossPayeeFinancialUk, context: Context): Promise<SuccessResponse> => {

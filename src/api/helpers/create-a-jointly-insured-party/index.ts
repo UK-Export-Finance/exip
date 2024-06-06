@@ -3,7 +3,7 @@ import { Context, ApplicationJointlyInsuredParty } from '../../types';
 /**
  * createAJointlyInsuredParty
  * Create a jointly insured party with a policy relationship.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Policy ID
  * @returns {Promise<Object>} Created policy
  */

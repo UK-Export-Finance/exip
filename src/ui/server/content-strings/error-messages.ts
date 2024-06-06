@@ -471,15 +471,17 @@ export const ERROR_MESSAGES = {
           [FIELD_IDS.INSURANCE.ACCOUNT.LAST_NAME]: {
             IS_EMPTY: 'Enter your last name',
           },
+          ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
           [FIELD_IDS.INSURANCE.ACCOUNT.EMAIL]: {
             IS_EMPTY: 'Enter an email address in the correct format, like name@example.com',
             INCORRECT_FORMAT: 'Enter an email address in the correct format, like name@example.com',
             ABOVE_MAXIMUM: `Your email address cannot be more than ${MAXIMUM_CHARACTERS.EMAIL} characters`,
-            ACCOUNT_ALREADY_EXISTS: 'There is already an account with this email address. Please sign in or reset your password',
+            ACCOUNT_ALREADY_EXISTS_INCORRECT: "Email address - either the email address or password you've entered is incorrect",
           },
           [FIELD_IDS.INSURANCE.ACCOUNT.PASSWORD]: {
             INCORRECT_FORMAT:
               'Enter a password in the correct format - for example, 14 characters long with an uppercase letter, lower case letter, number and special character',
+            ACCOUNT_ALREADY_EXISTS_INCORRECT: "Password - either the email address or password you've entered is incorrect",
           },
         },
       },

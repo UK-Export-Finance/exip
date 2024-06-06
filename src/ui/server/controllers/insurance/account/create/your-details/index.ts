@@ -6,7 +6,8 @@ import insuranceCorePageVariables from '../../../../../helpers/page-variables/co
 import constructPayload from '../../../../../helpers/construct-payload';
 import getUserNameFromSession from '../../../../../helpers/get-user-name-from-session';
 import generateValidationErrors from './validation';
-import generateAccountAlreadyExistsValidationErrors from './validation/account-already-exists';
+import generateAccountAlreadyExistsValidation from './validation/account-already-exists/invalid-password';
+import accountAlreadyExistsAlreadyVerifiedValidation from './validation/account-already-exists/already-verified';
 import saveData from './save-data';
 import canCreateAnApplication from '../../../../../helpers/can-create-an-application';
 import { sanitiseData } from '../../../../../helpers/sanitise-data';
@@ -121,8 +122,14 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    if (!saveResponse.success) {
-      validationErrors = generateAccountAlreadyExistsValidationErrors();
+    const { success, isVerified } = saveResponse;
+
+    if (!success) {
+      if (isVerified) {
+        validationErrors = accountAlreadyExistsAlreadyVerifiedValidation();
+      } else {
+        validationErrors = generateAccountAlreadyExistsValidation();
+      }
 
       if (validationErrors) {
         return res.render(TEMPLATE, {

@@ -23,7 +23,7 @@ import {
 } from '../../../../test-mocks';
 import { mockBroker } from '../../../../test-mocks/mock-application';
 
-const { INSURANCE_ROOT, ALL_SECTIONS, EXPORT_CONTRACT, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
+const { INSURANCE_ROOT, ALL_SECTIONS, PROBLEM_WITH_SERVICE } = INSURANCE_ROUTES;
 
 const { POLICY } = FIELD_IDS.INSURANCE;
 
@@ -165,10 +165,10 @@ describe('controllers/insurance/policy/check-your-answers', () => {
   });
 
   describe('post', () => {
-    it(`should redirect to ${EXPORT_CONTRACT.ROOT}`, () => {
+    it(`should redirect to ${ALL_SECTIONS}`, () => {
       post(req, res);
 
-      const expected = `${INSURANCE_ROOT}/${referenceNumber}${EXPORT_CONTRACT.ROOT}`;
+      const expected = `${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
 
       expect(res.redirect).toHaveBeenCalledWith(expected);
     });

@@ -6,7 +6,7 @@ import { Context, ApplicationCompanyCore } from '../../types';
 /**
  * createACompany
  * Create a company, address and SIC codes with appropriate relationships.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Application ID
  * @param {Object} Company data to create
  * @returns {Promise<Object>} Created company, address and SIC codes

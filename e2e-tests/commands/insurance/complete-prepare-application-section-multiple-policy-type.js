@@ -92,7 +92,6 @@ const completePrepareApplicationMultiplePolicyType = ({
   });
 
   cy.completeExportContractSection({
-    viaTaskList: false,
     totalContractValueOverThreshold,
     attemptedPrivateMarketCover,
     isUsingAgent,

@@ -4,7 +4,7 @@ import { Account, Context } from '../../types';
 /**
  * blockAccount
  * Update an account to have a true isBlocked property/flag
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} AccountStatus ID
  * @returns {Promise<Boolean>}
  */

@@ -8,7 +8,7 @@ import { Context, SuccessResponse } from '../../types';
 
 /**
  * confirmEmailAddressEmail.send
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Account ID
  * @returns {Promise<Object>} Object with success flag and emailRecipient
  */

@@ -42,7 +42,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
 /**
  * createFullApplication
  * Create a full application for unit testing
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Policy type flag - different data is created if multiple is passed. Defaults to single.
  * @returns {Object} Application
  */
@@ -65,7 +65,7 @@ export const createFullApplication = async (context: Context, policyType?: strin
   // create a new application
   const application = (await context.query.Application.createOne({
     query:
-      'id referenceNumber updatedAt submissionCount policyContact { id } exportContract { id } owner { id } company { id } business { id } nominatedLossPayee { id } broker { id } declaration { id } sectionReview { id } buyer { id buyerTradingHistory { id } relationship { id } }',
+      'id referenceNumber updatedAt submissionCount submissionDeadline policyContact { id } exportContract { id } owner { id } company { id } business { id } nominatedLossPayee { id } broker { id } declaration { id } sectionReview { id } buyer { id buyerTradingHistory { id } relationship { id } }',
     data: {
       owner: {
         connect: {

@@ -5,9 +5,8 @@ const createAccountMutation = gql`
     createAnAccount(urlOrigin: $urlOrigin, firstName: $firstName, lastName: $lastName, email: $email, password: $password) {
       success
       id
-      firstName
-      lastName
-      email
+      alreadyExists
+      isVerified
     }
   }
 `;

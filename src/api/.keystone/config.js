@@ -1117,27 +1117,14 @@ var account_default2 = accountCronSchedulerJobs;
 // cron/application/inactive-application-cron-job.ts
 var import_dotenv3 = __toESM(require("dotenv"));
 
-// helpers/date/index.ts
-var import_date_fns = require("date-fns");
-var getThirtyDaysBeforeNow = () => {
-  const now2 = /* @__PURE__ */ new Date();
-  const result = now2.setDate(now2.getDate() - 30);
-  return new Date(result);
-};
-var dateIsInThePast = (targetDate) => {
-  const now2 = /* @__PURE__ */ new Date();
-  return (0, import_date_fns.isAfter)(now2, targetDate);
-};
-
 // helpers/get-inactive-applications/index.ts
 var { IN_PROGRESS } = APPLICATION.STATUS;
 var getInactiveApplications = async (context) => {
   try {
     console.info("Getting inactive applications - getInactiveApplications helper");
-    const thirtyDaysLimit = getThirtyDaysBeforeNow();
     const applications = await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS] } }, { updatedAt: { lt: thirtyDaysLimit } }]
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { lt: /* @__PURE__ */ new Date() } }]
       },
       query: "id status"
     });
@@ -1226,7 +1213,7 @@ var import_core2 = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns2 = require("date-fns");
+var import_date_fns = require("date-fns");
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1423,7 +1410,7 @@ var lists = {
             const now2 = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns2.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = SUBMISSION_TYPE.MIA;
             modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
@@ -2288,9 +2275,9 @@ var typeDefs = `
 
   type CreateAnAccountResponse {
     success: Boolean
+    alreadyExists: Boolean
+    isVerified: Boolean
     id: String
-    firstName: String
-    lastName: String
     email: String
     verificationHash: String
   }
@@ -2739,6 +2726,22 @@ var typeDefs = `
 `;
 var type_defs_default = typeDefs;
 
+// helpers/get-account-status-by-id/index.ts
+var getAccountStatusById = async (context, id) => {
+  try {
+    console.info("Getting account status by ID  %s", id);
+    const accountStatus2 = await context.query.AccountStatus.findOne({
+      where: { id },
+      query: "id isVerified isBlocked isInactive"
+    });
+    return accountStatus2;
+  } catch (err) {
+    console.error("Error getting account status by ID %O", err);
+    throw new Error(`Getting account status by ID ${err}`);
+  }
+};
+var get_account_status_by_id_default = getAccountStatusById;
+
 // helpers/get-account-by-field/index.ts
 var getAccountByField = async (context, field, value) => {
   try {
@@ -2754,15 +2757,12 @@ var getAccountByField = async (context, field, value) => {
       return false;
     }
     const account2 = accountsArray[0];
-    const accountStatus2 = await context.db.AccountStatus.findOne({
-      where: { id: account2.statusId },
-      take: 1
-    });
-    const fullAccount = {
+    const accountStatus2 = await get_account_status_by_id_default(context, account2.statusId);
+    const populatedAccount = {
       ...account2,
       status: accountStatus2
     };
-    return fullAccount;
+    return populatedAccount;
   } catch (err) {
     console.error("Error getting account by field/value %O", err);
     throw new Error(`Getting account by field/value ${err}`);
@@ -2770,20 +2770,49 @@ var getAccountByField = async (context, field, value) => {
 };
 var get_account_by_field_default = getAccountByField;
 
-// helpers/encrypt-password/index.ts
+// helpers/get-password-hash/index.ts
 var import_crypto = __toESM(require("crypto"));
 var { ENCRYPTION } = ACCOUNT2;
 var {
-  RANDOM_BYTES_SIZE,
   STRING_TYPE,
   PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
   PASSWORD: {
     PBKDF2: { KEY_LENGTH }
   }
 } = ENCRYPTION;
-var encryptPassword = (password2) => {
-  const salt = import_crypto.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE);
+var getPasswordHash = (password2, salt) => {
   const hash = import_crypto.default.pbkdf2Sync(password2, salt, ITERATIONS, KEY_LENGTH, DIGEST_ALGORITHM).toString(STRING_TYPE);
+  return hash;
+};
+var get_password_hash_default = getPasswordHash;
+
+// helpers/is-valid-account-password/index.ts
+var isValidAccountPassword = (password2, salt, hash) => {
+  console.info("Validating account password");
+  const hashVerify = get_password_hash_default(password2, salt);
+  if (hash === hashVerify) {
+    console.info("Valid account password");
+    return true;
+  }
+  console.info("Invalid account password");
+  return false;
+};
+var is_valid_account_password_default = isValidAccountPassword;
+
+// helpers/encrypt-password/index.ts
+var import_crypto2 = __toESM(require("crypto"));
+var { ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var {
+  RANDOM_BYTES_SIZE,
+  STRING_TYPE: STRING_TYPE2,
+  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  PASSWORD: {
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+  }
+} = ENCRYPTION2;
+var encryptPassword = (password2) => {
+  const salt = import_crypto2.default.randomBytes(RANDOM_BYTES_SIZE).toString(STRING_TYPE2);
+  const hash = import_crypto2.default.pbkdf2Sync(password2, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
   return {
     salt,
     hash
@@ -2792,17 +2821,17 @@ var encryptPassword = (password2) => {
 var encrypt_password_default = encryptPassword;
 
 // helpers/get-account-verification-hash/index.ts
-var import_crypto2 = __toESM(require("crypto"));
-var { EMAIL, ENCRYPTION: ENCRYPTION2 } = ACCOUNT2;
+var import_crypto3 = __toESM(require("crypto"));
+var { EMAIL, ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
 var {
-  STRING_TYPE: STRING_TYPE2,
-  PBKDF2: { ITERATIONS: ITERATIONS2, DIGEST_ALGORITHM: DIGEST_ALGORITHM2 },
+  STRING_TYPE: STRING_TYPE3,
+  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
   PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH2 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
   }
-} = ENCRYPTION2;
+} = ENCRYPTION3;
 var generateAccountVerificationHash = (email, salt) => {
-  const verificationHash = import_crypto2.default.pbkdf2Sync(email, salt, ITERATIONS2, KEY_LENGTH2, DIGEST_ALGORITHM2).toString(STRING_TYPE2);
+  const verificationHash = import_crypto3.default.pbkdf2Sync(email, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
   const verificationExpiry = EMAIL.VERIFICATION_EXPIRY();
   return {
     verificationHash,
@@ -3051,8 +3080,8 @@ var documentsEmail = async (variables, templateId) => {
 var import_dotenv5 = __toESM(require("dotenv"));
 
 // helpers/format-date/index.ts
-var import_date_fns3 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns3.format)(new Date(timestamp3), dateFormat);
+var import_date_fns2 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
 // helpers/map-feedback-satisfaction/index.ts
@@ -3097,19 +3126,151 @@ var sendEmail = {
 };
 var emails_default = sendEmail;
 
+// helpers/get-account-by-id/index.ts
+var getAccountById = async (context, accountId) => {
+  try {
+    console.info("Getting account by ID");
+    const account2 = await context.db.Account.findOne({
+      where: {
+        id: accountId
+      }
+    });
+    return account2;
+  } catch (err) {
+    console.error("Error getting account by ID %O", err);
+    throw new Error(`Getting account by ID ${err}`);
+  }
+};
+var get_account_by_id_default = getAccountById;
+
+// helpers/update-account/index.ts
+var account = async (context, accountId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccount = await context.db.Account.updateOne({
+      where: {
+        id: accountId
+      },
+      data: updateData
+    });
+    return updatedAccount;
+  } catch (err) {
+    console.error("Error updating account %O", err);
+    throw new Error(`Updating account ${err}`);
+  }
+};
+var accountStatus = async (context, accountStatusId, updateData) => {
+  try {
+    console.info("Updating account");
+    const updatedAccountStatus = await context.db.AccountStatus.updateOne({
+      where: {
+        id: accountStatusId
+      },
+      data: {
+        ...updateData,
+        updatedAt: /* @__PURE__ */ new Date()
+      }
+    });
+    return updatedAccountStatus;
+  } catch (err) {
+    console.error("Error updating account status %O", err);
+    throw new Error(`Updating account status ${err}`);
+  }
+};
+var update = {
+  account,
+  accountStatus
+};
+var update_account_default = update;
+
+// helpers/date/index.ts
+var import_date_fns3 = require("date-fns");
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns3.isAfter)(now2, targetDate);
+};
+
+// helpers/send-email-confirm-email-address/index.ts
+var send = async (context, urlOrigin, accountId) => {
+  try {
+    console.info("Sending email verification");
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Sending email verification - no account exists with the provided account ID");
+      return {
+        success: false
+      };
+    }
+    let latestVerificationHash = "";
+    let verificationHasExpired = false;
+    if (account2.verificationExpiry) {
+      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
+    }
+    if (account2.verificationHash && !verificationHasExpired) {
+      latestVerificationHash = account2.verificationHash;
+    } else {
+      const { email: email2, salt } = account2;
+      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
+      const accountUpdate = { verificationHash, verificationExpiry };
+      latestVerificationHash = verificationHash;
+      await update_account_default.account(context, accountId, accountUpdate);
+    }
+    const { email, id } = account2;
+    const name = get_full_name_string_default(account2);
+    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
+  } catch (err) {
+    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
+    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
+  }
+};
+var confirmEmailAddressEmail = {
+  send
+};
+var send_email_confirm_email_address_default = confirmEmailAddressEmail;
+
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
-  console.info("Creating new account for %s", variables.email);
+  console.info("Account creation - %s", variables.email);
   try {
     const { urlOrigin, firstName, lastName, email, password: password2 } = variables;
     const account2 = await get_account_by_field_default(context, account_default.EMAIL, email);
     if (account2) {
-      console.info("Unable to create a new account for %s - account already exists", variables.email);
+      console.info("Account creation - account already exists %s", email);
+      if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
+        console.info("Account creation - account already exists - valid credentials provided %s", email);
+        if (!account2.status.isVerified) {
+          console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);
+          const { id: accountId } = account2;
+          console.info("Account creation - resending an email verification for %s", email);
+          const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+          if (emailResponse2.success) {
+            return {
+              id: accountId,
+              success: true,
+              alreadyExists: true,
+              isVerified: false
+            };
+          }
+        }
+        console.info("Account creation - unable to create a new account - account already exists and is verified %s", email);
+        return {
+          success: false,
+          alreadyExists: true,
+          isVerified: true
+        };
+      }
+      console.info("Account creation - account already exists - invalid credentials provided %s", email);
       return { success: false };
     }
+    console.info("Account creation - no existing account found. Generating an encrypted password %s", email);
     const { salt, hash } = encrypt_password_default(password2);
     const now2 = /* @__PURE__ */ new Date();
     const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email, salt);
+    console.info("Account creation - constructing account data %s", email);
     const accountData = {
       firstName,
       lastName,
@@ -3121,9 +3282,11 @@ var createAnAccount = async (root, variables, context) => {
       createdAt: now2,
       updatedAt: now2
     };
+    console.info("Account creation - creating account %s", email);
     const creationResponse = await context.db.Account.createOne({
       data: accountData
     });
+    console.info("Account creation - creating account status relationship %s", email);
     await context.db.AccountStatus.createOne({
       data: {
         account: {
@@ -3133,19 +3296,20 @@ var createAnAccount = async (root, variables, context) => {
         }
       }
     });
+    console.info("Account creation - sending an email verification for %s", email);
     const name = get_full_name_string_default(creationResponse);
     const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, verificationHash, creationResponse.id);
     if (emailResponse.success) {
       return {
-        ...creationResponse,
+        id: creationResponse.id,
         verificationHash,
         success: true
       };
     }
-    throw new Error(`Sending email verification for account creation ${emailResponse}`);
+    throw new Error(`Account creation - sending email verification for account creation ${emailResponse}`);
   } catch (err) {
-    console.error("Error creating a new account %O", err);
-    throw new Error(`Creating a new account ${err}`);
+    console.error("Error Account creation - creating account %O", err);
+    throw new Error(`Account creation - creating account ${err}`);
   }
 };
 var create_an_account_default = createAnAccount;
@@ -3211,48 +3375,6 @@ var delete_an_account_default = deleteAnAccount;
 
 // custom-resolvers/mutations/verify-account-email-address/index.ts
 var import_date_fns4 = require("date-fns");
-
-// helpers/update-account/index.ts
-var account = async (context, accountId, updateData) => {
-  try {
-    console.info("Updating account");
-    const updatedAccount = await context.db.Account.updateOne({
-      where: {
-        id: accountId
-      },
-      data: updateData
-    });
-    return updatedAccount;
-  } catch (err) {
-    console.error("Error updating account %O", err);
-    throw new Error(`Updating account ${err}`);
-  }
-};
-var accountStatus = async (context, accountStatusId, updateData) => {
-  try {
-    console.info("Updating account");
-    const updatedAccountStatus = await context.db.AccountStatus.updateOne({
-      where: {
-        id: accountStatusId
-      },
-      data: {
-        ...updateData,
-        updatedAt: /* @__PURE__ */ new Date()
-      }
-    });
-    return updatedAccountStatus;
-  } catch (err) {
-    console.error("Error updating account status %O", err);
-    throw new Error(`Updating account status ${err}`);
-  }
-};
-var update = {
-  account,
-  accountStatus
-};
-var update_account_default = update;
-
-// custom-resolvers/mutations/verify-account-email-address/index.ts
 var { ID, EMAIL: EMAIL2, VERIFICATION_EXPIRY } = account_default;
 var verifyAccountEmailAddress = async (root, variables, context) => {
   try {
@@ -3305,65 +3427,6 @@ var verifyAccountEmailAddress = async (root, variables, context) => {
 };
 var verify_account_email_address_default = verifyAccountEmailAddress;
 
-// helpers/get-account-by-id/index.ts
-var getAccountById = async (context, accountId) => {
-  try {
-    console.info("Getting account by ID");
-    const account2 = await context.db.Account.findOne({
-      where: {
-        id: accountId
-      }
-    });
-    return account2;
-  } catch (err) {
-    console.error("Error getting account by ID %O", err);
-    throw new Error(`Getting account by ID ${err}`);
-  }
-};
-var get_account_by_id_default = getAccountById;
-
-// helpers/send-email-confirm-email-address/index.ts
-var send = async (context, urlOrigin, accountId) => {
-  try {
-    console.info("Sending email verification");
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      console.info("Sending email verification - no account exists with the provided account ID");
-      return {
-        success: false
-      };
-    }
-    let latestVerificationHash = "";
-    let verificationHasExpired = false;
-    if (account2.verificationExpiry) {
-      verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
-    }
-    if (account2.verificationHash && !verificationHasExpired) {
-      latestVerificationHash = account2.verificationHash;
-    } else {
-      const { email: email2, salt } = account2;
-      const { verificationHash, verificationExpiry } = get_account_verification_hash_default(email2, salt);
-      const accountUpdate = { verificationHash, verificationExpiry };
-      latestVerificationHash = verificationHash;
-      await update_account_default.account(context, accountId, accountUpdate);
-    }
-    const { email, id } = account2;
-    const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.confirmEmailAddress(email, urlOrigin, name, latestVerificationHash, id);
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email verification (sendEmailConfirmEmailAddress helper) %O", err);
-    throw new Error(`Sending email verification (sendEmailConfirmEmailAddress helper) ${err}`);
-  }
-};
-var confirmEmailAddressEmail = {
-  send
-};
-var send_email_confirm_email_address_default = confirmEmailAddressEmail;
-
 // custom-resolvers/mutations/send-email-confirm-email-address/index.ts
 var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   try {
@@ -3379,35 +3442,6 @@ var sendEmailConfirmEmailAddressMutation = async (root, variables, context) => {
   }
 };
 var send_email_confirm_email_address_default2 = sendEmailConfirmEmailAddressMutation;
-
-// helpers/get-password-hash/index.ts
-var import_crypto3 = __toESM(require("crypto"));
-var { ENCRYPTION: ENCRYPTION3 } = ACCOUNT2;
-var {
-  STRING_TYPE: STRING_TYPE3,
-  PBKDF2: { ITERATIONS: ITERATIONS3, DIGEST_ALGORITHM: DIGEST_ALGORITHM3 },
-  PASSWORD: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH3 }
-  }
-} = ENCRYPTION3;
-var getPasswordHash = (password2, salt) => {
-  const hash = import_crypto3.default.pbkdf2Sync(password2, salt, ITERATIONS3, KEY_LENGTH3, DIGEST_ALGORITHM3).toString(STRING_TYPE3);
-  return hash;
-};
-var get_password_hash_default = getPasswordHash;
-
-// helpers/is-valid-account-password/index.ts
-var isValidAccountPassword = (password2, salt, hash) => {
-  console.info("Validating account password");
-  const hashVerify = get_password_hash_default(password2, salt);
-  if (hash === hashVerify) {
-    console.info("Valid account password");
-    return true;
-  }
-  console.info("Invalid account password");
-  return false;
-};
-var is_valid_account_password_default = isValidAccountPassword;
 
 // helpers/create-authentication-retry-entry/index.ts
 var createAuthenticationRetryEntry = async (context, accountId) => {
@@ -3531,7 +3565,9 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
       otpHash: hash,
       otpExpiry: expiry
     };
-    await update_account_default.account(context, accountId, accountUpdate);
+    const updatedAccount = await update_account_default.account(context, accountId, accountUpdate);
+    const accountStatusUpdate = { isInactive: false };
+    await update_account_default.accountStatus(context, updatedAccount.statusId, accountStatusUpdate);
     return {
       success: true,
       securityCode
@@ -3543,38 +3579,24 @@ var generateOTPAndUpdateAccount = async (context, accountId) => {
 };
 var generate_otp_and_update_account_default = generateOTPAndUpdateAccount;
 
-// custom-resolvers/mutations/account-sign-in/account-checks/index.ts
-var { EMAIL: EMAIL3 } = ACCOUNT2;
-var accountChecks = async (context, account2, urlOrigin) => {
+// custom-resolvers/mutations/account-sign-in/account-sign-in-checks/index.ts
+var accountSignInChecks = async (context, account2, urlOrigin) => {
   try {
     console.info("Signing in account - checking account");
     const { id: accountId, email } = account2;
     if (!account2.status.isVerified) {
-      console.info("Unable to sign in account - account has not been verified yet");
-      let verificationHasExpired = false;
-      if (account2.verificationExpiry) {
-        verificationHasExpired = dateIsInThePast(account2.verificationExpiry);
-      }
-      if (account2.verificationHash && !verificationHasExpired) {
-        console.info("Account has an unexpired verification token - resetting verification expiry");
-        const accountUpdate = {
-          verificationExpiry: EMAIL3.VERIFICATION_EXPIRY()
+      console.info("Unable to sign in account - account has not been verified yet. Sending a new email verification");
+      const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
+      if (emailResponse2?.success) {
+        return {
+          success: false,
+          resentVerificationEmail: true,
+          accountId
         };
-        await update_account_default.account(context, accountId, accountUpdate);
-        console.info("Account has an unexpired verification token - sending verification email");
-        const emailResponse2 = await send_email_confirm_email_address_default.send(context, urlOrigin, accountId);
-        if (emailResponse2?.success) {
-          return {
-            success: false,
-            resentVerificationEmail: true,
-            accountId
-          };
-        }
-        return { success: false, accountId };
       }
-      console.info("Unable to sign in account - account has not been verified");
-      return { success: false };
+      return { success: false, accountId };
     }
+    console.info("Signing in account - account is verified. Generating and sending an OTP");
     const { securityCode } = await generate_otp_and_update_account_default(context, accountId);
     const name = get_full_name_string_default(account2);
     const emailResponse = await emails_default.accessCodeEmail(email, name, securityCode);
@@ -3588,11 +3610,11 @@ var accountChecks = async (context, account2, urlOrigin) => {
       success: false
     };
   } catch (err) {
-    console.error("Error validating password or sending email for account sign in (accountSignIn mutation - account checks) %O", err);
-    throw new Error(`Validating password or sending email for account sign in (accountSignIn mutation - account checks) ${err}`);
+    console.error("Error validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) %O", err);
+    throw new Error(`Validating password or sending email(s) for account sign in (accountSignIn mutation - account checks) ${err}`);
   }
 };
-var account_checks_default = accountChecks;
+var account_sign_in_checks_default = accountSignInChecks;
 
 // custom-resolvers/mutations/account-sign-in/index.ts
 var accountSignIn = async (root, variables, context) => {
@@ -3606,14 +3628,15 @@ var accountSignIn = async (root, variables, context) => {
     }
     const account2 = accountData;
     const { id: accountId } = account2;
+    console.info("Signing in account - account found %s", accountId);
     const { isBlocked } = account2.status;
     if (isBlocked) {
-      console.info("Unable to sign in account - account is already blocked");
+      console.info("Unable to sign in account - account is blocked");
       return { success: false, isBlocked: true, accountId };
     }
     if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
       console.info("Signing in account - valid credentials provided");
-      return account_checks_default(context, account2, urlOrigin);
+      return account_sign_in_checks_default(context, account2, urlOrigin);
     }
     console.info("Signing in account - invalid credentials provided");
     const newRetriesEntry = await create_authentication_retry_entry_default(context, accountId);
@@ -5375,7 +5398,7 @@ var FORM_TITLES = {
 
 // content-strings/fields/insurance/policy/index.ts
 var {
-  ACCOUNT: { EMAIL: EMAIL4 },
+  ACCOUNT: { EMAIL: EMAIL3 },
   CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   POLICY: {
     POLICY_TYPE: POLICY_TYPE4,
@@ -5538,7 +5561,7 @@ var POLICY_FIELDS = {
       LABEL: "Position at company",
       MAXIMUM: 50
     },
-    [EMAIL4]: {
+    [EMAIL3]: {
       SUMMARY: {
         TITLE: "Contact email",
         FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
@@ -5606,7 +5629,7 @@ var POLICY_FIELDS = {
         FORM_TITLE: POLICY_FORM_TITLES.BROKER
       }
     },
-    [EMAIL4]: {
+    [EMAIL3]: {
       LABEL: "Email address",
       SUMMARY: {
         TITLE: "Broker's email",
@@ -6000,22 +6023,10 @@ var {
     },
     FINANCIAL_ADDRESS: FINANCIAL_ADDRESS2,
     LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED2 },
-    LOSS_PAYEE_DETAILS: {
-      NAME: LOSS_PAYEE_NAME2,
-      LOCATION: LOCATION2
-    },
-    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-      BIC_SWIFT_CODE: BIC_SWIFT_CODE2,
-      IBAN: IBAN2
-    },
-    LOSS_PAYEE_FINANCIAL_UK: {
-      SORT_CODE: SORT_CODE2,
-      ACCOUNT_NUMBER: ACCOUNT_NUMBER2
-    },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE2, IBAN: IBAN2 },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE2, ACCOUNT_NUMBER: ACCOUNT_NUMBER2 },
     NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD2,
-    REQUESTED_JOINTLY_INSURED_PARTY: {
-      REQUESTED: REQUESTED2
-    },
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2 },
     TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
     USING_BROKER: USING_BROKER3
   },
@@ -6116,7 +6127,7 @@ var format_time_of_day_default = formatTimeOfDay;
 // generate-xlsx/map-application-to-XLSX/map-introduction/index.ts
 var { FIELDS: FIELDS2 } = XLSX;
 var {
-  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL5 },
+  ACCOUNT: { FIRST_NAME: FIRST_NAME2, LAST_NAME: LAST_NAME2, EMAIL: EMAIL4 },
   POLICY: {
     NAME_ON_POLICY: { POSITION }
   }
@@ -6128,7 +6139,7 @@ var mapIntroduction = (application2) => {
     xlsx_row_default(TIME_SUBMITTED.SUMMARY.TITLE, format_time_of_day_default(application2.submissionDate)),
     xlsx_row_default(FIELDS2[FIRST_NAME2], application2.owner[FIRST_NAME2]),
     xlsx_row_default(FIELDS2[LAST_NAME2], application2.owner[LAST_NAME2]),
-    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL5]),
+    xlsx_row_default(FIELDS2.APPLICANT_EMAIL_ADDRESS, application2.owner[EMAIL4]),
     xlsx_row_default(FIELDS2.APPLICANT_ROLE, application2.policyContact[POSITION])
   ];
   return mapped;
@@ -6136,7 +6147,7 @@ var mapIntroduction = (application2) => {
 var map_introduction_default = mapIntroduction;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-contact-details/index.ts
-var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL6 } = account_default;
+var { FIRST_NAME: FIRST_NAME3, LAST_NAME: LAST_NAME3, EMAIL: EMAIL5 } = account_default;
 var {
   SECTION_TITLES: { EXPORTER_CONTACT_DETAILS },
   FIELDS: FIELDS3
@@ -6147,7 +6158,7 @@ var mapExporterContactDetails = (application2) => {
     xlsx_row_default(EXPORTER_CONTACT_DETAILS),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[FIRST_NAME3], policyContact[FIRST_NAME3]),
     xlsx_row_default(FIELDS3.EXPORTER_CONTACT[LAST_NAME3], policyContact[LAST_NAME3]),
-    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL6])
+    xlsx_row_default(FIELDS3.EXPORTER_CONTACT.EXPORTER_CONTACT_EMAIL, policyContact[EMAIL5])
   ];
   return mapped;
 };
@@ -6185,6 +6196,22 @@ var mapKeyInformation = (application2) => {
 };
 var map_key_information_default = mapKeyInformation;
 
+// generate-xlsx/map-application-to-XLSX/map-policy/map-intro/index.ts
+var { FIELDS: FIELDS5, SECTION_TITLES } = XLSX;
+var {
+  POLICY_TYPE: POLICY_TYPE7,
+  CONTRACT_POLICY: { REQUESTED_START_DATE: REQUESTED_START_DATE3 }
+} = policy_default;
+var mapIntro = (policy) => {
+  const mapped = [
+    xlsx_row_default(SECTION_TITLES.POLICY, ""),
+    xlsx_row_default(String(FIELDS5[POLICY_TYPE7]), policy[POLICY_TYPE7]),
+    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd-MMM-yy"))
+  ];
+  return mapped;
+};
+var map_intro_default = mapIntro;
+
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
 var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
   style: "currency",
@@ -6194,9 +6221,63 @@ var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleSt
 });
 var format_currency_default2 = formatCurrency2;
 
+// generate-xlsx/map-application-to-XLSX/map-policy/map-single-contract-policy/index.ts
+var { FIELDS: FIELDS6 } = XLSX;
+var CONTENT_STRINGS2 = {
+  ...POLICY_FIELDS,
+  ...POLICY_FIELDS.CONTRACT_POLICY,
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE
+};
+var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE3 },
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
+      POLICY_CURRENCY_CODE,
+      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
+    }
+  }
+} = insurance_default;
+var mapSingleContractPolicy = (policy) => {
+  const mapped = [
+    xlsx_row_default(String(FIELDS6[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+  ];
+  return mapped;
+};
+var map_single_contract_policy_default = mapSingleContractPolicy;
+
 // generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
 var map_month_string_default = mapMonthString;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-multiple-contract-policy/index.ts
+var CONTENT_STRINGS3 = {
+  ...POLICY_FIELDS,
+  ...POLICY_FIELDS.CONTRACT_POLICY,
+  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE
+};
+var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE4 },
+  POLICY: {
+    CONTRACT_POLICY: {
+      POLICY_CURRENCY_CODE: POLICY_CURRENCY_CODE2,
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER2 }
+    },
+    EXPORT_VALUE: {
+      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
+    }
+  }
+} = insurance_default;
+var mapMultipleContractPolicy = (policy) => [
+  xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_MONTHS_OF_COVER2].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER2])),
+  xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE4].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE2]),
+  xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+  xlsx_row_default(String(CONTENT_STRINGS3[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+];
+var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var { YES, NO } = FIELD_VALUES;
@@ -6217,93 +6298,94 @@ var map_yes_no_field_default = mapYesNoField;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER4,
-  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL7, FULL_ADDRESS: FULL_ADDRESS2 }
+  BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL6, FULL_ADDRESS: FULL_ADDRESS2 }
 } = POLICY;
-var { FIELDS: FIELDS5 } = XLSX;
+var { FIELDS: FIELDS7 } = XLSX;
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
+  let mapped = [xlsx_row_default(FIELDS7[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
   if (broker[USING_BROKER4]) {
     mapped = [
       ...mapped,
-      xlsx_row_default(FIELDS5[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(FIELDS5[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
-      xlsx_row_default(FIELDS5[EMAIL7], broker[EMAIL7])
+      xlsx_row_default(FIELDS7[BROKER_NAME2], broker[BROKER_NAME2]),
+      xlsx_row_default(FIELDS7[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
+      xlsx_row_default(FIELDS7[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;
 };
 var map_broker_default = mapBroker;
 
-// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/index.ts
-var { FIELDS: FIELDS6 } = XLSX;
-var CONTENT_STRINGS2 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/index.ts
+var { FIELDS: FIELDS8 } = XLSX;
+var CONTENT_STRINGS4 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
 var {
   LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED3 },
-  LOSS_PAYEE_DETAILS: {
-    IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2,
-    IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2,
-    LOCATION: LOCATION3,
-    NAME: LOSS_PAYEE_NAME3
-  },
-  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
-    BIC_SWIFT_CODE: BIC_SWIFT_CODE3,
-    IBAN: IBAN3
-  },
-  LOSS_PAYEE_FINANCIAL_UK: {
-    SORT_CODE: SORT_CODE3,
-    ACCOUNT_NUMBER: ACCOUNT_NUMBER3
-  },
-  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3
+  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION2, NAME: LOSS_PAYEE_NAME2 }
 } = policy_default;
 var mapAppointedLossPayee = (lossPayee) => {
-  let mapped = [
-    xlsx_row_default(String(FIELDS6[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))
-  ];
+  let mapped = [xlsx_row_default(String(FIELDS8[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
   if (lossPayee[IS_APPOINTED3]) {
     mapped = [
       ...mapped,
-      xlsx_row_default(String(CONTENT_STRINGS2[LOSS_PAYEE_NAME3].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME3]),
-      xlsx_row_default(String(CONTENT_STRINGS2[LOCATION3].LABEL), "TODO")
+      xlsx_row_default(String(CONTENT_STRINGS4[LOSS_PAYEE_NAME2].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME2]),
+      xlsx_row_default(String(CONTENT_STRINGS4[LOCATION2].LABEL), "TODO")
     ];
   }
   return mapped;
 };
+var map_appointed_loss_payee_default = mapAppointedLossPayee;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-international/index.ts
+var { FIELDS: FIELDS9 } = XLSX;
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2 },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE3, IBAN: IBAN3 },
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3
+} = policy_default;
 var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
   if (lossPayee[IS_LOCATED_INTERNATIONALLY2]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS6[BIC_SWIFT_CODE3]), lossPayee[BIC_SWIFT_CODE3]),
-      xlsx_row_default(String(FIELDS6[IBAN3]), lossPayee[IBAN3]),
-      xlsx_row_default(String(FIELDS6[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3])
+      xlsx_row_default(String(FIELDS9[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
+      xlsx_row_default(String(FIELDS9[IBAN3]), lossPayee.financialInternational[IBAN3]),
+      xlsx_row_default(String(FIELDS9[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3])
     ];
     return mapped;
   }
   return [];
 };
+var map_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-uk/index.ts
+var { FIELDS: FIELDS10 } = XLSX;
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2 },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE3, ACCOUNT_NUMBER: ACCOUNT_NUMBER3 },
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS4
+} = policy_default;
 var mapLossPayeeFinancialDetailsUk = (lossPayee) => {
   if (lossPayee[IS_LOCATED_IN_UK2]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS6[SORT_CODE3]), lossPayee[SORT_CODE3]),
-      xlsx_row_default(String(FIELDS6[ACCOUNT_NUMBER3]), lossPayee[ACCOUNT_NUMBER3]),
-      xlsx_row_default(String(FIELDS6[FINANCIAL_ADDRESS3]), lossPayee.financialUk[FINANCIAL_ADDRESS3])
+      xlsx_row_default(String(FIELDS10[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
+      xlsx_row_default(String(FIELDS10[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
+      xlsx_row_default(String(FIELDS10[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4])
     ];
     return mapped;
   }
   return [];
 };
+var map_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/index.ts
 var mapLossPayee = (lossPayee) => {
-  const mapped = [
-    ...mapAppointedLossPayee(lossPayee),
-    ...mapLossPayeeFinancialDetailsUk(lossPayee),
-    ...mapLossPayeeFinancialDetailsInternational(lossPayee)
-  ];
+  const mapped = [...map_appointed_loss_payee_default(lossPayee), ...map_financial_details_uk_default(lossPayee), ...map_financial_details_international_default(lossPayee)];
   return mapped;
 };
 var map_loss_payee_default = mapLossPayee;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/index.ts
-var { FIELDS: FIELDS7, SECTION_TITLES } = XLSX;
-var CONTENT_STRINGS3 = {
+var { FIELDS: FIELDS11 } = XLSX;
+var CONTENT_STRINGS5 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
   ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
@@ -6313,83 +6395,36 @@ var CONTENT_STRINGS3 = {
   ...POLICY_FIELDS.NAME_ON_POLICY
 };
 var {
-  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE3 },
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE7 },
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE: REQUESTED_START_DATE3,
-      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER2 },
-      POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
-    },
-    LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED4 },
-    LOSS_PAYEE_DETAILS: {
-      NAME: LOSS_PAYEE_NAME4,
-      LOCATION: LOCATION4
-    },
-    NAME_ON_POLICY: {
-      NAME: NAME2,
-      IS_SAME_AS_OWNER,
-      SAME_NAME,
-      OTHER_NAME,
-      POSITION: POSITION2,
-      POLICY_CONTACT_EMAIL
-    },
-    NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3,
-    REQUESTED_JOINTLY_INSURED_PARTY: {
-      REQUESTED: REQUESTED3
-    },
-    USING_BROKER: USING_BROKER5
-  }
-} = insurance_default;
-var mapPolicyIntro = (application2) => {
-  const { policy } = application2;
-  const mapped = [
-    xlsx_row_default(SECTION_TITLES.POLICY, ""),
-    xlsx_row_default(String(FIELDS7[POLICY_TYPE7]), policy[POLICY_TYPE7]),
-    xlsx_row_default(String(FIELDS7[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd-MMM-yy"))
-  ];
-  return mapped;
-};
-var mapSinglePolicyFields = (application2) => {
-  const { policy } = application2;
-  return [
-    xlsx_row_default(String(FIELDS7[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
-  ];
-};
-var mapMultiplePolicyFields = (application2) => {
-  const { policy } = application2;
-  const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_MONTHS_OF_COVER2].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER2])),
-    xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(String(CONTENT_STRINGS3[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
-  ];
-  return mapped;
-};
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
+  NAME_ON_POLICY: {
+    NAME: NAME2,
+    // IS_SAME_AS_OWNER,
+    // SAME_NAME,
+    // OTHER_NAME,
+    POSITION: POSITION2
+    // POLICY_CONTACT_EMAIL,
+  },
+  NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3,
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED3 },
+  USING_BROKER: USING_BROKER5
+} = policy_default;
 var mapPolicy = (application2) => {
   const { broker, nominatedLossPayee, policy, policyContact } = application2;
-  let mapped = mapPolicyIntro(application2);
-  const policyType = policy[POLICY_TYPE7];
+  const policyType = policy[POLICY_TYPE8];
+  let mapped = map_intro_default(policy);
   if (isSinglePolicyType(policyType)) {
-    mapped = [...mapped, ...mapSinglePolicyFields(application2)];
+    mapped = [...mapped, ...map_single_contract_policy_default(policy)];
   }
   if (isMultiplePolicyType(policyType)) {
-    mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
+    mapped = [...mapped, ...map_multiple_contract_policy_default(policy)];
   }
   mapped = [
     ...mapped,
-    xlsx_row_default(String(CONTENT_STRINGS3.NAME_ON_POLICY[NAME2].SUMMARY?.TITLE), policyContact[NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS3.NAME_ON_POLICY[POSITION2].SUMMARY?.TITLE), policyContact[POSITION2]),
-    xlsx_row_default(String(FIELDS7[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: policy[NEED_PRE_CREDIT_PERIOD3] })),
-    xlsx_row_default(String(FIELDS7[REQUESTED3]), map_yes_no_field_default({ answer: policy.jointlyInsuredParty[REQUESTED3] })),
-    xlsx_row_default(String(FIELDS7[USING_BROKER5]), map_yes_no_field_default({ answer: broker[USING_BROKER5] })),
+    xlsx_row_default(String(CONTENT_STRINGS5.NAME_ON_POLICY[NAME2].SUMMARY?.TITLE), policyContact[NAME2]),
+    xlsx_row_default(String(CONTENT_STRINGS5.NAME_ON_POLICY[POSITION2].SUMMARY?.TITLE), policyContact[POSITION2]),
+    xlsx_row_default(String(FIELDS11[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: policy[NEED_PRE_CREDIT_PERIOD3] })),
+    xlsx_row_default(String(FIELDS11[REQUESTED3]), map_yes_no_field_default({ answer: policy.jointlyInsuredParty[REQUESTED3] })),
+    xlsx_row_default(String(FIELDS11[USING_BROKER5]), map_yes_no_field_default({ answer: broker[USING_BROKER5] })),
     ...map_broker_default(application2),
     ...map_loss_payee_default(nominatedLossPayee)
   ];
@@ -6401,10 +6436,10 @@ var map_policy_default = mapPolicy;
 var {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 }
 } = business_default;
-var { FIELDS: FIELDS8 } = XLSX;
+var { FIELDS: FIELDS12 } = XLSX;
 var mapDifferentTradingName = (company) => {
   if (company[HAS_DIFFERENT_TRADING_NAME3]) {
-    return xlsx_row_default(FIELDS8[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]);
+    return xlsx_row_default(FIELDS12[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]);
   }
 };
 var map_different_trading_name_default = mapDifferentTradingName;
@@ -6413,12 +6448,12 @@ var map_different_trading_name_default = mapDifferentTradingName;
 var {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS3, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
 } = business_default;
-var { FIELDS: FIELDS9 } = XLSX;
+var { FIELDS: FIELDS13 } = XLSX;
 var mapDifferentTradingAddress = (company) => {
   const { differentTradingAddress } = company;
   const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS3];
   if (differentTradingAddressValue) {
-    return xlsx_row_default(FIELDS9[FULL_ADDRESS_DOT_NOTATION2], differentTradingAddressValue);
+    return xlsx_row_default(FIELDS13[FULL_ADDRESS_DOT_NOTATION2], differentTradingAddressValue);
   }
 };
 var map_different_trading_address_default = mapDifferentTradingAddress;
@@ -6443,12 +6478,12 @@ var map_exporter_address_default = mapExporterAddress;
 var {
   COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 }
 } = business_default;
-var { FIELDS: FIELDS10 } = XLSX;
+var { FIELDS: FIELDS14 } = XLSX;
 var mapFinancialYearEndDate = (company) => {
   if (company[FINANCIAL_YEAR_END_DATE2]) {
     return format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
   }
-  return FIELDS10.NO_FINANCIAL_YEAR_END_DATE;
+  return FIELDS14.NO_FINANCIAL_YEAR_END_DATE;
 };
 var map_financial_year_end_date_default = mapFinancialYearEndDate;
 
@@ -6464,8 +6499,8 @@ var mapSicCodes2 = (sicCodes) => {
 var map_sic_codes_default2 = mapSicCodes2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
-var { FIELDS: FIELDS11, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
-var CONTENT_STRINGS4 = {
+var { FIELDS: FIELDS15, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
+var CONTENT_STRINGS6 = {
   ...FIELDS.COMPANY_DETAILS,
   ...FIELDS.NATURE_OF_YOUR_BUSINESS,
   ...FIELDS.TURNOVER,
@@ -6482,22 +6517,22 @@ var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
     xlsx_row_default(SECTION_TITLES2.EXPORTER_BUSINESS, ""),
-    xlsx_row_default(CONTENT_STRINGS4[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    xlsx_row_default(FIELDS11[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(FIELDS11[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
-    xlsx_row_default(FIELDS11[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
+    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(FIELDS15[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(FIELDS15[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
+    xlsx_row_default(FIELDS15[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(FIELDS11[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    xlsx_row_default(FIELDS15[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
-    xlsx_row_default(FIELDS11[WEBSITE3], company[WEBSITE3]),
-    xlsx_row_default(FIELDS11[PHONE_NUMBER3], company[PHONE_NUMBER3]),
-    xlsx_row_default(FIELDS11[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(FIELDS11[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
-    xlsx_row_default(FIELDS11[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(CONTENT_STRINGS4[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
-    xlsx_row_default(FIELDS11[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
-    xlsx_row_default(CONTENT_STRINGS4[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    xlsx_row_default(FIELDS11[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
+    xlsx_row_default(FIELDS15[WEBSITE3], company[WEBSITE3]),
+    xlsx_row_default(FIELDS15[PHONE_NUMBER3], company[PHONE_NUMBER3]),
+    xlsx_row_default(FIELDS15[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(FIELDS15[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    xlsx_row_default(FIELDS15[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(CONTENT_STRINGS6[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
+    xlsx_row_default(FIELDS15[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(CONTENT_STRINGS6[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
+    xlsx_row_default(FIELDS15[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
   ];
   return mapped;
 };
@@ -6505,28 +6540,28 @@ var map_exporter_business_default = mapExporterBusiness;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
 var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
-var { FIELDS: FIELDS12 } = XLSX;
+var { FIELDS: FIELDS16 } = XLSX;
 var mapConnectionWithBuyer = (relationship2) => {
   if (relationship2[CONNECTION_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS12[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
+    return xlsx_row_default(String(FIELDS16[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
   }
 };
 var map_connection_with_buyer_default = mapConnectionWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-outstanding-payments/index.ts
 var {
-  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE4 },
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE5 },
   YOUR_BUYER: { OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3, TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3, TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2 }
 } = insurance_default;
-var { FIELDS: FIELDS13 } = XLSX;
+var { FIELDS: FIELDS17 } = XLSX;
 var mapOutstandingPayments = (tradingHistory) => {
   if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
     const values = {
-      totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE4]),
-      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE4])
+      totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE5]),
+      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5])
     };
     const mapped = [
-      xlsx_row_default(String(FIELDS13[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(FIELDS17[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
       xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue)
     ];
     return mapped;
@@ -6537,13 +6572,13 @@ var map_outstanding_payments_default = mapOutstandingPayments;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-buyer-trading-history/index.ts
 var { FAILED_PAYMENTS: FAILED_PAYMENTS3, OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS4, TRADED_WITH_BUYER: TRADED_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS14 } = XLSX;
+var { FIELDS: FIELDS18 } = XLSX;
 var mapBuyerTradingHistory = (tradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS14[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
+      xlsx_row_default(String(FIELDS18[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
       ...map_outstanding_payments_default(tradingHistory),
-      xlsx_row_default(String(FIELDS14[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
+      xlsx_row_default(String(FIELDS18[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
     ];
     return mapped;
   }
@@ -6553,16 +6588,16 @@ var map_buyer_trading_history_default = mapBuyerTradingHistory;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
 var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS15 } = XLSX;
+var { FIELDS: FIELDS19 } = XLSX;
 var mapPreviousCoverWithBuyer = (relationship2) => {
   if (relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS15[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]);
+    return xlsx_row_default(String(FIELDS19[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]);
   }
 };
 var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
-var CONTENT_STRINGS5 = {
+var CONTENT_STRINGS7 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
   ...YOUR_BUYER_FIELDS
 };
@@ -6573,29 +6608,29 @@ var {
   HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4,
   TRADED_WITH_BUYER: TRADED_WITH_BUYER4
 } = your_buyer_default;
-var { SECTION_TITLES: SECTION_TITLES3, FIELDS: FIELDS16 } = XLSX;
+var { SECTION_TITLES: SECTION_TITLES3, FIELDS: FIELDS20 } = XLSX;
 var mapBuyer = (application2) => {
   const { buyer } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
     xlsx_row_default(SECTION_TITLES3.BUYER, ""),
-    xlsx_row_default(FIELDS16[NAME3], buyer[NAME3]),
-    xlsx_row_default(String(CONTENT_STRINGS5[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(FIELDS16[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
-    xlsx_row_default(String(CONTENT_STRINGS5[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(String(FIELDS16[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
+    xlsx_row_default(FIELDS20[NAME3], buyer[NAME3]),
+    xlsx_row_default(String(CONTENT_STRINGS7[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
+    xlsx_row_default(FIELDS20[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(String(CONTENT_STRINGS7[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
+    xlsx_row_default(String(FIELDS20[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
     map_connection_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS16[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
+    xlsx_row_default(String(FIELDS20[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
     xlsx_row_default(
-      String(FIELDS16[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]),
+      String(FIELDS20[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]),
       map_yes_no_field_default({
         answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4],
         defaultValue: FIELD_VALUES.NO
       })
     ),
     map_previous_cover_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS16[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
+    xlsx_row_default(String(FIELDS20[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;
 };
@@ -6603,7 +6638,7 @@ var map_buyer_default = mapBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
-var { FIELDS: FIELDS17, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
+var { FIELDS: FIELDS21, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY3,
@@ -6623,12 +6658,12 @@ var mapEligibility = (application2) => {
     xlsx_row_default(SECTION_TITLES4.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
-    xlsx_row_default(FIELDS17[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(FIELDS17[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(FIELDS17[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
-    xlsx_row_default(FIELDS17[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(FIELDS17[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-    xlsx_row_default(FIELDS17[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
+    xlsx_row_default(FIELDS21[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(FIELDS21[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(FIELDS21[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
+    xlsx_row_default(FIELDS21[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(FIELDS21[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(FIELDS21[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
   ];
   return mapped;
 };
@@ -6644,7 +6679,7 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
-var { FIELDS: FIELDS18, SECTION_TITLES: SECTION_TITLES5 } = XLSX;
+var { FIELDS: FIELDS22, SECTION_TITLES: SECTION_TITLES5 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
@@ -6661,9 +6696,9 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(SECTION_TITLES5.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(String(FIELDS18[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3])),
-    xlsx_row_default(String(FIELDS18[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3])),
-    xlsx_row_default(String(FIELDS18[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
+    xlsx_row_default(String(FIELDS22[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS22[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3])),
+    xlsx_row_default(String(FIELDS22[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;

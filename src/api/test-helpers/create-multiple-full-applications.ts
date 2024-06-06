@@ -1,13 +1,16 @@
 import createFullApplication from './create-full-application';
+import applications from './applications';
 import { Application, Context } from '../types';
 
 /**
  * createMultipleFullApplications
  * Create multiple full applications for unit testing
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array<Application>} Applications array
  */
 export const createMultipleFullApplications = async (context: Context): Promise<Array<Application>> => {
+  await applications.deleteAll(context);
+
   const application1 = await createFullApplication(context);
   const application2 = await createFullApplication(context);
   const application3 = await createFullApplication(context);

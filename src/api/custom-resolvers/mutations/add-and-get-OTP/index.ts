@@ -10,7 +10,7 @@ import { AddOtpToAccountVariables, AddAndGetOtpResponse, Context } from '../../.
  * - The alternative approach is to have email inbox testing capabilities which can be risky/flaky.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the AddOtpToAccount mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag and OTP
  */
 const addAndGetOTP = async (root: any, variables: AddOtpToAccountVariables, context: Context): Promise<AddAndGetOtpResponse> => {

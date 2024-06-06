@@ -6,7 +6,7 @@ import { Account, Context, TestHelperAccountCreate, AccountCreationCore } from '
 /**
  * deleteAll test helper
  * Get all accounts and delete them.
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Array} Accounts that have been deleted
  */
 const deleteAll = async (context: Context) => {
@@ -36,11 +36,11 @@ const deleteAll = async (context: Context) => {
 /**
  * get account test helper
  * Get an account by ID
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Account ID
  * @returns {Object} Account
  */
-const get = async (context: Context, accountId: string) => {
+const get = async (context: Context, accountId: string): Promise<Account> => {
   try {
     console.info('Getting an account by ID (test helpers)');
 
@@ -60,7 +60,7 @@ const get = async (context: Context, accountId: string) => {
 /**
  * create account test helper
  * Create an account with mock account data and any provided custom account data.
- * @param {Object} KeystoneJS context API, account data, deleteAccounts flag
+ * @param {Context} KeystoneJS context API, account data, deleteAccounts flag
  * @returns {Object} Created account
  */
 const create = async ({ context, data, deleteAccounts = true }: TestHelperAccountCreate) => {
@@ -100,7 +100,7 @@ const create = async ({ context, data, deleteAccounts = true }: TestHelperAccoun
 /**
  * update account test helper
  * updates an account by ID
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @param {String} Account ID
  * @param {AccountCreationCore} Account update data
  * @returns {Account} Account

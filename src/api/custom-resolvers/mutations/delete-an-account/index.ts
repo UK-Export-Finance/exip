@@ -11,7 +11,7 @@ import { Account, AccountDeletionVariables, Context } from '../../../types';
  * 3) Delete the account.
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the DeleteAnAccount mutation
- * @param {Object} KeystoneJS context API
+ * @param {Context} KeystoneJS context API
  * @returns {Promise<Object>} Object with success flag
  */
 const deleteAnAccount = async (root: any, variables: AccountDeletionVariables, context: Context) => {
