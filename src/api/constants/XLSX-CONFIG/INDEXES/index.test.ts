@@ -10,9 +10,9 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         KEY_INFORMATION: 15,
         ELIGIBILITY: 21,
         EXPORTER_BUSINESS: 31,
-        POLICY: 48,
-        BUYER: 60,
-        DECLARATIONS: 70,
+        POLICY: 47,
+        BUYER: 63,
+        DECLARATIONS: 73,
       };
 
       expect(TITLE_INDEXES()).toEqual(expected);
@@ -25,7 +25,7 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         TITLES: TITLE_INDEXES(),
         COMPANY_ADDRESS: 33,
         COMPANY_SIC_CODES: 34,
-        BUYER_ADDRESS: 62,
+        BUYER_ADDRESS: 65,
       };
 
       expect(INDEXES()).toEqual(expected);

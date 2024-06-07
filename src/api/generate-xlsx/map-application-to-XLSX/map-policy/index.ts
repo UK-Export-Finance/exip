@@ -25,17 +25,9 @@ const CONTENT_STRINGS = {
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
-  NAME_ON_POLICY: {
-    NAME,
-    // IS_SAME_AS_OWNER,
-    // SAME_NAME,
-    // OTHER_NAME,
-    POSITION,
-    // POLICY_CONTACT_EMAIL,
-  },
+  NAME_ON_POLICY: { NAME, POSITION },
   NEED_PRE_CREDIT_PERIOD,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
-  USING_BROKER,
 } = FIELD_IDS;
 
 /**
@@ -45,7 +37,7 @@ const {
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPolicy = (application: Application) => {
-  const { broker, nominatedLossPayee, policy, policyContact } = application;
+  const { nominatedLossPayee, policy, policyContact } = application;
 
   const policyType = policy[POLICY_TYPE];
 
@@ -67,7 +59,6 @@ const mapPolicy = (application: Application) => {
 
     xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
     xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
-    xlsxRow(String(FIELDS[USING_BROKER]), mapYesNoField({ answer: broker[USING_BROKER] })),
 
     ...mapBroker(application),
     ...mapLossPayee(nominatedLossPayee),

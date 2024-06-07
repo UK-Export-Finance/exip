@@ -852,9 +852,11 @@ var XLSX_ROW_INDEXES = (application2) => {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName
     },
-    policy
+    nominatedLossPayee: {
+      isAppointed: nominatedLossPayeeAppointed
+    }
   } = application2;
-  const policyType = policy[POLICY_TYPE2];
+  const policyType = application2.policy[POLICY_TYPE2];
   let indexes = INDEXES();
   if (isMultiplePolicyType(policyType)) {
     indexes.TITLES.BUYER += 1;
@@ -890,6 +892,11 @@ var XLSX_ROW_INDEXES = (application2) => {
   }
   if (exporterHasPreviousCreditInsuranceWithBuyer) {
     indexes.TITLES.DECLARATIONS += 1;
+  }
+  if (nominatedLossPayeeAppointed) {
+    indexes.TITLES.BUYER += 2;
+    indexes.TITLES.DECLARATIONS += 2;
+    indexes.BUYER_ADDRESS += 2;
   }
   return indexes;
 };
@@ -6313,20 +6320,35 @@ var mapBroker = (application2) => {
 };
 var map_broker_default = mapBroker;
 
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/map-location/index.ts
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2, IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2, LOCATION: LOCATION2 }
+} = policy_default;
+var CONTENT_STRINGS4 = POLICY_FIELDS.LOSS_PAYEE_DETAILS[LOCATION2].OPTIONS;
+var mapLossPayeeLocation = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_INTERNATIONALLY2]) {
+    return String(CONTENT_STRINGS4?.INTERNATIONALLY.TEXT);
+  }
+  if (lossPayee[IS_LOCATED_IN_UK2]) {
+    return String(CONTENT_STRINGS4?.UK.TEXT);
+  }
+};
+var map_location_default = mapLossPayeeLocation;
+
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/index.ts
 var { FIELDS: FIELDS8 } = XLSX;
-var CONTENT_STRINGS4 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
+var CONTENT_STRINGS5 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
 var {
   LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED3 },
-  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION2, NAME: LOSS_PAYEE_NAME2 }
+  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION3, NAME: LOSS_PAYEE_NAME2 }
 } = policy_default;
 var mapAppointedLossPayee = (lossPayee) => {
   let mapped = [xlsx_row_default(String(FIELDS8[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
   if (lossPayee[IS_APPOINTED3]) {
     mapped = [
       ...mapped,
-      xlsx_row_default(String(CONTENT_STRINGS4[LOSS_PAYEE_NAME2].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME2]),
-      xlsx_row_default(String(CONTENT_STRINGS4[LOCATION2].LABEL), "TODO")
+      xlsx_row_default(String(CONTENT_STRINGS5[LOSS_PAYEE_NAME2].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME2]),
+      xlsx_row_default(String(CONTENT_STRINGS5[LOCATION3].LABEL), map_location_default(lossPayee))
     ];
   }
   return mapped;
@@ -6336,12 +6358,12 @@ var map_appointed_loss_payee_default = mapAppointedLossPayee;
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-international/index.ts
 var { FIELDS: FIELDS9 } = XLSX;
 var {
-  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2 },
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY3 },
   LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE3, IBAN: IBAN3 },
   FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3
 } = policy_default;
 var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
-  if (lossPayee[IS_LOCATED_INTERNATIONALLY2]) {
+  if (lossPayee[IS_LOCATED_INTERNATIONALLY3]) {
     const mapped = [
       xlsx_row_default(String(FIELDS9[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
       xlsx_row_default(String(FIELDS9[IBAN3]), lossPayee.financialInternational[IBAN3]),
@@ -6356,12 +6378,12 @@ var map_financial_details_international_default = mapLossPayeeFinancialDetailsIn
 // generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-uk/index.ts
 var { FIELDS: FIELDS10 } = XLSX;
 var {
-  LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2 },
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK3 },
   LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE3, ACCOUNT_NUMBER: ACCOUNT_NUMBER3 },
   FINANCIAL_ADDRESS: FINANCIAL_ADDRESS4
 } = policy_default;
 var mapLossPayeeFinancialDetailsUk = (lossPayee) => {
-  if (lossPayee[IS_LOCATED_IN_UK2]) {
+  if (lossPayee[IS_LOCATED_IN_UK3]) {
     const mapped = [
       xlsx_row_default(String(FIELDS10[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
       xlsx_row_default(String(FIELDS10[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
@@ -6382,7 +6404,7 @@ var map_loss_payee_default = mapLossPayee;
 
 // generate-xlsx/map-application-to-XLSX/map-policy/index.ts
 var { FIELDS: FIELDS11 } = XLSX;
-var CONTENT_STRINGS5 = {
+var CONTENT_STRINGS6 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
   ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
@@ -6393,20 +6415,12 @@ var CONTENT_STRINGS5 = {
 };
 var {
   TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
-  NAME_ON_POLICY: {
-    NAME: NAME2,
-    // IS_SAME_AS_OWNER,
-    // SAME_NAME,
-    // OTHER_NAME,
-    POSITION: POSITION2
-    // POLICY_CONTACT_EMAIL,
-  },
+  NAME_ON_POLICY: { NAME: NAME2, POSITION: POSITION2 },
   NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3,
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED3 },
-  USING_BROKER: USING_BROKER5
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED3 }
 } = policy_default;
 var mapPolicy = (application2) => {
-  const { broker, nominatedLossPayee, policy, policyContact } = application2;
+  const { nominatedLossPayee, policy, policyContact } = application2;
   const policyType = policy[POLICY_TYPE8];
   let mapped = map_intro_default(policy);
   if (isSinglePolicyType(policyType)) {
@@ -6417,11 +6431,10 @@ var mapPolicy = (application2) => {
   }
   mapped = [
     ...mapped,
-    xlsx_row_default(String(CONTENT_STRINGS5.NAME_ON_POLICY[NAME2].SUMMARY?.TITLE), policyContact[NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS5.NAME_ON_POLICY[POSITION2].SUMMARY?.TITLE), policyContact[POSITION2]),
+    xlsx_row_default(String(CONTENT_STRINGS6.NAME_ON_POLICY[NAME2].SUMMARY?.TITLE), policyContact[NAME2]),
+    xlsx_row_default(String(CONTENT_STRINGS6.NAME_ON_POLICY[POSITION2].SUMMARY?.TITLE), policyContact[POSITION2]),
     xlsx_row_default(String(FIELDS11[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: policy[NEED_PRE_CREDIT_PERIOD3] })),
     xlsx_row_default(String(FIELDS11[REQUESTED3]), map_yes_no_field_default({ answer: policy.jointlyInsuredParty[REQUESTED3] })),
-    xlsx_row_default(String(FIELDS11[USING_BROKER5]), map_yes_no_field_default({ answer: broker[USING_BROKER5] })),
     ...map_broker_default(application2),
     ...map_loss_payee_default(nominatedLossPayee)
   ];
@@ -6497,7 +6510,7 @@ var map_sic_codes_default2 = mapSicCodes2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
 var { FIELDS: FIELDS15, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
-var CONTENT_STRINGS6 = {
+var CONTENT_STRINGS7 = {
   ...FIELDS.COMPANY_DETAILS,
   ...FIELDS.NATURE_OF_YOUR_BUSINESS,
   ...FIELDS.TURNOVER,
@@ -6514,7 +6527,7 @@ var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
     xlsx_row_default(SECTION_TITLES2.EXPORTER_BUSINESS, ""),
-    xlsx_row_default(CONTENT_STRINGS6[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(CONTENT_STRINGS7[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
     xlsx_row_default(FIELDS15[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
     xlsx_row_default(FIELDS15[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
     xlsx_row_default(FIELDS15[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
@@ -6526,9 +6539,9 @@ var mapExporterBusiness = (application2) => {
     xlsx_row_default(FIELDS15[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
     xlsx_row_default(FIELDS15[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
     xlsx_row_default(FIELDS15[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(CONTENT_STRINGS6[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
+    xlsx_row_default(CONTENT_STRINGS7[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
     xlsx_row_default(FIELDS15[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
-    xlsx_row_default(CONTENT_STRINGS6[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
+    xlsx_row_default(CONTENT_STRINGS7[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
     xlsx_row_default(FIELDS15[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
   ];
   return mapped;
@@ -6594,7 +6607,7 @@ var mapPreviousCoverWithBuyer = (relationship2) => {
 var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
-var CONTENT_STRINGS7 = {
+var CONTENT_STRINGS8 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
   ...YOUR_BUYER_FIELDS
 };
@@ -6612,9 +6625,9 @@ var mapBuyer = (application2) => {
   const mapped = [
     xlsx_row_default(SECTION_TITLES3.BUYER, ""),
     xlsx_row_default(FIELDS20[NAME3], buyer[NAME3]),
-    xlsx_row_default(String(CONTENT_STRINGS7[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
+    xlsx_row_default(String(CONTENT_STRINGS8[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
     xlsx_row_default(FIELDS20[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
-    xlsx_row_default(String(CONTENT_STRINGS7[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
+    xlsx_row_default(String(CONTENT_STRINGS8[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
     xlsx_row_default(String(FIELDS20[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
     map_connection_with_buyer_default(relationship2),
     xlsx_row_default(String(FIELDS20[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),

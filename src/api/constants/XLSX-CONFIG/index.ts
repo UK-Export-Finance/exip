@@ -34,10 +34,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName,
     },
-    policy,
+    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
   } = application;
 
-  const policyType = policy[POLICY_TYPE];
+  const policyType = application.policy[POLICY_TYPE];
 
   let indexes = INDEXES();
 
@@ -86,6 +86,13 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   if (exporterHasPreviousCreditInsuranceWithBuyer) {
     indexes.TITLES.DECLARATIONS += 1;
+  }
+
+  if (nominatedLossPayeeAppointed) {
+    indexes.TITLES.BUYER += 2;
+    indexes.TITLES.DECLARATIONS += 2;
+
+    indexes.BUYER_ADDRESS += 2;
   }
 
   return indexes;

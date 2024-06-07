@@ -3,6 +3,7 @@ import { XLSX } from '../../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../../content-strings/fields/insurance';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
+import mapLossPayeeLocation from './map-location';
 import { ApplicationNominatedLossPayee } from '../../../../../types';
 
 const { FIELDS } = XLSX;
@@ -28,7 +29,7 @@ const mapAppointedLossPayee = (lossPayee: ApplicationNominatedLossPayee) => {
     mapped = [
       ...mapped,
       xlsxRow(String(CONTENT_STRINGS[LOSS_PAYEE_NAME].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME]),
-      xlsxRow(String(CONTENT_STRINGS[LOCATION].LABEL), 'TODO'),
+      xlsxRow(String(CONTENT_STRINGS[LOCATION].LABEL), mapLossPayeeLocation(lossPayee)),
     ];
   }
 

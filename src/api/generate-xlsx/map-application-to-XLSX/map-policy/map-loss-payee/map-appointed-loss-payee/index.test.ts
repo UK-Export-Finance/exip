@@ -4,6 +4,7 @@ import { XLSX } from '../../../../../content-strings';
 import { POLICY_FIELDS } from '../../../../../content-strings/fields/insurance';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
+import mapLossPayeeLocation from './map-location';
 import mockApplication from '../../../../../test-mocks/mock-application';
 
 const { FIELDS } = XLSX;
@@ -43,7 +44,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-loss-payee/ma
       const expected = [
         xlsxRow(String(FIELDS[IS_APPOINTED]), mapYesNoField({ answer: mockLossPayee[IS_APPOINTED] })),
         xlsxRow(String(CONTENT_STRINGS[LOSS_PAYEE_NAME].SUMMARY?.TITLE), mockLossPayee[LOSS_PAYEE_NAME]),
-        xlsxRow(String(CONTENT_STRINGS[LOCATION].LABEL), 'TODO'),
+        xlsxRow(String(CONTENT_STRINGS[LOCATION].LABEL), mapLossPayeeLocation(mockLossPayee)),
       ];
 
       expect(result).toEqual(expected);

@@ -31,7 +31,6 @@ const {
   NAME_ON_POLICY: { NAME, POSITION },
   NEED_PRE_CREDIT_PERIOD,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
-  USING_BROKER,
 } = FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
@@ -59,7 +58,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
     it('should return an array of mapped fields via mapSingleContractPolicy', () => {
       const result = mapPolicy(populatedApplication);
 
-      const { broker, nominatedLossPayee, policy, policyContact } = populatedApplication;
+      const { nominatedLossPayee, policy, policyContact } = populatedApplication;
 
       const expected = [
         ...mapIntro(policy),
@@ -70,7 +69,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
-        xlsxRow(String(FIELDS[USING_BROKER]), mapYesNoField({ answer: broker[USING_BROKER] })),
 
         ...mapBroker(application),
         ...mapLossPayee(nominatedLossPayee),
@@ -84,7 +82,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
     it('should return an array of mapped fields via mapMultipleContractPolicy', () => {
       const result = mapPolicy(populatedApplicationMultiplePolicy);
 
-      const { broker, nominatedLossPayee, policy, policyContact } = populatedApplicationMultiplePolicy;
+      const { nominatedLossPayee, policy, policyContact } = populatedApplicationMultiplePolicy;
 
       const expected = [
         ...mapIntro(policy),
@@ -95,7 +93,6 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
-        xlsxRow(String(FIELDS[USING_BROKER]), mapYesNoField({ answer: broker[USING_BROKER] })),
 
         ...mapBroker(application),
         ...mapLossPayee(nominatedLossPayee),
