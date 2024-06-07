@@ -799,9 +799,10 @@ export const lists = {
     fields: {
       application: relationship({ ref: 'Application' }),
       eligibility: nullableCheckbox(),
-      policy: nullableCheckbox(),
       business: nullableCheckbox(),
       buyer: nullableCheckbox(),
+      exportContract: nullableCheckbox(),
+      policy: nullableCheckbox(),
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

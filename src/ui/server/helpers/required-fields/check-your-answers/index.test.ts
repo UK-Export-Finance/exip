@@ -1,8 +1,10 @@
 import requiredFields from '.';
 import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
-import requiredEligibilityFields from '../eligibility';
-import requiredPolicyFields from '../policy';
 import requiredBusinessFields from '../business';
+import requiredSectionReviewFields from '../section-review';
+import requiredEligibilityFields from '../eligibility';
+import requiredExportContractFields from '../export-contract';
+import requiredPolicyFields from '../policy';
 import requiredYourBuyerFields from '../your-buyer';
 import flattenApplicationData from '../../flatten-application-data';
 import { mockApplication } from '../../../test-mocks';
@@ -18,9 +20,11 @@ describe('server/helpers/required-fields/check-your-answers', () => {
     const result = requiredFields(flatApplicationData);
 
     const expected = [
-      ...requiredEligibilityFields(),
-      ...requiredPolicyFields(flatApplicationData[POLICY_TYPE]),
       ...requiredBusinessFields(),
+      ...requiredEligibilityFields(),
+      ...requiredExportContractFields(flatApplicationData),
+      ...requiredPolicyFields(flatApplicationData[POLICY_TYPE]),
+      ...requiredSectionReviewFields,
       ...requiredYourBuyerFields({}),
     ];
 
