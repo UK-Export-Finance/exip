@@ -1,20 +1,19 @@
-context('Insurance - submit an application, no broker, no `have traded with buyer before` and no `have code of conduct` declaration', () => {
+import { APPLICATION } from '../../../../../../../constants';
+
+context('Insurance - submit an application - Multiple policy type, without `exporting with code of conduct` declaration', () => {
   let referenceNumber;
 
   before(() => {
-    cy.createAccount({});
-  });
-
-  beforeEach(() => {
-    cy.saveSession();
-
     cy.completeSignInAndSubmitAnApplication({
-      exporterHasTradedWithBuyer: false,
-      hasAntiBriberyCodeOfConduct: false,
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
       exportingWithCodeOfConduct: false,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });
+  });
+
+  beforeEach(() => {
+    cy.saveSession();
   });
 
   after(() => {
