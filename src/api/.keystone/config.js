@@ -2052,9 +2052,10 @@ var lists = {
     fields: {
       application: (0, import_fields.relationship)({ ref: "Application" }),
       eligibility: nullable_checkbox_default(),
-      policy: nullable_checkbox_default(),
       business: nullable_checkbox_default(),
-      buyer: nullable_checkbox_default()
+      buyer: nullable_checkbox_default(),
+      exportContract: nullable_checkbox_default(),
+      policy: nullable_checkbox_default()
     },
     hooks: {
       afterOperation: async ({ item, context }) => {

@@ -1,7 +1,9 @@
 import POLICY_FIELD_IDS from '../../../constants/field-ids/insurance/policy';
-import requiredEligibilityFields from '../eligibility';
-import requiredPolicyFields from '../policy';
 import requiredBusinessFields from '../business';
+import requiredSectionReviewFields from '../section-review';
+import requiredEligibilityFields from '../eligibility';
+import requiredExportContractFields from '../export-contract';
+import requiredPolicyFields from '../policy';
 import requiredYourBuyerFields from '../your-buyer';
 import { ApplicationFlat } from '../../../../types';
 
@@ -14,9 +16,11 @@ const {
  * @param {Array} Required field IDs
  */
 const requiredFields = (application: ApplicationFlat): Array<string> => [
-  ...requiredEligibilityFields(),
-  ...requiredPolicyFields(application[POLICY_TYPE]),
   ...requiredBusinessFields(),
+  ...requiredEligibilityFields(),
+  ...requiredExportContractFields(application),
+  ...requiredPolicyFields(application[POLICY_TYPE]),
+  ...requiredSectionReviewFields,
   ...requiredYourBuyerFields({}),
 ];
 
