@@ -30,8 +30,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-declarations', () => {
       xlsxRow(SECTION_TITLES.DECLARATIONS, ''),
       xlsxRow(CONTENT_STRINGS[AGREE_CONFIDENTIALITY].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_CONFIDENTIALITY])),
       xlsxRow(CONTENT_STRINGS[AGREE_ANTI_BRIBERY].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_ANTI_BRIBERY])),
-      xlsxRow(String(FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]), mapYesNoField(declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT])),
-      xlsxRow(String(FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT]), mapYesNoField(declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT])),
+      xlsxRow(String(FIELDS[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT]), mapYesNoField({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT] })),
+      xlsxRow(String(FIELDS[WILL_EXPORT_WITH_CODE_OF_CONDUCT]), mapYesNoField({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT] })),
       xlsxRow(String(FIELDS[AGREE_HOW_YOUR_DATA_WILL_BE_USED]), mapAgreedField(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED])),
       xlsxRow(CONTENT_STRINGS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS].SUMMARY.TITLE, mapAgreedField(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS])),
     ];
