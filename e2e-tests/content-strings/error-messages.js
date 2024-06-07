@@ -1,4 +1,11 @@
-import { APPLICATION, ELIGIBILITY, FIELD_IDS, MINIMUM_CHARACTERS, MAXIMUM_CHARACTERS, TOTAL_CONTRACT_VALUE } from '../constants';
+import {
+  APPLICATION,
+  ELIGIBILITY,
+  FIELD_IDS,
+  MINIMUM_CHARACTERS,
+  MAXIMUM_CHARACTERS,
+  TOTAL_CONTRACT_VALUE,
+} from '../constants';
 import formatCurrency from '../helpers/format-currency';
 
 const {

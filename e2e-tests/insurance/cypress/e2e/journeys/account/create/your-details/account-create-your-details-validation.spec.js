@@ -11,7 +11,12 @@ const {
 } = ROUTES;
 
 const {
-  ACCOUNT: { FIRST_NAME, LAST_NAME, EMAIL, PASSWORD },
+  ACCOUNT: {
+    FIRST_NAME,
+    LAST_NAME,
+    EMAIL,
+    PASSWORD,
+  },
 } = INSURANCE_FIELD_IDS;
 
 const {
