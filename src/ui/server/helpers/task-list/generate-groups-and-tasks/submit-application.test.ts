@@ -16,7 +16,7 @@ const {
 } = INSURANCE_ROUTES;
 
 const {
-  CHECK_YOUR_ANSWERS: { POLICY, EXPORTER_BUSINESS, BUYER },
+  CHECK_YOUR_ANSWERS: { BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY },
 } = FIELD_IDS.INSURANCE;
 
 describe('server/helpers/task-list/submit-application', () => {
@@ -44,7 +44,7 @@ describe('server/helpers/task-list/submit-application', () => {
       href: `${INSURANCE_ROOT}/${referenceNumber}${YOUR_BUSINESS}`,
       title: SUBMIT_APPLICATION.TASKS.CHECK_ANSWERS,
       id: TASK_IDS.SUBMIT_APPLICATION.CHECK_ANSWERS,
-      fields: [POLICY, EXPORTER_BUSINESS, BUYER],
+      fields: [BUYER, EXPORT_CONTRACT, EXPORTER_BUSINESS, POLICY],
       dependencies: expectedDependencies,
     };
 

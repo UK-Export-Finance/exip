@@ -215,9 +215,10 @@ const applicationByReferenceNumberQuery = gql`
         sectionReview {
           id
           eligibility
-          policy
+          exportContract
           business
           buyer
+          policy
         }
         declaration {
           id

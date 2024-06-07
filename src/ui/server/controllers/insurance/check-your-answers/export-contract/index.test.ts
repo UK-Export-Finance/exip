@@ -9,8 +9,10 @@ import getUserNameFromSession from '../../../../helpers/get-user-name-from-sessi
 import { exportContractSummaryLists } from '../../../../helpers/summary-lists/export-contract';
 import requiredFields from '../../../../helpers/required-fields/export-contract';
 import sectionStatus from '../../../../helpers/section-status';
+import constructPayload from '../../../../helpers/construct-payload';
+import save from '../save-data';
 import { Request, Response } from '../../../../../types';
-import { mockReq, mockRes, referenceNumber, mockApplication, mockCountries } from '../../../../test-mocks';
+import { mockReq, mockRes, referenceNumber, mockApplication, mockCountries, mockSpyPromise } from '../../../../test-mocks';
 
 const CHECK_YOUR_ANSWERS_TEMPLATE = TEMPLATES.INSURANCE.CHECK_YOUR_ANSWERS;
 
@@ -33,6 +35,12 @@ const {
 } = exportContract;
 
 describe('controllers/insurance/check-your-answers/export-contract', () => {
+  jest.mock('../save-data');
+
+  let mockSaveSectionReview = mockSpyPromise();
+
+  save.sectionReview = mockSaveSectionReview;
+
   let req: Request;
   let res: Response;
 
@@ -160,6 +168,15 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
       req.body = mockBody;
     });
 
+    it('should call save.sectionReview with application and data from constructPayload function', async () => {
+      await post(req, res);
+
+      const payload = constructPayload(req.body, [FIELD_ID]);
+
+      expect(save.sectionReview).toHaveBeenCalledTimes(1);
+      expect(save.sectionReview).toHaveBeenCalledWith(mockApplication, payload);
+    });
+
     it(`should redirect to ${ALL_SECTIONS}`, async () => {
       await post(req, res);
 
@@ -177,6 +194,38 @@ describe('controllers/insurance/check-your-answers/export-contract', () => {
         await post(req, res);
 
         expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+      });
+    });
+
+    describe('api error handling', () => {
+      describe('when the save data API call does not return anything', () => {
+        beforeEach(() => {
+          mockSaveSectionReview = jest.fn(() => Promise.resolve(false));
+          save.sectionReview = mockSaveSectionReview;
+
+          req.body = mockBody;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
+      });
+
+      describe('when the save data API call fails', () => {
+        beforeEach(() => {
+          mockSaveSectionReview = jest.fn(() => Promise.reject(new Error('mock')));
+          save.sectionReview = mockSaveSectionReview;
+
+          req.body = mockBody;
+        });
+
+        it(`should redirect to ${PROBLEM_WITH_SERVICE}`, async () => {
+          await post(req, res);
+
+          expect(res.redirect).toHaveBeenCalledWith(PROBLEM_WITH_SERVICE);
+        });
       });
     });
   });

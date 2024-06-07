@@ -74,8 +74,7 @@ context(
 
         cy.clickSubmitButton();
 
-        const expectedUrl = `${baseUrl}${INSURANCE_ROOT}/${referenceNumber}${ALL_SECTIONS}`;
-        cy.assertUrl(expectedUrl);
+        cy.assertAllSectionsUrl(referenceNumber);
       });
 
       describe('when going back to the all sections page', () => {

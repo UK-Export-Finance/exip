@@ -1,7 +1,12 @@
 import { INSURANCE_FIELD_IDS } from '../../constants/field-ids/insurance';
 import { field as fieldSelector, radios, autoCompleteField } from '../../pages/shared';
 import {
-  EUR, GBP, JPY, USD, NON_STANDARD_CURRENCY_CODE, NON_STANDARD_CURRENCY_NAME,
+  EUR,
+  GBP,
+  JPY,
+  USD,
+  NON_STANDARD_CURRENCY_CODE,
+  NON_STANDARD_CURRENCY_NAME,
 } from '../../fixtures/currencies';
 import { checkAutocompleteInput } from '../autocomplete-assertions';
 import { DZA } from '../../fixtures/countries';
