@@ -4897,11 +4897,8 @@ var getPopulatedApplication = async (context, application2) => {
   }
   const populatedPolicy = {
     ...policy,
-    // this is required otherwise, the dates are returned with a "datetime" type (from the database)
-    // they need to have a Date type, as per the GraphQL schema.
     requestedStartDate: new Date(policy.requestedStartDate),
     contractCompletionDate: new Date(policy.contractCompletionDate)
-    // jointlyInsuredParty,
   };
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }

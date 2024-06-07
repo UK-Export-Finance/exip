@@ -79,10 +79,6 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('policyContact', application.id));
   }
 
-  // const jointlyInsuredParty = await context.db.JointlyInsuredParty.findOne({
-  //   where: { id: policy.jointlyInsuredParty.id },
-  // });
-
   const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
     where: { id: nominatedLossPayeeId },
     query:
@@ -94,14 +90,16 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('nominated loss payee', application.id));
   }
 
+  /**
+   * Generate a populated policy.
+   * We need to transform date fields into a JavaScript date.
+   * Otherwise, the dates are returned as a "datetime" type (from the database)
+   * and the GraphQL call will fail.
+   */
   const populatedPolicy = {
     ...policy,
-
-    // this is required otherwise, the dates are returned with a "datetime" type (from the database)
-    // they need to have a Date type, as per the GraphQL schema.
     requestedStartDate: new Date(policy.requestedStartDate),
     contractCompletionDate: new Date(policy.contractCompletionDate),
-    // jointlyInsuredParty,
   } as ApplicationPolicy;
 
   const exportContract = await context.db.ExportContract.findOne({

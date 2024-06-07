@@ -96,6 +96,15 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.nominatedLossPayee.name).toEqual(mockNominatedLossPayee.name);
   });
 
+  it('should return an application with policy dates as date objects', async () => {
+    const result = await getPopulatedApplication(context, applicationIds);
+
+    expect(result.policy.id).toEqual(application.policy.id);
+
+    expect(typeof result.policy.requestedStartDate).toEqual('object');
+    expect(typeof result.policy.contractCompletionDate).toEqual('object');
+  });
+
   it('should return an application with populated financialUk', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 

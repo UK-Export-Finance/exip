@@ -238,8 +238,8 @@ interface ApplicationNominatedLossPayee {
 interface ApplicationPolicy {
   id: string;
   policyType?: string;
-  // requestedStartDate?: string;
-  // contractCompletionDate?: string;
+  requestedStartDate?: string;
+  contractCompletionDate?: string;
   totalValueOfContract?: number;
   creditPeriodWithBuyer?: string;
   policyCurrencyCode?: string;
