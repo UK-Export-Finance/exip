@@ -2,7 +2,7 @@ import { XLSX_ROW_INDEXES } from '.';
 import { INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
-import { mockApplication } from '../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany } from '../../test-mocks';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
@@ -10,9 +10,9 @@ const {
 } = POLICY_FIELD_IDS;
 
 const application = {
-  ...mockApplication,
+  ...mockApplicationMinimalBrokerBuyerAndCompany,
   policy: {
-    ...mockApplication.policy,
+    ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
   },
 };
