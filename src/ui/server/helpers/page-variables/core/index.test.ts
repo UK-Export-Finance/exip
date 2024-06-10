@@ -56,7 +56,6 @@ describe('server/helpers/page-variables/core', () => {
         },
         BACK_LINK: mock.BACK_LINK,
         COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
-        START_ROUTE: insuranceStart,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
         ATTRIBUTES,
         DATA_CY: {
@@ -64,6 +63,7 @@ describe('server/helpers/page-variables/core', () => {
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
+        START_ROUTE: insuranceStart,
       };
 
       expect(result).toEqual(expected);
@@ -92,7 +92,6 @@ describe('server/helpers/page-variables/core', () => {
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.APPLICATION },
         },
         BACK_LINK: mock.BACK_LINK,
-        START_ROUTE: insuranceStart,
         COOKIES_ROUTE: ROUTES.INSURANCE.COOKIES,
         FEEDBACK_ROUTE: ROUTES.INSURANCE.FEEDBACK,
         ATTRIBUTES,
@@ -101,6 +100,7 @@ describe('server/helpers/page-variables/core', () => {
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
+        START_ROUTE: insuranceStart,
       };
 
       expect(result).toEqual(expected);
@@ -129,7 +129,6 @@ describe('server/helpers/page-variables/core', () => {
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.QUOTE },
         },
         BACK_LINK: mock.BACK_LINK,
-        START_ROUTE: quoteStart,
         COOKIES_ROUTE: ROUTES.COOKIES,
         FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         ATTRIBUTES,
@@ -138,6 +137,7 @@ describe('server/helpers/page-variables/core', () => {
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
+        START_ROUTE: quoteStart,
       };
 
       expect(result).toEqual(expected);
@@ -167,7 +167,6 @@ describe('server/helpers/page-variables/core', () => {
           PRODUCT: { DESCRIPTION: PRODUCT_CONTENT_STRING.DESCRIPTION.GENERIC },
         },
         BACK_LINK: mock.BACK_LINK,
-        START_ROUTE: quoteStart,
         COOKIES_ROUTE: ROUTES.COOKIES,
         FEEDBACK_ROUTE: LINKS.EXTERNAL.FEEDBACK,
         ATTRIBUTES,
@@ -176,6 +175,7 @@ describe('server/helpers/page-variables/core', () => {
           BACK_LINK: 'back-link',
           INTRO: 'intro',
         },
+        START_ROUTE: quoteStart,
       };
 
       expect(result).toEqual(expected);

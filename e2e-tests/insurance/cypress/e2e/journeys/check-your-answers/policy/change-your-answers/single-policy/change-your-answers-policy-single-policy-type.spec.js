@@ -9,13 +9,8 @@ import { createTimestampFromNumbers, formatDate } from '../../../../../../../../
 
 const {
   ROOT: INSURANCE_ROOT,
-  POLICY: {
-    SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE,
-    SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE,
-  },
-  CHECK_YOUR_ANSWERS: {
-    TYPE_OF_POLICY,
-  },
+  POLICY: { SINGLE_CONTRACT_POLICY_CHECK_AND_CHANGE, SINGLE_CONTRACT_POLICY_TOTAL_CONTRACT_VALUE_CHECK_AND_CHANGE },
+  CHECK_YOUR_ANSWERS: { TYPE_OF_POLICY },
 } = INSURANCE_ROUTES;
 
 const {
@@ -74,7 +69,6 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
   describe('single policy type answers', () => {
     describe(REQUESTED_START_DATE, () => {
       const fieldId = REQUESTED_START_DATE;
-
       const newStartDate = {
         ...application.POLICY[fieldId],
         year: application.POLICY[fieldId].year + 1,
@@ -117,10 +111,7 @@ context('Insurance - Change your answers - Policy - Single contract policy - Sum
 
           cy.changeAnswerField(fieldVariables.startDate, field(fieldId).yearInput(), false);
 
-          cy.changeAnswerField(
-            fieldVariables.endDate,
-            field(CONTRACT_COMPLETION_DATE).yearInput(),
-          );
+          cy.changeAnswerField(fieldVariables.endDate, field(CONTRACT_COMPLETION_DATE).yearInput());
         });
 
         it(`should redirect to ${TYPE_OF_POLICY}`, () => {

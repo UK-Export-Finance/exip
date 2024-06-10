@@ -8,34 +8,37 @@ const {
 
 const baseUrl = Cypress.config('baseUrl');
 
-context('Insurance - Dashboard - Get a quote button - As an Exporter, I want to visit the `Get a quote` tool from my dashboard, So that I can easily access the Get a Quote from the digital service.', () => {
-  let referenceNumber;
+context(
+  'Insurance - Dashboard - Get a quote button - As an Exporter, I want to visit the `Get a quote` tool from my dashboard, So that I can easily access the Get a Quote from the digital service.',
+  () => {
+    let referenceNumber;
 
-  before(() => {
-    cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
-      referenceNumber = refNumber;
+    before(() => {
+      cy.completeSignInAndGoToApplication({}).then(({ referenceNumber: refNumber }) => {
+        referenceNumber = refNumber;
 
-      header.navigation.applications().click();
+        header.navigation.applications().click();
 
-      dashboardPage.getAQuoteButton().click();
+        dashboardPage.getAQuoteButton().click();
 
-      cy.submitQuoteAnswersHappyPathSinglePolicy();
+        cy.submitQuoteAnswersHappyPathSinglePolicy({});
 
-      cy.clickSubmitButton();
+        cy.clickSubmitButton();
+      });
     });
-  });
 
-  beforeEach(() => {
-    cy.saveSession();
-  });
+    beforeEach(() => {
+      cy.saveSession();
+    });
 
-  after(() => {
-    cy.deleteApplication(referenceNumber);
-  });
+    after(() => {
+      cy.deleteApplication(referenceNumber);
+    });
 
-  it('should allow the user to complete the `get a quote` journey and get a quote', () => {
-    const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
+    it('should allow the user to complete the `get a quote` journey and get a quote', () => {
+      const expectedUrl = `${baseUrl}${YOUR_QUOTE}`;
 
-    cy.assertUrl(expectedUrl);
-  });
-});
+      cy.assertUrl(expectedUrl);
+    });
+  },
+);

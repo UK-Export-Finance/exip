@@ -4,11 +4,7 @@ import { FIELD_IDS, ROUTES } from '../../../../../../constants';
 import { BRA } from '../../../../../../fixtures/countries';
 
 const {
-  ELIGIBILITY: {
-    BUYER_COUNTRY,
-    VALID_EXPORTER_LOCATION,
-    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
-  },
+  ELIGIBILITY: { BUYER_COUNTRY, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
 } = FIELD_IDS;
 
 const submissionData = {
@@ -17,12 +13,7 @@ const submissionData = {
 };
 
 const {
-  QUOTE: {
-    CHECK_YOUR_ANSWERS,
-    BUYER_COUNTRY_CHANGE,
-    EXPORTER_LOCATION_CHANGE,
-    UK_GOODS_OR_SERVICES_CHANGE,
-  },
+  QUOTE: { CHECK_YOUR_ANSWERS, BUYER_COUNTRY_CHANGE, EXPORTER_LOCATION_CHANGE, UK_GOODS_OR_SERVICES_CHANGE },
 } = ROUTES;
 
 const baseUrl = Cypress.config('baseUrl');
@@ -37,7 +28,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
 
   before(() => {
     cy.login();
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.assertUrl(url);
   });
 
@@ -61,11 +52,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     });
 
     it('renders a back link with correct url', () => {
-      cy.checkLink(
-        backLink(),
-        checkYourAnswersUrl,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), checkYourAnswersUrl, LINKS.BACK);
     });
 
     it('has originally submitted answer selected', () => {
@@ -119,11 +106,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it('has originally submitted answer selected', () => {
@@ -156,11 +139,7 @@ context('Change your answers (export fields) - as an exporter, I want to change 
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${CHECK_YOUR_ANSWERS}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it('has originally submitted answer', () => {

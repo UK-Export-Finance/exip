@@ -1,33 +1,17 @@
-import {
-  backLink, autoCompleteField, field, summaryList,
-} from '../../../../../../pages/shared';
-import {
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+import { backLink, autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
+import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
 const {
-  ELIGIBILITY: {
-    CONTRACT_VALUE,
-    CREDIT_PERIOD,
-    MAX_AMOUNT_OWED,
-    PERCENTAGE_OF_COVER,
-    BUYER_COUNTRY,
-  },
+  ELIGIBILITY: { CONTRACT_VALUE, CREDIT_PERIOD, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER, BUYER_COUNTRY },
   POLICY_TYPE,
   QUOTE,
   POLICY_LENGTH,
 } = FIELD_IDS;
 
 const {
-  QUOTE: {
-    BUYER_COUNTRY_CHANGE,
-    TELL_US_ABOUT_YOUR_POLICY_CHANGE,
-    YOUR_QUOTE,
-    CHECK_YOUR_ANSWERS,
-  },
+  QUOTE: { BUYER_COUNTRY_CHANGE, TELL_US_ABOUT_YOUR_POLICY_CHANGE, YOUR_QUOTE, CHECK_YOUR_ANSWERS },
 } = ROUTES;
 
 context('Your quote page - change answers (single policy type to multiple policy type) - as an exporter, I want to get an Credit insurance quote', () => {
@@ -39,7 +23,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.clickSubmitButton();
 
     cy.assertUrl(url);
@@ -65,11 +49,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -113,11 +93,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -199,11 +175,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
