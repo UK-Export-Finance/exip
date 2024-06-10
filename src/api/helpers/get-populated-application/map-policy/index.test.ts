@@ -48,8 +48,8 @@ describe('api/helpers/get-populated-application', () => {
         context,
         policyId: application.policy.id,
         data: {
-          requestedStartDate: '',
-          contractCompletionDate: '',
+          requestedStartDate: null,
+          contractCompletionDate: null,
         },
       });
     });
@@ -59,8 +59,8 @@ describe('api/helpers/get-populated-application', () => {
 
       const expected = {
         ...policy,
-        requestedStartDate: '',
-        contractCompletionDate: '',
+        requestedStartDate: null,
+        contractCompletionDate: null,
       };
 
       expect(result).toEqual(expected);

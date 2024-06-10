@@ -4846,9 +4846,8 @@ var mapPolicy = (policy) => {
   const { requestedStartDate, contractCompletionDate } = policy;
   const mappedPolicy = {
     ...policy,
-    ...policy.jointlyInsuredParty,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : "",
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : ""
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null
   };
   return mappedPolicy;
 };

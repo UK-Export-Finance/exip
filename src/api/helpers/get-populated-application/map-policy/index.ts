@@ -14,9 +14,8 @@ const mapPolicy = (policy: ApplicationPolicy) => {
 
   const mappedPolicy = {
     ...policy,
-    ...policy.jointlyInsuredParty,
-    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : '',
-    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : '',
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null,
   } as ApplicationPolicy;
 
   return mappedPolicy;
