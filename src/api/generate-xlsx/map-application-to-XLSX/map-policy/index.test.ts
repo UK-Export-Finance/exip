@@ -1,15 +1,20 @@
-import mapPolicy, { mapPolicyIntro, mapSinglePolicyFields, mapMultiplePolicyFields, mapPolicyOutro } from '.';
-import FIELD_IDS from '../../../constants/field-ids/insurance';
+import mapPolicy from '.';
+import FIELD_IDS from '../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../content-strings';
 import { POLICY_FIELDS, EXPORT_CONTRACT_FIELDS } from '../../../content-strings/fields/insurance';
-import { GBP_CURRENCY_CODE, FIELD_VALUES } from '../../../constants';
+import { FIELD_VALUES } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
-import formatDate from '../../../helpers/format-date';
-import formatCurrency from '../helpers/format-currency';
-import mapMonthString from '../helpers/map-month-string';
+import mapIntro from './map-intro';
+import mapSingleContractPolicy from './map-single-contract-policy';
+import mapMultipleContractPolicy from './map-multiple-contract-policy';
+import mapBroker from './map-broker';
+import mapLossPayee from './map-loss-payee';
+import mapYesNoField from '../helpers/map-yes-no-field';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
 import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../test-helpers';
 import { Application, Context } from '../../../types';
+
+const { FIELDS } = XLSX;
 
 const CONTENT_STRINGS = {
   ...POLICY_FIELDS,
@@ -18,26 +23,14 @@ const CONTENT_STRINGS = {
   ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
   ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
   ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
+  ...POLICY_FIELDS.NAME_ON_POLICY,
   ...EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES,
 };
 
 const {
-  POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE },
-    CONTRACT_POLICY: {
-      REQUESTED_START_DATE,
-      SINGLE: { CONTRACT_COMPLETION_DATE },
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-      POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE },
-    },
-    EXPORT_VALUE: {
-      MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE },
-    },
-  },
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION, FINAL_DESTINATION },
-  },
+  NAME_ON_POLICY: { NAME, POSITION },
+  NEED_PRE_CREDIT_PERIOD,
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
 } = FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
@@ -61,89 +54,48 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
     populatedApplicationMultiplePolicy = await getPopulatedApplication(context, mapApplicationIds(multiplePolicyApplication));
   });
 
-  describe('mapPolicy', () => {
-    describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
-      it('should return an array of mapped fields with single specific fields', () => {
-        const result = mapPolicy(populatedApplication);
+  describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
+    it('should return an array of mapped fields via mapSingleContractPolicy', () => {
+      const result = mapPolicy(populatedApplication);
 
-        const expected = [...mapPolicyIntro(populatedApplication), ...mapSinglePolicyFields(populatedApplication), ...mapPolicyOutro(populatedApplication)];
-
-        expect(result).toEqual(expected);
-      });
-    });
-
-    describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTIPLE}`, () => {
-      it('should return an array of mapped fields with multiple specific fields', () => {
-        const result = mapPolicy(populatedApplicationMultiplePolicy);
-
-        const expected = [
-          ...mapPolicyIntro(populatedApplicationMultiplePolicy),
-          ...mapMultiplePolicyFields(populatedApplicationMultiplePolicy),
-          ...mapPolicyOutro(populatedApplicationMultiplePolicy),
-        ];
-
-        expect(result).toEqual(expected);
-      });
-    });
-  });
-
-  describe('mapPolicyIntro', () => {
-    it('should return an array of mapped fields', () => {
-      const result = mapPolicyIntro(populatedApplication);
-
-      const { policy } = populatedApplication;
+      const { nominatedLossPayee, policy, policyContact } = populatedApplication;
 
       const expected = [
-        xlsxRow(XLSX.SECTION_TITLES.POLICY, ''),
-        xlsxRow(String(CONTENT_STRINGS[POLICY_TYPE].SUMMARY?.TITLE), policy[POLICY_TYPE]),
-        xlsxRow(String(CONTENT_STRINGS[REQUESTED_START_DATE].SUMMARY?.TITLE), formatDate(policy[REQUESTED_START_DATE], 'dd-MMM-yy')),
+        ...mapIntro(policy),
+        ...mapSingleContractPolicy(policy),
+
+        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[NAME].SUMMARY?.TITLE), policyContact[NAME]),
+        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[POSITION].SUMMARY?.TITLE), policyContact[POSITION]),
+
+        xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
+        xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
+
+        ...mapBroker(application),
+        ...mapLossPayee(nominatedLossPayee),
       ];
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe('mapSinglePolicyFields', () => {
-    it('should return an array of mapped fields', () => {
-      const result = mapSinglePolicyFields(populatedApplication);
+  describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.MULTIPLE}`, () => {
+    it('should return an array of mapped fields via mapMultipleContractPolicy', () => {
+      const result = mapPolicy(populatedApplicationMultiplePolicy);
 
-      const { policy } = populatedApplication;
-
-      const expected = [
-        xlsxRow(String(CONTENT_STRINGS[CONTRACT_COMPLETION_DATE].SUMMARY?.TITLE), formatDate(policy[CONTRACT_COMPLETION_DATE], 'dd-MMM-yy')),
-        xlsxRow(String(CONTENT_STRINGS[TOTAL_CONTRACT_VALUE].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_CONTRACT_VALUE], GBP_CURRENCY_CODE)),
-      ];
-
-      expect(result).toEqual(expected);
-    });
-  });
-
-  describe('mapMultiplePolicyFields', () => {
-    it('should return an array of mapped fields', () => {
-      const result = mapMultiplePolicyFields(populatedApplicationMultiplePolicy);
-
-      const { policy } = populatedApplicationMultiplePolicy;
+      const { nominatedLossPayee, policy, policyContact } = populatedApplicationMultiplePolicy;
 
       const expected = [
-        xlsxRow(String(CONTENT_STRINGS[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), mapMonthString(policy[TOTAL_MONTHS_OF_COVER])),
-        xlsxRow(String(CONTENT_STRINGS[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), formatCurrency(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-        xlsxRow(String(CONTENT_STRINGS[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), formatCurrency(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE)),
-      ];
+        ...mapIntro(policy),
+        ...mapMultipleContractPolicy(policy),
 
-      expect(result).toEqual(expected);
-    });
-  });
+        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[NAME].SUMMARY?.TITLE), policyContact[NAME]),
+        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[POSITION].SUMMARY?.TITLE), policyContact[POSITION]),
 
-  describe('mapPolicyOutro', () => {
-    it('should return an array of mapped fields', async () => {
-      const result = mapPolicyOutro(populatedApplication);
+        xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
+        xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
 
-      const { exportContract, policy } = populatedApplication;
-
-      const expected = [
-        xlsxRow(String(CONTENT_STRINGS[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-        xlsxRow(String(CONTENT_STRINGS[DESCRIPTION].SUMMARY?.TITLE), exportContract[DESCRIPTION]),
-        xlsxRow(String(CONTENT_STRINGS[FINAL_DESTINATION].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION].name),
+        ...mapBroker(application),
+        ...mapLossPayee(nominatedLossPayee),
       ];
 
       expect(result).toEqual(expected);

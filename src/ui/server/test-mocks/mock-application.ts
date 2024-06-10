@@ -19,7 +19,7 @@ export const referenceNumber = 10001;
 
 const mockGenericPolicy = {
   id: 'clav8by1i0007kgoqies0dbfc',
-  requestedStartDate: add(new Date(), { months: 1 }),
+  requestedStartDate: String(add(new Date(), { months: 1 })),
   policyCurrencyCode: GBP,
   needPreCreditPeriodCover: false,
   creditPeriodWithBuyer: 'Mock credit period description',
@@ -29,7 +29,7 @@ const mockGenericPolicy = {
 export const mockSinglePolicy = {
   ...mockGenericPolicy,
   policyType: APPLICATION.POLICY_TYPE.SINGLE,
-  contractCompletionDate: add(new Date(), { months: 3 }),
+  contractCompletionDate: String(add(new Date(), { months: 3 })),
   totalValueOfContract: 1500,
 };
 
