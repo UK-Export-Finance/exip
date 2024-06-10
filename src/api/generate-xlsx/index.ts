@@ -1,8 +1,5 @@
 import ExcelJS from 'exceljs';
-// import * as Encryptor from 'xlsx-populate/lib/Encryptor';
-
 import * as Encryptor from 'xlsx-populate/lib/Encryptor';
-
 import XlsxPopulate from 'xlsx-populate';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
