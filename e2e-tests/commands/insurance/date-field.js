@@ -17,12 +17,7 @@ import partials from '../../partials';
  * @param {String} fieldId: Field ID
  * @param {Object} errorMessages: Error messages
  */
-const checkValidation = ({
-  errorSummaryLength,
-  errorIndex = 0,
-  field,
-  errorMessages,
-}) => {
+const checkValidation = ({ errorSummaryLength, errorIndex = 0, field, errorMessages }) => {
   const assertFieldErrorsParams = {
     field,
     errorIndex,
@@ -37,8 +32,14 @@ const checkValidation = ({
        * Check validation errors.
        */
       notProvided: () => {
-        cy.keyboardInput(field.monthInput(), '1');
-        cy.keyboardInput(field.yearInput(), '2023');
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        field.dayInput().clear();
+        cy.keyboardInput(field.monthInput(), month);
+        cy.keyboardInput(field.yearInput(), year);
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_DAY;
@@ -73,7 +74,7 @@ const checkValidation = ({
         cy.keyboardInput(field.dayInput().clear(), 'Test');
         cy.clickSubmitButton();
 
-        const errorMessage = errorMessages.INCORRECT_FORMAT;
+        const errorMessage = errorMessages.INVALID_DAY;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -151,7 +152,7 @@ const checkValidation = ({
         cy.keyboardInput(field.monthInput(), 'One');
         cy.clickSubmitButton();
 
-        const errorMessage = errorMessages.INCORRECT_FORMAT;
+        const errorMessage = errorMessages.MISSING_DAY_AND_MONTH;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -287,9 +288,13 @@ const checkValidation = ({
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-        expect(text.trim()).not.equal(errorMessages.BEFORE_EARLIEST);
-      });
+      partials
+        .errorSummaryListItems()
+        .eq(0)
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).not.equal(errorMessages.BEFORE_EARLIEST);
+        });
 
       field.errorMessage().should('not.exist');
     },
@@ -297,9 +302,7 @@ const checkValidation = ({
      * Validations for when there are 2 date fields.
      * E.g, start and end date fields.
      */
-    withTwoDateFields: ({
-      fieldA, fieldB, expectedErrorSummaryLength, fieldBErrorIndex,
-    }) => ({
+    withTwoDateFields: ({ fieldA, fieldB, expectedErrorSummaryLength, fieldBErrorIndex }) => ({
       /**
        * Enter the same date into both date fields.
        * Check validation errors.

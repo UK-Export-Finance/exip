@@ -4841,6 +4841,19 @@ var delete_application_by_reference_number_default = deleteApplicationByReferenc
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns6 = require("date-fns");
 
+// helpers/get-populated-application/map-policy/index.ts
+var mapPolicy = (policy) => {
+  const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy = {
+    ...policy,
+    ...policy.jointlyInsuredParty,
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : "",
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : ""
+  };
+  return mappedPolicy;
+};
+var map_policy_default = mapPolicy;
+
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
@@ -4902,11 +4915,7 @@ var getPopulatedApplication = async (context, application2) => {
     console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
     throw new Error(generateErrorMessage("nominated loss payee", application2.id));
   }
-  const populatedPolicy = {
-    ...policy,
-    requestedStartDate: new Date(policy.requestedStartDate),
-    contractCompletionDate: new Date(policy.contractCompletionDate)
-  };
+  const populatedPolicy = map_policy_default(policy);
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }
   });
@@ -6421,7 +6430,7 @@ var {
   NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED3 }
 } = policy_default;
-var mapPolicy = (application2) => {
+var mapPolicy2 = (application2) => {
   const { nominatedLossPayee, policy, policyContact } = application2;
   const policyType = policy[POLICY_TYPE8];
   let mapped = map_intro_default(policy);
@@ -6442,7 +6451,7 @@ var mapPolicy = (application2) => {
   ];
   return mapped;
 };
-var map_policy_default = mapPolicy;
+var map_policy_default2 = mapPolicy2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-name/index.ts
 var {
@@ -6731,7 +6740,7 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_exporter_business_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_default(application2),
+      ...map_policy_default2(application2),
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,

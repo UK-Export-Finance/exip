@@ -95,7 +95,9 @@ export const createFullApplication = async (context: Context, policyType?: strin
   const { buyer } = await createABuyer(context, country.id, application.id);
 
   // create policy and associate with the application.
-  const { policy } = await createAPolicy(context, application.id);
+  const { policy: createdPolicy } = await createAPolicy(context, application.id);
+
+  let policy = createdPolicy;
 
   // create company and associate with the application.
   const company = await createACompany(context, application.id, mockCompany);
@@ -156,12 +158,13 @@ export const createFullApplication = async (context: Context, policyType?: strin
     policyData = mockSinglePolicy;
   }
 
-  (await context.query.Policy.updateOne({
+  policy = (await context.query.Policy.updateOne({
     where: {
       id: policy.id,
     },
     data: policyData,
-    query: 'id',
+    query:
+      'id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }',
   })) as ApplicationPolicy;
 
   /**

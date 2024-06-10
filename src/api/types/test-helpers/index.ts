@@ -1,5 +1,11 @@
 import Context from '@keystone-6/core/types';
-import { ApplicationCreateInput, BuyerCreateInput, PolicyCreateInput, LossPayeeFinancialInternationalVectorCreateInput, LossPayeeFinancialUkVectorCreateInput } from '.keystone/types'; // eslint-disable-line
+import {
+  ApplicationCreateInput,
+  BuyerCreateInput,
+  PolicyCreateInput,
+  LossPayeeFinancialInternationalVectorCreateInput,
+  LossPayeeFinancialUkVectorCreateInput,
+} from '.keystone/types'; // eslint-disable-line
 import { Account } from '../account';
 
 export interface TestHelperCreate {
@@ -39,6 +45,11 @@ export interface TestHelperBuyerCreate extends TestHelperCreate {
 
 export interface TestHelperPolicyCreate extends TestHelperCreate {
   data: PolicyCreateInput;
+}
+
+export interface TestHelperPolicyUpdate extends TestHelperCreate {
+  data: PolicyCreateInput;
+  policyId: string;
 }
 
 export interface TestHelperLossPayeeFinancialInternationalVectorCreate extends TestHelperCreate {

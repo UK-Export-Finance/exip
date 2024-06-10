@@ -2,6 +2,7 @@ import { Application as KeystoneApplication } from '.keystone/types'; // eslint-
 import getPopulatedApplication from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import getCountryByField from '../get-country-by-field';
+import mapPolicy from './map-policy';
 import mockCountries from '../../test-mocks/mock-countries';
 import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
@@ -52,7 +53,6 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.eligibility.totalContractValue.id).toEqual(application.eligibility.totalContractValueId);
     expect(result.exportContract.id).toEqual(application.exportContract.id);
     expect(result.owner.id).toEqual(application.owner.id);
-    expect(result.policy.id).toEqual(application.policy.id);
     expect(result.policyContact.id).toEqual(application.policyContact.id);
     expect(result.nominatedLossPayee.id).toEqual(application.nominatedLossPayee.id);
     expect(result.sectionReview.id).toEqual(application.sectionReview.id);
@@ -96,13 +96,15 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.nominatedLossPayee.name).toEqual(mockNominatedLossPayee.name);
   });
 
-  it('should return an application with policy dates as date objects', async () => {
+  it('should return an application with mapped policy data', async () => {
     const result = await getPopulatedApplication(context, applicationIds);
 
-    expect(result.policy.id).toEqual(application.policy.id);
+    const expected = mapPolicy({
+      ...application.policy,
+      id: applicationIds.policyId,
+    });
 
-    expect(typeof result.policy.requestedStartDate).toEqual('object');
-    expect(typeof result.policy.contractCompletionDate).toEqual('object');
+    expect(result.policy).toEqual(expected);
   });
 
   it('should return an application with populated financialUk', async () => {

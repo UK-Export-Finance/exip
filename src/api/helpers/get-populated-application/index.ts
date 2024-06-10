@@ -1,6 +1,7 @@
 import { Context, Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
+import mapPolicy from './map-policy';
 import { Application, ApplicationPolicy } from '../../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
@@ -90,17 +91,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('nominated loss payee', application.id));
   }
 
-  /**
-   * Generate a populated policy.
-   * We need to transform date fields into a JavaScript date.
-   * Otherwise, the dates are returned as a "datetime" type (from the database)
-   * and the GraphQL call will fail.
-   */
-  const populatedPolicy = {
-    ...policy,
-    requestedStartDate: new Date(policy.requestedStartDate),
-    contractCompletionDate: new Date(policy.contractCompletionDate),
-  } as ApplicationPolicy;
+  const populatedPolicy = mapPolicy(policy);
 
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId },
