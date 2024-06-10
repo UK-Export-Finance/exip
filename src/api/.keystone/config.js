@@ -5115,6 +5115,7 @@ var send_application_submitted_emails_default = applicationSubmittedEmails;
 
 // generate-xlsx/index.ts
 var import_exceljs = __toESM(require("exceljs"));
+var import_xlsx_populate = __toESM(require("xlsx-populate"));
 
 // helpers/replace-character-codes-with-characters/index.ts
 var replaceCharacterCodesWithCharacters = (str) => str.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&#x2F;/g, "/").replace(/&#42;/g, "*").replace(/&amp;/g, "&");
@@ -5786,11 +5787,7 @@ var {
   DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: {
-      COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS,
-      COMPANY_NAME: EXPORTER_COMPANY_NAME,
-      COMPANY_SIC: EXPORTER_COMPANY_SIC
-    },
+    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_SIC: EXPORTER_COMPANY_SIC },
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
@@ -6438,7 +6435,7 @@ var XLSX2 = (application2) => {
     console.info("Generating XLSX file for application %s", application2.id);
     const { referenceNumber } = application2;
     const refNumber = String(referenceNumber);
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
       const filePath = `XLSX/${refNumber}.xlsx`;
       const xlsxData = map_application_to_XLSX_default(application2);
       console.info("Generating XLSX file - creating a new workbook");
@@ -6455,7 +6452,13 @@ var XLSX2 = (application2) => {
       console.info("Generating XLSX file - adding custom styles to worksheet");
       worksheet = styled_columns_default(application2, worksheet);
       console.info("Generating XLSX file - writing file");
-      workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
+      return workbook.xlsx.writeFile(filePath).then(() => {
+        console.info("Generating XLSX file - password protecting file");
+        return import_xlsx_populate.default.fromFileAsync(filePath).then((wb) => {
+          wb.toFileAsync(filePath, { password: "my secret password" });
+          return resolve(filePath);
+        });
+      });
     });
   } catch (err) {
     console.error("Error generating XLSX file %O", err);

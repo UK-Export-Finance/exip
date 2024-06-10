@@ -1,4 +1,9 @@
 import ExcelJS from 'exceljs';
+// import * as Encryptor from 'xlsx-populate/lib/Encryptor';
+
+import * as Encryptor from 'xlsx-populate/lib/Encryptor';
+
+import XlsxPopulate from 'xlsx-populate';
 import mapApplicationToXLSX from './map-application-to-XLSX';
 import HEADER_COLUMNS from './header-columns';
 import styledColumns from './styled-columns';
@@ -18,7 +23,7 @@ const XLSX = (application: Application): Promise<string> => {
 
     const refNumber = String(referenceNumber);
 
-    return new Promise((resolve) => {
+    return new Promise(async (resolve) => {
       const filePath = `XLSX/${refNumber}.xlsx`;
 
       const xlsxData = mapApplicationToXLSX(application);
@@ -65,7 +70,15 @@ const XLSX = (application: Application): Promise<string> => {
        */
       console.info('Generating XLSX file - writing file');
 
-      workbook.xlsx.writeFile(filePath).then(() => resolve(filePath));
+      return workbook.xlsx.writeFile(filePath).then(() => {
+        console.info('Generating XLSX file - password protecting file');
+
+        return XlsxPopulate.fromFileAsync(filePath).then((wb: any) => {
+          wb.toFileAsync(filePath, { password: 'my secret password' })
+
+          return resolve(filePath);
+        });
+      });
     });
   } catch (err) {
     console.error('Error generating XLSX file %O', err);
