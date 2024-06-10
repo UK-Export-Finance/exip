@@ -13,3 +13,12 @@ export interface SendConfirmEmailAddressVariables {
   accountId: string;
   referenceNumber?: string;
 }
+
+export interface SubmissionDeadlineEmailVariables {
+  referenceNumber: string;
+  submissionDeadline: string;
+  name: string;
+  applicationUrl: string;
+  buyer: string;
+  email: string;
+}

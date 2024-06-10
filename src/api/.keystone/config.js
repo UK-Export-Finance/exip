@@ -1065,7 +1065,8 @@ var EMAIL_TEMPLATE_IDS = {
         NOTIFICATION_ANTI_BRIBERY: "8be12c98-b2c7-4992-8920-925aa37b6391",
         NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2",
         NO_DOCUMENTS: "65b517c6-ae86-470b-9448-194ae5ac44bb"
-      }
+      },
+      DEADLINE: "e8e5ba73-96da-46f1-b96e-2b1909be6f3d"
     }
   },
   FEEDBACK: {
@@ -1189,15 +1190,410 @@ var updateInactiveApplicationsJob = {
 };
 var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
+// cron/application/email-submission-deadline-reminder-cron-job.ts
+var import_dotenv7 = __toESM(require("dotenv"));
+
+// helpers/date/index.ts
+var import_date_fns = require("date-fns");
+var dateIsInThePast = (targetDate) => {
+  const now2 = /* @__PURE__ */ new Date();
+  return (0, import_date_fns.isAfter)(now2, targetDate);
+};
+var dateInTheFutureByDays = (date, days) => new Date(date.setDate(date.getDate() + days));
+
+// helpers/get-expiring-applications/index.ts
+var { IN_PROGRESS: IN_PROGRESS2 } = APPLICATION.STATUS;
+var getExpiringApplications = async (context) => {
+  try {
+    console.info("Getting expiring applications - getExpiringApplications helper");
+    const today = /* @__PURE__ */ new Date();
+    console.log("todayyyyyyy");
+    const twoDaysTime = dateInTheFutureByDays(today, 2);
+    const earlierLimit = new Date(twoDaysTime.setHours(0, 0, 0));
+    const laterLimit = new Date(twoDaysTime.setHours(23, 59, 59));
+    const applications = await context.query.Application.findMany({
+      where: {
+        AND: [{ status: { in: [IN_PROGRESS2] } }, { submissionDeadline: { gte: earlierLimit, lte: laterLimit } }]
+      },
+      query: "id referenceNumber status submissionDeadline owner { firstName lastName email } buyer { companyOrOrganisationName }"
+    });
+    return applications;
+  } catch (err) {
+    console.error("Error getting expiring applications (getExpiringApplications helper) %O", err);
+    throw new Error(`Error getting expiring applications (getExpiringApplications helper) ${err}`);
+  }
+};
+var get_expiring_applications_default = getExpiringApplications;
+
+// helpers/format-date/index.ts
+var import_date_fns2 = require("date-fns");
+var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
+var format_date_default = formatDate;
+
+// helpers/map-application-submission-deadline-variables/index.ts
+var mapApplicationSubmissionDeadlineVariables = (application2) => ({
+  email: application2.owner.email,
+  name: `${application2.owner.firstName} ${application2.owner.lastName}`,
+  referenceNumber: String(application2.referenceNumber),
+  applicationUrl: "",
+  buyer: application2.buyer.companyOrOrganisationName ? String(application2.buyer.companyOrOrganisationName) : "",
+  submissionDeadline: format_date_default(new Date(application2.submissionDeadline))
+});
+var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
+
+// emails/index.ts
+var import_dotenv6 = __toESM(require("dotenv"));
+
+// integrations/notify/index.ts
+var import_dotenv4 = __toESM(require("dotenv"));
+var import_notifications_node_client = require("notifications-node-client");
+import_dotenv4.default.config();
+var notifyKey = process.env.GOV_NOTIFY_API_KEY;
+var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
+var notify = {
+  /**
+   * sendEmail
+   * Send an email via Notify API
+   * @param {String} Template ID
+   * @param {String} Email address
+   * @param {Object} Custom variables for the email template
+   * @param {Buffer} File buffer
+   * @returns {Object} Success flag and email recipient
+   */
+  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
+    try {
+      console.info("Calling Notify API. templateId: %s", templateId);
+      const personalisation = variables;
+      if (file) {
+        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
+      }
+      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
+        personalisation,
+        reference: null
+      });
+      return {
+        success: true,
+        emailRecipient: sendToEmailAddress
+      };
+    } catch (err) {
+      console.error("Error calling Notify API. Unable to send email %O", err);
+      throw new Error(`Calling Notify API. Unable to send email ${err}`);
+    }
+  }
+};
+var notify_default = notify;
+
+// emails/call-notify/index.ts
+var callNotify = async (templateId, emailAddress, variables, file) => {
+  try {
+    let emailResponse;
+    if (file) {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
+    } else {
+      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
+    }
+    if (emailResponse.success) {
+      return emailResponse;
+    }
+    throw new Error(`Sending email ${emailResponse}`);
+  } catch (err) {
+    console.error("Error sending email %O", err);
+    throw new Error(`Sending email ${err}`);
+  }
+};
+
+// emails/confirm-email-address/index.ts
+var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
+  try {
+    console.info("Sending confirm email address email");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, confirmToken: verificationHash, id };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending confirm email address email %O", err);
+    throw new Error(`Sending confirm email address email ${err}`);
+  }
+};
+
+// emails/access-code-email/index.ts
+var accessCodeEmail = async (emailAddress, name, securityCode) => {
+  try {
+    console.info("Sending access code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.ACCESS_CODE;
+    const variables = { name, securityCode };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending access code email for account sign in %O", err);
+    throw new Error(`Sending access code email for account sign in ${err}`);
+  }
+};
+
+// emails/password-reset-link/index.ts
+var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
+  try {
+    console.info("Sending email for account password reset");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
+    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending email for account password reset %O", err);
+    throw new Error(`Sending email for account password reset ${err}`);
+  }
+};
+
+// emails/reactivate-account-link/index.ts
+var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHash) => {
+  try {
+    console.info("Sending email for account reactivation");
+    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
+    const variables = { urlOrigin, name, reactivationToken: reactivationHash };
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending email for account reactivation %O", err);
+    throw new Error(`Sending email for account reactivation ${err}`);
+  }
+};
+
+// file-system/index.ts
+var import_fs = require("fs");
+var import_path = __toESM(require("path"));
+var fileExists = (filePath) => {
+  const fileBuffer = Buffer.from(filePath);
+  if (fileBuffer.length) {
+    return true;
+  }
+  return false;
+};
+var isAcceptedFileType = (filePath) => {
+  const fileType = import_path.default.extname(filePath);
+  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
+    return true;
+  }
+  return false;
+};
+var readFile = async (filePath) => {
+  try {
+    console.info("Reading file %s", filePath);
+    const file = await import_fs.promises.readFile(filePath);
+    if (fileExists(file) && isAcceptedFileType(filePath)) {
+      return file;
+    }
+    throw new Error("Reading file - does not exist or is unaccepted file type");
+  } catch (err) {
+    console.error("Error reading file %O", err);
+    throw new Error(`Reading file ${err}`);
+  }
+};
+var unlink = async (filePath) => {
+  try {
+    console.info("Deleting file %s", filePath);
+    const file = await readFile(filePath);
+    if (file) {
+      await import_fs.promises.unlink(filePath);
+    }
+    return false;
+  } catch (err) {
+    console.error("Error deleting file %O", err);
+    throw new Error(`Deleting file ${err}`);
+  }
+};
+var fileSystem = {
+  fileExists,
+  isAcceptedFileType,
+  readFile,
+  unlink
+};
+var file_system_default = fileSystem;
+
+// emails/application/index.ts
+var application = {
+  /**
+   * application.submittedEmail
+   * Send "application submitted" email to an account
+   * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
+   * @returns {Promise<Object>} callNotify response
+   */
+  submittedEmail: async (variables) => {
+    try {
+      console.info("Sending application submitted email to application owner or provided business contact");
+      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
+      const { emailAddress } = variables;
+      const response = await callNotify(templateId, emailAddress, variables);
+      return response;
+    } catch (err) {
+      console.error("Error sending application submitted email to to application owner or provided business contact %O", err);
+      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
+    }
+  },
+  /**
+   * application.underwritingTeam
+   * Read CSV file, generate a file buffer
+   * Send "application submitted" email to the underwriting team with a link to CSV
+   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
+   * @param {ApplicationSubmissionEmailVariables}
+   * @returns {Promise<Object>} callNotify response
+   */
+  underwritingTeam: async (variables, filePath, templateId) => {
+    try {
+      console.info("Sending application submitted email to underwriting team");
+      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
+      const file = await file_system_default.readFile(filePath);
+      if (file) {
+        const fileBuffer = Buffer.from(file);
+        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
+        return response;
+      }
+      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
+    } catch (err) {
+      console.error("Error sending application submitted email to underwriting team %O", err);
+      throw new Error(`Sending application submitted email to underwriting team ${err}`);
+    }
+  }
+};
+var application_default2 = application;
+
+// emails/documents/index.ts
+var documentsEmail = async (variables, templateId) => {
+  try {
+    console.info("Sending documents email");
+    const { emailAddress } = variables;
+    const response = await callNotify(templateId, emailAddress, variables);
+    return response;
+  } catch (err) {
+    console.error("Error sending documents email %O", err);
+    throw new Error(`Sending documents email ${err}`);
+  }
+};
+
+// emails/insurance-feedback-email/index.ts
+var import_dotenv5 = __toESM(require("dotenv"));
+
+// helpers/map-feedback-satisfaction/index.ts
+var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
+var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
+
+// emails/insurance-feedback-email/index.ts
+import_dotenv5.default.config();
+var insuranceFeedbackEmail = async (variables) => {
+  try {
+    console.info("Sending insurance feedback email");
+    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
+    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
+    const emailVariables = variables;
+    emailVariables.time = "";
+    emailVariables.date = "";
+    if (variables.createdAt) {
+      emailVariables.date = format_date_default(variables.createdAt);
+      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
+    }
+    if (variables.satisfaction) {
+      emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
+    }
+    const response = await callNotify(templateId, emailAddress, emailVariables);
+    return response;
+  } catch (err) {
+    console.error("Error sending insurance feedback email %O", err);
+    throw new Error(`Sending insurance feedback email ${err}`);
+  }
+};
+
+// emails/submission-deadline/index.ts
+var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariables) => {
+  try {
+    console.log("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
+    console.info("Sending access code email for account sign in");
+    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE;
+    const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
+    return response;
+  } catch (err) {
+    console.error("Error sending access code email for account sign in %O", err);
+    throw new Error(`Sending access code email for account sign in ${err}`);
+  }
+};
+
+// emails/index.ts
+import_dotenv6.default.config();
+var sendEmail = {
+  confirmEmailAddress,
+  accessCodeEmail,
+  passwordResetLink,
+  reactivateAccountLink,
+  application: application_default2,
+  documentsEmail,
+  insuranceFeedbackEmail,
+  submissionDeadlineEmail
+};
+var emails_default = sendEmail;
+
+// helpers/send-email-application-submission-deadline/send-email/index.ts
+var send = async (applications) => {
+  const promises = applications.map(async (application2) => {
+    const variables = map_application_submission_deadline_variables_default(application2);
+    return emails_default.submissionDeadlineEmail(variables.email, variables);
+  });
+  return Promise.all(promises).then((sent) => {
+    console.info("Application submission deadline emails sent: ", sent.length);
+  }).catch((err) => {
+    console.error("Error sending application submission deadline email (sendEmail.submissionDeadlineEmail) %O", err);
+    throw new Error(`Sending application submission deadline email (sendEmail.submissionDeadlineEmail) ${err}`);
+  });
+};
+var applicationSubmissionDeadineEmail = {
+  send
+};
+var send_email_default = applicationSubmissionDeadineEmail;
+
+// helpers/send-email-application-submission-deadline/index.ts
+var applicationSubmissionDeadlineEmail = async (context) => {
+  try {
+    console.info("Sending email verification");
+    const applications = await get_expiring_applications_default(context);
+    if (applications.length) {
+      const sentEmails = await send_email_default.send(applications);
+      console.log("!!!!!!!!!!!!", sentEmails);
+      if (sentEmails.length === applications.length) {
+        return {
+          success: true
+        };
+      }
+      return {
+        success: false
+      };
+    }
+    return {
+      success: true
+    };
+  } catch (err) {
+    console.error("Error sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) %O", err);
+    throw new Error(`Sending application submission deadline email (emailApplicationSubmissionDeadlineEmail helper) ${err}`);
+  }
+};
+var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
+
+// cron/application/email-submission-deadline-reminder-cron-job.ts
+import_dotenv7.default.config();
+var { CRON_SCHEDULE_INACTIVE_APPLICATION: CRON_SCHEDULE_INACTIVE_APPLICATION2 } = process.env;
+var sendEmailApplicationSubmissionDeadlineJob = {
+  cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION2),
+  description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
+  task: send_email_application_submission_deadline_default
+};
+var email_submission_deadline_reminder_cron_job_default = sendEmailApplicationSubmissionDeadlineJob;
+
 // cron/application/index.ts
-var applicationCronSchedulerJobs = [inactive_application_cron_job_default];
-var application_default2 = applicationCronSchedulerJobs;
+var applicationCronSchedulerJobs = [inactive_application_cron_job_default, email_submission_deadline_reminder_cron_job_default];
+var application_default3 = applicationCronSchedulerJobs;
 
 // cron/index.ts
 var cronJobs = (context) => {
   console.info("Running cron jobs");
   cron_job_scheduler_default(account_default2, context);
-  cron_job_scheduler_default(application_default2, context);
+  cron_job_scheduler_default(application_default3, context);
 };
 var cron_default = cronJobs;
 
@@ -1206,7 +1602,7 @@ var import_core2 = require("@keystone-6/core");
 var import_access = require("@keystone-6/core/access");
 var import_fields = require("@keystone-6/core/fields");
 var import_fields_document = require("@keystone-6/fields-document");
-var import_date_fns = require("date-fns");
+var import_date_fns3 = require("date-fns");
 
 // helpers/update-application/index.ts
 var timestamp = async (context, applicationId) => {
@@ -1403,7 +1799,7 @@ var lists = {
             const now2 = /* @__PURE__ */ new Date();
             modifiedData.createdAt = now2;
             modifiedData.updatedAt = now2;
-            modifiedData.submissionDeadline = (0, import_date_fns.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
+            modifiedData.submissionDeadline = (0, import_date_fns3.addMonths)(new Date(now2), SUBMISSION_DEADLINE_IN_MONTHS);
             modifiedData.submissionType = SUBMISSION_TYPE.MIA;
             modifiedData.status = STATUS.IN_PROGRESS;
             return modifiedData;
@@ -2842,285 +3238,6 @@ var getFullNameString = (account2) => {
 };
 var get_full_name_string_default = getFullNameString;
 
-// emails/index.ts
-var import_dotenv6 = __toESM(require("dotenv"));
-
-// integrations/notify/index.ts
-var import_dotenv4 = __toESM(require("dotenv"));
-var import_notifications_node_client = require("notifications-node-client");
-import_dotenv4.default.config();
-var notifyKey = process.env.GOV_NOTIFY_API_KEY;
-var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
-var notify = {
-  /**
-   * sendEmail
-   * Send an email via Notify API
-   * @param {String} Template ID
-   * @param {String} Email address
-   * @param {Object} Custom variables for the email template
-   * @param {Buffer} File buffer
-   * @returns {Object} Success flag and email recipient
-   */
-  sendEmail: async (templateId, sendToEmailAddress, variables, file) => {
-    try {
-      console.info("Calling Notify API. templateId: %s", templateId);
-      const personalisation = variables;
-      if (file) {
-        personalisation.linkToFile = await notifyClient.prepareUpload(file, { confirmEmailBeforeDownload: true });
-      }
-      await notifyClient.sendEmail(templateId, sendToEmailAddress, {
-        personalisation,
-        reference: null
-      });
-      return {
-        success: true,
-        emailRecipient: sendToEmailAddress
-      };
-    } catch (err) {
-      console.error("Error calling Notify API. Unable to send email %O", err);
-      throw new Error(`Calling Notify API. Unable to send email ${err}`);
-    }
-  }
-};
-var notify_default = notify;
-
-// emails/call-notify/index.ts
-var callNotify = async (templateId, emailAddress, variables, file) => {
-  try {
-    let emailResponse;
-    if (file) {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables, file);
-    } else {
-      emailResponse = await notify_default.sendEmail(templateId, emailAddress, variables);
-    }
-    if (emailResponse.success) {
-      return emailResponse;
-    }
-    throw new Error(`Sending email ${emailResponse}`);
-  } catch (err) {
-    console.error("Error sending email %O", err);
-    throw new Error(`Sending email ${err}`);
-  }
-};
-
-// emails/confirm-email-address/index.ts
-var confirmEmailAddress = async (emailAddress, urlOrigin, name, verificationHash, id) => {
-  try {
-    console.info("Sending confirm email address email");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, confirmToken: verificationHash, id };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending confirm email address email %O", err);
-    throw new Error(`Sending confirm email address email ${err}`);
-  }
-};
-
-// emails/access-code-email/index.ts
-var accessCodeEmail = async (emailAddress, name, securityCode) => {
-  try {
-    console.info("Sending access code email for account sign in");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.ACCESS_CODE;
-    const variables = { name, securityCode };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending access code email for account sign in %O", err);
-    throw new Error(`Sending access code email for account sign in ${err}`);
-  }
-};
-
-// emails/password-reset-link/index.ts
-var passwordResetLink = async (urlOrigin, emailAddress, name, passwordResetHash) => {
-  try {
-    console.info("Sending email for account password reset");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.PASSWORD_RESET;
-    const variables = { urlOrigin, name, passwordResetToken: passwordResetHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending email for account password reset %O", err);
-    throw new Error(`Sending email for account password reset ${err}`);
-  }
-};
-
-// emails/reactivate-account-link/index.ts
-var reactivateAccountLink = async (urlOrigin, emailAddress, name, reactivationHash) => {
-  try {
-    console.info("Sending email for account reactivation");
-    const templateId = EMAIL_TEMPLATE_IDS.ACCOUNT.REACTIVATE_ACCOUNT_CONFIRM_EMAIL;
-    const variables = { urlOrigin, name, reactivationToken: reactivationHash };
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending email for account reactivation %O", err);
-    throw new Error(`Sending email for account reactivation ${err}`);
-  }
-};
-
-// file-system/index.ts
-var import_fs = require("fs");
-var import_path = __toESM(require("path"));
-var fileExists = (filePath) => {
-  const fileBuffer = Buffer.from(filePath);
-  if (fileBuffer.length) {
-    return true;
-  }
-  return false;
-};
-var isAcceptedFileType = (filePath) => {
-  const fileType = import_path.default.extname(filePath);
-  if (ACCEPTED_FILE_TYPES.includes(fileType)) {
-    return true;
-  }
-  return false;
-};
-var readFile = async (filePath) => {
-  try {
-    console.info("Reading file %s", filePath);
-    const file = await import_fs.promises.readFile(filePath);
-    if (fileExists(file) && isAcceptedFileType(filePath)) {
-      return file;
-    }
-    throw new Error("Reading file - does not exist or is unaccepted file type");
-  } catch (err) {
-    console.error("Error reading file %O", err);
-    throw new Error(`Reading file ${err}`);
-  }
-};
-var unlink = async (filePath) => {
-  try {
-    console.info("Deleting file %s", filePath);
-    const file = await readFile(filePath);
-    if (file) {
-      await import_fs.promises.unlink(filePath);
-    }
-    return false;
-  } catch (err) {
-    console.error("Error deleting file %O", err);
-    throw new Error(`Deleting file ${err}`);
-  }
-};
-var fileSystem = {
-  fileExists,
-  isAcceptedFileType,
-  readFile,
-  unlink
-};
-var file_system_default = fileSystem;
-
-// emails/application/index.ts
-var application = {
-  /**
-   * application.submittedEmail
-   * Send "application submitted" email to an account
-   * @param {ApplicationSubmissionEmailVariables} ApplicationSubmissionEmailVariables
-   * @returns {Promise<Object>} callNotify response
-   */
-  submittedEmail: async (variables) => {
-    try {
-      console.info("Sending application submitted email to application owner or provided business contact");
-      const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.EXPORTER.CONFIRMATION;
-      const { emailAddress } = variables;
-      const response = await callNotify(templateId, emailAddress, variables);
-      return response;
-    } catch (err) {
-      console.error("Error sending application submitted email to to application owner or provided business contact %O", err);
-      throw new Error(`Sending application submitted email to to application owner or provided business contact ${err}`);
-    }
-  },
-  /**
-   * application.underwritingTeam
-   * Read CSV file, generate a file buffer
-   * Send "application submitted" email to the underwriting team with a link to CSV
-   * We send a file buffer to Notify and Notify generates a unique URL that is then rendered in the email.
-   * @param {ApplicationSubmissionEmailVariables}
-   * @returns {Promise<Object>} callNotify response
-   */
-  underwritingTeam: async (variables, filePath, templateId) => {
-    try {
-      console.info("Sending application submitted email to underwriting team");
-      const emailAddress = String(process.env.UNDERWRITING_TEAM_EMAIL);
-      const file = await file_system_default.readFile(filePath);
-      if (file) {
-        const fileBuffer = Buffer.from(file);
-        const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
-        return response;
-      }
-      throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
-    } catch (err) {
-      console.error("Error sending application submitted email to underwriting team %O", err);
-      throw new Error(`Sending application submitted email to underwriting team ${err}`);
-    }
-  }
-};
-var application_default3 = application;
-
-// emails/documents/index.ts
-var documentsEmail = async (variables, templateId) => {
-  try {
-    console.info("Sending documents email");
-    const { emailAddress } = variables;
-    const response = await callNotify(templateId, emailAddress, variables);
-    return response;
-  } catch (err) {
-    console.error("Error sending documents email %O", err);
-    throw new Error(`Sending documents email ${err}`);
-  }
-};
-
-// emails/insurance-feedback-email/index.ts
-var import_dotenv5 = __toESM(require("dotenv"));
-
-// helpers/format-date/index.ts
-var import_date_fns2 = require("date-fns");
-var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
-var format_date_default = formatDate;
-
-// helpers/map-feedback-satisfaction/index.ts
-var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
-var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
-
-// emails/insurance-feedback-email/index.ts
-import_dotenv5.default.config();
-var insuranceFeedbackEmail = async (variables) => {
-  try {
-    console.info("Sending insurance feedback email");
-    const templateId = EMAIL_TEMPLATE_IDS.FEEDBACK.INSURANCE;
-    const emailAddress = process.env.FEEDBACK_EMAIL_RECIPIENT;
-    const emailVariables = variables;
-    emailVariables.time = "";
-    emailVariables.date = "";
-    if (variables.createdAt) {
-      emailVariables.date = format_date_default(variables.createdAt);
-      emailVariables.time = format_date_default(variables.createdAt, "HH:mm:ss");
-    }
-    if (variables.satisfaction) {
-      emailVariables.satisfaction = map_feedback_satisfaction_default(variables.satisfaction);
-    }
-    const response = await callNotify(templateId, emailAddress, emailVariables);
-    return response;
-  } catch (err) {
-    console.error("Error sending insurance feedback email %O", err);
-    throw new Error(`Sending insurance feedback email ${err}`);
-  }
-};
-
-// emails/index.ts
-import_dotenv6.default.config();
-var sendEmail = {
-  confirmEmailAddress,
-  accessCodeEmail,
-  passwordResetLink,
-  reactivateAccountLink,
-  application: application_default3,
-  documentsEmail,
-  insuranceFeedbackEmail
-};
-var emails_default = sendEmail;
-
 // helpers/get-account-by-id/index.ts
 var getAccountById = async (context, accountId) => {
   try {
@@ -3178,15 +3295,8 @@ var update = {
 };
 var update_account_default = update;
 
-// helpers/date/index.ts
-var import_date_fns3 = require("date-fns");
-var dateIsInThePast = (targetDate) => {
-  const now2 = /* @__PURE__ */ new Date();
-  return (0, import_date_fns3.isAfter)(now2, targetDate);
-};
-
 // helpers/send-email-confirm-email-address/index.ts
-var send = async (context, urlOrigin, accountId) => {
+var send2 = async (context, urlOrigin, accountId) => {
   try {
     console.info("Sending email verification");
     const account2 = await get_account_by_id_default(context, accountId);
@@ -3223,7 +3333,7 @@ var send = async (context, urlOrigin, accountId) => {
   }
 };
 var confirmEmailAddressEmail = {
-  send
+  send: send2
 };
 var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 
@@ -5048,7 +5158,7 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
 // emails/send-application-submitted-emails/index.ts
-var send2 = async (application2, xlsxPath) => {
+var send3 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
     const { email } = owner;
@@ -5109,7 +5219,7 @@ var send2 = async (application2, xlsxPath) => {
   }
 };
 var applicationSubmittedEmails = {
-  send: send2
+  send: send3
 };
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
@@ -5786,11 +5896,7 @@ var {
   DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: {
-      COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS,
-      COMPANY_NAME: EXPORTER_COMPANY_NAME,
-      COMPANY_SIC: EXPORTER_COMPANY_SIC
-    },
+    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_SIC: EXPORTER_COMPANY_SIC },
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
@@ -6832,8 +6938,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv7 = __toESM(require("dotenv"));
-import_dotenv7.default.config();
+var import_dotenv8 = __toESM(require("dotenv"));
+import_dotenv8.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -7129,8 +7235,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv8 = __toESM(require("dotenv"));
-import_dotenv8.default.config();
+var import_dotenv9 = __toESM(require("dotenv"));
+import_dotenv9.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -7170,8 +7276,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv9 = __toESM(require("dotenv"));
-import_dotenv9.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -7461,8 +7567,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv10 = __toESM(require("dotenv"));
-import_dotenv10.default.config();
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {

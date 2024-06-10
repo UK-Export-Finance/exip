@@ -29,16 +29,21 @@ const create = async ({ context, data }: TestHelperApplicationCreate) => {
  * get application test helper
  * Get an application by ID.
  * @param {Context} KeystoneJS context API, application ID
+ * @param {String} Application ID
+ * @param {String} getString: query string
  * @returns {Object} Application
  */
-const get = async ({ context, applicationId }: TestHelperApplicationGet): Promise<Application> => {
+const get = async ({
+  context,
+  applicationId,
+  getString = 'id eligibility { id } buyer { id } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline',
+}: TestHelperApplicationGet): Promise<Application> => {
   try {
     console.info('Getting an application (test helpers)');
 
     const application = (await context.query.Application.findOne({
       where: { id: applicationId },
-      query:
-        'id eligibility { id } buyer { id } company { id } exportContract { id }nominatedLossPayee { id } policy { id } sectionReview { id } referenceNumber',
+      query: getString,
     })) as Application;
 
     return application;

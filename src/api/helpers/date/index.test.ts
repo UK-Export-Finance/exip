@@ -1,4 +1,4 @@
-import { get30minutesFromNow, getTomorrowDay, getYesterdayDay, dateIsInThePast } from '.';
+import { get30minutesFromNow, getTomorrowDay, getYesterdayDay, dateIsInThePast, dateInTheFutureByDays } from '.';
 
 describe('api/helpers/date', () => {
   describe('get30minutesFromNow', () => {
@@ -68,6 +68,18 @@ describe('api/helpers/date', () => {
       const result = dateIsInThePast();
 
       expect(result).toEqual(false);
+    });
+  });
+
+  describe('dateInTheFutureByDays', () => {
+    it('should return a date in the future', () => {
+      const date = new Date('2024-01-01');
+
+      const result = dateInTheFutureByDays(date, 2);
+
+      const expected = new Date('2024-01-03');
+
+      expect(result).toEqual(expected);
     });
   });
 });
