@@ -1,4 +1,3 @@
-import { Application as KeystoneApplication } from '.keystone/types'; // eslint-disable-line
 import mapPolicy from '.';
 import { createFullApplication, getKeystoneContext } from '../../../test-helpers';
 import policies from '../../../test-helpers/policies';
@@ -29,8 +28,8 @@ describe('api/helpers/get-populated-application', () => {
       });
     });
 
-    it('should return a mapped policy', async () => {
-      const result = await mapPolicy(policy);
+    it('should return a mapped policy', () => {
+      const result = mapPolicy(policy);
 
       const expected = {
         ...policy,
@@ -54,8 +53,8 @@ describe('api/helpers/get-populated-application', () => {
       });
     });
 
-    it('should return a policy with date fields as empty strings', async () => {
-      const result = await mapPolicy(policy);
+    it('should return a policy with date fields as empty strings', () => {
+      const result = mapPolicy(policy);
 
       const expected = {
         ...policy,
