@@ -1,13 +1,25 @@
 import { summaryList } from '../../../../../../pages/shared';
 import { checkYourAnswersPage } from '../../../../../../pages/quote';
-import { FIELDS, LINKS, PAGES, SUMMARY_ANSWERS } from '../../../../../../content-strings';
+import {
+  FIELDS,
+  LINKS,
+  PAGES,
+  SUMMARY_ANSWERS,
+} from '../../../../../../content-strings';
 import { ROUTES, FIELD_VALUES } from '../../../../../../constants';
 import { FIELD_IDS } from '../../../../../../constants/field-ids';
 
 const CONTENT_STRINGS = PAGES.QUOTE.CHECK_YOUR_ANSWERS;
 
 const {
-  ELIGIBILITY: { BUYER_COUNTRY, CONTRACT_VALUE, CREDIT_PERIOD, PERCENTAGE_OF_COVER, VALID_EXPORTER_LOCATION, HAS_MINIMUM_UK_GOODS_OR_SERVICES },
+  ELIGIBILITY: {
+    BUYER_COUNTRY,
+    CONTRACT_VALUE,
+    CREDIT_PERIOD,
+    PERCENTAGE_OF_COVER,
+    VALID_EXPORTER_LOCATION,
+    HAS_MINIMUM_UK_GOODS_OR_SERVICES,
+  },
   POLICY_TYPE,
   POLICY_LENGTH,
 } = FIELD_IDS;

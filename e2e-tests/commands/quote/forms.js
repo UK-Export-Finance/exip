@@ -4,7 +4,13 @@ import { FIELD_IDS } from '../../constants';
 import { GBP_CURRENCY_CODE } from '../../fixtures/currencies';
 
 const {
-  ELIGIBILITY: { CONTRACT_VALUE, CURRENCY, CREDIT_PERIOD, MAX_AMOUNT_OWED, PERCENTAGE_OF_COVER },
+  ELIGIBILITY: {
+    CONTRACT_VALUE,
+    CURRENCY,
+    CREDIT_PERIOD,
+    MAX_AMOUNT_OWED,
+    PERCENTAGE_OF_COVER,
+  },
   POLICY_TYPE,
   POLICY_LENGTH,
 } = FIELD_IDS;
