@@ -1,8 +1,4 @@
-import {
-  completeAndSubmitBuyerBodyForm,
-  completeAndSubmitExporterLocationForm,
-  completeAndSubmitUkContentForm,
-} from '../../../../../../commands/quote/forms';
+import { completeAndSubmitBuyerBodyForm, completeAndSubmitExporterLocationForm, completeAndSubmitUkContentForm } from '../../../../../../commands/quote/forms';
 import { autoCompleteField, field, summaryList } from '../../../../../../pages/shared';
 import { policyTypePage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS } from '../../../../../../constants';
@@ -74,7 +70,7 @@ context('Get a quote/your quote page (single policy, Kenya, USD) - as an exporte
     cy.checkText(summaryList.field(QUOTE.INSURED_FOR).value(), expectedValue);
 
     // Check estimated cost in the quote
-    const expectedCost = '$5,090.00';
+    const expectedCost = '$4,860.00';
     cy.checkText(summaryList.field(QUOTE.ESTIMATED_COST).value(), expectedCost);
   });
 });

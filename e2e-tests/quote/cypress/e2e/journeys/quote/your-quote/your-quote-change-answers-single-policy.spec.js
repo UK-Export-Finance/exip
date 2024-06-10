@@ -1,10 +1,10 @@
 import {
-  backLink, autoCompleteField, field, summaryList,
+  backLink,
+  autoCompleteField,
+  field,
+  summaryList,
 } from '../../../../../../pages/shared';
-import {
-  policyTypePage,
-  tellUsAboutYourPolicyPage,
-} from '../../../../../../pages/quote';
+import { policyTypePage, tellUsAboutYourPolicyPage } from '../../../../../../pages/quote';
 import { ROUTES, FIELD_IDS, FIELD_VALUES } from '../../../../../../constants';
 import { LINKS } from '../../../../../../content-strings';
 
@@ -39,7 +39,7 @@ context('Your quote page - change answers (single policy type to multiple policy
 
     cy.login();
 
-    cy.submitQuoteAnswersHappyPathSinglePolicy();
+    cy.submitQuoteAnswersHappyPathSinglePolicy({});
     cy.clickSubmitButton();
 
     cy.assertUrl(url);
@@ -65,11 +65,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -113,11 +109,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
@@ -199,11 +191,7 @@ context('Your quote page - change answers (single policy type to multiple policy
     it('renders a back link with correct url', () => {
       const expectedHref = `${baseUrl}${YOUR_QUOTE}`;
 
-      cy.checkLink(
-        backLink(),
-        expectedHref,
-        LINKS.BACK,
-      );
+      cy.checkLink(backLink(), expectedHref, LINKS.BACK);
     });
 
     it(`redirects to ${CHECK_YOUR_ANSWERS} when submitting a new answer`, () => {
