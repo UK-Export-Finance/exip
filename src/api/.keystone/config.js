@@ -5786,11 +5786,7 @@ var {
   DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
-    COMPANIES_HOUSE: {
-      COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS,
-      COMPANY_NAME: EXPORTER_COMPANY_NAME,
-      COMPANY_SIC: EXPORTER_COMPANY_SIC
-    },
+    COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_SIC: EXPORTER_COMPANY_SIC },
     YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
@@ -5822,8 +5818,8 @@ var XLSX = {
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY: "Your insurance coverage",
-    EXPORTER_BUSINESS: "About your business",
+    POLICY: "Insurance policy",
+    EXPORTER_BUSINESS: "The business",
     BUYER: "Your buyer",
     ELIGIBILITY: "Eligibility",
     DECLARATIONS: "Declarations"
@@ -5845,8 +5841,8 @@ var XLSX = {
     [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
     [HAS_END_BUYER2]: "Is there an end buyer?",
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
-    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments",
-    [CONTRACT_COMPLETION_DATE2]: "Date expected for contract to complete",
+    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments?",
+    [CONTRACT_COMPLETION_DATE2]: "When it's expected to be complete",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",
     [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
@@ -5858,8 +5854,8 @@ var XLSX = {
     [WEBSITE2]: "Exporter Company website (optional)",
     [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
     [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
-    [YEARS_EXPORTING2]: "Exporter years exporting",
-    [EMPLOYEES_UK2]: "Exporter UK Employees",
+    [YEARS_EXPORTING2]: "How long the business has been exporting for",
+    [EMPLOYEES_UK2]: "Number of UK Employees",
     [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
     [USING_BROKER3]: "Using a broker for this insurance",
     [BROKER_NAME]: "Name of broker or company",
