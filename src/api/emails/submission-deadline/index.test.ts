@@ -38,13 +38,11 @@ describe('emails/submission-deadline', () => {
 
   describe('error handling', () => {
     beforeAll(async () => {
-      notify.sendEmail = jest.fn(() => Promise.reject(mockErrorMessage));
+      notify.sendEmail = jest.fn(() => Promise.reject(new Error(mockErrorMessage)));
     });
 
     test('should throw an error', async () => {
-      await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow(
-        `Sending access code email for account sign in Error: Sending email ${mockErrorMessage}`,
-      );
+      await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow('Sending submission deadline email');
     });
   });
 });
