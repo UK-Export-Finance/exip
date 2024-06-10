@@ -79,7 +79,7 @@ const checkValidation = ({
         cy.keyboardInput(field.dayInput().clear(), 'Test');
         cy.clickSubmitButton();
 
-        const errorMessage = errorMessages.INVALID_DAY;
+        const errorMessage = errorMessages.INCORRECT_FORMAT;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
@@ -157,7 +157,7 @@ const checkValidation = ({
         cy.keyboardInput(field.monthInput(), 'One');
         cy.clickSubmitButton();
 
-        const errorMessage = errorMessages.MISSING_DAY_AND_MONTH;
+        const errorMessage = errorMessages.INCORRECT_FORMAT;
 
         cy.assertFieldErrors({
           ...assertFieldErrorsParams,
