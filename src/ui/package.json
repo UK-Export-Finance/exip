@@ -50,7 +50,7 @@
     "date-fns": "^2.30.0",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
-    "express-rate-limit": "^7.3.0",
+    "express-rate-limit": "^7.3.1",
     "express-session": "^1.18.0",
     "google-libphonenumber": "^3.2.34",
     "govuk-frontend": "^5.3.1",
