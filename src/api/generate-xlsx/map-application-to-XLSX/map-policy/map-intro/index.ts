@@ -14,7 +14,7 @@ const {
 /**
  * mapIntro
  * Map an application's policy "intro" fields into an array of objects for XLSX generation
- * @param {ApplicationPolicy}
+ * @param {ApplicationPolicy} policy
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapIntro = (policy: ApplicationPolicy) => {

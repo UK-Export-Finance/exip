@@ -6054,11 +6054,7 @@ var XLSX = {
     KEY_INFORMATION: "Key information",
     EXPORTER_CONTACT_DETAILS: "Exporter contact details",
     POLICY: "Insurance policy",
-<<<<<<< HEAD
-    EXPORTER_BUSINESS: "About your business",
-=======
     EXPORTER_BUSINESS: "The business",
->>>>>>> main-application-no-pdf
     BUYER: "Your buyer",
     ELIGIBILITY: "Eligibility",
     DECLARATIONS: "Declarations"
@@ -6080,11 +6076,7 @@ var XLSX = {
     [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
     [HAS_END_BUYER2]: "Is there an end buyer?",
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
-<<<<<<< HEAD
-    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments",
-=======
     [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments?",
->>>>>>> main-application-no-pdf
     [CONTRACT_COMPLETION_DATE2]: "When it's expected to be complete",
     [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
     [EXPORTER_COMPANY_NAME]: "Exporter company name",

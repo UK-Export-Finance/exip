@@ -29,7 +29,7 @@ const {
 /**
  * mapMultipleContractPolicy
  * Map an application's multiple contract policy fields into an array of objects for XLSX generation
- * @param {ApplicationPolicy}
+ * @param {ApplicationPolicy} policy
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapMultipleContractPolicy = (policy: ApplicationPolicy) => [
