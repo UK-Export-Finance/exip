@@ -81,6 +81,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     }
   }
 
+  // TODO: EMS-3467: move to getPopulatedApplication.
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {

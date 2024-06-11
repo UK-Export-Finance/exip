@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+ /* eslint-disable @typescript-eslint/ban-ts-comment */
 import express from 'express';
 import compression from 'compression';
 import rateLimit from 'express-rate-limit';

@@ -17,8 +17,7 @@ const { FIELDS } = XLSX;
  * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPreviousCoverWithBuyer = (eligibility: ApplicationEligibility, relationship: ApplicationBuyerRelationship) => {
-  // TODO: move to getPopulatedApplication.
-  // TODO: this will also replace UI middleware.
+  // TODO: EMS-3467: move to getPopulatedApplication.
   const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {
