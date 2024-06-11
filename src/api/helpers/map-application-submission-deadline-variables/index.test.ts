@@ -1,6 +1,7 @@
 import dotenv from 'dotenv';
 import formatDate from '../format-date';
 import mockApplication from '../../test-mocks/mock-application';
+import generateApplicationUrl from '../generate-application-url';
 import mapApplicationSubmissionDeadlineVariables from '.';
 
 dotenv.config();
@@ -12,7 +13,7 @@ describe('helpers/map-application-submission-deadline-variables', () => {
       lastName: 'lastName',
       email: process.env.GOV_NOTIFY_EMAIL_RECIPIENT_1,
     },
-    referenceNumber: '12345',
+    referenceNumber: 12345,
     submissionDeadline: new Date(),
     buyer: mockApplication.buyer,
   };
@@ -25,7 +26,7 @@ describe('helpers/map-application-submission-deadline-variables', () => {
         email: application.owner.email,
         name: `${application.owner.firstName} ${application.owner.lastName}`,
         referenceNumber: String(application.referenceNumber),
-        applicationUrl: '',
+        applicationUrl: generateApplicationUrl(application.referenceNumber),
         buyerName: String(application.buyer.companyOrOrganisationName),
         submissionDeadline: formatDate(new Date(application.submissionDeadline)),
       };

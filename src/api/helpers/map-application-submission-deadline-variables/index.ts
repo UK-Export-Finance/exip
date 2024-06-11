@@ -1,4 +1,5 @@
 import formatDate from '../format-date';
+import generateApplicationUrl from '../generate-application-url';
 import { SubmissionDeadlineEmailVariables, Application } from '../../types';
 
 /**
@@ -8,7 +9,7 @@ import { SubmissionDeadlineEmailVariables, Application } from '../../types';
  * @returns {SubmissionDeadlineEmailVariables} variables for email
  */
 const mapApplicationSubmissionDeadlineVariables = (application: Application): SubmissionDeadlineEmailVariables => {
-  const { submissionDeadline, owner, referenceNumber, buyer }= application;
+  const { submissionDeadline, owner, referenceNumber, buyer } = application;
   const { email, firstName, lastName } = owner;
   const { companyOrOrganisationName } = buyer;
 
@@ -16,10 +17,10 @@ const mapApplicationSubmissionDeadlineVariables = (application: Application): Su
     email,
     name: `${firstName} ${lastName}`,
     referenceNumber: String(referenceNumber),
-    applicationUrl: '',
+    applicationUrl: generateApplicationUrl(referenceNumber),
     buyerName: application.buyer.companyOrOrganisationName ? String(companyOrOrganisationName) : '',
     submissionDeadline: formatDate(new Date(submissionDeadline)),
-  }
-}
+  };
+};
 
 export default mapApplicationSubmissionDeadlineVariables;

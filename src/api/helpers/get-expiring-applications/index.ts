@@ -35,7 +35,7 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
       where: {
         AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { gte: earlierLimit, lte: laterLimit } }],
       },
-      query: 'id referenceNumber status submissionDeadline owner { firstName lastName email } buyer { companyOrOrganisationName }',
+      query: APPLICATION.GET_QUERY,
     })) as Array<Application>;
 
     return applications;
