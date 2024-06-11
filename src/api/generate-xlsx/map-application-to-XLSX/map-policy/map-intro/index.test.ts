@@ -38,7 +38,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-intro', () =>
     const expected = [
       xlsxRow(SECTION_TITLES.POLICY, ''),
       xlsxRow(String(FIELDS[POLICY_TYPE]), policy[POLICY_TYPE]),
-      xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd-MMM-yy')),
+      xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd MM yyyy')),
     ];
 
     expect(result).toEqual(expected);

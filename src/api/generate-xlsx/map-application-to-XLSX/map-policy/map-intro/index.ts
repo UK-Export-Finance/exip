@@ -21,7 +21,7 @@ const mapIntro = (policy: ApplicationPolicy) => {
   const mapped = [
     xlsxRow(SECTION_TITLES.POLICY, ''),
     xlsxRow(String(FIELDS[POLICY_TYPE]), policy[POLICY_TYPE]),
-    xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd-MMM-yy')),
+    xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd MM yyyy')),
   ];
 
   return mapped;

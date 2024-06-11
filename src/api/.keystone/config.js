@@ -6217,7 +6217,7 @@ var mapIntro = (policy) => {
   const mapped = [
     xlsx_row_default(SECTION_TITLES.POLICY, ""),
     xlsx_row_default(String(FIELDS5[POLICY_TYPE7]), policy[POLICY_TYPE7]),
-    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd-MMM-yy"))
+    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd MM yyyy"))
   ];
   return mapped;
 };
@@ -6251,7 +6251,7 @@ var {
 } = insurance_default;
 var mapSingleContractPolicy = (policy) => {
   const mapped = [
-    xlsx_row_default(String(FIELDS6[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd-MMM-yy")),
+    xlsx_row_default(String(FIELDS6[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd MM yyyy")),
     xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
     xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
   ];
