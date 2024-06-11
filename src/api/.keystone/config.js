@@ -666,7 +666,11 @@ var APPLICATION = {
   },
   POLICY_TYPE: {
     SINGLE: "Single contract policy",
-    MULTIPLE: "Multiple contract policy"
+    MULTIPLE: "Multiple contract policy",
+    ABBREVIATED: {
+      SINGLE: "Single",
+      MULTIPLE: "Multiple"
+    }
   },
   POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
@@ -6207,6 +6211,20 @@ var mapKeyInformation = (application2) => {
 };
 var map_key_information_default = mapKeyInformation;
 
+// generate-xlsx/map-application-to-XLSX/map-policy/map-intro/map-policy-type/index.ts
+var {
+  POLICY_TYPE: { ABBREVIATED }
+} = APPLICATION;
+var mapPolicyType = (policyType) => {
+  if (isSinglePolicyType(policyType)) {
+    return ABBREVIATED.SINGLE;
+  }
+  if (isMultiplePolicyType(policyType)) {
+    return ABBREVIATED.MULTIPLE;
+  }
+};
+var map_policy_type_default = mapPolicyType;
+
 // generate-xlsx/map-application-to-XLSX/map-policy/map-intro/index.ts
 var { FIELDS: FIELDS5, SECTION_TITLES } = XLSX;
 var {
@@ -6216,7 +6234,7 @@ var {
 var mapIntro = (policy) => {
   const mapped = [
     xlsx_row_default(SECTION_TITLES.POLICY, ""),
-    xlsx_row_default(String(FIELDS5[POLICY_TYPE7]), policy[POLICY_TYPE7]),
+    xlsx_row_default(String(FIELDS5[POLICY_TYPE7]), map_policy_type_default(policy[POLICY_TYPE7])),
     xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd MM yyyy"))
   ];
   return mapped;

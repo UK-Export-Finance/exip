@@ -1,6 +1,7 @@
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
+import mapPolicyType from './map-policy-type';
 import formatDate from '../../../../helpers/format-date';
 import { ApplicationPolicy } from '../../../../types';
 
@@ -20,7 +21,7 @@ const {
 const mapIntro = (policy: ApplicationPolicy) => {
   const mapped = [
     xlsxRow(SECTION_TITLES.POLICY, ''),
-    xlsxRow(String(FIELDS[POLICY_TYPE]), policy[POLICY_TYPE]),
+    xlsxRow(String(FIELDS[POLICY_TYPE]), mapPolicyType(policy[POLICY_TYPE])),
     xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd MM yyyy')),
   ];
 

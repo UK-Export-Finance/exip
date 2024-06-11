@@ -26,6 +26,10 @@ export const APPLICATION = {
   POLICY_TYPE: {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',
+    ABBREVIATED: {
+      SINGLE: 'Single',
+      MULTIPLE: 'Multiple',
+    },
   },
   POLICY: {
     TOTAL_VALUE_OF_CONTRACT: {
