@@ -19,8 +19,8 @@ export const APPLICATION = {
     SINGLE: 'Single contract policy',
     MULTIPLE: 'Multiple contract policy',
     ABBREVIATED: {
-      SINGLE: 'Single contract policy',
-      MULTIPLE: 'Multiple contract policy',
+      SINGLE: 'Single',
+      MULTIPLE: 'Multiple',
     },
   },
   POLICY: {
