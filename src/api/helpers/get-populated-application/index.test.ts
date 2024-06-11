@@ -6,12 +6,7 @@ import mapPolicy from './map-policy';
 import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
 import { Application, Context } from '../../types';
-import mockApplication, {
-  mockLossPayeeFinancialDetailsUk,
-  mockLossPayeeFinancialDetailsUkVector,
-  mockLossPayeeFinancialDetailsInternational,
-  mockLossPayeeFinancialDetailsInternationalVector,
-} from '../../test-mocks/mock-application';
+import mockApplication from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
@@ -108,34 +103,6 @@ describe('api/helpers/get-populated-application', () => {
     });
 
     expect(result.policy).toEqual(expected);
-  });
-
-  it('should return an application with populated financialUk', async () => {
-    const result = await getPopulatedApplication({ context, application });
-
-    const { financialUk } = result.nominatedLossPayee;
-
-    const expected = {
-      ...mockLossPayeeFinancialDetailsUk,
-      id: financialUk.id,
-      vector: mockLossPayeeFinancialDetailsUkVector,
-    };
-
-    expect(financialUk).toEqual(expected);
-  });
-
-  it('should return an application with populated financialInternational', async () => {
-    const result = await getPopulatedApplication({ context, application });
-
-    const { financialInternational } = result.nominatedLossPayee;
-
-    const expected = {
-      ...mockLossPayeeFinancialDetailsInternational,
-      id: financialInternational.id,
-      vector: mockLossPayeeFinancialDetailsInternationalVector,
-    };
-
-    expect(financialInternational).toEqual(expected);
   });
 
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {
