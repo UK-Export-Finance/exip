@@ -45,7 +45,7 @@ describe('helpers/map-application-submission-deadline-variables', () => {
         email: application.owner.email,
         name: `${application.owner.firstName} ${application.owner.lastName}`,
         referenceNumber: String(application.referenceNumber),
-        applicationUrl: '',
+        applicationUrl: generateApplicationUrl(application.referenceNumber),
         buyerName: '',
         submissionDeadline: formatDate(new Date(application.submissionDeadline)),
       };
@@ -64,7 +64,7 @@ describe('helpers/map-application-submission-deadline-variables', () => {
         email: application.owner.email,
         name: `${application.owner.firstName} ${application.owner.lastName}`,
         referenceNumber: String(application.referenceNumber),
-        applicationUrl: '',
+        applicationUrl: generateApplicationUrl(application.referenceNumber),
         buyerName: '',
         submissionDeadline: formatDate(new Date(application.submissionDeadline)),
       };
