@@ -41,6 +41,8 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
       const canSubmit = isInProgress && validSubmissionDate && isFirstSubmission;
 
       if (canSubmit) {
+        console.info('Submitting application - updating status, submission date and count %s', variables.applicationId);
+
         // change the status and add submission date
         const update = {
           status: APPLICATION.STATUS.SUBMITTED,
@@ -54,8 +56,15 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
           data: update,
         });
 
+        console.info('Submitting application - getting populated application %s', variables.applicationId);
+
         // get a fully populated application for XLSX generation
-        const populatedApplication = await getPopulatedApplication({ context, application: updatedApplication });
+        const populatedApplication = await getPopulatedApplication({
+          context,
+          application: updatedApplication,
+          decryptFinancialUk: true,
+          decryptFinancialInternational: true,
+        });
 
         // generate a XLSX for UKEF underwriting team email
         const xlsxPath = await generate.XLSX(populatedApplication);

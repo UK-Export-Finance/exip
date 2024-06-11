@@ -11,6 +11,8 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
 interface GetPopulatedApplicationParams {
   context: Context;
   application: KeystoneApplication;
+  decryptFinancialUk?: boolean;
+  decryptFinancialInternational?: boolean;
 }
 
 /**
@@ -20,8 +22,13 @@ interface GetPopulatedApplicationParams {
  * @param {Application}
  * @returns {Promise<Object>} Populated application
  */
-const getPopulatedApplication = async ({ context, application }: GetPopulatedApplicationParams): Promise<Application> => {
-  console.info(`Getting populated application ${application.referenceNumber}`);
+const getPopulatedApplication = async ({
+  context,
+  application,
+  decryptFinancialUk = false,
+  decryptFinancialInternational = false,
+}: GetPopulatedApplicationParams): Promise<Application> => {
+  console.info(`Getting populated application (helper) ${application.id}`);
 
   const {
     eligibilityId,
@@ -86,7 +93,12 @@ const getPopulatedApplication = async ({ context, application }: GetPopulatedApp
     throw new Error(generateErrorMessage('policyContact', application.id));
   }
 
-  const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId);
+  const nominatedLossPayee = await getNominatedLossPayee(
+    context,
+    nominatedLossPayeeId,
+    decryptFinancialUk,
+    decryptFinancialInternational,
+  );
 
   const populatedPolicy = mapPolicy(policy);
 

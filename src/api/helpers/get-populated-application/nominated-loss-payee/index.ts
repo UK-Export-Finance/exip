@@ -1,4 +1,6 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
+import decryptNominatedLossPayee from '../../decrypt-nominated-loss-payee';
+import { ApplicationNominatedLossPayee } from '../../../types';
 
 /**
  * getNominatedLossPayee
@@ -7,7 +9,12 @@ import { Context } from '.keystone/types'; // eslint-disable-line
  * @param {String} lossPayeeId: Loss payee ID
  * @returns {ApplicationPolicy} mapped policy
  */
-const getNominatedLossPayee = async (context: Context, lossPayeeId: string) => {
+const getNominatedLossPayee = async (
+  context: Context,
+  lossPayeeId: string,
+  decryptFinancialUk?: boolean,
+  decryptFinancialInternational?: boolean,
+) => {
   try {
     console.info(`Getting nominated loss payee ${lossPayeeId}`);
 
@@ -15,7 +22,13 @@ const getNominatedLossPayee = async (context: Context, lossPayeeId: string) => {
       where: { id: lossPayeeId },
       query:
         'id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }',
-    });
+    }) as ApplicationNominatedLossPayee;
+
+    if (decryptFinancialUk && decryptFinancialInternational) {
+      const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk, decryptFinancialInternational);
+
+      return decryptedNominatedLossPayee;
+    }
 
     return nominatedLossPayee;
   } catch (err) {

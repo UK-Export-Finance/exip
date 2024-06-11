@@ -19,7 +19,7 @@ const createALossPayeeFinancialUk = async (context: Context, lossPayeeId: string
       },
     });
 
-    await context.db.LossPayeeFinancialUkVector.createOne({
+    const vector = await context.db.LossPayeeFinancialUkVector.createOne({
       data: {
         financialUk: {
           connect: { id: lossPayeeFinancialUk.id },
@@ -27,7 +27,10 @@ const createALossPayeeFinancialUk = async (context: Context, lossPayeeId: string
       },
     });
 
-    return lossPayeeFinancialUk;
+    return {
+      ...lossPayeeFinancialUk,
+      vector,
+    };
   } catch (err) {
     console.error('Error creating a loss payee financial (UK) for %O', err);
 

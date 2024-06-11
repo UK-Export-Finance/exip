@@ -88,12 +88,38 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.company.differentTradingAddress.fullAddress).toEqual('');
   });
 
-  it('should return an application with populated nominatedLossPayee', async () => {
-    const result = await getPopulatedApplication({ context, application });
+  describe('nominatedLossPayee', () => {
+    it('should return an application with populated nominatedLossPayee without decrypted data by default', async () => {
+      const result = await getPopulatedApplication({ context, application });
 
-    const expected = await getNominatedLossPayee(context, application.nominatedLossPayeeId);
+      const decryptFinancialUk = false;
+      const decryptFinancialInternational = false;
 
-    expect(result.nominatedLossPayee).toEqual(expected);
+      const expected = await getNominatedLossPayee(
+        context,
+        application.nominatedLossPayeeId,
+        decryptFinancialUk,
+        decryptFinancialInternational,
+      );
+
+      expect(result.nominatedLossPayee).toEqual(expected);
+    });
+
+    it('should return an application with populated nominatedLossPayee with decrypted data when `decrypt` params are passed', async () => {
+      const result = await getPopulatedApplication({ context, application });
+
+      const decryptFinancialUk = true;
+      const decryptFinancialInternational = true;
+
+      const expected = await getNominatedLossPayee(
+        context,
+        application.nominatedLossPayeeId,
+        decryptFinancialUk,
+        decryptFinancialInternational,
+      );
+
+      expect(result.nominatedLossPayee).toEqual(expected);
+    });
   });
 
   it('should return an application with mapped policy data', async () => {
