@@ -1,3 +1,4 @@
+import { TOTAL_CONTRACT_VALUE } from '../total-contract-value';
 import { INDEXES, incrementIndexes } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { isMultiplePolicyType } from '../../helpers/policy-type';
@@ -28,12 +29,12 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     broker,
     buyer: {
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
-      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer },
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName,
     },
+    eligibility: { totalContractValue },
     policy,
   } = application;
 
@@ -52,7 +53,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.DECLARATIONS += 2;
 
     indexes.BROKER_ADDRESS = 48;
     indexes.BUYER_ADDRESS += 3;
@@ -72,10 +73,6 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
 
-  if (exporterIsConnectedWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1;
-  }
-
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
 
@@ -84,8 +81,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     }
   }
 
-  if (exporterHasPreviousCreditInsuranceWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1;
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+
+  if (totalContractValueOverThreshold) {
+    indexes.TITLES.DECLARATIONS += 2;
   }
 
   return indexes;

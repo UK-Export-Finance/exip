@@ -1,52 +1,72 @@
 import mapPreviousCoverWithBuyer from '.';
-import FIELD_IDS from '../../../../constants/field-ids/insurance/your-buyer';
+import { TOTAL_CONTRACT_VALUE } from '../../../../constants';
+import FIELD_IDS from '../../../../constants/field-ids/insurance';
 import { XLSX } from '../../../../content-strings';
+import mapYesNoField from '../../helpers/map-yes-no-field';
 import xlsxRow from '../../helpers/xlsx-row';
-import { mockBuyerRelationship } from '../../../../test-mocks/mock-buyer';
+import { mockApplication } from '../../../../test-mocks';
 
-const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
+const {
+  ELIGIBILITY: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID },
+  YOUR_BUYER: { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER },
+} = FIELD_IDS;
 
 const { FIELDS } = XLSX;
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-previous-cover-with-buyer', () => {
-  describe(`when buyer relationship has a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} value of true`, () => {
-    it('should return an xlsxRow', () => {
-      const mockRelationship = {
-        ...mockBuyerRelationship,
-        [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: true,
+describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover-with-buyer', () => {
+  describe(`when the total contract value is ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
+    it('should return an array of mapped fields', () => {
+      const application = {
+        ...mockApplication,
+        eligibility: {
+          ...mockApplication.eligibility,
+          [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+            value: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE,
+          },
+        },
       };
 
-      const result = mapPreviousCoverWithBuyer(mockRelationship);
+      const {
+        eligibility,
+        buyer: { relationship },
+      } = application;
 
-      const expected = xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), mockRelationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]);
+      const result = mapPreviousCoverWithBuyer(eligibility, relationship);
+
+      const expected = [
+        xlsxRow(
+          String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
+          mapYesNoField({
+            answer: relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+          }),
+        ),
+        xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
+      ];
 
       expect(result).toEqual(expected);
     });
   });
 
-  describe(`when buyer relationship has a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} value of false`, () => {
-    it('should not return anything', () => {
-      const mockRelationship = {
-        ...mockBuyerRelationship,
-        [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: false,
+  describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
+    it('should return an empty array', () => {
+      const application = {
+        ...mockApplication,
+        eligibility: {
+          ...mockApplication.eligibility,
+          [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+            value: TOTAL_CONTRACT_VALUE.LESS_THAN_250K.VALUE,
+          },
+        },
       };
 
-      const result = mapPreviousCoverWithBuyer(mockRelationship);
+      const {
+        eligibility,
+        buyer: { relationship },
+      } = application;
 
-      expect(result).toBeUndefined();
-    });
-  });
+      const result = mapPreviousCoverWithBuyer(eligibility, relationship);
 
-  describe(`when buyer relationship has a ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} value of undefined`, () => {
-    it('should not return anything', () => {
-      const mockRelationship = {
-        ...mockBuyerRelationship,
-        [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: undefined,
-      };
-
-      const result = mapPreviousCoverWithBuyer(mockRelationship);
-
-      expect(result).toBeUndefined();
+      expect(result).toEqual([]);
     });
   });
 });

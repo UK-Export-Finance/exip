@@ -838,13 +838,13 @@ var XLSX_ROW_INDEXES = (application2) => {
   const {
     broker,
     buyer: {
-      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
-      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer }
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments }
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName
     },
+    eligibility: { totalContractValue },
     policy
   } = application2;
   const policyType = policy[POLICY_TYPE2];
@@ -858,7 +858,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.DECLARATIONS += 2;
     indexes.BROKER_ADDRESS = 48;
     indexes.BUYER_ADDRESS += 3;
   }
@@ -872,17 +872,15 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
-  if (exporterIsConnectedWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1;
-  }
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
     if (buyerHasOutstandingPayments) {
       indexes.TITLES.DECLARATIONS += 2;
     }
   }
-  if (exporterHasPreviousCreditInsuranceWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1;
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    indexes.TITLES.DECLARATIONS += 2;
   }
   return indexes;
 };
@@ -6239,10 +6237,21 @@ var map_buyer_trading_history_default = mapBuyerTradingHistory;
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
 var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
 var { FIELDS: FIELDS13 } = XLSX;
-var mapPreviousCoverWithBuyer = (relationship2) => {
-  if (relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS13[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]);
+var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
+  const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    const mapped = [
+      xlsx_row_default(
+        String(FIELDS13[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]),
+        map_yes_no_field_default({
+          answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]
+        })
+      ),
+      xlsx_row_default(String(FIELDS13[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3])
+    ];
+    return mapped;
   }
+  return [];
 };
 var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
@@ -6255,12 +6264,11 @@ var {
   COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
   CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER4,
   HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4,
   TRADED_WITH_BUYER: TRADED_WITH_BUYER4
 } = your_buyer_default;
 var { SECTION_TITLES: SECTION_TITLES2, FIELDS: FIELDS14 } = XLSX;
 var mapBuyer = (application2) => {
-  const { buyer } = application2;
+  const { buyer, eligibility } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
     xlsx_row_default(SECTION_TITLES2.BUYER, ""),
@@ -6272,14 +6280,7 @@ var mapBuyer = (application2) => {
     map_connection_with_buyer_default(relationship2),
     xlsx_row_default(String(FIELDS14[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
-    xlsx_row_default(
-      String(FIELDS14[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]),
-      map_yes_no_field_default({
-        answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4],
-        defaultValue: FIELD_VALUES.NO
-      })
-    ),
-    map_previous_cover_with_buyer_default(relationship2),
+    ...map_previous_cover_with_buyer_default(eligibility, relationship2),
     xlsx_row_default(String(FIELDS14[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;

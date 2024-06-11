@@ -1,5 +1,4 @@
 import mapBuyer from '.';
-import { FIELD_VALUES } from '../../../constants';
 import FIELD_IDS from '../../../constants/field-ids/insurance/your-buyer';
 import { XLSX } from '../../../content-strings';
 import { YOUR_BUYER_FIELDS } from '../../../content-strings/fields/insurance/your-buyer';
@@ -20,7 +19,6 @@ const {
   COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE },
   CONNECTION_WITH_BUYER,
   HAS_BUYER_FINANCIAL_ACCOUNTS,
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
   TRADED_WITH_BUYER,
 } = FIELD_IDS;
 
@@ -30,7 +28,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
   it('should return an array of mapped buyer fields', () => {
     const result = mapBuyer(mockApplication);
 
-    const { buyer } = mockApplication;
+    const { eligibility, buyer } = mockApplication;
     const { buyerTradingHistory, relationship } = buyer;
 
     const expected = [
@@ -47,15 +45,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-buyer', () => {
 
       ...mapBuyerTradingHistory(buyerTradingHistory),
 
-      xlsxRow(
-        String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
-        mapYesNoField({
-          answer: relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
-          defaultValue: FIELD_VALUES.NO,
-        }),
-      ),
-
-      mapPreviousCoverWithBuyer(relationship),
+      ...mapPreviousCoverWithBuyer(eligibility, relationship),
 
       xlsxRow(String(FIELDS[HAS_BUYER_FINANCIAL_ACCOUNTS]), mapYesNoField({ answer: relationship[HAS_BUYER_FINANCIAL_ACCOUNTS] })),
     ];
