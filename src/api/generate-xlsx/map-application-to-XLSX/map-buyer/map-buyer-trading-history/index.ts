@@ -13,7 +13,7 @@ const { FIELDS } = XLSX;
  * mapBuyerTradingHistory
  * Map an application's "buyer trading history" fields into an array of objects for XLSX generation
  * @param {BuyerTradingHistory} tradingHistory: Buyer trading history
- * @returns {Array} Array of objects for XLSX generation
+ * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapBuyerTradingHistory = (tradingHistory: BuyerTradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER]) {

@@ -29,7 +29,7 @@ const {
  * mapKeyInformation
  * Map key information for an application
  * @param {Application}
- * @returns {Array} Array of objects for XLSX generation
+ * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapKeyInformation = (application: Application) => {
   const { policy } = application;

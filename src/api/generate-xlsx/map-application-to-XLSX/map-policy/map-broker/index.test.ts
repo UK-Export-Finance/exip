@@ -12,7 +12,7 @@ const {
 
 const { FIELDS } = XLSX;
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-exporter-business/map-broker', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker', () => {
   describe(`when ${USING_BROKER} is true`, () => {
     it('should return an array of mapped exporter fields', () => {
       const result = mapBroker(mockApplication);

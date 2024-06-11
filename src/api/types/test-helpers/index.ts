@@ -47,6 +47,11 @@ export interface TestHelperPolicyCreate extends TestHelperCreate {
   data: PolicyCreateInput;
 }
 
+export interface TestHelperPolicyUpdate extends TestHelperCreate {
+  data: PolicyCreateInput;
+  policyId: string;
+}
+
 export interface TestHelperLossPayeeFinancialInternationalVectorCreate extends TestHelperCreate {
   data: LossPayeeFinancialInternationalVectorCreateInput;
 }
