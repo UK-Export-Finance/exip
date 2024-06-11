@@ -845,13 +845,13 @@ var XLSX_ROW_INDEXES = (application2) => {
   const {
     broker,
     buyer: {
-      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
-      relationship: { exporterIsConnectedWithBuyer, exporterHasPreviousCreditInsuranceWithBuyer }
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments }
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
       hasDifferentTradingName
     },
+    eligibility: { totalContractValue },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed }
   } = application2;
   const policyType = application2.policy[POLICY_TYPE2];
@@ -865,7 +865,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (broker[USING_BROKER]) {
     indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.DECLARATIONS += 2;
     indexes.BROKER_ADDRESS = 48;
     indexes.BUYER_ADDRESS += 3;
   }
@@ -879,17 +879,15 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
-  if (exporterIsConnectedWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1;
-  }
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
     if (buyerHasOutstandingPayments) {
       indexes.TITLES.DECLARATIONS += 2;
     }
   }
-  if (exporterHasPreviousCreditInsuranceWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1;
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    indexes.TITLES.DECLARATIONS += 2;
   }
   if (nominatedLossPayeeAppointed) {
     indexes.TITLES.BUYER += 2;
@@ -6131,12 +6129,12 @@ var {
   DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORTER_BUSINESS: {
+    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
     COMPANIES_HOUSE: { COMPANY_ADDRESS: EXPORTER_COMPANY_ADDRESS, COMPANY_NAME: EXPORTER_COMPANY_NAME, COMPANY_SIC: EXPORTER_COMPANY_SIC },
-    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 },
+    HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2,
     NATURE_OF_YOUR_BUSINESS: { GOODS_OR_SERVICES: GOODS_OR_SERVICES2, YEARS_EXPORTING: YEARS_EXPORTING2, EMPLOYEES_UK: EMPLOYEES_UK2 },
     TURNOVER: { ESTIMATED_ANNUAL_TURNOVER: ESTIMATED_ANNUAL_TURNOVER2 },
-    ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS_DOT_NOTATION },
-    HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2
+    YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME2, DIFFERENT_TRADING_NAME, PHONE_NUMBER: PHONE_NUMBER2, TRADING_ADDRESS: TRADING_ADDRESS2, WEBSITE: WEBSITE2 }
   },
   POLICY: {
     BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
@@ -6170,77 +6168,76 @@ var XLSX = {
   AGREED: "Agreed",
   SECTION_TITLES: {
     KEY_INFORMATION: "Key information",
-    EXPORTER_CONTACT_DETAILS: "Exporter contact details",
-    POLICY: "Insurance policy",
-    EXPORTER_BUSINESS: "The business",
     BUYER: "Your buyer",
+    DECLARATIONS: "Declarations",
     ELIGIBILITY: "Eligibility",
-    DECLARATIONS: "Declarations"
+    EXPORTER_CONTACT_DETAILS: "Exporter contact details",
+    EXPORTER_BUSINESS: "The business",
+    POLICY: "Insurance policy"
   },
   FIELDS: {
-    [FIRST_NAME]: "Applicant first name",
-    [LAST_NAME]: "Applicant last name",
+    [ACCOUNT_NUMBER2]: "Loss payee account number",
     [AGREE_HOW_YOUR_DATA_WILL_BE_USED2]: "How the data will be used",
     APPLICANT_EMAIL_ADDRESS: "Applicant email address",
     APPLICANT_ROLE: "Applicants role",
+    [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
+    [BROKER_NAME]: "Name of broker or company",
+    [BROKER_ADDRESS]: "Broker address",
+    [BROKER_EMAIL]: "Broker email address",
+    [BUYER_COMPANY_NAME]: "Buyer company name or organisation",
+    [BUYER_CONTACT_DETAILS]: "Buyer contact details",
     [BUYER_COUNTRY2]: "Where is your buyer based?",
+    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
+    [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
+    [CONNECTION_WITH_BUYER2]: "Is the exporter connected with the buyer in any way?",
+    [CONNECTION_WITH_BUYER_DESCRIPTION2]: "Describe connection to the buyer",
+    [CONTRACT_COMPLETION_DATE2]: "When it's expected to be complete",
+    [COUNTRY]: "Buyer location",
+    [COVER_PERIOD2]: "Length of cover",
+    [DIFFERENT_TRADING_NAME]: "Alternative trading name",
+    [EMPLOYEES_UK2]: "Number of UK Employees",
+    [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
+    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
+    [EXPORTER_COMPANY_NAME]: "Exporter company name",
+    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
     EXPORTER_CONTACT: {
       [FIRST_NAME]: "Exporter first name",
       [LAST_NAME]: "Exporter last name",
       EXPORTER_CONTACT_EMAIL: "Exporter email address"
     },
-    [COMPANIES_HOUSE_NUMBER2]: "Companies house number",
-    [COVER_PERIOD2]: "Length of cover",
+    [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time",
+    [FINANCIAL_ADDRESS2]: "Bank address of the loss payee",
+    [FIRST_NAME]: "Applicant first name",
+    [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
+    [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
     [HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2]: "Does the exporter have a code of conduct?",
+    [HAS_BUYER_FINANCIAL_ACCOUNTS2]: "Does the exporter hold any financial accounts in relation to the buyer?",
+    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments?",
+    [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
     [HAS_END_BUYER2]: "Is there an end buyer?",
     [HAS_MINIMUM_UK_GOODS_OR_SERVICES2]: "Is at least 20% of the contract value made up from UK goods or services?",
-    [HAS_CREDIT_CONTROL2]: "Do you have a process for dealing with late payments?",
-    [CONTRACT_COMPLETION_DATE2]: "When it's expected to be complete",
-    [EXPORTER_COMPANY_ADDRESS]: "Exporter registered office address",
-    [EXPORTER_COMPANY_NAME]: "Exporter company name",
-    [EXPORTER_COMPANY_SIC]: "Exporter standard industry classification (SIC) codes and nature of business",
-    [HAS_DIFFERENT_TRADING_NAME2]: "Different trading name?",
-    [DIFFERENT_TRADING_NAME]: "Alternative trading name",
-    [TRADING_ADDRESS2]: "Different trading address?",
-    [FULL_ADDRESS_DOT_NOTATION]: "Alternative trading address",
-    [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
-    [WEBSITE2]: "Exporter Company website (optional)",
-    [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
-    [GOODS_OR_SERVICES2]: "Goods or services the business supplies",
-    [YEARS_EXPORTING2]: "How long the business has been exporting for",
-    [EMPLOYEES_UK2]: "Number of UK Employees",
-    [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
-    [USING_BROKER3]: "Using a broker for this insurance?",
-    [BROKER_NAME]: "Name of broker or company",
-    [BROKER_ADDRESS]: "Broker address",
-    [BROKER_EMAIL]: "Broker email address",
-    [COUNTRY]: "Buyer location",
-    [BUYER_COMPANY_NAME]: "Buyer company name or organisation",
-    [BUYER_REGISTRATION_NUMBER]: "Buyer registration number (optional)",
-    [BUYER_CONTACT_DETAILS]: "Buyer contact details",
-    [CONNECTION_WITH_BUYER2]: "Is the exporter connected with the buyer in any way?",
-    [CONNECTION_WITH_BUYER_DESCRIPTION2]: "Describe connection to the buyer",
-    [TRADED_WITH_BUYER2]: "Has the exporter traded with this buyer before?",
-    [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time",
-    [HAS_BUYER_FINANCIAL_ACCOUNTS2]: "Does the exporter hold any financial accounts in relation to the buyer?",
     [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "If the exporter has in past held credit insurance cover on the buyer",
-    [IS_APPOINTED2]: "Using a loss payee?",
-    [ACCOUNT_NUMBER2]: "Loss payee account number",
-    [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
     [IBAN2]: "Loss payee IBAN number",
-    [SORT_CODE2]: "Loss payee sort code",
-    [FINANCIAL_ADDRESS2]: "Bank address of the loss payee",
-    [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer",
-    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Exporter explaining the credit insurance cover they had on the buyer",
-    [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
-    [POLICY_TYPE5]: "Type of policy",
-    [REQUESTED_START_DATE2]: "When policy starts",
-    [CONTRACT_COMPLETION_DATE2]: "When it's expected to be complete",
+    [IS_APPOINTED2]: "Using a loss payee?",
+    [LAST_NAME]: "Applicant last name",
+    [MORE_THAN_250K.VALUE]: `Contract value of ${format_currency_default(AMOUNT_250K, GBP_CURRENCY_CODE)} or more?`,
     [NEED_PRE_CREDIT_PERIOD2]: "Is there a pre-credit period?",
+    NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House",
+    [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer",
+    [PHONE_NUMBER2]: "Exporter UK telephone number (optional)",
+    [POLICY_TYPE5]: "Type of policy",
+    [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Exporter explaining the credit insurance cover they had on the buyer",
+    [REQUESTED_START_DATE2]: "When policy starts",
     [REQUESTED2]: "Is there another company that needs to be insured on the policy?",
+    [SORT_CODE2]: "Loss payee sort code",
     [TOTAL_CONTRACT_VALUE_ID]: "Total value of the contract",
+    [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
+    [TRADING_ADDRESS2]: "Different trading address?",
+    [TRADED_WITH_BUYER2]: "Has the exporter traded with this buyer before?",
+    [USING_BROKER3]: "Using a broker for this insurance?",
+    [WEBSITE2]: "Exporter Company website (optional)",
     [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
-    NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House"
+    [YEARS_EXPORTING2]: "How long the business has been exporting for"
   }
 };
 
@@ -6719,10 +6716,21 @@ var map_buyer_trading_history_default = mapBuyerTradingHistory;
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
 var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
 var { FIELDS: FIELDS19 } = XLSX;
-var mapPreviousCoverWithBuyer = (relationship2) => {
-  if (relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS19[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]);
+var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
+  const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+  if (totalContractValueOverThreshold) {
+    const mapped = [
+      xlsx_row_default(
+        String(FIELDS19[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]),
+        map_yes_no_field_default({
+          answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]
+        })
+      ),
+      xlsx_row_default(String(FIELDS19[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3])
+    ];
+    return mapped;
   }
+  return [];
 };
 var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
@@ -6735,12 +6743,11 @@ var {
   COMPANY_OR_ORGANISATION: { NAME: NAME3, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
   CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER4,
   HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4,
   TRADED_WITH_BUYER: TRADED_WITH_BUYER4
 } = your_buyer_default;
 var { SECTION_TITLES: SECTION_TITLES3, FIELDS: FIELDS20 } = XLSX;
 var mapBuyer = (application2) => {
-  const { buyer } = application2;
+  const { buyer, eligibility } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
     xlsx_row_default(SECTION_TITLES3.BUYER, ""),
@@ -6752,14 +6759,7 @@ var mapBuyer = (application2) => {
     map_connection_with_buyer_default(relationship2),
     xlsx_row_default(String(FIELDS20[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
-    xlsx_row_default(
-      String(FIELDS20[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4]),
-      map_yes_no_field_default({
-        answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER4],
-        defaultValue: FIELD_VALUES.NO
-      })
-    ),
-    map_previous_cover_with_buyer_default(relationship2),
+    ...map_previous_cover_with_buyer_default(eligibility, relationship2),
     xlsx_row_default(String(FIELDS20[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;

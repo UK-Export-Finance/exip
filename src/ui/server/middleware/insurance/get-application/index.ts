@@ -80,7 +80,7 @@ const getApplicationMiddleware = async (req: Request, res: Response, next: Next)
       const application = await getApplication(Number(referenceNumber));
 
       if (application) {
-        // maps and adds totalContractValueOverThreshold to application
+        // TODO: EMS-3467: move to getPopulatedApplication.
         res.locals.application = mapTotalContractValueOverThreshold(application);
 
         return next();

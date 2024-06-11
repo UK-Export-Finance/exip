@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { ACCOUNT, FIELD_IDS } from '../constants';
+import { ACCOUNT, APPLICATION, FIELD_IDS, TOTAL_CONTRACT_VALUE } from '../constants';
 import encryptPassword from '../helpers/encrypt-password';
 import application from './mock-application';
 import buyer from './mock-buyer';
@@ -12,6 +12,10 @@ import { Account } from '../types';
 
 const {
   ACCOUNT: { PASSWORD_RESET_HASH },
+  ELIGIBILITY: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+  },
 } = FIELD_IDS.INSURANCE;
 
 const now = new Date();
@@ -61,6 +65,34 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
     },
   },
   company: companyScenarios.noDifferentTradingNameOrAddress,
+};
+
+export const mockApplicationSinglePolicyTotalContractValueOverThreshold = {
+  ...mockApplicationMinimalBrokerBuyerAndCompany,
+  policy: {
+    ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
+    [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
+  },
+  eligibility: {
+    ...mockApplicationMinimalBrokerBuyerAndCompany.eligibility,
+    [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+      value: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE,
+    },
+  },
+};
+
+export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
+  ...mockApplicationMinimalBrokerBuyerAndCompany,
+  policy: {
+    ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
+    [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
+  },
+  eligibility: {
+    ...mockApplicationMinimalBrokerBuyerAndCompany.eligibility,
+    [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
+      value: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE,
+    },
+  },
 };
 
 export const mockCisCountries = cisCountries;
