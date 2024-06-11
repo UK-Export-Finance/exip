@@ -13,7 +13,7 @@ describe('api/helpers/generate-application-url', () => {
 
     const result = generateAccountVerificationUrl(referenceNumber);
 
-    const expected = `${applicationUrl}/${referenceNumber}/${APPLICATION.ALL_SECTIONS}`;
+    const expected = `${applicationUrl}/${referenceNumber}${APPLICATION.ALL_SECTIONS_ROUTE}`;
 
     expect(result).toEqual(expected);
   });

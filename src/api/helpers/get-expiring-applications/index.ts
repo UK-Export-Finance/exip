@@ -1,10 +1,11 @@
 import { Application, Context } from '.keystone/types'; // eslint-disable-line
 import { APPLICATION } from '../../constants';
+import getStartAndEndTimeOfDate from '../get-start-and-end-time-of-date';
 import { dateInTheFutureByDays } from '../date';
 
 const { IN_PROGRESS } = APPLICATION.STATUS;
 
-const { REMINDER_DAYS, EARLIER_LIMIT_TIME_SET, LATER_LIMIT_HOURS, LATER_LIMIT_TIME_SET } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
+const { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 
 /**
  * getExpiringApplications
@@ -20,10 +21,9 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
     const today = new Date();
 
     const twoDaysTime = dateInTheFutureByDays(today, REMINDER_DAYS);
-    // midnight 2 days in the future - earliest time of the day
-    const earlierLimit = new Date(twoDaysTime.setHours(EARLIER_LIMIT_TIME_SET, EARLIER_LIMIT_TIME_SET, EARLIER_LIMIT_TIME_SET, EARLIER_LIMIT_TIME_SET));
-    // latest time in the day
-    const laterLimit = new Date(twoDaysTime.setHours(LATER_LIMIT_HOURS, LATER_LIMIT_TIME_SET, LATER_LIMIT_TIME_SET, LATER_LIMIT_TIME_SET));
+
+    // generates start and end time of provided date
+    const { startTime, endTime } = getStartAndEndTimeOfDate(twoDaysTime);
 
     /**
      * Queries applications that:
@@ -33,7 +33,7 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
      */
     const applications = (await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { gte: earlierLimit, lte: laterLimit } }],
+        AND: [{ status: { in: [IN_PROGRESS] } }, { submissionDeadline: { gte: startTime, lte: endTime } }],
       },
       query: APPLICATION.GET_QUERY,
     })) as Array<Application>;
