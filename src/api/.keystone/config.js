@@ -4855,10 +4855,26 @@ var mapPolicy = (policy) => {
 };
 var map_policy_default = mapPolicy;
 
+// helpers/get-populated-application/nominated-loss-payee/index.ts
+var getNominatedLossPayee = async (context, lossPayeeId) => {
+  try {
+    console.info(`Getting nominated loss payee ${lossPayeeId}`);
+    const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
+      where: { id: lossPayeeId },
+      query: "id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }"
+    });
+    return nominatedLossPayee;
+  } catch (err) {
+    console.error("Error getting nominated loss payee (getNominatedLossPayee helper) %O", err);
+    throw new Error(`Error getting nominated loss payee (getNominatedLossPayee helper) ${err}`);
+  }
+};
+var nominated_loss_payee_default = getNominatedLossPayee;
+
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
-var getPopulatedApplication = async (context, application2) => {
-  console.info("Getting populated application");
+var getPopulatedApplication = async ({ context, application: application2 }) => {
+  console.info(`Getting populated application ${application2.referenceNumber}`);
   const {
     eligibilityId,
     ownerId,
@@ -4908,14 +4924,7 @@ var getPopulatedApplication = async (context, application2) => {
   if (!policyContact) {
     throw new Error(generateErrorMessage("policyContact", application2.id));
   }
-  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
-    where: { id: nominatedLossPayeeId },
-    query: "id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }"
-  });
-  if (!nominatedLossPayee) {
-    console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
-    throw new Error(generateErrorMessage("nominated loss payee", application2.id));
-  }
+  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId);
   const populatedPolicy = map_policy_default(policy);
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }
@@ -6876,7 +6885,7 @@ var submitApplication = async (root, variables, context) => {
           where: { id: application2.id },
           data: update2
         });
-        const populatedApplication = await get_populated_application_default(context, updatedApplication);
+        const populatedApplication = await get_populated_application_default({ context, application: updatedApplication });
         const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication);
         await send_application_submitted_emails_default.send(populatedApplication, xlsxPath);
         return {
@@ -7822,7 +7831,7 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2, decryptFinancialInternational: decryptFinancialInternational2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
-      const populatedApplication = await get_populated_application_default(context, application2);
+      const populatedApplication = await get_populated_application_default({ context, application: application2 });
       if (decryptFinancialUk2 || decryptFinancialInternational2) {
         const { nominatedLossPayee } = populatedApplication;
         const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);

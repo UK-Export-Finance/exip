@@ -36,22 +36,22 @@ const {
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
   let populatedApplication: Application;
   let populatedApplicationMultiplePolicy: Application;
-  let application: Application;
-  let applicationIds: object;
+  let fullApplication: Application;
+  let application: object;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = await createFullApplication(context);
+    fullApplication = await createFullApplication(context);
 
-    applicationIds = mapApplicationIds(application);
+    application = mapApplicationIds(fullApplication);
 
-    populatedApplication = await getPopulatedApplication(context, applicationIds);
+    populatedApplication = await getPopulatedApplication({ context, application });
 
     const multiplePolicyApplication = await createFullApplication(context, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    populatedApplicationMultiplePolicy = await getPopulatedApplication(context, mapApplicationIds(multiplePolicyApplication));
+    populatedApplicationMultiplePolicy = await getPopulatedApplication({ context, application: mapApplicationIds(multiplePolicyApplication) });
   });
 
   describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {

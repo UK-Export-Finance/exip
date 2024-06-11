@@ -2,10 +2,16 @@ import { Context, Application as KeystoneApplication } from '.keystone/types'; /
 import getAccountById from '../get-account-by-id';
 import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';
+import getNominatedLossPayee from './nominated-loss-payee';
 import { Application, ApplicationPolicy } from '../../types';
 
 export const generateErrorMessage = (section: string, applicationId: number) =>
   `Getting populated application - no ${section} found for application ${applicationId}`;
+
+interface GetPopulatedApplicationParams {
+  context: Context;
+  application: KeystoneApplication;
+}
 
 /**
  * getPopulatedApplication
@@ -14,8 +20,8 @@ export const generateErrorMessage = (section: string, applicationId: number) =>
  * @param {Application}
  * @returns {Promise<Object>} Populated application
  */
-const getPopulatedApplication = async (context: Context, application: KeystoneApplication): Promise<Application> => {
-  console.info('Getting populated application');
+const getPopulatedApplication = async ({ context, application }: GetPopulatedApplicationParams): Promise<Application> => {
+  console.info(`Getting populated application ${application.referenceNumber}`);
 
   const {
     eligibilityId,
@@ -80,16 +86,7 @@ const getPopulatedApplication = async (context: Context, application: KeystoneAp
     throw new Error(generateErrorMessage('policyContact', application.id));
   }
 
-  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
-    where: { id: nominatedLossPayeeId },
-    query:
-      'id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }',
-  });
-
-  if (!nominatedLossPayee) {
-    console.error('%s', generateErrorMessage('nominated loss payee', application.id));
-    throw new Error(generateErrorMessage('nominated loss payee', application.id));
-  }
+  const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId);
 
   const populatedPolicy = mapPolicy(policy);
 

@@ -55,7 +55,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
         });
 
         // get a fully populated application for XLSX generation
-        const populatedApplication = await getPopulatedApplication(context, updatedApplication);
+        const populatedApplication = await getPopulatedApplication({ context, application: updatedApplication });
 
         // generate a XLSX for UKEF underwriting team email
         const xlsxPath = await generate.XLSX(populatedApplication);

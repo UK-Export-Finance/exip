@@ -31,18 +31,18 @@ const {
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-single-contract-policy', () => {
   let populatedApplication: Application;
-  let application: Application;
-  let applicationIds: object;
+  let fullApplication: Application;
+  let application: object;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = await createFullApplication(context);
+    fullApplication = await createFullApplication(context);
 
-    applicationIds = mapApplicationIds(application);
+    application = mapApplicationIds(fullApplication);
 
-    populatedApplication = await getPopulatedApplication(context, applicationIds);
+    populatedApplication = await getPopulatedApplication({ context, application });
   });
 
   it('should return an array of mapped fields', () => {

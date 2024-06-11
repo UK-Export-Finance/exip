@@ -96,7 +96,7 @@ describe('custom-resolvers/submit-application', () => {
         where: { id: submittedApplication.id },
       });
 
-      populatedApplication = await getPopulatedApplication(context, fullSubmittedApplication);
+      populatedApplication = await getPopulatedApplication({ context, application: fullSubmittedApplication });
     });
 
     test('it should call generate.XLSX', async () => {

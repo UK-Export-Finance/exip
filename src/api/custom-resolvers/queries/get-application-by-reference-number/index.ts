@@ -35,7 +35,7 @@ const getApplicationByReferenceNumberQuery = async (
        * Populate the application,
        * with all relationships.
        */
-      const populatedApplication = await getPopulatedApplication(context, application);
+      const populatedApplication = await getPopulatedApplication({ context, application });
 
       /**
        * if decrypt variables are set to true
