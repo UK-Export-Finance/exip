@@ -193,8 +193,25 @@ export interface ApplicationOwner extends Relationship {
   lastName: string;
 }
 
+export interface ApplicationJointlyInsuredParty extends Relationship {
+  policyId: string;
+  requested?: boolean;
+  companyName?: string;
+  companyNumber?: string;
+  country?: Country;
+}
+
 export interface ApplicationPolicy extends Relationship {
-  requestedStartDate?: Date;
+  policyType?: string;
+  requestedStartDate: Date;
+  contractCompletionDate: Date;
+  totalValueOfContract?: number;
+  creditPeriodWithBuyer?: string;
+  policyCurrencyCode?: string;
+  totalMonthsOfCover?: number;
+  totalSalesToBuyer?: number;
+  maximumBuyerWillOwe?: number;
+  jointlyInsuredParty: ApplicationJointlyInsuredParty;
 }
 
 export interface ApplicationPolicyContact extends Relationship {
@@ -209,14 +226,6 @@ export interface ApplicationPrivateMarket extends Relationship {
   exportContractId: string;
   attempted?: boolean;
   declinedDescription?: string;
-}
-
-export interface ApplicationJointlyInsuredParty extends Relationship {
-  policyId: string;
-  requested?: boolean;
-  companyName?: string;
-  companyNumber?: string;
-  country: Country;
 }
 
 export interface Application {

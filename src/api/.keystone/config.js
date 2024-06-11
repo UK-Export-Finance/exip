@@ -711,6 +711,13 @@ var COVER_PERIOD = {
 var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
 var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
 
+// constants/eligibility.ts
+var ELIGIBILITY = {
+  MAX_COVER_AMOUNT_IN_GBP: 5e5,
+  MAX_COVER_PERIOD_MONTHS: 24,
+  MAX_COVER_PERIOD_YEARS: 2
+};
+
 // constants/external-apis.ts
 var EXTERNAL_API_DEFINITIONS = {
   CIS: {
@@ -805,15 +812,15 @@ var TITLE_INDEXES = () => ({
   KEY_INFORMATION: 15,
   ELIGIBILITY: 21,
   EXPORTER_BUSINESS: 31,
-  POLICY: 48,
-  BUYER: 57,
-  DECLARATIONS: 67
+  POLICY: 47,
+  BUYER: 63,
+  DECLARATIONS: 73
 });
 var INDEXES = () => ({
   TITLES: TITLE_INDEXES(),
   COMPANY_ADDRESS: 33,
   COMPANY_SIC_CODES: 34,
-  BUYER_ADDRESS: 59
+  BUYER_ADDRESS: 65
 });
 var incrementIndexes = (indexes) => {
   const modified = indexes;
@@ -845,9 +852,9 @@ var XLSX_ROW_INDEXES = (application2) => {
       hasDifferentTradingName
     },
     eligibility: { totalContractValue },
-    policy
+    nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed }
   } = application2;
-  const policyType = policy[POLICY_TYPE2];
+  const policyType = application2.policy[POLICY_TYPE2];
   let indexes = INDEXES();
   if (isMultiplePolicyType(policyType)) {
     indexes.TITLES.BUYER += 1;
@@ -881,6 +888,11 @@ var XLSX_ROW_INDEXES = (application2) => {
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 2;
+  }
+  if (nominatedLossPayeeAppointed) {
+    indexes.TITLES.BUYER += 2;
+    indexes.TITLES.DECLARATIONS += 2;
+    indexes.BUYER_ADDRESS += 2;
   }
   return indexes;
 };
@@ -4827,6 +4839,18 @@ var delete_application_by_reference_number_default = deleteApplicationByReferenc
 // custom-resolvers/mutations/submit-application/index.ts
 var import_date_fns6 = require("date-fns");
 
+// helpers/get-populated-application/map-policy/index.ts
+var mapPolicy = (policy) => {
+  const { requestedStartDate, contractCompletionDate } = policy;
+  const mappedPolicy = {
+    ...policy,
+    requestedStartDate: requestedStartDate ? new Date(requestedStartDate) : null,
+    contractCompletionDate: contractCompletionDate ? new Date(contractCompletionDate) : null
+  };
+  return mappedPolicy;
+};
+var map_policy_default = mapPolicy;
+
 // helpers/get-populated-application/index.ts
 var generateErrorMessage = (section, applicationId) => `Getting populated application - no ${section} found for application ${applicationId}`;
 var getPopulatedApplication = async (context, application2) => {
@@ -4867,8 +4891,9 @@ var getPopulatedApplication = async (context, application2) => {
   if (!account2) {
     throw new Error(generateErrorMessage("account", application2.id));
   }
-  const policy = await context.db.Policy.findOne({
-    where: { id: policyId }
+  const policy = await context.query.Policy.findOne({
+    where: { id: policyId },
+    query: "id policyType requestedStartDate contractCompletionDate totalValueOfContract creditPeriodWithBuyer policyCurrencyCode totalMonthsOfCover totalSalesToBuyer maximumBuyerWillOwe needPreCreditPeriodCover jointlyInsuredParty { id companyName companyNumber countryCode requested }"
   });
   if (!policy) {
     throw new Error(generateErrorMessage("policy", application2.id));
@@ -4879,6 +4904,15 @@ var getPopulatedApplication = async (context, application2) => {
   if (!policyContact) {
     throw new Error(generateErrorMessage("policyContact", application2.id));
   }
+  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
+    where: { id: nominatedLossPayeeId },
+    query: "id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }"
+  });
+  if (!nominatedLossPayee) {
+    console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
+    throw new Error(generateErrorMessage("nominated loss payee", application2.id));
+  }
+  const populatedPolicy = map_policy_default(policy);
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }
   });
@@ -4953,14 +4987,6 @@ var getPopulatedApplication = async (context, application2) => {
   if (!buyerTradingHistory) {
     throw new Error(generateErrorMessage("buyerTradingHistory", application2.id));
   }
-  const nominatedLossPayee = await context.query.NominatedLossPayee.findOne({
-    where: { id: nominatedLossPayeeId },
-    query: "id financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } isAppointed isLocatedInUk isLocatedInternationally name"
-  });
-  if (!nominatedLossPayee) {
-    console.error("%s", generateErrorMessage("nominated loss payee", application2.id));
-    throw new Error(generateErrorMessage("nominated loss payee", application2.id));
-  }
   const buyerCountry = await context.db.Country.findOne({
     where: { id: buyer.countryId }
   });
@@ -5002,7 +5028,7 @@ var getPopulatedApplication = async (context, application2) => {
     declaration,
     exportContract: populatedExportContract,
     owner: account2,
-    policy,
+    policy: populatedPolicy,
     policyContact,
     nominatedLossPayee,
     sectionReview
@@ -5352,53 +5378,141 @@ var EXPORT_CONTRACT_FIELDS = {
   }
 };
 
+// content-strings/form-titles.ts
+var FORM_TITLES = {
+  YOUR_BUSINESS: {
+    COMPANY_DETAILS: "Company details",
+    NATURE_OF_BUSINESS: "Nature of your business",
+    TURNOVER: "Turnover",
+    CREDIT_CONTROL: "Credit control"
+  },
+  YOUR_BUYER: {
+    COMPANY_DETAILS: "Company details",
+    CONNECTION_TO_BUYER: "Connection to the buyer",
+    TRADING_HISTORY: "Trading history",
+    CREDIT_INSURANCE_HISTORY: "Credit insurance history",
+    FINANCIAL_ACCOUNTS: "Financial accounts"
+  },
+  POLICY: {
+    CONTRACT_POLICY: "Requested insurance policy",
+    NAME_ON_POLICY: "Named person on the policy",
+    BROKER: "Broker",
+    OTHER_COMPANY: "Other company to be insured",
+    LOSS_PAYEE: "Loss payee"
+  },
+  EXPORT_CONTRACT: {
+    ABOUT_THE_EXPORT: "About the export",
+    PRIVATE_MARKET: "Private insurance market",
+    AGENT: "Agent"
+  }
+};
+
 // content-strings/fields/insurance/policy/index.ts
 var {
+  ACCOUNT: { EMAIL: EMAIL3 },
+  CURRENCY: { CURRENCY_CODE, ALTERNATIVE_CURRENCY_CODE },
   POLICY: {
+    POLICY_TYPE: POLICY_TYPE4,
+    SINGLE_POLICY_TYPE,
+    MULTIPLE_POLICY_TYPE,
     CONTRACT_POLICY,
     EXPORT_VALUE,
-    POLICY_TYPE: POLICY_TYPE4,
+    NAME_ON_POLICY,
+    DIFFERENT_NAME_ON_POLICY,
+    NEED_PRE_CREDIT_PERIOD,
+    CREDIT_PERIOD_WITH_BUYER,
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COUNTRY_CODE },
     USING_BROKER: USING_BROKER2,
-    BROKER_DETAILS: { NAME, EMAIL: EMAIL3, FULL_ADDRESS },
+    BROKER_DETAILS: { NAME, FULL_ADDRESS },
     LOSS_PAYEE: { IS_APPOINTED },
-    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY }
+    LOSS_PAYEE_DETAILS: { NAME: LOSS_PAYEE_NAME, LOCATION, IS_LOCATED_IN_UK, IS_LOCATED_INTERNATIONALLY },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE, ACCOUNT_NUMBER },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE, IBAN },
+    FINANCIAL_ADDRESS
   }
 } = insurance_default;
+var { MAX_COVER_PERIOD_MONTHS } = ELIGIBILITY;
+var {
+  POLICY: { TOTAL_MONTHS_OF_COVER }
+} = APPLICATION;
+var { POLICY: POLICY_FORM_TITLES } = FORM_TITLES;
 var POLICY_FIELDS = {
   [POLICY_TYPE4]: {
     ID: POLICY_TYPE4,
+    OPTIONS: {
+      SINGLE: {
+        ID: SINGLE_POLICY_TYPE,
+        VALUE: FIELD_VALUES.POLICY_TYPE.SINGLE,
+        TEXT: "Single contract policy",
+        HINT_LIST: [
+          "Covers a single contract with a buyer, for one or more shipments",
+          `Cover for up to ${MAX_COVER_PERIOD_MONTHS} months`,
+          "Best for a one off- project, when you know the exact value of your export contract now",
+          "You pay for the insurance before the policy starts"
+        ]
+      },
+      MULTIPLE: {
+        ID: MULTIPLE_POLICY_TYPE,
+        VALUE: FIELD_VALUES.POLICY_TYPE.MULTIPLE,
+        TEXT: "Multiple contract policy",
+        HINT_LIST: [
+          `Covers multiple contracts with the same buyer, usually for ${TOTAL_MONTHS_OF_COVER} months`,
+          "Best if you'll have an ongoing relationship with the buyer but you're not sure yet how many contracts or sales you'll have",
+          "You only pay for your insurance each time you declare a new contract or sale - no need to pay before the policy starts"
+        ]
+      }
+    },
     SUMMARY: {
-      TITLE: "Policy type"
+      TITLE: "Policy type",
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
     }
   },
   CONTRACT_POLICY: {
     [CONTRACT_POLICY.REQUESTED_START_DATE]: {
+      LABEL: "When do you want your policy to start?",
+      HINT: "For example, 06 11 2023",
       SUMMARY: {
-        TITLE: "Policy start date"
+        TITLE: "Policy start date",
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
       }
     },
-    [CONTRACT_POLICY.POLICY_CURRENCY_CODE]: {
+    [CURRENCY_CODE]: {
+      LEGEND: "Select currency you'd like your policy to be issued in",
+      HINT: "This is the currency your policy will be issued in",
       SUMMARY: {
-        TITLE: "Policy currency"
+        TITLE: "Policy currency",
+        FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+      },
+      [ALTERNATIVE_CURRENCY_CODE]: {
+        ID: ALTERNATIVE_CURRENCY_CODE,
+        VALUE: ALTERNATIVE_CURRENCY_CODE
       }
     },
     SINGLE: {
       [CONTRACT_POLICY.SINGLE.CONTRACT_COMPLETION_DATE]: {
+        LABEL: "When do you expect to complete the export contract?",
+        HINT: "For example, 06 11 2024",
         SUMMARY: {
-          TITLE: "Date you expect it to complete"
+          TITLE: "Date you expect it to complete",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       },
       [CONTRACT_POLICY.SINGLE.TOTAL_CONTRACT_VALUE]: {
         HINT: "Enter a whole number. Do not enter decimals.",
         SUMMARY: {
-          TITLE: "Contract value"
+          TITLE: "Contract value",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       }
     },
     MULTIPLE: {
       [CONTRACT_POLICY.MULTIPLE.TOTAL_MONTHS_OF_COVER]: {
+        LABEL: "How many months do you want to be insured for?",
+        HINT: `The maximum is ${TOTAL_MONTHS_OF_COVER} months.`,
+        OPTIONS: FIELD_VALUES.TOTAL_MONTHS_OF_COVER,
         SUMMARY: {
-          TITLE: "How many months you want to be insured for"
+          TITLE: "How many months you want to be insured for",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       }
     }
@@ -5409,18 +5523,102 @@ var POLICY_FIELDS = {
         LABEL: "Estimate total sales to your buyer during this time",
         HINT: "Enter a whole number. Do not enter decimals.",
         SUMMARY: {
-          TITLE: "Estimated total sales to the buyer"
+          TITLE: "Estimated total sales to the buyer",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
       },
       [EXPORT_VALUE.MULTIPLE.MAXIMUM_BUYER_WILL_OWE]: {
         LABEL: "Estimate the maximum amount your buyer will owe you at any single point during this time",
         HINT: {
           FOR_EXAMPLE: "For example, your total sales might be \xA3250,000 but the maximum the buyer will owe you at any single point is \xA3100,000.",
-          NO_DECIMALS: "Enter a whole number - do not enter decimals."
+          NO_DECIMALS: "Enter a whole number. Do not enter decimals."
         },
         SUMMARY: {
-          TITLE: "Estimated maximum amount owed by the buyer"
+          TITLE: "Estimated maximum amount owed by the buyer",
+          FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
         }
+      }
+    }
+  },
+  NAME_ON_POLICY: {
+    OPTIONS: {
+      SAME_NAME: {
+        ID: NAME_ON_POLICY.SAME_NAME,
+        VALUE: NAME_ON_POLICY.SAME_NAME
+      },
+      OTHER_NAME: {
+        ID: NAME_ON_POLICY.OTHER_NAME,
+        VALUE: NAME_ON_POLICY.OTHER_NAME,
+        TEXT: "Someone else"
+      }
+    },
+    [NAME_ON_POLICY.POSITION]: {
+      LABEL: "What's your position at the company?",
+      MAXIMUM: 50,
+      SUMMARY: {
+        TITLE: "Position at company",
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
+      }
+    },
+    [NAME_ON_POLICY.NAME]: {
+      SUMMARY: {
+        TITLE: "Contact name",
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
+      }
+    }
+  },
+  DIFFERENT_NAME_ON_POLICY: {
+    [DIFFERENT_NAME_ON_POLICY.POSITION]: {
+      LABEL: "Position at company",
+      MAXIMUM: 50
+    },
+    [EMAIL3]: {
+      SUMMARY: {
+        TITLE: "Contact email",
+        FORM_TITLE: POLICY_FORM_TITLES.NAME_ON_POLICY
+      }
+    }
+  },
+  [NEED_PRE_CREDIT_PERIOD]: {
+    HINT: "This is known as the pre-credit period",
+    SUMMARY: {
+      TITLE: "Pre-credit period",
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+    }
+  },
+  [CREDIT_PERIOD_WITH_BUYER]: {
+    LABEL: "What period of pre-credit cover do you require?",
+    SUMMARY: {
+      TITLE: "Period of pre-credit cover",
+      FORM_TITLE: POLICY_FORM_TITLES.CONTRACT_POLICY
+    },
+    MAXIMUM: MAXIMUM_CHARACTERS.CREDIT_PERIOD_WITH_BUYER
+  },
+  REQUESTED_JOINTLY_INSURED_PARTY: {
+    [REQUESTED]: {
+      HINT: "This could be a parent company, subsidiary or a subcontractor.",
+      SUMMARY: {
+        TITLE: "Another company to be insured"
+      }
+    },
+    [COMPANY_NAME2]: {
+      LABEL: "Name of the other company",
+      MAXIMUM: 200,
+      SUMMARY: {
+        TITLE: "Name of the other company"
+      }
+    },
+    [COMPANY_NUMBER]: {
+      LABEL: "Registration number of the other company (optional)",
+      MAXIMUM: 100,
+      SUMMARY: {
+        TITLE: "Registration number of the other company"
+      }
+    },
+    [COUNTRY_CODE]: {
+      LABEL: "What country is the other company based in?",
+      SUMMARY: {
+        TITLE: "Country of the company"
       }
     }
   },
@@ -5428,7 +5626,8 @@ var POLICY_FIELDS = {
     [USING_BROKER2]: {
       LABEL: "Are you using a broker to get this insurance?",
       SUMMARY: {
-        TITLE: "Using a broker"
+        TITLE: "Using a broker",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
       }
     }
   },
@@ -5437,20 +5636,24 @@ var POLICY_FIELDS = {
       LABEL: "Name of broker or company",
       MAXIMUM: 300,
       SUMMARY: {
-        TITLE: "Broker's name or company"
+        TITLE: "Broker's name or company",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
       }
     },
     [EMAIL3]: {
       LABEL: "Email address",
       SUMMARY: {
-        TITLE: "Broker's email"
+        TITLE: "Broker's email",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
       }
     },
     [FULL_ADDRESS]: {
       LABEL: "Broker's address",
       SUMMARY: {
-        TITLE: "Broker's address"
-      }
+        TITLE: "Broker's address",
+        FORM_TITLE: POLICY_FORM_TITLES.BROKER
+      },
+      MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
     }
   },
   LOSS_PAYEE: {
@@ -5458,12 +5661,21 @@ var POLICY_FIELDS = {
       HINT: {
         INTRO: "A loss payee is a financial organisation, like a bank or a lender, who will be paid in the event of a valid claim.  A loss payee could also be a parent company or subsidiary of your business.",
         OUTRO: "Not every policy has a loss payee. If you don't, select 'No' and you will be listed as the default claimant."
+      },
+      SUMMARY: {
+        TITLE: "Appointed a loss payee",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
       }
     }
   },
   LOSS_PAYEE_DETAILS: {
     [LOSS_PAYEE_NAME]: {
-      LABEL: "Name of the loss payee"
+      LABEL: "Name of the loss payee",
+      MAXIMUM: MAXIMUM_CHARACTERS.LOSS_PAYEE_NAME,
+      SUMMARY: {
+        TITLE: "Name of the loss payee",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
     },
     [LOCATION]: {
       LABEL: "Where is the loss payee located?",
@@ -5473,19 +5685,71 @@ var POLICY_FIELDS = {
           VALUE: IS_LOCATED_IN_UK,
           TEXT: "United Kingdom"
         },
-        INTERNATIONAL: {
+        INTERNATIONALLY: {
           ID: IS_LOCATED_INTERNATIONALLY,
           VALUE: IS_LOCATED_INTERNATIONALLY,
           TEXT: "International"
         }
       }
     }
+  },
+  LOSS_PAYEE_FINANCIAL_UK: {
+    [SORT_CODE]: {
+      LABEL: "Sort code",
+      HINT: "Must be 6 digits long",
+      SUMMARY: {
+        TITLE: "Sort code",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [ACCOUNT_NUMBER]: {
+      LABEL: "Account number",
+      HINT: "Must be between 6 and 8 digits long",
+      SUMMARY: {
+        TITLE: "Account number",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based in the UK",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    }
+  },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: {
+    [BIC_SWIFT_CODE]: {
+      LABEL: "BIC or SWIFT code",
+      HINT: "Must be between 8 and 11 characters long",
+      SUMMARY: {
+        TITLE: "BIC or SWIFT code",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [IBAN]: {
+      LABEL: "IBAN",
+      HINT: "Must be between 16 and 34 characters long",
+      SUMMARY: {
+        TITLE: "IBAN",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    },
+    [FINANCIAL_ADDRESS]: {
+      SUMMARY: {
+        TITLE: "Loss payee's bank based internationally",
+        FORM_TITLE: POLICY_FORM_TITLES.LOSS_PAYEE
+      }
+    }
+  },
+  FINANCIAL_ADDRESS: {
+    LABEL: "Bank address",
+    MAXIMUM: MAXIMUM_CHARACTERS.FULL_ADDRESS
   }
 };
 
 // content-strings/fields/insurance/your-business/index.ts
 var {
-  COMPANIES_HOUSE: { COMPANY_NAME: COMPANY_NAME2, COMPANY_NUMBER, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
+  COMPANIES_HOUSE: { COMPANY_NAME: COMPANY_NAME3, COMPANY_NUMBER: COMPANY_NUMBER2, COMPANY_INCORPORATED, COMPANY_SIC, COMPANY_ADDRESS, FINANCIAL_YEAR_END_DATE },
   EXPORTER_BUSINESS: EXPORTER_BUSINESS2
 } = insurance_default;
 var {
@@ -5497,12 +5761,12 @@ var {
 } = EXPORTER_BUSINESS2;
 var FIELDS = {
   COMPANY_DETAILS: {
-    [COMPANY_NUMBER]: {
+    [COMPANY_NUMBER2]: {
       SUMMARY: {
         TITLE: "Companies House registration number"
       }
     },
-    [COMPANY_NAME2]: {
+    [COMPANY_NAME3]: {
       SUMMARY: {
         TITLE: "Company name"
       }
@@ -5587,35 +5851,6 @@ var FIELDS = {
   }
 };
 
-// content-strings/form-titles.ts
-var FORM_TITLES = {
-  YOUR_BUSINESS: {
-    COMPANY_DETAILS: "Company details",
-    NATURE_OF_BUSINESS: "Nature of your business",
-    TURNOVER: "Turnover",
-    CREDIT_CONTROL: "Credit control"
-  },
-  YOUR_BUYER: {
-    COMPANY_DETAILS: "Company details",
-    CONNECTION_TO_BUYER: "Connection to the buyer",
-    TRADING_HISTORY: "Trading history",
-    CREDIT_INSURANCE_HISTORY: "Credit insurance history",
-    FINANCIAL_ACCOUNTS: "Financial accounts"
-  },
-  POLICY: {
-    CONTRACT_POLICY: "Requested insurance policy",
-    NAME_ON_POLICY: "Named person on the policy",
-    BROKER: "Broker",
-    OTHER_COMPANY: "Other company to be insured",
-    LOSS_PAYEE: "Loss payee"
-  },
-  EXPORT_CONTRACT: {
-    ABOUT_THE_EXPORT: "About the export",
-    PRIVATE_MARKET: "Private insurance market",
-    AGENT: "Agent"
-  }
-};
-
 // content-strings/fields/insurance/your-buyer/index.ts
 var {
   YOUR_BUYER: {
@@ -5631,7 +5866,7 @@ var {
     TOTAL_AMOUNT_OVERDUE,
     HAS_BUYER_FINANCIAL_ACCOUNTS
   },
-  CURRENCY: { CURRENCY_CODE }
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 }
 } = FIELD_IDS.INSURANCE;
 var {
   YOUR_BUYER: { COMPANY_DETAILS, TRADING_HISTORY, CONNECTION_TO_BUYER, CREDIT_INSURANCE_HISTORY, FINANCIAL_ACCOUNTS }
@@ -5713,7 +5948,7 @@ var YOUR_BUYER_FIELDS = {
       FORM_TITLE: TRADING_HISTORY
     }
   },
-  [CURRENCY_CODE]: {
+  [CURRENCY_CODE2]: {
     LEGEND: "What currency are the outstanding or overdue payments in?"
   },
   [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: {
@@ -5792,11 +6027,19 @@ var {
     HAS_CREDIT_CONTROL: HAS_CREDIT_CONTROL2
   },
   POLICY: {
+    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS },
     CONTRACT_POLICY: {
-      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2 }
+      REQUESTED_START_DATE: REQUESTED_START_DATE2,
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE2, TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_ID }
     },
-    USING_BROKER: USING_BROKER3,
-    BROKER_DETAILS: { NAME: BROKER_NAME, EMAIL: BROKER_EMAIL, FULL_ADDRESS: BROKER_ADDRESS }
+    FINANCIAL_ADDRESS: FINANCIAL_ADDRESS2,
+    LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED2 },
+    LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE2, IBAN: IBAN2 },
+    LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE2, ACCOUNT_NUMBER: ACCOUNT_NUMBER2 },
+    NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD2,
+    REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2 },
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 },
+    USING_BROKER: USING_BROKER3
   },
   YOUR_BUYER: {
     COMPANY_OR_ORGANISATION: { COUNTRY, NAME: BUYER_COMPANY_NAME, REGISTRATION_NUMBER: BUYER_REGISTRATION_NUMBER, FIRST_NAME: BUYER_CONTACT_DETAILS },
@@ -5855,7 +6098,7 @@ var XLSX = {
     [YEARS_EXPORTING2]: "How long the business has been exporting for",
     [EMPLOYEES_UK2]: "Number of UK Employees",
     [ESTIMATED_ANNUAL_TURNOVER2]: "Exporter estimated turnover this current financial year",
-    [USING_BROKER3]: "Using a broker for this insurance",
+    [USING_BROKER3]: "Using a broker for this insurance?",
     [BROKER_NAME]: "Name of broker or company",
     [BROKER_ADDRESS]: "Broker address",
     [BROKER_EMAIL]: "Broker email address",
@@ -5869,9 +6112,21 @@ var XLSX = {
     [FAILED_PAYMENTS2]: "Has the buyer ever failed to pay the exporter on time",
     [HAS_BUYER_FINANCIAL_ACCOUNTS2]: "Does the exporter hold any financial accounts in relation to the buyer?",
     [HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "If the exporter has in past held credit insurance cover on the buyer",
+    [IS_APPOINTED2]: "Using a loss payee?",
+    [ACCOUNT_NUMBER2]: "Loss payee account number",
+    [BIC_SWIFT_CODE2]: "Loss payee BIC or SWIFT code",
+    [IBAN2]: "Loss payee IBAN number",
+    [SORT_CODE2]: "Loss payee sort code",
+    [FINANCIAL_ADDRESS2]: "Bank address of the loss payee",
     [OUTSTANDING_PAYMENTS2]: "Does the exporter currently have any outstanding or overdue payments from the buyer",
     [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER2]: "Exporter explaining the credit insurance cover they had on the buyer",
     [TOTAL_OUTSTANDING_PAYMENTS2]: "Total outstanding payments",
+    [POLICY_TYPE5]: "Type of policy",
+    [REQUESTED_START_DATE2]: "When policy starts",
+    [CONTRACT_COMPLETION_DATE2]: "When it's expected to be complete",
+    [NEED_PRE_CREDIT_PERIOD2]: "Is there a pre-credit period?",
+    [REQUESTED2]: "Is there another company that needs to be insured on the policy?",
+    [TOTAL_CONTRACT_VALUE_ID]: "Total value of the contract",
     [WILL_EXPORT_WITH_CODE_OF_CONDUCT2]: "Will the exporter export using their code of conduct?",
     NO_FINANCIAL_YEAR_END_DATE: "No data from Companies House"
   }
@@ -5937,7 +6192,7 @@ var {
     COMPANY_OR_ORGANISATION: { COUNTRY: COUNTRY2, NAME: BUYER_COMPANY_NAME2 }
   },
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE5 }
+    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE6 }
   }
 } = insurance_default;
 var mapKeyInformation = (application2) => {
@@ -5947,11 +6202,27 @@ var mapKeyInformation = (application2) => {
     xlsx_row_default(FIELDS4[EXPORTER_COMPANY_NAME2], application2.company[EXPORTER_COMPANY_NAME2]),
     xlsx_row_default(FIELDS4[COUNTRY2], application2.buyer[COUNTRY2].name),
     xlsx_row_default(FIELDS4[BUYER_COMPANY_NAME2], application2.buyer[BUYER_COMPANY_NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE5].SUMMARY?.TITLE), policy[POLICY_TYPE5])
+    xlsx_row_default(String(CONTENT_STRINGS[POLICY_TYPE6].SUMMARY?.TITLE), policy[POLICY_TYPE6])
   ];
   return mapped;
 };
 var map_key_information_default = mapKeyInformation;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-intro/index.ts
+var { FIELDS: FIELDS5, SECTION_TITLES } = XLSX;
+var {
+  POLICY_TYPE: POLICY_TYPE7,
+  CONTRACT_POLICY: { REQUESTED_START_DATE: REQUESTED_START_DATE3 }
+} = policy_default;
+var mapIntro = (policy) => {
+  const mapped = [
+    xlsx_row_default(SECTION_TITLES.POLICY, ""),
+    xlsx_row_default(String(FIELDS5[POLICY_TYPE7]), policy[POLICY_TYPE7]),
+    xlsx_row_default(String(FIELDS5[REQUESTED_START_DATE3]), format_date_default(policy[REQUESTED_START_DATE3], "dd-MMM-yy"))
+  ];
+  return mapped;
+};
+var map_intro_default = mapIntro;
 
 // generate-xlsx/map-application-to-XLSX/helpers/format-currency/index.ts
 var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleString("en", {
@@ -5962,85 +6233,63 @@ var formatCurrency2 = (number, currencyCode, decimalPoints) => number.toLocaleSt
 });
 var format_currency_default2 = formatCurrency2;
 
+// generate-xlsx/map-application-to-XLSX/map-policy/map-single-contract-policy/index.ts
+var { FIELDS: FIELDS6 } = XLSX;
+var CONTENT_STRINGS2 = {
+  ...POLICY_FIELDS,
+  ...POLICY_FIELDS.CONTRACT_POLICY,
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE
+};
+var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE3 },
+  POLICY: {
+    CONTRACT_POLICY: {
+      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
+      POLICY_CURRENCY_CODE,
+      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
+    }
+  }
+} = insurance_default;
+var mapSingleContractPolicy = (policy) => {
+  const mapped = [
+    xlsx_row_default(String(FIELDS6[CONTRACT_COMPLETION_DATE3]), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd-MMM-yy")),
+    xlsx_row_default(String(CONTENT_STRINGS2[CURRENCY_CODE3].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
+    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
+  ];
+  return mapped;
+};
+var map_single_contract_policy_default = mapSingleContractPolicy;
+
 // generate-xlsx/map-application-to-XLSX/helpers/map-month-string/index.ts
 var mapMonthString = (answer) => answer === 1 ? `${answer} month` : `${answer} months`;
 var map_month_string_default = mapMonthString;
 
-// generate-xlsx/map-application-to-XLSX/map-policy/index.ts
-var CONTENT_STRINGS2 = {
+// generate-xlsx/map-application-to-XLSX/map-policy/map-multiple-contract-policy/index.ts
+var CONTENT_STRINGS3 = {
   ...POLICY_FIELDS,
   ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
   ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
-  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
-  ...EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE
 };
 var {
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE4 },
   POLICY: {
-    TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE6 },
     CONTRACT_POLICY: {
-      REQUESTED_START_DATE: REQUESTED_START_DATE2,
-      SINGLE: { CONTRACT_COMPLETION_DATE: CONTRACT_COMPLETION_DATE3 },
-      MULTIPLE: { TOTAL_MONTHS_OF_COVER },
-      POLICY_CURRENCY_CODE,
-      SINGLE: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE2 }
+      POLICY_CURRENCY_CODE: POLICY_CURRENCY_CODE2,
+      MULTIPLE: { TOTAL_MONTHS_OF_COVER: TOTAL_MONTHS_OF_COVER2 }
     },
     EXPORT_VALUE: {
       MULTIPLE: { TOTAL_SALES_TO_BUYER, MAXIMUM_BUYER_WILL_OWE }
     }
-  },
-  EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION2, FINAL_DESTINATION: FINAL_DESTINATION2 }
   }
 } = insurance_default;
-var mapPolicyIntro = (application2) => {
-  const { policy } = application2;
-  const mapped = [
-    xlsx_row_default(XLSX.SECTION_TITLES.POLICY, ""),
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_TYPE6].SUMMARY?.TITLE), policy[POLICY_TYPE6]),
-    xlsx_row_default(String(CONTENT_STRINGS2[REQUESTED_START_DATE2].SUMMARY?.TITLE), format_date_default(policy[REQUESTED_START_DATE2], "dd-MMM-yy"))
-  ];
-  return mapped;
-};
-var mapSinglePolicyFields = (application2) => {
-  const { policy } = application2;
-  return [
-    xlsx_row_default(String(CONTENT_STRINGS2[CONTRACT_COMPLETION_DATE3].SUMMARY?.TITLE), format_date_default(policy[CONTRACT_COMPLETION_DATE3], "dd-MMM-yy")),
-    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_CONTRACT_VALUE2].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_CONTRACT_VALUE2], GBP_CURRENCY_CODE))
-  ];
-};
-var mapMultiplePolicyFields = (application2) => {
-  const { policy } = application2;
-  const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_MONTHS_OF_COVER].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER])),
-    xlsx_row_default(String(CONTENT_STRINGS2[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
-    xlsx_row_default(String(CONTENT_STRINGS2[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
-  ];
-  return mapped;
-};
-var mapPolicyOutro = (application2) => {
-  const { exportContract, policy } = application2;
-  const mapped = [
-    xlsx_row_default(String(CONTENT_STRINGS2[POLICY_CURRENCY_CODE].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE]),
-    xlsx_row_default(String(CONTENT_STRINGS2[DESCRIPTION2].SUMMARY?.TITLE), exportContract[DESCRIPTION2]),
-    xlsx_row_default(String(CONTENT_STRINGS2[FINAL_DESTINATION2].SUMMARY?.TITLE), exportContract[FINAL_DESTINATION2].name)
-  ];
-  return mapped;
-};
-var mapPolicy = (application2) => {
-  let mapped = mapPolicyIntro(application2);
-  const policyType = application2.policy[POLICY_TYPE6];
-  if (isSinglePolicyType(policyType)) {
-    mapped = [...mapped, ...mapSinglePolicyFields(application2)];
-  }
-  if (isMultiplePolicyType(policyType)) {
-    mapped = [...mapped, ...mapMultiplePolicyFields(application2)];
-  }
-  mapped = [...mapped, ...mapPolicyOutro(application2)];
-  return mapped;
-};
-var map_policy_default = mapPolicy;
+var mapMultipleContractPolicy = (policy) => [
+  xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_MONTHS_OF_COVER2].SUMMARY?.TITLE), map_month_string_default(policy[TOTAL_MONTHS_OF_COVER2])),
+  xlsx_row_default(String(CONTENT_STRINGS3[CURRENCY_CODE4].SUMMARY?.TITLE), policy[POLICY_CURRENCY_CODE2]),
+  xlsx_row_default(String(CONTENT_STRINGS3[TOTAL_SALES_TO_BUYER].SUMMARY?.TITLE), format_currency_default2(policy[TOTAL_SALES_TO_BUYER], GBP_CURRENCY_CODE)),
+  xlsx_row_default(String(CONTENT_STRINGS3[MAXIMUM_BUYER_WILL_OWE].SUMMARY?.TITLE), format_currency_default2(policy[MAXIMUM_BUYER_WILL_OWE], GBP_CURRENCY_CODE))
+];
+var map_multiple_contract_policy_default = mapMultipleContractPolicy;
 
 // generate-xlsx/map-application-to-XLSX/helpers/map-yes-no-field/index.ts
 var { YES, NO } = FIELD_VALUES;
@@ -6058,35 +6307,157 @@ var mapYesNoField = ({ answer, defaultValue }) => {
 };
 var map_yes_no_field_default = mapYesNoField;
 
-// generate-xlsx/map-application-to-XLSX/map-exporter-business/map-broker/index.ts
+// generate-xlsx/map-application-to-XLSX/map-policy/map-broker/index.ts
 var {
   USING_BROKER: USING_BROKER4,
   BROKER_DETAILS: { NAME: BROKER_NAME2, EMAIL: EMAIL6, FULL_ADDRESS: FULL_ADDRESS2 }
 } = POLICY;
-var { FIELDS: FIELDS5 } = XLSX;
+var { FIELDS: FIELDS7 } = XLSX;
 var mapBroker = (application2) => {
   const { broker } = application2;
-  let mapped = [xlsx_row_default(FIELDS5[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
+  let mapped = [xlsx_row_default(FIELDS7[USING_BROKER4], map_yes_no_field_default({ answer: broker[USING_BROKER4] }))];
   if (broker[USING_BROKER4]) {
     mapped = [
       ...mapped,
-      xlsx_row_default(FIELDS5[BROKER_NAME2], broker[BROKER_NAME2]),
-      xlsx_row_default(FIELDS5[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
-      xlsx_row_default(FIELDS5[EMAIL6], broker[EMAIL6])
+      xlsx_row_default(FIELDS7[BROKER_NAME2], broker[BROKER_NAME2]),
+      xlsx_row_default(FIELDS7[FULL_ADDRESS2], broker[FULL_ADDRESS2]),
+      xlsx_row_default(FIELDS7[EMAIL6], broker[EMAIL6])
     ];
   }
   return mapped;
 };
 var map_broker_default = mapBroker;
 
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/map-location/index.ts
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY2, IS_LOCATED_IN_UK: IS_LOCATED_IN_UK2, LOCATION: LOCATION2 }
+} = policy_default;
+var CONTENT_STRINGS4 = POLICY_FIELDS.LOSS_PAYEE_DETAILS[LOCATION2].OPTIONS;
+var mapLossPayeeLocation = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_INTERNATIONALLY2]) {
+    return String(CONTENT_STRINGS4?.INTERNATIONALLY.TEXT);
+  }
+  if (lossPayee[IS_LOCATED_IN_UK2]) {
+    return String(CONTENT_STRINGS4?.UK.TEXT);
+  }
+};
+var map_location_default = mapLossPayeeLocation;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-appointed-loss-payee/index.ts
+var { FIELDS: FIELDS8 } = XLSX;
+var CONTENT_STRINGS5 = POLICY_FIELDS.LOSS_PAYEE_DETAILS;
+var {
+  LOSS_PAYEE: { IS_APPOINTED: IS_APPOINTED3 },
+  LOSS_PAYEE_DETAILS: { LOCATION: LOCATION3, NAME: LOSS_PAYEE_NAME2 }
+} = policy_default;
+var mapAppointedLossPayee = (lossPayee) => {
+  let mapped = [xlsx_row_default(String(FIELDS8[IS_APPOINTED3]), map_yes_no_field_default({ answer: lossPayee[IS_APPOINTED3] }))];
+  if (lossPayee[IS_APPOINTED3]) {
+    mapped = [
+      ...mapped,
+      xlsx_row_default(String(CONTENT_STRINGS5[LOSS_PAYEE_NAME2].SUMMARY?.TITLE), lossPayee[LOSS_PAYEE_NAME2]),
+      xlsx_row_default(String(CONTENT_STRINGS5[LOCATION3].LABEL), map_location_default(lossPayee))
+    ];
+  }
+  return mapped;
+};
+var map_appointed_loss_payee_default = mapAppointedLossPayee;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-international/index.ts
+var { FIELDS: FIELDS9 } = XLSX;
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_INTERNATIONALLY: IS_LOCATED_INTERNATIONALLY3 },
+  LOSS_PAYEE_FINANCIAL_INTERNATIONAL: { BIC_SWIFT_CODE: BIC_SWIFT_CODE3, IBAN: IBAN3 },
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS3
+} = policy_default;
+var mapLossPayeeFinancialDetailsInternational = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_INTERNATIONALLY3]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS9[BIC_SWIFT_CODE3]), lossPayee.financialInternational[BIC_SWIFT_CODE3]),
+      xlsx_row_default(String(FIELDS9[IBAN3]), lossPayee.financialInternational[IBAN3]),
+      xlsx_row_default(String(FIELDS9[FINANCIAL_ADDRESS3]), lossPayee.financialInternational[FINANCIAL_ADDRESS3])
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/map-financial-details-uk/index.ts
+var { FIELDS: FIELDS10 } = XLSX;
+var {
+  LOSS_PAYEE_DETAILS: { IS_LOCATED_IN_UK: IS_LOCATED_IN_UK3 },
+  LOSS_PAYEE_FINANCIAL_UK: { SORT_CODE: SORT_CODE3, ACCOUNT_NUMBER: ACCOUNT_NUMBER3 },
+  FINANCIAL_ADDRESS: FINANCIAL_ADDRESS4
+} = policy_default;
+var mapLossPayeeFinancialDetailsUk = (lossPayee) => {
+  if (lossPayee[IS_LOCATED_IN_UK3]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS10[SORT_CODE3]), lossPayee.financialUk[SORT_CODE3]),
+      xlsx_row_default(String(FIELDS10[ACCOUNT_NUMBER3]), lossPayee.financialUk[ACCOUNT_NUMBER3]),
+      xlsx_row_default(String(FIELDS10[FINANCIAL_ADDRESS4]), lossPayee.financialUk[FINANCIAL_ADDRESS4])
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/map-loss-payee/index.ts
+var mapLossPayee = (lossPayee) => {
+  const mapped = [...map_appointed_loss_payee_default(lossPayee), ...map_financial_details_uk_default(lossPayee), ...map_financial_details_international_default(lossPayee)];
+  return mapped;
+};
+var map_loss_payee_default = mapLossPayee;
+
+// generate-xlsx/map-application-to-XLSX/map-policy/index.ts
+var { FIELDS: FIELDS11 } = XLSX;
+var CONTENT_STRINGS6 = {
+  ...POLICY_FIELDS,
+  ...POLICY_FIELDS.CONTRACT_POLICY,
+  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
+  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
+  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
+  ...POLICY_FIELDS.LOSS_PAYEE_DETAILS,
+  ...POLICY_FIELDS.NAME_ON_POLICY
+};
+var {
+  TYPE_OF_POLICY: { POLICY_TYPE: POLICY_TYPE8 },
+  NAME_ON_POLICY: { NAME: NAME2, POSITION: POSITION2 },
+  NEED_PRE_CREDIT_PERIOD: NEED_PRE_CREDIT_PERIOD3,
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED3 }
+} = policy_default;
+var mapPolicy2 = (application2) => {
+  const { nominatedLossPayee, policy, policyContact } = application2;
+  const policyType = policy[POLICY_TYPE8];
+  let mapped = map_intro_default(policy);
+  if (isSinglePolicyType(policyType)) {
+    mapped = [...mapped, ...map_single_contract_policy_default(policy)];
+  }
+  if (isMultiplePolicyType(policyType)) {
+    mapped = [...mapped, ...map_multiple_contract_policy_default(policy)];
+  }
+  mapped = [
+    ...mapped,
+    xlsx_row_default(String(CONTENT_STRINGS6.NAME_ON_POLICY[NAME2].SUMMARY?.TITLE), policyContact[NAME2]),
+    xlsx_row_default(String(CONTENT_STRINGS6.NAME_ON_POLICY[POSITION2].SUMMARY?.TITLE), policyContact[POSITION2]),
+    xlsx_row_default(String(FIELDS11[NEED_PRE_CREDIT_PERIOD3]), map_yes_no_field_default({ answer: policy[NEED_PRE_CREDIT_PERIOD3] })),
+    xlsx_row_default(String(FIELDS11[REQUESTED3]), map_yes_no_field_default({ answer: policy.jointlyInsuredParty[REQUESTED3] })),
+    ...map_broker_default(application2),
+    ...map_loss_payee_default(nominatedLossPayee)
+  ];
+  return mapped;
+};
+var map_policy_default2 = mapPolicy2;
+
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/map-different-trading-name/index.ts
 var {
   YOUR_COMPANY: { HAS_DIFFERENT_TRADING_NAME: HAS_DIFFERENT_TRADING_NAME3, DIFFERENT_TRADING_NAME: DIFFERENT_TRADING_NAME2 }
 } = business_default;
-var { FIELDS: FIELDS6 } = XLSX;
+var { FIELDS: FIELDS12 } = XLSX;
 var mapDifferentTradingName = (company) => {
   if (company[HAS_DIFFERENT_TRADING_NAME3]) {
-    return xlsx_row_default(FIELDS6[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]);
+    return xlsx_row_default(FIELDS12[DIFFERENT_TRADING_NAME2], company[DIFFERENT_TRADING_NAME2]);
   }
 };
 var map_different_trading_name_default = mapDifferentTradingName;
@@ -6095,12 +6466,12 @@ var map_different_trading_name_default = mapDifferentTradingName;
 var {
   ALTERNATIVE_TRADING_ADDRESS: { FULL_ADDRESS: FULL_ADDRESS3, FULL_ADDRESS_DOT_NOTATION: FULL_ADDRESS_DOT_NOTATION2 }
 } = business_default;
-var { FIELDS: FIELDS7 } = XLSX;
+var { FIELDS: FIELDS13 } = XLSX;
 var mapDifferentTradingAddress = (company) => {
   const { differentTradingAddress } = company;
   const differentTradingAddressValue = differentTradingAddress[FULL_ADDRESS3];
   if (differentTradingAddressValue) {
-    return xlsx_row_default(FIELDS7[FULL_ADDRESS_DOT_NOTATION2], differentTradingAddressValue);
+    return xlsx_row_default(FIELDS13[FULL_ADDRESS_DOT_NOTATION2], differentTradingAddressValue);
   }
 };
 var map_different_trading_address_default = mapDifferentTradingAddress;
@@ -6125,12 +6496,12 @@ var map_exporter_address_default = mapExporterAddress;
 var {
   COMPANIES_HOUSE: { FINANCIAL_YEAR_END_DATE: FINANCIAL_YEAR_END_DATE2 }
 } = business_default;
-var { FIELDS: FIELDS8 } = XLSX;
+var { FIELDS: FIELDS14 } = XLSX;
 var mapFinancialYearEndDate = (company) => {
   if (company[FINANCIAL_YEAR_END_DATE2]) {
     return format_date_default(company[FINANCIAL_YEAR_END_DATE2], "d MMMM");
   }
-  return FIELDS8.NO_FINANCIAL_YEAR_END_DATE;
+  return FIELDS14.NO_FINANCIAL_YEAR_END_DATE;
 };
 var map_financial_year_end_date_default = mapFinancialYearEndDate;
 
@@ -6146,8 +6517,8 @@ var mapSicCodes2 = (sicCodes) => {
 var map_sic_codes_default2 = mapSicCodes2;
 
 // generate-xlsx/map-application-to-XLSX/map-exporter-business/index.ts
-var { FIELDS: FIELDS9, SECTION_TITLES } = XLSX;
-var CONTENT_STRINGS3 = {
+var { FIELDS: FIELDS15, SECTION_TITLES: SECTION_TITLES2 } = XLSX;
+var CONTENT_STRINGS7 = {
   ...FIELDS.COMPANY_DETAILS,
   ...FIELDS.NATURE_OF_YOUR_BUSINESS,
   ...FIELDS.TURNOVER,
@@ -6163,24 +6534,23 @@ var {
 var mapExporterBusiness = (application2) => {
   const { business, company, companySicCodes } = application2;
   const mapped = [
-    xlsx_row_default(SECTION_TITLES.EXPORTER_BUSINESS, ""),
-    xlsx_row_default(CONTENT_STRINGS3[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
-    xlsx_row_default(FIELDS9[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
-    xlsx_row_default(FIELDS9[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
-    xlsx_row_default(FIELDS9[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
+    xlsx_row_default(SECTION_TITLES2.EXPORTER_BUSINESS, ""),
+    xlsx_row_default(CONTENT_STRINGS7[COMPANY_INCORPORATED2].SUMMARY?.TITLE, format_date_default(company[COMPANY_INCORPORATED2], "dd-MMM-yy")),
+    xlsx_row_default(FIELDS15[COMPANY_ADDRESS2], map_exporter_address_default(company[COMPANY_ADDRESS2])),
+    xlsx_row_default(FIELDS15[COMPANY_SIC2], map_sic_codes_default2(companySicCodes)),
+    xlsx_row_default(FIELDS15[HAS_DIFFERENT_TRADING_NAME4], map_yes_no_field_default({ answer: company[HAS_DIFFERENT_TRADING_NAME4] })),
     map_different_trading_name_default(company),
-    xlsx_row_default(FIELDS9[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
+    xlsx_row_default(FIELDS15[TRADING_ADDRESS3], map_yes_no_field_default({ answer: company[TRADING_ADDRESS3] })),
     map_different_trading_address_default(company),
-    xlsx_row_default(FIELDS9[WEBSITE3], company[WEBSITE3]),
-    xlsx_row_default(FIELDS9[PHONE_NUMBER3], company[PHONE_NUMBER3]),
-    xlsx_row_default(FIELDS9[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
-    xlsx_row_default(FIELDS9[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
-    xlsx_row_default(FIELDS9[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
-    xlsx_row_default(CONTENT_STRINGS3[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
-    xlsx_row_default(FIELDS9[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
-    xlsx_row_default(CONTENT_STRINGS3[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
-    xlsx_row_default(FIELDS9[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] })),
-    ...map_broker_default(application2)
+    xlsx_row_default(FIELDS15[WEBSITE3], company[WEBSITE3]),
+    xlsx_row_default(FIELDS15[PHONE_NUMBER3], company[PHONE_NUMBER3]),
+    xlsx_row_default(FIELDS15[GOODS_OR_SERVICES3], business[GOODS_OR_SERVICES3]),
+    xlsx_row_default(FIELDS15[YEARS_EXPORTING3], business[YEARS_EXPORTING3]),
+    xlsx_row_default(FIELDS15[EMPLOYEES_UK3], business[EMPLOYEES_UK3]),
+    xlsx_row_default(CONTENT_STRINGS7[FINANCIAL_YEAR_END_DATE3].SUMMARY?.TITLE, map_financial_year_end_date_default(company)),
+    xlsx_row_default(FIELDS15[ESTIMATED_ANNUAL_TURNOVER3], format_currency_default2(business[ESTIMATED_ANNUAL_TURNOVER3], GBP_CURRENCY_CODE)),
+    xlsx_row_default(CONTENT_STRINGS7[PERCENTAGE_TURNOVER2].SUMMARY?.TITLE, `${business[PERCENTAGE_TURNOVER2]}%`),
+    xlsx_row_default(FIELDS15[HAS_CREDIT_CONTROL3], map_yes_no_field_default({ answer: business[HAS_CREDIT_CONTROL3] }))
   ];
   return mapped;
 };
@@ -6188,28 +6558,28 @@ var map_exporter_business_default = mapExporterBusiness;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-connection-with-buyer/index.ts
 var { CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER3, CONNECTION_WITH_BUYER_DESCRIPTION: CONNECTION_WITH_BUYER_DESCRIPTION3 } = your_buyer_default;
-var { FIELDS: FIELDS10 } = XLSX;
+var { FIELDS: FIELDS16 } = XLSX;
 var mapConnectionWithBuyer = (relationship2) => {
   if (relationship2[CONNECTION_WITH_BUYER3]) {
-    return xlsx_row_default(String(FIELDS10[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
+    return xlsx_row_default(String(FIELDS16[CONNECTION_WITH_BUYER_DESCRIPTION3]), relationship2[CONNECTION_WITH_BUYER_DESCRIPTION3]);
   }
 };
 var map_connection_with_buyer_default = mapConnectionWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-outstanding-payments/index.ts
 var {
-  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE2 },
+  CURRENCY: { CURRENCY_CODE: CURRENCY_CODE5 },
   YOUR_BUYER: { OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS3, TOTAL_OUTSTANDING_PAYMENTS: TOTAL_OUTSTANDING_PAYMENTS3, TOTAL_AMOUNT_OVERDUE: TOTAL_AMOUNT_OVERDUE2 }
 } = insurance_default;
-var { FIELDS: FIELDS11 } = XLSX;
+var { FIELDS: FIELDS17 } = XLSX;
 var mapOutstandingPayments = (tradingHistory) => {
   if (tradingHistory[OUTSTANDING_PAYMENTS3]) {
     const values = {
-      totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE2]),
-      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE2])
+      totalOutstanding: format_currency_default(tradingHistory[TOTAL_OUTSTANDING_PAYMENTS3], tradingHistory[CURRENCY_CODE5]),
+      totalAmountOverdue: format_currency_default(tradingHistory[TOTAL_AMOUNT_OVERDUE2], tradingHistory[CURRENCY_CODE5])
     };
     const mapped = [
-      xlsx_row_default(String(FIELDS11[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
+      xlsx_row_default(String(FIELDS17[TOTAL_OUTSTANDING_PAYMENTS3]), values.totalOutstanding),
       xlsx_row_default(String(YOUR_BUYER_FIELDS[TOTAL_AMOUNT_OVERDUE2].SUMMARY?.TITLE), values.totalAmountOverdue)
     ];
     return mapped;
@@ -6220,13 +6590,13 @@ var map_outstanding_payments_default = mapOutstandingPayments;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-buyer-trading-history/index.ts
 var { FAILED_PAYMENTS: FAILED_PAYMENTS3, OUTSTANDING_PAYMENTS: OUTSTANDING_PAYMENTS4, TRADED_WITH_BUYER: TRADED_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS12 } = XLSX;
+var { FIELDS: FIELDS18 } = XLSX;
 var mapBuyerTradingHistory = (tradingHistory) => {
   if (tradingHistory[TRADED_WITH_BUYER3]) {
     const mapped = [
-      xlsx_row_default(String(FIELDS12[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
+      xlsx_row_default(String(FIELDS18[OUTSTANDING_PAYMENTS4]), map_yes_no_field_default({ answer: tradingHistory[OUTSTANDING_PAYMENTS4] })),
       ...map_outstanding_payments_default(tradingHistory),
-      xlsx_row_default(String(FIELDS12[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
+      xlsx_row_default(String(FIELDS18[FAILED_PAYMENTS3]), map_yes_no_field_default({ answer: tradingHistory[FAILED_PAYMENTS3] }))
     ];
     return mapped;
   }
@@ -6236,18 +6606,18 @@ var map_buyer_trading_history_default = mapBuyerTradingHistory;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/map-previous-cover-with-buyer/index.ts
 var { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER: PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3 } = your_buyer_default;
-var { FIELDS: FIELDS13 } = XLSX;
+var { FIELDS: FIELDS19 } = XLSX;
 var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
   const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
     const mapped = [
       xlsx_row_default(
-        String(FIELDS13[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]),
+        String(FIELDS19[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]),
         map_yes_no_field_default({
           answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]
         })
       ),
-      xlsx_row_default(String(FIELDS13[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3])
+      xlsx_row_default(String(FIELDS19[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3])
     ];
     return mapped;
   }
@@ -6256,32 +6626,32 @@ var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
 var map_previous_cover_with_buyer_default = mapPreviousCoverWithBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-buyer/index.ts
-var CONTENT_STRINGS4 = {
+var CONTENT_STRINGS8 = {
   ...YOUR_BUYER_FIELDS.COMPANY_OR_ORGANISATION,
   ...YOUR_BUYER_FIELDS
 };
 var {
-  COMPANY_OR_ORGANISATION: { NAME: NAME2, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
+  COMPANY_OR_ORGANISATION: { NAME: NAME3, ADDRESS, COUNTRY: COUNTRY3, REGISTRATION_NUMBER, WEBSITE: WEBSITE4 },
   CONNECTION_WITH_BUYER: CONNECTION_WITH_BUYER4,
   HAS_BUYER_FINANCIAL_ACCOUNTS: HAS_BUYER_FINANCIAL_ACCOUNTS3,
   TRADED_WITH_BUYER: TRADED_WITH_BUYER4
 } = your_buyer_default;
-var { SECTION_TITLES: SECTION_TITLES2, FIELDS: FIELDS14 } = XLSX;
+var { SECTION_TITLES: SECTION_TITLES3, FIELDS: FIELDS20 } = XLSX;
 var mapBuyer = (application2) => {
   const { buyer, eligibility } = application2;
   const { buyerTradingHistory, relationship: relationship2 } = buyer;
   const mapped = [
-    xlsx_row_default(SECTION_TITLES2.BUYER, ""),
-    xlsx_row_default(FIELDS14[NAME2], buyer[NAME2]),
-    xlsx_row_default(String(CONTENT_STRINGS4[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
-    xlsx_row_default(FIELDS14[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
-    xlsx_row_default(String(CONTENT_STRINGS4[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
-    xlsx_row_default(String(FIELDS14[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
+    xlsx_row_default(SECTION_TITLES3.BUYER, ""),
+    xlsx_row_default(FIELDS20[NAME3], buyer[NAME3]),
+    xlsx_row_default(String(CONTENT_STRINGS8[ADDRESS].SUMMARY?.TITLE), `${buyer[ADDRESS]} ${xlsx_new_line_default}${buyer[COUNTRY3].name}`),
+    xlsx_row_default(FIELDS20[REGISTRATION_NUMBER], buyer[REGISTRATION_NUMBER]),
+    xlsx_row_default(String(CONTENT_STRINGS8[WEBSITE4].SUMMARY?.TITLE), buyer[WEBSITE4]),
+    xlsx_row_default(String(FIELDS20[CONNECTION_WITH_BUYER4]), map_yes_no_field_default({ answer: relationship2[CONNECTION_WITH_BUYER4] })),
     map_connection_with_buyer_default(relationship2),
-    xlsx_row_default(String(FIELDS14[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
+    xlsx_row_default(String(FIELDS20[TRADED_WITH_BUYER4]), map_yes_no_field_default({ answer: buyerTradingHistory[TRADED_WITH_BUYER4] })),
     ...map_buyer_trading_history_default(buyerTradingHistory),
     ...map_previous_cover_with_buyer_default(eligibility, relationship2),
-    xlsx_row_default(String(FIELDS14[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
+    xlsx_row_default(String(FIELDS20[HAS_BUYER_FINANCIAL_ACCOUNTS3]), map_yes_no_field_default({ answer: relationship2[HAS_BUYER_FINANCIAL_ACCOUNTS3] }))
   ];
   return mapped;
 };
@@ -6289,7 +6659,7 @@ var map_buyer_default = mapBuyer;
 
 // generate-xlsx/map-application-to-XLSX/map-eligibility/index.ts
 var { MORE_THAN_250K: MORE_THAN_250K2 } = TOTAL_CONTRACT_VALUE;
-var { FIELDS: FIELDS15, SECTION_TITLES: SECTION_TITLES3 } = XLSX;
+var { FIELDS: FIELDS21, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
 var {
   ELIGIBILITY: {
     BUYER_COUNTRY: BUYER_COUNTRY3,
@@ -6306,15 +6676,15 @@ var {
 var mapEligibility = (application2) => {
   const { company, eligibility } = application2;
   const mapped = [
-    xlsx_row_default(SECTION_TITLES3.ELIGIBILITY, ""),
+    xlsx_row_default(SECTION_TITLES4.ELIGIBILITY, ""),
     xlsx_row_default(FIELDS_ELIGIBILITY[VALID_EXPORTER_LOCATION2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[VALID_EXPORTER_LOCATION2] })),
     xlsx_row_default(FIELDS_ELIGIBILITY[HAS_COMPANIES_HOUSE_NUMBER2].SUMMARY?.TITLE, map_yes_no_field_default({ answer: eligibility[HAS_COMPANIES_HOUSE_NUMBER2] })),
-    xlsx_row_default(FIELDS15[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
-    xlsx_row_default(FIELDS15[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
-    xlsx_row_default(FIELDS15[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
-    xlsx_row_default(FIELDS15[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
-    xlsx_row_default(FIELDS15[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
-    xlsx_row_default(FIELDS15[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
+    xlsx_row_default(FIELDS21[COMPANIES_HOUSE_NUMBER3], company[COMPANIES_HOUSE_NUMBER3]),
+    xlsx_row_default(FIELDS21[BUYER_COUNTRY3], eligibility[BUYER_COUNTRY3].name),
+    xlsx_row_default(FIELDS21[MORE_THAN_250K2.VALUE], map_yes_no_field_default({ answer: eligibility[TOTAL_CONTRACT_VALUE_FIELD_ID2].valueId === MORE_THAN_250K2.DB_ID })),
+    xlsx_row_default(FIELDS21[COVER_PERIOD3], eligibility[COVER_PERIOD_ELIGIBILITY].value),
+    xlsx_row_default(FIELDS21[HAS_MINIMUM_UK_GOODS_OR_SERVICES3], map_yes_no_field_default({ answer: eligibility[HAS_MINIMUM_UK_GOODS_OR_SERVICES3] })),
+    xlsx_row_default(FIELDS21[HAS_END_BUYER3], map_yes_no_field_default({ answer: eligibility[HAS_END_BUYER3] }))
   ];
   return mapped;
 };
@@ -6330,7 +6700,7 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
-var { FIELDS: FIELDS16, SECTION_TITLES: SECTION_TITLES4 } = XLSX;
+var { FIELDS: FIELDS22, SECTION_TITLES: SECTION_TITLES5 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
@@ -6344,12 +6714,12 @@ var {
 var mapDeclarations = (application2) => {
   const { declaration } = application2;
   const mapped = [
-    xlsx_row_default(SECTION_TITLES4.DECLARATIONS, ""),
+    xlsx_row_default(SECTION_TITLES5.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(String(FIELDS16[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS16[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS16[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
+    xlsx_row_default(String(FIELDS22[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS22[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS22[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;
@@ -6370,7 +6740,7 @@ var mapApplicationToXLSX = (application2) => {
       xlsx_row_seperator_default,
       ...map_exporter_business_default(application2),
       xlsx_row_seperator_default,
-      ...map_policy_default(application2),
+      ...map_policy_default2(application2),
       xlsx_row_seperator_default,
       ...map_buyer_default(application2),
       xlsx_row_seperator_default,
@@ -6622,7 +6992,7 @@ var encrypt = (dataToEncrypt) => {
 var encrypt_default = encrypt;
 
 // helpers/map-loss-payee-financial-details-uk/index.ts
-var mapLossPayeeFinancialDetailsUk = (variables) => {
+var mapLossPayeeFinancialDetailsUk2 = (variables) => {
   try {
     console.info("Mapping loss payee financial UK");
     const { accountNumber, sortCode, bankAddress } = variables;
@@ -6651,7 +7021,7 @@ var mapLossPayeeFinancialDetailsUk = (variables) => {
     throw new Error(`Error mapping loss payee financial UK ${err}`);
   }
 };
-var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk;
+var map_loss_payee_financial_details_uk_default = mapLossPayeeFinancialDetailsUk2;
 
 // helpers/update-loss-payee-financial-uk/index.ts
 var updateLossPayeeFinancialInternationalUk = async (context, id, data) => {
@@ -6713,7 +7083,7 @@ var updateLossPayeeFinancialDetailsUk = async (root, variables, context) => {
 var update_loss_payee_financial_details_uk_default = updateLossPayeeFinancialDetailsUk;
 
 // helpers/map-loss-payee-financial-details-international/index.ts
-var mapLossPayeeFinancialDetailsInternational = (variables) => {
+var mapLossPayeeFinancialDetailsInternational2 = (variables) => {
   try {
     const { iban, bicSwiftCode, bankAddress } = variables;
     let ibanData = DEFAULT_ENCRYPTION_SAVE_OBJECT;
@@ -6741,7 +7111,7 @@ var mapLossPayeeFinancialDetailsInternational = (variables) => {
     throw new Error(`Error mapping loss payee financial international ${err}`);
   }
 };
-var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational;
+var map_loss_payee_financial_details_international_default = mapLossPayeeFinancialDetailsInternational2;
 
 // helpers/update-loss-payee-financial-international/index.ts
 var updateLossPayeeFinancialInternational = async (context, id, data) => {

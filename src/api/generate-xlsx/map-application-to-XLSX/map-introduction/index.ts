@@ -19,7 +19,7 @@ const {
  * mapIntroduction
  * Map introductory information for an application
  * @param {Application}
- * @returns {Array} Array of objects for XLSX generation
+ * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapIntroduction = (application: Application) => {
   const mapped = [

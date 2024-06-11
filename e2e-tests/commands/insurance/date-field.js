@@ -14,7 +14,7 @@ import partials from '../../partials';
  * 9) withTwoDateFields.cannotBeAfter
  * @param {Number} errorSummaryLength: The number of expected errors in the summary list
  * @param {Number} errorIndex: Index of summary list error
- * @param {String} fieldId: Field ID
+ * @param {String} field: Cypress field selector
  * @param {Object} errorMessages: Error messages
  */
 const checkValidation = ({
@@ -37,8 +37,14 @@ const checkValidation = ({
        * Check validation errors.
        */
       notProvided: () => {
-        cy.keyboardInput(field.monthInput(), '1');
-        cy.keyboardInput(field.yearInput(), '2023');
+        const date = new Date();
+        const month = date.getMonth() + 1;
+        const year = date.getFullYear();
+
+        field.dayInput().clear();
+        cy.keyboardInput(field.monthInput(), month);
+        cy.keyboardInput(field.yearInput(), year);
+
         cy.clickSubmitButton();
 
         const errorMessage = errorMessages.INVALID_DAY;
@@ -287,9 +293,13 @@ const checkValidation = ({
 
       cy.clickSubmitButton();
 
-      partials.errorSummaryListItems().eq(0).invoke('text').then((text) => {
-        expect(text.trim()).not.equal(errorMessages.BEFORE_EARLIEST);
-      });
+      partials
+        .errorSummaryListItems()
+        .eq(0)
+        .invoke('text')
+        .then((text) => {
+          expect(text.trim()).not.equal(errorMessages.BEFORE_EARLIEST);
+        });
 
       field.errorMessage().should('not.exist');
     },
@@ -298,7 +308,10 @@ const checkValidation = ({
      * E.g, start and end date fields.
      */
     withTwoDateFields: ({
-      fieldA, fieldB, expectedErrorSummaryLength, fieldBErrorIndex,
+      fieldA,
+      fieldB,
+      expectedErrorSummaryLength,
+      fieldBErrorIndex,
     }) => ({
       /**
        * Enter the same date into both date fields.
