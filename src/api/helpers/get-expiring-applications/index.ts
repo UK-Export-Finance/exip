@@ -9,7 +9,7 @@ const { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 
 /**
  * getExpiringApplications
- * gets expiring applications - submissionDeadline in 2 days time
+ * gets expiring applications - submissionDeadline in REMINDER_DAYS time
  * returns array of applications
  * @param {Context} context
  * @returns {Promise<Application[]>} Array of applications
@@ -20,15 +20,15 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
 
     const today = new Date();
 
-    const twoDaysTime = dateInTheFutureByDays(today, REMINDER_DAYS);
+    const reminderDays = dateInTheFutureByDays(today, REMINDER_DAYS);
 
     // generates start and end time of provided date
-    const { startTime, endTime } = getStartAndEndTimeOfDate(twoDaysTime);
+    const { startTime, endTime } = getStartAndEndTimeOfDate(reminderDays);
 
     /**
      * Queries applications that:
      * - have a status of IN_PROGRESS
-     * - have a submission deadline 2 days in the future
+     * - have a submission deadline of REMINDER_DAYS in the future
      * - between midnight and 23:59:59 on the day so any timestamp during that day is queried
      */
     const applications = (await context.query.Application.findMany({

@@ -661,6 +661,18 @@ var APPLICATION = {
   DEAL_TYPE: "EXIP",
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  ALL_SECTIONS_ROUTE: "/all-sections",
+  SUBMISSION_DEADLINE_EMAIL: {
+    REMINDER_DAYS: 2,
+    START_TIME_LIMIT_HOURS: 0,
+    START_TIME_LIMIT_MINUTES: 0,
+    START_TIME_LIMIT_SECONDS: 0,
+    START_TIME_LIMIT_MS: 0,
+    END_TIME_LIMIT_HOURS: 23,
+    END_TIME_LIMIT_MINUTES: 59,
+    END_TIME_LIMIT_SECONDS: 59,
+    END_TIME_LIMIT_MS: 999
+  },
   SUBMISSION_TYPE: {
     MIA: "Manual Inclusion Application"
   },
@@ -691,7 +703,8 @@ var APPLICATION = {
         PERCENTAGE: "Percentage"
       }
     }
-  }
+  },
+  GET_QUERY: "id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status "
 };
 var application_default = APPLICATION;
 
@@ -710,6 +723,7 @@ var COVER_PERIOD = {
 // constants/cron/index.ts
 var CRON_DESCRIPTION_ACCOUNT_UPDATE_UNVERIFIED = "Update unverified accounts (over 24hrs) to isInactive";
 var CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE = "Update inactive applications (over 30 days) to Abandoned";
+var CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL = "Email application submission deadline reminder";
 
 // constants/eligibility.ts
 var ELIGIBILITY = {
@@ -1076,7 +1090,7 @@ var EMAIL_TEMPLATE_IDS = {
         NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: "7f0541dd-1dae-4d51-9ebc-87d2a624f8d2",
         NO_DOCUMENTS: "65b517c6-ae86-470b-9448-194ae5ac44bb"
       },
-      DEADLINE: "e8e5ba73-96da-46f1-b96e-2b1909be6f3d"
+      DEADLINE_REMINDER: "e8e5ba73-96da-46f1-b96e-2b1909be6f3d"
     }
   },
   FEEDBACK: {
@@ -1201,7 +1215,28 @@ var updateInactiveApplicationsJob = {
 var inactive_application_cron_job_default = updateInactiveApplicationsJob;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-var import_dotenv7 = __toESM(require("dotenv"));
+var import_dotenv8 = __toESM(require("dotenv"));
+
+// helpers/get-start-and-end-time-of-date/index.ts
+var {
+  START_TIME_LIMIT_HOURS,
+  START_TIME_LIMIT_MINUTES,
+  START_TIME_LIMIT_MS,
+  START_TIME_LIMIT_SECONDS,
+  END_TIME_LIMIT_HOURS,
+  END_TIME_LIMIT_MINUTES,
+  END_TIME_LIMIT_MS,
+  END_TIME_LIMIT_SECONDS
+} = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
+var getStartAndEndTimeOfDate = (date) => {
+  const startSet = date.setHours(START_TIME_LIMIT_HOURS, START_TIME_LIMIT_MINUTES, START_TIME_LIMIT_SECONDS, START_TIME_LIMIT_MS);
+  const endSet = date.setHours(END_TIME_LIMIT_HOURS, END_TIME_LIMIT_MINUTES, END_TIME_LIMIT_SECONDS, END_TIME_LIMIT_MS);
+  return {
+    startTime: new Date(startSet),
+    endTime: new Date(endSet)
+  };
+};
+var get_start_and_end_time_of_date_default = getStartAndEndTimeOfDate;
 
 // helpers/date/index.ts
 var import_date_fns = require("date-fns");
@@ -1213,19 +1248,18 @@ var dateInTheFutureByDays = (date, days) => new Date(date.setDate(date.getDate()
 
 // helpers/get-expiring-applications/index.ts
 var { IN_PROGRESS: IN_PROGRESS2 } = APPLICATION.STATUS;
+var { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 var getExpiringApplications = async (context) => {
   try {
     console.info("Getting expiring applications - getExpiringApplications helper");
     const today = /* @__PURE__ */ new Date();
-    console.log("todayyyyyyy");
-    const twoDaysTime = dateInTheFutureByDays(today, 2);
-    const earlierLimit = new Date(twoDaysTime.setHours(0, 0, 0));
-    const laterLimit = new Date(twoDaysTime.setHours(23, 59, 59));
+    const reminderDays = dateInTheFutureByDays(today, REMINDER_DAYS);
+    const { startTime, endTime } = get_start_and_end_time_of_date_default(reminderDays);
     const applications = await context.query.Application.findMany({
       where: {
-        AND: [{ status: { in: [IN_PROGRESS2] } }, { submissionDeadline: { gte: earlierLimit, lte: laterLimit } }]
+        AND: [{ status: { in: [IN_PROGRESS2] } }, { submissionDeadline: { gte: startTime, lte: endTime } }]
       },
-      query: "id referenceNumber status submissionDeadline owner { firstName lastName email } buyer { companyOrOrganisationName }"
+      query: APPLICATION.GET_QUERY
     });
     return applications;
   } catch (err) {
@@ -1240,24 +1274,36 @@ var import_date_fns2 = require("date-fns");
 var formatDate = (timestamp3, dateFormat = DATE_FORMAT.DEFAULT) => (0, import_date_fns2.format)(new Date(timestamp3), dateFormat);
 var format_date_default = formatDate;
 
+// helpers/generate-application-url/index.ts
+var import_dotenv4 = __toESM(require("dotenv"));
+import_dotenv4.default.config();
+var baseUrl = String(process.env.APPLICATION_URL);
+var generateApplicationUrl = (referenceNumber) => `${baseUrl}/${referenceNumber}${APPLICATION.ALL_SECTIONS_ROUTE}`;
+var generate_application_url_default = generateApplicationUrl;
+
 // helpers/map-application-submission-deadline-variables/index.ts
-var mapApplicationSubmissionDeadlineVariables = (application2) => ({
-  email: application2.owner.email,
-  name: `${application2.owner.firstName} ${application2.owner.lastName}`,
-  referenceNumber: String(application2.referenceNumber),
-  applicationUrl: "",
-  buyer: application2.buyer.companyOrOrganisationName ? String(application2.buyer.companyOrOrganisationName) : "",
-  submissionDeadline: format_date_default(new Date(application2.submissionDeadline))
-});
+var mapApplicationSubmissionDeadlineVariables = (application2) => {
+  const { submissionDeadline, owner, referenceNumber, buyer } = application2;
+  const { email, firstName, lastName } = owner;
+  const { companyOrOrganisationName } = buyer;
+  return {
+    email,
+    name: `${firstName} ${lastName}`,
+    referenceNumber: String(referenceNumber),
+    applicationUrl: generate_application_url_default(referenceNumber),
+    buyerName: application2.buyer.companyOrOrganisationName ? String(companyOrOrganisationName) : "",
+    submissionDeadline: format_date_default(new Date(submissionDeadline))
+  };
+};
 var map_application_submission_deadline_variables_default = mapApplicationSubmissionDeadlineVariables;
 
 // emails/index.ts
-var import_dotenv6 = __toESM(require("dotenv"));
+var import_dotenv7 = __toESM(require("dotenv"));
 
 // integrations/notify/index.ts
-var import_dotenv4 = __toESM(require("dotenv"));
+var import_dotenv5 = __toESM(require("dotenv"));
 var import_notifications_node_client = require("notifications-node-client");
-import_dotenv4.default.config();
+import_dotenv5.default.config();
 var notifyKey = process.env.GOV_NOTIFY_API_KEY;
 var notifyClient = new import_notifications_node_client.NotifyClient(notifyKey);
 var notify = {
@@ -1481,14 +1527,14 @@ var documentsEmail = async (variables, templateId) => {
 };
 
 // emails/insurance-feedback-email/index.ts
-var import_dotenv5 = __toESM(require("dotenv"));
+var import_dotenv6 = __toESM(require("dotenv"));
 
 // helpers/map-feedback-satisfaction/index.ts
 var mapFeedbackSatisfaction = (satisfaction) => FEEDBACK.EMAIL_TEXT[satisfaction];
 var map_feedback_satisfaction_default = mapFeedbackSatisfaction;
 
 // emails/insurance-feedback-email/index.ts
-import_dotenv5.default.config();
+import_dotenv6.default.config();
 var insuranceFeedbackEmail = async (variables) => {
   try {
     console.info("Sending insurance feedback email");
@@ -1515,19 +1561,18 @@ var insuranceFeedbackEmail = async (variables) => {
 // emails/submission-deadline/index.ts
 var submissionDeadlineEmail = async (emailAddress, submissionDeadlineEmailVariables) => {
   try {
-    console.log("hereeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee");
-    console.info("Sending access code email for account sign in");
-    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE;
+    console.info("Sending submission deadline reminder email for %s", submissionDeadlineEmailVariables.referenceNumber);
+    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
     const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
     return response;
   } catch (err) {
-    console.error("Error sending access code email for account sign in %O", err);
-    throw new Error(`Sending access code email for account sign in ${err}`);
+    console.error("Error sending submission deadline email for applicationId %s - %O", submissionDeadlineEmailVariables.referenceNumber, err);
+    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${err}`);
   }
 };
 
 // emails/index.ts
-import_dotenv6.default.config();
+import_dotenv7.default.config();
 var sendEmail = {
   confirmEmailAddress,
   accessCodeEmail,
@@ -1561,11 +1606,10 @@ var send_email_default = applicationSubmissionDeadineEmail;
 // helpers/send-email-application-submission-deadline/index.ts
 var applicationSubmissionDeadlineEmail = async (context) => {
   try {
-    console.info("Sending email verification");
+    console.info("Sending application submission deadline email");
     const applications = await get_expiring_applications_default(context);
     if (applications.length) {
       const sentEmails = await send_email_default.send(applications);
-      console.log("!!!!!!!!!!!!", sentEmails);
       if (sentEmails.length === applications.length) {
         return {
           success: true
@@ -1586,11 +1630,11 @@ var applicationSubmissionDeadlineEmail = async (context) => {
 var send_email_application_submission_deadline_default = applicationSubmissionDeadlineEmail;
 
 // cron/application/email-submission-deadline-reminder-cron-job.ts
-import_dotenv7.default.config();
-var { CRON_SCHEDULE_INACTIVE_APPLICATION: CRON_SCHEDULE_INACTIVE_APPLICATION2 } = process.env;
+import_dotenv8.default.config();
+var { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 var sendEmailApplicationSubmissionDeadlineJob = {
-  cronExpression: String(CRON_SCHEDULE_INACTIVE_APPLICATION2),
-  description: CRON_DESCRIPTION_APPLICATION_UPDATE_INACTIVE,
+  cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
+  description: CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL,
   task: send_email_application_submission_deadline_default
 };
 var email_submission_deadline_reminder_cron_job_default = sendEmailApplicationSubmissionDeadlineJob;
@@ -7308,8 +7352,8 @@ var get_account_password_reset_token_default = getAccountPasswordResetToken;
 
 // integrations/APIM/index.ts
 var import_axios = __toESM(require("axios"));
-var import_dotenv8 = __toESM(require("dotenv"));
-import_dotenv8.default.config();
+var import_dotenv9 = __toESM(require("dotenv"));
+import_dotenv9.default.config();
 var { APIM_MDM_URL, APIM_MDM_KEY, APIM_MDM_VALUE } = process.env;
 var { APIM_MDM } = EXTERNAL_API_ENDPOINTS;
 var APIM = {
@@ -7605,8 +7649,8 @@ var sanitise_companies_house_number_default = sanitiseCompaniesHouseNumber;
 
 // integrations/companies-house/index.ts
 var import_axios2 = __toESM(require("axios"));
-var import_dotenv9 = __toESM(require("dotenv"));
-import_dotenv9.default.config();
+var import_dotenv10 = __toESM(require("dotenv"));
+import_dotenv10.default.config();
 var username = String(process.env.COMPANIES_HOUSE_API_KEY);
 var companiesHouseURL = String(process.env.COMPANIES_HOUSE_API_URL);
 var companiesHouse = {
@@ -7646,8 +7690,8 @@ var companies_house_default = companiesHouse;
 
 // integrations/industry-sector/index.ts
 var import_axios3 = __toESM(require("axios"));
-var import_dotenv10 = __toESM(require("dotenv"));
-import_dotenv10.default.config();
+var import_dotenv11 = __toESM(require("dotenv"));
+import_dotenv11.default.config();
 var { APIM_MDM_URL: APIM_MDM_URL2, APIM_MDM_KEY: APIM_MDM_KEY2, APIM_MDM_VALUE: APIM_MDM_VALUE2 } = process.env;
 var { APIM_MDM: APIM_MDM2 } = EXTERNAL_API_ENDPOINTS;
 var headers = {
@@ -7937,8 +7981,8 @@ var get_application_by_reference_number_default2 = getApplicationByReferenceNumb
 
 // integrations/ordnance-survey/index.ts
 var import_axios4 = __toESM(require("axios"));
-var import_dotenv11 = __toESM(require("dotenv"));
-import_dotenv11.default.config();
+var import_dotenv12 = __toESM(require("dotenv"));
+import_dotenv12.default.config();
 var { ORDNANCE_SURVEY_API_KEY, ORDNANCE_SURVEY_API_URL } = process.env;
 var ordnanceSurvey = {
   get: async (postcode) => {

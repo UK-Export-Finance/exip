@@ -4,10 +4,12 @@ import sendEmail from '../../emails';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import { createFullApplication } from '../../test-helpers';
 import { mockSendEmailResponse } from '../../test-mocks';
-import { DATE_24_HOURS_FROM_NOW } from '../../constants';
+import { DATE_24_HOURS_FROM_NOW, APPLICATION } from '../../constants';
 import { dateInTheFutureByDays } from '../date';
 import applications from '../../test-helpers/applications';
 import { Application, Context } from '../../types';
+
+const { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 
 describe('helpers/send-email-application-submission-deadline', () => {
   let context: Context;
@@ -20,7 +22,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
   let sendEmailSpy = jest.fn();
 
   const today = new Date();
-  const twoDaysInFuture = dateInTheFutureByDays(today, 2);
+  const reminderDays = dateInTheFutureByDays(today, REMINDER_DAYS);
 
   beforeAll(async () => {
     context = getKeystoneContext();
@@ -34,7 +36,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
     applications.deleteAll(context);
     application = await createFullApplication(context);
 
-    await applications.update({ context, applicationId: application.id, data: { submissionDeadline: twoDaysInFuture } });
+    await applications.update({ context, applicationId: application.id, data: { submissionDeadline: reminderDays } });
     application = await applications.get({ context, applicationId: application.id });
 
     jest.resetAllMocks();
@@ -46,7 +48,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
     applicationSubmissionDeadineEmail.send = sendEmailSpy;
   });
 
-  describe('when an account has an submissionDeadline 2 days in the future', () => {
+  describe(`when an account has an submissionDeadline ${REMINDER_DAYS} days in the future`, () => {
     test('it should call sendEmail.submissionDeadlineEmail and return success=true', async () => {
       const result = await applicationSubmissionDeadlineEmail(context);
 
@@ -61,7 +63,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
     });
   });
 
-  describe('when an account has an submissionDeadline 2 days in the future but sendEmail.submissionDeadlineEmail returns an array of length 0', () => {
+  describe(`when an account has an submissionDeadline ${REMINDER_DAYS} days in the future but sendEmail.submissionDeadlineEmail returns an array of length 0`, () => {
     test('it should call sendEmail.submissionDeadlineEmail and return success=false when sendEmail.submissionDeadlineEmail returns an array of 0 length', async () => {
       applicationSubmissionDeadineEmail.send = jest.fn(() => Promise.resolve([]));
 
@@ -75,7 +77,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
     });
   });
 
-  describe('when no accounts have a submissionDeadline 2 days in the future', () => {
+  describe(`when no accounts have a submissionDeadline ${REMINDER_DAYS} days in the future`, () => {
     test('it should NOT call sendEmail.submissionDeadlineEmail and return success=true', async () => {
       await applications.update({ context, applicationId: application.id, data: { submissionDeadline: DATE_24_HOURS_FROM_NOW() } });
 
