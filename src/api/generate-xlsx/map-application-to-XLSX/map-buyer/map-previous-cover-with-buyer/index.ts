@@ -14,7 +14,7 @@ const { FIELDS } = XLSX;
  * Generate an XLSX row if an exporter has "previous cover" with the buyer.
  * @param {ApplicationEligibility} eligibility: Application eligibility
  * @param {ApplicationBuyerRelationship} relationship: Application buyer relationship
- * @returns {Object | undefined} xlsxRow
+ * @returns {Array<object>} Array of objects for XLSX generation
  */
 const mapPreviousCoverWithBuyer = (eligibility: ApplicationEligibility, relationship: ApplicationBuyerRelationship) => {
   // TODO: move to getPopulatedApplication.
