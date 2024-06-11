@@ -81,5 +81,15 @@ describe('api/helpers/date', () => {
 
       expect(result).toEqual(expected);
     });
+
+    it('should return a date in the next month if provided date is the last day of the month', () => {
+      const date = new Date('2024-01-31');
+
+      const result = dateInTheFutureByDays(date, 2);
+
+      const expected = new Date('2024-02-02');
+
+      expect(result).toEqual(expected);
+    });
   });
 });

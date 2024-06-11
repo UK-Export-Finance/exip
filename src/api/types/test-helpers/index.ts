@@ -31,7 +31,6 @@ export interface TestHelperApplicationCreate extends TestHelperCreate {
 export interface TestHelperApplicationGet {
   context: Context;
   applicationId: string;
-  getString?: string;
 }
 
 export interface TestHelperApplicationUpdate {

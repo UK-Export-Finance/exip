@@ -153,4 +153,19 @@ describe('api/helpers/get-expiring-applications/date-checks', () => {
       expect(result.length).toEqual(0);
     });
   });
+
+  describe('Deadline is the same day as now', () => {
+    it('should return an empty array', async () => {
+      const date = '2024-04-02';
+
+      jest.setSystemTime(new Date(date));
+
+      await applications.update({ context, applicationId: application.id, data: { submissionDeadline: date } });
+      application = await applications.get({ context, applicationId: application.id });
+
+      const result = await getExpiringApplications(context);
+
+      expect(result.length).toEqual(0);
+    });
+  });
 });

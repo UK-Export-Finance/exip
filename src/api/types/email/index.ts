@@ -19,6 +19,6 @@ export interface SubmissionDeadlineEmailVariables {
   submissionDeadline: string;
   name: string;
   applicationUrl: string;
-  buyer: string;
+  buyerName: string;
   email: string;
 }

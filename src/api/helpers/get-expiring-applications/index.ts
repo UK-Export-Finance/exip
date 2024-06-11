@@ -4,6 +4,8 @@ import { dateInTheFutureByDays } from '../date';
 
 const { IN_PROGRESS } = APPLICATION.STATUS;
 
+const { REMINDER_DAYS, EARLIER_LIMIT_TIME_SET, LATER_LIMIT_HOURS, LATER_LIMIT_TIME_SET } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
+
 /**
  * getExpiringApplications
  * gets expiring applications - submissionDeadline in 2 days time
@@ -17,11 +19,11 @@ const getExpiringApplications = async (context: Context): Promise<Application[]>
 
     const today = new Date();
 
-    const twoDaysTime = dateInTheFutureByDays(today, 2);
+    const twoDaysTime = dateInTheFutureByDays(today, REMINDER_DAYS);
     // midnight 2 days in the future - earliest time of the day
-    const earlierLimit = new Date(twoDaysTime.setHours(0, 0, 0, 0));
+    const earlierLimit = new Date(twoDaysTime.setHours(EARLIER_LIMIT_TIME_SET, EARLIER_LIMIT_TIME_SET, EARLIER_LIMIT_TIME_SET, EARLIER_LIMIT_TIME_SET));
     // latest time in the day
-    const laterLimit = new Date(twoDaysTime.setHours(23, 59, 59, 59));
+    const laterLimit = new Date(twoDaysTime.setHours(LATER_LIMIT_HOURS, LATER_LIMIT_TIME_SET, LATER_LIMIT_TIME_SET, LATER_LIMIT_TIME_SET));
 
     /**
      * Queries applications that:

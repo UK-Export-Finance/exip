@@ -7,14 +7,14 @@ import { SubmissionDeadlineEmailVariables } from '../../types';
 describe('emails/submission-deadline', () => {
   const sendEmailSpy = jest.fn(() => Promise.resolve(mockSendEmailResponse));
 
-  const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE;
+  const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
 
   const variables = {
     email: mockApplication.owner.email,
     name: `${mockApplication.owner.firstName} ${mockApplication.owner.lastName}`,
     referenceNumber: String(mockApplication.referenceNumber),
     applicationUrl: '',
-    buyer: String(mockApplication.buyer.companyOrOrganisationName),
+    buyerName: String(mockApplication.buyer.companyOrOrganisationName),
     submissionDeadline: new Date(mockApplication.submissionDeadline).toString(),
   } as SubmissionDeadlineEmailVariables;
 
@@ -42,7 +42,7 @@ describe('emails/submission-deadline', () => {
     });
 
     test('should throw an error', async () => {
-      await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow('Sending submission deadline email');
+      await expect(submissionDeadlineEmail(variables.email, variables)).rejects.toThrow(`Sending submission deadline email for ${variables.referenceNumber}`);
     });
   });
 });

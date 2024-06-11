@@ -5,7 +5,7 @@ import { CronSchedulerJob } from '../../types';
 
 dotenv.config();
 
-const { CRON_SCHEDULE_SUBMISSION_DEADLINE_EMAIL } = process.env;
+const { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 
 /**
  * sendEmailApplicationSubmissionDeadlineJob
@@ -15,7 +15,7 @@ const { CRON_SCHEDULE_SUBMISSION_DEADLINE_EMAIL } = process.env;
  * task: function which cron job runs - applicationSubmissionDeadlineEmail
  */
 const sendEmailApplicationSubmissionDeadlineJob: CronSchedulerJob = {
-  cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_EMAIL),
+  cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
   description: CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL,
   task: applicationSubmissionDeadlineEmail,
 };

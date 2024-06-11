@@ -14,16 +14,16 @@ export const submissionDeadlineEmail = async (
   submissionDeadlineEmailVariables: SubmissionDeadlineEmailVariables,
 ): Promise<EmailResponse> => {
   try {
-    console.info('Sending access code email for account sign in');
+    console.info('Sending submission deadline reminder email for %s', submissionDeadlineEmailVariables.referenceNumber);
 
-    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE;
+    const templateId = EMAIL_TEMPLATE_IDS.APPLICATION.SUBMISSION.DEADLINE_REMINDER;
 
     const response = await callNotify(templateId, emailAddress, submissionDeadlineEmailVariables);
 
     return response;
   } catch (err) {
-    console.error('Error sending submission deadline email %O', err);
+    console.error('Error sending submission deadline email for applicationId %s - %O', submissionDeadlineEmailVariables.referenceNumber, err);
 
-    throw new Error(`Sending submission deadline email ${err}`);
+    throw new Error(`Sending submission deadline email for ${submissionDeadlineEmailVariables.referenceNumber} - ${err}`);
   }
 };

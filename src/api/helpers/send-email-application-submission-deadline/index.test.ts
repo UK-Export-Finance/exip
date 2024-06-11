@@ -22,8 +22,6 @@ describe('helpers/send-email-application-submission-deadline', () => {
   const today = new Date();
   const twoDaysInFuture = dateInTheFutureByDays(today, 2);
 
-  const getString = 'id referenceNumber status submissionDeadline owner { firstName lastName email } buyer { companyOrOrganisationName }';
-
   beforeAll(async () => {
     context = getKeystoneContext();
   });
@@ -37,7 +35,7 @@ describe('helpers/send-email-application-submission-deadline', () => {
     application = await createFullApplication(context);
 
     await applications.update({ context, applicationId: application.id, data: { submissionDeadline: twoDaysInFuture } });
-    application = await applications.get({ context, applicationId: application.id, getString });
+    application = await applications.get({ context, applicationId: application.id });
 
     jest.resetAllMocks();
 

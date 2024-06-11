@@ -7,6 +7,14 @@ import { APPLICATION } from '../../constants';
 
 const { IN_PROGRESS, ABANDONED } = APPLICATION.STATUS;
 
+const assertApplicationValues = (application: Application, expectedApplication: Application) => {
+  expect(application.id).toEqual(expectedApplication.id);
+  expect(application.buyer.companyOrOrganisationName).toEqual('');
+  expect(application.owner).toBeNull();
+  expect(application.status).toEqual(IN_PROGRESS);
+  expect(application.submissionDeadline).toBeDefined();
+}
+
 describe('api/helpers/get-expiring-applications', () => {
   let context: Context;
   let applicationArray: Array<Application>;
@@ -43,17 +51,8 @@ describe('api/helpers/get-expiring-applications', () => {
     it('should return an array with the expiring applications', async () => {
       const result = await getExpiringApplications(context);
 
-      expect(result[0].id).toEqual(applicationArray[3].id);
-      expect(result[0].buyer.companyOrOrganisationName).toEqual('');
-      expect(result[0].owner).toEqual(null);
-      expect(result[0].status).toEqual(IN_PROGRESS);
-      expect(result[0].submissionDeadline).toBeDefined();
-
-      expect(result[1].id).toEqual(applicationArray[4].id);
-      expect(result[1].buyer.companyOrOrganisationName).toEqual('');
-      expect(result[1].owner).toEqual(null);
-      expect(result[1].status).toEqual(IN_PROGRESS);
-      expect(result[1].submissionDeadline).toBeDefined();
+      assertApplicationValues(result[0], applicationArray[3]);
+      assertApplicationValues(result[1], applicationArray[4]);
     });
   });
 

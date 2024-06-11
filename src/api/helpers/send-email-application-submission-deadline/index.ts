@@ -7,12 +7,12 @@ import { Context, SuccessResponse } from '../../types';
  * finds applications which are expiring in 2 days
  * maps and generates email variables
  * sends email to those users if their application is expiring
- *
  * @param {Object} KeystoneJS context API
+ * @returns {Promise<SuccessResponse>} success response
  */
 const applicationSubmissionDeadlineEmail = async (context: Context): Promise<SuccessResponse> => {
   try {
-    console.info('Sending email verification');
+    console.info('Sending application submission deadline email');
 
     const applications = await getExpiringApplications(context);
 

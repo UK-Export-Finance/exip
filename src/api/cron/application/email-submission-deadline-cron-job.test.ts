@@ -5,12 +5,12 @@ import { CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL } from '../../co
 
 dotenv.config();
 
-const { CRON_SCHEDULE_SUBMISSION_DEADLINE_EMAIL } = process.env;
+const { CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL } = process.env;
 
 describe('cron/application/email-submission-deadline-cron-job', () => {
   it('should return an object with cronExpression, description and a task', () => {
     const expected = {
-      cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_EMAIL),
+      cronExpression: String(CRON_SCHEDULE_SUBMISSION_DEADLINE_REMINDER_EMAIL),
       description: CRON_DESCRIPTION_APPLICATION_SUBMISSION_DEADLINE_EMAIL,
       task: applicationSubmissionDeadlineEmail,
     };
