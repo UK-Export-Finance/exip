@@ -37,7 +37,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
           ...indexes.TITLES,
           POLICY: indexes.TITLES.POLICY + 3,
           BUYER: indexes.TITLES.BUYER + 4,
-          DECLARATIONS: indexes.TITLES.DECLARATIONS + 4,
+          DECLARATIONS: indexes.TITLES.DECLARATIONS + 3,
         },
       };
 
@@ -63,7 +63,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
           ...incremented.TITLES,
           POLICY: incremented.TITLES.POLICY + 3,
           BUYER: incremented.TITLES.BUYER + 4,
-          DECLARATIONS: incremented.TITLES.DECLARATIONS + 4,
+          DECLARATIONS: incremented.TITLES.DECLARATIONS + 3,
         },
       };
 
@@ -94,7 +94,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
           ...incremented.TITLES,
           POLICY: incremented.TITLES.POLICY + 3,
           BUYER: incremented.TITLES.BUYER + 4,
-          DECLARATIONS: incremented.TITLES.DECLARATIONS + 4,
+          DECLARATIONS: incremented.TITLES.DECLARATIONS + 3,
         },
       };
 
@@ -122,7 +122,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
           ...secondIncrement.TITLES,
           POLICY: incremented.TITLES.POLICY + 3,
           BUYER: incremented.TITLES.BUYER + 4,
-          DECLARATIONS: incremented.TITLES.DECLARATIONS + 4,
+          DECLARATIONS: incremented.TITLES.DECLARATIONS + 3,
         },
       };
 
