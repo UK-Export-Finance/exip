@@ -88,38 +88,15 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.company.differentTradingAddress.fullAddress).toEqual('');
   });
 
-  describe('nominatedLossPayee', () => {
-    it('should return an application with populated nominatedLossPayee without decrypted data by default', async () => {
-      const result = await getPopulatedApplication({ context, application });
+  it('should return an application with populated nominatedLossPayee with decrypted data by default', async () => {
+    const result = await getPopulatedApplication({ context, application });
 
-      const decryptFinancialUk = false;
-      const decryptFinancialInternational = false;
+    const decryptFinancialUk = false;
+    const decryptFinancialInternational = false;
 
-      const expected = await getNominatedLossPayee(
-        context,
-        application.nominatedLossPayeeId,
-        decryptFinancialUk,
-        decryptFinancialInternational,
-      );
+    const expected = await getNominatedLossPayee(context, application.nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
 
-      expect(result.nominatedLossPayee).toEqual(expected);
-    });
-
-    it('should return an application with populated nominatedLossPayee with decrypted data when `decrypt` params are passed', async () => {
-      const result = await getPopulatedApplication({ context, application });
-
-      const decryptFinancialUk = true;
-      const decryptFinancialInternational = true;
-
-      const expected = await getNominatedLossPayee(
-        context,
-        application.nominatedLossPayeeId,
-        decryptFinancialUk,
-        decryptFinancialInternational,
-      );
-
-      expect(result.nominatedLossPayee).toEqual(expected);
-    });
+    expect(result.nominatedLossPayee).toEqual(expected);
   });
 
   it('should return an application with mapped policy data', async () => {
