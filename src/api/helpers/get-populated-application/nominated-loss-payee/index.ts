@@ -21,7 +21,7 @@ const getNominatedLossPayee = async (context: Context, lossPayeeId: string, decr
         'id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }',
     })) as ApplicationNominatedLossPayee;
 
-    if (decryptFinancialUk && decryptFinancialInternational) {
+    if (decryptFinancialUk || decryptFinancialInternational) {
       const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk, decryptFinancialInternational);
 
       return decryptedNominatedLossPayee;

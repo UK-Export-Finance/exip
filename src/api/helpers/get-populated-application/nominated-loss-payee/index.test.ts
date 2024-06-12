@@ -20,17 +20,30 @@ describe('api/helpers/get-populated-application/nominated-loss-payee', () => {
     expect(result).toEqual(lossPayee);
   });
 
-  describe('when decryptFinancialUk and decryptFinancialInternational are provided', () => {
+  describe('when decryptFinancialUk is provided', () => {
     it('should return a nominated loss payee with decrypted data', async () => {
       const decryptFinancialUk = true;
+      const decryptFinancialInternational = false;
+
+      const result = await getNominatedLossPayee(context, lossPayee.id, decryptFinancialUk, decryptFinancialInternational);
+
+      const decrypted = decryptNominatedLossPayee(lossPayee, decryptFinancialUk, decryptFinancialInternational);
+
+      const expected = {
+        ...lossPayee,
+        ...decrypted,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when decryptFinancialInternational is provided', () => {
+    it('should return a nominated loss payee with decrypted data', async () => {
+      const decryptFinancialUk = false;
       const decryptFinancialInternational = true;
 
-      const result = await getNominatedLossPayee(
-        context,
-        lossPayee.id,
-        decryptFinancialUk,
-        decryptFinancialInternational,
-      );
+      const result = await getNominatedLossPayee(context, lossPayee.id, decryptFinancialUk, decryptFinancialInternational);
 
       const decrypted = decryptNominatedLossPayee(lossPayee, decryptFinancialUk, decryptFinancialInternational);
 

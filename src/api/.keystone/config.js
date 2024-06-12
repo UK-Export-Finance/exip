@@ -5006,7 +5006,7 @@ var getNominatedLossPayee = async (context, lossPayeeId, decryptFinancialUk2, de
       where: { id: lossPayeeId },
       query: "id isAppointed isLocatedInUk isLocatedInternationally name financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } }"
     });
-    if (decryptFinancialUk2 && decryptFinancialInternational2) {
+    if (decryptFinancialUk2 || decryptFinancialInternational2) {
       const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
       return decryptedNominatedLossPayee;
     }
