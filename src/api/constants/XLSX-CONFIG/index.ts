@@ -18,10 +18,11 @@ const {
  * - If "exporter business section - has different trading address" is true, the XLSX has 1 additional row.
  * - If "exporter business section - has different trading name" is true, the XLSX has 1 additional row.
  * - If "exporter business section - has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
- * - If "buyer section - is connected with buyer" is true, the XLSX has 1 additional row.
- * - If "buyer section - traded with buyer before" is true, the XLSX has 4 additional rows.
+ * - If "buyer section - traded with buyer before" is true, the XLSX has 2 additional rows.
  * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
  * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
+ * - If "eligibility - total contract value over threshold" is true, the XLSX has 2 additional rows.
+ * - If "policy - using a nominated loss payee" is true, the XLSX has 5 additional rows.
  * @returns {XLSXRowIndexes}
  */
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
@@ -51,11 +52,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   }
 
   if (broker[USING_BROKER]) {
-    indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 2;
 
-    indexes.BROKER_ADDRESS = 48;
+    indexes.BROKER_ADDRESS = 59;
     indexes.BUYER_ADDRESS += 3;
   }
 
@@ -85,14 +85,14 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {
-    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.DECLARATIONS += 3;
   }
 
   if (nominatedLossPayeeAppointed) {
-    indexes.TITLES.BUYER += 2;
-    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.BUYER += 5;
+    indexes.TITLES.DECLARATIONS += 5;
 
-    indexes.BUYER_ADDRESS += 2;
+    indexes.BUYER_ADDRESS += 5;
   }
 
   return indexes;

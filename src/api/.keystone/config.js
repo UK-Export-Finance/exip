@@ -831,14 +831,16 @@ var TITLE_INDEXES = () => ({
   ELIGIBILITY: 21,
   EXPORTER_BUSINESS: 31,
   POLICY: 47,
-  BUYER: 63,
-  DECLARATIONS: 73
+  // BUYER: 63,
+  BUYER: 60,
+  // DECLARATIONS: 73,
+  DECLARATIONS: 69
 });
 var INDEXES = () => ({
   TITLES: TITLE_INDEXES(),
   COMPANY_ADDRESS: 33,
   COMPANY_SIC_CODES: 34,
-  BUYER_ADDRESS: 65
+  BUYER_ADDRESS: 62
 });
 var incrementIndexes = (indexes) => {
   const modified = indexes;
@@ -881,10 +883,9 @@ var XLSX_ROW_INDEXES = (application2) => {
     indexes.BUYER_CONTACT_DETAILS += 1;
   }
   if (broker[USING_BROKER]) {
-    indexes.TITLES.POLICY += 3;
     indexes.TITLES.BUYER += 3;
     indexes.TITLES.DECLARATIONS += 2;
-    indexes.BROKER_ADDRESS = 48;
+    indexes.BROKER_ADDRESS = 59;
     indexes.BUYER_ADDRESS += 3;
   }
   if (hasDifferentTradingAddress) {
@@ -905,12 +906,12 @@ var XLSX_ROW_INDEXES = (application2) => {
   }
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
-    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.DECLARATIONS += 3;
   }
   if (nominatedLossPayeeAppointed) {
-    indexes.TITLES.BUYER += 2;
-    indexes.TITLES.DECLARATIONS += 2;
-    indexes.BUYER_ADDRESS += 2;
+    indexes.TITLES.BUYER += 5;
+    indexes.TITLES.DECLARATIONS += 5;
+    indexes.BUYER_ADDRESS += 5;
   }
   return indexes;
 };
@@ -1505,7 +1506,6 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
-        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");

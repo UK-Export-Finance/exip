@@ -2,13 +2,13 @@ import { XLSX_ROW_INDEXES } from '.';
 import { INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
-import { mockApplication } from '../../test-mocks';
+import { mockApplicationMinimalBrokerBuyerAndCompany } from '../../test-mocks';
 
 const {
   LOSS_PAYEE: { IS_APPOINTED },
 } = POLICY_FIELD_IDS;
 
-const application = mockApplication;
+const application = mockApplicationMinimalBrokerBuyerAndCompany;
 
 application.nominatedLossPayee[IS_APPOINTED] = true;
 
@@ -20,13 +20,11 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
     const expected = {
       ...indexes,
-      BROKER_ADDRESS: 48,
       BUYER_ADDRESS: indexes.BUYER_ADDRESS + 5,
       TITLES: {
         ...indexes.TITLES,
-        POLICY: indexes.TITLES.POLICY + 3,
         BUYER: indexes.TITLES.BUYER + 5,
-        DECLARATIONS: indexes.TITLES.DECLARATIONS + 8,
+        DECLARATIONS: indexes.TITLES.DECLARATIONS + 5,
       },
     };
 
