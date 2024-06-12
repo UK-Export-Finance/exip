@@ -46,7 +46,7 @@ context('Insurance - Your buyer - Check your answers - Summary list - Your buyer
           hasConnectionToBuyer: true,
           exporterHasTradedWithBuyer: true,
           fullyPopulatedBuyerTradingHistory: true,
-          hasHadCreditInsuranceCover: true,
+          hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
           exporterHasBuyerFinancialAccounts: true,
           totalContractValueOverThreshold: true,
         });

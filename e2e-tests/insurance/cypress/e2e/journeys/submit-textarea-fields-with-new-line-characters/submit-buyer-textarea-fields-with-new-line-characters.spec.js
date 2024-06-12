@@ -93,7 +93,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
         cy.navigateToUrl(creditInsuranceCoverUrl);
 
         cy.completeCreditInsuranceCoverForm({
-          hasHadCreditInsuranceCover: true,
+          hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
           creditInsuranceCoverDescription: MULTI_LINE_STRING,
         });
 

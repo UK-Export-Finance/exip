@@ -49,7 +49,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         hasConnectionToBuyer: true,
         exporterHasTradedWithBuyer: true,
         fullyPopulatedBuyerTradingHistory: true,
-        hasHadCreditInsuranceCover: true,
+        hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
         exporterHasBuyerFinancialAccounts: true,
         totalContractValueOverThreshold: true,
       });

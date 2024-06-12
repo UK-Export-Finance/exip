@@ -11,6 +11,7 @@ context('Insurance - submit an application - Multiple policy type - fully popula
       needPreCreditPeriod: true,
       otherCompanyInvolved: true,
       totalContractValueOverThreshold: true,
+      hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
       usingBroker: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;

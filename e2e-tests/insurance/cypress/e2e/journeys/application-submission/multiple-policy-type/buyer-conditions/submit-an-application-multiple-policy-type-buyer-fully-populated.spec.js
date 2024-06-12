@@ -10,7 +10,7 @@ context('Insurance - submit an application - Multiple policy type, fully populat
       exporterHasTradedWithBuyer: true,
       buyerOutstandingPayments: true,
       buyerFailedToPayOnTime: true,
-      hasHadCreditInsuranceCover: true,
+      hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
       exporterHasBuyerFinancialAccounts: true,
       totalContractValueOverThreshold: true,
     }).then((refNumber) => {
