@@ -1,4 +1,7 @@
+import { APPLICATION } from '../constants';
 import { Application, TestHelperApplicationCreate, TestHelperApplicationGet, TestHelperApplicationUpdate, Context } from '../types';
+
+const { GET_QUERY } = APPLICATION;
 
 const applicationQuery =
   'id createdAt updatedAt referenceNumber dealType submissionCount submissionDeadline submissionType status previousStatus version eligibility { id } exportContract { id } owner { id } company { id } business { id } broker { id } buyer { id buyerTradingHistory { id } } sectionReview { id } declaration { id } policyContact { id }';
@@ -29,6 +32,7 @@ const create = async ({ context, data }: TestHelperApplicationCreate) => {
  * get application test helper
  * Get an application by ID.
  * @param {Context} KeystoneJS context API, application ID
+ * @param {String} Application ID
  * @returns {Object} Application
  */
 const get = async ({ context, applicationId }: TestHelperApplicationGet): Promise<Application> => {
@@ -37,8 +41,7 @@ const get = async ({ context, applicationId }: TestHelperApplicationGet): Promis
 
     const application = (await context.query.Application.findOne({
       where: { id: applicationId },
-      query:
-        'id eligibility { id } buyer { id } company { id } exportContract { id }nominatedLossPayee { id } policy { id } sectionReview { id } referenceNumber',
+      query: GET_QUERY,
     })) as Application;
 
     return application;

@@ -220,6 +220,7 @@ export const EMAIL_TEMPLATE_IDS = {
         NOTIFICATION_ANTI_BRIBERY_AND_TRADING_HISTORY: '7f0541dd-1dae-4d51-9ebc-87d2a624f8d2',
         NO_DOCUMENTS: '65b517c6-ae86-470b-9448-194ae5ac44bb',
       },
+      DEADLINE_REMINDER: 'e8e5ba73-96da-46f1-b96e-2b1909be6f3d',
     },
   },
   FEEDBACK: {
