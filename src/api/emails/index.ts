@@ -6,6 +6,7 @@ import { reactivateAccountLink } from './reactivate-account-link';
 import application from './application';
 import { documentsEmail } from './documents';
 import { insuranceFeedbackEmail } from './insurance-feedback-email';
+import { submissionDeadlineEmail } from './submission-deadline';
 
 dotenv.config();
 
@@ -17,6 +18,7 @@ const sendEmail = {
   application,
   documentsEmail,
   insuranceFeedbackEmail,
+  submissionDeadlineEmail,
 };
 
 export default sendEmail;

@@ -56,3 +56,12 @@ export const dateIsInThePast = (targetDate: Date) => {
 
   return isAfter(now, targetDate);
 };
+
+/**
+ * dateInTheFutureByDays
+ * generates a date in the future by a specified number of days
+ * @param {Date} date
+ * @param {number} days: number of days to add
+ * @returns {Date}
+ */
+export const dateInTheFutureByDays = (date: Date, days: number) => new Date(date.setDate(date.getDate() + days));

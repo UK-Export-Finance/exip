@@ -13,7 +13,9 @@ import { Account } from '../types';
 const {
   ACCOUNT: { PASSWORD_RESET_HASH },
   ELIGIBILITY: { TOTAL_CONTRACT_VALUE: TOTAL_CONTRACT_VALUE_FIELD_ID },
-  POLICY: { TYPE_OF_POLICY: { POLICY_TYPE } },
+  POLICY: {
+    TYPE_OF_POLICY: { POLICY_TYPE },
+  },
 } = FIELD_IDS.INSURANCE;
 
 const now = new Date();
@@ -90,7 +92,7 @@ export const mockApplicationMultiplePolicyTotalContractValueOverThreshold = {
     [TOTAL_CONTRACT_VALUE_FIELD_ID]: {
       value: TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE,
     },
-  }
+  },
 };
 
 export const mockCisCountries = cisCountries;

@@ -20,6 +20,18 @@ export const APPLICATION = {
   DEAL_TYPE: 'EXIP',
   SUBMISSION_COUNT_DEFAULT: 0,
   SUBMISSION_DEADLINE_IN_MONTHS: 1,
+  ALL_SECTIONS_ROUTE: '/all-sections',
+  SUBMISSION_DEADLINE_EMAIL: {
+    REMINDER_DAYS: 2,
+    START_TIME_LIMIT_HOURS: 0,
+    START_TIME_LIMIT_MINUTES: 0,
+    START_TIME_LIMIT_SECONDS: 0,
+    START_TIME_LIMIT_MS: 0,
+    END_TIME_LIMIT_HOURS: 23,
+    END_TIME_LIMIT_MINUTES: 59,
+    END_TIME_LIMIT_SECONDS: 59,
+    END_TIME_LIMIT_MS: 999,
+  },
   SUBMISSION_TYPE: {
     MIA: 'Manual Inclusion Application',
   },
@@ -55,6 +67,8 @@ export const APPLICATION = {
       },
     },
   },
+  GET_QUERY:
+    'id eligibility { id } buyer { id companyOrOrganisationName } company { id } exportContract { id } nominatedLossPayee { id } policy { id } sectionReview { id } owner { id email firstName lastName } referenceNumber submissionDeadline status ',
 };
 
 export default APPLICATION;

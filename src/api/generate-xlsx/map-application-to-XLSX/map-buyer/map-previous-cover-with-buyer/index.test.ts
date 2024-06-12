@@ -6,9 +6,7 @@ import mapYesNoField from '../../helpers/map-yes-no-field';
 import xlsxRow from '../../helpers/xlsx-row';
 import { mockApplication, mockApplicationSinglePolicyTotalContractValueOverThreshold } from '../../../../test-mocks';
 
-const {
-  HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-} = FIELD_IDS;
+const { HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER, PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 
 const { FIELDS } = XLSX;
 
