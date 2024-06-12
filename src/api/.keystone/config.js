@@ -5187,7 +5187,7 @@ var getPopulatedApplication = async ({
   if (!sectionReview) {
     throw new Error(generateErrorMessage("sectionReview", application2.id));
   }
-  const populatedApplication = {
+  const populatedApplication2 = {
     ...application2,
     eligibility: populatedEligibility,
     broker,
@@ -5203,9 +5203,12 @@ var getPopulatedApplication = async ({
     nominatedLossPayee,
     sectionReview
   };
-  return populatedApplication;
+  return populatedApplication2;
 };
-var get_populated_application_default = getPopulatedApplication;
+var populatedApplication = {
+  get: getPopulatedApplication
+};
+var get_populated_application_default = populatedApplication;
 
 // helpers/get-application-submitted-email-template-ids/index.ts
 var {
@@ -7044,14 +7047,14 @@ var submitApplication = async (root, variables, context) => {
           data: update2
         });
         console.info("Submitting application - getting populated application %s", variables.applicationId);
-        const populatedApplication = await get_populated_application_default({
+        const populatedApplication2 = await get_populated_application_default.get({
           context,
           application: updatedApplication,
           decryptFinancialUk: true,
           decryptFinancialInternational: true
         });
-        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication);
-        await send_application_submitted_emails_default.send(populatedApplication, xlsxPath);
+        const xlsxPath = await generate_xlsx_default.XLSX(populatedApplication2);
+        await send_application_submitted_emails_default.send(populatedApplication2, xlsxPath);
         return {
           success: true
         };
@@ -7858,15 +7861,15 @@ var getApplicationByReferenceNumberQuery = async (root, variables, context) => {
     const { referenceNumber, decryptFinancialUk: decryptFinancialUk2, decryptFinancialInternational: decryptFinancialInternational2 } = variables;
     const application2 = await get_application_by_reference_number_default(referenceNumber, context);
     if (application2) {
-      const populatedApplication = await get_populated_application_default({ context, application: application2 });
-      if (decryptFinancialUk2 || decryptFinancialInternational2) {
-        const { nominatedLossPayee } = populatedApplication;
-        const decryptedNominatedLossPayee = decrypt_nominated_loss_payee_default(nominatedLossPayee, decryptFinancialUk2, decryptFinancialInternational2);
-        populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
-      }
+      const populatedApplication2 = await get_populated_application_default.get({
+        context,
+        application: application2,
+        decryptFinancialUk: decryptFinancialUk2,
+        decryptFinancialInternational: decryptFinancialInternational2
+      });
       return {
         success: true,
-        application: populatedApplication
+        application: populatedApplication2
       };
     }
     return {

@@ -39,7 +39,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with associated data', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.business.id).toEqual(application.business.id);
     expect(result.broker.id).toEqual(application.broker.id);
@@ -55,7 +55,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated buyer', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     const [expectedCountry] = mockCountries;
 
@@ -71,7 +71,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated company', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.company.id).toEqual(application.company.id);
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
@@ -84,7 +84,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated nominatedLossPayee with decrypted data by default', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     const decryptFinancialUk = false;
     const decryptFinancialInternational = false;
@@ -95,7 +95,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with mapped policy data', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     const expected = mapPolicy({
       ...application.policy,
@@ -106,7 +106,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     const { exportContract } = mockApplication;
 
@@ -120,7 +120,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated sectionReview', async () => {
-    const result = await getPopulatedApplication({ context, application });
+    const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.sectionReview.id).toEqual(application.sectionReviewId);
   });

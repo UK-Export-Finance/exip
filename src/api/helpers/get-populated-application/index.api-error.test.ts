@@ -38,7 +38,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, eligibilityId: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('eligibility', application.id));
       expect(err).toEqual(expected);
@@ -51,7 +51,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, accountId: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('exporter', application.id));
       expect(err).toEqual(expected);
@@ -64,7 +64,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, buyerCountryId: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('buyerCountry', application.id));
       expect(err).toEqual(expected);
@@ -78,7 +78,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, policyId: invalidId };
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(expected);
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
   });
 
   it('should throw an error when policyContact does not exist', async () => {
@@ -88,7 +88,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, policyContactId: invalidId };
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(expected);
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
   });
 
   it('should throw an error when companyAddress does not exist', async () => {
@@ -97,7 +97,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, companyAddressId: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('companyAddress', application.id));
       expect(err).toEqual(expected);
@@ -116,7 +116,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     };
 
     try {
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('differentTradingAddress', application.id));
       expect(err).toEqual(expected);
@@ -130,14 +130,14 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const expected = new Error(generateErrorMessage('company', application.id));
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(expected);
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
   });
 
   it('should throw an error when companySicCode does not exist', async () => {
     try {
       const mockApplication = { ...application, companyId: application.companyId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('companySicCode', application.id));
       expect(err).toEqual(expected);
@@ -151,7 +151,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const expected = new Error(generateErrorMessage('business', application.id));
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(expected);
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
   });
 
   it('should throw an error when broker does not exist', async () => {
@@ -161,7 +161,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const expected = new Error(generateErrorMessage('broker', application.id));
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(expected);
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
   });
 
   it('should throw an error when buyer does not exist', async () => {
@@ -170,7 +170,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, buyerId: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('buyer', application.id));
       expect(err).toEqual(expected);
@@ -183,7 +183,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, buyerRelationship: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('buyerRelationship', application.id));
       expect(err).toEqual(expected);
@@ -196,7 +196,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
     try {
       const mockApplication = { ...application, buyerTradingHistory: invalidId };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('buyerTradingHistory', application.id));
       expect(err).toEqual(expected);
@@ -212,7 +212,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
         buyer: { countryId: invalidId },
       };
 
-      await getPopulatedApplication({ context, application: mockApplication });
+      await getPopulatedApplication.get({ context, application: mockApplication });
     } catch (err) {
       const expected = new Error(generateErrorMessage('buyer', application.id));
       expect(err).toEqual(expected);
@@ -226,7 +226,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const expected = new Error(generateErrorMessage('declaration', application.id));
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(expected);
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(expected);
   });
 
   it('should throw an error when sectionReview does not exist', async () => {
@@ -234,7 +234,7 @@ describe('api/helpers/get-populated-application - error handling', () => {
 
     const mockApplication = { ...application, sectionReviewId: invalidId };
 
-    await expect(getPopulatedApplication({ context, application: mockApplication })).rejects.toThrow(
+    await expect(getPopulatedApplication.get({ context, application: mockApplication })).rejects.toThrow(
       new Error(generateErrorMessage('sectionReview', application.id)),
     );
   });

@@ -28,7 +28,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-intro', () =>
 
     application = mapApplicationIds(fullApplication);
 
-    populatedApplication = await getPopulatedApplication({ context, application });
+    populatedApplication = await getPopulatedApplication.get({ context, application });
   });
 
   it('should return an array of mapped fields', () => {

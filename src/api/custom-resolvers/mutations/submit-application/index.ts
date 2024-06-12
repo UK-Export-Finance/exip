@@ -59,7 +59,7 @@ const submitApplication = async (root: any, variables: SubmitApplicationVariable
         console.info('Submitting application - getting populated application %s', variables.applicationId);
 
         // get a fully populated application for XLSX generation
-        const populatedApplication = await getPopulatedApplication({
+        const populatedApplication = await getPopulatedApplication.get({
           context,
           application: updatedApplication,
           decryptFinancialUk: true,

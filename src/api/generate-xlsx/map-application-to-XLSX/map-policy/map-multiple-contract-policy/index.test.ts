@@ -38,7 +38,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-multiple-cont
 
     const multiplePolicyApplication = await createFullApplication(context, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    populatedApplicationMultiplePolicy = await getPopulatedApplication({ context, application: mapApplicationIds(multiplePolicyApplication) });
+    populatedApplicationMultiplePolicy = await getPopulatedApplication.get({ context, application: mapApplicationIds(multiplePolicyApplication) });
   });
 
   it('should return an array of mapped fields', () => {

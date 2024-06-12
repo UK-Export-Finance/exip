@@ -93,12 +93,7 @@ const getPopulatedApplication = async ({
     throw new Error(generateErrorMessage('policyContact', application.id));
   }
 
-  const nominatedLossPayee = await getNominatedLossPayee(
-    context,
-    nominatedLossPayeeId,
-    decryptFinancialUk,
-    decryptFinancialInternational,
-  );
+  const nominatedLossPayee = await getNominatedLossPayee(context, nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
 
   const populatedPolicy = mapPolicy(policy);
 
@@ -257,4 +252,8 @@ const getPopulatedApplication = async ({
   return populatedApplication;
 };
 
-export default getPopulatedApplication;
+const populatedApplication = {
+  get: getPopulatedApplication,
+};
+
+export default populatedApplication;

@@ -96,7 +96,7 @@ describe('custom-resolvers/submit-application', () => {
         where: { id: submittedApplication.id },
       });
 
-      populatedApplication = await getPopulatedApplication({
+      populatedApplication = await getPopulatedApplication.get({
         context,
         application: fullSubmittedApplication,
         decryptFinancialUk: true,

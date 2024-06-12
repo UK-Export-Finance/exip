@@ -16,7 +16,7 @@ export const generateSubmittedApplication = async () => {
 
   const application = mapApplicationIds(fullApplication);
 
-  const populatedApplication = await getPopulatedApplication({ context, application });
+  const populatedApplication = await getPopulatedApplication.get({ context, application });
 
   const submittedApplication = {
     ...populatedApplication,
