@@ -3,12 +3,6 @@ import { Application, Context } from '../../types';
 import getKeystoneContext from '../../test-helpers/get-keystone-context';
 import applications from '../../test-helpers/applications';
 
-const assertError = (err) => {
-  const errorString = String(err);
-
-  expect(errorString.includes('Creating a broker')).toEqual(true);
-};
-
 describe('helpers/create-a-broker', () => {
   let context: Context;
   let application: Application;
@@ -39,22 +33,13 @@ describe('helpers/create-a-broker', () => {
 
   describe('when an invalid application ID is passed', () => {
     test('it should throw an error', async () => {
-      try {
-        await createABroker(context, 'invalid-id');
-      } catch (err) {
-        assertError(err);
-      }
+      await expect(createABroker(context, 'invalid-id')).rejects.toThrow('Creating a broker');
     });
   });
 
   describe('when creation is not successful', () => {
     test('it should throw an error', async () => {
-      try {
-        // pass empty context object to force an error
-        await createABroker({}, application.id);
-      } catch (err) {
-        assertError(err);
-      }
+      await expect(createABroker({}, application.id)).rejects.toThrow('Creating a broker');
     });
   });
 });
