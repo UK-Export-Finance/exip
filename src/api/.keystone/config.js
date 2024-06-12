@@ -5076,12 +5076,7 @@ var getPopulatedApplication = async ({
   if (!policyContact) {
     throw new Error(generateErrorMessage("policyContact", application2.id));
   }
-  const nominatedLossPayee = await nominated_loss_payee_default(
-    context,
-    nominatedLossPayeeId,
-    decryptFinancialUk2,
-    decryptFinancialInternational2
-  );
+  const nominatedLossPayee = await nominated_loss_payee_default(context, nominatedLossPayeeId, decryptFinancialUk2, decryptFinancialInternational2);
   const populatedPolicy = map_policy_default(policy);
   const exportContract = await context.db.ExportContract.findOne({
     where: { id: exportContractId }

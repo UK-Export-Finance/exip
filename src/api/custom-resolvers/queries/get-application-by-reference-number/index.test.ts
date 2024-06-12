@@ -1,4 +1,4 @@
-import { Application as KeystoneApplication, Context } from '.keystone/types'; // eslint-disable-line
+import { Context } from '.keystone/types'; // eslint-disable-line
 import getApplicationByReferenceNumberQuery from '.';
 import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
 import getPopulatedApplication from '../../../helpers/get-populated-application';

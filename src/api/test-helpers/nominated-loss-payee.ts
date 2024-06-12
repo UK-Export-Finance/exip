@@ -1,7 +1,6 @@
 import createLossPayeeFinancialDetailsUk from './loss-payee-financial-uk';
 import createLossPayeeFinancialDetailsInternational from './loss-payee-financial-international';
-
-import { ApplicationNominatedLossPayee, TestHelperCreate } from '../types';
+import { ApplicationNominatedLossPayee, ApplicationLossPayeeFinancialUk, ApplicationLossPayeeFinancialInternational, TestHelperCreate } from '../types';
 
 /**
  * create a nominated loss payee financial uk helper
@@ -13,25 +12,24 @@ const createNominatedLossPayee = async ({ context }: TestHelperCreate) => {
   try {
     console.info('Creating a nominated loss payee (test helpers)');
 
-    const financialUk = await createLossPayeeFinancialDetailsUk({ context });
-    const financialInternational = await createLossPayeeFinancialDetailsInternational({ context });
+    const financialUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
+    const financialInternational = (await createLossPayeeFinancialDetailsInternational({ context })) as ApplicationLossPayeeFinancialInternational;
 
     const lossPayee = (await context.query.NominatedLossPayee.createOne({
       data: {
         financialUk: {
           connect: {
-            // TODO: fix types
             id: financialUk.id,
           },
         },
         financialInternational: {
           connect: {
-            // TODO: fix types
             id: financialInternational.id,
           },
         },
       },
-      query: 'id financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } isAppointed isLocatedInUk isLocatedInternationally name',
+      query:
+        'id financialInternational { id iban bicSwiftCode bankAddress vector { bicSwiftCodeVector ibanVector } } financialUk { id accountNumber sortCode bankAddress vector { accountNumberVector sortCodeVector } } isAppointed isLocatedInUk isLocatedInternationally name',
     })) as ApplicationNominatedLossPayee;
 
     const created = {
