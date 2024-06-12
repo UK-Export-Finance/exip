@@ -57,7 +57,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
     });
   });
 
-  describe('when an error occurs whilst updating loss payee financial international vector', () => {
+  describe('when an error occurs whilst updating loss payee financial uk vector', () => {
     it('should throw an error', async () => {
       /**
        * Delete the LossPayeeFinancialUkVector relationship,
