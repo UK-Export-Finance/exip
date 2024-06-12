@@ -1,29 +1,32 @@
-import getApplicationByReferenceNumber from '.';
-import { mockLossPayeeFinancialDetailsUk } from '../../../test-mocks/mock-application';
-import { Context } from '../../../types';
+import { Context } from '.keystone/types'; // eslint-disable-line
+import getApplicationByReferenceNumberQuery from '.';
+import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
+import getPopulatedApplication from '../../../helpers/get-populated-application';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 import { createFullApplication } from '../../../test-helpers/create-full-application';
-import decrypt from '../../../helpers/decrypt';
+import { mockApplication } from '../../../test-mocks';
 
 describe('custom-resolvers/get-application-by-reference-number', () => {
   let context: Context;
+  let fullApplication;
+  let refNumber: number;
 
-  jest.mock('../../../helpers/decrypt');
-  const mockDecryptedValue = '123456';
-  let decryptSpy = jest.fn();
+  const populatedApplicationResponse = mockApplication;
+
+  jest.mock('../../../helpers/get-populated-application');
+
+  let getPopulatedApplicationSpy = jest.fn();
 
   beforeAll(() => {
     context = getKeystoneContext();
   });
 
-  let refNumber: number;
-
   beforeAll(async () => {
     jest.resetAllMocks();
 
-    const application = await createFullApplication(context);
+    fullApplication = await createFullApplication(context);
 
-    const { referenceNumber } = application;
+    const { referenceNumber } = fullApplication;
 
     refNumber = referenceNumber;
   });
@@ -31,68 +34,93 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
   beforeEach(async () => {
     jest.resetAllMocks();
 
-    decryptSpy = jest.fn(() => mockDecryptedValue);
+    getPopulatedApplicationSpy = jest.fn(() => populatedApplicationResponse);
 
-    decrypt.decrypt = decryptSpy;
+    getPopulatedApplication.get = getPopulatedApplicationSpy;
   });
 
-  describe('when the decryptFinancialUk variable is not set', () => {
-    it('should return success=true and application without decryption', async () => {
-      const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber }, context);
+  describe('when the decryptFinancialUk and decryptFinancialInternational variables are NOT provided', () => {
+    it('should call getPopulatedApplication.get', async () => {
+      await getApplicationByReferenceNumberQuery({}, { referenceNumber: refNumber }, context);
 
-      const { financialUk } = result.application.nominatedLossPayee;
+      const expectedApplication = await getApplicationByReferenceNumber(refNumber, context);
 
-      expect(result.success).toEqual(true);
-      expect(financialUk.sortCode).toEqual(mockLossPayeeFinancialDetailsUk.sortCode);
-      expect(financialUk.accountNumber).toEqual(mockLossPayeeFinancialDetailsUk.accountNumber);
+      expect(getPopulatedApplicationSpy).toHaveBeenCalledTimes(1);
+      expect(getPopulatedApplicationSpy).toHaveBeenCalledWith({
+        context,
+        application: expectedApplication,
+        decryptFinancialUk: undefined,
+        decryptFinancialInternational: undefined,
+      });
     });
 
-    it('should NOT call decrypt', async () => {
-      await getApplicationByReferenceNumber({}, { referenceNumber: refNumber }, context);
+    it('should return success=true and populated application', async () => {
+      const result = await getApplicationByReferenceNumberQuery({}, { referenceNumber: refNumber }, context);
 
-      expect(decryptSpy).toHaveBeenCalledTimes(0);
-    });
-  });
+      const expected = {
+        success: true,
+        application: populatedApplicationResponse,
+      };
 
-  describe('when the decryptFinancialUk variable is set to "true"', () => {
-    it('should return success=true and application with decryption', async () => {
-      const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
-
-      const { financialUk } = result.application.nominatedLossPayee;
-
-      expect(result.success).toEqual(true);
-      expect(financialUk.sortCode).toEqual(mockDecryptedValue);
-      expect(financialUk.accountNumber).toEqual(mockDecryptedValue);
-    });
-
-    it('should call decrypt', async () => {
-      await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
-
-      expect(decryptSpy).toHaveBeenCalledTimes(2);
+      expect(result).toEqual(expected);
     });
   });
 
-  describe('when the decryptFinancialInternational variable is set to "true"', () => {
-    it('should return success=true and application with decryption', async () => {
-      const result = await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialInternational: true }, context);
+  describe('when the decryptFinancialUk variable is set to true', () => {
+    it('should call getPopulatedApplication.get', async () => {
+      await getApplicationByReferenceNumberQuery({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
-      const { financialInternational } = result.application.nominatedLossPayee;
+      const expectedApplication = await getApplicationByReferenceNumber(refNumber, context);
 
-      expect(result.success).toEqual(true);
-      expect(financialInternational.iban).toEqual(mockDecryptedValue);
-      expect(financialInternational.bicSwiftCode).toEqual(mockDecryptedValue);
+      expect(getPopulatedApplicationSpy).toHaveBeenCalledTimes(1);
+      expect(getPopulatedApplicationSpy).toHaveBeenCalledWith({
+        context,
+        application: expectedApplication,
+        decryptFinancialUk: true,
+      });
     });
 
-    it('should call decrypt', async () => {
-      await getApplicationByReferenceNumber({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
+    it('should return success=true and populated application', async () => {
+      const result = await getApplicationByReferenceNumberQuery({}, { referenceNumber: refNumber, decryptFinancialUk: true }, context);
 
-      expect(decryptSpy).toHaveBeenCalledTimes(2);
+      const expected = {
+        success: true,
+        application: populatedApplicationResponse,
+      };
+
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('when the decryptFinancialInternational variable is set to true', () => {
+    it('should call getPopulatedApplication.get', async () => {
+      await getApplicationByReferenceNumberQuery({}, { referenceNumber: refNumber, decryptFinancialInternational: true }, context);
+
+      const expectedApplication = await getApplicationByReferenceNumber(refNumber, context);
+
+      expect(getPopulatedApplicationSpy).toHaveBeenCalledTimes(1);
+      expect(getPopulatedApplicationSpy).toHaveBeenCalledWith({
+        context,
+        application: expectedApplication,
+        decryptFinancialInternational: true,
+      });
+    });
+
+    it('should return success=true and populated application', async () => {
+      const result = await getApplicationByReferenceNumberQuery({}, { referenceNumber: refNumber, decryptFinancialInternational: true }, context);
+
+      const expected = {
+        success: true,
+        application: populatedApplicationResponse,
+      };
+
+      expect(result).toEqual(expected);
     });
   });
 
   describe('when the application cannot be found', () => {
     it('should return success=false', async () => {
-      const result = await getApplicationByReferenceNumber({}, { referenceNumber: 123 }, context);
+      const result = await getApplicationByReferenceNumberQuery({}, { referenceNumber: 123 }, context);
 
       expect(result.success).toEqual(false);
     });
@@ -101,7 +129,7 @@ describe('custom-resolvers/get-application-by-reference-number', () => {
   describe('when an error occurs', () => {
     it('should throw an error', async () => {
       try {
-        await getApplicationByReferenceNumber({}, { referenceNumber: 0 }, context);
+        await getApplicationByReferenceNumberQuery({}, { referenceNumber: 0 }, context);
       } catch (err) {
         const errorString = String(err);
 

@@ -7,6 +7,7 @@ import createLossPayeeFinancialDetailsInternationalVector from '../../../test-he
 
 describe('custom-resolvers/update-loss-payee-financial-details-international', () => {
   let context: Context;
+  let lossPayeeFinancialDetailsInternational: ApplicationLossPayeeFinancialInternational;
   let lossPayeeFinancialDetailsInternationalResponse: SuccessResponse;
   let vector: ApplicationLossPayeeFinancialInternationalVector;
 
@@ -26,7 +27,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
   describe('successfully updates loss payee financial international', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
-      const lossPayeeFinancialDetailsInternational = (await createLossPayeeFinancialDetailsInternational({
+      lossPayeeFinancialDetailsInternational = (await createLossPayeeFinancialDetailsInternational({
         context,
       })) as ApplicationLossPayeeFinancialInternational;
 
@@ -76,14 +77,14 @@ describe('custom-resolvers/update-loss-payee-financial-details-international', (
   describe('when an error occurs whilst updating loss payee financial international vector', () => {
     it('should throw an error', async () => {
       /**
-       * Create a new LossPayeeFinancialDetailsInternational,
-       * Without a vector relationship.
-       * This will then cause the vector call to fail,
-       * because there is no associated vector ID.
+       * Delete the LossPayeeFinancialInternationalVector relationship,
+       * to cause the vector data saving to fail.
        */
-      const lossPayeeFinancialDetailsInternational = (await createLossPayeeFinancialDetailsInternational({
-        context,
-      })) as ApplicationLossPayeeFinancialInternational;
+      await context.query.LossPayeeFinancialInternationalVector.deleteOne({
+        where: {
+          id: vector.id,
+        },
+      });
 
       variables.id = lossPayeeFinancialDetailsInternational.id;
 

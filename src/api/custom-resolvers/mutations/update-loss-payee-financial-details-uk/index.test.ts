@@ -7,6 +7,7 @@ import createLossPayeeFinancialDetailsUkVector from '../../../test-helpers/loss-
 
 describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   let context: Context;
+  let lossPayeeFinancialDetailsUk: ApplicationLossPayeeFinancialUk;
   let lossPayeeFinancialDetailsUkResponse: SuccessResponse;
   let vector: ApplicationLossPayeeFinancialUkVector;
 
@@ -26,7 +27,7 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   describe('successfully updates loss payee financial uk', () => {
     beforeEach(async () => {
       jest.resetAllMocks();
-      const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
+      lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({ context })) as ApplicationLossPayeeFinancialUk;
 
       vector = (await createLossPayeeFinancialDetailsUkVector({
         context,
@@ -59,14 +60,14 @@ describe('custom-resolvers/update-loss-payee-financial-details-uk', () => {
   describe('when an error occurs whilst updating loss payee financial uk vector', () => {
     it('should throw an error', async () => {
       /**
-       * Create a new LossPayeeFinancialDetailsUk,
-       * Without a vector relationship.
-       * This will then cause the vector call to fail,
-       * because there is no associated vector ID.
+       * Delete the LossPayeeFinancialUkVector relationship,
+       * to cause the vector data saving to fail.
        */
-      const lossPayeeFinancialDetailsUk = (await createLossPayeeFinancialDetailsUk({
-        context,
-      })) as ApplicationLossPayeeFinancialUk;
+      await context.query.LossPayeeFinancialUkVector.deleteOne({
+        where: {
+          id: vector.id,
+        },
+      });
 
       variables.id = lossPayeeFinancialDetailsUk.id;
 

@@ -3,47 +3,43 @@ import getPopulatedApplication from '.';
 import { createFullApplication, getKeystoneContext } from '../../test-helpers';
 import getCountryByField from '../get-country-by-field';
 import mapPolicy from './map-policy';
+import getNominatedLossPayee from './nominated-loss-payee';
 import mockCountries from '../../test-mocks/mock-countries';
-import mockNominatedLossPayee from '../../test-mocks/mock-nominated-loss-payee';
 import { Application, Context } from '../../types';
-import mockApplication, {
-  mockLossPayeeFinancialDetailsUk,
-  mockLossPayeeFinancialDetailsUkVector,
-  mockLossPayeeFinancialDetailsInternational,
-  mockLossPayeeFinancialDetailsInternationalVector,
-} from '../../test-mocks/mock-application';
+import mockApplication from '../../test-mocks/mock-application';
 
 describe('api/helpers/get-populated-application', () => {
   let context: Context;
-  let applicationIds: KeystoneApplication;
-  let application: Application;
+  let application: KeystoneApplication;
+  let fullApplication: Application;
 
   beforeAll(async () => {
     context = getKeystoneContext();
   });
 
   beforeEach(async () => {
-    application = await createFullApplication(context);
+    fullApplication = await createFullApplication(context);
 
-    applicationIds = {
-      companyId: application.company.id,
-      businessId: application.business.id,
-      brokerId: application.broker.id,
-      buyerId: application.buyer.id,
-      declarationId: application.declaration.id,
-      eligibilityId: application.eligibility.id,
-      exportContractId: application.exportContract.id,
-      id: application.id,
-      ownerId: application.owner.id,
-      policyId: application.policy.id,
-      policyContactId: application.policyContact.id,
-      nominatedLossPayeeId: application.nominatedLossPayee.id,
-      sectionReviewId: application.sectionReview.id,
+    application = {
+      ...fullApplication,
+      companyId: fullApplication.company.id,
+      businessId: fullApplication.business.id,
+      brokerId: fullApplication.broker.id,
+      buyerId: fullApplication.buyer.id,
+      declarationId: fullApplication.declaration.id,
+      eligibilityId: fullApplication.eligibility.id,
+      exportContractId: fullApplication.exportContract.id,
+      id: fullApplication.id,
+      ownerId: fullApplication.owner.id,
+      policyId: fullApplication.policy.id,
+      policyContactId: fullApplication.policyContact.id,
+      nominatedLossPayeeId: fullApplication.nominatedLossPayee.id,
+      sectionReviewId: fullApplication.sectionReview.id,
     };
   });
 
   it('should return an application with associated data', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+    const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.business.id).toEqual(application.business.id);
     expect(result.broker.id).toEqual(application.broker.id);
@@ -59,7 +55,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated buyer', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+    const result = await getPopulatedApplication.get({ context, application });
 
     const [expectedCountry] = mockCountries;
 
@@ -75,7 +71,7 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated company', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+    const result = await getPopulatedApplication.get({ context, application });
 
     expect(result.company.id).toEqual(application.company.id);
     expect(result.companySicCodes[0].companyId).toEqual(application.company.id);
@@ -87,56 +83,30 @@ describe('api/helpers/get-populated-application', () => {
     expect(result.company.differentTradingAddress.fullAddress).toEqual('');
   });
 
-  it('should return an application with populated nominatedLossPayee', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+  it('should return an application with populated nominatedLossPayee with decrypted data by default', async () => {
+    const result = await getPopulatedApplication.get({ context, application });
 
-    expect(result.nominatedLossPayee.isAppointed).toEqual(mockNominatedLossPayee.isAppointed);
-    expect(result.nominatedLossPayee.isLocatedInUk).toEqual(mockNominatedLossPayee.isLocatedInUk);
-    expect(result.nominatedLossPayee.isLocatedInternationally).toEqual(mockNominatedLossPayee.isLocatedInternationally);
-    expect(result.nominatedLossPayee.name).toEqual(mockNominatedLossPayee.name);
+    const decryptFinancialUk = false;
+    const decryptFinancialInternational = false;
+
+    const expected = await getNominatedLossPayee(context, application.nominatedLossPayeeId, decryptFinancialUk, decryptFinancialInternational);
+
+    expect(result.nominatedLossPayee).toEqual(expected);
   });
 
   it('should return an application with mapped policy data', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+    const result = await getPopulatedApplication.get({ context, application });
 
     const expected = mapPolicy({
       ...application.policy,
-      id: applicationIds.policyId,
+      id: application.policyId,
     });
 
     expect(result.policy).toEqual(expected);
   });
 
-  it('should return an application with populated financialUk', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
-
-    const { financialUk } = result.nominatedLossPayee;
-
-    const expected = {
-      ...mockLossPayeeFinancialDetailsUk,
-      id: financialUk.id,
-      vector: mockLossPayeeFinancialDetailsUkVector,
-    };
-
-    expect(financialUk).toEqual(expected);
-  });
-
-  it('should return an application with populated financialInternational', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
-
-    const { financialInternational } = result.nominatedLossPayee;
-
-    const expected = {
-      ...mockLossPayeeFinancialDetailsInternational,
-      id: financialInternational.id,
-      vector: mockLossPayeeFinancialDetailsInternationalVector,
-    };
-
-    expect(financialInternational).toEqual(expected);
-  });
-
   it('should return an application with populated answers and finalDestinationCountry object in exportContract', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+    const result = await getPopulatedApplication.get({ context, application });
 
     const { exportContract } = mockApplication;
 
@@ -150,8 +120,8 @@ describe('api/helpers/get-populated-application', () => {
   });
 
   it('should return an application with populated sectionReview', async () => {
-    const result = await getPopulatedApplication(context, applicationIds);
+    const result = await getPopulatedApplication.get({ context, application });
 
-    expect(result.sectionReview.id).toEqual(applicationIds.sectionReviewId);
+    expect(result.sectionReview.id).toEqual(application.sectionReviewId);
   });
 });

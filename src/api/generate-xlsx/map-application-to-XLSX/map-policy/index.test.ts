@@ -34,31 +34,25 @@ const {
 } = FIELD_IDS;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
-  let populatedApplication: Application;
   let populatedApplicationMultiplePolicy: Application;
-  let application: Application;
-  let applicationIds: object;
+  let fullApplication: Application;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = await createFullApplication(context);
-
-    applicationIds = mapApplicationIds(application);
-
-    populatedApplication = await getPopulatedApplication(context, applicationIds);
+    fullApplication = await createFullApplication(context);
 
     const multiplePolicyApplication = await createFullApplication(context, FIELD_VALUES.POLICY_TYPE.MULTIPLE);
 
-    populatedApplicationMultiplePolicy = await getPopulatedApplication(context, mapApplicationIds(multiplePolicyApplication));
+    populatedApplicationMultiplePolicy = await getPopulatedApplication.get({ context, application: mapApplicationIds(multiplePolicyApplication) });
   });
 
   describe(`when the policy type is ${FIELD_VALUES.POLICY_TYPE.SINGLE}`, () => {
     it('should return an array of mapped fields via mapSingleContractPolicy', () => {
-      const result = mapPolicy(populatedApplication);
+      const result = mapPolicy(fullApplication);
 
-      const { nominatedLossPayee, policy, policyContact } = populatedApplication;
+      const { nominatedLossPayee, policy, policyContact } = fullApplication;
 
       const expected = [
         ...mapIntro(policy),
@@ -70,7 +64,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
 
-        ...mapBroker(application),
+        ...mapBroker(fullApplication),
         ...mapLossPayee(nominatedLossPayee),
       ];
 
@@ -94,7 +88,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
 
-        ...mapBroker(application),
+        ...mapBroker(fullApplication),
         ...mapLossPayee(nominatedLossPayee),
       ];
 

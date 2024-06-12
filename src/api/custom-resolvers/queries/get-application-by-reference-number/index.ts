@@ -1,14 +1,12 @@
 import { Context } from '.keystone/types'; // eslint-disable-line
-import { GetApplicationByReferenceNumberResponse, GetApplicationByReferenceNumberVariables } from '../../../types';
 import getApplicationByReferenceNumber from '../../../helpers/get-application-by-reference-number';
 import getPopulatedApplication from '../../../helpers/get-populated-application';
-import decryptNominatedLossPayee from '../../../helpers/decrypt-nominated-loss-payee';
+import { GetApplicationByReferenceNumberResponse, GetApplicationByReferenceNumberVariables } from '../../../types';
 
 /**
  * getApplicationByReferenceNumberQuery
- * Gets an application by reference number
- * Based on decrypt variables, decrypts part of application
- * returns full application
+ * Get an application by reference number,
+ * call getPopulatedApplication
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the getApplicationByReferenceNumberVariables query
  * @param {Context} KeystoneJS context API
@@ -34,23 +32,14 @@ const getApplicationByReferenceNumberQuery = async (
       /**
        * Populate the application,
        * with all relationships.
+       * This function also handles decrypting financial details.
        */
-      const populatedApplication = await getPopulatedApplication(context, application);
-
-      /**
-       * if decrypt variables are set to true
-       * decrypts relevant nominatedLossPayee fields
-       * if decryptFinancialUk then decrypts financial uk
-       * if decryptFinancialInternational then decrypts financialInternational
-       * returns decrypted application
-       */
-      if (decryptFinancialUk || decryptFinancialInternational) {
-        const { nominatedLossPayee } = populatedApplication;
-
-        const decryptedNominatedLossPayee = decryptNominatedLossPayee(nominatedLossPayee, decryptFinancialUk, decryptFinancialInternational);
-
-        populatedApplication.nominatedLossPayee = decryptedNominatedLossPayee;
-      }
+      const populatedApplication = await getPopulatedApplication.get({
+        context,
+        application,
+        decryptFinancialUk,
+        decryptFinancialInternational,
+      });
 
       return {
         success: true,

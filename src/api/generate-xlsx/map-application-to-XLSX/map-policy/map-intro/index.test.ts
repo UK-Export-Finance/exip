@@ -2,6 +2,7 @@ import mapIntro from '.';
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../../content-strings';
 import xlsxRow from '../../helpers/xlsx-row';
+import mapPolicyType from './map-policy-type';
 import formatDate from '../../../../helpers/format-date';
 import getPopulatedApplication from '../../../../helpers/get-populated-application';
 import { createFullApplication, getKeystoneContext, mapApplicationIds } from '../../../../test-helpers';
@@ -16,18 +17,18 @@ const {
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-intro', () => {
   let populatedApplication: Application;
-  let application: Application;
-  let applicationIds: object;
+  let fullApplication: Application;
+  let application: object;
   let context: Context;
 
   beforeAll(async () => {
     context = getKeystoneContext();
 
-    application = await createFullApplication(context);
+    fullApplication = await createFullApplication(context);
 
-    applicationIds = mapApplicationIds(application);
+    application = mapApplicationIds(fullApplication);
 
-    populatedApplication = await getPopulatedApplication(context, applicationIds);
+    populatedApplication = await getPopulatedApplication.get({ context, application });
   });
 
   it('should return an array of mapped fields', () => {
@@ -37,8 +38,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-intro', () =>
 
     const expected = [
       xlsxRow(SECTION_TITLES.POLICY, ''),
-      xlsxRow(String(FIELDS[POLICY_TYPE]), policy[POLICY_TYPE]),
-      xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd-MMM-yy')),
+      xlsxRow(String(FIELDS[POLICY_TYPE]), mapPolicyType(policy[POLICY_TYPE])),
+      xlsxRow(String(FIELDS[REQUESTED_START_DATE]), formatDate(policy[REQUESTED_START_DATE], 'dd MM yyyy')),
     ];
 
     expect(result).toEqual(expected);

@@ -53,9 +53,9 @@ export interface TestHelperPolicyUpdate extends TestHelperCreate {
 }
 
 export interface TestHelperLossPayeeFinancialInternationalVectorCreate extends TestHelperCreate {
-  data: LossPayeeFinancialInternationalVectorCreateInput;
+  data?: LossPayeeFinancialInternationalVectorCreateInput;
 }
 
 export interface TestHelperLossPayeeFinancialUkVectorCreate extends TestHelperCreate {
-  data: LossPayeeFinancialUkVectorCreateInput;
+  data?: LossPayeeFinancialUkVectorCreateInput;
 }
