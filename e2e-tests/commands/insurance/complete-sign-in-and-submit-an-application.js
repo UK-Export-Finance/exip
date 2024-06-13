@@ -30,7 +30,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - buyerOutstandingPayments: Exporter has outstanding payments with the buyer
  * - buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * - fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
- * - hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
+ * - hasHadCreditInsuranceCoverWIthBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * - exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @return {String} Application reference number
  */
@@ -59,7 +59,7 @@ const completeSignInAndSubmitAnApplication = ({
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory = false,
-  hasHadCreditInsuranceCover = false,
+  hasHadCreditInsuranceCoverWIthBuyer = false,
   exporterHasBuyerFinancialAccounts = false,
 }) => {
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
@@ -87,7 +87,7 @@ const completeSignInAndSubmitAnApplication = ({
         buyerOutstandingPayments,
         buyerFailedToPayOnTime,
         fullyPopulatedBuyerTradingHistory,
-        hasHadCreditInsuranceCover,
+        hasHadCreditInsuranceCoverWIthBuyer,
         exporterHasBuyerFinancialAccounts,
       });
     } else {
@@ -113,7 +113,7 @@ const completeSignInAndSubmitAnApplication = ({
         buyerOutstandingPayments,
         buyerFailedToPayOnTime,
         fullyPopulatedBuyerTradingHistory,
-        hasHadCreditInsuranceCover,
+        hasHadCreditInsuranceCoverWIthBuyer,
         exporterHasBuyerFinancialAccounts,
       });
     }

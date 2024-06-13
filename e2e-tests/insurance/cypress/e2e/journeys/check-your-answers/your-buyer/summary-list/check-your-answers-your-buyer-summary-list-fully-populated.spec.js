@@ -5,19 +5,11 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUYER,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER },
 } = INSURANCE_ROUTES;
 
 const {
-  COMPANY_OR_ORGANISATION: {
-    NAME,
-    ADDRESS,
-    COUNTRY,
-    REGISTRATION_NUMBER,
-    WEBSITE,
-  },
+  COMPANY_OR_ORGANISATION: { NAME, ADDRESS, COUNTRY, REGISTRATION_NUMBER, WEBSITE },
   CONNECTION_WITH_BUYER,
   CONNECTION_WITH_BUYER_DESCRIPTION,
   TRADED_WITH_BUYER,
@@ -49,7 +41,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         hasConnectionToBuyer: true,
         exporterHasTradedWithBuyer: true,
         fullyPopulatedBuyerTradingHistory: true,
-        hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
+        hasHadCreditInsuranceCoverWIthBuyer: true,
         exporterHasBuyerFinancialAccounts: true,
         totalContractValueOverThreshold: true,
       });

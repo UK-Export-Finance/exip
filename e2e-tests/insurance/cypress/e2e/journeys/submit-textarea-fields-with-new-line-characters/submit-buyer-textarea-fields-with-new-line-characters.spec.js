@@ -1,9 +1,6 @@
 import { INSURANCE_ROUTES } from '../../../../../constants/routes/insurance';
 import { YOUR_BUYER as BUYER_FIELD_IDS } from '../../../../../constants/field-ids/insurance/your-buyer';
-import {
-  MULTI_LINE_STRING,
-  EXPECTED_MULTI_LINE_STRING,
-} from '../../../../../constants';
+import { MULTI_LINE_STRING, EXPECTED_MULTI_LINE_STRING } from '../../../../../constants';
 
 const {
   ROOT,
@@ -93,7 +90,7 @@ context('Insurance - Textarea fields - `Buyer` textarea fields should render new
         cy.navigateToUrl(creditInsuranceCoverUrl);
 
         cy.completeCreditInsuranceCoverForm({
-          hasHadCreditInsuranceCover: true, // TODO: rename to include 'with buyer'
+          hasHadCreditInsuranceCoverWIthBuyer: true,
           creditInsuranceCoverDescription: MULTI_LINE_STRING,
         });
 

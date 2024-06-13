@@ -3,9 +3,7 @@ import { INSURANCE_ROUTES } from '../../../../../../../constants/routes/insuranc
 import { YOUR_BUYER as YOUR_BUYER_FIELD_IDS } from '../../../../../../../constants/field-ids/insurance/your-buyer';
 import application from '../../../../../../../fixtures/application';
 
-const {
-  PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER,
-} = YOUR_BUYER_FIELD_IDS;
+const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = YOUR_BUYER_FIELD_IDS;
 
 const {
   YOUR_BUYER: { CREDIT_INSURANCE_COVER },
@@ -93,7 +91,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCreditInsuranceCoverForm({ hasHadCreditInsuranceCover: true });
+      cy.completeCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWIthBuyer: true });
 
       cy.clickSaveAndBackButton();
     });
