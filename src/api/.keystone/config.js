@@ -3437,8 +3437,8 @@ var send3 = async (variables, context) => {
     }
     return { accountId, email, success: false };
   } catch (err) {
-    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLinkHelper) %O", err);
-    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLinkHelper) ${err}`);
+    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) %O", err);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper) ${err}`);
   }
 };
 var sendEmailReactivateAccountLinkHelper = {
@@ -3474,6 +3474,10 @@ var createAnAccount = async (root, variables, context) => {
               isBlocked: true
             };
           }
+          return {
+            success: false,
+            alreadyExists: true
+          };
         }
         if (!account2.status.isVerified) {
           console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);

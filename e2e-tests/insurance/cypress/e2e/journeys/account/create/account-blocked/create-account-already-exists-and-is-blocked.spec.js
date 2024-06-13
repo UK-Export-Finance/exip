@@ -7,7 +7,7 @@ const {
   START,
 } = ROUTES;
 
-context('Insurance - Account - Create account - Create an account which already exists and is suspended', () => {
+context('Insurance - Account - Create account - Create an account which already exists and is blocked', () => {
   const baseUrl = Cypress.config('baseUrl');
   const emailSentUrl = `${baseUrl}${EMAIL_SENT}`;
 

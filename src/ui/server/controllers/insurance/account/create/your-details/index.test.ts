@@ -218,6 +218,7 @@ describe('controllers/insurance/account/create/your-details', () => {
 
             saveData.account = jest.fn(() => Promise.resolve(response));
           });
+
           it(`should redirect to ${EMAIL_SENT}`, async () => {
             await post(req, res);
 

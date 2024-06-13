@@ -17,6 +17,7 @@ import { Account, AccountCreationVariables, AccountCreationCore, Context } from 
  * - Validate the provided password.
  * - If the account is unverified, send a "confirm email address" email.
  * - If the account is verified, return "isVerified=true"
+ * - If the account is blocked, return "isBlocked=true"
  * - If the password is invalid, return "success=false".
  * If an account does NOT already exist:
  * - Create email verification hash/token.
@@ -70,6 +71,11 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
               isBlocked: true,
             };
           }
+
+          return {
+            success: false,
+            alreadyExists: true,
+          };
         }
 
         if (!account.status.isVerified) {
