@@ -13,7 +13,7 @@ const accountEmail = Cypress.env('GOV_NOTIFY_EMAIL_RECIPIENT_1');
 
 context('Insurance - Account - Create account - Create an account which already exists and is blocked, verify and sign in', () => {
   const baseUrl = Cypress.config('baseUrl');
-  const url = `${baseUrl}${ENTER_CODE}`;
+  const enterCodeUrl = `${baseUrl}${ENTER_CODE}`;
 
   let account;
 
@@ -39,9 +39,9 @@ context('Insurance - Account - Create account - Create an account which already 
     reactivatedPage.continue().click();
   });
 
-  it(`should redirect to ${url} signing in`, () => {
+  it(`should redirect to ${enterCodeUrl} after signing in`, () => {
     cy.completeAndSubmitSignInAccountForm({});
 
-    cy.assertUrl(url);
+    cy.assertUrl(enterCodeUrl);
   });
 });

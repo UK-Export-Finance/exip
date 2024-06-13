@@ -20,7 +20,7 @@ const {
   PBKDF2: { ITERATIONS, DIGEST_ALGORITHM },
 } = ENCRYPTION;
 
-describe('custom-resolvers/create-an-account', () => {
+describe('custom-resolvers/create-an-account - account exists and blocked', () => {
   let context: Context;
   let account: Account;
   let createdAccount: Account;

@@ -7,7 +7,7 @@ import { mockAccount, mockSendEmailResponse } from '../../../test-mocks';
 import { Account, Context } from '../../../types';
 import getKeystoneContext from '../../../test-helpers/get-keystone-context';
 
-describe('custom-resolvers/create-an-account', () => {
+describe('custom-resolvers/create-an-account - account exists and is verified', () => {
   let context: Context;
   let account: Account;
 
