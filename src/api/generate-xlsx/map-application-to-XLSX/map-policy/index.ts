@@ -1,6 +1,5 @@
 import FIELD_IDS from '../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../content-strings';
-import { POLICY_FIELDS } from '../../../content-strings/fields/insurance';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 import xlsxRow from '../helpers/xlsx-row';
 import mapIntro from './map-intro';
@@ -12,16 +11,6 @@ import mapYesNoField from '../helpers/map-yes-no-field';
 import { Application } from '../../../types';
 
 const { FIELDS } = XLSX;
-
-const CONTENT_STRINGS = {
-  ...POLICY_FIELDS,
-  ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
-  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
-  ...POLICY_FIELDS.LOSS_PAYEE_DETAILS,
-  ...POLICY_FIELDS.NAME_ON_POLICY,
-};
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
@@ -54,8 +43,8 @@ const mapPolicy = (application: Application) => {
   mapped = [
     ...mapped,
 
-    xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[NAME].SUMMARY?.TITLE), policyContact[NAME]),
-    xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[POSITION].SUMMARY?.TITLE), policyContact[POSITION]),
+    xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]),
+    xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
 
     xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
     xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),

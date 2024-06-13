@@ -1,7 +1,6 @@
 import mapPolicy from '.';
 import FIELD_IDS from '../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../content-strings';
-import { POLICY_FIELDS, EXPORT_CONTRACT_FIELDS } from '../../../content-strings/fields/insurance';
 import { FIELD_VALUES } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapIntro from './map-intro';
@@ -15,17 +14,6 @@ import { createFullApplication, getKeystoneContext, mapApplicationIds } from '..
 import { Application, Context } from '../../../types';
 
 const { FIELDS } = XLSX;
-
-const CONTENT_STRINGS = {
-  ...POLICY_FIELDS,
-  ...POLICY_FIELDS.CONTRACT_POLICY,
-  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  ...POLICY_FIELDS.CONTRACT_POLICY.MULTIPLE,
-  ...POLICY_FIELDS.CONTRACT_POLICY.SINGLE,
-  ...POLICY_FIELDS.EXPORT_VALUE.MULTIPLE,
-  ...POLICY_FIELDS.NAME_ON_POLICY,
-  ...EXPORT_CONTRACT_FIELDS.ABOUT_GOODS_OR_SERVICES,
-};
 
 const {
   NAME_ON_POLICY: { NAME, POSITION },
@@ -58,8 +46,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
         ...mapIntro(policy),
         ...mapSingleContractPolicy(policy),
 
-        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[NAME].SUMMARY?.TITLE), policyContact[NAME]),
-        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[POSITION].SUMMARY?.TITLE), policyContact[POSITION]),
+        xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]),
+        xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
@@ -82,8 +70,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
         ...mapIntro(policy),
         ...mapMultipleContractPolicy(policy),
 
-        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[NAME].SUMMARY?.TITLE), policyContact[NAME]),
-        xlsxRow(String(CONTENT_STRINGS.NAME_ON_POLICY[POSITION].SUMMARY?.TITLE), policyContact[POSITION]),
+        xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]),
+        xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
