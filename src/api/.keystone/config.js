@@ -876,9 +876,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     eligibility: { totalContractValue },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy: {
-      jointlyInsuredParty: {
-        requested: requestedJointlyInsuredParty
-      }
+      jointlyInsuredParty: { requested: requestedJointlyInsuredParty }
     },
     policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
   } = application2;
@@ -1533,6 +1531,7 @@ var application = {
       if (file) {
         const fileBuffer = Buffer.from(file);
         const response = await callNotify(templateId, emailAddress, variables, fileBuffer);
+        await file_system_default.unlink(filePath);
         return response;
       }
       throw new Error("Sending application submitted email to underwriting team - invalid file / file not found");
@@ -6779,18 +6778,11 @@ var map_yes_no_field_default = mapYesNoField;
 var { FIELDS: FIELDS9 } = XLSX;
 var CONTENT_STRINGS4 = POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY;
 var {
-  REQUESTED_JOINTLY_INSURED_PARTY: {
-    REQUESTED: REQUESTED2,
-    COMPANY_NAME: COMPANY_NAME4,
-    COMPANY_NUMBER: COMPANY_NUMBER3,
-    COUNTRY_CODE: COUNTRY_CODE2
-  }
+  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED: REQUESTED2, COMPANY_NAME: COMPANY_NAME4, COMPANY_NUMBER: COMPANY_NUMBER3, COUNTRY_CODE: COUNTRY_CODE2 }
 } = policy_default;
 var mapJointlyInsuredParty = (party) => {
   const requestedParty = party[REQUESTED2];
-  let mapped = [
-    xlsx_row_default(String(FIELDS9.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))
-  ];
+  let mapped = [xlsx_row_default(String(FIELDS9.JOINTLY_INSURED_PARTY[REQUESTED2]), map_yes_no_field_default({ answer: requestedParty }))];
   if (requestedParty) {
     mapped = [
       ...mapped,
