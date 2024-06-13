@@ -27,6 +27,7 @@ export const INDEXES = () =>
     TITLES: TITLE_INDEXES(),
     COMPANY_ADDRESS: 33,
     COMPANY_SIC_CODES: 34,
+    BROKER_ADDRESS: 59,
     BUYER_ADDRESS: 62,
     LOSS_PAYEE_ADDRESS: 63,
   }) as XLSXRowIndexes;

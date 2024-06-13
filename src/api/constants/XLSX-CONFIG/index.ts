@@ -45,24 +45,10 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   let indexes = INDEXES();
 
-  if (isMultiplePolicyType(policyType)) {
-    indexes.TITLES.BUYER += 1;
-    indexes.TITLES.DECLARATIONS += 1;
-
-    indexes.BUYER_ADDRESS += 1;
-    indexes.BUYER_CONTACT_DETAILS += 1;
-    indexes.LOSS_PAYEE_ADDRESS += 1;
-  }
-
-  if (broker[USING_BROKER]) {
-    indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 3;
-
-    indexes.BROKER_ADDRESS = 59;
-    indexes.BUYER_ADDRESS += 3;
-    indexes.LOSS_PAYEE_ADDRESS += 1;
-  }
-
+  /**
+   * Increment some specific indexes,
+   * depending on answers in the "Business" section of an application.
+   */
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
 
@@ -77,12 +63,26 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
 
-  if (exporterHasTradedWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 2;
+  /**
+   * Increment some specific indexes,
+   * depending on answers in the "Policy" section of an application.
+   */
+  if (isMultiplePolicyType(policyType)) {
+    indexes.TITLES.BUYER += 1;
+    indexes.TITLES.DECLARATIONS += 1;
 
-    if (buyerHasOutstandingPayments) {
-      indexes.TITLES.DECLARATIONS += 2;
-    }
+    indexes.BROKER_ADDRESS += 1;
+    indexes.BUYER_ADDRESS += 1;
+    indexes.BUYER_CONTACT_DETAILS += 1;
+    indexes.LOSS_PAYEE_ADDRESS += 1;
+  }
+
+  if (broker[USING_BROKER]) {
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+
+    indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
   }
 
   // TODO: update documentation.
@@ -92,18 +92,8 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.DECLARATIONS += 2;
 
     indexes.LOSS_PAYEE_ADDRESS += 2;
+    indexes.BROKER_ADDRESS += 2;
     indexes.BUYER_ADDRESS += 2;
-  }
-
-  // TODO: EMS-3467: move to getPopulatedApplication.
-  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
-
-  if (totalContractValueOverThreshold) {
-    indexes.TITLES.DECLARATIONS += 1; // TODO: update documentation.
-  }
-
-  if (exporterHasPreviousCreditInsuranceWithBuyer) {
-    indexes.TITLES.DECLARATIONS += 1; // TODO: update documentation.
   }
 
   if (nominatedLossPayeeAppointed) {
@@ -111,6 +101,33 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.DECLARATIONS += 5;
 
     indexes.BUYER_ADDRESS += 5;
+  }
+
+  /**
+   * Increment some specific indexes,
+   * depending on answers in the "Buyer" section of an application.
+   */
+  if (exporterHasTradedWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 2;
+
+    if (buyerHasOutstandingPayments) {
+      indexes.TITLES.DECLARATIONS += 2;
+    }
+  }
+
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1; // TODO: update documentation.
+  }
+
+  /**
+   * Increment some specific indexes,
+   * depending on generic answers in the application.
+   */
+  // TODO: EMS-3467: move to getPopulatedApplication.
+  const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
+
+  if (totalContractValueOverThreshold) {
+    indexes.TITLES.DECLARATIONS += 1; // TODO: update documentation.
   }
 
   return indexes;

@@ -32,7 +32,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
         ...indexes,
         BROKER_ADDRESS: 59,
         BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
-        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 1,
+        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 3,
         TITLES: {
           ...indexes.TITLES,
           BUYER: indexes.TITLES.BUYER + 3,
@@ -57,7 +57,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
         ...incremented,
         BROKER_ADDRESS: 60,
         BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
-        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 1,
+        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 3,
         TITLES: {
           ...incremented.TITLES,
           BUYER: incremented.TITLES.BUYER + 3,
@@ -87,7 +87,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
         BROKER_ADDRESS: 60,
         BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
         ALTERNATIVE_TRADING_ADDRESS: 37,
-        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 1,
+        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 3,
         TITLES: {
           ...incremented.TITLES,
           BUYER: incremented.TITLES.BUYER + 3,
@@ -114,7 +114,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
         BROKER_ADDRESS: 61,
         BUYER_ADDRESS: indexes.BUYER_ADDRESS + 3,
         ALTERNATIVE_TRADING_ADDRESS: 38,
-        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 1,
+        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 3,
         TITLES: {
           ...secondIncrement.TITLES,
           BUYER: incremented.TITLES.BUYER + 3,
