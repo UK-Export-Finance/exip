@@ -7,17 +7,17 @@ const { PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER } = FIELD_IDS;
 /**
  * completeCreditInsuranceCoverForm
  * completes credit insurance cover form
- * if hasHadCreditInsuranceCoverWIthBuyer, then selects yes radio and fills in conditional textarea
- * if not hasHadCreditInsuranceCoverWIthBuyer then selects no radio
- * @param {Boolean} hasHadCreditInsuranceCoverWIthBuyer - should select yes or no radio
+ * if hasHadCreditInsuranceCoverWithBuyer, then selects yes radio and fills in conditional textarea
+ * if not hasHadCreditInsuranceCoverWithBuyer then selects no radio
+ * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer - should select yes or no radio
  */
 const completeCreditInsuranceCoverForm = ({
-  hasHadCreditInsuranceCoverWIthBuyer = false,
+  hasHadCreditInsuranceCoverWithBuyer = false,
   creditInsuranceCoverDescription = application.BUYER[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
 }) => {
   const fieldId = PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER;
 
-  if (hasHadCreditInsuranceCoverWIthBuyer) {
+  if (hasHadCreditInsuranceCoverWithBuyer) {
     cy.clickYesRadioInput();
     cy.keyboardInput(field(fieldId).textarea(), creditInsuranceCoverDescription);
   } else {

@@ -142,7 +142,7 @@ context(
 
       describe(`when submitting the form with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} as "yes"`, () => {
         it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
-          cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWIthBuyer: true });
+          cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWithBuyer: true });
 
           cy.assertUrl(buyerFinancialInformationUrl);
         });
@@ -162,7 +162,7 @@ context(
 
       describe(`changing ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} from "yes" to "no"`, () => {
         it(`should redirect to ${BUYER_FINANCIAL_INFORMATION} page`, () => {
-          cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWIthBuyer: true });
+          cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWithBuyer: true });
           cy.assertUrl(buyerFinancialInformationUrl);
 
           // resubmit as no

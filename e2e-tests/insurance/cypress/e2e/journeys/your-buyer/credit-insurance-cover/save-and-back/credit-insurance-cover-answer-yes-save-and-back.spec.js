@@ -91,7 +91,7 @@ context('Insurance - Your buyer - Credit insurance cover - Save and back - Yes',
     beforeEach(() => {
       cy.navigateToUrl(url);
 
-      cy.completeCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWIthBuyer: true });
+      cy.completeCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWithBuyer: true });
 
       cy.clickSaveAndBackButton();
     });

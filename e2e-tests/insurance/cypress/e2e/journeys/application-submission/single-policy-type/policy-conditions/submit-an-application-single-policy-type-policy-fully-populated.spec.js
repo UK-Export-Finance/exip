@@ -8,7 +8,7 @@ context('Insurance - submit an application - Single policy type - fully populate
       needPreCreditPeriod: true,
       otherCompanyInvolved: true,
       totalContractValueOverThreshold: true,
-      hasHadCreditInsuranceCoverWIthBuyer: true,
+      hasHadCreditInsuranceCoverWithBuyer: true,
       usingBroker: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;

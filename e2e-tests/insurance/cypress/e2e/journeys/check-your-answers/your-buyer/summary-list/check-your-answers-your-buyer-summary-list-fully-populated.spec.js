@@ -41,7 +41,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         hasConnectionToBuyer: true,
         exporterHasTradedWithBuyer: true,
         fullyPopulatedBuyerTradingHistory: true,
-        hasHadCreditInsuranceCoverWIthBuyer: true,
+        hasHadCreditInsuranceCoverWithBuyer: true,
         exporterHasBuyerFinancialAccounts: true,
         totalContractValueOverThreshold: true,
       });

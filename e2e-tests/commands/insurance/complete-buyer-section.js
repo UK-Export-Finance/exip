@@ -8,7 +8,7 @@
  * @param {Boolean} outstandingPayments: Exporter has outstanding payments with the buyer
  * @param {Boolean} failedToPay: Buyer has failed to pay the exporter on the time
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
- * @param {Boolean} hasHadCreditInsuranceCoverWIthBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past"
+ * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past"
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Submit "yes" to "have traded with buyer before" in the "working with buyer" form.
  * @param {Boolean} submitCheckYourAnswers: Click buyer "check your answers" submit button.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
@@ -21,7 +21,7 @@ const completeBuyerSection = ({
   outstandingPayments = false,
   failedToPay = false,
   fullyPopulatedBuyerTradingHistory = false,
-  hasHadCreditInsuranceCoverWIthBuyer = false,
+  hasHadCreditInsuranceCoverWithBuyer = false,
   exporterHasBuyerFinancialAccounts = false,
   submitCheckYourAnswers = false,
   totalContractValueOverThreshold = false,
@@ -52,7 +52,7 @@ const completeBuyerSection = ({
    * complete and submit credit insurance cover form
    */
   if (totalContractValueOverThreshold) {
-    cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWIthBuyer });
+    cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWithBuyer });
   }
 
   cy.completeAndSubmitBuyerFinancialInformationForm({ exporterHasBuyerFinancialAccounts });

@@ -15,7 +15,7 @@ const { POLICY_TYPE } = FIELD_VALUES;
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
- * @param {Boolean} hasHadCreditInsuranceCoverWIthBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
+ * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
  * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on. Defaults to false
@@ -42,7 +42,7 @@ const completePrepareApplicationSinglePolicyType = ({
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory,
-  hasHadCreditInsuranceCoverWIthBuyer,
+  hasHadCreditInsuranceCoverWithBuyer,
   exporterHasBuyerFinancialAccounts,
   usingBroker,
   otherCompanyInvolved = false,
@@ -73,7 +73,7 @@ const completePrepareApplicationSinglePolicyType = ({
     outstandingPayments: buyerOutstandingPayments,
     failedToPay: buyerFailedToPayOnTime,
     fullyPopulatedBuyerTradingHistory,
-    hasHadCreditInsuranceCoverWIthBuyer,
+    hasHadCreditInsuranceCoverWithBuyer,
     exporterHasBuyerFinancialAccounts,
     totalContractValueOverThreshold,
     submitCheckYourAnswers,

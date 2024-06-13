@@ -77,7 +77,7 @@ context(
 
             summaryList.field(fieldId).changeLink().click();
 
-            cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWIthBuyer: true });
+            cy.completeAndSubmitCreditInsuranceCoverForm({ hasHadCreditInsuranceCoverWithBuyer: true });
           });
 
           it(`should redirect to ${YOUR_BUYER}`, () => {

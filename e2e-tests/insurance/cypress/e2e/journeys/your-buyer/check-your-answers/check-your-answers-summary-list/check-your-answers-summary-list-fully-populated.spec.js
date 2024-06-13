@@ -40,7 +40,7 @@ context(
             hasConnectionToBuyer: true,
             exporterHasTradedWithBuyer: true,
             fullyPopulatedBuyerTradingHistory: true,
-            hasHadCreditInsuranceCoverWIthBuyer: true,
+            hasHadCreditInsuranceCoverWithBuyer: true,
             exporterHasBuyerFinancialAccounts: true,
             totalContractValueOverThreshold: true,
           });
