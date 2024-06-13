@@ -16,7 +16,7 @@ const application = {
   },
 };
 
-describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.MULTIPLE} - not using a broker, no buyer conditions, no different trading details`, () => {
+describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.MULTIPLE} - minimal - no conditional answers`, () => {
   it('should return default multiple contract policy row indexes', () => {
     const result = XLSX_ROW_INDEXES(application);
 
@@ -26,6 +26,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
       ...indexes,
       BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
       BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
+      LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 1,
       TITLES: {
         ...indexes.TITLES,
         BUYER: indexes.TITLES.BUYER + 1,

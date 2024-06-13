@@ -50,6 +50,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
     indexes.BUYER_ADDRESS += 1;
     indexes.BUYER_CONTACT_DETAILS += 1;
+    indexes.LOSS_PAYEE_ADDRESS += 1;
   }
 
   if (broker[USING_BROKER]) {
@@ -58,6 +59,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
     indexes.BROKER_ADDRESS = 59;
     indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 1;
   }
 
   if (hasDifferentTradingAddress) {

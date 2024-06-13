@@ -28,6 +28,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
         ...indexes,
         BUYER_ADDRESS: indexes.BUYER_ADDRESS + 1,
         BUYER_CONTACT_DETAILS: indexes.BUYER_CONTACT_DETAILS + 1,
+        LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 1,
         TITLES: {
           ...indexes.TITLES,
           BUYER: indexes.TITLES.BUYER + 1,
