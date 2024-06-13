@@ -1,13 +1,10 @@
 import FIELD_IDS from '../../../../constants/field-ids/insurance/policy';
 import { XLSX } from '../../../../content-strings';
-import { POLICY_FIELDS } from '../../../../content-strings/fields/insurance/policy';
 import xlsxRow from '../../helpers/xlsx-row';
 import mapYesNoField from '../../helpers/map-yes-no-field';
 import { ApplicationJointlyInsuredParty } from '../../../../types';
 
 const { FIELDS } = XLSX;
-
-const CONTENT_STRINGS = POLICY_FIELDS.REQUESTED_JOINTLY_INSURED_PARTY;
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED, COMPANY_NAME, COMPANY_NUMBER, COUNTRY_CODE },
@@ -29,7 +26,7 @@ const mapJointlyInsuredParty = (party: ApplicationJointlyInsuredParty) => {
       ...mapped,
       xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COMPANY_NAME]), party[COMPANY_NAME]),
       xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COUNTRY_CODE]), party[COUNTRY_CODE]),
-      xlsxRow(String(CONTENT_STRINGS[COMPANY_NUMBER].SUMMARY?.TITLE), party[COMPANY_NUMBER]),
+      xlsxRow(String(FIELDS.JOINTLY_INSURED_PARTY[COMPANY_NUMBER]), party[COMPANY_NUMBER]),
     ];
   }
 

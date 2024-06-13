@@ -26,8 +26,8 @@ const mapBroker = (application: Application) => {
     mapped = [
       ...mapped,
       xlsxRow(FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-      xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
       xlsxRow(FIELDS[EMAIL], broker[EMAIL]),
+      xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
     ];
   }
 

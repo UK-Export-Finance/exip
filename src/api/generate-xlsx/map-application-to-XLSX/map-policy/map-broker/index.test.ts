@@ -22,8 +22,8 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy/map-broker', () =
       const expected = [
         xlsxRow(FIELDS[USING_BROKER], mapYesNoField({ answer: broker[USING_BROKER] })),
         xlsxRow(FIELDS[BROKER_NAME], broker[BROKER_NAME]),
-        xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
         xlsxRow(FIELDS[EMAIL], broker[EMAIL]),
+        xlsxRow(FIELDS[FULL_ADDRESS], broker[FULL_ADDRESS]),
       ];
 
       expect(result).toEqual(expected);

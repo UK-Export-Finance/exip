@@ -116,6 +116,7 @@ export const XLSX = {
     JOINTLY_INSURED_PARTY: {
       [REQUESTED_JOINTLY_INSURED_PARTY.REQUESTED]: 'Is there another company that needs to be insured on the policy?',
       [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NAME]: 'Name of the company',
+      [REQUESTED_JOINTLY_INSURED_PARTY.COMPANY_NUMBER]: 'Registration number of the other company (optional)',
       [REQUESTED_JOINTLY_INSURED_PARTY.COUNTRY_CODE]: 'The country the other company is based in',
     },
     [LAST_NAME]: 'Applicant last name',
