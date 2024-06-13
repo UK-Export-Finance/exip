@@ -8,8 +8,8 @@ import { APPLICATION } from '../../constants';
 const { IN_PROGRESS, ABANDONED, SUBMITTED } = APPLICATION.STATUS;
 const { REMINDER_DAYS } = APPLICATION.SUBMISSION_DEADLINE_EMAIL;
 
-const assertApplicationValues = (application: Application, expectedApplication: Application) => {
-  expect(application.id).toEqual(expectedApplication.id);
+const assertApplicationValues = (application: Application, expectedApplicationId: string) => {
+  expect(application.id).toEqual(expectedApplicationId);
   expect(application.buyer.companyOrOrganisationName).toEqual('');
   expect(application.owner).toBeNull();
   expect(application.status).toEqual(IN_PROGRESS);
@@ -52,8 +52,8 @@ describe('api/helpers/get-expiring-applications', () => {
     it('should return an array with the expiring applications', async () => {
       const result = await getExpiringApplications(context);
 
-      assertApplicationValues(result[0], applicationArray[3]);
-      assertApplicationValues(result[1], applicationArray[4]);
+      assertApplicationValues(result[0], applicationArray[3].id);
+      assertApplicationValues(result[1], applicationArray[4].id);
     });
   });
 

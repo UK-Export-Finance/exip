@@ -3565,6 +3565,7 @@ type CreateAnAccountResponse {
   id: String
   email: String
   verificationHash: String
+  isBlocked: Boolean
 }
 
 type CompaniesHouseResponse {

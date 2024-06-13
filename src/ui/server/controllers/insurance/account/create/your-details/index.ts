@@ -22,6 +22,7 @@ const {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL },
       SIGN_IN,
+      SUSPENDED: { EMAIL_SENT },
     },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
@@ -122,7 +123,7 @@ export const post = async (req: Request, res: Response) => {
       return res.redirect(PROBLEM_WITH_SERVICE);
     }
 
-    const { success, isVerified } = saveResponse;
+    const { success, isVerified, isBlocked } = saveResponse;
 
     if (!success) {
       if (isVerified) {
@@ -173,6 +174,10 @@ export const post = async (req: Request, res: Response) => {
         console.error('Error creating application');
         return res.redirect(PROBLEM_WITH_SERVICE);
       }
+    }
+
+    if (isBlocked) {
+      return res.redirect(EMAIL_SENT);
     }
 
     return res.redirect(CONFIRM_EMAIL);

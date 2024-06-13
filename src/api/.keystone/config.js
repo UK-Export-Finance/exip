@@ -2728,6 +2728,7 @@ var typeDefs = `
     id: String
     email: String
     verificationHash: String
+    isBlocked: Boolean
   }
 
   type CompaniesHouseResponse {
@@ -3395,6 +3396,56 @@ var confirmEmailAddressEmail = {
 };
 var send_email_confirm_email_address_default = confirmEmailAddressEmail;
 
+// helpers/send-email-reactivate-account-link/index.ts
+var import_crypto4 = __toESM(require("crypto"));
+var {
+  ENCRYPTION: {
+    STRING_TYPE: STRING_TYPE4,
+    PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+    PASSWORD: {
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+    }
+  }
+} = ACCOUNT2;
+var send3 = async (variables, context) => {
+  try {
+    console.info("Received a request to send reactivate account email/link - checking account - sendEmailReactivateAccountLinkHelper");
+    const { urlOrigin, accountId } = variables;
+    const account2 = await get_account_by_id_default(context, accountId);
+    if (!account2) {
+      console.info("Unable to check account and send reactivate account email/link - no account found");
+      return { success: false };
+    }
+    const { email } = account2;
+    console.info("Generating hash for account reactivation");
+    const reactivationHash = import_crypto4.default.pbkdf2Sync(email, account2.salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    const accountUpdate = {
+      reactivationHash,
+      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
+    };
+    console.info("Updating account for reactivation");
+    await update_account_default.account(context, accountId, accountUpdate);
+    console.info("Sending reactivate account email/link");
+    const name = get_full_name_string_default(account2);
+    const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
+    if (emailResponse.success) {
+      return {
+        ...emailResponse,
+        email,
+        accountId
+      };
+    }
+    return { accountId, email, success: false };
+  } catch (err) {
+    console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLinkHelper) %O", err);
+    throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLinkHelper) ${err}`);
+  }
+};
+var sendEmailReactivateAccountLinkHelper = {
+  send: send3
+};
+var send_email_reactivate_account_link_default = sendEmailReactivateAccountLinkHelper;
+
 // custom-resolvers/mutations/create-an-account/index.ts
 var createAnAccount = async (root, variables, context) => {
   console.info("Account creation - %s", variables.email);
@@ -3405,6 +3456,25 @@ var createAnAccount = async (root, variables, context) => {
       console.info("Account creation - account already exists %s", email);
       if (is_valid_account_password_default(password2, account2.salt, account2.hash)) {
         console.info("Account creation - account already exists - valid credentials provided %s", email);
+        if (account2.status.isBlocked) {
+          console.info("Account creation - unable to create a new account - account already exists and is blocked %s", email);
+          const { id: accountId } = account2;
+          const reactivateAccountVariables = {
+            accountId,
+            urlOrigin
+          };
+          console.info("Account creation - resending an email for reactivation %s", email);
+          const emailResponse2 = await send_email_reactivate_account_link_default.send(reactivateAccountVariables, context);
+          if (emailResponse2.success) {
+            return {
+              id: accountId,
+              success: true,
+              alreadyExists: true,
+              isVerified: false,
+              isBlocked: true
+            };
+          }
+        }
         if (!account2.status.isVerified) {
           console.info("Account creation - unable to create a new account - account already exists and is not verified %s", email);
           const { id: accountId } = account2;
@@ -3682,24 +3752,24 @@ var blockAccount = async (context, statusId) => {
 var block_account_default = blockAccount;
 
 // helpers/generate-otp/index.ts
-var import_crypto4 = __toESM(require("crypto"));
+var import_crypto5 = __toESM(require("crypto"));
 var import_otplib = require("otplib");
 var { ENCRYPTION: ENCRYPTION4, OTP } = ACCOUNT2;
 var {
   RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE2,
-  STRING_TYPE: STRING_TYPE4,
-  PBKDF2: { ITERATIONS: ITERATIONS4, DIGEST_ALGORITHM: DIGEST_ALGORITHM4 },
+  STRING_TYPE: STRING_TYPE5,
+  PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH4 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
   }
 } = ENCRYPTION4;
 var generateOtp = () => {
   try {
     console.info("Generating OTP");
-    const salt = import_crypto4.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE4);
+    const salt = import_crypto5.default.randomBytes(RANDOM_BYTES_SIZE2).toString(STRING_TYPE5);
     import_otplib.authenticator.options = { digits: OTP.DIGITS };
     const securityCode = import_otplib.authenticator.generate(salt);
-    const hash = import_crypto4.default.pbkdf2Sync(securityCode, salt, ITERATIONS4, KEY_LENGTH4, DIGEST_ALGORITHM4).toString(STRING_TYPE4);
+    const hash = import_crypto5.default.pbkdf2Sync(securityCode, salt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE5);
     const expiry = OTP.VERIFICATION_EXPIRY();
     return {
       securityCode,
@@ -3857,19 +3927,19 @@ var accountSignInSendNewCode = async (root, variables, context) => {
 var account_sign_in_new_code_default = accountSignInSendNewCode;
 
 // helpers/is-valid-otp/index.ts
-var import_crypto5 = __toESM(require("crypto"));
+var import_crypto6 = __toESM(require("crypto"));
 var { ENCRYPTION: ENCRYPTION5 } = ACCOUNT2;
 var {
-  STRING_TYPE: STRING_TYPE5,
-  PBKDF2: { ITERATIONS: ITERATIONS5, DIGEST_ALGORITHM: DIGEST_ALGORITHM5 },
+  STRING_TYPE: STRING_TYPE6,
+  PBKDF2: { ITERATIONS: ITERATIONS6, DIGEST_ALGORITHM: DIGEST_ALGORITHM6 },
   OTP: {
-    PBKDF2: { KEY_LENGTH: KEY_LENGTH5 }
+    PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
   }
 } = ENCRYPTION5;
 var isValidOTP = (securityCode, otpSalt, otpHash) => {
   try {
     console.info("Validating OTP");
-    const hashVerify = import_crypto5.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS5, KEY_LENGTH5, DIGEST_ALGORITHM5).toString(STRING_TYPE5);
+    const hashVerify = import_crypto6.default.pbkdf2Sync(securityCode, otpSalt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE6);
     if (otpHash === hashVerify) {
       return true;
     }
@@ -3901,10 +3971,10 @@ var deleteAuthenticationRetries = async (context, accountId) => {
 var delete_authentication_retries_default = deleteAuthenticationRetries;
 
 // helpers/create-jwt/index.ts
-var import_crypto6 = __toESM(require("crypto"));
+var import_crypto7 = __toESM(require("crypto"));
 var import_jsonwebtoken = __toESM(require("jsonwebtoken"));
 var {
-  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE6 },
+  ENCRYPTION: { RANDOM_BYTES_SIZE: RANDOM_BYTES_SIZE3, STRING_TYPE: STRING_TYPE7 },
   JWT: {
     KEY: { SIGNATURE, ENCODING, STRING_ENCODING },
     TOKEN: { EXPIRY, ALGORITHM }
@@ -3912,7 +3982,7 @@ var {
 } = ACCOUNT2;
 var PRIV_KEY = Buffer.from(SIGNATURE, ENCODING).toString(STRING_ENCODING);
 var createJWT = (accountId) => {
-  const sessionIdentifier = import_crypto6.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE6);
+  const sessionIdentifier = import_crypto7.default.randomBytes(RANDOM_BYTES_SIZE3).toString(STRING_TYPE7);
   const expiresIn = EXPIRY;
   const payload = {
     sub: accountId,
@@ -4017,13 +4087,13 @@ var addAndGetOTP = async (root, variables, context) => {
 var add_and_get_OTP_default = addAndGetOTP;
 
 // custom-resolvers/mutations/send-email-password-reset-link/index.ts
-var import_crypto7 = __toESM(require("crypto"));
+var import_crypto8 = __toESM(require("crypto"));
 var {
   ENCRYPTION: {
-    STRING_TYPE: STRING_TYPE7,
-    PBKDF2: { ITERATIONS: ITERATIONS6, DIGEST_ALGORITHM: DIGEST_ALGORITHM6 },
+    STRING_TYPE: STRING_TYPE8,
+    PBKDF2: { ITERATIONS: ITERATIONS7, DIGEST_ALGORITHM: DIGEST_ALGORITHM7 },
     PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH6 }
+      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
     }
   }
 } = ACCOUNT2;
@@ -4059,7 +4129,7 @@ var sendEmailPasswordResetLink = async (root, variables, context) => {
       }
     }
     console.info("Generating password reset hash");
-    const passwordResetHash = import_crypto7.default.pbkdf2Sync(email, account2.salt, ITERATIONS6, KEY_LENGTH6, DIGEST_ALGORITHM6).toString(STRING_TYPE7);
+    const passwordResetHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
     const accountUpdate = {
       passwordResetHash,
       passwordResetExpiry: ACCOUNT2.PASSWORD_RESET_EXPIRY()
@@ -4205,51 +4275,17 @@ var accountPasswordReset = async (root, variables, context) => {
 var account_password_reset_default = accountPasswordReset;
 
 // custom-resolvers/mutations/send-email-reactivate-account-link/index.ts
-var import_crypto8 = __toESM(require("crypto"));
-var {
-  ENCRYPTION: {
-    STRING_TYPE: STRING_TYPE8,
-    PBKDF2: { ITERATIONS: ITERATIONS7, DIGEST_ALGORITHM: DIGEST_ALGORITHM7 },
-    PASSWORD: {
-      PBKDF2: { KEY_LENGTH: KEY_LENGTH7 }
-    }
-  }
-} = ACCOUNT2;
 var sendEmailReactivateAccountLink = async (root, variables, context) => {
   try {
     console.info("Received a request to send reactivate account email/link - checking account");
-    const { urlOrigin, accountId } = variables;
-    const account2 = await get_account_by_id_default(context, accountId);
-    if (!account2) {
-      console.info("Unable to check account and send reactivate account email/link - no account found");
-      return { success: false };
-    }
-    const { email } = account2;
-    console.info("Generating hash for account reactivation");
-    const reactivationHash = import_crypto8.default.pbkdf2Sync(email, account2.salt, ITERATIONS7, KEY_LENGTH7, DIGEST_ALGORITHM7).toString(STRING_TYPE8);
-    const accountUpdate = {
-      reactivationHash,
-      reactivationExpiry: ACCOUNT2.REACTIVATION_EXPIRY()
-    };
-    console.info("Updating account for reactivation");
-    await update_account_default.account(context, accountId, accountUpdate);
-    console.info("Sending reactivate account email/link");
-    const name = get_full_name_string_default(account2);
-    const emailResponse = await emails_default.reactivateAccountLink(urlOrigin, email, name, reactivationHash);
-    if (emailResponse.success) {
-      return {
-        ...emailResponse,
-        email,
-        accountId
-      };
-    }
-    return { accountId, email, success: false };
+    const reactiveAccountResponse = await send_email_reactivate_account_link_default.send(variables, context);
+    return reactiveAccountResponse;
   } catch (err) {
     console.error("Error checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) %O", err);
     throw new Error(`Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink mutation) ${err}`);
   }
 };
-var send_email_reactivate_account_link_default = sendEmailReactivateAccountLink;
+var send_email_reactivate_account_link_default2 = sendEmailReactivateAccountLink;
 
 // helpers/get-country-by-field/index.ts
 var getCountryByField = async (context, field, value) => {
@@ -5394,7 +5430,7 @@ var getApplicationSubmittedEmailTemplateIds = (application2) => {
 var get_application_submitted_email_template_ids_default = getApplicationSubmittedEmailTemplateIds;
 
 // emails/send-application-submitted-emails/index.ts
-var send3 = async (application2, xlsxPath) => {
+var send4 = async (application2, xlsxPath) => {
   try {
     const { referenceNumber, owner, company, buyer, policy, policyContact } = application2;
     const { email } = owner;
@@ -5455,7 +5491,7 @@ var send3 = async (application2, xlsxPath) => {
   }
 };
 var applicationSubmittedEmails = {
-  send: send3
+  send: send4
 };
 var send_application_submitted_emails_default = applicationSubmittedEmails;
 
@@ -8180,7 +8216,7 @@ var customResolvers = {
     addAndGetOTP: add_and_get_OTP_default,
     accountPasswordReset: account_password_reset_default,
     sendEmailPasswordResetLink: send_email_password_reset_link_default,
-    sendEmailReactivateAccountLink: send_email_reactivate_account_link_default,
+    sendEmailReactivateAccountLink: send_email_reactivate_account_link_default2,
     createAnApplication: create_an_application_default2,
     createAnAbandonedApplication: create_an_abandoned_application_default,
     deleteApplicationByReferenceNumber: delete_application_by_reference_number_default,

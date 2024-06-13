@@ -6,6 +6,7 @@ import generateAccountVerificationHash from '../../../helpers/get-account-verifi
 import getFullNameString from '../../../helpers/get-full-name-string';
 import sendEmail from '../../../emails';
 import confirmEmailAddressEmail from '../../../helpers/send-email-confirm-email-address';
+import sendEmailReactivateAccountLinkHelper from '../../../helpers/send-email-reactivate-account-link';
 import { Account, AccountCreationVariables, AccountCreationCore, Context } from '../../../types';
 
 /**
@@ -40,6 +41,36 @@ const createAnAccount = async (root: any, variables: AccountCreationVariables, c
 
       if (isValidAccountPassword(password, account.salt, account.hash)) {
         console.info('Account creation - account already exists - valid credentials provided %s', email);
+
+        /**
+         * if account's status is blocked
+         * sends a reactivation email
+         * returns object including isBlocked=true
+         */
+        if (account.status.isBlocked) {
+          console.info('Account creation - unable to create a new account - account already exists and is blocked %s', email);
+
+          const { id: accountId } = account;
+
+          const reactivateAccountVariables = {
+            accountId,
+            urlOrigin,
+          };
+
+          console.info('Account creation - resending an email for reactivation %s', email);
+
+          const emailResponse = await sendEmailReactivateAccountLinkHelper.send(reactivateAccountVariables, context);
+
+          if (emailResponse.success) {
+            return {
+              id: accountId,
+              success: true,
+              alreadyExists: true,
+              isVerified: false,
+              isBlocked: true,
+            };
+          }
+        }
 
         if (!account.status.isVerified) {
           console.info('Account creation - unable to create a new account - account already exists and is not verified %s', email);

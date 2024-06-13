@@ -23,6 +23,7 @@ const {
     ACCOUNT: {
       CREATE: { CONFIRM_EMAIL },
       SIGN_IN,
+      SUSPENDED: { EMAIL_SENT },
     },
     DASHBOARD,
     PROBLEM_WITH_SERVICE,
@@ -206,6 +207,22 @@ describe('controllers/insurance/account/create/your-details', () => {
           await post(req, res);
 
           expect(res.redirect).toHaveBeenCalledWith(CONFIRM_EMAIL);
+        });
+
+        describe('when saveData.account returns isBlocked', () => {
+          beforeEach(() => {
+            const response = {
+              ...mockSaveDataResponse,
+              isBlocked: true,
+            };
+
+            saveData.account = jest.fn(() => Promise.resolve(response));
+          });
+          it(`should redirect to ${EMAIL_SENT}`, async () => {
+            await post(req, res);
+
+            expect(res.redirect).toHaveBeenCalledWith(EMAIL_SENT);
+          });
         });
 
         describe('when an application is not successfully created', () => {
