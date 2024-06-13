@@ -110,7 +110,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
   describe('error handling', () => {
     test('should throw an error', async () => {
       await expect(sendEmailReactivateAccountLinkHelper.send()).rejects.toThrow(
-        'Checking account and sending reactivate account email/link (sendEmailReactivateAccountLinkHelper)',
+        'Checking account and sending reactivate account email/link (sendEmailReactivateAccountLink helper)',
       );
     });
   });
