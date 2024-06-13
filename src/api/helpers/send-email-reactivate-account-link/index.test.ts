@@ -55,7 +55,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
 
     variables.accountId = account.id;
 
-    result = await sendEmailReactivateAccountLinkHelper(variables, context);
+    result = await sendEmailReactivateAccountLinkHelper.send(variables, context);
 
     // get the latest account
     account = await accounts.get(context, account.id);
@@ -99,7 +99,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
       // wipe accounts so an account will not be found.
       await accounts.deleteAll(context);
 
-      result = await sendEmailReactivateAccountLinkHelper(variables, context);
+      result = await sendEmailReactivateAccountLinkHelper.send(variables, context);
 
       const expected = { success: false };
 
@@ -109,7 +109,7 @@ describe('helpers/send-email-reactivate-account-link', () => {
 
   describe('error handling', () => {
     test('should throw an error', async () => {
-      await expect(sendEmailReactivateAccountLinkHelper()).rejects.toThrow(
+      await expect(sendEmailReactivateAccountLinkHelper.send()).rejects.toThrow(
         'Checking account and sending reactivate account email/link (sendEmailReactivateAccountLinkHelper)',
       );
     });
