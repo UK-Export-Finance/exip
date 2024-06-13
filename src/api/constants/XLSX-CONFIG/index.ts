@@ -38,6 +38,9 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     },
     eligibility: { totalContractValue },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policy: {
+      jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
+    },
     policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application;
 
@@ -94,6 +97,16 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.LOSS_PAYEE_ADDRESS += 2;
     indexes.BROKER_ADDRESS += 2;
     indexes.BUYER_ADDRESS += 2;
+  }
+
+  // TODO: update documentation - 3 extra fields.
+  if (requestedJointlyInsuredParty) {
+    indexes.BROKER_ADDRESS += 3;
+    indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
   }
 
   if (nominatedLossPayeeAppointed) {

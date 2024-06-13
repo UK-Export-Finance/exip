@@ -11,7 +11,7 @@ const {
 const application = {
   ...mockApplicationMinimalBrokerBuyerAndCompany,
   policy: {
-    ...mockApplicationMinimalBrokerBuyerAndCompany,
+    ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
   },
   buyer: mockApplication.buyer,

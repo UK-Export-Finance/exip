@@ -6,6 +6,7 @@ import mapIntro from './map-intro';
 import mapNameOnPolicy from './map-name-on-policy';
 import mapSingleContractPolicy from './map-single-contract-policy';
 import mapMultipleContractPolicy from './map-multiple-contract-policy';
+import mapJointlyInsuredParty from './map-jointly-insured-party';
 import mapBroker from './map-broker';
 import mapLossPayee from './map-loss-payee';
 import mapYesNoField from '../helpers/map-yes-no-field';
@@ -16,7 +17,6 @@ const { FIELDS } = XLSX;
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
   NEED_PRE_CREDIT_PERIOD,
-  REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
 } = FIELD_IDS;
 
 /**
@@ -46,7 +46,8 @@ const mapPolicy = (application: Application) => {
     ...mapNameOnPolicy(policyContact),
 
     xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
-    xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
+
+    ...mapJointlyInsuredParty(policy.jointlyInsuredParty),
 
     ...mapBroker(application),
     ...mapLossPayee(nominatedLossPayee),
