@@ -36,8 +36,6 @@ const mockBuyer = {
     isoCode: 'GBR',
     name: 'United Kingdom',
   },
-  exporterIsConnectedWithBuyer: true,
-  exporterHasTradedWithBuyer: true,
   registrationNumber: '1234',
   relationship: mockBuyerRelationship,
   website: 'www.gov.uk',

@@ -128,6 +128,7 @@ export const XLSX = {
     [PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]: 'Details of credit insurance cover held on the buyer',
     [REQUESTED_START_DATE]: 'Requested policy start date',
     [REQUESTED]: 'Is there another company that needs to be insured on the policy?',
+    SOMEONE_ELSE: 'Someone else',
     [SORT_CODE]: 'Loss payee sort code',
     [TOTAL_CONTRACT_VALUE_ID]: 'Total value of the contract',
     [TOTAL_MONTHS_OF_COVER]: 'Requested length of insurance',

@@ -4,6 +4,7 @@ import { XLSX } from '../../../content-strings';
 import { FIELD_VALUES } from '../../../constants';
 import xlsxRow from '../helpers/xlsx-row';
 import mapIntro from './map-intro';
+import mapNameOnPolicy from './map-name-on-policy';
 import mapSingleContractPolicy from './map-single-contract-policy';
 import mapMultipleContractPolicy from './map-multiple-contract-policy';
 import mapBroker from './map-broker';
@@ -16,7 +17,6 @@ import { Application, Context } from '../../../types';
 const { FIELDS } = XLSX;
 
 const {
-  NAME_ON_POLICY: { NAME, POSITION },
   NEED_PRE_CREDIT_PERIOD,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
 } = FIELD_IDS;
@@ -46,8 +46,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
         ...mapIntro(policy),
         ...mapSingleContractPolicy(policy),
 
-        xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]),
-        xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
+        ...mapNameOnPolicy(policyContact),
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),
@@ -70,8 +69,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-policy', () => {
         ...mapIntro(policy),
         ...mapMultipleContractPolicy(policy),
 
-        xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]),
-        xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
+        ...mapNameOnPolicy(policyContact),
 
         xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
         xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),

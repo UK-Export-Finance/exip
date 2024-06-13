@@ -3,6 +3,7 @@ import { XLSX } from '../../../content-strings';
 import { isSinglePolicyType, isMultiplePolicyType } from '../../../helpers/policy-type';
 import xlsxRow from '../helpers/xlsx-row';
 import mapIntro from './map-intro';
+import mapNameOnPolicy from './map-name-on-policy';
 import mapSingleContractPolicy from './map-single-contract-policy';
 import mapMultipleContractPolicy from './map-multiple-contract-policy';
 import mapBroker from './map-broker';
@@ -14,7 +15,6 @@ const { FIELDS } = XLSX;
 
 const {
   TYPE_OF_POLICY: { POLICY_TYPE },
-  NAME_ON_POLICY: { NAME, POSITION },
   NEED_PRE_CREDIT_PERIOD,
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
 } = FIELD_IDS;
@@ -43,8 +43,7 @@ const mapPolicy = (application: Application) => {
   mapped = [
     ...mapped,
 
-    xlsxRow(String(FIELDS.NAME_ON_POLICY[NAME]), policyContact[NAME]),
-    xlsxRow(String(FIELDS.NAME_ON_POLICY[POSITION]), policyContact[POSITION]),
+    ...mapNameOnPolicy(policyContact),
 
     xlsxRow(String(FIELDS[NEED_PRE_CREDIT_PERIOD]), mapYesNoField({ answer: policy[NEED_PRE_CREDIT_PERIOD] })),
     xlsxRow(String(FIELDS[REQUESTED]), mapYesNoField({ answer: policy.jointlyInsuredParty[REQUESTED] })),

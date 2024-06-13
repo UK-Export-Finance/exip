@@ -38,6 +38,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     },
     eligibility: { totalContractValue },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application;
 
   const policyType = application.policy[POLICY_TYPE];
@@ -82,6 +83,16 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     if (buyerHasOutstandingPayments) {
       indexes.TITLES.DECLARATIONS += 2;
     }
+  }
+
+  // TODO: update documentation.
+  // if different name on policy, 2 extra fields.
+  if (policyContactIsSameAsOwner === false) {
+    indexes.TITLES.BUYER += 2;
+    indexes.TITLES.DECLARATIONS += 2;
+
+    indexes.LOSS_PAYEE_ADDRESS += 2;
+    indexes.BUYER_ADDRESS += 2;
   }
 
   // TODO: EMS-3467: move to getPopulatedApplication.
