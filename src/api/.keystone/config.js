@@ -831,9 +831,7 @@ var TITLE_INDEXES = () => ({
   ELIGIBILITY: 21,
   EXPORTER_BUSINESS: 31,
   POLICY: 47,
-  // BUYER: 63,
   BUYER: 60,
-  // DECLARATIONS: 73,
   DECLARATIONS: 69
 });
 var INDEXES = () => ({
@@ -865,7 +863,8 @@ var XLSX_ROW_INDEXES = (application2) => {
   const {
     broker,
     buyer: {
-      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments }
+      buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterHasPreviousCreditInsuranceWithBuyer }
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
@@ -884,7 +883,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   }
   if (broker[USING_BROKER]) {
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.DECLARATIONS += 3;
     indexes.BROKER_ADDRESS = 59;
     indexes.BUYER_ADDRESS += 3;
   }
@@ -906,7 +905,10 @@ var XLSX_ROW_INDEXES = (application2) => {
   }
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
-    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
   }
   if (nominatedLossPayeeAppointed) {
     indexes.TITLES.BUYER += 5;
@@ -6945,15 +6947,18 @@ var { FIELDS: FIELDS19 } = XLSX;
 var mapPreviousCoverWithBuyer = (eligibility, relationship2) => {
   const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
+    const answer = relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3];
     const mapped = [
       xlsx_row_default(
         String(FIELDS19[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]),
-        map_yes_no_field_default({
-          answer: relationship2[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]
-        })
-      ),
-      xlsx_row_default(String(FIELDS19[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3])
+        map_yes_no_field_default({ answer })
+      )
     ];
+    if (answer === true) {
+      mapped.push(
+        xlsx_row_default(String(FIELDS19[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3]), relationship2[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER3])
+      );
+    }
     return mapped;
   }
   return [];

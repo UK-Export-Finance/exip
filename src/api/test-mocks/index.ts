@@ -61,6 +61,7 @@ export const mockApplicationMinimalBrokerBuyerAndCompany = {
       id: buyer.buyerTradingHistory.id,
     },
     relationship: {
+      ...mockApplication.buyer.relationship,
       id: buyer.relationship.id,
     },
   },

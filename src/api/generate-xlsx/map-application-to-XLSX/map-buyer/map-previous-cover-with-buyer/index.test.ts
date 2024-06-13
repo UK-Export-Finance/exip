@@ -12,33 +12,59 @@ const { FIELDS } = XLSX;
 
 describe('api/generate-xlsx/map-application-to-xlsx/map-buyer/map-previous-cover-with-buyer', () => {
   describe(`when the total contract value is ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
-    it('should return an array of mapped fields', () => {
-      const {
-        eligibility,
-        buyer: { relationship },
-      } = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+    describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is true`, () => {
+      it(`should return an array of mapped fields with ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
+        const {
+          buyer: { relationship },
+          eligibility,
+        } = mockApplicationSinglePolicyTotalContractValueOverThreshold;
 
-      const result = mapPreviousCoverWithBuyer(eligibility, relationship);
+        const result = mapPreviousCoverWithBuyer(eligibility, relationship);
 
-      const expected = [
-        xlsxRow(
-          String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
-          mapYesNoField({
-            answer: relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
-          }),
-        ),
-        xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
-      ];
+        const expected = [
+          xlsxRow(
+            String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
+            mapYesNoField({
+              answer: relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+            }),
+          ),
+          xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
+        ];
 
-      expect(result).toEqual(expected);
+        expect(result).toEqual(expected);
+      });
+    });
+
+    describe(`${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER} is false`, () => {
+      it(`should return an array of mapped fields without ${HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER}`, () => {
+        const { buyer, eligibility } = mockApplicationSinglePolicyTotalContractValueOverThreshold;
+
+        const mockRelationship = {
+          ...buyer.relationship,
+          exporterHasPreviousCreditInsuranceWithBuyer: false,
+        };
+
+        const result = mapPreviousCoverWithBuyer(eligibility, mockRelationship);
+
+        const expected = [
+          xlsxRow(
+            String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
+            mapYesNoField({
+              answer: mockRelationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
+            }),
+          ),
+        ];
+
+        expect(result).toEqual(expected);
+      });
     });
   });
 
   describe(`when the total contract value is NOT ${TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE}`, () => {
     it('should return an empty array', () => {
       const {
-        eligibility,
         buyer: { relationship },
+        eligibility,
       } = mockApplication;
 
       const result = mapPreviousCoverWithBuyer(eligibility, relationship);

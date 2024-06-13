@@ -30,6 +30,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     broker,
     buyer: {
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterHasPreviousCreditInsuranceWithBuyer },
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
@@ -53,7 +54,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
 
   if (broker[USING_BROKER]) {
     indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 2;
+    indexes.TITLES.DECLARATIONS += 3;
 
     indexes.BROKER_ADDRESS = 59;
     indexes.BUYER_ADDRESS += 3;
@@ -85,7 +86,11 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {
-    indexes.TITLES.DECLARATIONS += 3;
+    indexes.TITLES.DECLARATIONS += 1; // TODO: update documentation.
+  }
+
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1; // TODO: update documentation.
   }
 
   if (nominatedLossPayeeAppointed) {
