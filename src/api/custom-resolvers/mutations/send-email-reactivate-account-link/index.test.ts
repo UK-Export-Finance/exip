@@ -63,7 +63,7 @@ describe('custom-resolvers/send-email-reactivate-account-link', () => {
 
   describe('when sendEmailReactivateAccountLinkHelper.send errors', () => {
     beforeEach(() => {
-      sendEmailReactivateAccountLinkHelper.send = jest.fn(() => Promise.reject());
+      sendEmailReactivateAccountLinkHelper.send = jest.fn(() => Promise.reject(new Error('mock error')));
     });
 
     it('should throw an error', async () => {
