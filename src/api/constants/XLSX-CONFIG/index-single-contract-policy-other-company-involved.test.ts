@@ -3,7 +3,6 @@ import { INDEXES } from './INDEXES';
 import { POLICY as POLICY_FIELD_IDS } from '../field-ids/insurance/policy';
 import { APPLICATION } from '../application';
 import { mockApplicationMinimalBrokerBuyerAndCompany } from '../../test-mocks';
-import { Application } from '../../types';
 
 const {
   REQUESTED_JOINTLY_INSURED_PARTY: { REQUESTED },
@@ -18,7 +17,7 @@ const application = {
     ...policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
   },
-} as Application;
+};
 
 application.policy.jointlyInsuredParty[REQUESTED] = true;
 

@@ -15,11 +15,9 @@ const application = {
     ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.MULTIPLE,
   },
-  broker: {
-    ...mockApplicationMinimalBrokerBuyerAndCompany.broker,
-    isUsingBroker: true,
-  },
 };
+
+application.broker.isUsingBroker = true;
 
 describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.MULTIPLE} - using a broker`, () => {
   describe('with no different trading name, no different trading adddress', () => {

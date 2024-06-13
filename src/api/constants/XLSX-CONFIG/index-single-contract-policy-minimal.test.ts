@@ -14,10 +14,6 @@ const application = {
     ...mockApplicationMinimalBrokerBuyerAndCompany.policy,
     [POLICY_TYPE]: APPLICATION.POLICY_TYPE.SINGLE,
   },
-  nominatedLossPayee: {
-    ...mockApplicationMinimalBrokerBuyerAndCompany.nominatedLossPayee,
-    isAppointed: false,
-  },
 };
 
 describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.SINGLE} - minimal - no conditional answers`, () => {
