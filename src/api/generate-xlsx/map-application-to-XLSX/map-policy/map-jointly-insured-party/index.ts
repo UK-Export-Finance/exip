@@ -11,7 +11,7 @@ const {
 } = FIELD_IDS;
 
 /**
- * mapBroker
+ * mapJointlyInsuredParty
  * Map an application's "jointly insured party" fields into an array of objects for XLSX generation
  * @param {ApplicationJointlyInsuredParty} party: Application's jointly insured party
  * @returns {Array<object>} Array of objects for XLSX generation
