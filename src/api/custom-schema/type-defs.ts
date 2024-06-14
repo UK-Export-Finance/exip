@@ -27,6 +27,7 @@ const typeDefs = `
     id: String
     email: String
     verificationHash: String
+    isBlocked: Boolean
   }
 
   type CompaniesHouseResponse {

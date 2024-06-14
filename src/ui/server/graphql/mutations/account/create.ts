@@ -7,6 +7,7 @@ const createAccountMutation = gql`
       id
       alreadyExists
       isVerified
+      isBlocked
     }
   }
 `;
