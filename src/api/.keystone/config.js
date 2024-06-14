@@ -6442,25 +6442,13 @@ var {
   DECLARATIONS: { AGREE_HOW_YOUR_DATA_WILL_BE_USED: AGREE_HOW_YOUR_DATA_WILL_BE_USED2, HAS_ANTI_BRIBERY_CODE_OF_CONDUCT: HAS_ANTI_BRIBERY_CODE_OF_CONDUCT2, WILL_EXPORT_WITH_CODE_OF_CONDUCT: WILL_EXPORT_WITH_CODE_OF_CONDUCT2 },
   ELIGIBILITY: { BUYER_COUNTRY: BUYER_COUNTRY2, COMPANIES_HOUSE_NUMBER: COMPANIES_HOUSE_NUMBER2, COVER_PERIOD: COVER_PERIOD2, HAS_END_BUYER: HAS_END_BUYER2, HAS_MINIMUM_UK_GOODS_OR_SERVICES: HAS_MINIMUM_UK_GOODS_OR_SERVICES2 },
   EXPORT_CONTRACT: {
-    ABOUT_GOODS_OR_SERVICES: {
-      DESCRIPTION: DESCRIPTION2,
-      FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN2
-    },
+    ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION2, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN2 },
     // AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
     AGENT_CHARGES: { PAYABLE_COUNTRY_CODE, FIXED_SUM_AMOUNT, PERCENTAGE_CHARGE },
-    AGENT_DETAILS: {
-      NAME: AGENT_NAME,
-      FULL_ADDRESS: AGENT_ADDRESS,
-      COUNTRY_CODE: AGENT_COUNTRY_CODE
-    },
+    AGENT_DETAILS: { NAME: AGENT_NAME, FULL_ADDRESS: AGENT_ADDRESS, COUNTRY_CODE: AGENT_COUNTRY_CODE },
     AGENT_SERVICE: { IS_CHARGING, SERVICE_DESCRIPTION },
-    HOW_WILL_YOU_GET_PAID: {
-      PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION2
-    },
-    PRIVATE_MARKET: {
-      ATTEMPTED: ATTEMPTED_PRIVATE_MARKET,
-      DECLINED_DESCRIPTION: DECLINED_DESCRIPTION2
-    },
+    HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION2 },
+    PRIVATE_MARKET: { ATTEMPTED: ATTEMPTED_PRIVATE_MARKET, DECLINED_DESCRIPTION: DECLINED_DESCRIPTION2 },
     USING_AGENT
   },
   EXPORTER_BUSINESS: {
@@ -7291,13 +7279,9 @@ var mapPrivateMarket = (privateMarket, totalContractValue) => {
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
     const attempedPrivateMarketAnswer = privateMarket[ATTEMPTED];
-    const mapped = [
-      xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))
-    ];
+    const mapped = [xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[ATTEMPTED]), map_yes_no_field_default({ answer: attempedPrivateMarketAnswer }))];
     if (attempedPrivateMarketAnswer) {
-      mapped.push(
-        xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3])
-      );
+      mapped.push(xlsx_row_default(String(FIELDS25.EXPORT_CONTRACT[DECLINED_DESCRIPTION3]), privateMarket[DECLINED_DESCRIPTION3]));
     }
     return mapped;
   }
@@ -7305,30 +7289,52 @@ var mapPrivateMarket = (privateMarket, totalContractValue) => {
 };
 var map_private_market_default = mapPrivateMarket;
 
-// generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/index.ts
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/map-agent-charge-amount/index.ts
 var { FIELDS: FIELDS26 } = XLSX;
 var {
-  AGENT_CHARGES: { PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2 },
+  AGENT_CHARGES: { FIXED_SUM_AMOUNT: FIXED_SUM_AMOUNT2, FIXED_SUM_CURRENCY_CODE, PAYABLE_COUNTRY_CODE: PAYABLE_COUNTRY_CODE2, PERCENTAGE_CHARGE: PERCENTAGE_CHARGE2 }
+} = export_contract_default;
+var mapAgentChargeAmount = (charge) => {
+  const payableCountryRow = xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), charge[PAYABLE_COUNTRY_CODE2]);
+  if (charge[FIXED_SUM_AMOUNT2]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS26.AGENT_CHARGES[FIXED_SUM_AMOUNT2]), format_currency_default2(charge[FIXED_SUM_AMOUNT2], charge[FIXED_SUM_CURRENCY_CODE])),
+      payableCountryRow
+    ];
+    return mapped;
+  }
+  if (charge[PERCENTAGE_CHARGE2]) {
+    const mapped = [
+      xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PERCENTAGE_CHARGE2]), `${charge[PERCENTAGE_CHARGE2]}%`),
+      payableCountryRow
+    ];
+    return mapped;
+  }
+  return [];
+};
+var map_agent_charge_amount_default = mapAgentChargeAmount;
+
+// generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/map-agent-charge/index.ts
+var { FIELDS: FIELDS27 } = XLSX;
+var {
   AGENT_SERVICE: { IS_CHARGING: IS_CHARGING2 }
 } = export_contract_default;
 var mapAgentCharge = (service) => {
   const { charge } = service;
   const chargingAnswer = service[IS_CHARGING2];
-  const mapped = [
-    xlsx_row_default(String(FIELDS26.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))
-  ];
+  let mapped = [xlsx_row_default(String(FIELDS27.AGENT_SERVICE[IS_CHARGING2]), map_yes_no_field_default({ answer: chargingAnswer }))];
   if (chargingAnswer) {
-    mapped.push(
-      xlsx_row_default("TODO - charges", "TODO"),
-      xlsx_row_default(String(FIELDS26.AGENT_CHARGES[PAYABLE_COUNTRY_CODE2]), charge[PAYABLE_COUNTRY_CODE2])
-    );
+    mapped = [
+      ...mapped,
+      ...map_agent_charge_amount_default(charge)
+    ];
   }
   return mapped;
 };
 var map_agent_charge_default = mapAgentCharge;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/map-agent/index.ts
-var { FIELDS: FIELDS27 } = XLSX;
+var { FIELDS: FIELDS28 } = XLSX;
 var {
   // AGENT_CHARGES: { METHOD, PAYABLE_COUNTRY_CODE, FIXED_SUM, FIXED_SUM_AMOUNT, FIXED_SUM_CURRENCY_CODE, PERCENTAGE, PERCENTAGE_CHARGE },
   AGENT_DETAILS: { NAME: NAME4, FULL_ADDRESS: FULL_ADDRESS4, COUNTRY_CODE: COUNTRY_CODE3 },
@@ -7337,17 +7343,15 @@ var {
 } = export_contract_default;
 var mapAgent = (agent) => {
   const usingAgentAnswer = agent[USING_AGENT2];
-  let mapped = [
-    xlsx_row_default(String(FIELDS27.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))
-  ];
+  let mapped = [xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[USING_AGENT2]), map_yes_no_field_default({ answer: usingAgentAnswer }))];
   if (usingAgentAnswer) {
     const { service } = agent;
     mapped = [
       ...mapped,
-      xlsx_row_default(String(FIELDS27.AGENT[NAME4]), agent[NAME4]),
-      xlsx_row_default(String(FIELDS27.AGENT[FULL_ADDRESS4]), agent[FULL_ADDRESS4]),
-      xlsx_row_default(String(FIELDS27.AGENT[COUNTRY_CODE3]), agent[COUNTRY_CODE3]),
-      xlsx_row_default(String(FIELDS27.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
+      xlsx_row_default(String(FIELDS28.AGENT[NAME4]), agent[NAME4]),
+      xlsx_row_default(String(FIELDS28.AGENT[FULL_ADDRESS4]), agent[FULL_ADDRESS4]),
+      xlsx_row_default(String(FIELDS28.AGENT[COUNTRY_CODE3]), agent[COUNTRY_CODE3]),
+      xlsx_row_default(String(FIELDS28.AGENT_SERVICE[SERVICE_DESCRIPTION2]), service[SERVICE_DESCRIPTION2]),
       ...map_agent_charge_default(service)
     ];
   }
@@ -7356,15 +7360,10 @@ var mapAgent = (agent) => {
 var map_agent_default = mapAgent;
 
 // generate-xlsx/map-application-to-XLSX/map-export-contract/index.ts
-var { FIELDS: FIELDS28, SECTION_TITLES: SECTION_TITLES5 } = XLSX;
+var { FIELDS: FIELDS29, SECTION_TITLES: SECTION_TITLES5 } = XLSX;
 var {
-  ABOUT_GOODS_OR_SERVICES: {
-    DESCRIPTION: DESCRIPTION3,
-    FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3
-  },
-  HOW_WILL_YOU_GET_PAID: {
-    PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3
-  }
+  ABOUT_GOODS_OR_SERVICES: { DESCRIPTION: DESCRIPTION3, FINAL_DESTINATION_KNOWN: FINAL_DESTINATION_KNOWN3 },
+  HOW_WILL_YOU_GET_PAID: { PAYMENT_TERMS_DESCRIPTION: PAYMENT_TERMS_DESCRIPTION3 }
 } = export_contract_default;
 var mapExportContract = (application2) => {
   const {
@@ -7374,9 +7373,9 @@ var mapExportContract = (application2) => {
   const { agent, privateMarket } = exportContract;
   const mapped = [
     xlsx_row_default(SECTION_TITLES5.EXPORT_CONTRACT, ""),
-    xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
-    xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: exportContract[FINAL_DESTINATION_KNOWN3] })),
-    xlsx_row_default(String(FIELDS28.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[DESCRIPTION3]), exportContract[DESCRIPTION3]),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[FINAL_DESTINATION_KNOWN3]), map_yes_no_field_default({ answer: exportContract[FINAL_DESTINATION_KNOWN3] })),
+    xlsx_row_default(String(FIELDS29.EXPORT_CONTRACT[PAYMENT_TERMS_DESCRIPTION3]), exportContract[PAYMENT_TERMS_DESCRIPTION3]),
     ...map_private_market_default(privateMarket, totalContractValue),
     ...map_agent_default(agent)
   ];
@@ -7394,7 +7393,7 @@ var mapAgreedField = (answer) => {
 var map_agreed_field_default = mapAgreedField;
 
 // generate-xlsx/map-application-to-XLSX/map-declarations/index.ts
-var { FIELDS: FIELDS29, SECTION_TITLES: SECTION_TITLES6 } = XLSX;
+var { FIELDS: FIELDS30, SECTION_TITLES: SECTION_TITLES6 } = XLSX;
 var {
   DECLARATIONS: {
     AGREE_CONFIDENTIALITY: AGREE_CONFIDENTIALITY2,
@@ -7411,9 +7410,9 @@ var mapDeclarations = (application2) => {
     xlsx_row_default(SECTION_TITLES6.DECLARATIONS, ""),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIDENTIALITY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIDENTIALITY2])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_ANTI_BRIBERY2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_ANTI_BRIBERY2])),
-    xlsx_row_default(String(FIELDS29[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS29[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
-    xlsx_row_default(String(FIELDS29[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
+    xlsx_row_default(String(FIELDS30[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[HAS_ANTI_BRIBERY_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[WILL_EXPORT_WITH_CODE_OF_CONDUCT3]), map_yes_no_field_default({ answer: declaration[WILL_EXPORT_WITH_CODE_OF_CONDUCT3] })),
+    xlsx_row_default(String(FIELDS30[AGREE_HOW_YOUR_DATA_WILL_BE_USED3]), map_agreed_field_default(declaration[AGREE_HOW_YOUR_DATA_WILL_BE_USED3])),
     xlsx_row_default(DECLARATIONS_FIELDS[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2].SUMMARY.TITLE, map_agreed_field_default(declaration[AGREE_CONFIRMATION_ACKNOWLEDGEMENTS2]))
   ];
   return mapped;

@@ -2,12 +2,12 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contr
 import { XLSX } from '../../../../../content-strings';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
+import mapAgentChargeAmount from './map-agent-charge-amount';
 import { ApplicationExportContractAgentService } from '../../../../../types';
 
 const { FIELDS } = XLSX;
 
 const {
-  AGENT_CHARGES: { PAYABLE_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING },
 } = FIELD_IDS;
 
@@ -22,12 +22,10 @@ const mapAgentCharge = (service: ApplicationExportContractAgentService) => {
 
   const chargingAnswer = service[IS_CHARGING];
 
-  const mapped = [xlsxRow(String(FIELDS.AGENT_SERVICE[IS_CHARGING]), mapYesNoField({ answer: chargingAnswer }))];
+  let mapped = [xlsxRow(String(FIELDS.AGENT_SERVICE[IS_CHARGING]), mapYesNoField({ answer: chargingAnswer }))];
 
   if (chargingAnswer) {
-    // TODO: How much is the agent charging?
-
-    mapped.push(xlsxRow('TODO - charges', 'TODO'), xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), charge[PAYABLE_COUNTRY_CODE]));
+    mapped = [...mapped, ...mapAgentChargeAmount(charge)];
   }
 
   return mapped;

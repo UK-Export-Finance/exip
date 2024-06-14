@@ -3,12 +3,12 @@ import FIELD_IDS from '../../../../../constants/field-ids/insurance/export-contr
 import { XLSX } from '../../../../../content-strings';
 import xlsxRow from '../../../helpers/xlsx-row';
 import mapYesNoField from '../../../helpers/map-yes-no-field';
+import mapAgentChargeAmount from './map-agent-charge-amount';
 import { mockApplication } from '../../../../../test-mocks';
 
 const { FIELDS } = XLSX;
 
 const {
-  AGENT_CHARGES: { PAYABLE_COUNTRY_CODE },
   AGENT_SERVICE: { IS_CHARGING },
 } = FIELD_IDS;
 
@@ -18,7 +18,7 @@ const {
   },
 } = mockApplication;
 
-describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agent', () => {
+describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agent/map-agent-charge', () => {
   describe(`when ${IS_CHARGING} is true`, () => {
     const mockService = {
       ...service,
@@ -30,8 +30,7 @@ describe('api/generate-xlsx/map-application-to-xlsx/map-export-contract/map-agen
 
       const expected = [
         xlsxRow(String(FIELDS.AGENT_SERVICE[IS_CHARGING]), mapYesNoField({ answer: mockService[IS_CHARGING] })),
-        xlsxRow('TODO - charges', 'TODO'),
-        xlsxRow(String(FIELDS.AGENT_CHARGES[PAYABLE_COUNTRY_CODE]), mockService.charge[PAYABLE_COUNTRY_CODE]),
+        ...mapAgentChargeAmount(mockService.charge),
       ];
 
       expect(result).toEqual(expected);
