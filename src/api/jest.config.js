@@ -2,6 +2,7 @@ module.exports = {
   clearMocks: true,
   collectCoverage: true,
   collectCoverageFrom: [
+    'constants/XLSX-CONFIG/**/*.{ts,}',
     'custom-resolvers/**/*.{ts,}',
     'emails/**/*.{ts,}',
     'generate-xlsx/**/*.{ts,}',
@@ -11,5 +12,5 @@ module.exports = {
     'server/generate-quote/*.{ts,}',
   ],
   testTimeout: 60000,
-  workerIdleMemoryLimit: '512MB'
+  workerIdleMemoryLimit: '512MB',
 };

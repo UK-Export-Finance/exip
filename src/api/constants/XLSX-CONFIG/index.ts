@@ -26,7 +26,8 @@ const {
  * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
  * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
  * - If "export contract section - has attempted private market cover" is true, the XLSX has 1 additional row.
- * - If "export contract section - using an agent, agent is charging" is true, the XLSX has 1 additional row.
+ * - If "export contract section - using an agent" is true, the XLSX has 5 additional rows.
+ * - If "export contract section - using an agent - agent is charging" is true, the XLSX has 1 additional row.
  * - If the application's total conctract value is over the threshold, the XLSX has 1 additional row.
  * @returns {XLSXRowIndexes}
  */
@@ -45,6 +46,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     eligibility: { totalContractValue },
     exportContract: {
       agent: {
+        isUsingAgent,
         service: { agentIsCharging },
       },
       privateMarket: { attempted: attemptedPrivateMarket },
@@ -56,7 +58,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application;
 
-  const policyType = application.policy[POLICY_TYPE];
+  const isMultiplePolicy = isMultiplePolicyType(application.policy[POLICY_TYPE]);
 
   let indexes = INDEXES();
 
@@ -82,7 +84,7 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
    * Increment some specific indexes,
    * depending on answers in the "Policy" section of an application.
    */
-  if (isMultiplePolicyType(policyType)) {
+  if (isMultiplePolicy) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
@@ -149,7 +151,6 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.EXPORT_CONTRACT += 1;
   }
 
-  // TODO: export contract section
   /**
    * Increment some specific indexes,
    * depending on answers in the "Export contract" section of an application.
@@ -158,8 +159,27 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.TITLES.DECLARATIONS += 1;
   }
 
+  if (isUsingAgent) {
+    indexes.TITLES.DECLARATIONS += 5;
+    indexes.AGENT_ADDRESS = 75;
+
+    if (isMultiplePolicy) {
+      indexes.AGENT_ADDRESS += 1;
+
+      indexes.TITLES.DECLARATIONS += 1;
+    }
+
+    if (attemptedPrivateMarket) {
+      indexes.TITLES.DECLARATIONS += 1;
+
+      indexes.AGENT_ADDRESS += 1;
+    }
+  }
+
   if (agentIsCharging) {
     indexes.TITLES.DECLARATIONS += 1;
+
+    indexes.AGENT_ADDRESS += 1;
   }
 
   /**
@@ -172,6 +192,8 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
+
+    indexes.AGENT_ADDRESS += 1;
   }
 
   return indexes;

@@ -841,7 +841,8 @@ var INDEXES = () => ({
   COMPANY_SIC_CODES: 34,
   BROKER_ADDRESS: 59,
   BUYER_ADDRESS: 62,
-  LOSS_PAYEE_ADDRESS: 63
+  LOSS_PAYEE_ADDRESS: 63,
+  AGENT_ADDRESS: 0
 });
 var incrementIndexes = (indexes) => {
   const modified = indexes;
@@ -877,8 +878,11 @@ var XLSX_ROW_INDEXES = (application2) => {
     },
     eligibility: { totalContractValue },
     exportContract: {
-      agent: { service: { agentIsCharging } },
-      privateMarket: attemptedPrivateMarket
+      agent: {
+        isUsingAgent,
+        service: { agentIsCharging }
+      },
+      privateMarket: { attempted: attemptedPrivateMarket }
     },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
     policy: {
@@ -886,7 +890,7 @@ var XLSX_ROW_INDEXES = (application2) => {
     },
     policyContact: { isSameAsOwner: policyContactIsSameAsOwner }
   } = application2;
-  const policyType = application2.policy[POLICY_TYPE2];
+  const isMultiplePolicy = isMultiplePolicyType(application2.policy[POLICY_TYPE2]);
   let indexes = INDEXES();
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
@@ -898,7 +902,7 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (hasDifferentTradingName && hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
-  if (isMultiplePolicyType(policyType)) {
+  if (isMultiplePolicy) {
     indexes.TITLES.BUYER += 1;
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
@@ -951,13 +955,27 @@ var XLSX_ROW_INDEXES = (application2) => {
   if (attemptedPrivateMarket) {
     indexes.TITLES.DECLARATIONS += 1;
   }
+  if (isUsingAgent) {
+    indexes.TITLES.DECLARATIONS += 5;
+    indexes.AGENT_ADDRESS = 75;
+    if (isMultiplePolicy) {
+      indexes.AGENT_ADDRESS += 1;
+      indexes.TITLES.DECLARATIONS += 1;
+    }
+    if (attemptedPrivateMarket) {
+      indexes.TITLES.DECLARATIONS += 1;
+      indexes.AGENT_ADDRESS += 1;
+    }
+  }
   if (agentIsCharging) {
     indexes.TITLES.DECLARATIONS += 1;
+    indexes.AGENT_ADDRESS += 1;
   }
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
   if (totalContractValueOverThreshold) {
     indexes.TITLES.DECLARATIONS += 1;
     indexes.TITLES.EXPORT_CONTRACT += 1;
+    indexes.AGENT_ADDRESS += 1;
   }
   return indexes;
 };

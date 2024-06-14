@@ -31,6 +31,7 @@ export const INDEXES = () =>
     BROKER_ADDRESS: 59,
     BUYER_ADDRESS: 62,
     LOSS_PAYEE_ADDRESS: 63,
+    AGENT_ADDRESS: 0,
   }) as XLSXRowIndexes;
 
 /**
