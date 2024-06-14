@@ -1,7 +1,7 @@
 import { FIELD_VALUES, MINIMUM_CHARACTERS } from '../../../../../../../constants';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
+import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import percentageNumberValidation from '../../../../../../../helpers/percentage-number-validation';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { RequestBody } from '../../../../../../../../types';
@@ -26,7 +26,7 @@ const {
 
 /**
  * validate the METHOD field
- * - If METHOD is FIXED_SUM, validate FIXED_SUM_AMOUNT via wholeNumberAboveMinimumValidation.
+ * - If METHOD is FIXED_SUM, validate FIXED_SUM_AMOUNT via numberAboveMinimumValidation.
  * - If METHOD is PERCENTAGE, validate PERCENTAGE_CHARGE via percentageNumberValidation.
  * - Otherwise, assert empty field validation.
  * @param {RequestBody} formBody: Form body
@@ -35,7 +35,14 @@ const {
  */
 const method = (formBody: RequestBody, errors: object) => {
   if (formBody[METHOD] === FIXED_SUM) {
-    return wholeNumberAboveMinimumValidation(formBody, FIXED_SUM_AMOUNT, FIXED_SUM_AMOUNT_ERROR_MESSAGES, errors, MINIMUM_CHARACTERS.ONE);
+    return numberAboveMinimumValidation({
+      formBody,
+      fieldId: FIXED_SUM_AMOUNT,
+      errorMessage: FIXED_SUM_AMOUNT_ERROR_MESSAGES,
+      errors,
+      minimum: MINIMUM_CHARACTERS.ONE,
+      allowDecimalPlaces: true,
+    });
   }
 
   if (formBody[METHOD] === PERCENTAGE) {

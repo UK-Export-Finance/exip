@@ -1,6 +1,6 @@
 import YOUR_BUYER_FIELD_IDS from '../../../../../../constants/field-ids/insurance/your-buyer';
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
-import wholeNumberAboveMinimumValidation from '../../../../../../shared-validation/whole-number-above-minimum';
+import numberAboveMinimumValidation from '../../../../../../shared-validation/number-above-minimum';
 import { RequestBody } from '../../../../../../../types';
 
 const { OUTSTANDING_PAYMENTS, TOTAL_AMOUNT_OVERDUE: FIELD_ID } = YOUR_BUYER_FIELD_IDS;
@@ -23,7 +23,7 @@ export const MINIMUM = 1;
  */
 const amountOverdueRules = (formBody: RequestBody, errors: object) => {
   if (formBody[OUTSTANDING_PAYMENTS] === 'true') {
-    return wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM);
+    return numberAboveMinimumValidation({ formBody, fieldId: FIELD_ID, errorMessage: ERROR_MESSAGES_OBJECT, errors, minimum: MINIMUM });
   }
 
   return errors;

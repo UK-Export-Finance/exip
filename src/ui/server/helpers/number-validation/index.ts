@@ -1,4 +1,4 @@
-import { RequestBody } from '../../../types';
+import { ValidationWholeNumberParams } from '../../../types';
 import generateValidationErrors from '../validation';
 import { isNumber, numberHasDecimal, isNumberBelowMinimum } from '../number';
 import { stripCommas } from '../string';
@@ -12,11 +12,12 @@ import { stripCommas } from '../string';
  * @param {string} errorMessage
  * @param {string} field fieldId of the field being checked
  * @param {Boolean} allowNegativeValue false as default, if true then allows for negative numbers below 0.
+ * @param {Boolean} allowDecimalPlaces false as default, if true then allows for decimal places.
  * @returns {Object} errors
  */
-const wholeNumberValidation = (formBody: RequestBody, errors: object, errorMessage: string, field: string, allowNegativeValue = false) => {
+const numberValidation = ({ formBody, errors, errorMessage, fieldId, allowNegativeValue = false, allowDecimalPlaces = false }: ValidationWholeNumberParams) => {
   // strip commas - commas are valid.
-  const numberWithoutCommas = stripCommas(formBody[field]);
+  const numberWithoutCommas = stripCommas(formBody[fieldId]);
 
   const isFieldANumber = isNumber(numberWithoutCommas);
   const hasDecimal = numberHasDecimal(Number(numberWithoutCommas));
@@ -28,11 +29,20 @@ const wholeNumberValidation = (formBody: RequestBody, errors: object, errorMessa
     isBelowMinimum = isNumberBelowMinimum(Number(numberWithoutCommas), 0);
   }
 
-  if (!isFieldANumber || hasDecimal || isBelowMinimum) {
-    return generateValidationErrors(field, errorMessage, errors);
+  let hasErrors = !isFieldANumber || hasDecimal || isBelowMinimum;
+
+  /**
+   * if allowDecimalPlaces is true, then only check if the field is a number and below the minimum.
+   */
+  if (allowDecimalPlaces) {
+    hasErrors = !isFieldANumber || isBelowMinimum;
+  }
+
+  if (hasErrors) {
+    return generateValidationErrors(fieldId, errorMessage, errors);
   }
 
   return errors;
 };
 
-export default wholeNumberValidation;
+export default numberValidation;

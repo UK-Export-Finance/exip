@@ -1,7 +1,7 @@
 import { ERROR_MESSAGES } from '../../../../../../content-strings';
 import { FIELD_IDS } from '../../../../../../constants';
 import { RequestBody } from '../../../../../../../types';
-import wholeNumberValidation from '../../../../../../helpers/whole-number-validation';
+import numberValidation from '../../../../../../helpers/number-validation';
 import { objectHasProperty } from '../../../../../../helpers/object';
 import generateValidationErrors from '../../../../../../helpers/validation';
 import { stripCommas } from '../../../../../../helpers/string';
@@ -42,7 +42,7 @@ const employeesUK = (formBody: RequestBody, errors: object) => {
   }
 
   const errorMessage = ERROR_MESSAGE.INCORRECT_FORMAT;
-  return wholeNumberValidation(formBody, errors, errorMessage, FIELD_ID);
+  return numberValidation({ formBody, errors, errorMessage, fieldId: FIELD_ID });
 };
 
 export default employeesUK;

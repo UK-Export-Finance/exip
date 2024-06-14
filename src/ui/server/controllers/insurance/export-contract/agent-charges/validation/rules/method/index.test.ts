@@ -2,7 +2,7 @@ import methodRule from '.';
 import { FIELD_VALUES, MINIMUM_CHARACTERS } from '../../../../../../../constants';
 import FIELD_IDS from '../../../../../../../constants/field-ids/insurance/export-contract';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
+import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import percentageNumberValidation from '../../../../../../../helpers/percentage-number-validation';
 import emptyFieldValidation from '../../../../../../../shared-validation/empty-field';
 import { mockErrors } from '../../../../../../../test-mocks';
@@ -27,14 +27,21 @@ const {
 
 describe('controllers/insurance/export-contract/agent-charges/validation/rules/method', () => {
   describe(`when ${METHOD} is ${FIXED_SUM}`, () => {
-    it('should return the result of wholeNumberAboveMinimumValidation', () => {
+    it('should return the result of numberAboveMinimumValidation', () => {
       const mockBody = {
         [METHOD]: FIXED_SUM,
       };
 
       const result = methodRule(mockBody, mockErrors);
 
-      const expected = wholeNumberAboveMinimumValidation(mockBody, FIXED_SUM_AMOUNT, FIXED_SUM_AMOUNT_ERROR_MESSAGES, mockErrors, MINIMUM_CHARACTERS.ONE);
+      const expected = numberAboveMinimumValidation({
+        formBody: mockBody,
+        fieldId: FIXED_SUM_AMOUNT,
+        errorMessage: FIXED_SUM_AMOUNT_ERROR_MESSAGES,
+        errors: mockErrors,
+        minimum: MINIMUM_CHARACTERS.ONE,
+        allowDecimalPlaces: true,
+      });
 
       expect(result).toEqual(expected);
     });

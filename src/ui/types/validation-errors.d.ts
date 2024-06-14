@@ -43,4 +43,35 @@ interface ValidationMinAndMaxLengthParams extends ValidationMinAndMaxLengthCore 
   value: string;
 }
 
-export { DateValidationRulesParams, DateValidationFormatRulesParams, DateValidationFormatRules, ValidationErrors, ValidationMinAndMaxLengthParams };
+interface WholeNumberParams {
+  formBody: RequestBody;
+  fieldId: string;
+  errors: object;
+  allowDecimalPlaces?: boolean;
+  allowNegativeValue?: boolean;
+}
+interface ValidationWholeNumberParams extends WholeNumberParams {
+  errorMessage: string;
+}
+
+interface ValidationWholeNumberAboveMinimumParams extends WholeNumberParams {
+  errorMessage: ErrorMessageObject;
+  minimum: number;
+}
+
+interface ValidationWholeNumberMinMaxParams extends WholeNumberParams {
+  errorMessage: ErrorMessageObject;
+  minimum: number;
+  maximum: number;
+}
+
+export {
+  DateValidationRulesParams,
+  DateValidationFormatRulesParams,
+  DateValidationFormatRules,
+  ValidationErrors,
+  ValidationMinAndMaxLengthParams,
+  ValidationWholeNumberParams,
+  ValidationWholeNumberAboveMinimumParams,
+  ValidationWholeNumberMinMaxParams,
+};

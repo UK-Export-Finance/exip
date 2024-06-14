@@ -1,6 +1,6 @@
 import INSURANCE_FIELD_IDS from '../../../../../../../constants/field-ids/insurance';
 import { ERROR_MESSAGES } from '../../../../../../../content-strings';
-import wholeNumberAboveMinimumValidation from '../../../../../../../shared-validation/whole-number-above-minimum';
+import numberAboveMinimumValidation from '../../../../../../../shared-validation/number-above-minimum';
 import { RequestBody } from '../../../../../../../../types';
 
 const {
@@ -32,6 +32,6 @@ export const MINIMUM = 1;
  * @returns {ValidationErrors}
  */
 const maximumBuyerWillOweRules = (formBody: RequestBody, errors: object) =>
-  wholeNumberAboveMinimumValidation(formBody, FIELD_ID, ERROR_MESSAGES_OBJECT, errors, MINIMUM);
+  numberAboveMinimumValidation({ formBody, fieldId: FIELD_ID, errorMessage: ERROR_MESSAGES_OBJECT, errors, minimum: MINIMUM });
 
 export default maximumBuyerWillOweRules;
