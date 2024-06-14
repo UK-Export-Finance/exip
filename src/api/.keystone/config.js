@@ -4472,9 +4472,11 @@ var createABuyer = async (context, countryId, applicationId) => {
     const buyerRelationship = await create_a_buyer_relationship_default(context, buyer.id, applicationId);
     const buyerContact = await create_a_buyer_contact_default(context, buyer.id, applicationId);
     return {
-      buyer,
-      buyerTradingHistory,
-      buyerRelationship,
+      buyer: {
+        ...buyer,
+        buyerTradingHistory,
+        relationship: buyerRelationship
+      },
       buyerContact
     };
   } catch (err) {

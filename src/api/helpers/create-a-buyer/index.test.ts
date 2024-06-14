@@ -32,7 +32,9 @@ describe('helpers/create-a-buyer', () => {
   test('it should return a buyer and buyer trading history with respective IDs', async () => {
     const result = await createABuyer(context, country.id, application.id);
 
-    const { buyer, buyerTradingHistory } = result;
+    const { buyer } = result;
+
+    const { buyerTradingHistory } = buyer;
 
     expect(buyer).toBeDefined();
     expect(buyerTradingHistory).toBeDefined();
@@ -56,22 +58,26 @@ describe('helpers/create-a-buyer', () => {
 
   test('it should return empty buyerTradingAddress fields with default currencyCode', async () => {
     const result = await createABuyer(context, country.id, application.id);
-    const { buyerTradingHistory } = result;
+    const {
+      buyer: { buyerTradingHistory },
+    } = result;
 
     expect(buyerTradingHistory.currencyCode).toEqual(GBP);
     expect(buyerTradingHistory.outstandingPayments).toBeNull();
     expect(buyerTradingHistory.failedPayments).toBeNull();
   });
 
-  test('it should return empty buyerRelationship fields', async () => {
+  test('it should return empty buyer relationship fields', async () => {
     const result = await createABuyer(context, country.id, application.id);
-    const { buyerRelationship } = result;
+    const {
+      buyer: { relationship },
+    } = result;
 
-    expect(buyerRelationship.exporterIsConnectedWithBuyer).toBeNull();
-    expect(buyerRelationship.connectionWithBuyerDescription).toEqual('');
-    expect(buyerRelationship.exporterHasPreviousCreditInsuranceWithBuyer).toBeNull();
-    expect(buyerRelationship.exporterHasBuyerFinancialAccounts).toBeNull();
-    expect(buyerRelationship.previousCreditInsuranceWithBuyerDescription).toEqual('');
+    expect(relationship.exporterIsConnectedWithBuyer).toBeNull();
+    expect(relationship.connectionWithBuyerDescription).toEqual('');
+    expect(relationship.exporterHasPreviousCreditInsuranceWithBuyer).toBeNull();
+    expect(relationship.exporterHasBuyerFinancialAccounts).toBeNull();
+    expect(relationship.previousCreditInsuranceWithBuyerDescription).toEqual('');
   });
 
   test('it should return empty buyerContact fields', async () => {
