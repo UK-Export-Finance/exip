@@ -107,6 +107,7 @@ const completeSignInAndSubmitAnApplication = ({
         totalContractValueOverThreshold,
         attemptedPrivateMarketCover,
         isUsingAgent,
+        agentIsCharging,
         agentChargeMethodFixedSum,
         agentChargeMethodPercentage,
         hasConnectionToBuyer,
