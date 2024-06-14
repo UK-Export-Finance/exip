@@ -11,14 +11,7 @@ import createAnExportContract from '../helpers/create-an-export-contract';
 import createANominatedLossPayee from '../helpers/create-a-nominated-loss-payee';
 import sectionReviewCreate from './sectionReview';
 import { FIELD_VALUES } from '../constants';
-import {
-  mockApplicationEligibility,
-  mockSinglePolicy,
-  mockMultiplePolicy,
-  mockExportContract,
-  mockBusiness,
-  mockPolicyContact,
-} from '../test-mocks/mock-application';
+import { mockApplicationEligibility, mockExportContract, mockBusiness, mockPolicyContact } from '../test-mocks/mock-application';
 import { mockApplicationDeclaration } from '../test-mocks';
 import mockCompany from '../test-mocks/mock-company';
 import mockCountries from '../test-mocks/mock-countries';
@@ -139,16 +132,19 @@ export const createFullApplication = async (context: Context, policyType?: strin
   });
 
   /**
-   * Update the policy so we have a full data set.
-   * If a multiple policy type is passed, use mock multiple policy data.
-   * Otherwise, use mock single policy data.
+   * Create minimal policy data.
+   * If a multiple policy type is passed, use multiple policy type.
+   * Otherwise, use single policy type.
    */
-  let policyData = {};
+  const policyData = {
+    policyType: POLICY_TYPE.SINGLE,
+    totalSalesToBuyer: 123,
+    totalValueOfContract: 456,
+    maximumBuyerWillOwe: 789,
+  };
 
   if (policyType === POLICY_TYPE.MULTIPLE) {
-    policyData = mockMultiplePolicy;
-  } else {
-    policyData = mockSinglePolicy;
+    policyData.policyType = POLICY_TYPE.MULTIPLE;
   }
 
   policy = (await context.query.Policy.updateOne({

@@ -1,15 +1,18 @@
-context('Insurance - submit an application - Single policy type, fully populated buyer', () => {
+import { APPLICATION } from '../../../../../../../constants';
+
+context('Insurance - submit an application - Multiple policy type - fully populated', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      hasConnectionToBuyer: true,
-      exporterHasTradedWithBuyer: true,
-      buyerOutstandingPayments: true,
-      buyerFailedToPayOnTime: true,
-      hasHadCreditInsuranceCoverWithBuyer: true,
-      exporterHasBuyerFinancialAccounts: true,
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
+      differentPolicyContact: true,
+      isAppointingLossPayee: true,
+      needPreCreditPeriod: true,
+      otherCompanyInvolved: true,
       totalContractValueOverThreshold: true,
+      hasHadCreditInsuranceCoverWithBuyer: true,
+      usingBroker: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;
     });

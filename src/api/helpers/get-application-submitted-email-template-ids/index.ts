@@ -22,7 +22,9 @@ const getApplicationSubmittedEmailTemplateIds = (application: Application) => {
   };
 
   const { hasAntiBriberyCodeOfConduct } = declaration;
-  const { exporterHasTradedWithBuyer } = buyer;
+  const {
+    buyerTradingHistory: { exporterHasTradedWithBuyer },
+  } = buyer;
 
   if (!hasAntiBriberyCodeOfConduct && !exporterHasTradedWithBuyer) {
     /**

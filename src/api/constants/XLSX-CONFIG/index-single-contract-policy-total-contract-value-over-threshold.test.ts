@@ -13,7 +13,7 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
       ...indexes,
       TITLES: {
         ...indexes.TITLES,
-        DECLARATIONS: indexes.TITLES.DECLARATIONS + 2,
+        DECLARATIONS: indexes.TITLES.DECLARATIONS + 1,
       },
     };
 

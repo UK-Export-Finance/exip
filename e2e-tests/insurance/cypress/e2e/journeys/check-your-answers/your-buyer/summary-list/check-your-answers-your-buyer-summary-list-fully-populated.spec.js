@@ -5,9 +5,7 @@ import { INSURANCE_FIELD_IDS } from '../../../../../../../constants/field-ids/in
 
 const {
   ROOT,
-  CHECK_YOUR_ANSWERS: {
-    YOUR_BUYER,
-  },
+  CHECK_YOUR_ANSWERS: { YOUR_BUYER },
 } = INSURANCE_ROUTES;
 
 const {
@@ -49,7 +47,7 @@ context('Insurance - Check your answers - Your buyer page - Summary list - appli
         hasConnectionToBuyer: true,
         exporterHasTradedWithBuyer: true,
         fullyPopulatedBuyerTradingHistory: true,
-        hasHadCreditInsuranceCover: true,
+        hasHadCreditInsuranceCoverWithBuyer: true,
         exporterHasBuyerFinancialAccounts: true,
         totalContractValueOverThreshold: true,
       });

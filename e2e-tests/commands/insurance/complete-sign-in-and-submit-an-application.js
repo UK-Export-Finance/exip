@@ -14,9 +14,11 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - exporterHasTradedWithBuyer: Should submit "yes" to "have traded with buyer before" in the "working with buyer" form. Defaults to "yes".
  * - hasAntiBriberyCodeOfConduct: Should submit "yes" in the "have a code of conduct" form. Defaults to "yes".
  * - exportingWithCodeOfConduct: Should submit "yes" in the "exporting with code of conduct" form. Defaults to "yes".
- * - policyValueOverMvpMaximum: should submit an application with a value over the MVP maximum amount. Defaults to false.
+ * - policyValueOverMvpMaximum: Should submit an application with a value over the MVP maximum amount. Defaults to false.
  * - usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to false.
+ * - otherCompanyInvolved: Should submit "yes" to "another company to be insured". Defaults to false
  * - differentPolicyContact: Should submit an application with a different policy contact to the owner
+ * - needPreCreditPeriod: Should submit "yes" to the "need a pre-credit period" question/form. Defaults to false.
  * - isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
  * - lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
  * - totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
@@ -28,7 +30,7 @@ import completeSignInAndGoToApplication from './account/complete-sign-in-and-go-
  * - buyerOutstandingPayments: Exporter has outstanding payments with the buyer
  * - buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * - fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
- * - hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
+ * - hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * - exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @return {String} Application reference number
  */
@@ -42,7 +44,9 @@ const completeSignInAndSubmitAnApplication = ({
   exportingWithCodeOfConduct,
   policyValueOverMvpMaximum = false,
   usingBroker = false,
+  otherCompanyInvolved = false,
   differentPolicyContact = false,
+  needPreCreditPeriod = false,
   isAppointingLossPayee = false,
   lossPayeeIsLocatedInUK = false,
   totalContractValueOverThreshold = false,
@@ -55,7 +59,7 @@ const completeSignInAndSubmitAnApplication = ({
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory = false,
-  hasHadCreditInsuranceCover = false,
+  hasHadCreditInsuranceCoverWithBuyer = false,
   exporterHasBuyerFinancialAccounts = false,
 }) => {
   completeSignInAndGoToApplication({ totalContractValueOverThreshold }).then(({ referenceNumber }) => {
@@ -68,7 +72,9 @@ const completeSignInAndSubmitAnApplication = ({
         policyValueOverMvpMaximum,
         referenceNumber,
         usingBroker,
+        otherCompanyInvolved,
         differentPolicyContact,
+        needPreCreditPeriod,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUK,
         totalContractValueOverThreshold,
@@ -81,7 +87,7 @@ const completeSignInAndSubmitAnApplication = ({
         buyerOutstandingPayments,
         buyerFailedToPayOnTime,
         fullyPopulatedBuyerTradingHistory,
-        hasHadCreditInsuranceCover,
+        hasHadCreditInsuranceCoverWithBuyer,
         exporterHasBuyerFinancialAccounts,
       });
     } else {
@@ -93,7 +99,9 @@ const completeSignInAndSubmitAnApplication = ({
         policyValueOverMvpMaximum,
         referenceNumber,
         usingBroker,
+        otherCompanyInvolved,
         differentPolicyContact,
+        needPreCreditPeriod,
         isAppointingLossPayee,
         lossPayeeIsLocatedInUK,
         totalContractValueOverThreshold,
@@ -105,7 +113,7 @@ const completeSignInAndSubmitAnApplication = ({
         buyerOutstandingPayments,
         buyerFailedToPayOnTime,
         fullyPopulatedBuyerTradingHistory,
-        hasHadCreditInsuranceCover,
+        hasHadCreditInsuranceCoverWithBuyer,
         exporterHasBuyerFinancialAccounts,
       });
     }

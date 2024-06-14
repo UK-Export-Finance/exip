@@ -17,4 +17,5 @@ export interface XLSXRowIndexes {
   BROKER_ADDRESS: number;
   BUYER_ADDRESS: number;
   BUYER_CONTACT_DETAILS: number;
+  LOSS_PAYEE_ADDRESS: number;
 }

@@ -32,6 +32,10 @@ export const mockApplicationEligibility = {
 const mockGenericPolicy = {
   requestedStartDate: new Date(date.setMonth(month + 1)),
   policyCurrencyCode: GBP,
+  jointlyInsuredParty: {
+    id: 'clfv9uv6v00csoqz2pm7nftfx',
+    requested: false,
+  },
 };
 
 export const mockSinglePolicy = {

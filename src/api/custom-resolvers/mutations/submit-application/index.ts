@@ -11,7 +11,7 @@ import { SubmitApplicationVariables, SuccessResponse } from '../../../types';
  * Submit an application
  * 1) Change application status, add submission date
  * 2) Generate a XLSX for the UKEF underwriting team
- * 3) Sends emails to the UKEF underwriting team and the account that created the application
+ * 3) Sends emails to the UKEF underwriting team and the owner of the application
  * @param {Object} GraphQL root variables
  * @param {Object} GraphQL variables for the SubmitApplication mutation
  * @param {Context} KeystoneJS context API

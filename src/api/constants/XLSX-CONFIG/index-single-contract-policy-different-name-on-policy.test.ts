@@ -5,14 +5,14 @@ import { APPLICATION } from '../application';
 import { mockApplicationMinimalBrokerBuyerAndCompany } from '../../test-mocks';
 
 const {
-  LOSS_PAYEE: { IS_APPOINTED },
+  NAME_ON_POLICY: { IS_SAME_AS_OWNER },
 } = POLICY_FIELD_IDS;
 
 const application = mockApplicationMinimalBrokerBuyerAndCompany;
 
-application.nominatedLossPayee[IS_APPOINTED] = true;
+application.policyContact[IS_SAME_AS_OWNER] = false;
 
-describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.SINGLE} - appointed a loss payee`, () => {
+describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.SINGLE} - different name on policy`, () => {
   it('should return the correct row indexes', () => {
     const result = XLSX_ROW_INDEXES(application);
 
@@ -20,11 +20,13 @@ describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TY
 
     const expected = {
       ...indexes,
-      BUYER_ADDRESS: indexes.BUYER_ADDRESS + 5,
+      BROKER_ADDRESS: indexes.BROKER_ADDRESS + 2,
+      BUYER_ADDRESS: indexes.BUYER_ADDRESS + 2,
+      LOSS_PAYEE_ADDRESS: indexes.LOSS_PAYEE_ADDRESS + 2,
       TITLES: {
         ...indexes.TITLES,
-        BUYER: indexes.TITLES.BUYER + 5,
-        DECLARATIONS: indexes.TITLES.DECLARATIONS + 5,
+        BUYER: indexes.TITLES.BUYER + 2,
+        DECLARATIONS: indexes.TITLES.DECLARATIONS + 2,
       },
     };
 

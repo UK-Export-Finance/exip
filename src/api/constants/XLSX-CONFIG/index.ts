@@ -12,23 +12,29 @@ const {
 /**
  * XLSX_ROW_INDEXES
  * Generate row indexes for XLSX.
- * Depending on the submitted application data, the rows can be different.
- * - If the policy type is multiple, the XLSX has 1 additional row.
- * - If "using a broker" is true, the XLSX has 3 additional rows.
+ * Depending on the submitted application data, different rows are mapped and rendered.
+ * - If "eligibility - total contract value over threshold" is true, the XLSX has 2 additional rows.
  * - If "exporter business section - has different trading address" is true, the XLSX has 1 additional row.
  * - If "exporter business section - has different trading name" is true, the XLSX has 1 additional row.
  * - If "exporter business section - has different trading name/address" the ALTERNATIVE_TRADING_ADDRESS row needs to change.
- * - If "buyer section - is connected with buyer" is true, the XLSX has 1 additional row.
- * - If "buyer section - traded with buyer before" is true, the XLSX has 4 additional rows.
+ * - If the policy type is multiple, the XLSX has 1 additional row.
+ * - If "policy - using a broker" is true, the XLSX has 3 additional rows.
+ * - If "policy - different name on policy / policy contact is NOT the same as the owner", is true, the XLSX has 2 additional rows.
+ * - If "policy - requested a jointly insured party" is true, the XLSX has 3 additional rows.
+ * - If "policy - using a nominated loss payee" is true, the XLSX has 5 additional rows.
+ * - If "buyer section - traded with buyer before" is true, the XLSX has 2 additional rows.
  * - If "buyer section - traded with buyer before" is true and "buyer has outstanding payments" is true, the XLSX has 2 additional rows.
  * - If "buyer section - has previous credit insurance cover with buyer" is true, the XLSX has 1 additional row.
+ * - If the application's total conctract value is over the threshold, the XLSX has 1 additional row.
  * @returns {XLSXRowIndexes}
  */
+
 export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
   const {
     broker,
     buyer: {
       buyerTradingHistory: { exporterHasTradedWithBuyer, outstandingPayments: buyerHasOutstandingPayments },
+      relationship: { exporterHasPreviousCreditInsuranceWithBuyer },
     },
     company: {
       differentTradingAddress: { fullAddress: hasDifferentTradingAddress },
@@ -36,29 +42,20 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     },
     eligibility: { totalContractValue },
     nominatedLossPayee: { isAppointed: nominatedLossPayeeAppointed },
+    policy: {
+      jointlyInsuredParty: { requested: requestedJointlyInsuredParty },
+    },
+    policyContact: { isSameAsOwner: policyContactIsSameAsOwner },
   } = application;
 
   const policyType = application.policy[POLICY_TYPE];
 
   let indexes = INDEXES();
 
-  if (isMultiplePolicyType(policyType)) {
-    indexes.TITLES.BUYER += 1;
-    indexes.TITLES.DECLARATIONS += 1;
-
-    indexes.BUYER_ADDRESS += 1;
-    indexes.BUYER_CONTACT_DETAILS += 1;
-  }
-
-  if (broker[USING_BROKER]) {
-    indexes.TITLES.POLICY += 3;
-    indexes.TITLES.BUYER += 3;
-    indexes.TITLES.DECLARATIONS += 2;
-
-    indexes.BROKER_ADDRESS = 48;
-    indexes.BUYER_ADDRESS += 3;
-  }
-
+  /**
+   * Increment some specific indexes,
+   * depending on answers in the "Business" section of an application.
+   */
   if (hasDifferentTradingAddress) {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 37;
 
@@ -73,6 +70,57 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     indexes.ALTERNATIVE_TRADING_ADDRESS = 38;
   }
 
+  /**
+   * Increment some specific indexes,
+   * depending on answers in the "Policy" section of an application.
+   */
+  if (isMultiplePolicyType(policyType)) {
+    indexes.TITLES.BUYER += 1;
+    indexes.TITLES.DECLARATIONS += 1;
+
+    indexes.BROKER_ADDRESS += 1;
+    indexes.BUYER_ADDRESS += 1;
+    indexes.BUYER_CONTACT_DETAILS += 1;
+    indexes.LOSS_PAYEE_ADDRESS += 1;
+  }
+
+  if (broker[USING_BROKER]) {
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+
+    indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+  }
+
+  if (policyContactIsSameAsOwner === false) {
+    indexes.TITLES.BUYER += 2;
+    indexes.TITLES.DECLARATIONS += 2;
+
+    indexes.LOSS_PAYEE_ADDRESS += 2;
+    indexes.BROKER_ADDRESS += 2;
+    indexes.BUYER_ADDRESS += 2;
+  }
+
+  if (requestedJointlyInsuredParty) {
+    indexes.BROKER_ADDRESS += 3;
+    indexes.BUYER_ADDRESS += 3;
+    indexes.LOSS_PAYEE_ADDRESS += 3;
+
+    indexes.TITLES.BUYER += 3;
+    indexes.TITLES.DECLARATIONS += 3;
+  }
+
+  if (nominatedLossPayeeAppointed) {
+    indexes.TITLES.BUYER += 5;
+    indexes.TITLES.DECLARATIONS += 5;
+
+    indexes.BUYER_ADDRESS += 5;
+  }
+
+  /**
+   * Increment some specific indexes,
+   * depending on answers in the "Buyer" section of an application.
+   */
   if (exporterHasTradedWithBuyer) {
     indexes.TITLES.DECLARATIONS += 2;
 
@@ -81,18 +129,19 @@ export const XLSX_ROW_INDEXES = (application: Application): XLSXRowIndexes => {
     }
   }
 
+  if (exporterHasPreviousCreditInsuranceWithBuyer) {
+    indexes.TITLES.DECLARATIONS += 1;
+  }
+
+  /**
+   * Increment some specific indexes,
+   * depending on generic answers in the application.
+   */
   // TODO: EMS-3467: move to getPopulatedApplication.
   const totalContractValueOverThreshold = totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {
-    indexes.TITLES.DECLARATIONS += 2;
-  }
-
-  if (nominatedLossPayeeAppointed) {
-    indexes.TITLES.BUYER += 2;
-    indexes.TITLES.DECLARATIONS += 2;
-
-    indexes.BUYER_ADDRESS += 2;
+    indexes.TITLES.DECLARATIONS += 1;
   }
 
   return indexes;

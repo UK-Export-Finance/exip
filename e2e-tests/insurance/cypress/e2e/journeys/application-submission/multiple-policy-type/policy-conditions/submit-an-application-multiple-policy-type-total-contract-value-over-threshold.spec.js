@@ -1,14 +1,11 @@
-context('Insurance - submit an application - Single policy type, fully populated buyer', () => {
+import { APPLICATION } from '../../../../../../../constants';
+
+context('Insurance - submit an application - Multiple policy type - total contract value over threshold', () => {
   let referenceNumber;
 
   before(() => {
     cy.completeSignInAndSubmitAnApplication({
-      hasConnectionToBuyer: true,
-      exporterHasTradedWithBuyer: true,
-      buyerOutstandingPayments: true,
-      buyerFailedToPayOnTime: true,
-      hasHadCreditInsuranceCoverWithBuyer: true,
-      exporterHasBuyerFinancialAccounts: true,
+      policyType: APPLICATION.POLICY_TYPE.MULTIPLE,
       totalContractValueOverThreshold: true,
     }).then((refNumber) => {
       referenceNumber = refNumber;

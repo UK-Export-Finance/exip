@@ -13,8 +13,8 @@ export const TITLE_INDEXES = () =>
     ELIGIBILITY: 21,
     EXPORTER_BUSINESS: 31,
     POLICY: 47,
-    BUYER: 63,
-    DECLARATIONS: 73,
+    BUYER: 60,
+    DECLARATIONS: 69,
   }) as XLSXTitleRowIndexes;
 
 /**
@@ -27,7 +27,9 @@ export const INDEXES = () =>
     TITLES: TITLE_INDEXES(),
     COMPANY_ADDRESS: 33,
     COMPANY_SIC_CODES: 34,
-    BUYER_ADDRESS: 65,
+    BROKER_ADDRESS: 59,
+    BUYER_ADDRESS: 62,
+    LOSS_PAYEE_ADDRESS: 63,
   }) as XLSXRowIndexes;
 
 /**
@@ -44,6 +46,7 @@ export const incrementIndexes = (indexes: XLSXRowIndexes) => {
 
   modified.BROKER_ADDRESS += 1;
   modified.BUYER_ADDRESS += 1;
+  modified.LOSS_PAYEE_ADDRESS += 1;
 
   modified.TITLES.POLICY += 1;
   modified.TITLES.BUYER += 1;

@@ -21,15 +21,13 @@ const mapPreviousCoverWithBuyer = (eligibility: ApplicationEligibility, relation
   const totalContractValueOverThreshold = eligibility.totalContractValue.value === TOTAL_CONTRACT_VALUE.MORE_THAN_250K.VALUE;
 
   if (totalContractValueOverThreshold) {
-    const mapped = [
-      xlsxRow(
-        String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
-        mapYesNoField({
-          answer: relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER],
-        }),
-      ),
-      xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]),
-    ];
+    const answer = relationship[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER];
+
+    const mapped = [xlsxRow(String(FIELDS[HAS_PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), mapYesNoField({ answer }))];
+
+    if (answer === true) {
+      mapped.push(xlsxRow(String(FIELDS[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]), relationship[PREVIOUS_CREDIT_INSURANCE_COVER_WITH_BUYER]));
+    }
 
     return mapped;
   }

@@ -15,15 +15,15 @@ const { POLICY_TYPE } = APPLICATION;
  * @param {Boolean} buyerOutstandingPayments: Exporter has outstanding payments with the buyer
  * @param {Boolean} buyerFailedToPayOnTime: Buyer has failed to pay the exporter on the time
  * @param {Boolean} fullyPopulatedBuyerTradingHistory: Submit all possible optional "buyer trading history" form fields.
- * @param {Boolean} hasHadCreditInsuranceCover: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
+ * @param {Boolean} hasHadCreditInsuranceCoverWithBuyer: Submit "yes" to if export "has held credit insurance cover on the buyer in the past".
  * @param {Boolean} exporterHasBuyerFinancialAccounts: Should submit "yes" to the "have buyer financial accounts" form.
  * @param {Boolean} usingBroker: Should submit "yes" or "no" to "using a broker". Defaults to "no".
- * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on  - defaults to false
+ * @param {Boolean} otherCompanyInvolved: If "another company to be insured" is on. Defaults to false
  * @param {Boolean} isAppointingLossPayee: Should submit "yes" or "no" to "appointing a loss payee". Defaults to "no".
  * @param {Boolean} lossPayeeIsLocatedInUK: Should submit "UK" to "loss payee details". Defaults to false.
  * @param {Boolean} policyValueOverMvpMaximum: Should submit an application with the value over the MVP maximum amount.
  * @param {Boolean} differentPolicyContact: Should submit an application with a different policy contact to the owner.
- * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period - defaults to false.
+ * @param {Boolean} needPreCreditPeriod: If the user needs a pre-credit period. Defaults to false.
  * @param {Boolean} totalContractValueOverThreshold: If total contract value in eligibility should be over threshold.
  * @param {Boolean} attemptedPrivateMarketCover: Should submit "yes" to "attempted to insure through the private market" form.
  * @param {Boolean} isUsingAgent: Should submit "yes" to "using an agent" form.
@@ -42,7 +42,7 @@ const completePrepareApplicationMultiplePolicyType = ({
   buyerOutstandingPayments = false,
   buyerFailedToPayOnTime = false,
   fullyPopulatedBuyerTradingHistory = false,
-  hasHadCreditInsuranceCover = false,
+  hasHadCreditInsuranceCoverWithBuyer = false,
   exporterHasBuyerFinancialAccounts = false,
   usingBroker = false,
   otherCompanyInvolved = false,
@@ -73,7 +73,7 @@ const completePrepareApplicationMultiplePolicyType = ({
     outstandingPayments: buyerOutstandingPayments,
     failedToPay: buyerFailedToPayOnTime,
     fullyPopulatedBuyerTradingHistory,
-    hasHadCreditInsuranceCover,
+    hasHadCreditInsuranceCoverWithBuyer,
     exporterHasBuyerFinancialAccounts,
     totalContractValueOverThreshold,
     submitCheckYourAnswers,

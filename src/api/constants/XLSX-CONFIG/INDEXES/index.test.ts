@@ -11,8 +11,8 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         ELIGIBILITY: 21,
         EXPORTER_BUSINESS: 31,
         POLICY: 47,
-        BUYER: 63,
-        DECLARATIONS: 73,
+        BUYER: 60,
+        DECLARATIONS: 69,
       };
 
       expect(TITLE_INDEXES()).toEqual(expected);
@@ -25,7 +25,9 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
         TITLES: TITLE_INDEXES(),
         COMPANY_ADDRESS: 33,
         COMPANY_SIC_CODES: 34,
-        BUYER_ADDRESS: 65,
+        BROKER_ADDRESS: 59,
+        BUYER_ADDRESS: 62,
+        LOSS_PAYEE_ADDRESS: 63,
       };
 
       expect(INDEXES()).toEqual(expected);
@@ -37,10 +39,11 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
       const mockIndexes = {
         BROKER_ADDRESS: 1,
         BUYER_ADDRESS: 2,
+        LOSS_PAYEE_ADDRESS: 3,
         TITLES: {
-          POLICY: 3,
-          BUYER: 4,
-          DECLARATIONS: 5,
+          POLICY: 4,
+          BUYER: 5,
+          DECLARATIONS: 6,
         },
       } as XLSXRowIndexes;
 
@@ -49,10 +52,11 @@ describe('api/constants/XLSX-CONFIG/INDEXES', () => {
       const expected = {
         BROKER_ADDRESS: 2,
         BUYER_ADDRESS: 3,
+        LOSS_PAYEE_ADDRESS: 4,
         TITLES: {
-          POLICY: 4,
-          BUYER: 5,
-          DECLARATIONS: 6,
+          POLICY: 5,
+          BUYER: 6,
+          DECLARATIONS: 7,
         },
       };
 

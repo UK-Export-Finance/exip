@@ -16,7 +16,7 @@ const application = {
   },
 };
 
-describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.SINGLE} - not using a broker, no broker conditions, no different trading details`, () => {
+describe(`api/constants/XLSX-CONFIG - XLSX_ROW_INDEXES - ${APPLICATION.POLICY_TYPE.SINGLE} - minimal - no conditional answers`, () => {
   it('should return default row indexes', () => {
     const result = XLSX_ROW_INDEXES(application);
 
